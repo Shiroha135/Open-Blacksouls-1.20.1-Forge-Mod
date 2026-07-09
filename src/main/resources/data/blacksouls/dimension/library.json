@@ -1,0 +1,10 @@
+{
+  "type": "blacksouls:library",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "layers": [{ "block": "minecraft:air", "height": 1 }],
+      "biome": "blacksouls:library_biome"
+    }
+  }
+}

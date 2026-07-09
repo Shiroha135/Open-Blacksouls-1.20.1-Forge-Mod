@@ -1,0 +1,443 @@
+{
+  "acid": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:acid"
+    ]
+  },
+  "attack3": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:attack3"
+    ]
+  },
+  "battle3": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:battle3"
+    ]
+  },
+  "break": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:break"
+    ]
+  },
+  "crash": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:crash"
+    ]
+  },
+  "cursor1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:cursor1"
+    ]
+  },
+  "dao": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:dao"
+    ]
+  },
+  "darkness3": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:darkness3"
+    ]
+  },
+  "darkness5": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:darkness5"
+    ]
+  },
+  "down2": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:down2"
+    ]
+  },
+  "earth6": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:earth6"
+    ]
+  },
+  "evasion1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:evasion1"
+    ]
+  },
+  "explosion3": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:explosion3"
+    ]
+  },
+  "fire2": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:fire2"
+    ]
+  },
+  "fire3": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:fire3"
+    ]
+  },
+  "fire4": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:fire4"
+    ]
+  },
+  "fire6": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:fire6"
+    ]
+  },
+  "fire7": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:fire7"
+    ]
+  },
+  "fire8": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:fire8"
+    ]
+  },
+  "flash1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:flash1"
+    ]
+  },
+  "flash3": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:flash3"
+    ]
+  },
+  "fog2": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:fog2"
+    ]
+  },
+  "gucha004a": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:gucha004a"
+    ]
+  },
+  "gun1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:gun1"
+    ]
+  },
+  "ice1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:ice1"
+    ]
+  },
+  "ice2": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:ice2"
+    ]
+  },
+  "ice4": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:ice4"
+    ]
+  },
+  "ice7": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:ice7"
+    ]
+  },
+  "ice8": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:ice8"
+    ]
+  },
+  "item1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:item1"
+    ]
+  },
+  "key": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:key"
+    ]
+  },
+  "magic1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:magic1"
+    ]
+  },
+  "mbjh_me03": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:mbjh_me03"
+    ]
+  },
+  "monster4": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:monster4"
+    ]
+  },
+  "player_death": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:player_death"
+    ]
+  },
+  "rabbit_watch_wind": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:rabbit_watch_wind"
+    ],
+    "subtitle": "subtitles.rabbit_watch_wind"
+  },
+  "raise3": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:raise3"
+    ]
+  },
+  "record_florence": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "blacksouls:florence",
+        "stream": true
+      }
+    ]
+  },
+  "record_nana": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "blacksouls:nana",
+        "stream": true
+      }
+    ]
+  },
+  "saint6": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:saint6"
+    ]
+  },
+  "saint7": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:saint7"
+    ]
+  },
+  "saint9": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:saint9"
+    ]
+  },
+  "sand": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:sand"
+    ]
+  },
+  "shotgun_fire": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:shotgun_fire"
+    ]
+  },
+  "skill1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:skill1"
+    ]
+  },
+  "skill3": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:skill3"
+    ]
+  },
+  "slash1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:slash1"
+    ]
+  },
+  "slash2": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:slash2"
+    ]
+  },
+  "slash3": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:slash3"
+    ]
+  },
+  "slash4": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:slash4"
+    ]
+  },
+  "slash8": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:slash8"
+    ]
+  },
+  "slash9": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:slash9"
+    ]
+  },
+  "slash11": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:slash11"
+    ]
+  },
+  "slash12": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:slash12"
+    ]
+  },
+  "song": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:song"
+    ]
+  },
+  "sword1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:sword1"
+    ]
+  },
+  "sword2": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:sword2"
+    ]
+  },
+  "sword3": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:sword3"
+    ]
+  },
+  "sword4": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:sword4"
+    ]
+  },
+  "thunder1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:thunder1"
+    ]
+  },
+  "thunder5": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:thunder5"
+    ]
+  },
+  "thunder8": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:thunder8"
+    ]
+  },
+  "thunder10": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:thunder10"
+    ]
+  },
+  "title_bgm": {
+    "sounds": [
+      {
+        "name": "blacksouls:title_bgm",
+        "stream": true
+      }
+    ]
+  },
+  "twine": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:twine"
+    ]
+  },
+  "up4": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:up4"
+    ]
+  },
+  "water1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:water1"
+    ]
+  },
+  "wind1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:wind1"
+    ]
+  },
+  "wind10": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:wind10"
+    ]
+  },
+  "music.library": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:music.library",
+        "stream": true
+      }
+    ]
+  },
+  "hell_prince_bgm": {
+    "category": "hostile",
+    "sounds": [
+      {
+        "name": "blacksouls:hell_prince_bgm",
+        "stream": true
+      }
+    ]
+  }
+}

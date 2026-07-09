@@ -1,0 +1,26 @@
+{
+  "display": {
+    "icon": {
+      "item": "blacksouls:book_blank"
+    },
+    "title": {
+      "translate": "advancement.blacksouls.library.title"
+    },
+    "description": {
+      "translate": "advancement.blacksouls.library.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "blacksouls:textures/gui/advancements/backgrounds/library_bg.png"
+  },
+  "criteria": {
+    "entered_library": {
+      "trigger": "minecraft:changed_dimension",
+      "conditions": {
+        "to": "blacksouls:library"
+      }
+    }
+  }
+}

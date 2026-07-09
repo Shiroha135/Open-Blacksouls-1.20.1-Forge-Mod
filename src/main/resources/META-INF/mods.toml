@@ -1,0 +1,74 @@
+# Minecraft 1.20.1 Forge Mod 配置文件
+modLoader="javafml"
+loaderVersion="[47,)"
+license="LGPL-3.0"
+issueTrackerURL=""
+
+[[mods]]
+modId="blacksouls"
+version="2.0.1"
+displayName="Black Souls II"
+updateJSONURL=""
+displayURL="https://github.com/Shiroha135/Shiroha135.github.io"
+logoFile="logo.png"
+credits=""
+authors="Bilibili_HatsuyukiAya"
+description='''
+感谢寿司勇者创作的BlackSouls系列，以及所有支持本模组的人。
+这是一个基于BlackSouls系列制作的模组，加入了独特的技能系统、蓝量机制以及相关特色道具。
+'''
+
+# ====================================================
+# 基础前置依赖（必选） (Forge & Minecraft)
+# ====================================================
+[[dependencies.blacksouls]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.blacksouls]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.21)"
+ordering="NONE"
+side="BOTH"
+
+# ====================================================
+# 地图专属维度依赖（可选）
+# ====================================================
+
+# 1.装饰工艺
+[[dependencies.blacksouls]]
+modId="decocraft"
+mandatory=false
+versionRange="*"
+ordering="NONE"
+side="BOTH"
+
+# 2.金刚鹦鹉的窗户
+[[dependencies.blacksouls]]
+modId="mcwwindows"
+mandatory=false
+versionRange="*"
+ordering="NONE"
+side="BOTH"
+
+# 3.金刚鹦鹉的楼梯
+[[dependencies.blacksouls]]
+modId="mcwstairs"
+mandatory=false
+versionRange="*"
+ordering="NONE"
+side="BOTH"
+
+# 4.LandK门窗
+[[dependencies.blacksouls]]
+modId="landk_doors_and_windows"
+mandatory=false
+versionRange="*"
+ordering="NONE"
+side="BOTH"
+
+

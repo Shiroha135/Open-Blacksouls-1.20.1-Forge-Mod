@@ -1,0 +1,25 @@
+{
+  "parent": "blacksouls:library_of_dream",
+  "display": {
+    "icon": {
+      "item": "blacksouls:noden_spawn_egg"
+    },
+    "title": {
+      "translate": "advancement.blacksouls.noden_first_talk.title"
+    },
+    "description": {
+      "translate": "advancement.blacksouls.noden_first_talk.desc"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "x": 1.0,
+    "y": 1.0
+  },
+  "criteria": {
+    "talked": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

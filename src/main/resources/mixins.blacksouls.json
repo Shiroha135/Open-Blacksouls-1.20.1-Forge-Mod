@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "minVersion": "0.8.5",
+  "package": "com.BlackSouls.BlackSoulsMod.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "mixins.blacksouls.refmap.json",
+  "mixins": [
+    "EntityTickMixin",
+    "LivingEntityTickMixin",
+    "ServerLevelMixin",
+    "ServerGamePacketListenerImplMixin",
+    "ItemStackMaxStackMixin",
+    "SlotMaxStackMixin"
+  ],
+  "client": [
+    "AbstractContainerScreenAccessor",
+    "client.GuiAccessor",
+    "client.ItemInHandRendererAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

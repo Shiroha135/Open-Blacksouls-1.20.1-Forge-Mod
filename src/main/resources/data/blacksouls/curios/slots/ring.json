@@ -1,0 +1,5 @@
+{
+  "operation": "ADD",
+  "size": 3, 
+  "drop_rule": "DEFAULT"
+}

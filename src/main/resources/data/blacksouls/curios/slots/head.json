@@ -1,0 +1,6 @@
+{
+  "replace": true,
+  "operation": "SET",
+  "size": 1,
+  "drop_rule": "DEFAULT"
+}
