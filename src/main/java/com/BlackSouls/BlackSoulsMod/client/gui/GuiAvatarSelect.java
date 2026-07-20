@@ -12,6 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GuiAvatarSelect extends Screen {
@@ -54,18 +55,6 @@ public class GuiAvatarSelect extends Screen {
             "syoujo2_mz_sheet"
     );
 
-    private List<String> getVisibleAvatars() {
-        java.util.ArrayList<String> list = new java.util.ArrayList<>(DEFAULT_AVATARS);
-
-        for (String id : DLC_AVATARS) {
-            if (ClientSkillInfo.isDlcAvatarUnlocked(id)) {
-                list.add(id);
-            }
-        }
-
-        return list;
-    }
-
     private static final int VISIBLE_ROWS = 3;
     private static final int COLS = 4;
     private static final int AVATAR_SIZE = 60;
@@ -84,6 +73,9 @@ public class GuiAvatarSelect extends Screen {
     private int guiTop;
     private int scrollOffset = 0;
     private int maxScroll = 0;
+    private List<String> visibleAvatars = List.of();
+    private List<ResourceLocation> visibleAvatarTextures = List.of();
+    private long unlockedDlcMask;
 
     private final java.util.Map<String, Integer> expressionMap = new java.util.HashMap<>();
 
@@ -100,9 +92,6 @@ public class GuiAvatarSelect extends Screen {
     public GuiAvatarSelect(Screen parentScreen) {
         super(Component.literal("Avatar Select"));
         this.parentScreen = parentScreen;
-
-        int totalRows = (int) Math.ceil((double) getVisibleAvatars().size() / COLS);
-        this.maxScroll = Math.max(0, totalRows - VISIBLE_ROWS);
     }
 
     @Override
@@ -110,10 +99,16 @@ public class GuiAvatarSelect extends Screen {
         super.init();
         this.guiLeft = (this.width - this.guiWidth) / 2;
         this.guiTop = (this.height - this.guiHeight) / 2;
+        refreshVisibleAvatars(getUnlockedDlcMask());
+    }
 
-        int totalRows = (int) Math.ceil((double) getVisibleAvatars().size() / COLS);
-        this.maxScroll = Math.max(0, totalRows - VISIBLE_ROWS);
-        this.scrollOffset = net.minecraft.util.Mth.clamp(this.scrollOffset, 0, this.maxScroll);
+    @Override
+    public void tick() {
+        super.tick();
+        long currentMask = getUnlockedDlcMask();
+        if (currentMask != this.unlockedDlcMask) {
+            refreshVisibleAvatars(currentMask);
+        }
     }
 
     @Override
@@ -151,7 +146,7 @@ public class GuiAvatarSelect extends Screen {
         int startX = guiLeft + 25;
         int startY = guiTop + 40;
 
-        List<String> avatars = getVisibleAvatars();
+        List<String> avatars = this.visibleAvatars;
 
         for (int i = 0; i < avatars.size(); i++) {
             int row = i / COLS;
@@ -165,10 +160,7 @@ public class GuiAvatarSelect extends Screen {
             int drawY = startY + ((row - scrollOffset) * SPACING);
 
             String avatarId = avatars.get(i);
-            ResourceLocation tex = new ResourceLocation(
-                    BlackSouls.MODID,
-                    "textures/gui/avatars/" + avatarId + ".png"
-            );
+            ResourceLocation tex = this.visibleAvatarTextures.get(i);
 
             boolean hovered = mouseX >= drawX && mouseX <= drawX + AVATAR_SIZE
                     && mouseY >= drawY && mouseY <= drawY + AVATAR_SIZE;
@@ -265,7 +257,7 @@ public class GuiAvatarSelect extends Screen {
             int startX = guiLeft + 25;
             int startY = guiTop + 40;
 
-            List<String> avatars = getVisibleAvatars();
+            List<String> avatars = this.visibleAvatars;
 
             for (int i = 0; i < avatars.size(); i++) {
                 int row = i / COLS;
@@ -307,7 +299,7 @@ public class GuiAvatarSelect extends Screen {
         int startX = guiLeft + 25;
         int startY = guiTop + 40;
 
-        List<String> avatars = getVisibleAvatars();
+        List<String> avatars = this.visibleAvatars;
 
         for (int i = 0; i < avatars.size(); i++) {
             int row = i / COLS;
@@ -371,5 +363,37 @@ public class GuiAvatarSelect extends Screen {
     @Override
     public boolean isPauseScreen() {
         return false;
+    }
+
+    private long getUnlockedDlcMask() {
+        long mask = 0L;
+        for (int i = 0; i < DLC_AVATARS.size(); i++) {
+            if (ClientSkillInfo.isDlcAvatarUnlocked(DLC_AVATARS.get(i))) {
+                mask |= 1L << i;
+            }
+        }
+        return mask;
+    }
+
+    private void refreshVisibleAvatars(long mask) {
+        ArrayList<String> avatars = new ArrayList<>(DEFAULT_AVATARS.size() + DLC_AVATARS.size());
+        avatars.addAll(DEFAULT_AVATARS);
+        for (int i = 0; i < DLC_AVATARS.size(); i++) {
+            if ((mask & 1L << i) != 0L) {
+                avatars.add(DLC_AVATARS.get(i));
+            }
+        }
+
+        ArrayList<ResourceLocation> textures = new ArrayList<>(avatars.size());
+        for (String avatarId : avatars) {
+            textures.add(new ResourceLocation(BlackSouls.MODID, "textures/gui/avatars/" + avatarId + ".png"));
+        }
+
+        this.visibleAvatars = List.copyOf(avatars);
+        this.visibleAvatarTextures = List.copyOf(textures);
+        this.unlockedDlcMask = mask;
+        int totalRows = (this.visibleAvatars.size() + COLS - 1) / COLS;
+        this.maxScroll = Math.max(0, totalRows - VISIBLE_ROWS);
+        this.scrollOffset = net.minecraft.util.Mth.clamp(this.scrollOffset, 0, this.maxScroll);
     }
 }

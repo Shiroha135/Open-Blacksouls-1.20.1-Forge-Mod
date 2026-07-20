@@ -13,6 +13,9 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class GuiPurgeCommission extends Screen {
     private static final int PANEL_WIDTH = 404;
     private static final int PANEL_MAX_HEIGHT = 348;
@@ -22,7 +25,11 @@ public class GuiPurgeCommission extends Screen {
     private static final int TASK_SPACING = 6;
     private static final int REFRESH_BUTTON_WIDTH = 72;
     private static final int BUTTON_HEIGHT = 18;
+    private static final int MAX_REWARD_CACHE_SIZE = 32;
     private int scrollOffset = 0;
+    private long cachedRemainingSeconds = Long.MIN_VALUE;
+    private String cachedRemainingTime = "--:--";
+    private final Map<String, Item> rewardItemCache = new HashMap<>();
 
     public GuiPurgeCommission() {
         super(Component.translatable("gui.blacksouls.purge.title"));
@@ -32,6 +39,7 @@ public class GuiPurgeCommission extends Screen {
     protected void init() {
         super.init();
         this.scrollOffset = 0;
+        this.rewardItemCache.clear();
     }
 
     @Override
@@ -46,8 +54,8 @@ public class GuiPurgeCommission extends Screen {
         int refreshButtonLeft = left + panelWidth - REFRESH_BUTTON_WIDTH - 14;
         int refreshButtonTop = top + 46;
 
-        BSPlayerStats stats = Minecraft.getInstance().player != null
-                ? Minecraft.getInstance().player.getCapability(BSPlayerStats.CAPABILITY).orElse(null)
+        BSPlayerStats stats = this.minecraft != null && this.minecraft.player != null
+                ? this.minecraft.player.getCapability(BSPlayerStats.CAPABILITY).orElse(null)
                 : null;
 
         BSGuiUtils.drawRMWindow(guiGraphics, left, top, panelWidth, panelHeight);
@@ -94,8 +102,8 @@ public class GuiPurgeCommission extends Screen {
         Component category = Component.translatable("gui.blacksouls.purge.category." + task.category);
         Component target = Component.translatable("gui.blacksouls.purge.target." + task.category + "." + task.targetId);
         String progressText = task.progress + "/" + task.required;
-        String rewardText = resolveRewardName(task.rewardItemId) + " x" + task.rewardCount;
-        Item rewardItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(task.rewardItemId));
+        Item rewardItem = getRewardItem(task.rewardItemId);
+        String rewardText = resolveRewardName(rewardItem, task.rewardItemId) + " x" + task.rewardCount;
         int buttonLeft = left + width - 70;
         int buttonTop = top + height - 22;
 
@@ -131,9 +139,20 @@ public class GuiPurgeCommission extends Screen {
         }
     }
 
-    private String resolveRewardName(String rewardItemId) {
-        Item rewardItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(rewardItemId));
+    private String resolveRewardName(Item rewardItem, String rewardItemId) {
         return rewardItem != null ? rewardItem.getDescription().getString() : rewardItemId;
+    }
+
+    private Item getRewardItem(String rewardItemId) {
+        if (this.rewardItemCache.containsKey(rewardItemId)) {
+            return this.rewardItemCache.get(rewardItemId);
+        }
+        if (this.rewardItemCache.size() >= MAX_REWARD_CACHE_SIZE) {
+            this.rewardItemCache.clear();
+        }
+        Item rewardItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(rewardItemId));
+        this.rewardItemCache.put(rewardItemId, rewardItem);
+        return rewardItem;
     }
 
     private String formatRemainingTicks() {
@@ -144,9 +163,14 @@ public class GuiPurgeCommission extends Screen {
         long dayTime = this.minecraft.player.level().getDayTime();
         long remaining = REFRESH_TICKS - (dayTime % REFRESH_TICKS);
         long seconds = remaining / 20L;
+        if (seconds == this.cachedRemainingSeconds) {
+            return this.cachedRemainingTime;
+        }
         long minutesPart = seconds / 60L;
         long secondsPart = seconds % 60L;
-        return String.format("%02d:%02d", minutesPart, secondsPart);
+        this.cachedRemainingSeconds = seconds;
+        this.cachedRemainingTime = String.format("%02d:%02d", minutesPart, secondsPart);
+        return this.cachedRemainingTime;
     }
 
     private boolean isInside(double mouseX, double mouseY, int left, int top, int width, int height) {

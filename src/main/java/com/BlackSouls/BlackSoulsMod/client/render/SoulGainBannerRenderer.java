@@ -20,15 +20,17 @@ public class SoulGainBannerRenderer {
 
     private static int ticksLeft = 0;
     private static long soulDelta = 0L;
+    private static String deltaText = "0S";
 
     public static void show(long delta) {
         soulDelta = delta;
+        deltaText = (delta > 0 ? "+" : "") + delta + "S";
         ticksLeft = 60;
     }
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && ticksLeft > 0) {
+        if (event.phase == TickEvent.Phase.END && ticksLeft > 0 && !Minecraft.getInstance().isPaused()) {
             ticksLeft--;
         }
     }
@@ -71,7 +73,6 @@ public class SoulGainBannerRenderer {
         RenderSystem.disableBlend();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        String deltaText = (soulDelta > 0 ? "+" : "") + soulDelta + "S";
         String valueText = I18n.get(
                 "gui.blacksouls.soul.banner.current_value",
                 stats.souls,

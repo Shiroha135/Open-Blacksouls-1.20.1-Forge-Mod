@@ -10,7 +10,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
+import java.util.WeakHashMap;
 
 public class DifficultyManager {
 
@@ -26,6 +30,7 @@ public class DifficultyManager {
     public static boolean maliceUnlocked = false;
     public static boolean eternityUnlocked = false;
     private static final UUID DIFFICULTY_MODIFIER_ID = UUID.fromString("B5A2C19D-3E84-4E1F-9B5A-8C2A1B4E6D9F");
+    private static final Map<ServerLevel, Set<LivingEntity>> TRACKED_MONSTERS = new WeakHashMap<>();
 
     public static double getMultiplier(int difficulty) {
         if (difficulty <= 1) return 1.0D;
@@ -87,12 +92,19 @@ public class DifficultyManager {
     }
 
     public static void applyModifierToSingleMonster(LivingEntity monster) {
-        if (!BSMobStatManager.hasManagedStats(monster)) {
+        BSMobStatManager.MobStats baseStats = BSMobStatManager.getStats(monster);
+        if (!hasManagedStats(baseStats)) {
             return;
         }
 
-        BSMobStatManager.MobStats baseStats = BSMobStatManager.getStats(monster);
-        double multiplier = getCurrentTotalMultiplier(monster.level());
+        if (monster.level() instanceof ServerLevel serverLevel) {
+            TRACKED_MONSTERS.computeIfAbsent(serverLevel, ignored ->
+                    Collections.newSetFromMap(new WeakHashMap<>())).add(monster);
+        }
+        applyModifier(monster, baseStats, getCurrentTotalMultiplier(monster.level()));
+    }
+
+    private static void applyModifier(LivingEntity monster, BSMobStatManager.MobStats baseStats, double multiplier) {
         double amount = multiplier - 1.0D;
 
         float oldMaxHp = monster.getMaxHealth();
@@ -103,8 +115,14 @@ public class DifficultyManager {
         setBaseAttribute(monster, Attributes.ATTACK_DAMAGE, baseStats.attack);
         setBaseAttribute(monster, Attributes.MOVEMENT_SPEED, baseStats.getMovementSpeedAttribute());
 
-        applyDifficultyModifier(monster, Attributes.MAX_HEALTH, amount);
-        applyDifficultyModifier(monster, Attributes.ATTACK_DAMAGE, amount);
+        AttributeModifier modifier = amount > 0.0D ? new AttributeModifier(
+                DIFFICULTY_MODIFIER_ID,
+                "BlackSouls_Difficulty",
+                amount,
+                AttributeModifier.Operation.MULTIPLY_BASE
+        ) : null;
+        applyDifficultyModifier(monster, Attributes.MAX_HEALTH, modifier);
+        applyDifficultyModifier(monster, Attributes.ATTACK_DAMAGE, modifier);
 
         monster.setHealth((float) (monster.getMaxHealth() * hpPercent));
     }
@@ -116,17 +134,11 @@ public class DifficultyManager {
         }
     }
 
-    private static void applyDifficultyModifier(LivingEntity monster, Attribute attribute, double amount) {
+    private static void applyDifficultyModifier(LivingEntity monster, Attribute attribute, AttributeModifier modifier) {
         AttributeInstance attrInstance = monster.getAttribute(attribute);
         if (attrInstance != null) {
             attrInstance.removeModifier(DIFFICULTY_MODIFIER_ID);
-            if (amount > 0.0D) {
-                AttributeModifier modifier = new AttributeModifier(
-                        DIFFICULTY_MODIFIER_ID,
-                        "BlackSouls_Difficulty",
-                        amount,
-                        AttributeModifier.Operation.MULTIPLY_BASE
-                );
+            if (modifier != null) {
                 attrInstance.addPermanentModifier(modifier);
             }
         }
@@ -137,11 +149,45 @@ public class DifficultyManager {
             return;
         }
 
-        for (Entity entity : serverLevel.getAllEntities()) {
-            if (entity instanceof LivingEntity livingEntity && BSMobStatManager.hasManagedStats(livingEntity)) {
-                applyModifierToSingleMonster(livingEntity);
+        Set<LivingEntity> trackedMonsters = TRACKED_MONSTERS.get(serverLevel);
+        if (trackedMonsters == null || trackedMonsters.isEmpty()) {
+            return;
+        }
+
+        double multiplier = getCurrentTotalMultiplier(serverLevel);
+        var iterator = trackedMonsters.iterator();
+        while (iterator.hasNext()) {
+            LivingEntity livingEntity = iterator.next();
+            if (livingEntity == null || livingEntity.isRemoved() || livingEntity.level() != serverLevel) {
+                iterator.remove();
+                continue;
+            }
+
+            BSMobStatManager.MobStats baseStats = BSMobStatManager.getStats(livingEntity);
+            if (!hasManagedStats(baseStats)) {
+                iterator.remove();
+                continue;
+            }
+            applyModifier(livingEntity, baseStats, multiplier);
+        }
+    }
+
+    public static void untrackMonster(Entity entity) {
+        if (!(entity instanceof LivingEntity livingEntity) || !(entity.level() instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+        Set<LivingEntity> trackedMonsters = TRACKED_MONSTERS.get(serverLevel);
+        if (trackedMonsters != null) {
+            trackedMonsters.remove(livingEntity);
+            if (trackedMonsters.isEmpty()) {
+                TRACKED_MONSTERS.remove(serverLevel);
             }
         }
+    }
+
+    private static boolean hasManagedStats(BSMobStatManager.MobStats stats) {
+        return stats.maxHealth > 0.0 || stats.attack > 0.0 || stats.defense > 0.0 || stats.magicDefense > 0.0;
     }
 
     private static double getCurrentTotalMultiplier(Level level) {

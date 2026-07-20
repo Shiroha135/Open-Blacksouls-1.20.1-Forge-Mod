@@ -19,6 +19,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.EntityLeaveLevelEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -33,6 +34,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID)
 public class SkillEventHandler {
+    private static final String INVISIBLE_BODY_SKILL = "bs2_skill_invisible_body";
 
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
@@ -87,25 +89,24 @@ public class SkillEventHandler {
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && !event.player.level().isClientSide()) {
-            Player player = event.player;
+        if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide() || event.player.tickCount % 20 != 0) {
+            return;
+        }
 
-            if (SkillUtils.hasLearnedSkill(player, "bs2_skill_invisible_body")) {
-                if (player.tickCount % 20 == 0) {
-                    float current = SkillUtils.getMana(player);
-                    float max = SkillUtils.getMaxMana(player);
-                    if (current < max) {
-                        SkillUtils.setMana(player, current + 2.0F);
-                    }
-                }
+        BSPlayerStats stats = event.player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+        if (stats == null) {
+            return;
+        }
+
+        if (stats.unlockedSkills.contains(INVISIBLE_BODY_SKILL)) {
+            float current = (float) stats.mp;
+            float max = (float) stats.maxMp;
+            if (current < max) {
+                stats.mp = current + 2.0F;
             }
-            if (player.tickCount % 20 == 0) {
-                player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
-                    if (stats.mp < stats.maxMp) {
-                        stats.restoreMP(1.0);
-                    }
-                });
-            }
+        }
+        if (stats.mp < stats.maxMp) {
+            stats.restoreMP(1.0);
         }
     }
 
@@ -328,6 +329,13 @@ public class SkillEventHandler {
                 && event.getEntity() instanceof LivingEntity monster
                 && com.BlackSouls.BlackSoulsMod.util.BSMobStatManager.hasManagedStats(monster)) {
             DifficultyManager.applyModifierToSingleMonster(monster);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onMonsterLeave(EntityLeaveLevelEvent event) {
+        if (!event.getLevel().isClientSide()) {
+            DifficultyManager.untrackMonster(event.getEntity());
         }
     }
 }

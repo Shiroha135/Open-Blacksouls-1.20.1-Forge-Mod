@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.handler;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.client.gui.GuiBSMainMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.TitleScreen;
@@ -15,7 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ClientSoundEventHandler {
 
-    private static int lastScreenIdentity = 0;
+    private static Screen lastScreen;
     private static boolean lastScreenWasRPGUI = false;
 
     private static boolean wasInWorld = false;
@@ -54,8 +55,7 @@ public class ClientSoundEventHandler {
             }
             wasInWorld = isInWorld; 
             if (logoutSoundDelay > 0) {
-                boolean isMainMenu = currentScreen instanceof TitleScreen
-                        || (currentScreen != null && currentScreen.getClass().getName().contains("GuiBSMainMenu"));
+                boolean isMainMenu = currentScreen instanceof TitleScreen || currentScreen instanceof GuiBSMainMenu;
 
                 if (isMainMenu) {
                     logoutSoundDelay--;
@@ -72,8 +72,7 @@ public class ClientSoundEventHandler {
                 }
             }
 
-            int currentScreenIdentity = currentScreen == null ? 0 : System.identityHashCode(currentScreen);
-            if (lastScreenIdentity != currentScreenIdentity) {
+            if (lastScreen != currentScreen) {
                 boolean wasRPGUI = lastScreenWasRPGUI;
                 boolean isRPGUI = isRPGUIScreen(currentScreen);
 
@@ -85,7 +84,7 @@ public class ClientSoundEventHandler {
                     closeSoundDelay = 3;
                 }
 
-                lastScreenIdentity = currentScreenIdentity;
+                lastScreen = currentScreen;
                 lastScreenWasRPGUI = isRPGUI;
             }
         } catch (Exception e) {}
@@ -95,8 +94,10 @@ public class ClientSoundEventHandler {
         if (screen == null) {
             return false;
         }
+        if (screen instanceof GuiBSMainMenu) {
+            return false;
+        }
         String className = screen.getClass().getName();
-        return className.startsWith("com.BlackSouls.BlackSoulsMod.client.gui")
-                && !className.contains("GuiBSMainMenu");
+        return className.startsWith("com.BlackSouls.BlackSoulsMod.client.gui");
     }
 }

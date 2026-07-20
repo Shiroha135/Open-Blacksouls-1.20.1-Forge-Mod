@@ -46,10 +46,14 @@ public class GuiUniversalShop extends Screen {
         final RegistryObject<Item> itemReg;
         final long price;
         final String descKey;
+        final ResourceLocation texture;
+        final ItemStack renderStack;
         ShopItem(RegistryObject<Item> itemReg, long price, String descKey) {
             this.itemReg = itemReg;
             this.price = price;
             this.descKey = descKey;
+            this.texture = new ResourceLocation(BlackSouls.MODID, "textures/item/" + itemReg.getId().getPath() + ".png");
+            this.renderStack = new ItemStack(itemReg.get());
         }
     }
 
@@ -318,16 +322,13 @@ public class GuiUniversalShop extends Screen {
                 guiGraphics.fill(listStartX, rowY - 3, listW - 8, rowY + 18, 0x66FFFFFF);
             }
 
-            ItemStack renderStack = new ItemStack(item.itemReg.get());
-            ResourceLocation itemTex = new ResourceLocation(BlackSouls.MODID, "textures/item/" + item.itemReg.getId().getPath() + ".png");
-
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
-            guiGraphics.blit(itemTex, listStartX + 2, rowY, 16, 16, 0, 0, 16, 16, 16, 16);
+            guiGraphics.blit(item.texture, listStartX + 2, rowY, 16, 16, 0, 0, 16, 16, 16, 16);
             RenderSystem.disableBlend();
 
-            guiGraphics.drawString(font, I18n.get(renderStack.getDescriptionId()), listStartX + 22, rowY + 3, COLOR_TEXT_HIGHLIGHT, false);
+            guiGraphics.drawString(font, I18n.get(item.renderStack.getDescriptionId()), listStartX + 22, rowY + 3, COLOR_TEXT_HIGHLIGHT, false);
 
             if (isSelectingQuantity && i == selectedIndex) {
                 drawQuantityBox(guiGraphics, rowY, item.price);

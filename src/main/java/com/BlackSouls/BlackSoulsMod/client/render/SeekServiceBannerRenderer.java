@@ -19,15 +19,17 @@ public class SeekServiceBannerRenderer {
     private static final ResourceLocation ICON = new ResourceLocation(BlackSouls.MODID, "textures/gui/sendam.png");
     private static int ticksLeft = 0;
     private static int senDelta = 0;
+    private static String deltaText = "0";
 
     public static void show(int delta) {
         senDelta = delta;
+        deltaText = (delta > 0 ? "+" : "") + delta;
         ticksLeft = 60;
     }
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && ticksLeft > 0) {
+        if (event.phase == TickEvent.Phase.END && ticksLeft > 0 && !Minecraft.getInstance().isPaused()) {
             ticksLeft--;
         }
     }
@@ -70,7 +72,6 @@ public class SeekServiceBannerRenderer {
         RenderSystem.disableBlend();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        String deltaText = (senDelta > 0 ? "+" : "") + senDelta;
         String valueText = I18n.get(
                 "gui.blacksouls.seek_service.banner.current_value",
                 stats.sen,

@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 
 @SuppressWarnings({"resource", "unused"})
 public class PacketCastSkill {
+    private static final int MAX_SKILL_ID_LENGTH = 128;
 
     private String skillName;
 
@@ -24,11 +25,11 @@ public class PacketCastSkill {
     }
 
     public PacketCastSkill(FriendlyByteBuf buf) {
-        this.skillName = buf.readUtf();
+        this.skillName = buf.readUtf(MAX_SKILL_ID_LENGTH);
     }
 
     public void toBytes(FriendlyByteBuf buf) {
-        buf.writeUtf(this.skillName);
+        buf.writeUtf(this.skillName, MAX_SKILL_ID_LENGTH);
     }
 
     public boolean handle(Supplier<NetworkEvent.Context> supplier) {
@@ -51,12 +52,12 @@ public class PacketCastSkill {
             if (stats == null) return;
 
             AbstractSkill skill = SkillRegistry.SKILLS.get(skillName);
-            if (skill != null) {
-                if (skill.canCast(player, stats)) {
-                    skill.consumeAndSetCooldown(player, stats);
-                    skill.execute(player, stats);
-                }
-            } else {
+            if (skill == null || !skill.isUnlockedForGUI(player)) {
+                return;
+            }
+            if (skill.canCast(player, stats)) {
+                skill.consumeAndSetCooldown(player, stats);
+                skill.execute(player, stats);
             }
         });
         context.setPacketHandled(true);

@@ -2,6 +2,7 @@ package com.BlackSouls.BlackSoulsMod.client.render;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.client.render.heldoutline.HeldItemOutlineCompat;
+import com.mojang.blaze3d.shaders.AbstractUniform;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -12,6 +13,7 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -70,10 +72,14 @@ public class ClientStatusRenderer {
 
         drawPixelBorderAndBg(matrix, x, y, w, h);
 
-        if (ShaderHelper.flowBarShader != null && !HeldItemOutlineCompat.isOculusShaderPackActive()) {
-            float smoothTime = (Util.getMillis() % 1000000L) / 1000.0f;
-            if (ShaderHelper.flowBarShader.safeGetUniform("GameTime") != null) {
-                ShaderHelper.flowBarShader.safeGetUniform("GameTime").set(smoothTime);
+        long currentTime = Util.getMillis();
+        boolean oculusShaderPackActive = HeldItemOutlineCompat.isOculusShaderPackActive();
+        if (ShaderHelper.flowBarShader != null && !oculusShaderPackActive) {
+            float smoothTime = (currentTime % 1000000L) / 1000.0f;
+            ShaderInstance shader = ShaderHelper.flowBarShader;
+            AbstractUniform gameTime = shader.safeGetUniform("GameTime");
+            if (gameTime != null) {
+                gameTime.set(smoothTime);
             }
             RenderSystem.setShader(() -> ShaderHelper.flowBarShader);
             RenderSystem.enableDepthTest();
@@ -88,8 +94,8 @@ public class ClientStatusRenderer {
             RenderSystem.depthMask(true);
             RenderSystem.enableDepthTest();
             RenderSystem.setShader(net.minecraft.client.renderer.GameRenderer::getPositionTexColorShader);
-        } else if (HeldItemOutlineCompat.isOculusShaderPackActive()) {
-            drawOculusFlowBar(matrix, x, y, w * hpPercent, h, Util.getMillis());
+        } else if (oculusShaderPackActive) {
+            drawOculusFlowBar(matrix, x, y, w * hpPercent, h, currentTime);
         } else {
             fillSolid(matrix, x, y, x + (w * hpPercent), y + h, 0xFFDD2222);
         }

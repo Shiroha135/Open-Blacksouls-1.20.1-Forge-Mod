@@ -27,7 +27,11 @@ public class ClientboundBannerPacket {
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
-        PacketHandlers.handleClient(supplier, () -> ClientHandler.handle(this.type, this.delta));
+        PacketHandlers.handleClient(supplier, () -> {
+            if (this.type != null) {
+                ClientHandler.handle(this.type, this.delta);
+            }
+        });
     }
 
     public enum Type {

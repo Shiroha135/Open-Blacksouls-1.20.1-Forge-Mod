@@ -30,13 +30,11 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
@@ -1108,9 +1106,6 @@ public class BlackSouls {
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, BSConfig.CLIENT_SPEC);
         // 绑定生命周期
         modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(this::clientSetup);
-        // 注册到全局总线
-        MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -1121,14 +1116,7 @@ public class BlackSouls {
             NetworkHandler.register();
             // 启动时技能塞进服务端的字典里
             SkillRegistry.init();
-            System.out.println("[BlackSouls/Client] Client visual engine starting up……");
-        });
-    }
-
-    private void clientSetup(final FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-            System.out.println("[BlackSouls/Core] Core systems & network bus initialized successfully.");
-            // 重构的按键绑定、着色器加载等……待办
+            LOGGER.info("Core systems and network bus initialized successfully");
         });
     }
 }

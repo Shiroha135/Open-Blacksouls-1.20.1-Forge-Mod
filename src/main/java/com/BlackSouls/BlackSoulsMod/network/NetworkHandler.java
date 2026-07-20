@@ -6,6 +6,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
@@ -14,6 +15,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.Optional;
 
 public class NetworkHandler {
 
@@ -31,37 +33,37 @@ public class NetworkHandler {
         return packetId++;
     }
 
-    private static <MSG> void register(Class<MSG> type, BiConsumer<MSG, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, MSG> decoder, BiConsumer<MSG, Supplier<NetworkEvent.Context>> handler) {
-        INSTANCE.registerMessage(id(), type, encoder, decoder, handler);
+    private static <MSG> void register(Class<MSG> type, BiConsumer<MSG, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, MSG> decoder, BiConsumer<MSG, Supplier<NetworkEvent.Context>> handler, NetworkDirection direction) {
+        INSTANCE.registerMessage(id(), type, encoder, decoder, handler, Optional.of(direction));
     }
 
     public static void register() {
-        register(PacketSyncSkill.class, PacketSyncSkill::toBytes, PacketSyncSkill::new, PacketSyncSkill::handle);
-        register(PacketSyncStats.class, PacketSyncStats::toBytes, PacketSyncStats::new, PacketSyncStats::handle);
-        register(PacketSyncMana.class, PacketSyncMana::toBytes, PacketSyncMana::new, PacketSyncMana::handle);
-        register(PacketSpawnDamageText.class, PacketSpawnDamageText::toBytes, PacketSpawnDamageText::new, PacketSpawnDamageText::handle);
-        register(PacketSyncDifficulty.class, PacketSyncDifficulty::toBytes, PacketSyncDifficulty::new, PacketSyncDifficulty::handle);
-        register(PacketWhiteFlash.class, PacketWhiteFlash::toBytes, PacketWhiteFlash::new, PacketWhiteFlash::handle);
-        register(PacketSyncBonfireList.class, PacketSyncBonfireList::toBytes, PacketSyncBonfireList::new, PacketSyncBonfireList::handle);
-        register(PacketOpenDialogue.class, PacketOpenDialogue::toBytes, PacketOpenDialogue::new, PacketOpenDialogue::handle);
-        register(PacketCastSkill.class, PacketCastSkill::toBytes, PacketCastSkill::new, PacketCastSkill::handle);
-        register(PacketBindSkill.class, PacketBindSkill::toBytes, PacketBindSkill::new, PacketBindSkill::handle);
-        register(PacketSetDifficulty.class, PacketSetDifficulty::toBytes, PacketSetDifficulty::new, PacketSetDifficulty::handle);
-        register(PacketSetExtraMode.class, PacketSetExtraMode::toBytes, PacketSetExtraMode::new, PacketSetExtraMode::handle);
-        register(ServerboundNodenRewardPacket.class, ServerboundNodenRewardPacket::toBytes, ServerboundNodenRewardPacket::new, ServerboundNodenRewardPacket::handle);
-        register(ClientboundBannerPacket.class, ClientboundBannerPacket::toBytes, ClientboundBannerPacket::new, ClientboundBannerPacket::handle);
-        register(PacketClaimPurgeTaskReward.class, PacketClaimPurgeTaskReward::toBytes, PacketClaimPurgeTaskReward::new, PacketClaimPurgeTaskReward::handle);
-        register(ServerboundSimpleActionPacket.class, ServerboundSimpleActionPacket::toBytes, ServerboundSimpleActionPacket::new, ServerboundSimpleActionPacket::handle);
-        register(PacketDevSetStats.class, PacketDevSetStats::toBytes, PacketDevSetStats::new, PacketDevSetStats::handle);
-        register(PacketSetCovenant.class, PacketSetCovenant::toBytes, PacketSetCovenant::new, PacketSetCovenant::handle);
-        register(PacketTeleportToBonfire.class, PacketTeleportToBonfire::toBytes, PacketTeleportToBonfire::new, PacketTeleportToBonfire::handle);
-        register(PacketConvertSouls.class, PacketConvertSouls::toBytes, PacketConvertSouls::new, PacketConvertSouls::handle);
-        register(ServerboundTradePacket.class, ServerboundTradePacket::toBytes, ServerboundTradePacket::new, ServerboundTradePacket::handle);
-        register(PacketKillDialogueNPC.class, PacketKillDialogueNPC::toBytes, PacketKillDialogueNPC::new, PacketKillDialogueNPC::handle);
-        register(ClientboundSimpleActionPacket.class, ClientboundSimpleActionPacket::toBytes, ClientboundSimpleActionPacket::new, ClientboundSimpleActionPacket::handle);
-        register(PacketUpdateBonfireName.class, PacketUpdateBonfireName::toBytes, PacketUpdateBonfireName::new, PacketUpdateBonfireName::handle);
-        register(PacketPlayAnim.class, PacketPlayAnim::toBytes, PacketPlayAnim::new, PacketPlayAnim::handle);
-        register(PacketSyncUnlockedAvatars.class, PacketSyncUnlockedAvatars::toBytes, PacketSyncUnlockedAvatars::new, PacketSyncUnlockedAvatars::handle);
+        register(PacketSyncSkill.class, PacketSyncSkill::toBytes, PacketSyncSkill::new, PacketSyncSkill::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(PacketSyncStats.class, PacketSyncStats::toBytes, PacketSyncStats::new, PacketSyncStats::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(PacketSyncMana.class, PacketSyncMana::toBytes, PacketSyncMana::new, PacketSyncMana::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(PacketSpawnDamageText.class, PacketSpawnDamageText::toBytes, PacketSpawnDamageText::new, PacketSpawnDamageText::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(PacketSyncDifficulty.class, PacketSyncDifficulty::toBytes, PacketSyncDifficulty::new, PacketSyncDifficulty::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(PacketWhiteFlash.class, PacketWhiteFlash::toBytes, PacketWhiteFlash::new, PacketWhiteFlash::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(PacketSyncBonfireList.class, PacketSyncBonfireList::toBytes, PacketSyncBonfireList::new, PacketSyncBonfireList::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(PacketOpenDialogue.class, PacketOpenDialogue::toBytes, PacketOpenDialogue::new, PacketOpenDialogue::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(PacketCastSkill.class, PacketCastSkill::toBytes, PacketCastSkill::new, PacketCastSkill::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(PacketBindSkill.class, PacketBindSkill::toBytes, PacketBindSkill::new, PacketBindSkill::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(PacketSetDifficulty.class, PacketSetDifficulty::toBytes, PacketSetDifficulty::new, PacketSetDifficulty::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(PacketSetExtraMode.class, PacketSetExtraMode::toBytes, PacketSetExtraMode::new, PacketSetExtraMode::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ServerboundNodenRewardPacket.class, ServerboundNodenRewardPacket::toBytes, ServerboundNodenRewardPacket::new, ServerboundNodenRewardPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ClientboundBannerPacket.class, ClientboundBannerPacket::toBytes, ClientboundBannerPacket::new, ClientboundBannerPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(PacketClaimPurgeTaskReward.class, PacketClaimPurgeTaskReward::toBytes, PacketClaimPurgeTaskReward::new, PacketClaimPurgeTaskReward::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ServerboundSimpleActionPacket.class, ServerboundSimpleActionPacket::toBytes, ServerboundSimpleActionPacket::new, ServerboundSimpleActionPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(PacketDevSetStats.class, PacketDevSetStats::toBytes, PacketDevSetStats::new, PacketDevSetStats::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(PacketSetCovenant.class, PacketSetCovenant::toBytes, PacketSetCovenant::new, PacketSetCovenant::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(PacketTeleportToBonfire.class, PacketTeleportToBonfire::toBytes, PacketTeleportToBonfire::new, PacketTeleportToBonfire::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(PacketConvertSouls.class, PacketConvertSouls::toBytes, PacketConvertSouls::new, PacketConvertSouls::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ServerboundTradePacket.class, ServerboundTradePacket::toBytes, ServerboundTradePacket::new, ServerboundTradePacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(PacketKillDialogueNPC.class, PacketKillDialogueNPC::toBytes, PacketKillDialogueNPC::new, PacketKillDialogueNPC::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ClientboundSimpleActionPacket.class, ClientboundSimpleActionPacket::toBytes, ClientboundSimpleActionPacket::new, ClientboundSimpleActionPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(PacketUpdateBonfireName.class, PacketUpdateBonfireName::toBytes, PacketUpdateBonfireName::new, PacketUpdateBonfireName::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(PacketPlayAnim.class, PacketPlayAnim::toBytes, PacketPlayAnim::new, PacketPlayAnim::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(PacketSyncUnlockedAvatars.class, PacketSyncUnlockedAvatars::toBytes, PacketSyncUnlockedAvatars::new, PacketSyncUnlockedAvatars::handle, NetworkDirection.PLAY_TO_CLIENT);
 
     }
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {

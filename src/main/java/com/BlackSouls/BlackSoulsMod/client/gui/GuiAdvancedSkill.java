@@ -46,6 +46,9 @@ public class GuiAdvancedSkill extends Screen {
     private static final ResourceLocation ICON_SOUL_RADIATION = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/soul_arrow.png");
     private static final ResourceLocation ICON_CARTHUS_BLOOD_CURSE = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/reinforce.png");
     private static final ResourceLocation ICON_CHRONO_CLOCK = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/chrono_clock.png");
+    private static final Component TITLE = Component.translatable("gui.blacksouls.skill.title");
+    private static final Component ORGANIZED = Component.translatable("gui.blacksouls.skill.organized");
+    private static final Component UNDEAD = Component.translatable("gui.blacksouls.skill.undead");
     private int currentMouseX;
     private int currentMouseY;
     private final List<SkillButton> skillButtons = new ArrayList<>();
@@ -63,7 +66,7 @@ public class GuiAdvancedSkill extends Screen {
     private static final int VISIBLE_ROWS = 5;
 
     public GuiAdvancedSkill() {
-        super(Component.translatable("gui.blacksouls.skill.title"));
+        super(TITLE);
     }
 
     @Override
@@ -202,14 +205,15 @@ public class GuiAdvancedSkill extends Screen {
         BSGuiUtils.drawRMWindow(guiGraphics, guiLeft + leftW, guiTop, guiWidth - leftW, topH);
         BSGuiUtils.drawRMWindow(guiGraphics, guiLeft, guiTop + topH, guiWidth, guiHeight - topH);
 
-        guiGraphics.drawString(font, Component.translatable("gui.blacksouls.skill.title"), guiLeft + 15, guiTop + 15, 0xFFFFFF, false);
+        guiGraphics.drawString(font, TITLE, guiLeft + 15, guiTop + 15, 0xFFFFFF, false);
         guiGraphics.fill(guiLeft + 10, guiTop + 30, guiLeft + leftW - 10, guiTop + 31, 0x55FFFFFF);
-        guiGraphics.drawString(font, Component.translatable("gui.blacksouls.skill.organized"), guiLeft + 15, guiTop + 40, 0xAAAAAA, false);
+        guiGraphics.drawString(font, ORGANIZED, guiLeft + 15, guiTop + 40, 0xAAAAAA, false);
 
         int rightX = guiLeft + leftW;
 
-        String avatarName = ClientSkillInfo.getAvatar() != null ? ClientSkillInfo.getAvatar() : "default";
-        ResourceLocation currentAvatarTex = new ResourceLocation(BlackSouls.MODID, "textures/gui/avatars/" + avatarName + ".png");
+        String avatarName = ClientSkillInfo.getAvatar();
+        if (avatarName == null) avatarName = "default";
+        ResourceLocation currentAvatarTex = BSAvatarRenderer.getTexture(avatarName);
 
         boolean isHoveringAvatar = mouseX >= rightX + 10 && mouseX <= rightX + 70 && mouseY >= guiTop + 7 && mouseY <= guiTop + 67;
         if (isHoveringAvatar) {
@@ -226,7 +230,7 @@ public class GuiAdvancedSkill extends Screen {
         String playerName = player.getName().getString();
         int nameWidth = font.width(playerName);
         guiGraphics.drawString(font, playerName, textBaseX, guiTop + 15, 0xFFFFFF, false);
-        guiGraphics.drawString(font, Component.translatable("gui.blacksouls.skill.undead"), textBaseX + nameWidth + 25, guiTop + 15, 0xFFFFFF, false);
+        guiGraphics.drawString(font, UNDEAD, textBaseX + nameWidth + 25, guiTop + 15, 0xFFFFFF, false);
 
         int tagColor = 0x5555FF;
         guiGraphics.drawString(font, "Lv", textBaseX, guiTop + 35, tagColor, false);
@@ -361,12 +365,16 @@ public class GuiAdvancedSkill extends Screen {
     private class SkillButton {
         String skillId;
         ResourceLocation icon;
+        Component name;
+        String costText;
         int col, row;
         int colWidth = 160;
         int size = 32;
 
         SkillButton(String id, ResourceLocation icon, int col, int row) {
             this.skillId = id; this.icon = icon; this.col = col; this.row = row;
+            this.name = Component.translatable(translationKeyFor(id));
+            this.costText = String.valueOf((int) getSkillCost(id));
         }
 
         boolean isHidden() { return row < scrollOffset || row >= scrollOffset + VISIBLE_ROWS; }
@@ -396,7 +404,6 @@ public class GuiAdvancedSkill extends Screen {
             guiGraphics.blit(icon, x, y, size, size, 0.0F, 0.0F, size, size, size, size);
             RenderSystem.disableBlend();
 
-            Component name = Component.translatable(translationKeyFor(skillId));
             int nameWidth = font.width(name);
             guiGraphics.drawString(font, name, x + size + 8, y + 12, hovered ? 0xFFFF00 : 0xFFFFFF, false);
 
@@ -404,7 +411,6 @@ public class GuiAdvancedSkill extends Screen {
                 guiGraphics.drawString(font, boundKeys.trim(), x + size + 8 + nameWidth + 4, y + 12, 0xFFFF00, false);
             }
 
-            String costText = String.valueOf((int) getSkillCost(skillId));
             guiGraphics.drawString(font, costText, x + colWidth - 15 - font.width(costText), y + 12, 0x55FFFF, false);
         }
 

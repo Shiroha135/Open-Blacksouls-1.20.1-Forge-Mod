@@ -1,6 +1,5 @@
 package com.BlackSouls.BlackSoulsMod.client.gui;
 
-import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.client.ClientSkillInfo;
 import com.BlackSouls.BlackSoulsMod.client.render.BSAvatarRenderer;
@@ -9,7 +8,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -17,9 +15,35 @@ import com.mojang.blaze3d.platform.InputConstants;
 public class GuiPlayerAttributes extends Screen {
 
     private static final int GUI_WIDTH = 280;
+    private static final Component[] LEFT_LABELS = {
+            Component.translatable("gui.blacksouls.stat.atk"),
+            Component.translatable("gui.blacksouls.stat.def"),
+            Component.translatable("gui.blacksouls.stat.matk"),
+            Component.translatable("gui.blacksouls.stat.mdef"),
+            Component.translatable("gui.blacksouls.stat.speed"),
+            Component.translatable("gui.blacksouls.stat.luc")
+    };
+    private static final Component[] RIGHT_LABELS = {
+            Component.translatable("gui.blacksouls.stat.hit_rate"),
+            Component.translatable("gui.blacksouls.stat.evasion"),
+            Component.translatable("gui.blacksouls.stat.crit"),
+            Component.translatable("gui.blacksouls.stat.meva"),
+            Component.translatable("gui.blacksouls.stat.counter"),
+            Component.translatable("gui.blacksouls.stat.hp_regen"),
+            Component.translatable("gui.blacksouls.stat.mp_regen"),
+            Component.translatable("gui.blacksouls.stat.def_effect"),
+            Component.translatable("gui.blacksouls.stat.mp_cost_rate")
+    };
+    private final int[] cachedLeftValues = new int[LEFT_LABELS.length];
+    private final String[] leftValues = new String[LEFT_LABELS.length];
+    private final String[] rightValues = {"100%", null, null, "0%", "0%", "0%", null, "250%", "100%"};
+    private int cachedEvasion = Integer.MIN_VALUE;
+    private int cachedCritRate = Integer.MIN_VALUE;
+    private double cachedMpRegenRate = Double.NaN;
 
     public GuiPlayerAttributes() {
         super(Component.translatable("gui.blacksouls.menu.attributes"));
+        java.util.Arrays.fill(this.cachedLeftValues, Integer.MIN_VALUE);
     }
 
     @Override
@@ -43,8 +67,9 @@ public class GuiPlayerAttributes extends Screen {
         guiGraphics.drawString(font, "Lv", lvX, topY, labelColor, false);
         guiGraphics.drawString(font, String.valueOf(stats.level), lvX + 20, topY, valColor, false);
         int avatarY = topY + 15;
-        String avatarName = ClientSkillInfo.getAvatar() != null ? ClientSkillInfo.getAvatar() : "default";
-        ResourceLocation currentAvatarTex = new ResourceLocation(BlackSouls.MODID, "textures/gui/avatars/" + avatarName + ".png");
+        String avatarName = ClientSkillInfo.getAvatar();
+        if (avatarName == null) avatarName = "default";
+        var currentAvatarTex = BSAvatarRenderer.getTexture(avatarName);
         RenderSystem.enableBlend();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         BSAvatarRenderer.draw(guiGraphics, currentAvatarTex, avatarName, guiLeft + 15, avatarY, 60);
@@ -85,29 +110,37 @@ public class GuiPlayerAttributes extends Screen {
         int leftValEdge = guiLeft + 120;
         int lineHeight = 14;
 
-        String[] leftLabels = { "atk", "def", "matk", "mdef", "speed", "luc" };
-        String[] leftValues = {
-                String.valueOf((int)stats.attack), String.valueOf((int)stats.defense),
-                String.valueOf((int)stats.magicAttack), String.valueOf((int)stats.magicDefense),
-                String.valueOf((int)stats.speed), String.valueOf((int)stats.luck)
-        };
-
-        String[] rightLabels = { "hit_rate", "evasion", "crit", "meva", "counter", "hp_regen", "mp_regen", "def_effect", "mp_cost_rate" };
-        String[] rightValues = {
-                "100%", (int)stats.evasion + "%", (int)stats.critRate + "%", "0%", "0%",
-                "0%", String.format("%.1f", stats.mpRegenRate * 100) + "%", "250%", "100%"
-        };
-
-        for (int i = 0; i < leftLabels.length; i++) {
-            int y = statY + i * lineHeight;
-            guiGraphics.drawString(font, I18n.get("gui.blacksouls.stat." + leftLabels[i]), leftColX, y, labelColor, false);
-            guiGraphics.drawString(font, leftValues[i], leftValEdge - font.width(leftValues[i]), y, valColor, false);
+        updateLeftValue(0, (int) stats.attack);
+        updateLeftValue(1, (int) stats.defense);
+        updateLeftValue(2, (int) stats.magicAttack);
+        updateLeftValue(3, (int) stats.magicDefense);
+        updateLeftValue(4, (int) stats.speed);
+        updateLeftValue(5, (int) stats.luck);
+        int evasion = (int) stats.evasion;
+        if (this.rightValues[1] == null || evasion != this.cachedEvasion) {
+            this.cachedEvasion = evasion;
+            this.rightValues[1] = evasion + "%";
+        }
+        int critRate = (int) stats.critRate;
+        if (this.rightValues[2] == null || critRate != this.cachedCritRate) {
+            this.cachedCritRate = critRate;
+            this.rightValues[2] = critRate + "%";
+        }
+        if (this.rightValues[6] == null || Double.compare(stats.mpRegenRate, this.cachedMpRegenRate) != 0) {
+            this.cachedMpRegenRate = stats.mpRegenRate;
+            this.rightValues[6] = String.format("%.1f", stats.mpRegenRate * 100) + "%";
         }
 
-        for (int i = 0; i < rightLabels.length; i++) {
+        for (int i = 0; i < LEFT_LABELS.length; i++) {
             int y = statY + i * lineHeight;
-            guiGraphics.drawString(font, I18n.get("gui.blacksouls.stat." + rightLabels[i]), rightColX, y, labelColor, false);
-            guiGraphics.drawString(font, rightValues[i], rightEdge - font.width(rightValues[i]), y, valColor, false);
+            guiGraphics.drawString(font, LEFT_LABELS[i], leftColX, y, labelColor, false);
+            guiGraphics.drawString(font, this.leftValues[i], leftValEdge - font.width(this.leftValues[i]), y, valColor, false);
+        }
+
+        for (int i = 0; i < RIGHT_LABELS.length; i++) {
+            int y = statY + i * lineHeight;
+            guiGraphics.drawString(font, RIGHT_LABELS[i], rightColX, y, labelColor, false);
+            guiGraphics.drawString(font, this.rightValues[i], rightEdge - font.width(this.rightValues[i]), y, valColor, false);
         }
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
@@ -124,4 +157,11 @@ public class GuiPlayerAttributes extends Screen {
 
     @Override
     public boolean isPauseScreen() { return false; }
+
+    private void updateLeftValue(int index, int value) {
+        if (this.leftValues[index] == null || this.cachedLeftValues[index] != value) {
+            this.cachedLeftValues[index] = value;
+            this.leftValues[index] = String.valueOf(value);
+        }
+    }
 }

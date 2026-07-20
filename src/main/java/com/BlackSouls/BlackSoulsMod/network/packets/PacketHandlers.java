@@ -16,7 +16,7 @@ final class PacketHandlers {
     static <E extends Enum<E>> E readEnum(FriendlyByteBuf buf, E[] values) {
         int ordinal = buf.readVarInt();
         if (ordinal < 0 || ordinal >= values.length) {
-            return values[0];
+            return null;
         }
         return values[ordinal];
     }
@@ -27,12 +27,20 @@ final class PacketHandlers {
 
     static void handleClient(Supplier<NetworkEvent.Context> supplier, Runnable task) {
         NetworkEvent.Context context = supplier.get();
+        if (!context.getDirection().getReceptionSide().isClient()) {
+            context.setPacketHandled(true);
+            return;
+        }
         context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> task));
         context.setPacketHandled(true);
     }
 
     static void handleServer(Supplier<NetworkEvent.Context> supplier, Consumer<NetworkEvent.Context> task) {
         NetworkEvent.Context context = supplier.get();
+        if (!context.getDirection().getReceptionSide().isServer()) {
+            context.setPacketHandled(true);
+            return;
+        }
         context.enqueueWork(() -> task.accept(context));
         context.setPacketHandled(true);
     }

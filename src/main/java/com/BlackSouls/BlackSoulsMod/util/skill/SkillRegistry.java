@@ -3,12 +3,12 @@ package com.BlackSouls.BlackSoulsMod.util.skill;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class SkillRegistry {
-    public static final Map<String, AbstractSkill> SKILLS = new HashMap<>();
+    public static final Map<String, AbstractSkill> SKILLS = new LinkedHashMap<>();
 
     public static void init() {
         register(new SkillInvisibleBody());

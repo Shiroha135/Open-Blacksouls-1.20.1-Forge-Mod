@@ -12,6 +12,7 @@ import java.util.function.Supplier;
 
 @SuppressWarnings("DataFlowIssue") 
 public class PacketDevSetStats {
+    private static final double MAX_ABSOLUTE_BONUS = 1_000_000_000.0D;
 
     public int level;
     public double bonusHp, bonusMp, bonusAtk, bonusDef, bonusMagicAttack, bonusMagicDefense, bonusLuck, bonusSpeed;
@@ -67,8 +68,11 @@ public class PacketDevSetStats {
         ctx.enqueueWork(() -> {
             ServerPlayer player = ctx.getSender();
             if (player != null) {
-                if (!player.isCreative()) {
+                if (!player.isCreative() || !player.hasPermissions(4)) {
                     player.sendSystemMessage(Component.translatable("message.blacksouls.dev.no_permission").withStyle(ChatFormatting.RED));
+                    return;
+                }
+                if (!hasValidValues()) {
                     return;
                 }
 
@@ -98,5 +102,17 @@ public class PacketDevSetStats {
         });
         ctx.setPacketHandled(true);
         return true;
+    }
+
+    private boolean hasValidValues() {
+        return level >= 1 && level <= 999 && souls >= 0L && sen >= 0
+                && isValidBonus(bonusHp) && isValidBonus(bonusMp)
+                && isValidBonus(bonusAtk) && isValidBonus(bonusDef)
+                && isValidBonus(bonusMagicAttack) && isValidBonus(bonusMagicDefense)
+                && isValidBonus(bonusLuck) && isValidBonus(bonusSpeed);
+    }
+
+    private static boolean isValidBonus(double value) {
+        return Double.isFinite(value) && Math.abs(value) <= MAX_ABSOLUTE_BONUS;
     }
 }

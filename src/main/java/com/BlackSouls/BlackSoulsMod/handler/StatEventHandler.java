@@ -102,27 +102,43 @@ public class StatEventHandler {
     private static final List<PurgeRewardTemplate> PURGE_REWARD_POOL = new ArrayList<>();
 
     private static final class BaubleCounter {
-        private final LivingEntity entity;
         private final Map<Item, Integer> cache = new IdentityHashMap<>();
+        private boolean chronoClockEquipped;
 
         private BaubleCounter(LivingEntity entity) {
-            this.entity = entity;
+            CuriosApi.getCuriosInventory(entity).ifPresent(handler -> {
+                for (var result : handler.findCurios(stack -> !stack.isEmpty())) {
+                    ItemStack stack = result.stack();
+                    Item item = stack.getItem();
+                    cache.put(item, cache.getOrDefault(item, 0) + 1);
+                    if (SkillUtils.isChronoClockItem(stack)) {
+                        chronoClockEquipped = true;
+                    }
+                }
+            });
         }
 
         private int count(Item item) {
-            return cache.computeIfAbsent(item, ignored -> getBaubleCount(entity, item));
+            return cache.getOrDefault(item, 0);
         }
 
         private boolean has(Item item) {
             return count(item) > 0;
         }
+
+        private boolean hasChronoClock() {
+            return chronoClockEquipped;
+        }
     }
 
     public static void syncToClient(Player player) {
         if (player instanceof ServerPlayer serverPlayer) {
-            player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer),
-                    new PacketSyncStats(stats.serializeNBT())));
+            player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> syncToClient(serverPlayer, stats));
         }
+    }
+
+    private static void syncToClient(ServerPlayer player, BSPlayerStats stats) {
+        NetworkHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketSyncStats(stats.serializeNBT()));
     }
 
     public static void ensurePurgeCommissions(ServerPlayer player) {
@@ -624,8 +640,9 @@ public class StatEventHandler {
                     serverPlayer.setRespawnPosition(level.dimension(), pos, player.getYRot(), true, false);
                     com.BlackSouls.BlackSoulsMod.util.SkillUtils.setMana(serverPlayer, com.BlackSouls.BlackSoulsMod.util.SkillUtils.getMaxMana(serverPlayer));
                     serverPlayer.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
-                        stats.restoreActionPoints(SkillUtils.getMaxActionPoints(serverPlayer), SkillUtils.getMaxActionPoints(serverPlayer));
-                        syncToClient(serverPlayer);
+                        double maxActionPoints = SkillUtils.getMaxActionPoints(serverPlayer, stats);
+                        stats.restoreActionPoints(maxActionPoints, maxActionPoints);
+                        syncToClient(serverPlayer, stats);
                     });
                 }
             }
@@ -970,7 +987,12 @@ public class StatEventHandler {
     public static void applyStats(Player player) {
         BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).resolve().orElse(null);
         if (stats != null) {
-            BaubleCounter counts = new BaubleCounter(player);
+            applyStats(player, new BaubleCounter(player), stats);
+        }
+    }
+
+    private static void applyStats(Player player, BaubleCounter counts, BSPlayerStats stats) {
+        if (stats != null) {
             stats.recalculateStats();
             resetDerivedStats(stats);
             applyCovenantBonuses(stats);
@@ -1000,247 +1022,247 @@ public class StatEventHandler {
                 stats.speed *= 1.20;
             }
 
-            int lifeRingCount = getBaubleCount(player, BlackSouls.RING_LIFE.get());
+            int lifeRingCount = counts.count(BlackSouls.RING_LIFE.get());
             if (lifeRingCount > 0) stats.hp *= (1.0 + lifeRingCount * 0.05);
 
-            int evilEyeCount = getBaubleCount(player, BlackSouls.RING_EVIL_EYE.get());
+            int evilEyeCount = counts.count(BlackSouls.RING_EVIL_EYE.get());
             if (evilEyeCount > 0) stats.hpRegenRate += evilEyeCount * 0.03;
 
-            int poisonBiteCount = getBaubleCount(player, BlackSouls.RING_POISON_BITE.get());
+            int poisonBiteCount = counts.count(BlackSouls.RING_POISON_BITE.get());
             if (poisonBiteCount > 0) {
                 stats.poisonResistRate = 1.0;
                 stats.severePoisonResistRate = 1.0;
             }
 
-            int bloodBiteCount = getBaubleCount(player, BlackSouls.RING_BLOOD_BITE.get());
+            int bloodBiteCount = counts.count(BlackSouls.RING_BLOOD_BITE.get());
             if (bloodBiteCount > 0) {
                 stats.bleedResistRate = 1.0;
                 stats.hpRegenRate += bloodBiteCount * 0.02;
             }
 
-            int guardCount = getBaubleCount(player, BlackSouls.RING_GUARD.get());
+            int guardCount = counts.count(BlackSouls.RING_GUARD.get());
             if (guardCount > 0) stats.defense += guardCount * 50.0;
 
-            int terrorCount = getBaubleCount(player, BlackSouls.RING_TERROR.get());
+            int terrorCount = counts.count(BlackSouls.RING_TERROR.get());
             if (terrorCount > 0) {
                 stats.fearRate += terrorCount * 50.0;
                 stats.fearResistRate = 1.0;
             }
 
-            int fairyCount = getBaubleCount(player, BlackSouls.RING_FAIRY.get());
+            int fairyCount = counts.count(BlackSouls.RING_FAIRY.get());
             if (fairyCount > 0) {
                 stats.evasion += fairyCount * 5.0;
                 stats.sleepResistRate = 1.0;
             }
 
-            int windGodCount = getBaubleCount(player, BlackSouls.RING_WIND_GOD.get());
+            int windGodCount = counts.count(BlackSouls.RING_WIND_GOD.get());
             if (windGodCount > 0) stats.speed += windGodCount * 50.0;
 
-            int spellCount = getBaubleCount(player, BlackSouls.RING_SPELL.get());
+            int spellCount = counts.count(BlackSouls.RING_SPELL.get());
             if (spellCount > 0) stats.magicAttack += spellCount * 50.0;
 
-            int masochistCount = getBaubleCount(player, BlackSouls.RING_MASOCHIST.get());
+            int masochistCount = counts.count(BlackSouls.RING_MASOCHIST.get());
             if (masochistCount > 0) stats.targetingRate *= Math.pow(4.0, masochistCount);
 
-            int midnightCrownCount = getBaubleCount(player, BlackSouls.RING_MIDNIGHT_CROWN.get());
+            int midnightCrownCount = counts.count(BlackSouls.RING_MIDNIGHT_CROWN.get());
             if (midnightCrownCount > 0) {
                 stats.hp *= Math.pow(0.5, midnightCrownCount);
                 stats.maxMp *= Math.pow(0.5, midnightCrownCount);
                 stats.magicAttack *= Math.pow(1.5, midnightCrownCount);
             }
 
-            int godFishCount = getBaubleCount(player, BlackSouls.RING_GOD_FISH.get());
+            int godFishCount = counts.count(BlackSouls.RING_GOD_FISH.get());
             if (godFishCount > 0) stats.defense *= (1.0 + godFishCount * 1.0);
 
-            int waspCount = getBaubleCount(player, BlackSouls.RING_WASP.get());
+            int waspCount = counts.count(BlackSouls.RING_WASP.get());
             if (waspCount > 0) stats.critRate += waspCount * 20.0;
 
-            int puyoCount = getBaubleCount(player, BlackSouls.RING_PUYO.get());
+            int puyoCount = counts.count(BlackSouls.RING_PUYO.get());
             if (puyoCount > 0) stats.hp *= (1.0 + puyoCount * 0.15);
 
-            int hunyaCount = getBaubleCount(player, BlackSouls.RING_HUNYA.get());
+            int hunyaCount = counts.count(BlackSouls.RING_HUNYA.get());
             if (hunyaCount > 0) stats.maxMp *= (1.0 + hunyaCount * 0.05);
 
-            int goddessCount = getBaubleCount(player, BlackSouls.RING_GODDESS.get());
+            int goddessCount = counts.count(BlackSouls.RING_GODDESS.get());
             if (goddessCount > 0) stats.mpRegenRate += goddessCount * 0.05;
 
-            int angelCount = getBaubleCount(player, BlackSouls.RING_ANGEL.get());
+            int angelCount = counts.count(BlackSouls.RING_ANGEL.get());
             if (angelCount > 0) stats.mpRegenRate += angelCount * 0.03;
 
-            int knightRingCount = getBaubleCount(player, BlackSouls.RING_KNIGHT.get());
+            int knightRingCount = counts.count(BlackSouls.RING_KNIGHT.get());
             if (knightRingCount > 0) stats.stunRate += knightRingCount * 10.0;
 
-            int ironMaidenCount = getBaubleCount(player, BlackSouls.RING_IRON_MAIDEN.get());
+            int ironMaidenCount = counts.count(BlackSouls.RING_IRON_MAIDEN.get());
             if (ironMaidenCount > 0) stats.hpRegenRate -= ironMaidenCount * 0.20;
 
-            int ironProtectionCount = getBaubleCount(player, BlackSouls.RING_IRON_PROTECTION.get());
+            int ironProtectionCount = counts.count(BlackSouls.RING_IRON_PROTECTION.get());
             if (ironProtectionCount > 0) stats.physicalDamageRate *= Math.pow(0.8, ironProtectionCount);
 
-            int magicStoneCount = getBaubleCount(player, BlackSouls.RING_MAGIC_STONE.get());
+            int magicStoneCount = counts.count(BlackSouls.RING_MAGIC_STONE.get());
             if (magicStoneCount > 0) {
                 stats.magicDamageRate *= Math.pow(0.8, magicStoneCount);
                 stats.magicDefense += magicStoneCount * 50.0;
             }
 
-            stats.evasion += getBaubleCount(player, BlackSouls.RING_LIEF.get()) * 20.0;
-            stats.evasion += getBaubleCount(player, BlackSouls.RING_VOID.get()) * 10.0;
-            stats.evasion -= getBaubleCount(player, BlackSouls.RING_DEATH.get()) * 50.0;
+            stats.evasion += counts.count(BlackSouls.RING_LIEF.get()) * 20.0;
+            stats.evasion += counts.count(BlackSouls.RING_VOID.get()) * 10.0;
+            stats.evasion -= counts.count(BlackSouls.RING_DEATH.get()) * 50.0;
 
-            if (getBaubleCount(player, BlackSouls.NOBLE_CLOTHES.get()) > 0) {
+            if (counts.count(BlackSouls.NOBLE_CLOTHES.get()) > 0) {
                 stats.evasion += 5.0; stats.magicDefense *= 1.05; stats.speed *= 0.97;
             }
-            if (getBaubleCount(player, BlackSouls.LAWYER_MASK.get()) > 0) {
+            if (counts.count(BlackSouls.LAWYER_MASK.get()) > 0) {
                 stats.magicDefense *= 1.10; stats.defense *= 1.05; stats.speed *= 0.97;
             }
-            if (getBaubleCount(player, BlackSouls.VIOLENT_CLOAK.get()) > 0) {
+            if (counts.count(BlackSouls.VIOLENT_CLOAK.get()) > 0) {
                 stats.attack *= 1.05; try { stats.magicAttack *= 1.05; } catch (Exception ignored) {}
                 stats.speed *= 0.97;
             }
-            if (getBaubleCount(player, BlackSouls.FRENZIED_KING_CLOAK.get()) > 0) {
+            if (counts.count(BlackSouls.FRENZIED_KING_CLOAK.get()) > 0) {
                 try { stats.magicAttack *= 1.15; } catch (Exception ignored) {}
                 stats.magicDefense *= 1.15; stats.speed *= 0.90;
             }
-            if (getBaubleCount(player, BlackSouls.ANGEL_RAIMENT.get()) > 0) {
+            if (counts.count(BlackSouls.ANGEL_RAIMENT.get()) > 0) {
                 stats.hp *= 1.50; stats.speed *= 0.96;
             }
-            if (getBaubleCount(player, BlackSouls.LEATHER_ARMOR.get()) > 0) {
+            if (counts.count(BlackSouls.LEATHER_ARMOR.get()) > 0) {
                 stats.attack *= 1.08; stats.defense *= 1.05; stats.speed *= 0.97;
             }
-            if (getBaubleCount(player, BlackSouls.MATCH_GIRL_CLOTHES.get()) > 0) {
+            if (counts.count(BlackSouls.MATCH_GIRL_CLOTHES.get()) > 0) {
                 stats.evasion += 5.0;
             }
-            if (getBaubleCount(player, BlackSouls.GENTLEMAN_COAT.get()) > 0) {
+            if (counts.count(BlackSouls.GENTLEMAN_COAT.get()) > 0) {
                 stats.evasion += 5.0; stats.defense *= 1.03;
             }
-            if (getBaubleCount(player, BlackSouls.PROSTITUTE_DRESS.get()) > 0) {
+            if (counts.count(BlackSouls.PROSTITUTE_DRESS.get()) > 0) {
                 stats.evasion += 5.0;
             }
-            if (getBaubleCount(player, BlackSouls.PLATE_ARMOR.get()) > 0) {
+            if (counts.count(BlackSouls.PLATE_ARMOR.get()) > 0) {
                 stats.defense *= 1.10; stats.speed *= 0.97;
             }
-            if (getBaubleCount(player, BlackSouls.MILTON_ARMOR.get()) > 0) {
+            if (counts.count(BlackSouls.MILTON_ARMOR.get()) > 0) {
                 stats.defense *= 1.10; stats.speed *= 0.97;
             }
-            if (getBaubleCount(player, BlackSouls.MILTON_HELMET.get()) > 0) {
+            if (counts.count(BlackSouls.MILTON_HELMET.get()) > 0) {
                 stats.defense *= 1.06; stats.speed *= 0.97;
             }
-            if (getBaubleCount(player, BlackSouls.HUNTERS_ATTIRE.get()) > 0) {
+            if (counts.count(BlackSouls.HUNTERS_ATTIRE.get()) > 0) {
                 stats.evasion += 10.0; stats.speed *= 0.98;
             }
-            if (getBaubleCount(player, BlackSouls.DEEP_SEA_KNIGHT_HELMET.get()) > 0) {
+            if (counts.count(BlackSouls.DEEP_SEA_KNIGHT_HELMET.get()) > 0) {
                 stats.defense *= 1.40; stats.speed *= 0.80;
             }
-            if (getBaubleCount(player, BlackSouls.DEEP_SEA_KNIGHT_ARMOR.get()) > 0) {
+            if (counts.count(BlackSouls.DEEP_SEA_KNIGHT_ARMOR.get()) > 0) {
                 stats.defense *= 1.50; stats.speed *= 0.70;
             }
-            if (getBaubleCount(player, BlackSouls.CREW_HEADSCARF.get()) > 0) {
+            if (counts.count(BlackSouls.CREW_HEADSCARF.get()) > 0) {
                 stats.critRate += 5.0; stats.speed *= 0.99;
             }
-            if (getBaubleCount(player, BlackSouls.ONI_WARRIOR_HELMET.get()) > 0) {
+            if (counts.count(BlackSouls.ONI_WARRIOR_HELMET.get()) > 0) {
                 stats.critRate += 15.0; stats.defense *= 1.15; stats.speed *= 0.90;
             }
-            if (getBaubleCount(player, BlackSouls.ONI_WARRIOR_ARMOR.get()) > 0) {
+            if (counts.count(BlackSouls.ONI_WARRIOR_ARMOR.get()) > 0) {
                 stats.critRate += 20.0; stats.defense *= 1.20; stats.speed *= 0.80;
             }
-            if (getBaubleCount(player, BlackSouls.SAILOR_SUIT.get()) > 0) {
+            if (counts.count(BlackSouls.SAILOR_SUIT.get()) > 0) {
                 stats.critRate += 5.0; stats.evasion += 5.0;
             }
-            if (getBaubleCount(player, BlackSouls.SNAKE_DRESS.get()) > 0) {
+            if (counts.count(BlackSouls.SNAKE_DRESS.get()) > 0) {
                 stats.evasion += 5.0; stats.speed *= 0.98;
             }
-            if (getBaubleCount(player, BlackSouls.DISCIPLINARIAN_ROBE.get()) > 0) {
+            if (counts.count(BlackSouls.DISCIPLINARIAN_ROBE.get()) > 0) {
                 stats.magicDefense *= 1.25; stats.mpRegenRate += 0.05; stats.speed *= 0.94;
             }
-            if (getBaubleCount(player, BlackSouls.OMINOUS_CLOTHES.get()) > 0) {
+            if (counts.count(BlackSouls.OMINOUS_CLOTHES.get()) > 0) {
                 stats.evasion += 30.0;
             }
-            if (getBaubleCount(player, BlackSouls.BUTETSU_ARMOR.get()) > 0) {
+            if (counts.count(BlackSouls.BUTETSU_ARMOR.get()) > 0) {
                 stats.critRate += 15.0; stats.defense *= 1.15; stats.speed *= 0.90;
             }
-            if (SkillUtils.hasChronoClockEquipped(player)) {
+            if (counts.hasChronoClock()) {
                 stats.extraActionRate += 1.0;
             }
 
-            if (getBaubleCount(player, BlackSouls.ARMOR_OF_THE_SUN.get()) > 0) {
+            if (counts.count(BlackSouls.ARMOR_OF_THE_SUN.get()) > 0) {
                 stats.attack *= 1.15; stats.defense *= 1.15; stats.speed *= 0.90;
             }
-            if (getBaubleCount(player, BlackSouls.CLERIC_VESTMENT.get()) > 0) {
+            if (counts.count(BlackSouls.CLERIC_VESTMENT.get()) > 0) {
                 stats.defense *= 1.05; stats.magicDefense *= 1.07; stats.evasion += 5.0; stats.speed *= 0.96;
             }
-            if (getBaubleCount(player, BlackSouls.MAGICIAN_COAT.get()) > 0) {
+            if (counts.count(BlackSouls.MAGICIAN_COAT.get()) > 0) {
                 try { stats.magicAttack *= 1.05; } catch (Exception ignored) {}
                 stats.magicDefense *= 1.10; stats.evasion += 5.0; stats.speed *= 0.96;
             }
-            if (getBaubleCount(player, BlackSouls.SHADOW_ATTIRE.get()) > 0) {
+            if (counts.count(BlackSouls.SHADOW_ATTIRE.get()) > 0) {
                 stats.defense *= 1.08; stats.evasion += 5.0; stats.speed *= 0.98;
             }
-            if (getBaubleCount(player, BlackSouls.KNIGHT_ARMOR.get()) > 0) {
+            if (counts.count(BlackSouls.KNIGHT_ARMOR.get()) > 0) {
                 stats.defense *= 1.15; stats.speed *= 0.95;
             }
-            if (getBaubleCount(player, BlackSouls.WARRIOR_ARMOR.get()) > 0) {
+            if (counts.count(BlackSouls.WARRIOR_ARMOR.get()) > 0) {
                 stats.attack *= 1.05; stats.defense *= 1.10; stats.speed *= 0.95;
             }
-            if (getBaubleCount(player, BlackSouls.BABEL_TOWER_ARMOR.get()) > 0) {
+            if (counts.count(BlackSouls.BABEL_TOWER_ARMOR.get()) > 0) {
                 stats.defense *= 1.30; stats.speed *= 0.80;
             }
-            if (getBaubleCount(player, BlackSouls.PHANTOM_THIEF_CLOAK.get()) > 0) {
+            if (counts.count(BlackSouls.PHANTOM_THIEF_CLOAK.get()) > 0) {
                 stats.evasion += 15.0; stats.defense *= 0.90;
             }
-            if (getBaubleCount(player, BlackSouls.CLERIC_CIRCLET.get()) > 0) {
+            if (counts.count(BlackSouls.CLERIC_CIRCLET.get()) > 0) {
                 stats.defense *= 1.02; stats.magicDefense *= 1.03; stats.speed *= 0.99;
             }
-            if (getBaubleCount(player, BlackSouls.MAGICIAN_HAT.get()) > 0) {
+            if (counts.count(BlackSouls.MAGICIAN_HAT.get()) > 0) {
                 try { stats.magicAttack *= 1.03; } catch (Exception ignored) {}
                 stats.magicDefense *= 1.05; stats.speed *= 0.98;
             }
-            if (getBaubleCount(player, BlackSouls.THIEF_MASK.get()) > 0) {
+            if (counts.count(BlackSouls.THIEF_MASK.get()) > 0) {
                 stats.defense *= 1.04; stats.speed *= 0.99;
             }
-            if (getBaubleCount(player, BlackSouls.KNIGHT_HELMET.get()) > 0) {
+            if (counts.count(BlackSouls.KNIGHT_HELMET.get()) > 0) {
                 stats.defense *= 1.08; stats.speed *= 0.97;
             }
-            if (getBaubleCount(player, BlackSouls.VIKING_HELMET.get()) > 0) {
+            if (counts.count(BlackSouls.VIKING_HELMET.get()) > 0) {
                 stats.attack *= 1.04; stats.defense *= 1.04; stats.speed *= 0.97;
             }
-            if (getBaubleCount(player, BlackSouls.RABBIT_EARS.get()) > 0) {
+            if (counts.count(BlackSouls.RABBIT_EARS.get()) > 0) {
                 stats.speed *= 1.05;
             }
-            if (getBaubleCount(player, BlackSouls.WHITE_HAIRBAND.get()) > 0) {
+            if (counts.count(BlackSouls.WHITE_HAIRBAND.get()) > 0) {
                 stats.magicDefense *= 1.20; stats.speed *= 0.98;
             }
-            if (getBaubleCount(player, BlackSouls.BABEL_TOWER_HELMET.get()) > 0) {
+            if (counts.count(BlackSouls.BABEL_TOWER_HELMET.get()) > 0) {
                 stats.defense *= 1.20; stats.speed *= 0.90;
             }
-            if (getBaubleCount(player, BlackSouls.NINJA_HEADBAND.get()) > 0) {
+            if (counts.count(BlackSouls.NINJA_HEADBAND.get()) > 0) {
                 stats.attack *= 1.02; stats.defense *= 1.02;
             }
-            if (getBaubleCount(player, BlackSouls.MYSTERIOUS_HAT.get()) > 0) {
+            if (counts.count(BlackSouls.MYSTERIOUS_HAT.get()) > 0) {
                 try { stats.magicAttack *= 1.08; } catch (Exception ignored) {}
                 stats.speed *= 0.96;
             }
-            if (getBaubleCount(player, BlackSouls.HATTER_HAT.get()) > 0) {
+            if (counts.count(BlackSouls.HATTER_HAT.get()) > 0) {
                 try { stats.magicAttack *= 1.15; } catch (Exception ignored) {}
                 stats.speed *= 0.98;
             }
-            if (getBaubleCount(player, BlackSouls.SKY_KNIGHT_HAT.get()) > 0) {
+            if (counts.count(BlackSouls.SKY_KNIGHT_HAT.get()) > 0) {
                 stats.evasion += 5.0;
             }
-            if (getBaubleCount(player, BlackSouls.IGOR_MASK.get()) > 0) {
+            if (counts.count(BlackSouls.IGOR_MASK.get()) > 0) {
                 stats.attack *= 1.20; try { stats.magicAttack *= 1.20; } catch (Exception ignored) {}
                 stats.speed *= 0.85;
             }
-            if (getBaubleCount(player, BlackSouls.BUNNY_GIRL_UNIFORM.get()) > 0) {
+            if (counts.count(BlackSouls.BUNNY_GIRL_UNIFORM.get()) > 0) {
                 stats.speed *= 1.05;
             }
 
-            if (getBaubleCount(player, BlackSouls.GUARDIAN_ANGEL.get()) > 0) {
+            if (counts.count(BlackSouls.GUARDIAN_ANGEL.get()) > 0) {
                 stats.defense *= 0.70;
                 stats.magicDefense *= 0.70;
             }
 
-            int abyssCount = getBaubleCount(player, BlackSouls.RING_ABYSS.get());
+            int abyssCount = counts.count(BlackSouls.RING_ABYSS.get());
             if (abyssCount > 0) stats.critRate += abyssCount * 40.0;
-            int blackbeardCount = getBaubleCount(player, BlackSouls.RING_BLACKBEARD.get());
+            int blackbeardCount = counts.count(BlackSouls.RING_BLACKBEARD.get());
             if (blackbeardCount > 0) {
                 stats.instantDeathRate += blackbeardCount * 20.0;
             }
@@ -1624,88 +1646,105 @@ public class StatEventHandler {
         }
 
         Player player = event.player;
-        applyPassiveSnakeDressPoison(player);
-        updateChronoClockState(player);
-        applyStats(player);
+        BaubleCounter counts = new BaubleCounter(player);
+        applyPassiveSnakeDressPoison(player, counts);
+        updateChronoClockState(player, counts.hasChronoClock());
+        BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).resolve().orElse(null);
+        if (stats != null) {
+            applyStats(player, counts, stats);
+        }
 
-        if (!player.level().isClientSide() && player instanceof ServerPlayer serverPlayer) {
-            tickServerPlayerResources(serverPlayer, player);
+        if (stats != null && !player.level().isClientSide() && player instanceof ServerPlayer serverPlayer) {
+            tickServerPlayerResources(serverPlayer, player, stats, counts);
         }
     }
 
-    private static void applyPassiveSnakeDressPoison(Player player) {
+    private static void applyPassiveSnakeDressPoison(Player player, BaubleCounter counts) {
         if (!player.level().isClientSide()
-                && getBaubleCount(player, BlackSouls.SNAKE_DRESS.get()) > 0
+                && counts.has(BlackSouls.SNAKE_DRESS.get())
                 && BlackSouls.BUFF_SEVERE_POISON.isPresent()
                 && !player.hasEffect(BlackSouls.BUFF_SEVERE_POISON.get())) {
             player.addEffect(new net.minecraft.world.effect.MobEffectInstance(BlackSouls.BUFF_SEVERE_POISON.get(), 200, 0, false, true, true));
         }
     }
 
-    private static void updateChronoClockState(Player player) {
+    private static void updateChronoClockState(Player player, boolean chronoClockEquipped) {
         if (player.level().isClientSide()) {
             return;
         }
 
         CuriosApi.getCuriosInventory(player).ifPresent(handler -> {
-            HashMultimap<String, AttributeModifier> modifiers = HashMultimap.create();
-            AttributeModifier modifier = new AttributeModifier(CHRONO_WATCH_SLOT_UUID, "chrono_clock_watch_slot", 1.0D, AttributeModifier.Operation.ADDITION);
-            modifiers.put("watch", modifier);
-
-            boolean shouldHaveWatchSlot = SkillUtils.hasChronoClockAvailable(player);
-            boolean hasWatchSlotModifier = handler.getModifiers().entries().stream()
-                    .anyMatch(entry -> entry.getKey().equals("watch") && CHRONO_WATCH_SLOT_UUID.equals(entry.getValue().getId()));
+            boolean shouldHaveWatchSlot = SkillUtils.hasChronoClockAvailable(player, chronoClockEquipped);
+            boolean hasWatchSlotModifier = false;
+            for (Map.Entry<String, AttributeModifier> entry : handler.getModifiers().entries()) {
+                if (entry.getKey().equals("watch") && CHRONO_WATCH_SLOT_UUID.equals(entry.getValue().getId())) {
+                    hasWatchSlotModifier = true;
+                    break;
+                }
+            }
 
             if (shouldHaveWatchSlot && !hasWatchSlotModifier) {
+                HashMultimap<String, AttributeModifier> modifiers = createChronoWatchSlotModifier();
                 handler.addTransientSlotModifiers(modifiers);
             } else if (!shouldHaveWatchSlot && hasWatchSlotModifier) {
+                HashMultimap<String, AttributeModifier> modifiers = createChronoWatchSlotModifier();
                 handler.removeSlotModifiers(modifiers);
             }
         });
     }
 
-    private static void tickServerPlayerResources(ServerPlayer serverPlayer, Player player) {
-        serverPlayer.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
-            boolean chronoSkillBindingChanged = clearChronoClockBindingsIfNeeded(serverPlayer, stats);
-            double previousActionPoints = stats.getCurrentActionPoints();
-            double maxActionPoints = SkillUtils.getMaxActionPoints(serverPlayer);
-            if (previousActionPoints < maxActionPoints) {
-                stats.restoreActionPoints(SkillUtils.getActionRegenPerTick(serverPlayer), maxActionPoints);
-                stats.clampActionPoints(maxActionPoints);
-                if (serverPlayer.tickCount % 5 == 0
-                        && Math.abs(stats.getCurrentActionPoints() - previousActionPoints) > 1.0E-4) {
-                    syncToClient(serverPlayer);
+    private static HashMultimap<String, AttributeModifier> createChronoWatchSlotModifier() {
+        HashMultimap<String, AttributeModifier> modifiers = HashMultimap.create();
+        modifiers.put("watch", new AttributeModifier(CHRONO_WATCH_SLOT_UUID, "chrono_clock_watch_slot", 1.0D, AttributeModifier.Operation.ADDITION));
+        return modifiers;
+    }
+
+    private static void tickServerPlayerResources(ServerPlayer serverPlayer, Player player, BSPlayerStats stats, BaubleCounter counts) {
+        boolean syncNeeded = clearChronoClockBindingsIfNeeded(stats, counts.hasChronoClock());
+        double previousActionPoints = stats.getCurrentActionPoints();
+        double maxActionPoints = SkillUtils.getActionCount(
+                serverPlayer,
+                stats,
+                counts.count(BlackSouls.RING_WHITE_RABBIT.get()),
+                counts.count(BlackSouls.MYSTERY_OF_NIGHT_SKY.get()),
+                counts.count(BlackSouls.RING_BLACK_RABBIT.get())
+        );
+        if (previousActionPoints < maxActionPoints) {
+            stats.restoreActionPoints(maxActionPoints / SkillUtils.ACTION_TURN_TICKS, maxActionPoints);
+            stats.clampActionPoints(maxActionPoints);
+            if (serverPlayer.tickCount % 5 == 0
+                    && Math.abs(stats.getCurrentActionPoints() - previousActionPoints) > 1.0E-4) {
+                syncNeeded = true;
+            }
+        }
+
+        if (serverPlayer.tickCount % 20 == 0) {
+            if (stats.mp < stats.maxMp) {
+                double regenAmount = 1.0 + (stats.maxMp * stats.mpRegenRate);
+                stats.mp += regenAmount;
+                if (stats.mp >= stats.maxMp || (stats.maxMp - stats.mp) < 0.5) {
+                    stats.mp = stats.maxMp;
                 }
             }
+            syncNeeded = true;
+        }
+        if (syncNeeded) {
+            syncToClient(serverPlayer, stats);
+        }
+        if (serverPlayer.tickCount % 200 == 0 && stats.hpRegenRate > 0.0 && serverPlayer.getHealth() < serverPlayer.getMaxHealth()) {
+            serverPlayer.heal((float) (serverPlayer.getMaxHealth() * stats.hpRegenRate));
+        }
+        if (serverPlayer.tickCount % 200 == 0 && stats.hpRegenRate < 0.0 && serverPlayer.getHealth() > 1.0F) {
+            float regenLoss = (float) (serverPlayer.getMaxHealth() * Math.abs(stats.hpRegenRate));
+            serverPlayer.setHealth(Math.max(1.0F, serverPlayer.getHealth() - regenLoss));
+        }
+        if (stats.lostSouls > 0 && player.isAlive()) {
+            tryRecoverLostSouls(serverPlayer, stats);
+        }
+    }
 
-              if (serverPlayer.tickCount % 20 == 0) {
-                  if (stats.mp < stats.maxMp) {
-                      double regenAmount = 1.0 + (stats.maxMp * stats.mpRegenRate);
-                      stats.mp += regenAmount;
-                      if (stats.mp >= stats.maxMp || (stats.maxMp - stats.mp) < 0.5) {
-                          stats.mp = stats.maxMp;
-                      }
-                  }
-                  syncToClient(serverPlayer);
-              }
-              if (chronoSkillBindingChanged) {
-                  syncToClient(serverPlayer);
-              }
-            if (serverPlayer.tickCount % 200 == 0 && stats.hpRegenRate > 0.0 && serverPlayer.getHealth() < serverPlayer.getMaxHealth()) {
-                serverPlayer.heal((float) (serverPlayer.getMaxHealth() * stats.hpRegenRate));
-            }
-            if (serverPlayer.tickCount % 200 == 0 && stats.hpRegenRate < 0.0 && serverPlayer.getHealth() > 1.0F) {
-                float regenLoss = (float) (serverPlayer.getMaxHealth() * Math.abs(stats.hpRegenRate));
-                serverPlayer.setHealth(Math.max(1.0F, serverPlayer.getHealth() - regenLoss));
-            }
-            if (stats.lostSouls > 0 && player.isAlive()) {
-                tryRecoverLostSouls(serverPlayer, stats);
-            }
-          });
-      }
-
-    private static boolean clearChronoClockBindingsIfNeeded(ServerPlayer player, BSPlayerStats stats) {
-        if (SkillUtils.hasChronoClockEquipped(player)) {
+    private static boolean clearChronoClockBindingsIfNeeded(BSPlayerStats stats, boolean chronoClockEquipped) {
+        if (chronoClockEquipped) {
             return false;
         }
         boolean changed = false;
@@ -1752,7 +1791,7 @@ public class StatEventHandler {
         serverPlayer.displayClientMessage(
                 net.minecraft.network.chat.Component.translatable("message.blacksouls.death.recovered", recoveredAmount).withStyle(net.minecraft.ChatFormatting.GOLD), true
         );
-        syncToClient(serverPlayer);
+        syncToClient(serverPlayer, stats);
     }
 
     @SubscribeEvent
@@ -1773,7 +1812,7 @@ public class StatEventHandler {
                 stats.lostDim = serverPlayer.level().dimension().location().toString();
 
                 stats.souls = 0;
-                com.BlackSouls.BlackSoulsMod.handler.StatEventHandler.syncToClient(serverPlayer);
+                syncToClient(serverPlayer, stats);
             }
         }
     }

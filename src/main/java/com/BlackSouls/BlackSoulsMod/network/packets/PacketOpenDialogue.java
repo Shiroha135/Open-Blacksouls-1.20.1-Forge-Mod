@@ -1,8 +1,6 @@
 package com.BlackSouls.BlackSoulsMod.network.packets;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -18,6 +16,7 @@ public class PacketOpenDialogue {
     private final boolean isLaterDialogue;
     private final int entityId;
     private final int covLevel;
+    private final boolean valid;
 
     
     public PacketOpenDialogue(String nameKey, String avatarId, String[] dialogues, boolean isLaterDialogue, int entityId, int covLevel) {
@@ -27,13 +26,22 @@ public class PacketOpenDialogue {
         this.isLaterDialogue = isLaterDialogue;
         this.entityId = entityId;
         this.covLevel = covLevel;
+        this.valid = true;
     }
 
     
     public PacketOpenDialogue(FriendlyByteBuf buf) {
         this.nameKey = buf.readUtf(MAX_ID_LENGTH);
         this.avatarId = buf.readUtf(MAX_ID_LENGTH);
-        int len = Math.min(Math.max(0, buf.readVarInt()), MAX_DIALOGUE_LINES);
+        int len = buf.readVarInt();
+        if (len < 0 || len > MAX_DIALOGUE_LINES) {
+            this.dialogues = new String[0];
+            this.isLaterDialogue = false;
+            this.entityId = -1;
+            this.covLevel = -1;
+            this.valid = false;
+            return;
+        }
         this.dialogues = new String[len];
         for (int i = 0; i < len; i++) {
             this.dialogues[i] = buf.readUtf(MAX_DIALOGUE_TEXT_LENGTH);
@@ -41,6 +49,7 @@ public class PacketOpenDialogue {
         this.isLaterDialogue = buf.readBoolean();
         this.entityId = buf.readVarInt();
         this.covLevel = buf.readVarInt();
+        this.valid = true;
     }
 
     
@@ -59,10 +68,11 @@ public class PacketOpenDialogue {
 
     
     public void handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientHandler.doOpen(this));
+        PacketHandlers.handleClient(ctx, () -> {
+            if (this.valid) {
+                ClientHandler.doOpen(this);
+            }
         });
-        ctx.get().setPacketHandled(true);
     }
 
     

@@ -9,6 +9,8 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class PacketSyncSkill {
+    private static final int MAX_SKILL_ID_LENGTH = 128;
+
     private final String skillName;
 
     public PacketSyncSkill(String skillName) {
@@ -16,11 +18,11 @@ public class PacketSyncSkill {
     }
 
     public PacketSyncSkill(FriendlyByteBuf buf) {
-        this.skillName = buf.readUtf();
+        this.skillName = buf.readUtf(MAX_SKILL_ID_LENGTH);
     }
 
     public void toBytes(FriendlyByteBuf buf) {
-        buf.writeUtf(this.skillName);
+        buf.writeUtf(this.skillName, MAX_SKILL_ID_LENGTH);
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {

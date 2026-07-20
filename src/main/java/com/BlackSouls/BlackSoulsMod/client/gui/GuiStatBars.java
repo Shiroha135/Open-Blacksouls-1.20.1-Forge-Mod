@@ -34,6 +34,10 @@ public class GuiStatBars {
     private static double displayAction = -1.0;
     private static float displayFood = -1.0f;
     private static long lastHitTime = 0L;
+    private static final IntegerBarTextCache HP_TEXT = new IntegerBarTextCache();
+    private static final IntegerBarTextCache MP_TEXT = new IntegerBarTextCache();
+    private static final DecimalBarTextCache ACTION_TEXT = new DecimalBarTextCache();
+    private static final IntegerBarTextCache FOOD_TEXT = new IntegerBarTextCache();
 
     @SubscribeEvent
     public static void onRenderGuiPre(RenderGuiOverlayEvent.Pre event) {
@@ -58,7 +62,10 @@ public class GuiStatBars {
 
         GuiGraphics graphics = event.getGuiGraphics();
         float partialTicks = mc.getFrameTime();
-        player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
+        BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+        if (stats == null) {
+            return;
+        }
             float targetHp = player.getHealth();
             float maxHp = player.getMaxHealth();
             float targetMp = stats.getMana();
@@ -84,7 +91,7 @@ public class GuiStatBars {
 
             if (displayHp > targetHp) {
                 if (displayHp - targetHp > 1.0f) {
-                    lastHitTime = Util.getMillis();
+                    lastHitTime = currentTime;
                 }
                 displayHp += (targetHp - displayHp) * 0.05f * partialTicks;
             } else {
@@ -138,7 +145,7 @@ public class GuiStatBars {
                     isRgbMode ? 0.05f : 0.90f,
                     isRgbMode ? 1.00f : 0.12f,
                     isRgbMode ? 0.05f : 0.12f,
-                    String.format(Locale.ROOT, "%d/%d", (int) targetHp, (int) maxHp),
+                    HP_TEXT.get((int) targetHp, (int) maxHp),
                     isRgbMode ? getRainbowColor(currentTime) : 0xFFFFFF,
                     timeSinceLastHitNeedsShake(currentTime),
                     !isRgbMode && realHpRatio < 0.20f,
@@ -159,7 +166,7 @@ public class GuiStatBars {
                     0.10f,
                     0.48f,
                     1.00f,
-                    String.format(Locale.ROOT, "%d/%d", (int) targetMp, (int) maxMp),
+                    MP_TEXT.get((int) targetMp, (int) maxMp),
                     0x33CCFF,
                     false,
                     realMpRatio < 0.20f,
@@ -180,7 +187,7 @@ public class GuiStatBars {
                     0.18f,
                     0.95f,
                     0.25f,
-                    String.format(Locale.ROOT, "%.2f/%.2f", targetAction, maxAction),
+                    ACTION_TEXT.get(targetAction, maxAction),
                     0x66FF88,
                     false,
                     realActionRatio < 0.20f,
@@ -201,15 +208,13 @@ public class GuiStatBars {
                     1.00f,
                     0.55f,
                     0.10f,
-                    String.format(Locale.ROOT, "%d/%d", (int) targetFood, (int) maxFood),
+                    FOOD_TEXT.get((int) targetFood, (int) maxFood),
                     0xFFB347,
                     false,
                     realFoodRatio < 0.20f,
                     subX + subWidth / 2,
                     foodY + h / 2
             );
-
-        });
     }
 
     private static boolean timeSinceLastHitNeedsShake(long currentTime) {
@@ -350,12 +355,9 @@ public class GuiStatBars {
             long currentTime
     ) {
         Minecraft mc = Minecraft.getInstance();
-        String avatarName = ClientSkillInfo.getAvatar() != null ? ClientSkillInfo.getAvatar() : "knight_face";
-
-        ResourceLocation tex = new ResourceLocation(
-                BlackSouls.MODID,
-                "textures/gui/avatars/" + avatarName + ".png"
-        );
+        String avatarName = ClientSkillInfo.getAvatar();
+        if (avatarName == null) avatarName = "knight_face";
+        ResourceLocation tex = BSAvatarRenderer.getTexture(avatarName);
 
         graphics.pose().pushPose();
 
@@ -378,6 +380,36 @@ public class GuiStatBars {
         RenderSystem.disableBlend();
 
         graphics.pose().popPose();
+    }
+
+    private static class IntegerBarTextCache {
+        private int current;
+        private int maximum;
+        private String text;
+
+        private String get(int current, int maximum) {
+            if (text == null || this.current != current || this.maximum != maximum) {
+                this.current = current;
+                this.maximum = maximum;
+                this.text = current + "/" + maximum;
+            }
+            return text;
+        }
+    }
+
+    private static class DecimalBarTextCache {
+        private double current;
+        private double maximum;
+        private String text;
+
+        private String get(double current, double maximum) {
+            if (text == null || Double.compare(this.current, current) != 0 || Double.compare(this.maximum, maximum) != 0) {
+                this.current = current;
+                this.maximum = maximum;
+                this.text = String.format(Locale.ROOT, "%.2f/%.2f", current, maximum);
+            }
+            return text;
+        }
     }
 
 }

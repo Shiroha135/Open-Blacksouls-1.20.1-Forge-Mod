@@ -1,5 +1,6 @@
 package com.BlackSouls.BlackSoulsMod.util;
 
+import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
@@ -41,7 +42,7 @@ public class BSMobStatManager {
 
     private static final MobStats EMPTY_STATS = new MobStats(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0L);
     private static final MobStats DEFAULT_HOSTILE_STATS = new MobStats(220.0, 0.0, 110.0, 18.0, 40.0, 16.0, 36.0, 10.0, 70L);
-    private static final Map<String, MobStats> MOB_STATS_DB = new HashMap<>();
+    private static final Map<ResourceLocation, MobStats> MOB_STATS_DB = new HashMap<>();
 
     static {
         register("zombie", 220.0, 0.0, 110.0, 18.0, 0.0, 10.0, 34.0, 8.0, 50L);
@@ -81,12 +82,22 @@ public class BSMobStatManager {
         register("warden", 4200.0, 0.0, 420.0, 110.0, 0.0, 80.0, 38.0, 20.0, 3000L);
         register("wither", 5600.0, 300.0, 340.0, 95.0, 220.0, 92.0, 34.0, 20.0, 5000L);
         register("ender_dragon", 8000.0, 400.0, 380.0, 120.0, 260.0, 100.0, 42.0, 24.0, 8000L);
-        register("hail_caesar", 20000.0, 700.0, 500.0, 100.0, 100.0, 100.0, 400.0, 200.0, 15000L);
+        registerMod("hail_caesar", 20000.0, 700.0, 500.0, 100.0, 100.0, 100.0, 400.0, 200.0, 15000L);
         
-        register("hell_prince", 1900000.0, 9999.0, 2400.0, 960.0, 2700.0, 990.0, 8550.0, 8100.0, 160000L);
+        registerMod("hell_prince", 1900000.0, 9999.0, 2400.0, 960.0, 2700.0, 990.0, 8550.0, 8100.0, 160000L);
     }
 
     private static void register(String id, double hp, double mp, double atk, double def,
+                                 double matk, double mdef, double speed, double luck, long soulReward) {
+        register(new ResourceLocation("minecraft", id), hp, mp, atk, def, matk, mdef, speed, luck, soulReward);
+    }
+
+    private static void registerMod(String id, double hp, double mp, double atk, double def,
+                                    double matk, double mdef, double speed, double luck, long soulReward) {
+        register(new ResourceLocation(BlackSouls.MODID, id), hp, mp, atk, def, matk, mdef, speed, luck, soulReward);
+    }
+
+    private static void register(ResourceLocation id, double hp, double mp, double atk, double def,
                                  double matk, double mdef, double speed, double luck, long soulReward) {
         MOB_STATS_DB.put(id, new MobStats(hp, mp, atk, def, matk, mdef, speed, luck, soulReward));
     }
@@ -101,7 +112,7 @@ public class BSMobStatManager {
             return EMPTY_STATS;
         }
 
-        MobStats stats = MOB_STATS_DB.get(key.getPath());
+        MobStats stats = MOB_STATS_DB.get(key);
         if (stats != null) {
             return stats;
         }

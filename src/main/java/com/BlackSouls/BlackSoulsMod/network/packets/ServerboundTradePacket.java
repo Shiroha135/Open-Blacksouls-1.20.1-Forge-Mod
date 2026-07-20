@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod.network.packets;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.network.TradeService;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -10,6 +11,7 @@ import java.util.function.Supplier;
 
 public class ServerboundTradePacket {
     private static final int MAX_ITEM_ID_LENGTH = 128;
+    private static final int MAX_TRADE_QUANTITY = 999;
 
     private final Action action;
     private final String itemRLString;
@@ -36,7 +38,8 @@ public class ServerboundTradePacket {
     public void handle(Supplier<NetworkEvent.Context> supplier) {
         PacketHandlers.handleServer(supplier, context -> {
             ServerPlayer player = context.getSender();
-            if (player == null) {
+            if (player == null || this.action == null || this.quantity <= 0 || this.quantity > MAX_TRADE_QUANTITY
+                    || ResourceLocation.tryParse(this.itemRLString) == null) {
                 return;
             }
 

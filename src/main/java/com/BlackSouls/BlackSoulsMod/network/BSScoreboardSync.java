@@ -4,10 +4,13 @@ import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -20,7 +23,20 @@ public class BSScoreboardSync {
     private static Method scoreboardRegisterNewObjective;
     private static Method objectiveGetScore;
     private static Method scoreSetScore;
+    private static final Map<UUID, PlayerScoreCache> PLAYER_SCORE_CACHE = new HashMap<>();
     private static long lastSyncFailureLogTime = 0L;
+
+    private static final class PlayerScoreCache {
+        private final Object scoreboard;
+        private final Object soulsScore;
+        private final Object manaScore;
+
+        private PlayerScoreCache(Object scoreboard, Object soulsScore, Object manaScore) {
+            this.scoreboard = scoreboard;
+            this.soulsScore = soulsScore;
+            this.manaScore = manaScore;
+        }
+    }
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
@@ -31,23 +47,32 @@ public class BSScoreboardSync {
             return;
         }
 
-        player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
-            try {
-                Object bukkitPlayer = bukkitGetPlayer.invoke(null, player.getUUID());
-                if (bukkitPlayer == null) return;
+        BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+        if (stats == null) {
+            return;
+        }
 
-                Object currentScoreboard = playerGetScoreboard.invoke(bukkitPlayer);
-                String playerName = player.getScoreboardName();
-
-                Object soulsObj = getOrCreateObjective(currentScoreboard, "bs_souls", "Souls");
-                setScore(soulsObj, playerName, (int) stats.souls);
-
-                Object manaObj = getOrCreateObjective(currentScoreboard, "bs_mana", "Mana");
-                setScore(manaObj, playerName, (int) stats.mp);
-            } catch (ReflectiveOperationException | SecurityException e) {
-                logSyncFailure(e);
+        UUID playerId = player.getUUID();
+        try {
+            Object bukkitPlayer = bukkitGetPlayer.invoke(null, playerId);
+            if (bukkitPlayer == null) {
+                PLAYER_SCORE_CACHE.remove(playerId);
+                return;
             }
-        });
+
+            Object currentScoreboard = playerGetScoreboard.invoke(bukkitPlayer);
+            PlayerScoreCache cache = getOrCreateScoreCache(playerId, currentScoreboard, player.getScoreboardName());
+            scoreSetScore.invoke(cache.soulsScore, (int) stats.souls);
+            scoreSetScore.invoke(cache.manaScore, (int) stats.mp);
+        } catch (ReflectiveOperationException | SecurityException e) {
+            PLAYER_SCORE_CACHE.remove(playerId);
+            logSyncFailure(e);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
+        PLAYER_SCORE_CACHE.remove(event.getEntity().getUUID());
     }
 
     private static boolean ensureBukkitReflection() {
@@ -92,9 +117,21 @@ public class BSScoreboardSync {
         return objective;
     }
 
-    private static void setScore(Object objective, String playerName, int value) throws ReflectiveOperationException {
-        Object score = objectiveGetScore.invoke(objective, playerName);
-        scoreSetScore.invoke(score, value);
+    private static PlayerScoreCache getOrCreateScoreCache(UUID playerId, Object scoreboard, String playerName) throws ReflectiveOperationException {
+        PlayerScoreCache cache = PLAYER_SCORE_CACHE.get(playerId);
+        if (cache != null && cache.scoreboard == scoreboard) {
+            return cache;
+        }
+
+        Object soulsObjective = getOrCreateObjective(scoreboard, "bs_souls", "Souls");
+        Object manaObjective = getOrCreateObjective(scoreboard, "bs_mana", "Mana");
+        cache = new PlayerScoreCache(
+                scoreboard,
+                objectiveGetScore.invoke(soulsObjective, playerName),
+                objectiveGetScore.invoke(manaObjective, playerName)
+        );
+        PLAYER_SCORE_CACHE.put(playerId, cache);
+        return cache;
     }
 
     private static void logSyncFailure(Exception e) {

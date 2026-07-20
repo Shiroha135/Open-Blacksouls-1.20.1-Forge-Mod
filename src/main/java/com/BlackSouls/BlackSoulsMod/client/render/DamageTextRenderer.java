@@ -13,9 +13,9 @@ import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Iterator;
-import java.util.List;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = BlackSouls.MODID)
 public class DamageTextRenderer {
@@ -43,13 +43,13 @@ public class DamageTextRenderer {
         }
     }
 
-    private static final List<DamageText> TEXTS = new ArrayList<>();
+    private static final Deque<DamageText> TEXTS = new ArrayDeque<>();
 
     public static void addText(double x, double y, double z, float damage, boolean isCrit) {
         while (TEXTS.size() >= MAX_TEXTS) {
-            TEXTS.remove(0);
+            TEXTS.removeFirst();
         }
-        TEXTS.add(new DamageText(x, y, z, damage, isCrit));
+        TEXTS.addLast(new DamageText(x, y, z, damage, isCrit));
     }
 
     @SubscribeEvent
@@ -62,10 +62,12 @@ public class DamageTextRenderer {
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
-            if (Minecraft.getInstance().level == null) {
+            Minecraft mc = Minecraft.getInstance();
+            if (mc.level == null) {
                 TEXTS.clear();
                 return;
             }
+            if (mc.isPaused()) return;
             Iterator<DamageText> it = TEXTS.iterator();
             while (it.hasNext()) {
                 DamageText t = it.next();

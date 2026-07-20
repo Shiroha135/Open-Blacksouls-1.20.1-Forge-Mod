@@ -19,6 +19,9 @@ import net.minecraftforge.common.util.LazyOptional;
 public class BSPlayerStats {
     public static final Capability<BSPlayerStats> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 
+    private static final int MAX_LEVEL = 999;
+    private static final long[] EXP_THRESHOLDS = createExpThresholds();
+
     public static final double HARD_CAP_HP = 1099998;
     public static final double HARD_CAP_MP = 109998;
     public static final double HARD_CAP_OTHER = 109998;
@@ -301,11 +304,11 @@ public class BSPlayerStats {
     }
 
     public void addExp(long amount) {
-        if (this.level >= 999) {
+        if (this.level >= MAX_LEVEL) {
             return;
         }
         this.currentExp += amount;
-        while (this.level < 999 && this.currentExp >= getExpToReachLevel(this.level + 1)) {
+        while (this.level < MAX_LEVEL && this.currentExp >= getExpToReachLevel(this.level + 1)) {
             this.level++;
         }
         recalculateStats();
@@ -324,7 +327,7 @@ public class BSPlayerStats {
     }
 
     public void recalculateStats() {
-        int l = Math.min(999, this.level);
+        int l = Math.min(MAX_LEVEL, this.level);
 
         double baseHp = getRMStat(l, 638, 6680, 61);
         double baseMp = getRMStat(l, 100, 205, 1);
@@ -424,6 +427,22 @@ public class BSPlayerStats {
             return 0;
         }
 
+        if (targetLevel < EXP_THRESHOLDS.length) {
+            return EXP_THRESHOLDS[targetLevel];
+        }
+
+        return calculateExpThreshold(targetLevel);
+    }
+
+    private static long[] createExpThresholds() {
+        long[] thresholds = new long[MAX_LEVEL + 2];
+        for (int level = 2; level < thresholds.length; level++) {
+            thresholds[level] = calculateExpThreshold(level);
+        }
+        return thresholds;
+    }
+
+    private static long calculateExpThreshold(int targetLevel) {
         double basis = 30.0;
         double extra = 0.0;
         double accA = 10.0;

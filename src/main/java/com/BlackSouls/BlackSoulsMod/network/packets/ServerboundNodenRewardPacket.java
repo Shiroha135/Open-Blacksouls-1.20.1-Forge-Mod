@@ -33,16 +33,19 @@ public class ServerboundNodenRewardPacket {
     public void handle(Supplier<NetworkEvent.Context> supplier) {
         PacketHandlers.handleServer(supplier, context -> {
             ServerPlayer player = context.getSender();
-            if (player == null) {
+            if (player == null || this.type == null) {
                 return;
             }
 
             Entity entity = player.level().getEntity(this.entityId);
-            if (!(entity instanceof EntityNoden) || entity.distanceToSqr(player) > 64.0D) {
+            if (!(entity instanceof EntityNoden noden) || !noden.isAlive() || noden.isRemoved() || noden.distanceToSqr(player) > 64.0D) {
                 return;
             }
 
             player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
+                if (!stats.unlockedCovenants.contains("noden") || stats.nodenCovenantLevel < this.type.requiredCovenantLevel) {
+                    return;
+                }
                 int delta = this.type.senDelta;
                 stats.sen = Math.max(0, stats.sen + delta);
                 StatEventHandler.syncToClient(player);
@@ -52,13 +55,15 @@ public class ServerboundNodenRewardPacket {
     }
 
     public enum Type {
-        KISS(-1),
-        SEEK_SERVICE(10);
+        KISS(-1, 1),
+        SEEK_SERVICE(10, 2);
 
         private final int senDelta;
+        private final int requiredCovenantLevel;
 
-        Type(int senDelta) {
+        Type(int senDelta, int requiredCovenantLevel) {
             this.senDelta = senDelta;
+            this.requiredCovenantLevel = requiredCovenantLevel;
         }
     }
 }

@@ -4,32 +4,38 @@ import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import net.minecraft.Util;
 import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.joml.Matrix4f;
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Iterator;
-import java.util.List;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = BlackSouls.MODID)
 public class ClientVFXHandler {
 
     private static final int MAX_ACTIVE_ANIMATIONS = 128;
+    private static final float[] CORNER_X = {-0.5F, 0.5F, 0.5F, -0.5F};
+    private static final float[] CORNER_Y = {-0.5F, -0.5F, 0.5F, 0.5F};
 
-    private static final List<ActiveAnim> activeAnimations = new ArrayList<>();
+    private static final Deque<ActiveAnim> activeAnimations = new ArrayDeque<>();
+    private static long pauseStartedAt = -1L;
 
     public static void playAnim(int animId, double x, double y, double z) {
         VFXAnimation anim = AnimationRegistry.ANIMATIONS.get(animId);
         if (anim != null) {
-            addActiveAnimation(new ActiveAnim(anim, x, y, z, System.currentTimeMillis(), 66));
+            addActiveAnimation(new ActiveAnim(anim, x, y, z, getAnimationTime(), 66));
         }
     }
 
@@ -41,20 +47,31 @@ public class ClientVFXHandler {
             frame.addCell(new VFXCell(frameIndex, 0f, 0f, scale, scale, 0f, 1.0f, false));
             tempAnim.frames.add(frame);
         }
-        addActiveAnimation(new ActiveAnim(tempAnim, x, y, z, System.currentTimeMillis(), 40));
+        addActiveAnimation(new ActiveAnim(tempAnim, x, y, z, getAnimationTime(), 40));
     }
 
     private static void addActiveAnimation(ActiveAnim activeAnim) {
         while (activeAnimations.size() >= MAX_ACTIVE_ANIMATIONS) {
-            activeAnimations.remove(0);
+            activeAnimations.removeFirst();
         }
-        activeAnimations.add(activeAnim);
+        activeAnimations.addLast(activeAnim);
     }
 
     @SubscribeEvent
     public static void onWorldUnload(LevelEvent.Unload event) {
-        if (event.getLevel().isClientSide()) activeAnimations.clear();
+        if (event.getLevel().isClientSide()) {
+            activeAnimations.clear();
+            pauseStartedAt = -1L;
+        }
     }
+
+    @SubscribeEvent
+    public static void onClientTick(TickEvent.ClientTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            updatePauseState(Util.getMillis());
+        }
+    }
+
     @SubscribeEvent
     public static void onRenderLevelStage(RenderLevelStageEvent event) {
         if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_PARTICLES) return;
@@ -80,7 +97,7 @@ public class ClientVFXHandler {
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder buffer = tesselator.getBuilder();
 
-        long currentTime = System.currentTimeMillis();
+        long currentTime = getAnimationTime();
         Iterator<ActiveAnim> it = activeAnimations.iterator();
 
         while (it.hasNext()) {
@@ -121,20 +138,12 @@ public class ClientVFXHandler {
                 float cos = (float) Math.cos(rad);
                 float sin = (float) Math.sin(rad);
 
-                float[][] corners = {
-                        {-0.5f, -0.5f},
-                        { 0.5f, -0.5f},
-                        { 0.5f,  0.5f},
-                        {-0.5f,  0.5f}
-                };
-                float[][] uvs = {{u0, v0}, {u1, v0}, {u1, v1}, {u0, v1}};
-
                 RenderSystem.setShaderTexture(0, currentTex);
                 buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
 
                 for (int i = 0; i < 4; i++) {
-                    float x = corners[i][0];
-                    float y = corners[i][1];
+                    float x = CORNER_X[i];
+                    float y = CORNER_Y[i];
                     if (cell.mirror) x = -x;
 
                     x *= cell.scaleX * baseScale;
@@ -147,7 +156,7 @@ public class ClientVFXHandler {
                     float fy = ry + cell.offsetY * 0.4f;
 
                     buffer.vertex(matrix, -fx, -fy, 0.0F)
-                            .uv(uvs[i][0], uvs[i][1])
+                            .uv(i == 0 || i == 3 ? u0 : u1, i < 2 ? v0 : v1)
                             .color(1.0F, 1.0F, 1.0F, cell.alpha)
                             .endVertex();
                 }
@@ -163,6 +172,29 @@ public class ClientVFXHandler {
         RenderSystem.defaultBlendFunc();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         poseStack.popPose();
+    }
+
+    private static long getAnimationTime() {
+        long now = Util.getMillis();
+        updatePauseState(now);
+        return pauseStartedAt >= 0L ? pauseStartedAt : now;
+    }
+
+    private static void updatePauseState(long now) {
+        if (Minecraft.getInstance().isPaused()) {
+            if (pauseStartedAt < 0L) {
+                pauseStartedAt = now;
+            }
+            return;
+        }
+
+        if (pauseStartedAt >= 0L) {
+            long pausedDuration = now - pauseStartedAt;
+            for (ActiveAnim active : activeAnimations) {
+                active.startTime += pausedDuration;
+            }
+            pauseStartedAt = -1L;
+        }
     }
 
     private static class ActiveAnim {

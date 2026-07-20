@@ -26,15 +26,19 @@ public class ServerboundSimpleActionPacket {
     public void handle(Supplier<NetworkEvent.Context> supplier) {
         PacketHandlers.handleServer(supplier, context -> {
             ServerPlayer player = context.getSender();
-            if (player == null) {
+            if (player == null || this.action == null) {
                 return;
             }
 
             switch (this.action) {
                 case REFRESH_PURGE_COMMISSIONS -> StatEventHandler.rerollPurgeTasks(player);
-                case REQUEST_RESPAWN -> player.connection.handleClientCommand(
-                        new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.PERFORM_RESPAWN)
-                );
+                case REQUEST_RESPAWN -> {
+                    if (player.isDeadOrDying()) {
+                        player.connection.handleClientCommand(
+                                new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.PERFORM_RESPAWN)
+                        );
+                    }
+                }
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.BlackSouls.BlackSoulsMod.client.render;
 
+import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -15,6 +16,8 @@ public class BSAvatarRenderer {
     private static final int FACE_MZ_SHEET_WIDTH = 576;
     private static final int FACE_MZ_SHEET_HEIGHT = 288;
     private static final int FACE_MZ_CELL_SIZE = 144;
+    private static String cachedTextureAvatar;
+    private static ResourceLocation cachedTexture;
 
     private static final java.util.Map<String, int[]> EXPRESSION_MAP = new java.util.HashMap<>();
 
@@ -78,6 +81,15 @@ public class BSAvatarRenderer {
                     96, 96
             );
         }
+    }
+
+    public static ResourceLocation getTexture(String avatarId) {
+        if (!avatarId.equals(cachedTextureAvatar)) {
+            ResourceLocation texture = new ResourceLocation(BlackSouls.MODID, "textures/gui/avatars/" + avatarId + ".png");
+            cachedTextureAvatar = avatarId;
+            cachedTexture = texture;
+        }
+        return cachedTexture;
     }
 
     private static int remapExpression(String avatarId, int logicalExpression) {

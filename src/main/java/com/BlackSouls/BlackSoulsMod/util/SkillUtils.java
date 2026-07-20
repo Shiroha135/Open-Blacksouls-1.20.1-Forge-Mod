@@ -97,15 +97,37 @@ public class SkillUtils {
     }
 
     public static double getActionCount(Player player) {
-        double actions = 1.0;
         BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).resolve().orElse(null);
+        return getActionCount(player, stats);
+    }
+
+    public static double getActionCount(Player player, BSPlayerStats stats) {
+        double accessoryActions = CuriosApi.getCuriosInventory(player).map(handler -> {
+            double bonus = 0.0D;
+            for (var result : handler.findCurios(stack -> stack.is(BlackSouls.RING_WHITE_RABBIT.get())
+                    || stack.is(BlackSouls.MYSTERY_OF_NIGHT_SKY.get())
+                    || stack.is(BlackSouls.RING_BLACK_RABBIT.get()))) {
+                if (result.stack().is(BlackSouls.RING_BLACK_RABBIT.get())) {
+                    bonus += 1.0D;
+                } else {
+                    bonus += 0.5D;
+                }
+            }
+            return bonus;
+        }).orElse(0.0D);
+        return calculateActionCount(player, stats, accessoryActions);
+    }
+
+    public static double getActionCount(Player player, BSPlayerStats stats, int whiteRabbitCount, int mysteryOfNightSkyCount, int blackRabbitCount) {
+        return calculateActionCount(player, stats,
+                (whiteRabbitCount * 0.5D) + (mysteryOfNightSkyCount * 0.5D) + blackRabbitCount);
+    }
+
+    private static double calculateActionCount(Player player, BSPlayerStats stats, double accessoryActions) {
+        double actions = 1.0D + accessoryActions;
         if (stats != null) {
             actions += stats.extraActionRate;
         }
-
-        actions += StatEventHandler.getBaubleCount(player, BlackSouls.RING_WHITE_RABBIT.get()) * 0.5;
-        actions += StatEventHandler.getBaubleCount(player, BlackSouls.MYSTERY_OF_NIGHT_SKY.get()) * 0.5;
-        actions += StatEventHandler.getBaubleCount(player, BlackSouls.RING_BLACK_RABBIT.get()) * 1.0;
 
         if (BlackSouls.BUFF_HELANRITH_WINE.isPresent() && player.hasEffect(BlackSouls.BUFF_HELANRITH_WINE.get())) {
             actions += 1.0;
@@ -116,6 +138,10 @@ public class SkillUtils {
 
     public static double getMaxActionPoints(Player player) {
         return getActionCount(player);
+    }
+
+    public static double getMaxActionPoints(Player player, BSPlayerStats stats) {
+        return getActionCount(player, stats);
     }
 
     public static double getCurrentActionPoints(Player player) {
@@ -210,7 +236,11 @@ public class SkillUtils {
     }
 
     public static boolean hasChronoClockAvailable(Player player) {
-        if (hasChronoClockEquipped(player)) {
+        return hasChronoClockAvailable(player, hasChronoClockEquipped(player));
+    }
+
+    public static boolean hasChronoClockAvailable(Player player, boolean chronoClockEquipped) {
+        if (chronoClockEquipped) {
             return true;
         }
         for (var stack : player.getInventory().items) {

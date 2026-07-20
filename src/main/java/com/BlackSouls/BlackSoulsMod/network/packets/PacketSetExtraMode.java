@@ -47,13 +47,19 @@ public class PacketSetExtraMode {
                 serverPlayer.sendSystemMessage(Component.translatable("message.blacksouls.difficulty.no_permission").withStyle(ChatFormatting.RED));
                 return;
             }
+            if (modeOrdinal < 0 || modeOrdinal >= ITEM_MODES.length) {
+                return;
+            }
 
-            ItemMode mode = ITEM_MODES[Math.max(0, Math.min(ITEM_MODES.length - 1, modeOrdinal))];
+            ItemMode mode = ITEM_MODES[modeOrdinal];
             ServerLevel overworld = serverPlayer.server.overworld();
             BSWorldData data = BSWorldData.get(overworld);
 
             if (!mode.isUnlocked(data)) {
                 serverPlayer.sendSystemMessage(Component.translatable("message.blacksouls.dev_mode.locked").withStyle(ChatFormatting.RED));
+                return;
+            }
+            if (mode.isEnabled(data) == enabled) {
                 return;
             }
 
@@ -74,11 +80,15 @@ public class PacketSetExtraMode {
             @Override
             public boolean isUnlocked(BSWorldData data) { return data.isRevengeUnlocked(); }
             @Override
+            public boolean isEnabled(BSWorldData data) { return data.isRevengeMode(); }
+            @Override
             public void setEnabled(BSWorldData data, boolean enabled) { data.setRevengeMode(enabled); }
         },
         DEATH {
             @Override
             public boolean isUnlocked(BSWorldData data) { return data.isDeathUnlocked(); }
+            @Override
+            public boolean isEnabled(BSWorldData data) { return data.isDeathMode(); }
             @Override
             public void setEnabled(BSWorldData data, boolean enabled) { data.setDeathMode(enabled); }
         },
@@ -86,11 +96,15 @@ public class PacketSetExtraMode {
             @Override
             public boolean isUnlocked(BSWorldData data) { return data.isLegendaryUnlocked(); }
             @Override
+            public boolean isEnabled(BSWorldData data) { return data.isLegendaryMode(); }
+            @Override
             public void setEnabled(BSWorldData data, boolean enabled) { data.setLegendaryMode(enabled); }
         },
         MALICE {
             @Override
             public boolean isUnlocked(BSWorldData data) { return data.isMaliceUnlocked(); }
+            @Override
+            public boolean isEnabled(BSWorldData data) { return data.isMaliceMode(); }
             @Override
             public void setEnabled(BSWorldData data, boolean enabled) { data.setMaliceMode(enabled); }
         },
@@ -98,10 +112,13 @@ public class PacketSetExtraMode {
             @Override
             public boolean isUnlocked(BSWorldData data) { return data.isEternityUnlocked(); }
             @Override
+            public boolean isEnabled(BSWorldData data) { return data.isEternityMode(); }
+            @Override
             public void setEnabled(BSWorldData data, boolean enabled) { data.setEternityMode(enabled); }
         };
 
         public abstract boolean isUnlocked(BSWorldData data);
+        public abstract boolean isEnabled(BSWorldData data);
         public abstract void setEnabled(BSWorldData data, boolean enabled);
     }
 }

@@ -8,6 +8,8 @@ import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class PacketClaimPurgeTaskReward {
+    private static final int MAX_TASKS = 10;
+
     private final int taskIndex;
 
     public PacketClaimPurgeTaskReward(int taskIndex) {
@@ -26,7 +28,7 @@ public class PacketClaimPurgeTaskReward {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
-            if (player != null) {
+            if (player != null && this.taskIndex >= 0 && this.taskIndex < MAX_TASKS) {
                 StatEventHandler.claimPurgeTaskReward(player, this.taskIndex);
             }
         });

@@ -23,7 +23,11 @@ public class ClientboundSimpleActionPacket {
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
-        PacketHandlers.handleClient(supplier, () -> ClientHandler.handle(this.action));
+        PacketHandlers.handleClient(supplier, () -> {
+            if (this.action != null) {
+                ClientHandler.handle(this.action);
+            }
+        });
     }
 
     public enum Action {

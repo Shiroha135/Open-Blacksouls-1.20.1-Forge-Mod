@@ -12,6 +12,9 @@ import net.minecraftforge.network.PacketDistributor;
 import java.util.function.Supplier;
 
 public class PacketSetDifficulty {
+    private static final int MIN_DIFFICULTY = 1;
+    private static final int MAX_DIFFICULTY = 9;
+
     public int difficulty;
 
     public PacketSetDifficulty() {}
@@ -37,8 +40,14 @@ public class PacketSetDifficulty {
                     serverPlayer.sendSystemMessage(Component.translatable("message.blacksouls.difficulty.no_permission").withStyle(ChatFormatting.RED));
                     return;
                 }
+                if (difficulty < MIN_DIFFICULTY || difficulty > MAX_DIFFICULTY) {
+                    return;
+                }
 
                 BSWorldData data = BSWorldData.get(serverPlayer.serverLevel());
+                if (data.difficulty == difficulty) {
+                    return;
+                }
                 data.difficulty = difficulty;
                 data.setDirty();
 

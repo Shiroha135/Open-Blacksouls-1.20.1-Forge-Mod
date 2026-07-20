@@ -38,7 +38,8 @@ public class PacketKillDialogueNPC {
             Level level = player.level();
             Entity targetEntity = level.getEntity(this.entityId);
 
-            if (targetEntity instanceof EntityNoden noden) {
+            if (targetEntity instanceof EntityNoden noden && noden.isAlive() && !noden.isRemoved()
+                    && noden.distanceToSqr(player) <= 64.0D) {
                 noden.discard();
                 player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
                     stats.sen = Math.max(0, stats.sen - 30);

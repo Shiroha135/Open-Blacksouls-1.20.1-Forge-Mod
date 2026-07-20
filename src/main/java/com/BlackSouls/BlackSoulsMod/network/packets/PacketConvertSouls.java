@@ -31,7 +31,7 @@ public class PacketConvertSouls {
             ServerPlayer player = ctx.get().getSender();
             if (player != null) {
                 player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
-                    if (amount > 0 && stats.souls >= amount) {
+                    if (amount > 0 && stats.souls >= amount && stats.currentExp <= Long.MAX_VALUE - amount) {
                         stats.souls -= amount;
                         stats.addExp(amount);
 

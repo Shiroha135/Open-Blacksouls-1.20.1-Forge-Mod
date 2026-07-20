@@ -2,6 +2,7 @@ package com.BlackSouls.BlackSoulsMod.client.render;
 
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.pipeline.TextureTarget;
+import com.mojang.blaze3d.shaders.AbstractUniform;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -51,8 +52,9 @@ public class GuiShaderTextRenderer {
         guiGraphics.flush();
 
         float time = mc.level != null ? (mc.level.getGameTime() + mc.getFrameTime()) * 0.04F : (System.currentTimeMillis() % 100000L) / 1000.0F;
-        if (shader.safeGetUniform("GameTime") != null) {
-            shader.safeGetUniform("GameTime").set(time);
+        AbstractUniform gameTime = shader.safeGetUniform("GameTime");
+        if (gameTime != null) {
+            gameTime.set(time);
         }
 
         RenderSystem.enableBlend();

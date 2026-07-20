@@ -9,8 +9,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.network.NetworkEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +21,21 @@ public class PacketSyncBonfireList {
     private static final int MAX_DIMENSION_ID_LENGTH = 128;
 
     private final List<BonfireEntry> bonfires;
+    private final boolean valid;
 
     public PacketSyncBonfireList(List<BonfireEntry> originalList) {
-        
-        this.bonfires = new ArrayList<>(originalList);
-
-        this.bonfires.removeIf(entry ->
-                entry.pos.dimension().location().getPath().contains("library") ||
-                        entry.name.contains("图书馆") ||
-                        entry.name.contains("library_name")
-        );
+        this.bonfires = new ArrayList<>(Math.min(originalList.size(), MAX_BONFIRES - 1) + 1);
+        for (BonfireEntry entry : originalList) {
+            if (this.bonfires.size() >= MAX_BONFIRES - 1) {
+                break;
+            }
+            if (entry == null || entry.pos == null || entry.name == null
+                    || entry.pos.dimension().location().getPath().contains("library")
+                    || entry.name.contains("图书馆") || entry.name.contains("library_name")) {
+                continue;
+            }
+            this.bonfires.add(entry);
+        }
 
         
         ResourceKey<Level> libKey = ResourceKey.create(Registries.DIMENSION, new ResourceLocation("blacksouls", "library"));
@@ -42,22 +45,27 @@ public class PacketSyncBonfireList {
         String transDesc = Component.translatable("gui.blacksouls.bonfire.library_desc").getString();
 
         this.bonfires.add(0, new BonfireEntry(libPos, transName, transDesc));
+        this.valid = true;
     }
 
     public PacketSyncBonfireList(FriendlyByteBuf buf) {
         this.bonfires = new ArrayList<>();
-        int size = Math.min(Math.max(0, buf.readVarInt()), MAX_BONFIRES);
+        int size = buf.readVarInt();
+        if (size < 0 || size > MAX_BONFIRES) {
+            this.valid = false;
+            return;
+        }
         for (int i = 0; i < size; i++) {
             ResourceLocation dimLoc = ResourceLocation.tryParse(buf.readUtf(MAX_DIMENSION_ID_LENGTH));
-            if (dimLoc == null) {
-                dimLoc = Level.OVERWORLD.location();
-            }
-            ResourceKey<Level> dim = ResourceKey.create(Registries.DIMENSION, dimLoc);
             BlockPos pos = buf.readBlockPos();
             String name = buf.readUtf(MAX_NAME_LENGTH);
             String desc = buf.readUtf(MAX_DESC_LENGTH);
-            bonfires.add(new BonfireEntry(GlobalPos.of(dim, pos), name, desc));
+            if (dimLoc != null) {
+                ResourceKey<Level> dim = ResourceKey.create(Registries.DIMENSION, dimLoc);
+                bonfires.add(new BonfireEntry(GlobalPos.of(dim, pos), name, desc));
+            }
         }
+        this.valid = true;
     }
 
     public void toBytes(FriendlyByteBuf buf) {
@@ -73,10 +81,11 @@ public class PacketSyncBonfireList {
     }
 
     public boolean handle(Supplier<NetworkEvent.Context> ctx) {
-        ctx.get().enqueueWork(() -> {
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientHandler.handle(this));
+        PacketHandlers.handleClient(ctx, () -> {
+            if (this.valid) {
+                ClientHandler.handle(this);
+            }
         });
-        ctx.get().setPacketHandled(true);
         return true;
     }
 

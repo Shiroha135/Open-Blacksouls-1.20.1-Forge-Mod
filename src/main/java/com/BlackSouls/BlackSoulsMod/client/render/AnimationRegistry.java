@@ -1,5 +1,6 @@
 package com.BlackSouls.BlackSoulsMod.client.render;
 
+import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mojang.blaze3d.platform.NativeImage;
@@ -15,6 +16,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -35,7 +37,7 @@ public class AnimationRegistry {
         int pattern; float x; float y; float zoom; float angle; float opacity; boolean mirror;
     }
 
-    private static String processAndGetTexture(String texName, int hue, Map<String, Integer> rowCache, Set<String> generatedCache) {
+    private static String processAndGetTexture(String texName, int hue, Map<String, Integer> rowCache, Set<ResourceLocation> generatedCache) {
         if (texName == null || texName.isEmpty()) return "";
         texName = texName.toLowerCase();
 
@@ -58,7 +60,7 @@ public class AnimationRegistry {
 
         String dynamicName = texName + "_hue_" + hue;
         ResourceLocation dynamicLoc = new ResourceLocation("blacksouls", "dynamic_vfx/" + dynamicName);
-        if (generatedCache.contains(dynamicLoc.toString())) {
+        if (generatedCache.contains(dynamicLoc)) {
             return dynamicLoc.toString();
         }
 
@@ -72,6 +74,7 @@ public class AnimationRegistry {
                     int width = bimg.getWidth();
                     int height = bimg.getHeight();
                     BufferedImage newBimg = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+                    float[] hsb = new float[3];
 
                     for (int x = 0; x < width; x++) {
                         for (int y = 0; y < height; y++) {
@@ -83,7 +86,7 @@ public class AnimationRegistry {
                                 int g = (argb >> 8) & 0xFF;
                                 int b = argb & 0xFF;
 
-                                float[] hsb = Color.RGBtoHSB(r, g, b, null);
+                                Color.RGBtoHSB(r, g, b, hsb);
                                 hsb[0] += hue / 360.0f;
                                 if (hsb[0] > 1.0f) hsb[0] -= 1.0f;
 
@@ -113,12 +116,12 @@ public class AnimationRegistry {
                         Minecraft.getInstance().getTextureManager().register(dynamicLoc, new DynamicTexture(image));
                     });
 
-                    generatedCache.add(dynamicLoc.toString());
+                    generatedCache.add(dynamicLoc);
                     return dynamicLoc.toString();
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            BlackSouls.LOGGER.error("Failed to generate VFX texture {} with hue {}", texName, hue, e);
         }
 
         return originalLoc.toString();
@@ -130,13 +133,14 @@ public class AnimationRegistry {
         try {
             ResourceLocation jsonPath = new ResourceLocation("blacksouls", "bs_animations.json");
 
-            Reader reader = new InputStreamReader(Minecraft.getInstance().getResourceManager().getResourceOrThrow(jsonPath).open());
-
-            Type listType = new TypeToken<List<RawAnim>>(){}.getType();
-            List<RawAnim> rawAnims = new Gson().fromJson(reader, listType);
+            List<RawAnim> rawAnims;
+            try (Reader reader = new InputStreamReader(Minecraft.getInstance().getResourceManager().getResourceOrThrow(jsonPath).open(), StandardCharsets.UTF_8)) {
+                Type listType = new TypeToken<List<RawAnim>>(){}.getType();
+                rawAnims = new Gson().fromJson(reader, listType);
+            }
 
             Map<String, Integer> textureRowsCache = new HashMap<>();
-            Set<String> generatedTextures = new HashSet<>();
+            Set<ResourceLocation> generatedTextures = new HashSet<>();
 
             for (RawAnim raw : rawAnims) {
                 if (raw == null || raw.frames == null) continue;
@@ -168,9 +172,8 @@ public class AnimationRegistry {
                 }
                 ANIMATIONS.put(raw.id, vfxAnim);
             }
-            reader.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            BlackSouls.LOGGER.error("Failed to load VFX animations", e);
         }
     }
 }

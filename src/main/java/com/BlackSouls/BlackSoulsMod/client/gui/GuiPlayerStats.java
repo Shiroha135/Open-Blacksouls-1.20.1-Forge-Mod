@@ -23,11 +23,11 @@ public class GuiPlayerStats extends Screen {
     private static final int GUI_HEIGHT = 250;
     private static final String UNKNOWN_BIOME = "???";
 
-    private static final String[] MENU_KEYS = {
-            "gui.blacksouls.menu.skills",
-            "gui.blacksouls.menu.covenants",
-            "gui.blacksouls.menu.attributes",
-            "gui.blacksouls.menu.game_end"
+    private static final Component[] MENU_LABELS = {
+            Component.translatable("gui.blacksouls.menu.skills"),
+            Component.translatable("gui.blacksouls.menu.covenants"),
+            Component.translatable("gui.blacksouls.menu.attributes"),
+            Component.translatable("gui.blacksouls.menu.game_end")
     };
 
     private int guiLeft;
@@ -78,7 +78,7 @@ public class GuiPlayerStats extends Screen {
             int mX = guiLeft + 12;
             int mY = guiTop + 15 + i * 26;
             boolean isHovered = mouseX >= boxStartX && mouseX <= boxEndX && mouseY >= mY - 4 && mouseY <= mY + 12;
-            String menuText = I18n.get(MENU_KEYS[i]);
+            Component menuText = MENU_LABELS[i];
 
             if (isHovered) {
                 guiGraphics.fill(boxStartX, mY - 4, boxEndX, mY + 12, 0x66FFFFFF);
@@ -107,8 +107,9 @@ public class GuiPlayerStats extends Screen {
 
         int mainY = guiTop;
         int avatarX = mainX + 12, avatarY = mainY + 12, avatarSize = 60;
-        String avatarName = ClientSkillInfo.getAvatar() != null ? ClientSkillInfo.getAvatar() : "default";
-        ResourceLocation currentAvatarTex = new ResourceLocation(BlackSouls.MODID, "textures/gui/avatars/" + avatarName + ".png");
+        String avatarName = ClientSkillInfo.getAvatar();
+        if (avatarName == null) avatarName = "default";
+        ResourceLocation currentAvatarTex = BSAvatarRenderer.getTexture(avatarName);
 
         RenderSystem.enableBlend();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);

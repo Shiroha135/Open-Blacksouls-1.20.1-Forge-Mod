@@ -14,13 +14,15 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID, value = Dist.CLIENT)
 public class BonfireEffectRenderer {
 
+    private static final Component BONFIRE_LIT_TEXT = Component.literal("BONFIRE LIT");
+
     public static int whiteFlashTicks = 0;
     public static int darkOverlayTicks = 0;
     public static int bonfireLitTicks = 0;
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
+        if (event.phase == TickEvent.Phase.END && !Minecraft.getInstance().isPaused()) {
             if (whiteFlashTicks > 0) whiteFlashTicks--;
             if (darkOverlayTicks > 0) darkOverlayTicks--;
             if (bonfireLitTicks > 0) bonfireLitTicks--;
@@ -89,7 +91,7 @@ public class BonfireEffectRenderer {
 
                 int textAlpha = (int) (alpha * 255.0f);
                 int textColor = (textAlpha << 24) | 0xFFAA00;
-                Component text = Component.literal("BONFIRE LIT");
+                Component text = BONFIRE_LIT_TEXT;
 
                 graphics.pose().pushPose();
 

@@ -24,6 +24,7 @@ import java.util.List;
 public class GuiDialogueEnhanced extends Screen {
     private final String npcNameKey;
     private final String npcAvatarId;
+    private final ResourceLocation npcAvatarTexture;
     private final boolean showOptionsAfterDialogue;
     private final int entityId;
     private final int covenantLevel;
@@ -52,10 +53,10 @@ public class GuiDialogueEnhanced extends Screen {
         SEEK_SERVICE("gui.blacksouls.dialogue.option.seek_service", 0xFFFFFF), 
         FALL_IN_LOVE("gui.blacksouls.dialogue.option.fall_in_love", 0xFFFFFF), 
         EXIT("gui.blacksouls.dialogue.option.exit", 0xFFFFFF);
-        final String translationKey;
+        final Component text;
         final int textColor;
         DialogueOption(String translationKey, int textColor) {
-            this.translationKey = translationKey;
+            this.text = Component.translatable(translationKey);
             this.textColor = textColor;
         }
     }
@@ -83,6 +84,9 @@ public class GuiDialogueEnhanced extends Screen {
         super(Component.translatable(npcNameKey));
         this.npcNameKey = npcNameKey;
         this.npcAvatarId = npcAvatarId;
+        this.npcAvatarTexture = npcAvatarId == null || npcAvatarId.isEmpty()
+                ? null
+                : new ResourceLocation(BlackSouls.MODID, "textures/gui/avatars/" + npcAvatarId + ".png");
         this.currentDialogueKeys = dialogueKeys;
         this.showOptionsAfterDialogue = showOptionsAfterDialogue;
         this.entityId = entityId;
@@ -129,7 +133,7 @@ public class GuiDialogueEnhanced extends Screen {
         int mainBoxTop = this.height - MAIN_BOX_H;
         int mainBoxWidth = this.width;
 
-        Component nameComp = Component.translatable(npcNameKey);
+        Component nameComp = this.title;
         int nameTextWidth = font.width(nameComp);
         int nameBoxWidth = nameTextWidth + NAME_BOX_W_PADDING * 2;
         int nameBoxLeft = NAME_BOX_X_OFFSET;
@@ -155,7 +159,7 @@ public class GuiDialogueEnhanced extends Screen {
                 int color = activeOptions[i].textColor;
                 if (!isKillOption && isHovered) color = 0xFFFFFF;
 
-                guiGraphics.drawString(font, Component.translatable(activeOptions[i].translationKey), textStartX, currentY + 3, color, false);
+                guiGraphics.drawString(font, activeOptions[i].text, textStartX, currentY + 3, color, false);
             }
         }
 
@@ -165,12 +169,11 @@ public class GuiDialogueEnhanced extends Screen {
         int contentLeft = PADDING_H;
         int contentTop = mainBoxTop + PADDING_V;
 
-        if (npcAvatarId != null && !npcAvatarId.isEmpty()) {
-            ResourceLocation avatarTex = new ResourceLocation(BlackSouls.MODID, "textures/gui/avatars/" + npcAvatarId + ".png");
+        if (npcAvatarTexture != null) {
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.enableBlend();
             RenderSystem.defaultBlendFunc();
-            guiGraphics.blit(avatarTex, contentLeft, contentTop, AVATAR_SIZE_RENDER, AVATAR_SIZE_RENDER, 0, 0, 96, 96, 96, 96);
+            guiGraphics.blit(npcAvatarTexture, contentLeft, contentTop, AVATAR_SIZE_RENDER, AVATAR_SIZE_RENDER, 0, 0, 96, 96, 96, 96);
             RenderSystem.disableBlend();
         }
 
