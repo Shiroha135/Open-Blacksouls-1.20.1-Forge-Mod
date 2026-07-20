@@ -2,6 +2,8 @@
 .gradle-user/
 build/
 run/
+/run-data/
+/mcmodsrepo/
 out/
 bin/
 
@@ -10,7 +12,14 @@ bin/
 .settings/
 .idea/
 *.iml
+*.launch
 .vscode/
+.fleet/
+/eclipse/
+.metadata/
+.factorypath
+.apt_generated/
+.externalToolBuilders/
 
 *.log
 hs_err_pid*
@@ -22,5 +31,11 @@ logs/
 saves/
 
 ._*
+.DS_Store
 Thumbs.db
 desktop.ini
+
+.env
+.env.*
+!.env.example
+*.local

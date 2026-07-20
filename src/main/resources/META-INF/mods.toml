@@ -2,16 +2,13 @@
 modLoader="javafml"
 loaderVersion="${loader_version_range}"
 license="${mod_license}"
-issueTrackerURL=""
 
 [[mods]]
 modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
-updateJSONURL=""
 displayURL="https://github.com/Shiroha135/Shiroha135.github.io"
 logoFile="logo.png"
-credits=""
 authors="${mod_authors}"
 description='''
 感谢寿司勇者创作的BlackSouls系列，以及所有支持本模组的人。

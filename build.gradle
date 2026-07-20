@@ -42,7 +42,6 @@ minecraft {
 
 
         client {
-            args '--username', 'Hatsuyuki', '--uuid', '00896a4c315b496d97a0d3dec1175aa6'
             args '-mixin.config=mixins.blacksouls.json'
             property 'forge.enabledGameTestNamespaces', mod_id
             property 'mixin.env.remapRefMap', 'true'
@@ -72,13 +71,6 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven {
-        url "https://cursemaven.com"
-        content {
-            includeGroup "curse.maven"
-        }
-    }
-
-    maven {
         url = "https://maven.theillusivec4.top/"
         content {
             includeGroup "top.theillusivec4.curios"
@@ -91,11 +83,6 @@ repositories {
         content {
             includeGroup "maven.modrinth"
         }
-    }
-
-    maven {
-        name = "JourneyMap (Public)"
-        url = "https://jm.gserv.me/repository/maven-public/"
     }
 
     maven {
