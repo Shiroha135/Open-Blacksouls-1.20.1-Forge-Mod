@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod.client.gui;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.client.ClientSkillInfo;
 import com.BlackSouls.BlackSoulsMod.client.render.BSAvatarRenderer;
+import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -39,6 +40,7 @@ public class GuiPlayerAttributes extends Screen {
     private final String[] rightValues = {"100%", null, null, "0%", "0%", "0%", null, "250%", "100%"};
     private int cachedEvasion = Integer.MIN_VALUE;
     private int cachedCritRate = Integer.MIN_VALUE;
+    private int cachedCounterRate = Integer.MIN_VALUE;
     private double cachedMpRegenRate = Double.NaN;
 
     public GuiPlayerAttributes() {
@@ -125,6 +127,11 @@ public class GuiPlayerAttributes extends Screen {
         if (this.rightValues[2] == null || critRate != this.cachedCritRate) {
             this.cachedCritRate = critRate;
             this.rightValues[2] = critRate + "%";
+        }
+        int counterRate = (int) StatEventHandler.getWeaponCounterRate(player);
+        if (counterRate != this.cachedCounterRate) {
+            this.cachedCounterRate = counterRate;
+            this.rightValues[4] = counterRate + "%";
         }
         if (this.rightValues[6] == null || Double.compare(stats.mpRegenRate, this.cachedMpRegenRate) != 0) {
             this.cachedMpRegenRate = stats.mpRegenRate;

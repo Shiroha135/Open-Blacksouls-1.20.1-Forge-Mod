@@ -29,6 +29,14 @@ public class SkillRegistry {
         register(new SkillSoulLight());
         register(new SkillSoulRadiation());
         register(new SkillCarthusBloodCurse());
+        register(new SkillDecapitation());
+        register(new SkillHideAndSeek());
+        register(new SkillShadowless());
+        register(new SkillSweep());
+        register(new SkillBerserkerRoar());
+        register(new SkillIronHammer());
+        register(new SkillArmorPierce());
+        register(new SkillGaleSixfoldThrust());
     }
 
     public static void register(AbstractSkill skill) {

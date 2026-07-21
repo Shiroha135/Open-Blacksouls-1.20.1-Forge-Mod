@@ -15,7 +15,10 @@ public class WeaponUpgradeHandler {
     
     private static UpgradeReq getRequirement(Item weapon, int currentLevel) {
         
-        if (weapon == BlackSouls.KNIGHT_SWORD.get()) {
+        if (weapon == BlackSouls.KNIGHT_SWORD.get()
+                || weapon == BlackSouls.THIEFS_DAGGER.get()
+                || weapon == BlackSouls.GREAT_SWORD.get()
+                || weapon == BlackSouls.BROAD_SPEAR.get()) {
             return getKnightSwordRoute(currentLevel);
         }
 
@@ -84,9 +87,9 @@ public class WeaponUpgradeHandler {
         if (material.getItem() == req.material && material.getCount() >= req.count) {
 
             
-            if (currentLevel == 9 && weapon.getItem() == BlackSouls.KNIGHT_SWORD.get()) {
-                
-                ItemStack evolvedWeapon = new ItemStack(BlackSouls.KNIGHT_KING_SWORD.get());
+            if (currentLevel == 9 && getEvolutionResult(weapon.getItem()) != null) {
+                Item evolvedItem = getEvolutionResult(weapon.getItem());
+                ItemStack evolvedWeapon = new ItemStack(evolvedItem);
                 
                 if (weapon.isEnchanted()) {
                     evolvedWeapon.getOrCreateTag().put("Enchantments", weapon.getEnchantmentTags().copy());
@@ -113,6 +116,14 @@ public class WeaponUpgradeHandler {
                 event.setCost(newLevel * 2);      
             }
         }
+    }
+
+    private static Item getEvolutionResult(Item weapon) {
+        if (weapon == BlackSouls.KNIGHT_SWORD.get()) return BlackSouls.KNIGHT_KING_SWORD.get();
+        if (weapon == BlackSouls.THIEFS_DAGGER.get()) return BlackSouls.GREAT_THIEFS_DAGGER.get();
+        if (weapon == BlackSouls.GREAT_SWORD.get()) return BlackSouls.GIANT_SWORD.get();
+        if (weapon == BlackSouls.BROAD_SPEAR.get()) return BlackSouls.GUNGNIR.get();
+        return null;
     }
 
     

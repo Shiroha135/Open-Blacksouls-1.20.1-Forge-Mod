@@ -64,6 +64,11 @@ import java.util.UUID;
 public class StatEventHandler {
     private static final String TAG_FIRST_JOIN_BLACK_ASH = "bs2_first_join_black_ash";
     private static final String TAG_FIRST_JOIN_DEV_MODE_ITEMS = "bs2_first_join_dev_mode_items";
+    private static final String TAG_DAGGER_EXTRA_HIT = "bs2_dagger_extra_hit";
+    private static final String TAG_PRECOMPUTED_SKILL_DAMAGE = "bs2_precomputed_skill_damage";
+    private static final String TAG_SURE_HIT_SKILL = "bs2_sure_hit_skill";
+    private static final String TAG_SKILL_INSTANT_DEATH_RATE = "bs2_skill_instant_death_rate";
+    private static final String TAG_SPEAR_COUNTER = "bs2_spear_counter";
     private static final UUID CHRONO_WATCH_SLOT_UUID = UUID.fromString("a7eecdcf-c4a0-4d4d-8831-fc8f7c80adf1");
 
     private static final double CAP_HP = BSPlayerStats.HARD_CAP_HP;
@@ -551,6 +556,128 @@ public class StatEventHandler {
         return baseDamage;
     }
 
+    public static boolean hurtWithSkillDamage(ServerPlayer player, LivingEntity target, float damage, boolean sureHit, double instantDeathRate) {
+        if (target == null || target.isRemoved() || !target.isAlive()) {
+            return false;
+        }
+
+        CompoundTag data = player.getPersistentData();
+        data.putBoolean(TAG_PRECOMPUTED_SKILL_DAMAGE, true);
+        if (sureHit) {
+            data.putBoolean(TAG_SURE_HIT_SKILL, true);
+        }
+        if (instantDeathRate > 0.0D) {
+            data.putDouble(TAG_SKILL_INSTANT_DEATH_RATE, instantDeathRate);
+        }
+
+        target.invulnerableTime = 0;
+        try {
+            DamageSource source = sureHit
+                    ? player.damageSources().indirectMagic(player, player)
+                    : player.damageSources().playerAttack(player);
+            boolean damaged = target.hurt(source, damage);
+            if (!damaged) {
+                data.remove("bs2_is_crit");
+            }
+            return damaged;
+        } finally {
+            data.remove(TAG_PRECOMPUTED_SKILL_DAMAGE);
+            data.remove(TAG_SURE_HIT_SKILL);
+            data.remove(TAG_SKILL_INSTANT_DEATH_RATE);
+        }
+    }
+
+    public static void performDaggerExtraHit(ServerPlayer player, LivingEntity target) {
+        if (target == null || target.isRemoved() || !target.isAlive()) {
+            return;
+        }
+
+        BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+        if (stats == null) {
+            return;
+        }
+
+        double rawDamage = stats.attack * 3.0D - resolveVictimDirectDefense(target) * 2.0D;
+        rawDamage = Math.max(1.0D, rawDamage);
+        rawDamage *= com.BlackSouls.BlackSoulsMod.util.BSAttributeManager.getBestMultiplier(
+                target,
+                buildPlayerAttackAttributes(player, stats)
+        );
+        rawDamage *= 0.8D + Math.random() * 0.4D;
+        float finalDamage = rollSkillCrit(player, (float) rawDamage);
+
+        CompoundTag data = player.getPersistentData();
+        data.putBoolean(TAG_DAGGER_EXTRA_HIT, true);
+        target.invulnerableTime = 0;
+        try {
+            if (!target.hurt(player.damageSources().playerAttack(player), finalDamage)) {
+                data.remove("bs2_is_crit");
+            }
+        } finally {
+            data.remove(TAG_DAGGER_EXTRA_HIT);
+        }
+    }
+
+    public static double getWeaponCounterRate(Player player) {
+        if (player == null) return 0.0D;
+        ItemStack mainHand = player.getMainHandItem();
+        if (mainHand.isEmpty()) return 0.0D;
+        if (mainHand.getItem() == BlackSouls.GUNGNIR.get()) return 100.0D;
+        if (mainHand.getItem() == BlackSouls.BROAD_SPEAR.get()) return 50.0D;
+        return 0.0D;
+    }
+
+    private static boolean tryTriggerSpearCounter(LivingAttackEvent event, Player victim, DamageSource source) {
+        if (!(victim instanceof ServerPlayer serverPlayer)
+                || !(source.getEntity() instanceof LivingEntity attacker)
+                || attacker == victim
+                || source.getDirectEntity() != attacker
+                || !(source.is(DamageTypes.PLAYER_ATTACK)
+                || source.is(DamageTypes.MOB_ATTACK)
+                || source.is(DamageTypes.MOB_ATTACK_NO_AGGRO))) {
+            return false;
+        }
+        if (attacker instanceof Player attackingPlayer
+                && attackingPlayer.getPersistentData().getBoolean(TAG_SPEAR_COUNTER)) {
+            return false;
+        }
+
+        double counterRate = getWeaponCounterRate(victim);
+        if (counterRate <= 0.0D || victim.getRandom().nextDouble() * 100.0D >= counterRate) {
+            return false;
+        }
+
+        event.setCanceled(true);
+        performSpearCounter(serverPlayer, attacker);
+        return true;
+    }
+
+    private static void performSpearCounter(ServerPlayer player, LivingEntity target) {
+        BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+        if (stats == null || target.isRemoved() || !target.isAlive()) {
+            return;
+        }
+
+        double rawDamage = stats.attack * 4.0D - resolveVictimDirectDefense(target) * 2.0D;
+        rawDamage = Math.max(1.0D, rawDamage);
+        rawDamage *= com.BlackSouls.BlackSoulsMod.util.BSAttributeManager.getBestMultiplier(
+                target,
+                buildPlayerAttackAttributes(player, stats)
+        );
+        rawDamage *= 0.8D + Math.random() * 0.4D;
+        float finalDamage = rollSkillCrit(player, (float) rawDamage);
+
+        CompoundTag data = player.getPersistentData();
+        data.putBoolean(TAG_SPEAR_COUNTER, true);
+        player.swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
+        com.BlackSouls.BlackSoulsMod.item.weapon.ItemBroadSpear.playAttackEffects(player, target);
+        try {
+            hurtWithSkillDamage(player, target, finalDamage, false, 0.0D);
+        } finally {
+            data.remove(TAG_SPEAR_COUNTER);
+        }
+    }
+
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onLivingAttack(LivingAttackEvent event) {
         if (event.getEntity() instanceof Player player) {
@@ -566,6 +693,27 @@ public class StatEventHandler {
 
             if (source.getDirectEntity() instanceof EntityThrownBlade thrownBlade && thrownBlade.isSureHit()) {
                 return;
+            }
+
+            if (source.getEntity() instanceof Player attacker
+                    && attacker.getPersistentData().getBoolean(TAG_SURE_HIT_SKILL)) {
+                return;
+            }
+
+            if (tryTriggerSpearCounter(event, player, source)) {
+                return;
+            }
+
+            if (source.getEntity() instanceof Player attacker) {
+                CompoundTag attackerData = attacker.getPersistentData();
+                ItemStack mainHand = attacker.getMainHandItem();
+                boolean spearAttack = !mainHand.isEmpty()
+                        && (mainHand.getItem() == BlackSouls.BROAD_SPEAR.get()
+                        || mainHand.getItem() == BlackSouls.GUNGNIR.get());
+                if (spearAttack && (source.is(DamageTypes.PLAYER_ATTACK)
+                        || attackerData.getBoolean(TAG_PRECOMPUTED_SKILL_DAMAGE))) {
+                    return;
+                }
             }
 
             player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
@@ -676,6 +824,9 @@ public class StatEventHandler {
         if (BlackSouls.BUFF_KNIGHTS_GLORY.isPresent() && victim.hasEffect(BlackSouls.BUFF_KNIGHTS_GLORY.get())) {
             event.setAmount(event.getAmount() * 0.5F);
         }
+        if (BlackSouls.BUFF_DAGGER_GUARD.isPresent() && victim.hasEffect(BlackSouls.BUFF_DAGGER_GUARD.get())) {
+            event.setAmount(event.getAmount() * 0.5F);
+        }
 
         applyManagedMobAttackOverride(event);
 
@@ -684,7 +835,11 @@ public class StatEventHandler {
         boolean fromThrownBlade = event.getSource().getDirectEntity() instanceof EntityThrownBlade;
 
         if (event.getSource().getEntity() instanceof Player attacker) {
-            if (fromThrownBlade) {
+            CompoundTag attackerData = attacker.getPersistentData();
+            boolean daggerExtraHit = attackerData.getBoolean(TAG_DAGGER_EXTRA_HIT);
+            boolean precomputedSkillDamage = attackerData.getBoolean(TAG_PRECOMPUTED_SKILL_DAMAGE);
+
+            if (fromThrownBlade || daggerExtraHit || precomputedSkillDamage) {
                 skipUniversalDefense = true;
             } else if (event.getSource().is(DamageTypes.INDIRECT_MAGIC)) {
                 skipUniversalDefense = true;
@@ -694,7 +849,7 @@ public class StatEventHandler {
                 handlePlayerAttackVariance(attacker, event);
             }
 
-            if (!fromThrownBlade) {
+            if (!fromThrownBlade && !daggerExtraHit) {
                 applyPlayerOnHitStatusEffects(attacker, victim);
             }
         }
@@ -734,8 +889,10 @@ public class StatEventHandler {
     }
 
     private static double computePlayerDirectAttackDamage(Player attacker, LivingEntity victim, BSPlayerStats stats) {
-        double rawDamage = stats.attack * 4.0 - resolveVictimDirectDefense(victim) * 2.0;
         Item mainHandItem = attacker.getMainHandItem().getItem();
+        boolean isDagger = mainHandItem == BlackSouls.THIEFS_DAGGER.get()
+                || mainHandItem == BlackSouls.GREAT_THIEFS_DAGGER.get();
+        double rawDamage = stats.attack * (isDagger ? 3.0D : 4.0D) - resolveVictimDirectDefense(victim) * 2.0D;
         boolean isWeapon = mainHandItem instanceof net.minecraft.world.item.TieredItem
                 || mainHandItem instanceof net.minecraft.world.item.ProjectileWeaponItem;
 
@@ -789,6 +946,12 @@ public class StatEventHandler {
         if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.KNIGHT_SWORD.get()) finalStunRate += 20.0;
         if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.DRAKE_SWORD.get()) finalStunRate += 10.0;
         if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.KNIGHT_KING_SWORD.get()) finalStunRate += 20.0;
+        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.THIEFS_DAGGER.get()
+                || mainHand.getItem() == BlackSouls.GREAT_THIEFS_DAGGER.get())) finalStunRate += 5.0;
+        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.GREAT_SWORD.get()
+                || mainHand.getItem() == BlackSouls.GIANT_SWORD.get())) finalStunRate += 80.0;
+        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.BROAD_SPEAR.get()
+                || mainHand.getItem() == BlackSouls.GUNGNIR.get())) finalStunRate += 10.0;
 
         if (finalStunRate > 0 && Math.random() * 100.0 < finalStunRate && BlackSouls.BUFF_STUN.isPresent()) {
             victim.addEffect(new net.minecraft.world.effect.MobEffectInstance(BlackSouls.BUFF_STUN.get(), 40, 0));
@@ -1338,6 +1501,46 @@ public class StatEventHandler {
                 else if (upgradeLevel >= 5) addAtk = 160.0;
                 stats.attack += addAtk;
             }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.THIEFS_DAGGER.get()) {
+                double addAtk = 8.0;
+                double addSpeed = 20.0;
+                if (upgradeLevel == 1) { addAtk = 13.0; addSpeed = 30.0; }
+                else if (upgradeLevel == 2) { addAtk = 18.0; addSpeed = 40.0; }
+                else if (upgradeLevel == 3) { addAtk = 26.0; addSpeed = 50.0; }
+                else if (upgradeLevel == 4) { addAtk = 32.0; addSpeed = 60.0; }
+                else if (upgradeLevel == 5) { addAtk = 42.0; addSpeed = 70.0; }
+                else if (upgradeLevel == 6) { addAtk = 49.0; addSpeed = 80.0; }
+                else if (upgradeLevel == 7) { addAtk = 56.0; addSpeed = 90.0; }
+                else if (upgradeLevel == 8) { addAtk = 62.0; addSpeed = 100.0; }
+                else if (upgradeLevel >= 9) { addAtk = 68.0; addSpeed = 110.0; }
+                stats.attack += addAtk;
+                stats.speed += addSpeed;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.GREAT_THIEFS_DAGGER.get()) {
+                stats.attack += 72.0;
+                stats.speed += 120.0;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.GREAT_SWORD.get()) {
+                double[] attackByLevel = {60.0D, 80.0D, 100.0D, 120.0D, 140.0D, 160.0D, 180.0D, 200.0D, 220.0D, 240.0D};
+                stats.attack += attackByLevel[Math.max(0, Math.min(9, upgradeLevel))];
+                stats.speed *= 0.5D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.GIANT_SWORD.get()) {
+                stats.attack += 280.0D;
+                stats.attack *= 2.0D;
+                stats.speed *= 0.5D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.BROAD_SPEAR.get()) {
+                double[] attackByLevel = {30.0D, 42.0D, 50.0D, 62.0D, 71.0D, 85.0D, 93.0D, 104.0D, 115.0D, 124.0D};
+                stats.attack += attackByLevel[Math.max(0, Math.min(9, upgradeLevel))];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.GUNGNIR.get()) {
+                stats.attack += 150.0D;
+            }
+            if (BlackSouls.BUFF_BERSERK.isPresent() && player.hasEffect(BlackSouls.BUFF_BERSERK.get())) {
+                stats.attack *= 1.5D;
+                stats.speed *= 1.5D;
+            }
 
             stats.attack *= getAttackShiftMultiplier(player);
             stats.defense *= getDefenseShiftMultiplier(player);
@@ -1368,6 +1571,9 @@ public class StatEventHandler {
             if (BlackSouls.BUFF_DARK_POWER.isPresent() && player.hasEffect(BlackSouls.BUFF_DARK_POWER.get())) {
                 stats.weaponEnchantments.add(com.BlackSouls.BlackSoulsMod.util.BSAttributeManager.DARK);
                 stats.attack *= 1.05;
+            }
+            if (BlackSouls.BUFF_DAGGER_EVASION.isPresent() && player.hasEffect(BlackSouls.BUFF_DAGGER_EVASION.get())) {
+                stats.evasion += 70.0D;
             }
             if (BlackSouls.BUFF_FEAR.isPresent() && player.hasEffect(BlackSouls.BUFF_FEAR.get())) {
                 stats.evasion -= 100.0;
@@ -1473,13 +1679,26 @@ public class StatEventHandler {
         float damage = event.getAmount();
 
         if (event.getSource().getEntity() instanceof Player player) {
+            CompoundTag attackerData = player.getPersistentData();
+            if (attackerData.getBoolean(TAG_DAGGER_EXTRA_HIT)) {
+                if (!player.level().isClientSide() && damage > 0.1F) {
+                    showDamageFeedback(player, victim, damage);
+                }
+                return;
+            }
+
             if (!player.level().isClientSide() && damage > 0.1F) {
                 showDamageFeedback(player, victim, damage);
             }
 
             BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
-            if (stats != null && stats.instantDeathRate > 0 && Math.random() * 100.0 < stats.instantDeathRate) {
-                tryTriggerInstantDeath(player, victim, event, stats);
+            double skillInstantDeathRate = attackerData.getDouble(TAG_SKILL_INSTANT_DEATH_RATE);
+            boolean skillInstantDeathRolled = skillInstantDeathRate > 0.0D
+                    && Math.random() * 100.0D < skillInstantDeathRate;
+            if (skillInstantDeathRolled) {
+                tryTriggerInstantDeath(player, victim, event, skillInstantDeathRate);
+            } else if (stats != null && stats.instantDeathRate > 0 && Math.random() * 100.0 < stats.instantDeathRate) {
+                tryTriggerInstantDeath(player, victim, event, stats.instantDeathRate);
             }
             if (!player.level().isClientSide() && getBaubleCount(player, BlackSouls.SNAKE_DRESS.get()) > 0 && BlackSouls.BUFF_SEVERE_POISON.isPresent()) {
                 victim.addEffect(new net.minecraft.world.effect.MobEffectInstance(BlackSouls.BUFF_SEVERE_POISON.get(), 1000, 0));
@@ -1508,7 +1727,7 @@ public class StatEventHandler {
         }
     }
 
-    private static void tryTriggerInstantDeath(Player player, LivingEntity victim, LivingDamageEvent event, BSPlayerStats stats) {
+    private static void tryTriggerInstantDeath(Player player, LivingEntity victim, LivingDamageEvent event, double instantDeathRate) {
         if (isVictimImmuneToInstantDeath(victim)) {
             if (!player.level().isClientSide()) {
                 player.sendSystemMessage(Component.translatable("message.blacksouls.skill.instant_death_immune").withStyle(ChatFormatting.GRAY));
@@ -1521,7 +1740,7 @@ public class StatEventHandler {
             return;
         }
 
-        player.sendSystemMessage(Component.translatable("message.blacksouls.skill.instant_death", (int) stats.instantDeathRate).withStyle(ChatFormatting.DARK_RED));
+        player.sendSystemMessage(Component.translatable("message.blacksouls.skill.instant_death", (int) instantDeathRate).withStyle(ChatFormatting.DARK_RED));
         PacketDistributor.TargetPoint p = new PacketDistributor.TargetPoint(victim.getX(), victim.getY(), victim.getZ(), 64, player.level().dimension());
         try {
             NetworkHandler.INSTANCE.send(PacketDistributor.NEAR.with(() -> p),

@@ -48,6 +48,11 @@ public class PacketCastSkill {
                 return;
             }
 
+            if (BlackSouls.BUFF_BERSERK.isPresent() && player.hasEffect(BlackSouls.BUFF_BERSERK.get())) {
+                player.sendSystemMessage(Component.translatable("message.blacksouls.skill.berserk_locked").withStyle(ChatFormatting.GRAY));
+                return;
+            }
+
             BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).resolve().orElse(null);
             if (stats == null) return;
 

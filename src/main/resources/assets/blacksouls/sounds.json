@@ -17,6 +17,18 @@
       "blacksouls:battle3"
     ]
   },
+  "blind": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:blind"
+    ]
+  },
+  "blow7": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:blow7"
+    ]
+  },
   "break": {
     "category": "player",
     "sounds": [
@@ -51,6 +63,12 @@
     "category": "player",
     "sounds": [
       "blacksouls:darkness5"
+    ]
+  },
+  "darkness7": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:darkness7"
     ]
   },
   "down2": {
@@ -125,6 +143,12 @@
       "blacksouls:flash3"
     ]
   },
+  "fog1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:fog1"
+    ]
+  },
   "fog2": {
     "category": "player",
     "sounds": [
@@ -173,6 +197,12 @@
       "blacksouls:ice8"
     ]
   },
+  "ice11": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:ice11"
+    ]
+  },
   "item1": {
     "category": "player",
     "sounds": [
@@ -201,6 +231,12 @@
     "category": "player",
     "sounds": [
       "blacksouls:monster4"
+    ]
+  },
+  "monster1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:monster1"
     ]
   },
   "player_death": {
@@ -318,6 +354,12 @@
       "blacksouls:slash9"
     ]
   },
+  "slash10": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:slash10"
+    ]
+  },
   "slash11": {
     "category": "player",
     "sounds": [
@@ -358,6 +400,12 @@
     "category": "player",
     "sounds": [
       "blacksouls:sword4"
+    ]
+  },
+  "sword5": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:sword5"
     ]
   },
   "thunder1": {
@@ -414,6 +462,12 @@
     "category": "player",
     "sounds": [
       "blacksouls:wind1"
+    ]
+  },
+  "wind7": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:wind7"
     ]
   },
   "wind10": {

@@ -46,6 +46,14 @@ public class GuiAdvancedSkill extends Screen {
     private static final ResourceLocation ICON_SOUL_RADIATION = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/soul_arrow.png");
     private static final ResourceLocation ICON_CARTHUS_BLOOD_CURSE = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/reinforce.png");
     private static final ResourceLocation ICON_CHRONO_CLOCK = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/chrono_clock.png");
+    private static final ResourceLocation ICON_DECAPITATION = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/decapitation.png");
+    private static final ResourceLocation ICON_HIDE_AND_SEEK = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/hide_and_seek.png");
+    private static final ResourceLocation ICON_SHADOWLESS = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/shadowless.png");
+    private static final ResourceLocation ICON_SWEEP = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/sweep.png");
+    private static final ResourceLocation ICON_BERSERKER_ROAR = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/berserker_roar.png");
+    private static final ResourceLocation ICON_IRON_HAMMER = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/iron_hammer.png");
+    private static final ResourceLocation ICON_ARMOR_PIERCE = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/armor_pierce.png");
+    private static final ResourceLocation ICON_GALE_SIXFOLD_THRUST = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/gale_sixfold_thrust.png");
     private static final Component TITLE = Component.translatable("gui.blacksouls.skill.title");
     private static final Component ORGANIZED = Component.translatable("gui.blacksouls.skill.organized");
     private static final Component UNDEAD = Component.translatable("gui.blacksouls.skill.undead");
@@ -128,6 +136,26 @@ public class GuiAdvancedSkill extends Screen {
         if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.KNIGHT_SWORD.get() || mainHand.getItem() == BlackSouls.KNIGHT_KING_SWORD.get())) {
             addSkill("bs2_skill_weapon_break", ICON_WEAPON_BREAK);
             addSkill("bs2_skill_armor_break", ICON_ARMOR_BREAK);
+        }
+        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.THIEFS_DAGGER.get() || mainHand.getItem() == BlackSouls.GREAT_THIEFS_DAGGER.get())) {
+            addSkill("bs2_skill_decapitation", ICON_DECAPITATION);
+            addSkill("bs2_skill_hide_and_seek", ICON_HIDE_AND_SEEK);
+        }
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.GREAT_THIEFS_DAGGER.get()) {
+            addSkill("bs2_skill_shadowless", ICON_SHADOWLESS);
+        }
+        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.GREAT_SWORD.get() || mainHand.getItem() == BlackSouls.GIANT_SWORD.get())) {
+            addSkill("bs2_skill_sweep", ICON_SWEEP);
+            addSkill("bs2_skill_berserker_roar", ICON_BERSERKER_ROAR);
+        }
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.GIANT_SWORD.get()) {
+            addSkill("bs2_skill_iron_hammer", ICON_IRON_HAMMER);
+        }
+        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.BROAD_SPEAR.get() || mainHand.getItem() == BlackSouls.GUNGNIR.get())) {
+            addSkill("bs2_skill_armor_pierce", ICON_ARMOR_PIERCE);
+        }
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.GUNGNIR.get()) {
+            addSkill("bs2_skill_gale_sixfold_thrust", ICON_GALE_SIXFOLD_THRUST);
         }
 
         // 主手判断持有骑士王之剑给予骑士的荣耀判断
