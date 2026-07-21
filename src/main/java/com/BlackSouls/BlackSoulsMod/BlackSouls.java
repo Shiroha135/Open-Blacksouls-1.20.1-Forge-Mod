@@ -85,6 +85,7 @@ public class BlackSouls {
     public static final RegistryObject<MobEffect> BUFF_DAGGER_EVASION = MOB_EFFECTS.register("dagger_evasion", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xD8E4F2));
     public static final RegistryObject<MobEffect> BUFF_DAGGER_GUARD = MOB_EFFECTS.register("dagger_guard", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0x9CA8B8));
     public static final RegistryObject<MobEffect> BUFF_BERSERK = MOB_EFFECTS.register("berserk", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xC63B2D));
+    public static final RegistryObject<MobEffect> BUFF_STRUGGLE = MOB_EFFECTS.register("struggle", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xE6B94A));
     public static final RegistryObject<MobEffect> BUFF_MAGIC_ATK_UP = MOB_EFFECTS.register("magic_atk_up", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xFF8ED8));
     public static final RegistryObject<MobEffect> BUFF_MAGIC_ATK_UP_2 = MOB_EFFECTS.register("magic_atk_up_2", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xFFC5F1));
     public static final RegistryObject<MobEffect> BUFF_MAGIC_ATK_DOWN = MOB_EFFECTS.register("magic_atk_down", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.HARMFUL, 0x8C3A72));
@@ -114,6 +115,7 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> ATTACK3_EVENT = registerSound("attack3");
     public static final RegistryObject<SoundEvent> BATTLE3_EVENT =  registerSound("battle3");
     public static final RegistryObject<SoundEvent> BLIND_EVENT = registerSound("blind");
+    public static final RegistryObject<SoundEvent> BLOW6_EVENT = registerSound("blow6");
     public static final RegistryObject<SoundEvent> BLOW7_EVENT = registerSound("blow7");
     public static final RegistryObject<SoundEvent> BREAK_EVENT = registerSound("break");
     public static final RegistryObject<SoundEvent> CRASH_EVENT = registerSound("crash");
@@ -122,11 +124,15 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> DARKNESS3_EVENT = registerSound("darkness3");
     public static final RegistryObject<SoundEvent> DARKNESS5_EVENT = registerSound("darkness5");
     public static final RegistryObject<SoundEvent> DARKNESS7_EVENT = registerSound("darkness7");
+    public static final RegistryObject<SoundEvent> DAMAGE4_EVENT = registerSound("damage4");
     public static final RegistryObject<SoundEvent> DOWN2_EVENT = registerSound("down2");
     public static final RegistryObject<SoundEvent> EARTH6_EVENT = registerSound("earth6");
+    public static final RegistryObject<SoundEvent> EARTH1_EVENT = registerSound("earth1");
+    public static final RegistryObject<SoundEvent> EARTH5_EVENT = registerSound("earth5");
     public static final RegistryObject<SoundEvent> EVASION1_EVENT  = registerSound("evasion1");
     public static final RegistryObject<SoundEvent> EXPLOSION3_EVENT =registerSound("explosion3");
     public static final RegistryObject<SoundEvent> FIRE2_EVENT = registerSound("fire2");
+    public static final RegistryObject<SoundEvent> FIRE1_EVENT = registerSound("fire1");
     public static final RegistryObject<SoundEvent> FIRE3_EVENT = registerSound("fire3");
     public static final RegistryObject<SoundEvent> FIRE4_EVENT = registerSound("fire4");
     public static final RegistryObject<SoundEvent> FIRE6_EVENT = registerSound("fire6");
@@ -150,13 +156,16 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> MBJH_ME03_EVENT = registerSound("mbjh_me03");
     public static final RegistryObject<SoundEvent> MONSTER4_EVENT = registerSound("monster4");
     public static final RegistryObject<SoundEvent> MONSTER1_EVENT = registerSound("monster1");
+    public static final RegistryObject<SoundEvent> HEARTBEAT_EVENT = registerSound("heartbeat");
     public static final RegistryObject<SoundEvent> PLAYER_DEATH_EVENT = registerSound("player_death");
     public static final RegistryObject<SoundEvent> RABBIT_WATCH_WIND_EVENT = registerSound("rabbit_watch_wind");
     public static final RegistryObject<SoundEvent> RAISE3_EVENT = registerSound("raise3");
+    public static final RegistryObject<SoundEvent> RAISE1_EVENT = registerSound("raise1");
     public static final RegistryObject<SoundEvent> SAINT6_EVENT = registerSound("saint6");
     public static final RegistryObject<SoundEvent> SAINT7_EVENT = registerSound("saint7");
     public static final RegistryObject<SoundEvent> SAINT9_EVENT = registerSound("saint9");
     public static final RegistryObject<SoundEvent> SAND_EVENT = registerSound("sand");
+    public static final RegistryObject<SoundEvent> PUSH_EVENT = registerSound("push");
     public static final RegistryObject<SoundEvent> SHOTGUN_FIRE_EVENT = registerSound("shotgun_fire");
     public static final RegistryObject<SoundEvent> SKILL1_EVENT =  registerSound("skill1");
     public static final RegistryObject<SoundEvent> SKILL3_EVENT =  registerSound("skill3");
@@ -176,6 +185,7 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> SWORD4_EVENT = registerSound("sword4");
     public static final RegistryObject<SoundEvent> SWORD5_EVENT = registerSound("sword5");
     public static final RegistryObject<SoundEvent> THUNDER1_EVENT = registerSound("thunder1");
+    public static final RegistryObject<SoundEvent> THUNDER7_EVENT = registerSound("thunder7");
     public static final RegistryObject<SoundEvent> THUNDER5_EVENT = registerSound("thunder5");
     public static final RegistryObject<SoundEvent> THUNDER8_EVENT = registerSound("thunder8");
     public static final RegistryObject<SoundEvent> THUNDER10_EVENT = registerSound("thunder10");
@@ -427,6 +437,10 @@ public class BlackSouls {
     public static final RegistryObject<Item> GIANT_SWORD = ITEMS.register("giant_sword", () -> new ItemGiantSword(new Item.Properties()));
     public static final RegistryObject<Item> BROAD_SPEAR = ITEMS.register("broad_spear", () -> new ItemBroadSpear(new Item.Properties()));
     public static final RegistryObject<Item> GUNGNIR = ITEMS.register("gungnir", () -> new ItemGungnir(new Item.Properties()));
+    public static final RegistryObject<Item> BANDERSNATCH_SWORD = ITEMS.register("bandersnatch_sword", () -> new ItemBandersnatchSword(new Item.Properties()));
+    public static final RegistryObject<Item> VORPAL_SWORD = ITEMS.register("vorpal_sword", () -> new ItemVorpalSword(new Item.Properties()));
+    public static final RegistryObject<Item> CLUB = ITEMS.register("club", () -> new ItemClub(new Item.Properties()));
+    public static final RegistryObject<Item> KING_CLUB = ITEMS.register("king_club", () -> new ItemKingClub(new Item.Properties()));
     // =========================================================================================================================================================================
     // 技能书
     // =========================================================================================================================================================================
@@ -689,6 +703,10 @@ public class BlackSouls {
                         output.accept(GIANT_SWORD.get());                  // 巨人剑
                         output.accept(BROAD_SPEAR.get());                  // 阔头枪
                         output.accept(GUNGNIR.get());                      // 冈格尼尔
+                        output.accept(BANDERSNATCH_SWORD.get());           // 暴剑班达斯奈奇
+                        output.accept(VORPAL_SWORD.get());                 // 沃柏尔之剑
+                        output.accept(CLUB.get());                         // 棍棒
+                        output.accept(KING_CLUB.get());                    // 王棒
                     })
                     .build());
 

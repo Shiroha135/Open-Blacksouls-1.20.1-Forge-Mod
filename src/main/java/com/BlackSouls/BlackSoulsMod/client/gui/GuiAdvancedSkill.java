@@ -54,6 +54,9 @@ public class GuiAdvancedSkill extends Screen {
     private static final ResourceLocation ICON_IRON_HAMMER = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/iron_hammer.png");
     private static final ResourceLocation ICON_ARMOR_PIERCE = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/armor_pierce.png");
     private static final ResourceLocation ICON_GALE_SIXFOLD_THRUST = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/gale_sixfold_thrust.png");
+    private static final ResourceLocation ICON_STRUGGLE = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/struggle.png");
+    private static final ResourceLocation ICON_HEAVY_STRIKE = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/heavy_strike.png");
+    private static final ResourceLocation ICON_SMOLDERING_FRENZY = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/smoldering_frenzy.png");
     private static final Component TITLE = Component.translatable("gui.blacksouls.skill.title");
     private static final Component ORGANIZED = Component.translatable("gui.blacksouls.skill.organized");
     private static final Component UNDEAD = Component.translatable("gui.blacksouls.skill.undead");
@@ -117,7 +120,7 @@ public class GuiAdvancedSkill extends Screen {
             addSkill("bs2_skill_shotgun_blast", ICON_SHOTGUN);
         }
         // 主手判断持有沃柏尔之刃给予三段斩判断
-        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.VORPAL_BLADE.get()) {
+        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.VORPAL_BLADE.get() || mainHand.getItem() == BlackSouls.VORPAL_SWORD.get())) {
             addSkill("bs2_skill_vorpal_slash", ICON_VORPAL);
         }
         // 主手判断持有安多鲁之剑给予灵气刃判断
@@ -157,6 +160,13 @@ public class GuiAdvancedSkill extends Screen {
         if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.GUNGNIR.get()) {
             addSkill("bs2_skill_gale_sixfold_thrust", ICON_GALE_SIXFOLD_THRUST);
         }
+        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.CLUB.get() || mainHand.getItem() == BlackSouls.KING_CLUB.get())) {
+            addSkill("bs2_skill_struggle", ICON_STRUGGLE);
+        }
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.BANDERSNATCH_SWORD.get()) {
+            addSkill("bs2_skill_heavy_strike", ICON_HEAVY_STRIKE);
+            addSkill("bs2_skill_smoldering_frenzy", ICON_SMOLDERING_FRENZY);
+        }
 
         // 主手判断持有骑士王之剑给予骑士的荣耀判断
         if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.KNIGHT_KING_SWORD.get()) {
@@ -177,7 +187,9 @@ public class GuiAdvancedSkill extends Screen {
         }
 
         // 勇剑沃柏尔+沃柏尔之刃都拥有强化附加技能
-        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.BRAVE_SWORD_VORPAL.get() || mainHand.getItem() == BlackSouls.VORPAL_BLADE.get())) {
+        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.BRAVE_SWORD_VORPAL.get()
+                || mainHand.getItem() == BlackSouls.VORPAL_BLADE.get()
+                || mainHand.getItem() == BlackSouls.VORPAL_SWORD.get())) {
             addSkill("bs2_skill_reinforce", ICON_REINFORCE);
         }
         // 所有角色自带难度设置技能

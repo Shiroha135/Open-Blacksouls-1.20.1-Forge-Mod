@@ -44,7 +44,8 @@ public class SkillVorpalSlash extends WeaponSkill {
     @Override
     protected boolean isWeaponEquipped(Player player) {
         ItemStack mainHand = player.getMainHandItem();
-        return !mainHand.isEmpty() && mainHand.getItem() == BlackSouls.VORPAL_BLADE.get();
+        return !mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.VORPAL_BLADE.get()
+                || mainHand.getItem() == BlackSouls.VORPAL_SWORD.get());
     }
 
     @Override

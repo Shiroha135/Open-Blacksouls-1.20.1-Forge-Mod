@@ -476,6 +476,60 @@
       "blacksouls:wind10"
     ]
   },
+  "blow6": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:blow6"
+    ]
+  },
+  "damage4": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:damage4"
+    ]
+  },
+  "earth1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:earth1"
+    ]
+  },
+  "earth5": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:earth5"
+    ]
+  },
+  "fire1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:fire1"
+    ]
+  },
+  "heartbeat": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:heartbeat"
+    ]
+  },
+  "push": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:push"
+    ]
+  },
+  "raise1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:raise1"
+    ]
+  },
+  "thunder7": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:thunder7"
+    ]
+  },
   "music.library": {
     "category": "music",
     "sounds": [

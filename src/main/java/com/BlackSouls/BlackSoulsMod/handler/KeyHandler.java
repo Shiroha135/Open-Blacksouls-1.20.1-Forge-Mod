@@ -100,7 +100,8 @@ public class KeyHandler {
                 if (!offhand.isEmpty() && offhand.getItem() == BlackSouls.MURDERERS_SHOTGUN.get()) canCast = true;
             } else if (skillToCast.equals("bs2_skill_vorpal_slash")) {
                 net.minecraft.world.item.ItemStack mainHand = player.getMainHandItem();
-                if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.VORPAL_BLADE.get()) canCast = true;
+                if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.VORPAL_BLADE.get()
+                        || mainHand.getItem() == BlackSouls.VORPAL_SWORD.get())) canCast = true;
             } else if (skillToCast.equals("bs2_skill_aura_blade")) {
                 net.minecraft.world.item.ItemStack mainHand = player.getMainHandItem();
                 if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.ANDOR_SWORD.get()) canCast = true;
@@ -143,7 +144,9 @@ public class KeyHandler {
             
             else if (skillToCast.equals("bs2_skill_reinforce")) {
                 net.minecraft.world.item.ItemStack mainHand = player.getMainHandItem();
-                if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.BRAVE_SWORD_VORPAL.get() || mainHand.getItem() == BlackSouls.VORPAL_BLADE.get())) {
+                if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.BRAVE_SWORD_VORPAL.get()
+                        || mainHand.getItem() == BlackSouls.VORPAL_BLADE.get()
+                        || mainHand.getItem() == BlackSouls.VORPAL_SWORD.get())) {
                     canCast = true;
                 }
             } else if (skillToCast.equals("bs2_skill_chrono_clock")) {

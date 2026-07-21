@@ -37,6 +37,9 @@ public class SkillRegistry {
         register(new SkillIronHammer());
         register(new SkillArmorPierce());
         register(new SkillGaleSixfoldThrust());
+        register(new SkillStruggle());
+        register(new SkillHeavyStrike());
+        register(new SkillSmolderingFrenzy());
     }
 
     public static void register(AbstractSkill skill) {

@@ -18,12 +18,16 @@ public class WeaponUpgradeHandler {
         if (weapon == BlackSouls.KNIGHT_SWORD.get()
                 || weapon == BlackSouls.THIEFS_DAGGER.get()
                 || weapon == BlackSouls.GREAT_SWORD.get()
-                || weapon == BlackSouls.BROAD_SPEAR.get()) {
+                || weapon == BlackSouls.BROAD_SPEAR.get()
+                || weapon == BlackSouls.VORPAL_BLADE.get()
+                || weapon == BlackSouls.CLUB.get()) {
             return getKnightSwordRoute(currentLevel);
         }
 
         
-        if (weapon == BlackSouls.ANDOR_SWORD.get() || weapon == BlackSouls.DRAKE_SWORD.get()) {
+        if (weapon == BlackSouls.ANDOR_SWORD.get()
+                || weapon == BlackSouls.DRAKE_SWORD.get()
+                || weapon == BlackSouls.BANDERSNATCH_SWORD.get()) {
             return getSpecialWeaponRoute(currentLevel);
         }
 
@@ -123,6 +127,8 @@ public class WeaponUpgradeHandler {
         if (weapon == BlackSouls.THIEFS_DAGGER.get()) return BlackSouls.GREAT_THIEFS_DAGGER.get();
         if (weapon == BlackSouls.GREAT_SWORD.get()) return BlackSouls.GIANT_SWORD.get();
         if (weapon == BlackSouls.BROAD_SPEAR.get()) return BlackSouls.GUNGNIR.get();
+        if (weapon == BlackSouls.VORPAL_BLADE.get()) return BlackSouls.VORPAL_SWORD.get();
+        if (weapon == BlackSouls.CLUB.get()) return BlackSouls.KING_CLUB.get();
         return null;
     }
 

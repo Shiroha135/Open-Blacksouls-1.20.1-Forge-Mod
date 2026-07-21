@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "blacksouls:item/great_sword"
+    "layer0": "blacksouls:item/king_club"
   }
 }

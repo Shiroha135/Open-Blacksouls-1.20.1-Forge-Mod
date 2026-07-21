@@ -23,6 +23,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ambient.AmbientCreature;
@@ -859,7 +860,8 @@ public class StatEventHandler {
         }
 
         if (BlackSouls.BUFF_DEFENSELESS.isPresent() && victim.hasEffect(BlackSouls.BUFF_DEFENSELESS.get())) {
-            event.setAmount(event.getAmount() * 2.0F);
+            MobEffectInstance defenseless = victim.getEffect(BlackSouls.BUFF_DEFENSELESS.get());
+            event.setAmount(event.getAmount() * (defenseless != null && defenseless.getAmplifier() > 0 ? 3.0F : 2.0F));
         }
 
     }
@@ -929,7 +931,8 @@ public class StatEventHandler {
         attackAttrs.addAll(stats.weaponEnchantments);
 
         ItemStack currentWeapon = attacker.getMainHandItem();
-        if (!currentWeapon.isEmpty() && currentWeapon.getItem() == BlackSouls.BRAVE_SWORD_VORPAL.get()) {
+        if (!currentWeapon.isEmpty() && (currentWeapon.getItem() == BlackSouls.BRAVE_SWORD_VORPAL.get()
+                || currentWeapon.getItem() == BlackSouls.VORPAL_SWORD.get())) {
             attackAttrs.add(com.BlackSouls.BlackSoulsMod.util.BSAttributeManager.JABBERWOCK_KILLER);
         }
         return attackAttrs;
@@ -952,6 +955,9 @@ public class StatEventHandler {
                 || mainHand.getItem() == BlackSouls.GIANT_SWORD.get())) finalStunRate += 80.0;
         if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.BROAD_SPEAR.get()
                 || mainHand.getItem() == BlackSouls.GUNGNIR.get())) finalStunRate += 10.0;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.BANDERSNATCH_SWORD.get()) finalStunRate += 30.0;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.CLUB.get()) finalStunRate += 25.0;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.KING_CLUB.get()) finalStunRate += 60.0;
 
         if (finalStunRate > 0 && Math.random() * 100.0 < finalStunRate && BlackSouls.BUFF_STUN.isPresent()) {
             victim.addEffect(new net.minecraft.world.effect.MobEffectInstance(BlackSouls.BUFF_STUN.get(), 40, 0));
@@ -1461,7 +1467,8 @@ public class StatEventHandler {
                 stats.extraActionRate += addExtraAction;
             }
             if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.VORPAL_BLADE.get()) {
-                stats.attack += 21.0;
+                double[] attackByLevel = {21.0D, 33.0D, 46.0D, 55.0D, 64.0D, 70.0D, 82.0D, 91.0D, 98.0D, 108.0D};
+                stats.attack += attackByLevel[Math.max(0, Math.min(9, upgradeLevel))];
             }
 
             if (BlackSouls.BUFF_KNIGHTS_GLORY.isPresent() && player.hasEffect(BlackSouls.BUFF_KNIGHTS_GLORY.get())) {
@@ -1536,6 +1543,27 @@ public class StatEventHandler {
             }
             if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.GUNGNIR.get()) {
                 stats.attack += 150.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.VORPAL_SWORD.get()) {
+                stats.attack += 160.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.BANDERSNATCH_SWORD.get()) {
+                double[] attackByLevel = {50.0D, 70.0D, 90.0D, 110.0D, 135.0D, 180.0D};
+                int level = Math.max(0, Math.min(5, upgradeLevel));
+                stats.attack += attackByLevel[level];
+                if (level >= 5) {
+                    stats.critRate += 30.0D;
+                }
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.CLUB.get()) {
+                double[] attackByLevel = {22.0D, 30.0D, 38.0D, 46.0D, 55.0D, 65.0D, 71.0D, 80.0D, 95.0D, 123.0D};
+                stats.attack += attackByLevel[Math.max(0, Math.min(9, upgradeLevel))];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.KING_CLUB.get()) {
+                stats.attack += 150.0D;
+            }
+            if (BlackSouls.BUFF_STRUGGLE.isPresent() && player.hasEffect(BlackSouls.BUFF_STRUGGLE.get())) {
+                stats.critRate += 30.0D;
             }
             if (BlackSouls.BUFF_BERSERK.isPresent() && player.hasEffect(BlackSouls.BUFF_BERSERK.get())) {
                 stats.attack *= 1.5D;
