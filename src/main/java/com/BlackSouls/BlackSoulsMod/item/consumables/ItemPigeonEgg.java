@@ -35,7 +35,7 @@ public class ItemPigeonEgg extends Item {
             BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
             if (stats != null) {
                 double maxMana = stats.maxMp;
-                stats.mp = Math.min(maxMana, stats.mp + maxMana * 0.30);
+                stats.mp = Math.min(maxMana, stats.mp + maxMana * 0.30 * StatEventHandler.getConsumableRecoveryMultiplier(player));
                 StatEventHandler.syncToClient(player);
             }
 

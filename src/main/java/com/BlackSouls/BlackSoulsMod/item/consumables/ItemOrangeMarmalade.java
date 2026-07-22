@@ -6,6 +6,7 @@ import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketPlayAnim;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -55,6 +56,9 @@ public class ItemOrangeMarmalade extends Item {
                 target.addEffect(new MobEffectInstance(BlackSouls.BUFF_SEVERE_POISON.get(), 1000, 0));
             }
 
+            target.level().playSound(null, target.blockPosition(), BlackSouls.EVASION1_EVENT.get(), SoundSource.PLAYERS, 0.8F, 1.0F);
+            target.level().playSound(null, target.blockPosition(), BlackSouls.POISON_EVENT.get(), SoundSource.PLAYERS, 0.8F, 0.7F);
+            target.level().playSound(null, target.blockPosition(), BlackSouls.POISON_EVENT.get(), SoundSource.PLAYERS, 0.8F, 1.0F);
             PacketPlayAnim animPacket = new PacketPlayAnim(205, target.getX(), target.getY() + target.getBbHeight() / 2.0F, target.getZ());
             NetworkHandler.sendToAllAround(animPacket, target);
 

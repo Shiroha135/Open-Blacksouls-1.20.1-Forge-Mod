@@ -7,6 +7,7 @@ import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.google.common.collect.HashMultimap;
 import com.BlackSouls.BlackSoulsMod.entity.EntityThrownBlade;
 import com.BlackSouls.BlackSoulsMod.entity.InstantDeathImmuneEntity;
+import com.BlackSouls.BlackSoulsMod.item.rings.ItemOriginalRing;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.*;
 import com.BlackSouls.BlackSoulsMod.util.SkillUtils;
@@ -66,10 +67,13 @@ public class StatEventHandler {
     private static final String TAG_FIRST_JOIN_BLACK_ASH = "bs2_first_join_black_ash";
     private static final String TAG_FIRST_JOIN_DEV_MODE_ITEMS = "bs2_first_join_dev_mode_items";
     private static final String TAG_DAGGER_EXTRA_HIT = "bs2_dagger_extra_hit";
+    private static final String TAG_RING_EXTRA_HIT = "bs2_ring_extra_hit";
+    private static final String TAG_RING_COMBAT_UNTIL = "bs2_ring_combat_until";
     private static final String TAG_PRECOMPUTED_SKILL_DAMAGE = "bs2_precomputed_skill_damage";
     private static final String TAG_SURE_HIT_SKILL = "bs2_sure_hit_skill";
     private static final String TAG_SKILL_INSTANT_DEATH_RATE = "bs2_skill_instant_death_rate";
     private static final String TAG_SPEAR_COUNTER = "bs2_spear_counter";
+    private static final String TAG_PUPPET_RANGED_COOLDOWN = "bs2_puppet_ranged_cooldown";
     private static final UUID CHRONO_WATCH_SLOT_UUID = UUID.fromString("a7eecdcf-c4a0-4d4d-8831-fc8f7c80adf1");
 
     private static final double CAP_HP = BSPlayerStats.HARD_CAP_HP;
@@ -126,6 +130,17 @@ public class StatEventHandler {
 
         private int count(Item item) {
             return cache.getOrDefault(item, 0);
+        }
+
+        private int count(com.BlackSouls.BlackSoulsMod.item.rings.ItemOriginalRing.Profile profile) {
+            int total = 0;
+            for (Map.Entry<Item, Integer> entry : cache.entrySet()) {
+                if (entry.getKey() instanceof com.BlackSouls.BlackSoulsMod.item.rings.ItemOriginalRing ring
+                        && ring.getProfile() == profile) {
+                    total += entry.getValue();
+                }
+            }
+            return total;
         }
 
         private boolean has(Item item) {
@@ -353,6 +368,34 @@ public class StatEventHandler {
         return CuriosApi.getCuriosInventory(player).map(handler ->
                 handler.findCurios(targetRing).size()
         ).orElse(0);
+    }
+
+    public static int getOriginalRingCount(LivingEntity entity,
+                                            com.BlackSouls.BlackSoulsMod.item.rings.ItemOriginalRing.Profile profile) {
+        return entity == null || profile == null ? 0 : new BaubleCounter(entity).count(profile);
+    }
+
+    public static double getItemRecoveryMultiplier(LivingEntity entity) {
+        return Math.pow(2.0D, getBaubleCount(entity, BlackSouls.RING_TOTO.get()))
+                * Math.pow(0.5D, getBaubleCount(entity, BlackSouls.RING_RED_TEARSTONE.get()))
+                * Math.pow(0.8D, getOriginalRingCount(entity, ItemOriginalRing.Profile.CUT_DOWN));
+    }
+
+    public static double getConsumableRecoveryMultiplier(LivingEntity entity) {
+        return getItemRecoveryMultiplier(entity)
+                * Math.pow(2.0D, getBaubleCount(entity, BlackSouls.RING_MIRACLE.get()));
+    }
+
+    public static double getPercentageDamageMultiplier(LivingEntity entity) {
+        return Math.pow(2.0D, getBaubleCount(entity, BlackSouls.RING_MIRACLE.get()))
+                * Math.pow(0.8D, getOriginalRingCount(entity, ItemOriginalRing.Profile.CUT_DOWN));
+    }
+
+    private static double getGuardEffectMultiplier(LivingEntity entity) {
+        return Math.pow(1.5D, getBaubleCount(entity, BlackSouls.RING_TENACIOUS.get()))
+                * Math.pow(2.0D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_1))
+                * Math.pow(2.5D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_2))
+                * Math.pow(3.0D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_3));
     }
 
     private static boolean hasRegisteredEffect(LivingEntity entity, RegistryObject<net.minecraft.world.effect.MobEffect> effect) {
@@ -778,15 +821,21 @@ public class StatEventHandler {
         if (player == null) return 0.0D;
         if (BlackSouls.BUFF_HASSO.isPresent() && player.hasEffect(BlackSouls.BUFF_HASSO.get())) return 100.0D;
         if (BlackSouls.BUFF_COUNTER_STANCE.isPresent() && player.hasEffect(BlackSouls.BUFF_COUNTER_STANCE.get())) return 100.0D;
+        double rate = getBaubleCount(player, BlackSouls.RING_FIGHTER.get()) * 10.0D
+                + getBaubleCount(player, BlackSouls.RING_SIN.get()) * 50.0D
+                + getOriginalRingCount(player, ItemOriginalRing.Profile.SIN_PLUS_1) * 55.0D
+                + getOriginalRingCount(player, ItemOriginalRing.Profile.SIN_PLUS_2) * 60.0D
+                + getOriginalRingCount(player, ItemOriginalRing.Profile.SIN_PLUS_3) * 70.0D
+                + getOriginalRingCount(player, ItemOriginalRing.Profile.COUNTERATTACK) * 100.0D;
         ItemStack mainHand = player.getMainHandItem();
-        if (mainHand.isEmpty()) return 0.0D;
-        if (mainHand.getItem() == BlackSouls.GUNGNIR.get()) return 100.0D;
-        if (mainHand.getItem() == BlackSouls.BROAD_SPEAR.get()) return 50.0D;
+        if (mainHand.isEmpty()) return Math.min(100.0D, rate);
+        if (mainHand.getItem() == BlackSouls.GUNGNIR.get()) rate += 100.0D;
+        if (mainHand.getItem() == BlackSouls.BROAD_SPEAR.get()) rate += 50.0D;
         if (mainHand.getItem() == BlackSouls.MIRANDA_AXE.get()) {
             int level = mainHand.hasTag() ? Math.max(0, Math.min(5, mainHand.getTag().getInt("bs2_upgrade_level"))) : 0;
-            return level >= 5 ? 40.0D : 30.0D;
+            rate += level >= 5 ? 40.0D : 30.0D;
         }
-        return 0.0D;
+        return Math.min(100.0D, rate);
     }
 
     private static boolean tryTriggerSpearCounter(LivingAttackEvent event, Player victim, DamageSource source) {
@@ -860,6 +909,9 @@ public class StatEventHandler {
     public static void onLivingAttack(LivingAttackEvent event) {
         if (event.getEntity() instanceof Player player) {
             DamageSource source = event.getSource();
+            if (source.getEntity() instanceof LivingEntity opponent && opponent != player) {
+                activateBattleStartRings(player);
+            }
 
             if (EntityHellPrince.isOpeningComboDamage(source)) {
                 return;
@@ -875,6 +927,23 @@ public class StatEventHandler {
 
             if (source.getEntity() instanceof Player attacker
                     && attacker.getPersistentData().getBoolean(TAG_SURE_HIT_SKILL)) {
+                return;
+            }
+
+            if (getBaubleCount(player, BlackSouls.WINDLESS_CLOTHES.get()) > 0
+                    && !source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_ARMOR)
+                    && !source.is(DamageTypes.MAGIC)
+                    && !source.is(DamageTypes.INDIRECT_MAGIC)) {
+                event.setCanceled(true);
+                if (!player.level().isClientSide()) {
+                    ((ServerLevel) player.level()).sendParticles(
+                            ParticleTypes.CLOUD,
+                            player.getX(), player.getY() + 1.0D, player.getZ(),
+                            3, 0.2D, 0.2D, 0.2D, 0.05D
+                    );
+                    player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
+                            SoundEvents.PLAYER_ATTACK_SWEEP, SoundSource.PLAYERS, 1.0F, 2.0F);
+                }
                 return;
             }
 
@@ -1019,20 +1088,38 @@ public class StatEventHandler {
 
         LivingEntity victim = event.getEntity();
 
+        if (victim instanceof Player player
+                && event.getSource().getEntity() instanceof LivingEntity opponent
+                && opponent != player) {
+            activateBattleStartRings(player);
+        }
+
         if (event.getSource().getEntity() instanceof Player attacker) {
-            CompoundTag attackerData = attacker.getPersistentData();
-            if (attacker.getMainHandItem().getItem() == BlackSouls.MEAT_CLEAVER_GREATAXE.get()
-                    && !attackerData.getBoolean(TAG_SURE_HIT_SKILL)
-                    && attacker.getRandom().nextDouble() < 0.30D) {
-                event.setCanceled(true);
-                return;
+            if (attacker != victim) {
+                activateBattleStartRings(attacker);
             }
+            CompoundTag attackerData = attacker.getPersistentData();
             Item heldItem = attacker.getMainHandItem().getItem();
-            boolean warhammer = heldItem == BlackSouls.WARHAMMER.get()
+            boolean inaccurateWeapon = heldItem == BlackSouls.MEAT_CLEAVER_GREATAXE.get()
+                    || heldItem == BlackSouls.WARHAMMER.get()
                     || heldItem == BlackSouls.ABERRANT_WARHAMMER.get();
             boolean aimed = BlackSouls.BUFF_AIM.isPresent() && attacker.hasEffect(BlackSouls.BUFF_AIM.get());
-            if (warhammer && !aimed && !attackerData.getBoolean(TAG_SURE_HIT_SKILL)
-                    && attacker.getRandom().nextDouble() < 0.30D) {
+            double missChance = getBaubleCount(attacker, BlackSouls.RING_TROLL.get()) * 0.50D
+                    - getBaubleCount(attacker, BlackSouls.RING_SNIPER.get()) * 0.30D
+                    - getBaubleCount(attacker, BlackSouls.RING_SIN.get()) * 0.50D
+                    - getOriginalRingCount(attacker, ItemOriginalRing.Profile.SNIPER_PLUS_1) * 0.40D
+                    - getOriginalRingCount(attacker, ItemOriginalRing.Profile.SNIPER_PLUS_2) * 0.50D
+                    - getOriginalRingCount(attacker, ItemOriginalRing.Profile.SNIPER_PLUS_3) * 0.60D
+                    - getOriginalRingCount(attacker, ItemOriginalRing.Profile.SIN_PLUS_1) * 0.55D
+                    - getOriginalRingCount(attacker, ItemOriginalRing.Profile.SIN_PLUS_2) * 0.60D
+                    - getOriginalRingCount(attacker, ItemOriginalRing.Profile.SIN_PLUS_3) * 0.70D
+                    - (BlackSouls.BUFF_PLAYWRIGHT.isPresent() && attacker.hasEffect(BlackSouls.BUFF_PLAYWRIGHT.get()) ? 1.0D : 0.0D);
+            if (inaccurateWeapon && !aimed) {
+                missChance += 0.30D;
+            }
+            if (attacker != victim
+                    && !attackerData.getBoolean(TAG_SURE_HIT_SKILL)
+                    && attacker.getRandom().nextDouble() < Math.min(1.0D, Math.max(0.0D, missChance))) {
                 event.setCanceled(true);
                 return;
             }
@@ -1046,7 +1133,27 @@ public class StatEventHandler {
             event.setAmount(event.getAmount() * 0.5F);
         }
         if (BlackSouls.BUFF_DAGGER_GUARD.isPresent() && victim.hasEffect(BlackSouls.BUFF_DAGGER_GUARD.get())) {
-            event.setAmount(event.getAmount() * 0.5F);
+            event.setAmount((float) (event.getAmount() * 0.5D
+                    / getGuardEffectMultiplier(victim)));
+        } else if (victim instanceof Player player && player.isBlocking()) {
+            event.setAmount((float) (event.getAmount()
+                    / getGuardEffectMultiplier(victim)));
+        }
+
+        if (victim instanceof Player player
+                && event.getSource().getEntity() instanceof LivingEntity magicAttacker
+                && magicAttacker != victim
+                && (event.getSource().is(DamageTypes.MAGIC) || event.getSource().is(DamageTypes.INDIRECT_MAGIC))) {
+            int reflectCount = getOriginalRingCount(player, ItemOriginalRing.Profile.MOLASSES);
+            int winterMageCoatCount = getBaubleCount(player, BlackSouls.WINTER_MAGE_COAT.get());
+            double reflectChance = 1.0D
+                    - Math.pow(0.90D, reflectCount)
+                    * Math.pow(0.85D, winterMageCoatCount);
+            if (reflectChance > 0.0D && player.getRandom().nextDouble() < reflectChance) {
+                event.setCanceled(true);
+                magicAttacker.hurt(player.damageSources().magic(), event.getAmount());
+                return;
+            }
         }
 
         applyManagedMobAttackOverride(event);
@@ -1087,6 +1194,15 @@ public class StatEventHandler {
 
             if (!fromThrownBlade && !daggerExtraHit && attacker != victim) {
                 applyPlayerOnHitStatusEffects(attacker, victim);
+            }
+            double criticalEvasionChance = Math.min(1.0D,
+                    (getBaubleCount(victim, BlackSouls.WINTER_KNIGHT_ARMOR.get())
+                            + getBaubleCount(victim, BlackSouls.WINTER_KNIGHT_HELMET.get())) * 0.50D);
+            if (attackerData.getBoolean("bs2_is_crit")
+                    && criticalEvasionChance > 0.0D
+                    && victim.getRandom().nextDouble() < criticalEvasionChance) {
+                event.setAmount(event.getAmount() / 3.0F);
+                attackerData.remove("bs2_is_crit");
             }
         }
 
@@ -1155,7 +1271,8 @@ public class StatEventHandler {
         if (mainHandItem == BlackSouls.HANS_MACHINE_GUN.get()) {
             rawDamage = stats.attack * 2.0D - resolveVictimDirectDefense(victim);
         } else if (mainHandItem == BlackSouls.CORRUPT_JABBERWOCK_SCYTHE.get()) {
-            rawDamage = 10.0D * (0.8D + Math.random() * 0.4D) + victim.getMaxHealth() * 0.01D;
+            rawDamage = 10.0D * (0.8D + Math.random() * 0.4D)
+                    + victim.getMaxHealth() * 0.01D * getPercentageDamageMultiplier(victim);
         } else if (mainHandItem == BlackSouls.MAD_BOW_JUBJUB.get()) {
             rawDamage = stats.attack * 3.0D - resolveVictimDirectDefense(victim) * 2.0D;
         } else if (mainHandItem == BlackSouls.LOST_SWORD.get()) {
@@ -1333,6 +1450,45 @@ public class StatEventHandler {
         }
         if (bleedRate > 0.0D && Math.random() * 100.0D < bleedRate && BlackSouls.BUFF_BLEEDING.isPresent()) {
             victim.addEffect(new net.minecraft.world.effect.MobEffectInstance(BlackSouls.BUFF_BLEEDING.get(), 600, 0));
+        }
+        int appleRingCount = getBaubleCount(attacker, BlackSouls.RING_APPLE.get());
+        if (appleRingCount > 0
+                && Math.random() * 100.0D < Math.min(100.0D, appleRingCount * 50.0D)
+                && BlackSouls.BUFF_SLEEP.isPresent()) {
+            victim.addEffect(new MobEffectInstance(BlackSouls.BUFF_SLEEP.get(), 600 + victim.getRandom().nextInt(401), 0));
+        }
+        int bankerRingCount = getBaubleCount(attacker, BlackSouls.RING_BANKER.get());
+        if (bankerRingCount > 0 && BlackSouls.BUFF_OILY.isPresent()) {
+            victim.addEffect(new MobEffectInstance(BlackSouls.BUFF_OILY.get(), 600 + victim.getRandom().nextInt(201), 0));
+        }
+        int mosquitoRingCount = getBaubleCount(attacker, BlackSouls.RING_MOSQUITO.get());
+        double mosquitoRate = Math.min(100.0D, mosquitoRingCount * 30.0D);
+        if (mosquitoRate > 0.0D) {
+            if (BlackSouls.BUFF_POISON.isPresent() && Math.random() * 100.0D < mosquitoRate) {
+                victim.addEffect(new MobEffectInstance(BlackSouls.BUFF_POISON.get(), 2000, 0));
+            }
+            if (BlackSouls.BUFF_SEVERE_POISON.isPresent() && Math.random() * 100.0D < mosquitoRate) {
+                victim.addEffect(new MobEffectInstance(BlackSouls.BUFF_SEVERE_POISON.get(), 2000, 0));
+            }
+            if (BlackSouls.BUFF_BLEEDING.isPresent() && Math.random() * 100.0D < mosquitoRate) {
+                victim.addEffect(new MobEffectInstance(BlackSouls.BUFF_BLEEDING.get(), 600, 0));
+            }
+        }
+        int ghoulCount = getOriginalRingCount(attacker, ItemOriginalRing.Profile.GHOUL);
+        if (ghoulCount > 0 && BlackSouls.BUFF_WEAKNESS.isPresent()) {
+            victim.addEffect(new MobEffectInstance(BlackSouls.BUFF_WEAKNESS.get(), 600, 0));
+        }
+        int unicornCount = getOriginalRingCount(attacker, ItemOriginalRing.Profile.UNICORN);
+        if (unicornCount > 0
+                && Math.random() < 1.0D - Math.pow(0.50D, unicornCount)
+                && BlackSouls.BUFF_FROSTBITE.isPresent()) {
+            victim.addEffect(new MobEffectInstance(BlackSouls.BUFF_FROSTBITE.get(), 800, 0));
+        }
+        int lionCount = getOriginalRingCount(attacker, ItemOriginalRing.Profile.LION);
+        if (lionCount > 0
+                && Math.random() < 1.0D - Math.pow(0.50D, lionCount)
+                && BlackSouls.BUFF_LACERATION.isPresent()) {
+            victim.addEffect(new MobEffectInstance(BlackSouls.BUFF_LACERATION.get(), 800, 0));
         }
     }
 
@@ -1519,7 +1675,7 @@ public class StatEventHandler {
 
             if (entity.tickCount % 20 == 0) {
                 float maxHp = entity.getMaxHealth();
-                float burnDmg = maxHp * 0.05F;
+                float burnDmg = (float) (maxHp * 0.05F * getPercentageDamageMultiplier(entity));
 
                 entity.hurt(entity.damageSources().magic(), burnDmg);
                 entity.setSecondsOnFire(1);
@@ -1649,9 +1805,133 @@ public class StatEventHandler {
                 stats.magicDefense += magicStoneCount * 50.0;
             }
 
+            int murderClownCount = counts.count(BlackSouls.RING_MURDER_CLOWN.get());
+            if (murderClownCount > 0) {
+                stats.attack += murderClownCount * 200.0D;
+                stats.magicAttack += murderClownCount * 200.0D;
+                stats.physicalDamageRate *= Math.pow(2.0D, murderClownCount);
+                stats.magicDamageRate *= Math.pow(2.0D, murderClownCount);
+            }
+
+            int blackGoatCount = counts.count(BlackSouls.RING_BLACK_GOAT.get());
+            if (blackGoatCount > 0) {
+                stats.hp += blackGoatCount * 5000.0D;
+                stats.attack += blackGoatCount * 500.0D;
+                stats.defense += blackGoatCount * 500.0D;
+                stats.magicAttack += blackGoatCount * 500.0D;
+                stats.magicDefense += blackGoatCount * 500.0D;
+                stats.speed += blackGoatCount * 500.0D;
+                stats.luck += blackGoatCount * 500.0D;
+                double multiplier = Math.pow(1.20D, blackGoatCount);
+                stats.hp *= multiplier;
+                stats.attack *= multiplier;
+                stats.defense *= multiplier;
+                stats.magicAttack *= multiplier;
+                stats.magicDefense *= multiplier;
+                stats.speed *= multiplier;
+                stats.luck *= multiplier;
+                stats.maxMp = 0.0D;
+                stats.mp = 0.0D;
+            }
+
+            int vanityCount = counts.count(BlackSouls.RING_VANITY.get());
+            if (vanityCount > 0) {
+                stats.hp *= Math.pow(2.0D, vanityCount);
+                stats.maxMp *= Math.pow(2.0D, vanityCount);
+                stats.defense *= Math.pow(0.5D, vanityCount);
+                stats.magicDefense *= Math.pow(0.5D, vanityCount);
+            }
+
+            int lundinianCount = counts.count(BlackSouls.RING_LUNDINIAN.get());
+            if (lundinianCount > 0) {
+                double multiplier = Math.pow(1.05D, lundinianCount);
+                stats.hp *= multiplier;
+                stats.maxMp *= multiplier;
+                stats.attack *= multiplier;
+                stats.defense *= multiplier;
+                stats.magicAttack *= multiplier;
+                stats.magicDefense *= multiplier;
+                stats.speed *= multiplier;
+                stats.luck *= multiplier;
+                stats.evasion -= lundinianCount * 5.0D;
+            }
+
+            stats.mpRegenRate += counts.count(BlackSouls.RING_DEEP_ONE.get()) * 0.10D;
+            stats.speed += counts.count(BlackSouls.RING_WHITE_RAVEN.get()) * 100.0D;
+            stats.luck += counts.count(BlackSouls.RING_FOUR_LEAF_CLOVER.get()) * 200.0D;
+
+            int recklessHeroCount = counts.count(BlackSouls.RING_RECKLESS_HERO.get());
+            if (recklessHeroCount > 0) {
+                stats.critRate += recklessHeroCount * 60.0D;
+                stats.defense *= Math.pow(0.01D, recklessHeroCount);
+                stats.magicDefense *= Math.pow(0.01D, recklessHeroCount);
+            }
+            stats.speed *= Math.pow(1.15D, counts.count(BlackSouls.RING_BOOTBLACK.get()));
+            stats.extraActionRate += counts.count(BlackSouls.RING_PROSTITUTE.get()) * 0.10D;
+
+            int trollCount = counts.count(BlackSouls.RING_TROLL.get());
+            if (trollCount > 0) {
+                stats.attack *= Math.pow(1.50D, trollCount);
+                stats.critRate -= trollCount * 50.0D;
+            }
+
+            int redTearstoneCount = counts.count(BlackSouls.RING_RED_TEARSTONE.get());
+            if (redTearstoneCount > 0) {
+                stats.attack *= Math.pow(1.20D, redTearstoneCount);
+                stats.magicAttack *= Math.pow(1.20D, redTearstoneCount);
+            }
+
+            int walrusCount = counts.count(BlackSouls.RING_WALRUS.get());
+            if (walrusCount > 0) {
+                stats.hp *= Math.pow(0.50D, walrusCount);
+                stats.hpRegenRate += walrusCount * 0.50D;
+            }
+
+            int hellDestructionCount = counts.count(BlackSouls.RING_HELL_DESTRUCTION.get());
+            if (hellDestructionCount > 0) {
+                stats.attack *= Math.pow(1.50D, hellDestructionCount);
+                stats.speed *= Math.pow(0.50D, hellDestructionCount);
+            }
+
+            int heartKnightCount = counts.count(BlackSouls.RING_HEART_KNIGHT.get());
+            stats.hpRegenRate += heartKnightCount * 0.10D;
+            stats.mpRegenRate += heartKnightCount * 0.10D;
+            stats.speed *= Math.pow(1.20D, counts.count(BlackSouls.RING_SPADE_KNIGHT.get()));
+            stats.defense *= Math.pow(1.10D, counts.count(BlackSouls.RING_CLUB_KNIGHT.get()));
+
+            int sinCount = counts.count(BlackSouls.RING_SIN.get());
+            if (sinCount > 0) {
+                double multiplier = Math.pow(0.70D, sinCount);
+                stats.hp *= multiplier;
+                stats.maxMp *= multiplier;
+                stats.attack *= multiplier;
+                stats.defense *= multiplier;
+                stats.magicAttack *= multiplier;
+                stats.magicDefense *= multiplier;
+                stats.speed *= multiplier;
+                stats.luck *= multiplier;
+                stats.critRate += sinCount * 50.0D;
+                stats.evasion += sinCount * 50.0D;
+            }
+
+            int starCount = counts.count(BlackSouls.RING_STAR.get());
+            if (starCount > 0) {
+                stats.attack *= Math.pow(2.0D, starCount);
+                stats.magicAttack = 0.0D;
+            }
+
+            int ogreCount = counts.count(BlackSouls.RING_OGRE.get());
+            if (ogreCount > 0) {
+                stats.defense *= Math.pow(1.50D, ogreCount);
+                stats.evasion -= ogreCount * 50.0D;
+            }
+            stats.speed *= Math.pow(1.50D, counts.count(BlackSouls.RING_IDATEN.get()));
+            stats.attack *= Math.pow(0.01D, counts.count(BlackSouls.RING_ADULTERY.get()));
+
             stats.evasion += counts.count(BlackSouls.RING_LIEF.get()) * 20.0;
             stats.evasion += counts.count(BlackSouls.RING_VOID.get()) * 10.0;
             stats.evasion -= counts.count(BlackSouls.RING_DEATH.get()) * 50.0;
+            applyExpandedOriginalRingStats(counts, stats);
 
             if (counts.count(BlackSouls.NOBLE_CLOTHES.get()) > 0) {
                 stats.evasion += 5.0; stats.magicDefense *= 1.05; stats.speed *= 0.97;
@@ -1723,6 +2003,45 @@ public class StatEventHandler {
             }
             if (counts.count(BlackSouls.BUTETSU_ARMOR.get()) > 0) {
                 stats.critRate += 15.0; stats.defense *= 1.15; stats.speed *= 0.90;
+            }
+            int workClothesCount = counts.count(BlackSouls.WORK_CLOTHES.get());
+            stats.evasion += workClothesCount * 5.0D;
+
+            int abyssArmorCount = counts.count(BlackSouls.ABYSS_ARMOR.get());
+            stats.defense *= Math.pow(1.10D, abyssArmorCount);
+            stats.speed *= Math.pow(0.90D, abyssArmorCount);
+
+            int abyssHelmetCount = counts.count(BlackSouls.ABYSS_HELMET.get());
+            stats.defense *= Math.pow(1.08D, abyssHelmetCount);
+            stats.speed *= Math.pow(0.94D, abyssHelmetCount);
+
+            stats.speed *= Math.pow(2.0D, counts.count(BlackSouls.YELLOW_CLOTH.get()));
+            stats.speed += counts.count(BlackSouls.PLAYWRIGHT_HEADSCARF.get()) * 2.0D;
+
+            int falseAngelCrownCount = counts.count(BlackSouls.FALSE_ANGEL_CROWN.get());
+            if (falseAngelCrownCount > 0) {
+                stats.hp *= Math.pow(1.30D, falseAngelCrownCount);
+                stats.speed += falseAngelCrownCount * 500.0D;
+                stats.speed *= Math.pow(1.50D, falseAngelCrownCount);
+            }
+
+            int winterMageCoatCount = counts.count(BlackSouls.WINTER_MAGE_COAT.get());
+            stats.magicDefense *= Math.pow(1.10D, winterMageCoatCount);
+            stats.speed *= Math.pow(0.95D, winterMageCoatCount);
+
+            int winterKnightArmorCount = counts.count(BlackSouls.WINTER_KNIGHT_ARMOR.get());
+            stats.defense *= Math.pow(1.15D, winterKnightArmorCount);
+            stats.speed *= Math.pow(0.90D, winterKnightArmorCount);
+
+            int winterKnightHelmetCount = counts.count(BlackSouls.WINTER_KNIGHT_HELMET.get());
+            stats.defense *= Math.pow(1.08D, winterKnightHelmetCount);
+            stats.speed *= Math.pow(0.94D, winterKnightHelmetCount);
+
+            int miracleGarbCount = counts.count(BlackSouls.MIRACLE_SHRINE_MAIDEN_GARB.get());
+            if (miracleGarbCount > 0) {
+                stats.magicAttack *= Math.pow(1.50D, miracleGarbCount);
+                stats.magicDefense *= Math.pow(1.50D, miracleGarbCount);
+                stats.maxMp *= Math.pow(0.01D, miracleGarbCount);
             }
             if (counts.hasChronoClock()) {
                 stats.extraActionRate += 1.0;
@@ -2287,6 +2606,21 @@ public class StatEventHandler {
             if (BlackSouls.BUFF_FROSTBITE.isPresent() && player.hasEffect(BlackSouls.BUFF_FROSTBITE.get())) {
                 stats.magicDefense *= 0.80D;
             }
+            if (BlackSouls.BUFF_LACERATION.isPresent() && player.hasEffect(BlackSouls.BUFF_LACERATION.get())) {
+                stats.attack *= 0.85D;
+                stats.magicAttack *= 0.85D;
+                stats.hpRegenRate -= 0.02D;
+            }
+            if (BlackSouls.BUFF_DEFENSE_KING.isPresent() && player.hasEffect(BlackSouls.BUFF_DEFENSE_KING.get())) {
+                stats.defense *= 9.0D;
+                stats.magicDefense *= 9.0D;
+                stats.hpRegenRate += 1.0D;
+            }
+            if (BlackSouls.BUFF_PLAYWRIGHT.isPresent() && player.hasEffect(BlackSouls.BUFF_PLAYWRIGHT.get())) {
+                stats.attack *= 2.0D;
+                stats.magicAttack *= 2.0D;
+                stats.critRate += 100.0D;
+            }
 
             stats.attack *= getAttackShiftMultiplier(player);
             stats.defense *= getDefenseShiftMultiplier(player);
@@ -2333,6 +2667,126 @@ public class StatEventHandler {
             clampCalculatedStats(player, stats);
             syncVanillaAttributes(player, stats);
         }
+    }
+
+    private static void applyExpandedOriginalRingStats(BaubleCounter counts, BSPlayerStats stats) {
+        int count;
+
+        stats.hp *= Math.pow(1.10D, counts.count(ItemOriginalRing.Profile.LIFE_PLUS_1));
+        stats.hp *= Math.pow(1.25D, counts.count(ItemOriginalRing.Profile.LIFE_PLUS_2));
+        stats.hp *= Math.pow(1.50D, counts.count(ItemOriginalRing.Profile.LIFE_PLUS_3));
+
+        count = counts.count(ItemOriginalRing.Profile.PUYO_PLUS_1);
+        stats.hp = (stats.hp + count * 4000.0D) * Math.pow(1.30D, count);
+        count = counts.count(ItemOriginalRing.Profile.PUYO_PLUS_2);
+        stats.hp = (stats.hp + count * 4500.0D) * Math.pow(1.40D, count);
+        count = counts.count(ItemOriginalRing.Profile.PUYO_PLUS_3);
+        stats.hp = (stats.hp + count * 5000.0D) * Math.pow(1.50D, count);
+
+        count = counts.count(ItemOriginalRing.Profile.HUNYA_PLUS_1);
+        stats.maxMp = (stats.maxMp + count * 300.0D) * Math.pow(1.10D, count);
+        count = counts.count(ItemOriginalRing.Profile.HUNYA_PLUS_2);
+        stats.maxMp = (stats.maxMp + count * 400.0D) * Math.pow(1.25D, count);
+        count = counts.count(ItemOriginalRing.Profile.HUNYA_PLUS_3);
+        stats.maxMp = (stats.maxMp + count * 500.0D) * Math.pow(1.40D, count);
+
+        stats.evasion += counts.count(ItemOriginalRing.Profile.VOID_PLUS_1) * 15.0D;
+        stats.evasion += counts.count(ItemOriginalRing.Profile.VOID_PLUS_2) * 20.0D;
+        stats.evasion += counts.count(ItemOriginalRing.Profile.VOID_PLUS_3) * 25.0D;
+        stats.hpRegenRate += counts.count(ItemOriginalRing.Profile.EVIL_EYE_PLUS_1) * 0.08D;
+        stats.hpRegenRate += counts.count(ItemOriginalRing.Profile.EVIL_EYE_PLUS_2) * 0.15D;
+        stats.hpRegenRate += counts.count(ItemOriginalRing.Profile.EVIL_EYE_PLUS_3) * 0.20D;
+        stats.mpRegenRate += counts.count(ItemOriginalRing.Profile.GODDESS_PLUS_1) * 0.10D;
+        stats.mpRegenRate += counts.count(ItemOriginalRing.Profile.GODDESS_PLUS_2) * 0.15D;
+        stats.mpRegenRate += counts.count(ItemOriginalRing.Profile.GODDESS_PLUS_3) * 0.20D;
+
+        stats.physicalDamageRate *= Math.pow(0.75D, counts.count(ItemOriginalRing.Profile.IRON_PROTECTION_PLUS_1));
+        stats.physicalDamageRate *= Math.pow(0.70D, counts.count(ItemOriginalRing.Profile.IRON_PROTECTION_PLUS_2));
+        stats.physicalDamageRate *= Math.pow(0.65D, counts.count(ItemOriginalRing.Profile.IRON_PROTECTION_PLUS_3));
+        count = counts.count(ItemOriginalRing.Profile.MAGIC_STONE_PLUS_1);
+        stats.magicDefense += count * 50.0D;
+        stats.magicDamageRate *= Math.pow(0.75D, count);
+        count = counts.count(ItemOriginalRing.Profile.MAGIC_STONE_PLUS_2);
+        stats.magicDefense += count * 50.0D;
+        stats.magicDamageRate *= Math.pow(0.70D, count);
+        count = counts.count(ItemOriginalRing.Profile.MAGIC_STONE_PLUS_3);
+        stats.magicDefense += count * 50.0D;
+        stats.magicDamageRate *= Math.pow(0.65D, count);
+
+        stats.critRate += counts.count(ItemOriginalRing.Profile.WASP_PLUS_1) * 30.0D;
+        stats.critRate += counts.count(ItemOriginalRing.Profile.WASP_PLUS_2) * 40.0D;
+        stats.critRate += counts.count(ItemOriginalRing.Profile.WASP_PLUS_3) * 50.0D;
+        stats.attack += counts.count(ItemOriginalRing.Profile.BLADES_PLUS_1) * 100.0D;
+        stats.attack += counts.count(ItemOriginalRing.Profile.BLADES_PLUS_2) * 150.0D;
+        stats.attack += counts.count(ItemOriginalRing.Profile.BLADES_PLUS_3) * 200.0D;
+        stats.defense += counts.count(ItemOriginalRing.Profile.GUARD_PLUS_1) * 100.0D;
+        stats.defense += counts.count(ItemOriginalRing.Profile.GUARD_PLUS_2) * 150.0D;
+        stats.defense += counts.count(ItemOriginalRing.Profile.GUARD_PLUS_3) * 200.0D;
+        stats.speed += counts.count(ItemOriginalRing.Profile.WIND_GOD_PLUS_1) * 100.0D;
+        stats.speed += counts.count(ItemOriginalRing.Profile.WIND_GOD_PLUS_2) * 150.0D;
+        stats.speed += counts.count(ItemOriginalRing.Profile.WIND_GOD_PLUS_3) * 200.0D;
+        stats.magicAttack += counts.count(ItemOriginalRing.Profile.SPELL_PLUS_1) * 100.0D;
+        stats.magicAttack += counts.count(ItemOriginalRing.Profile.SPELL_PLUS_2) * 150.0D;
+        stats.magicAttack += counts.count(ItemOriginalRing.Profile.SPELL_PLUS_3) * 200.0D;
+
+        applyAllParameterRing(stats, counts.count(ItemOriginalRing.Profile.LUNDINIAN_PLUS_1), 1.10D);
+        stats.evasion -= counts.count(ItemOriginalRing.Profile.LUNDINIAN_PLUS_1) * 10.0D;
+        applyAllParameterRing(stats, counts.count(ItemOriginalRing.Profile.LUNDINIAN_PLUS_2), 1.20D);
+        stats.evasion -= counts.count(ItemOriginalRing.Profile.LUNDINIAN_PLUS_2) * 15.0D;
+        applyAllParameterRing(stats, counts.count(ItemOriginalRing.Profile.LUNDINIAN_PLUS_3), 1.30D);
+        stats.evasion -= counts.count(ItemOriginalRing.Profile.LUNDINIAN_PLUS_3) * 20.0D;
+
+        count = counts.count(ItemOriginalRing.Profile.ALMIGHTY);
+        stats.hp += count * 5000.0D;
+        stats.maxMp += count * 100.0D;
+        stats.attack += count * 500.0D;
+        stats.defense += count * 500.0D;
+        stats.magicAttack += count * 500.0D;
+        stats.magicDefense += count * 500.0D;
+        stats.speed += count * 500.0D;
+        stats.luck += count * 500.0D;
+
+        applySinUpgrade(stats, counts.count(ItemOriginalRing.Profile.SIN_PLUS_1), 0.65D, 55.0D);
+        applySinUpgrade(stats, counts.count(ItemOriginalRing.Profile.SIN_PLUS_2), 0.60D, 60.0D);
+        applySinUpgrade(stats, counts.count(ItemOriginalRing.Profile.SIN_PLUS_3), 0.55D, 70.0D);
+
+        if (counts.count(ItemOriginalRing.Profile.TIGER_FOX) > 0) {
+            stats.targetingRate = 0.0D;
+        }
+        count = counts.count(ItemOriginalRing.Profile.OLD_KING);
+        if (count > 0) {
+            stats.attack = 0.0D;
+            stats.magicAttack *= Math.pow(2.0D, count);
+        }
+        count = counts.count(ItemOriginalRing.Profile.POLAR_BEAR);
+        if (count > 0) {
+            stats.hp *= Math.pow(0.10D, count);
+            stats.critRate += count * 100.0D;
+        }
+        count = counts.count(ItemOriginalRing.Profile.COUNTERATTACK);
+        stats.attack += count * 500.0D;
+        count = counts.count(ItemOriginalRing.Profile.MOLASSES);
+        stats.attack += count * 500.0D;
+    }
+
+    private static void applyAllParameterRing(BSPlayerStats stats, int count, double multiplier) {
+        if (count <= 0) return;
+        double combined = Math.pow(multiplier, count);
+        stats.hp *= combined;
+        stats.maxMp *= combined;
+        stats.attack *= combined;
+        stats.defense *= combined;
+        stats.magicAttack *= combined;
+        stats.magicDefense *= combined;
+        stats.speed *= combined;
+        stats.luck *= combined;
+    }
+
+    private static void applySinUpgrade(BSPlayerStats stats, int count, double multiplier, double probabilityBonus) {
+        if (count <= 0) return;
+        applyAllParameterRing(stats, count, multiplier);
+        stats.critRate += count * probabilityBonus;
+        stats.evasion += count * probabilityBonus;
     }
 
     private static void resetDerivedStats(BSPlayerStats stats) {
@@ -2426,7 +2880,7 @@ public class StatEventHandler {
 
         if (event.getSource().getEntity() instanceof Player player) {
             CompoundTag attackerData = player.getPersistentData();
-            if (attackerData.getBoolean(TAG_DAGGER_EXTRA_HIT)) {
+            if (attackerData.getBoolean(TAG_DAGGER_EXTRA_HIT) || attackerData.getBoolean(TAG_RING_EXTRA_HIT)) {
                 if (!player.level().isClientSide() && damage > 0.1F) {
                     showDamageFeedback(player, victim, damage);
                 }
@@ -2443,6 +2897,15 @@ public class StatEventHandler {
                 player.heal(damage);
             }
 
+            if (player instanceof ServerPlayer serverPlayer
+                    && event.getSource().is(DamageTypes.PLAYER_ATTACK)
+                    && !attackerData.getBoolean(TAG_PRECOMPUTED_SKILL_DAMAGE)) {
+                int pumpkinRingCount = getBaubleCount(player, BlackSouls.RING_PUMPKIN_KNIGHT.get());
+                if (pumpkinRingCount > 0) {
+                    schedulePumpkinRingExtraAttacks(serverPlayer, victim, pumpkinRingCount);
+                }
+            }
+
             BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
             double skillInstantDeathRate = attackerData.getDouble(TAG_SKILL_INSTANT_DEATH_RATE);
             boolean skillInstantDeathRolled = skillInstantDeathRate > 0.0D
@@ -2456,6 +2919,71 @@ public class StatEventHandler {
                 victim.addEffect(new net.minecraft.world.effect.MobEffectInstance(BlackSouls.BUFF_SEVERE_POISON.get(), 1000, 0));
             }
         }
+    }
+
+    private static void schedulePumpkinRingExtraAttacks(ServerPlayer player, LivingEntity target, int count) {
+        net.minecraft.server.MinecraftServer server = player.serverLevel().getServer();
+        for (int hit = 0; hit < count; hit++) {
+            int executeTick = server.getTickCount() + 2 + hit * 2;
+            server.tell(new net.minecraft.server.TickTask(executeTick, () -> {
+                if (!player.isAlive() || !target.isAlive() || target.isRemoved()) {
+                    return;
+                }
+                CompoundTag data = player.getPersistentData();
+                data.putBoolean(TAG_RING_EXTRA_HIT, true);
+                target.invulnerableTime = 0;
+                try {
+                    player.attack(target);
+                } finally {
+                    data.remove(TAG_RING_EXTRA_HIT);
+                }
+            }));
+        }
+    }
+
+    private static void activateBattleStartRings(Player player) {
+        if (!(player instanceof ServerPlayer serverPlayer)) {
+            return;
+        }
+        int beeCount = getBaubleCount(player, BlackSouls.RING_BEE.get());
+        int frenziedKingCount = getBaubleCount(player, BlackSouls.RING_FRENZIED_KING.get());
+        int myStruggleCount = getBaubleCount(player, BlackSouls.RING_MY_STRUGGLE.get());
+        int defenseKingCount = getOriginalRingCount(player, ItemOriginalRing.Profile.DEFENSE_KING);
+        int playwrightCount = getBaubleCount(player, BlackSouls.PLAYWRIGHT_HEADSCARF.get());
+        if (beeCount + frenziedKingCount + myStruggleCount + defenseKingCount + playwrightCount <= 0) {
+            return;
+        }
+
+        CompoundTag data = SkillUtils.getPersistedData(player);
+        long gameTime = player.level().getGameTime();
+        boolean enteringCombat = gameTime >= data.getLong(TAG_RING_COMBAT_UNTIL);
+        data.putLong(TAG_RING_COMBAT_UNTIL, gameTime + 200L);
+        if (!enteringCombat) {
+            return;
+        }
+
+        if (beeCount > 0 && BlackSouls.BUFF_DAGGER_EVASION.isPresent()) {
+            player.addEffect(new MobEffectInstance(BlackSouls.BUFF_DAGGER_EVASION.get(), 400, 0));
+        }
+        if (frenziedKingCount > 0 && BlackSouls.BUFF_BERSERK.isPresent()) {
+            player.addEffect(new MobEffectInstance(BlackSouls.BUFF_BERSERK.get(), 2000, 0));
+        }
+        if (myStruggleCount > 0) {
+            applyAttackUp(player, 2000);
+            applyDefenseUp(player, 2000);
+            applyMagicAttackUp(player, 2000);
+            applyMagicDefenseUp(player, 2000);
+            applySpeedUp(player, 2000);
+            applyLuckUp(player, 2000);
+        }
+        if (defenseKingCount > 0 && BlackSouls.BUFF_DEFENSE_KING.isPresent()) {
+            player.addEffect(new MobEffectInstance(BlackSouls.BUFF_DEFENSE_KING.get(), 400, 0));
+        }
+        if (playwrightCount > 0 && BlackSouls.BUFF_PLAYWRIGHT.isPresent()) {
+            player.addEffect(new MobEffectInstance(BlackSouls.BUFF_PLAYWRIGHT.get(), 200, 0));
+        }
+        applyStats(player);
+        syncToClient(serverPlayer);
     }
 
     private static void showDamageFeedback(Player player, LivingEntity victim, float damage) {
@@ -2524,6 +3052,14 @@ public class StatEventHandler {
             if (getBaubleCount(player, BlackSouls.MYSTERY_OF_NIGHT_SKY.get()) > 0) {
                 event.setAmount(event.getAmount() * 1.30F);
             }
+            int miracleCount = getBaubleCount(player, BlackSouls.RING_MIRACLE.get());
+            if (miracleCount > 0) {
+                event.setAmount((float) (event.getAmount() * Math.pow(2.0D, miracleCount)));
+            }
+            int cutDownCount = getOriginalRingCount(player, ItemOriginalRing.Profile.CUT_DOWN);
+            if (cutDownCount > 0) {
+                event.setAmount((float) (event.getAmount() * Math.pow(0.8D, cutDownCount)));
+            }
         }
     }
 
@@ -2541,6 +3077,45 @@ public class StatEventHandler {
         }
 
         if (event.getEntity() instanceof Player player) {
+            net.minecraft.world.effect.MobEffect incomingEffect = event.getEffectInstance().getEffect();
+            if (getBaubleCount(player, BlackSouls.RING_BARBER.get()) > 0 && isParameterDebuff(incomingEffect)) {
+                event.setResult(Event.Result.DENY);
+                return;
+            }
+            if (getBaubleCount(player, BlackSouls.RING_APPLE.get()) > 0
+                    && BlackSouls.BUFF_SLEEP.isPresent()
+                    && incomingEffect == BlackSouls.BUFF_SLEEP.get()) {
+                event.setResult(Event.Result.DENY);
+                return;
+            }
+            if (getBaubleCount(player, BlackSouls.RING_BUTCHER.get()) > 0
+                    && BlackSouls.BUFF_MADNESS.isPresent()
+                    && incomingEffect == BlackSouls.BUFF_MADNESS.get()) {
+                event.setResult(Event.Result.DENY);
+                return;
+            }
+            if (getBaubleCount(player, BlackSouls.RING_PROSTITUTE.get()) > 0
+                    && BlackSouls.BUFF_WEAKNESS.isPresent()
+                    && incomingEffect == BlackSouls.BUFF_WEAKNESS.get()) {
+                event.setResult(Event.Result.DENY);
+                return;
+            }
+            if (getBaubleCount(player, BlackSouls.WORK_CLOTHES.get()) > 0
+                    && BlackSouls.BUFF_OILY.isPresent()
+                    && incomingEffect == BlackSouls.BUFF_OILY.get()) {
+                event.setResult(Event.Result.DENY);
+                return;
+            }
+            int fighterCount = getBaubleCount(player, BlackSouls.RING_FIGHTER.get());
+            int clubKnightCount = getBaubleCount(player, BlackSouls.RING_CLUB_KNIGHT.get());
+            double stunResistance = 1.0D - Math.pow(0.50D, fighterCount + clubKnightCount);
+            if (stunResistance > 0.0D
+                    && BlackSouls.BUFF_STUN.isPresent()
+                    && incomingEffect == BlackSouls.BUFF_STUN.get()
+                    && Math.random() < stunResistance) {
+                event.setResult(Event.Result.DENY);
+                return;
+            }
             if (player.getMainHandItem().getItem() == BlackSouls.MARY_SUES_BRANCH_STAFF.get()
                     && event.getEffectInstance().getEffect().getCategory() == net.minecraft.world.effect.MobEffectCategory.HARMFUL) {
                 event.setResult(Event.Result.DENY);
@@ -2565,6 +3140,35 @@ public class StatEventHandler {
                 }
             }
 
+            if (getOriginalRingCount(player, ItemOriginalRing.Profile.UNICORN) > 0
+                    && BlackSouls.BUFF_FROSTBITE.isPresent()
+                    && incomingEffect == BlackSouls.BUFF_FROSTBITE.get()) {
+                event.setResult(Event.Result.DENY);
+                return;
+            }
+            if (getOriginalRingCount(player, ItemOriginalRing.Profile.LION) > 0
+                    && BlackSouls.BUFF_LACERATION.isPresent()
+                    && incomingEffect == BlackSouls.BUFF_LACERATION.get()) {
+                event.setResult(Event.Result.DENY);
+                return;
+            }
+            if (getOriginalRingCount(player, ItemOriginalRing.Profile.BREAK_RESISTANCE) > 0
+                    && BlackSouls.BUFF_DEFENSELESS.isPresent()
+                    && incomingEffect == BlackSouls.BUFF_DEFENSELESS.get()) {
+                event.setResult(Event.Result.DENY);
+                return;
+            }
+            int holyForestCount = getOriginalRingCount(player, ItemOriginalRing.Profile.HOLY_FOREST);
+            int abyssArmorCount = getBaubleCount(player, BlackSouls.ABYSS_ARMOR.get());
+            int abyssHelmetCount = getBaubleCount(player, BlackSouls.ABYSS_HELMET.get());
+            double ailmentPassRate = Math.pow(0.70D, holyForestCount + abyssArmorCount)
+                    * Math.pow(0.80D, abyssHelmetCount);
+            if (incomingEffect.getCategory() == net.minecraft.world.effect.MobEffectCategory.HARMFUL
+                    && Math.random() >= ailmentPassRate) {
+                event.setResult(Event.Result.DENY);
+                return;
+            }
+
             if (BlackSouls.BUFF_DEFENSELESS.isPresent() && event.getEffectInstance().getEffect() == BlackSouls.BUFF_DEFENSELESS.get()) {
                 if (BlackSouls.BUFF_KNIGHTS_GLORY.isPresent() && player.hasEffect(BlackSouls.BUFF_KNIGHTS_GLORY.get())) {
                     event.setResult(Event.Result.DENY); return;
@@ -2582,13 +3186,13 @@ public class StatEventHandler {
                 }
             }
             if (BlackSouls.BUFF_MADNESS.isPresent() && event.getEffectInstance().getEffect() == BlackSouls.BUFF_MADNESS.get()) {
-                if (getBaubleCount(player, BlackSouls.RABBIT_EARS.get()) > 0 && Math.random() < 0.50) {
-                    event.setResult(Event.Result.DENY); return;
-                }
-                if (getBaubleCount(player, BlackSouls.BUNNY_GIRL_UNIFORM.get()) > 0 && Math.random() < 0.50) {
-                    event.setResult(Event.Result.DENY); return;
-                }
-                if (getBaubleCount(player, BlackSouls.PROSTITUTE_DRESS.get()) > 0 && Math.random() < 0.50) {
+                int resistanceSources = getBaubleCount(player, BlackSouls.RABBIT_EARS.get())
+                        + getBaubleCount(player, BlackSouls.BUNNY_GIRL_UNIFORM.get())
+                        + getBaubleCount(player, BlackSouls.PROSTITUTE_DRESS.get());
+                int yellowClothCount = getBaubleCount(player, BlackSouls.YELLOW_CLOTH.get());
+                double madnessPassRate = Math.min(1.0D,
+                        Math.pow(0.50D, resistanceSources) * Math.pow(2.0D, yellowClothCount));
+                if (Math.random() >= madnessPassRate) {
                     event.setResult(Event.Result.DENY); return;
                 }
             }
@@ -2604,6 +3208,21 @@ public class StatEventHandler {
                 }
             }
         }
+    }
+
+    private static boolean isParameterDebuff(net.minecraft.world.effect.MobEffect effect) {
+        return effect == BlackSouls.BUFF_ATK_DOWN.get()
+                || effect == BlackSouls.BUFF_ATK_DOWN_2.get()
+                || effect == BlackSouls.BUFF_DEF_DOWN.get()
+                || effect == BlackSouls.BUFF_DEF_DOWN_2.get()
+                || effect == BlackSouls.BUFF_MAGIC_ATK_DOWN.get()
+                || effect == BlackSouls.BUFF_MAGIC_ATK_DOWN_2.get()
+                || effect == BlackSouls.BUFF_MAGIC_DEF_DOWN.get()
+                || effect == BlackSouls.BUFF_MAGIC_DEF_DOWN_2.get()
+                || effect == BlackSouls.BUFF_LUCK_DOWN.get()
+                || effect == BlackSouls.BUFF_LUCK_DOWN_2.get()
+                || effect == BlackSouls.BUFF_SPEED_DOWN.get()
+                || effect == BlackSouls.BUFF_SPEED_DOWN_2.get();
     }
 
     @SubscribeEvent
@@ -2707,6 +3326,7 @@ public class StatEventHandler {
     }
 
     private static void tickServerPlayerResources(ServerPlayer serverPlayer, Player player, BSPlayerStats stats, BaubleCounter counts) {
+        tickPuppetRing(serverPlayer, stats, counts);
         boolean syncNeeded = clearChronoClockBindingsIfNeeded(stats, counts.hasChronoClock());
         double previousActionPoints = stats.getCurrentActionPoints();
         double maxActionPoints = SkillUtils.getActionCount(
@@ -2748,6 +3368,81 @@ public class StatEventHandler {
         if (stats.lostSouls > 0 && player.isAlive()) {
             tryRecoverLostSouls(serverPlayer, stats);
         }
+    }
+
+    private static void tickPuppetRing(ServerPlayer player, BSPlayerStats stats, BaubleCounter counts) {
+        if (player.tickCount % 5 != 0
+                || counts.count(ItemOriginalRing.Profile.PUPPET) <= 0
+                || !player.isAlive()
+                || player.isSpectator()
+                || player.isCrouching()
+                || player.containerMenu != player.inventoryMenu) {
+            return;
+        }
+
+        LivingEntity target = player.level().getEntitiesOfClass(
+                        LivingEntity.class,
+                        player.getBoundingBox().inflate(12.0D),
+                        entity -> entity != player
+                                && entity.isAlive()
+                                && !entity.isSpectator()
+                                && (entity instanceof net.minecraft.world.entity.monster.Enemy
+                                || com.BlackSouls.BlackSoulsMod.util.BSMobStatManager.hasManagedStats(entity))
+                                && player.hasLineOfSight(entity))
+                .stream()
+                .min(java.util.Comparator.comparingDouble(player::distanceToSqr))
+                .orElse(null);
+        if (target == null) {
+            return;
+        }
+
+        if (com.BlackSouls.BlackSoulsMod.util.skill.SkillRegistry.tryCastPuppetSkill(player, stats, target)) {
+            return;
+        }
+
+        ItemStack weapon = player.getMainHandItem();
+        if (weapon.getItem() instanceof com.BlackSouls.BlackSoulsMod.item.weapon.ItemOriginalBow) {
+            tryPuppetRangedAttack(player, target, weapon);
+        } else if (player.distanceToSqr(target) <= 20.25D && player.getAttackStrengthScale(0.5F) >= 0.90F) {
+            player.swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
+            player.attack(target);
+        }
+    }
+
+    private static void tryPuppetRangedAttack(ServerPlayer player, LivingEntity target, ItemStack weapon) {
+        CompoundTag data = player.getPersistentData();
+        long gameTime = player.level().getGameTime();
+        if (gameTime < data.getLong(TAG_PUPPET_RANGED_COOLDOWN)) {
+            return;
+        }
+
+        ItemStack ammo = player.getProjectile(weapon);
+        boolean virtualArrow = ammo.isEmpty() && player.getAbilities().instabuild;
+        if (virtualArrow) {
+            ammo = new ItemStack(net.minecraft.world.item.Items.ARROW);
+        }
+        if (!(ammo.getItem() instanceof net.minecraft.world.item.ArrowItem arrowItem)) {
+            return;
+        }
+
+        net.minecraft.world.entity.projectile.AbstractArrow arrow =
+                arrowItem.createArrow(player.level(), ammo, player);
+        arrow.setPos(player.getX(), player.getEyeY() - 0.1D, player.getZ());
+        double dx = target.getX() - player.getX();
+        double dz = target.getZ() - player.getZ();
+        double horizontalDistance = Math.sqrt(dx * dx + dz * dz);
+        double dy = target.getY(0.5D) - arrow.getY() + horizontalDistance * 0.05D;
+        arrow.shoot(dx, dy, dz, 2.5F, 1.0F);
+        if (virtualArrow) {
+            arrow.pickup = net.minecraft.world.entity.projectile.AbstractArrow.Pickup.CREATIVE_ONLY;
+        } else if (!player.getAbilities().instabuild) {
+            ammo.shrink(1);
+        }
+        player.level().addFreshEntity(arrow);
+        player.swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
+        player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
+                SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0F, 1.0F);
+        data.putLong(TAG_PUPPET_RANGED_COOLDOWN, gameTime + 20L);
     }
 
     private static boolean clearChronoClockBindingsIfNeeded(BSPlayerStats stats, boolean chronoClockEquipped) {

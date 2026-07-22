@@ -1,14 +1,41 @@
 package com.BlackSouls.BlackSoulsMod.util.skill;
 
+import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
+import com.BlackSouls.BlackSoulsMod.util.SkillUtils;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class SkillRegistry {
     public static final Map<String, AbstractSkill> SKILLS = new LinkedHashMap<>();
+    private static final String PUPPET_SKILL_CURSOR = "bs2_puppet_skill_cursor";
+    private static final Set<String> PUPPET_SKILLS = Set.of(
+            "bs2_skill_slash_down", "bs2_skill_massacre_axe", "bs2_skill_giant_guillotine",
+            "bs2_skill_pommel_stun", "bs2_skill_cleave_in_two", "bs2_skill_wrath_of_twilight",
+            "bs2_skill_foot_shot", "bs2_skill_triple_shot", "bs2_skill_arrow_rain",
+            "bs2_skill_mana_burn", "bs2_skill_mental_break", "bs2_skill_silver_moon_thunder_axe",
+            "bs2_skill_flesh_carve", "bs2_skill_blood_trail", "bs2_skill_blood_edge",
+            "bs2_skill_shield_slam", "bs2_skill_darkness", "bs2_skill_sin_crush", "bs2_skill_sin_burst",
+            "bs2_skill_dead_strike", "bs2_skill_overhead_barrage", "bs2_skill_hundred_fists",
+            "bs2_skill_iai", "bs2_skill_forward_slash", "bs2_skill_tempest_rend",
+            "bs2_skill_reckless_strike", "bs2_skill_double_collision",
+            "bs2_skill_soul_harvest", "bs2_skill_true_soul_harvest",
+            "bs2_skill_storm_king", "bs2_skill_storm_overlord",
+            "bs2_skill_moonlight_blade", "bs2_skill_moonlight_break",
+            "bs2_skill_twilight_of_grudge", "bs2_skill_soul_collapse",
+            "bs2_skill_crushing_water", "bs2_skill_zenith_blade", "bs2_skill_solar_flare",
+            "bs2_skill_lake_god_apocalypse", "bs2_skill_green_collapse",
+            "bs2_skill_cross_slash", "bs2_skill_visceral_attack", "bs2_skill_sky_cleaving_slash",
+            "bs2_skill_heaven_shattering_thunder", "bs2_skill_lion_whirlwind",
+            "bs2_skill_strong_crush"
+    );
 
     public static void init() {
         register(new SkillInvisibleBody());
@@ -108,6 +135,8 @@ public class SkillRegistry {
         register(new SkillEuniceRapierArt(SkillEuniceRapierArt.Art.PEERLESS_CHALLENGE));
         register(new SkillRaidenAxesArt(SkillRaidenAxesArt.Art.HEAVEN_SHATTERING_THUNDER));
         register(new SkillRaidenAxesArt(SkillRaidenAxesArt.Art.LION_WHIRLWIND));
+        register(new SkillRingArt(SkillRingArt.Art.STRONG_CRUSH));
+        register(new SkillRingArt(SkillRingArt.Art.JUGGLING_EVASION));
     }
 
     public static void register(AbstractSkill skill) {
@@ -122,5 +151,39 @@ public class SkillRegistry {
             }
         }
         return available;
+    }
+
+    public static boolean tryCastPuppetSkill(ServerPlayer player, BSPlayerStats stats, LivingEntity target) {
+        if (player == null || stats == null || target == null
+                || (BlackSouls.BUFF_STUN.isPresent() && player.hasEffect(BlackSouls.BUFF_STUN.get()))
+                || (BlackSouls.BUFF_SILENCE.isPresent() && player.hasEffect(BlackSouls.BUFF_SILENCE.get()))
+                || (BlackSouls.BUFF_BERSERK.isPresent() && player.hasEffect(BlackSouls.BUFF_BERSERK.get()))) {
+            return false;
+        }
+
+        String[] bindings = {stats.skillZ, stats.skillX, stats.skillC, stats.skillV};
+        net.minecraft.nbt.CompoundTag data = SkillUtils.getPersistedData(player);
+        int start = Math.floorMod(data.getInt(PUPPET_SKILL_CURSOR), bindings.length);
+        for (int offset = 0; offset < bindings.length; offset++) {
+            int index = (start + offset) % bindings.length;
+            String skillId = bindings[index];
+            AbstractSkill skill = SKILLS.get(skillId);
+            if (!(skill instanceof AbstractWeaponCombatSkill)
+                    || !PUPPET_SKILLS.contains(skillId)
+                    || !skill.canAutoCast(player, stats)) {
+                continue;
+            }
+
+            data.putInt(PUPPET_SKILL_CURSOR, (index + 1) % bindings.length);
+            AbstractWeaponCombatSkill.setPuppetTarget(target);
+            try {
+                skill.consumeAndSetCooldown(player, stats);
+                skill.execute(player, stats);
+            } finally {
+                AbstractWeaponCombatSkill.clearPuppetTarget();
+            }
+            return true;
+        }
+        return false;
     }
 }

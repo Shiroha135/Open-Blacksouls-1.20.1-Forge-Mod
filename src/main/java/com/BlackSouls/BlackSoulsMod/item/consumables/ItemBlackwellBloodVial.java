@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.item.consumables;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
@@ -31,7 +32,7 @@ public class ItemBlackwellBloodVial extends Item {
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 BlackSouls.SAINT7_EVENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 
-        player.heal(player.getMaxHealth() * 0.70F);
+        player.heal((float) (player.getMaxHealth() * 0.70F * StatEventHandler.getItemRecoveryMultiplier(player)));
 
         if (!player.getAbilities().instabuild) {
             itemstack.shrink(1);

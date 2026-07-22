@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.item.consumables;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
 import com.BlackSouls.BlackSoulsMod.item.ItemLoreBase;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -41,7 +42,7 @@ public class ItemHerbBottle extends ItemLoreBase {
         
         if (!level.isClientSide()) {
             
-            float healAmount = player.getMaxHealth() * 0.50F;
+            float healAmount = (float) (player.getMaxHealth() * 0.50F * StatEventHandler.getItemRecoveryMultiplier(player));
             player.heal(healAmount);
 
             level.playSound(null, player.getX(), player.getY(), player.getZ(),

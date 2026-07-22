@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.util.skill;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -80,7 +81,8 @@ public class SkillRagnarokArt extends AbstractOriginalWeaponSkill {
             playSound(target, BlackSouls.BLOOD_SPLATTER_EVENT.get(), 1.0F);
             playSound(target, BlackSouls.EARTH5_EVENT.get(), 1.0F);
             playSound(target, BlackSouls.SLASH9_EVENT.get(), 0.9F);
-            applyRawHit(player, target, stats.attack * 5.0D + target.getMaxHealth() * 0.05D, true, false, 0.0D);
+            applyRawHit(player, target, stats.attack * 5.0D
+                    + target.getMaxHealth() * 0.05D * StatEventHandler.getPercentageDamageMultiplier(target), true, false, 0.0D);
         }));
     }
 

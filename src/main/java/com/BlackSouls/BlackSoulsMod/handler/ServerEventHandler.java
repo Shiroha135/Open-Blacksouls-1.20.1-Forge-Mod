@@ -192,8 +192,14 @@ public class ServerEventHandler {
         if (!(event.getEntity() instanceof Mob mob)
                 || mob.level().isClientSide()
                 || !(mob instanceof Enemy)
-                || mob.tickCount % 20 != 0
-                || !(mob.getTarget() instanceof Player)) {
+                || !(mob.getTarget() instanceof Player currentTarget)) {
+            return;
+        }
+        if (getTargetingWeight(currentTarget) <= 0.0D) {
+            mob.setTarget(null);
+            return;
+        }
+        if (mob.tickCount % 20 != 0) {
             return;
         }
 
@@ -203,8 +209,19 @@ public class ServerEventHandler {
         }
 
         List<Player> candidates = mob.level().getEntitiesOfClass(Player.class, mob.getBoundingBox().inflate(followRange),
-                player -> player.isAlive() && !player.isSpectator() && !player.isCreative() && mob.hasLineOfSight(player));
-        if (candidates.size() <= 1) {
+                player -> player.isAlive()
+                        && !player.isSpectator()
+                        && !player.isCreative()
+                        && getTargetingWeight(player) > 0.0D
+                        && mob.hasLineOfSight(player));
+        if (candidates.isEmpty()) {
+            mob.setTarget(null);
+            return;
+        }
+        if (candidates.size() == 1) {
+            if (mob.getTarget() != candidates.get(0)) {
+                mob.setTarget(candidates.get(0));
+            }
             return;
         }
 
@@ -221,23 +238,29 @@ public class ServerEventHandler {
         }
 
         if (totalWeight <= 0.0) {
-            return candidates.get(0);
+            return null;
         }
 
         double value = roll * totalWeight;
+        Player lastEligible = null;
         for (Player candidate : candidates) {
-            value -= getTargetingWeight(candidate);
+            double weight = getTargetingWeight(candidate);
+            if (weight <= 0.0D) {
+                continue;
+            }
+            lastEligible = candidate;
+            value -= weight;
             if (value <= 0.0) {
                 return candidate;
             }
         }
 
-        return candidates.get(candidates.size() - 1);
+        return lastEligible;
     }
 
     private static double getTargetingWeight(Player player) {
         return player.getCapability(BSPlayerStats.CAPABILITY)
-                .map(stats -> Math.max(0.1, stats.targetingRate))
+                .map(stats -> Math.max(0.0, stats.targetingRate))
                 .orElse(1.0);
     }
 

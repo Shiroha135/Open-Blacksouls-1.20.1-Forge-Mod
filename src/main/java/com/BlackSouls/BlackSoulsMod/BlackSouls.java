@@ -135,6 +135,9 @@ public class BlackSouls {
     public static final RegistryObject<MobEffect> BUFF_DARK_POWER = MOB_EFFECTS.register("dark_power", PotionDarkPower::new);
     public static final RegistryObject<MobEffect> BUFF_SEVERED_LEG = MOB_EFFECTS.register("severed_leg", PotionSeveredLeg::new);
     public static final RegistryObject<MobEffect> BUFF_FROSTBITE = MOB_EFFECTS.register("frostbite", PotionFrostbite::new);
+    public static final RegistryObject<MobEffect> BUFF_LACERATION = MOB_EFFECTS.register("laceration", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.HARMFUL, 0x8A2030));
+    public static final RegistryObject<MobEffect> BUFF_DEFENSE_KING = MOB_EFFECTS.register("defense_king", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xD8C36A));
+    public static final RegistryObject<MobEffect> BUFF_PLAYWRIGHT = MOB_EFFECTS.register("playwright_effect", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0x8B1A1A));
     // ===========================================================================================================
     // 音效注册
     // ===========================================================================================================
@@ -411,9 +414,9 @@ public class BlackSouls {
     public static final RegistryObject<Item> EAT_ME = ITEMS.register("eat_me", () -> new ItemUnavailableStoryConsumable(new Item.Properties().stacksTo(1), "message.blacksouls.story_map_only"));
     public static final RegistryObject<Item> RABBIT_KEY = ITEMS.register("rabbit_key", () -> new ItemSimpleLore(new Item.Properties().stacksTo(1), 2));
     public static final RegistryObject<Item> GOLDEN_EGG = ITEMS.register("golden_egg", () -> new ItemSoul(new Item.Properties(), 250000, "item.blacksouls.golden_egg.lore.1", "item.blacksouls.golden_egg.lore.2"));
-    public static final RegistryObject<Item> TRAIN_TICKET = ITEMS.register("train_ticket", () -> new ItemSimpleLore(new Item.Properties().stacksTo(1), 1));
-    public static final RegistryObject<Item> ENTRY_PASS = ITEMS.register("entry_pass", () -> new ItemSimpleLore(new Item.Properties().stacksTo(1), 1));
-    public static final RegistryObject<Item> ALICE_ITEM = ITEMS.register("alice", () -> new ItemSimpleLore(new Item.Properties().stacksTo(1), 1));
+    public static final RegistryObject<Item> TRAIN_TICKET = ITEMS.register("train_ticket", () -> new ItemSimpleLore(new Item.Properties().stacksTo(1), 1, true));
+    public static final RegistryObject<Item> ENTRY_PASS = ITEMS.register("entry_pass", () -> new ItemSimpleLore(new Item.Properties().stacksTo(1), 1, true));
+    public static final RegistryObject<Item> ALICE_ITEM = ITEMS.register("alice", () -> new ItemSimpleLore(new Item.Properties().stacksTo(1), 1, true));
     public static final RegistryObject<Item> MAD_GEAR = ITEMS.register("mad_gear", () -> new ItemMadGear(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> NIGHTMARE_LANTERN = ITEMS.register("nightmare_lantern", () -> new ItemThrownConsumable(new Item.Properties(), EntityThrownBlade.MODE_NIGHTMARE_LANTERN, false, 204, EVASION1_EVENT));
     public static final RegistryObject<Item> SATYRS_THING = ITEMS.register("satyrs_thing", () -> new ItemGrantWhiteStickyThing(new Item.Properties()));
@@ -496,6 +499,17 @@ public class BlackSouls {
     public static final RegistryObject<Item> WARRIOR_ARMOR = ITEMS.register("warrior_armor", () -> new ItemWarriorArmor(new Item.Properties()));
     public static final RegistryObject<Item> WHITE_HAIRBAND = ITEMS.register("white_hairband", () -> new ItemWhiteHairband(new Item.Properties()));
     public static final RegistryObject<Item> GENTLEMAN_COAT = ITEMS.register("gentleman_coat", () -> new ItemGentlemanCoat(new Item.Properties()));
+    public static final RegistryObject<Item> WORK_CLOTHES = ITEMS.register("work_clothes", () -> new ItemOriginalAccessory(ItemOriginalAccessory.Profile.WORK_CLOTHES, new Item.Properties()));
+    public static final RegistryObject<Item> ABYSS_ARMOR = ITEMS.register("abyss_armor", () -> new ItemOriginalAccessory(ItemOriginalAccessory.Profile.ABYSS_ARMOR, new Item.Properties()));
+    public static final RegistryObject<Item> ABYSS_HELMET = ITEMS.register("abyss_helmet", () -> new ItemOriginalAccessory(ItemOriginalAccessory.Profile.ABYSS_HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> YELLOW_CLOTH = ITEMS.register("yellow_cloth", () -> new ItemOriginalAccessory(ItemOriginalAccessory.Profile.YELLOW_CLOTH, new Item.Properties()));
+    public static final RegistryObject<Item> PLAYWRIGHT_HEADSCARF = ITEMS.register("playwright_headscarf", () -> new ItemOriginalAccessory(ItemOriginalAccessory.Profile.PLAYWRIGHT_HEADSCARF, new Item.Properties()));
+    public static final RegistryObject<Item> FALSE_ANGEL_CROWN = ITEMS.register("false_angel_crown", () -> new ItemOriginalAccessory(ItemOriginalAccessory.Profile.FALSE_ANGEL_CROWN, new Item.Properties()));
+    public static final RegistryObject<Item> WINTER_MAGE_COAT = ITEMS.register("winter_mage_coat", () -> new ItemOriginalAccessory(ItemOriginalAccessory.Profile.WINTER_MAGE_COAT, new Item.Properties()));
+    public static final RegistryObject<Item> WINTER_KNIGHT_ARMOR = ITEMS.register("winter_knight_armor", () -> new ItemOriginalAccessory(ItemOriginalAccessory.Profile.WINTER_KNIGHT_ARMOR, new Item.Properties()));
+    public static final RegistryObject<Item> WINTER_KNIGHT_HELMET = ITEMS.register("winter_knight_helmet", () -> new ItemOriginalAccessory(ItemOriginalAccessory.Profile.WINTER_KNIGHT_HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> WINDLESS_CLOTHES = ITEMS.register("windless_clothes", () -> new ItemOriginalAccessory(ItemOriginalAccessory.Profile.WINDLESS_CLOTHES, new Item.Properties()));
+    public static final RegistryObject<Item> MIRACLE_SHRINE_MAIDEN_GARB = ITEMS.register("miracle_shrine_maiden_garb", () -> new ItemOriginalAccessory(ItemOriginalAccessory.Profile.MIRACLE_SHRINE_MAIDEN_GARB, new Item.Properties()));
     // =========================================================================================================================================================================
     // 戒指
     // =========================================================================================================================================================================
@@ -537,6 +551,114 @@ public class BlackSouls {
     public static final RegistryObject<Item> RING_HUNYA = ITEMS.register("ring_hunya", () -> new ItemRingHunya(new Item.Properties()));
     public static final RegistryObject<Item> RING_KNIGHT = ITEMS.register("ring_knight", () -> new ItemRingKnight(new Item.Properties()));
     public static final RegistryObject<Item> RING_ANGEL = ITEMS.register("ring_angel", () -> new ItemRingAngel(new Item.Properties()));
+    public static final RegistryObject<Item> RING_TENACIOUS = ITEMS.register("ring_tenacious", () -> new ItemOriginalRing(ItemOriginalRing.Profile.TENACIOUS, new Item.Properties()));
+    public static final RegistryObject<Item> RING_REBELLION = ITEMS.register("ring_rebellion", () -> new ItemOriginalRing(ItemOriginalRing.Profile.REBELLION, new Item.Properties()));
+    public static final RegistryObject<Item> RING_MIRACLE = ITEMS.register("ring_miracle", () -> new ItemOriginalRing(ItemOriginalRing.Profile.MIRACLE, new Item.Properties()));
+    public static final RegistryObject<Item> RING_MURDER_CLOWN = ITEMS.register("ring_murder_clown", () -> new ItemOriginalRing(ItemOriginalRing.Profile.MURDER_CLOWN, new Item.Properties()));
+    public static final RegistryObject<Item> RING_BLACK_GOAT = ITEMS.register("ring_black_goat", () -> new ItemOriginalRing(ItemOriginalRing.Profile.BLACK_GOAT, new Item.Properties()));
+    public static final RegistryObject<Item> RING_BARBER = ITEMS.register("ring_barber", () -> new ItemOriginalRing(ItemOriginalRing.Profile.BARBER, new Item.Properties()));
+    public static final RegistryObject<Item> RING_VANITY = ITEMS.register("ring_vanity", () -> new ItemOriginalRing(ItemOriginalRing.Profile.VANITY, new Item.Properties()));
+    public static final RegistryObject<Item> RING_APPLE = ITEMS.register("ring_apple", () -> new ItemOriginalRing(ItemOriginalRing.Profile.APPLE, new Item.Properties()));
+    public static final RegistryObject<Item> RING_LUNDINIAN = ITEMS.register("ring_lundinian", () -> new ItemOriginalRing(ItemOriginalRing.Profile.LUNDINIAN, new Item.Properties()));
+    public static final RegistryObject<Item> RING_PUMPKIN_KNIGHT = ITEMS.register("ring_pumpkin_knight", () -> new ItemOriginalRing(ItemOriginalRing.Profile.PUMPKIN_KNIGHT, new Item.Properties()));
+    public static final RegistryObject<Item> RING_SNIPER = ITEMS.register("ring_sniper", () -> new ItemOriginalRing(ItemOriginalRing.Profile.SNIPER, new Item.Properties()));
+    public static final RegistryObject<Item> RING_DEEP_ONE = ITEMS.register("ring_deep_one", () -> new ItemOriginalRing(ItemOriginalRing.Profile.DEEP_ONE, new Item.Properties()));
+    public static final RegistryObject<Item> RING_WHITE_RAVEN = ITEMS.register("ring_white_raven", () -> new ItemOriginalRing(ItemOriginalRing.Profile.WHITE_RAVEN, new Item.Properties()));
+    public static final RegistryObject<Item> RING_DULL_WOOD_GRAIN = ITEMS.register("ring_dull_wood_grain", () -> new ItemOriginalRing(ItemOriginalRing.Profile.DULL_WOOD_GRAIN, new Item.Properties()));
+    public static final RegistryObject<Item> RING_TOTO = ITEMS.register("ring_toto", () -> new ItemOriginalRing(ItemOriginalRing.Profile.TOTO, new Item.Properties()));
+    public static final RegistryObject<Item> RING_FOUR_LEAF_CLOVER = ITEMS.register("ring_four_leaf_clover", () -> new ItemOriginalRing(ItemOriginalRing.Profile.FOUR_LEAF_CLOVER, new Item.Properties()));
+    public static final RegistryObject<Item> RING_PUPPET = ITEMS.register("ring_puppet", () -> new ItemOriginalRing(ItemOriginalRing.Profile.PUPPET, new Item.Properties()));
+    public static final RegistryObject<Item> RING_EDITH = ITEMS.register("ring_edith", () -> new ItemOriginalRing(ItemOriginalRing.Profile.EDITH, new Item.Properties()));
+    public static final RegistryObject<Item> RING_PRICKETT = ITEMS.register("ring_prickett", () -> new ItemOriginalRing(ItemOriginalRing.Profile.PRICKETT, new Item.Properties()));
+    public static final RegistryObject<Item> RING_LIFE_PLUS_1 = ITEMS.register("life_ring_plus_1", () -> new ItemOriginalRing(ItemOriginalRing.Profile.LIFE_PLUS_1, new Item.Properties()));
+    public static final RegistryObject<Item> RING_LIFE_PLUS_2 = ITEMS.register("life_ring_plus_2", () -> new ItemOriginalRing(ItemOriginalRing.Profile.LIFE_PLUS_2, new Item.Properties()));
+    public static final RegistryObject<Item> RING_LIFE_PLUS_3 = ITEMS.register("life_ring_plus_3", () -> new ItemOriginalRing(ItemOriginalRing.Profile.LIFE_PLUS_3, new Item.Properties()));
+    public static final RegistryObject<Item> RING_TENACIOUS_PLUS_1 = ITEMS.register("ring_tenacious_plus_1", () -> new ItemOriginalRing(ItemOriginalRing.Profile.TENACIOUS_PLUS_1, new Item.Properties()));
+    public static final RegistryObject<Item> RING_TENACIOUS_PLUS_2 = ITEMS.register("ring_tenacious_plus_2", () -> new ItemOriginalRing(ItemOriginalRing.Profile.TENACIOUS_PLUS_2, new Item.Properties()));
+    public static final RegistryObject<Item> RING_TENACIOUS_PLUS_3 = ITEMS.register("ring_tenacious_plus_3", () -> new ItemOriginalRing(ItemOriginalRing.Profile.TENACIOUS_PLUS_3, new Item.Properties()));
+    public static final RegistryObject<Item> RING_PUYO_PLUS_1 = ITEMS.register("ring_puyo_plus_1", () -> new ItemOriginalRing(ItemOriginalRing.Profile.PUYO_PLUS_1, new Item.Properties()));
+    public static final RegistryObject<Item> RING_PUYO_PLUS_2 = ITEMS.register("ring_puyo_plus_2", () -> new ItemOriginalRing(ItemOriginalRing.Profile.PUYO_PLUS_2, new Item.Properties()));
+    public static final RegistryObject<Item> RING_PUYO_PLUS_3 = ITEMS.register("ring_puyo_plus_3", () -> new ItemOriginalRing(ItemOriginalRing.Profile.PUYO_PLUS_3, new Item.Properties()));
+    public static final RegistryObject<Item> RING_HUNYA_PLUS_1 = ITEMS.register("ring_hunya_plus_1", () -> new ItemOriginalRing(ItemOriginalRing.Profile.HUNYA_PLUS_1, new Item.Properties()));
+    public static final RegistryObject<Item> RING_HUNYA_PLUS_2 = ITEMS.register("ring_hunya_plus_2", () -> new ItemOriginalRing(ItemOriginalRing.Profile.HUNYA_PLUS_2, new Item.Properties()));
+    public static final RegistryObject<Item> RING_HUNYA_PLUS_3 = ITEMS.register("ring_hunya_plus_3", () -> new ItemOriginalRing(ItemOriginalRing.Profile.HUNYA_PLUS_3, new Item.Properties()));
+    public static final RegistryObject<Item> RING_VOID_PLUS_1 = ITEMS.register("ring_void_plus_1", () -> new ItemOriginalRing(ItemOriginalRing.Profile.VOID_PLUS_1, new Item.Properties()));
+    public static final RegistryObject<Item> RING_VOID_PLUS_2 = ITEMS.register("ring_void_plus_2", () -> new ItemOriginalRing(ItemOriginalRing.Profile.VOID_PLUS_2, new Item.Properties()));
+    public static final RegistryObject<Item> RING_VOID_PLUS_3 = ITEMS.register("ring_void_plus_3", () -> new ItemOriginalRing(ItemOriginalRing.Profile.VOID_PLUS_3, new Item.Properties()));
+    public static final RegistryObject<Item> RING_EVIL_EYE_PLUS_1 = ITEMS.register("ring_evil_eye_plus_1", () -> new ItemOriginalRing(ItemOriginalRing.Profile.EVIL_EYE_PLUS_1, new Item.Properties()));
+    public static final RegistryObject<Item> RING_EVIL_EYE_PLUS_2 = ITEMS.register("ring_evil_eye_plus_2", () -> new ItemOriginalRing(ItemOriginalRing.Profile.EVIL_EYE_PLUS_2, new Item.Properties()));
+    public static final RegistryObject<Item> RING_EVIL_EYE_PLUS_3 = ITEMS.register("ring_evil_eye_plus_3", () -> new ItemOriginalRing(ItemOriginalRing.Profile.EVIL_EYE_PLUS_3, new Item.Properties()));
+    public static final RegistryObject<Item> RING_GODDESS_PLUS_1 = ITEMS.register("ring_goddess_plus_1", () -> new ItemOriginalRing(ItemOriginalRing.Profile.GODDESS_PLUS_1, new Item.Properties()));
+    public static final RegistryObject<Item> RING_GODDESS_PLUS_2 = ITEMS.register("ring_goddess_plus_2", () -> new ItemOriginalRing(ItemOriginalRing.Profile.GODDESS_PLUS_2, new Item.Properties()));
+    public static final RegistryObject<Item> RING_GODDESS_PLUS_3 = ITEMS.register("ring_goddess_plus_3", () -> new ItemOriginalRing(ItemOriginalRing.Profile.GODDESS_PLUS_3, new Item.Properties()));
+    public static final RegistryObject<Item> RING_IRON_PROTECTION_PLUS_1 = ITEMS.register("ring_iron_protection_plus_1", () -> new ItemOriginalRing(ItemOriginalRing.Profile.IRON_PROTECTION_PLUS_1, new Item.Properties()));
+    public static final RegistryObject<Item> RING_IRON_PROTECTION_PLUS_2 = ITEMS.register("ring_iron_protection_plus_2", () -> new ItemOriginalRing(ItemOriginalRing.Profile.IRON_PROTECTION_PLUS_2, new Item.Properties()));
+    public static final RegistryObject<Item> RING_IRON_PROTECTION_PLUS_3 = ITEMS.register("ring_iron_protection_plus_3", () -> new ItemOriginalRing(ItemOriginalRing.Profile.IRON_PROTECTION_PLUS_3, new Item.Properties()));
+    public static final RegistryObject<Item> RING_MAGIC_STONE_PLUS_1 = ITEMS.register("ring_magic_stone_plus_1", () -> new ItemOriginalRing(ItemOriginalRing.Profile.MAGIC_STONE_PLUS_1, new Item.Properties()));
+    public static final RegistryObject<Item> RING_MAGIC_STONE_PLUS_2 = ITEMS.register("ring_magic_stone_plus_2", () -> new ItemOriginalRing(ItemOriginalRing.Profile.MAGIC_STONE_PLUS_2, new Item.Properties()));
+    public static final RegistryObject<Item> RING_MAGIC_STONE_PLUS_3 = ITEMS.register("ring_magic_stone_plus_3", () -> new ItemOriginalRing(ItemOriginalRing.Profile.MAGIC_STONE_PLUS_3, new Item.Properties()));
+    public static final RegistryObject<Item> RING_SNIPER_PLUS_1 = ITEMS.register("ring_sniper_plus_1", () -> new ItemOriginalRing(ItemOriginalRing.Profile.SNIPER_PLUS_1, new Item.Properties()));
+    public static final RegistryObject<Item> RING_SNIPER_PLUS_2 = ITEMS.register("ring_sniper_plus_2", () -> new ItemOriginalRing(ItemOriginalRing.Profile.SNIPER_PLUS_2, new Item.Properties()));
+    public static final RegistryObject<Item> RING_SNIPER_PLUS_3 = ITEMS.register("ring_sniper_plus_3", () -> new ItemOriginalRing(ItemOriginalRing.Profile.SNIPER_PLUS_3, new Item.Properties()));
+    public static final RegistryObject<Item> RING_WASP_PLUS_1 = ITEMS.register("ring_wasp_plus_1", () -> new ItemOriginalRing(ItemOriginalRing.Profile.WASP_PLUS_1, new Item.Properties()));
+    public static final RegistryObject<Item> RING_WASP_PLUS_2 = ITEMS.register("ring_wasp_plus_2", () -> new ItemOriginalRing(ItemOriginalRing.Profile.WASP_PLUS_2, new Item.Properties()));
+    public static final RegistryObject<Item> RING_WASP_PLUS_3 = ITEMS.register("ring_wasp_plus_3", () -> new ItemOriginalRing(ItemOriginalRing.Profile.WASP_PLUS_3, new Item.Properties()));
+    public static final RegistryObject<Item> RING_BLADES_PLUS_1 = ITEMS.register("ring_blades_plus_1", () -> new ItemOriginalRing(ItemOriginalRing.Profile.BLADES_PLUS_1, new Item.Properties()));
+    public static final RegistryObject<Item> RING_BLADES_PLUS_2 = ITEMS.register("ring_blades_plus_2", () -> new ItemOriginalRing(ItemOriginalRing.Profile.BLADES_PLUS_2, new Item.Properties()));
+    public static final RegistryObject<Item> RING_BLADES_PLUS_3 = ITEMS.register("ring_blades_plus_3", () -> new ItemOriginalRing(ItemOriginalRing.Profile.BLADES_PLUS_3, new Item.Properties()));
+    public static final RegistryObject<Item> RING_GUARD_PLUS_1 = ITEMS.register("ring_guard_plus_1", () -> new ItemOriginalRing(ItemOriginalRing.Profile.GUARD_PLUS_1, new Item.Properties()));
+    public static final RegistryObject<Item> RING_GUARD_PLUS_2 = ITEMS.register("ring_guard_plus_2", () -> new ItemOriginalRing(ItemOriginalRing.Profile.GUARD_PLUS_2, new Item.Properties()));
+    public static final RegistryObject<Item> RING_GUARD_PLUS_3 = ITEMS.register("ring_guard_plus_3", () -> new ItemOriginalRing(ItemOriginalRing.Profile.GUARD_PLUS_3, new Item.Properties()));
+    public static final RegistryObject<Item> RING_WIND_GOD_PLUS_1 = ITEMS.register("ring_wind_god_plus_1", () -> new ItemOriginalRing(ItemOriginalRing.Profile.WIND_GOD_PLUS_1, new Item.Properties()));
+    public static final RegistryObject<Item> RING_WIND_GOD_PLUS_2 = ITEMS.register("ring_wind_god_plus_2", () -> new ItemOriginalRing(ItemOriginalRing.Profile.WIND_GOD_PLUS_2, new Item.Properties()));
+    public static final RegistryObject<Item> RING_WIND_GOD_PLUS_3 = ITEMS.register("ring_wind_god_plus_3", () -> new ItemOriginalRing(ItemOriginalRing.Profile.WIND_GOD_PLUS_3, new Item.Properties()));
+    public static final RegistryObject<Item> RING_SPELL_PLUS_1 = ITEMS.register("ring_spell_plus_1", () -> new ItemOriginalRing(ItemOriginalRing.Profile.SPELL_PLUS_1, new Item.Properties()));
+    public static final RegistryObject<Item> RING_SPELL_PLUS_2 = ITEMS.register("ring_spell_plus_2", () -> new ItemOriginalRing(ItemOriginalRing.Profile.SPELL_PLUS_2, new Item.Properties()));
+    public static final RegistryObject<Item> RING_SPELL_PLUS_3 = ITEMS.register("ring_spell_plus_3", () -> new ItemOriginalRing(ItemOriginalRing.Profile.SPELL_PLUS_3, new Item.Properties()));
+    public static final RegistryObject<Item> RING_LUNDINIAN_PLUS_1 = ITEMS.register("ring_lundinian_plus_1", () -> new ItemOriginalRing(ItemOriginalRing.Profile.LUNDINIAN_PLUS_1, new Item.Properties()));
+    public static final RegistryObject<Item> RING_LUNDINIAN_PLUS_2 = ITEMS.register("ring_lundinian_plus_2", () -> new ItemOriginalRing(ItemOriginalRing.Profile.LUNDINIAN_PLUS_2, new Item.Properties()));
+    public static final RegistryObject<Item> RING_LUNDINIAN_PLUS_3 = ITEMS.register("ring_lundinian_plus_3", () -> new ItemOriginalRing(ItemOriginalRing.Profile.LUNDINIAN_PLUS_3, new Item.Properties()));
+    public static final RegistryObject<Item> RING_CUT_DOWN = ITEMS.register("ring_cut_down", () -> new ItemOriginalRing(ItemOriginalRing.Profile.CUT_DOWN, new Item.Properties()));
+    public static final RegistryObject<Item> RING_GHOUL = ITEMS.register("ring_ghoul", () -> new ItemOriginalRing(ItemOriginalRing.Profile.GHOUL, new Item.Properties()));
+    public static final RegistryObject<Item> RING_ALMIGHTY = ITEMS.register("ring_almighty", () -> new ItemOriginalRing(ItemOriginalRing.Profile.ALMIGHTY, new Item.Properties()));
+    public static final RegistryObject<Item> RING_SIN_PLUS_1 = ITEMS.register("ring_sin_plus_1", () -> new ItemOriginalRing(ItemOriginalRing.Profile.SIN_PLUS_1, new Item.Properties()));
+    public static final RegistryObject<Item> RING_SIN_PLUS_2 = ITEMS.register("ring_sin_plus_2", () -> new ItemOriginalRing(ItemOriginalRing.Profile.SIN_PLUS_2, new Item.Properties()));
+    public static final RegistryObject<Item> RING_SIN_PLUS_3 = ITEMS.register("ring_sin_plus_3", () -> new ItemOriginalRing(ItemOriginalRing.Profile.SIN_PLUS_3, new Item.Properties()));
+    public static final RegistryObject<Item> RING_UNICORN = ITEMS.register("ring_unicorn", () -> new ItemOriginalRing(ItemOriginalRing.Profile.UNICORN, new Item.Properties()));
+    public static final RegistryObject<Item> RING_LION = ITEMS.register("ring_lion", () -> new ItemOriginalRing(ItemOriginalRing.Profile.LION, new Item.Properties()));
+    public static final RegistryObject<Item> RING_TIGER_FOX = ITEMS.register("ring_tiger_fox", () -> new ItemOriginalRing(ItemOriginalRing.Profile.TIGER_FOX, new Item.Properties()));
+    public static final RegistryObject<Item> RING_ICE_STONE = ITEMS.register("ring_ice_stone", () -> new ItemOriginalRing(ItemOriginalRing.Profile.ICE_STONE, new Item.Properties()));
+    public static final RegistryObject<Item> RING_OLD_KING = ITEMS.register("ring_old_king", () -> new ItemOriginalRing(ItemOriginalRing.Profile.OLD_KING, new Item.Properties()));
+    public static final RegistryObject<Item> RING_POLAR_BEAR = ITEMS.register("ring_polar_bear", () -> new ItemOriginalRing(ItemOriginalRing.Profile.POLAR_BEAR, new Item.Properties()));
+    public static final RegistryObject<Item> RING_DEFENSE_KING = ITEMS.register("ring_defense_king", () -> new ItemOriginalRing(ItemOriginalRing.Profile.DEFENSE_KING, new Item.Properties()));
+    public static final RegistryObject<Item> RING_BREAK_RESISTANCE = ITEMS.register("ring_break_resistance", () -> new ItemOriginalRing(ItemOriginalRing.Profile.BREAK_RESISTANCE, new Item.Properties()));
+    public static final RegistryObject<Item> RING_COUNTERATTACK = ITEMS.register("ring_counterattack", () -> new ItemOriginalRing(ItemOriginalRing.Profile.COUNTERATTACK, new Item.Properties()));
+    public static final RegistryObject<Item> RING_HOLY_FOREST = ITEMS.register("ring_holy_forest", () -> new ItemOriginalRing(ItemOriginalRing.Profile.HOLY_FOREST, new Item.Properties()));
+    public static final RegistryObject<Item> RING_MOLASSES = ITEMS.register("ring_molasses", () -> new ItemOriginalRing(ItemOriginalRing.Profile.MOLASSES, new Item.Properties()));
+    public static final RegistryObject<Item> RING_RECKLESS_HERO = ITEMS.register("ring_reckless_hero", () -> new ItemOriginalRing(ItemOriginalRing.Profile.RECKLESS_HERO, new Item.Properties()));
+    public static final RegistryObject<Item> RING_BANKER = ITEMS.register("ring_banker", () -> new ItemOriginalRing(ItemOriginalRing.Profile.BANKER, new Item.Properties()));
+    public static final RegistryObject<Item> RING_HEAVEN = ITEMS.register("ring_heaven", () -> new ItemOriginalRing(ItemOriginalRing.Profile.HEAVEN, new Item.Properties()));
+    public static final RegistryObject<Item> RING_BOOTBLACK = ITEMS.register("ring_bootblack", () -> new ItemOriginalRing(ItemOriginalRing.Profile.BOOTBLACK, new Item.Properties()));
+    public static final RegistryObject<Item> RING_BUTCHER = ITEMS.register("ring_butcher", () -> new ItemOriginalRing(ItemOriginalRing.Profile.BUTCHER, new Item.Properties()));
+    public static final RegistryObject<Item> RING_PROSTITUTE = ITEMS.register("ring_prostitute", () -> new ItemOriginalRing(ItemOriginalRing.Profile.PROSTITUTE, new Item.Properties()));
+    public static final RegistryObject<Item> RING_EXORCISM = ITEMS.register("ring_exorcism", () -> new ItemOriginalRing(ItemOriginalRing.Profile.EXORCISM, new Item.Properties()));
+    public static final RegistryObject<Item> RING_FIGHTER = ITEMS.register("ring_fighter", () -> new ItemOriginalRing(ItemOriginalRing.Profile.FIGHTER, new Item.Properties()));
+    public static final RegistryObject<Item> RING_TROLL = ITEMS.register("ring_troll", () -> new ItemOriginalRing(ItemOriginalRing.Profile.TROLL, new Item.Properties()));
+    public static final RegistryObject<Item> RING_MOSQUITO = ITEMS.register("ring_mosquito", () -> new ItemOriginalRing(ItemOriginalRing.Profile.MOSQUITO, new Item.Properties()));
+    public static final RegistryObject<Item> RING_RED_TEARSTONE = ITEMS.register("ring_red_tearstone", () -> new ItemOriginalRing(ItemOriginalRing.Profile.RED_TEARSTONE, new Item.Properties()));
+    public static final RegistryObject<Item> RING_WALRUS = ITEMS.register("ring_walrus", () -> new ItemOriginalRing(ItemOriginalRing.Profile.WALRUS, new Item.Properties()));
+    public static final RegistryObject<Item> RING_HELL_DESTRUCTION = ITEMS.register("ring_hell_destruction", () -> new ItemOriginalRing(ItemOriginalRing.Profile.HELL_DESTRUCTION, new Item.Properties()));
+    public static final RegistryObject<Item> RING_HEART_KNIGHT = ITEMS.register("ring_heart_knight", () -> new ItemOriginalRing(ItemOriginalRing.Profile.HEART_KNIGHT, new Item.Properties()));
+    public static final RegistryObject<Item> RING_SPADE_KNIGHT = ITEMS.register("ring_spade_knight", () -> new ItemOriginalRing(ItemOriginalRing.Profile.SPADE_KNIGHT, new Item.Properties()));
+    public static final RegistryObject<Item> RING_CLUB_KNIGHT = ITEMS.register("ring_club_knight", () -> new ItemOriginalRing(ItemOriginalRing.Profile.CLUB_KNIGHT, new Item.Properties()));
+    public static final RegistryObject<Item> RING_SIN = ITEMS.register("ring_sin", () -> new ItemOriginalRing(ItemOriginalRing.Profile.SIN, new Item.Properties()));
+    public static final RegistryObject<Item> RING_STAR = ITEMS.register("ring_star", () -> new ItemOriginalRing(ItemOriginalRing.Profile.STAR, new Item.Properties()));
+    public static final RegistryObject<Item> RING_OGRE = ITEMS.register("ring_ogre", () -> new ItemOriginalRing(ItemOriginalRing.Profile.OGRE, new Item.Properties()));
+    public static final RegistryObject<Item> RING_BEE = ITEMS.register("ring_bee", () -> new ItemOriginalRing(ItemOriginalRing.Profile.BEE, new Item.Properties()));
+    public static final RegistryObject<Item> RING_FRENZIED_KING = ITEMS.register("ring_frenzied_king", () -> new ItemOriginalRing(ItemOriginalRing.Profile.FRENZIED_KING, new Item.Properties()));
+    public static final RegistryObject<Item> RING_IDATEN = ITEMS.register("ring_idaten", () -> new ItemOriginalRing(ItemOriginalRing.Profile.IDATEN, new Item.Properties()));
+    public static final RegistryObject<Item> RING_MY_STRUGGLE = ITEMS.register("ring_my_struggle", () -> new ItemOriginalRing(ItemOriginalRing.Profile.MY_STRUGGLE, new Item.Properties()));
+    public static final RegistryObject<Item> RING_ADULTERY = ITEMS.register("ring_adultery", () -> new ItemOriginalRing(ItemOriginalRing.Profile.ADULTERY, new Item.Properties()));
     // =========================================================================================================================================================================
     // 武器/盾
     // =========================================================================================================================================================================
@@ -920,10 +1042,10 @@ public class BlackSouls {
                         output.accept(MARY_SUES_BRANCH_STAFF.get());       // 玛丽苏的枝杖
                         output.accept(EUNICES_RAPIER.get());               // 尤妮丝的刺剑
                         output.accept(RAIDENS_DUAL_AXES.get());            // 莱登的双斧
-                        // ===========================================================
+                        // =============================================================
                         // 盾系列
-                        // ===========================================================
-                        output.accept(MURDERERS_SHOTGUN.get());            // 杀人魔霰弹枪
+                        // =============================================================
+                        output.accept(MURDERERS_SHOTGUN.get());            // 杀人魔霰弹铳
                     })
                     .build());
 
@@ -943,11 +1065,11 @@ public class BlackSouls {
                         output.accept(LEATHER_ARMOR.get());                // 皮甲
                         output.accept(HUNTERS_ATTIRE.get());               // 猎人的装束
                         output.accept(MATCH_GIRL_CLOTHES.get());           // 卖火柴的衣服
-                        // 作业服
+                        output.accept(WORK_CLOTHES.get());                 // 作业服
                         output.accept(GENTLEMAN_COAT.get());               // 绅士外套
                         output.accept(PROSTITUTE_DRESS.get());             // 娼妇之服
                         output.accept(PLATE_ARMOR.get());                  // 板甲
-                        // 深渊之铠
+                        output.accept(ABYSS_ARMOR.get());                  // 深渊之铠
                         output.accept(ARMOR_OF_THE_SUN.get());             // 太阳之铠
                         output.accept(CLERIC_VESTMENT.get());              // 圣职者的装衣
                         output.accept(MAGICIAN_COAT.get());                // 魔术师的外套
@@ -981,18 +1103,19 @@ public class BlackSouls {
                         output.accept(SAILOR_SUIT.get());                  // 船员服
                         output.accept(SNAKE_DRESS.get());                  // 毒蛇之服
                         output.accept(DISCIPLINARIAN_ROBE.get());          // 教戒师的礼袍
+                        output.accept(ABYSS_HELMET.get());                 // 深渊之盔
                         output.accept(OMINOUS_CLOTHES.get());              // 不吉的上衣
                         output.accept(BUTETSU_ARMOR.get());                // 武铁之铠
-                        // 黄之布
+                        output.accept(YELLOW_CLOTH.get());                 // 黄之布
                         output.accept(GUARDIAN_ANGEL.get());               // 守护天使
-                        // 剧作家的头巾
-                        // 伪天使的花冠
+                        output.accept(PLAYWRIGHT_HEADSCARF.get());         // 剧作家的头巾
+                        output.accept(FALSE_ANGEL_CROWN.get());            // 伪天使的花冠
                         output.accept(MYSTERY_OF_NIGHT_SKY.get());         // 夜空的神秘
-                        // 冬魔导士的外套
-                        // 冬骑士之铠
-                        // 冬骑士之盔
-                        // 无风之衣
-                        // 奇迹的巫女装束
+                        output.accept(WINTER_MAGE_COAT.get());             // 冬魔导士的外套
+                        output.accept(WINTER_KNIGHT_ARMOR.get());          // 冬骑士之铠
+                        output.accept(WINTER_KNIGHT_HELMET.get());         // 冬骑士之盔
+                        output.accept(WINDLESS_CLOTHES.get());             // 无风之衣
+                        output.accept(MIRACLE_SHRINE_MAIDEN_GARB.get());   // 奇迹的巫女装束
                     })
                     .build());
 
@@ -1007,7 +1130,7 @@ public class BlackSouls {
                         // ==========================================================================
                         output.accept(RING_FRAGILE.get());                 // 脆弱生命的戒指
                         output.accept(RING_LIFE.get());                    // 生命戒指
-                        // 坚韧者的戒指
+                        output.accept(RING_TENACIOUS.get());               // 坚韧者的戒指
                         output.accept(RING_EVIL_EYE.get());                // 邪眼戒指
                         output.accept(RING_IRON_PROTECTION.get());         // 铁之加护戒指
                         output.accept(RING_FIRE_STONE.get());              // 炎方石戒指
@@ -1029,7 +1152,7 @@ public class BlackSouls {
                         output.accept(RING_SPELL.get());                   // 咒术戒指
                         output.accept(RING_MASOCHIST.get());               // 受虐戒指
                         output.accept(RING_CAT.get());                     // 柴郡猫戒指
-                        // 叛逆戒指
+                        output.accept(RING_REBELLION.get());               // 叛逆戒指
                         output.accept(RING_TERROR.get());                  // 恐怖戒指
                         output.accept(RING_IRON_MAIDEN.get());             // 铁处女戒指
                         output.accept(RING_KNIGHT.get());                  // 骑士戒指
@@ -1038,54 +1161,119 @@ public class BlackSouls {
                         output.accept(RING_VOID.get());                    // 空虚戒指
                         output.accept(RING_DRAGON_GUARD.get());            // 龙之守护戒指
                         output.accept(RING_MIDNIGHT_CROWN.get());          // 宵暗的指冠
-                        // 奇迹戒指
-                        // 杀人小丑戒指
-                        // 黑山羊戒指
+                        output.accept(RING_MIRACLE.get());                 // 奇迹戒指
+                        output.accept(RING_MURDER_CLOWN.get());            // 杀人小丑戒指
+                        output.accept(RING_BLACK_GOAT.get());              // 黑山羊戒指
                         output.accept(RING_DEATH.get());                   // 死神戒指
-                        // 理发师戒指
-                        // 虚饰戒指
-                        // 苹果戒指
-                        // 伦蒂尼恩的戒指
-                        // 南瓜骑士戒指
-                        // 狙击手戒指
-                        // 深者戒指
-                        // 白鸦戒指
-                        // 暗沉木纹戒指
-                        // 托托的戒指
-                        // 四叶草戒指
-                        // 傀儡戒指
-                        // 无谋勇者戒指
-                        // 银行家戒指
-                        // 天之戒指
-                        // 擦靴人的戒指
+                        output.accept(RING_BARBER.get());                  // 理发师戒指
+                        output.accept(RING_VANITY.get());                  // 虚饰戒指
+                        output.accept(RING_APPLE.get());                   // 苹果戒指
+                        output.accept(RING_LUNDINIAN.get());               // 伦蒂尼恩的戒指
+                        output.accept(RING_PUMPKIN_KNIGHT.get());          // 南瓜骑士戒指
+                        output.accept(RING_SNIPER.get());                  // 狙击手戒指
+                        output.accept(RING_DEEP_ONE.get());                // 深者戒指
+                        output.accept(RING_WHITE_RAVEN.get());             // 白鸦戒指
+                        output.accept(RING_DULL_WOOD_GRAIN.get());         // 暗沉木纹戒指
+                        output.accept(RING_TOTO.get());                    // 托托的戒指
+                        output.accept(RING_FOUR_LEAF_CLOVER.get());        // 四叶草戒指
+                        output.accept(RING_PUPPET.get());                  // 傀儡戒指
+                        output.accept(RING_RECKLESS_HERO.get());           // 无谋勇者戒指
+                        output.accept(RING_BANKER.get());                  // 银行家戒指
+                        output.accept(RING_HEAVEN.get());                  // 天之戒指
+                        output.accept(RING_BOOTBLACK.get());               // 擦靴人的戒指
                         output.accept(RING_LIEF.get());                    // 莉耶芙的戒指
-                        // 屠夫戒指
-                        // 娼妇戒指
-                        // 退魔戒指
+                        output.accept(RING_BUTCHER.get());                 // 屠夫戒指
+                        output.accept(RING_PROSTITUTE.get());              // 娼妇戒指
+                        output.accept(RING_EXORCISM.get());                // 退魔戒指
                         output.accept(RING_ABYSS.get());                   // 深渊戒指
-                        // 斗士戒指
+                        output.accept(RING_FIGHTER.get());                 // 斗士戒指
                         output.accept(RING_BLACK_RABBIT.get());            // 黑兔戒指
-                        // 巨魔戒指
-                        // 蚊之戒指
-                        // 红泪石戒指
-                        // 伊迪斯的戒指
-                        // 海象的戒指
-                        // 狱灭戒指
-                        // 红心骑士戒指
-                        // 黑桃骑士戒指
-                        // 草花骑士戒指
+                        output.accept(RING_TROLL.get());                   // 巨魔戒指
+                        output.accept(RING_MOSQUITO.get());                // 蚊之戒指
+                        output.accept(RING_RED_TEARSTONE.get());           // 红泪石戒指
+                        output.accept(RING_EDITH.get());                   // 伊迪斯的戒指
+                        output.accept(RING_WALRUS.get());                  // 海象的戒指
+                        output.accept(RING_HELL_DESTRUCTION.get());        // 狱灭戒指
+                        output.accept(RING_HEART_KNIGHT.get());            // 红心骑士戒指
+                        output.accept(RING_SPADE_KNIGHT.get());            // 黑桃骑士戒指
+                        output.accept(RING_CLUB_KNIGHT.get());             // 草花骑士戒指
                         output.accept(RING_WHITE_RABBIT.get());            // 白兔戒指
                         output.accept(RING_GOD_FISH.get());                // 神鱼戒指
-                        // 罪恶戒指
-                        // 星辰戒指
+                        output.accept(RING_SIN.get());                     // 罪恶戒指
+                        output.accept(RING_STAR.get());                    // 星辰戒指
                         output.accept(RING_BLACKBEARD.get());              // 黑胡子戒指
-                        // 普利凯特的戒指
-                        // 食人魔戒指
-                        // 蜜蜂戒指
-                        // 狂乱王的戒指
-                        // 韦陀天戒指
-                        // 我的奋斗戒指
-                        // 奸淫戒指
+                        output.accept(RING_PRICKETT.get());                // 普利凯特的戒指
+                        output.accept(RING_OGRE.get());                    // 食人魔戒指
+                        output.accept(RING_BEE.get());                     // 蜜蜂戒指
+                        output.accept(RING_FRENZIED_KING.get());           // 狂乱王的戒指
+                        output.accept(RING_IDATEN.get());                  // 韦陀天戒指
+                        output.accept(RING_MY_STRUGGLE.get());             // 我的奋斗戒指
+                        output.accept(RING_ADULTERY.get());                // 奸淫戒指
+                        output.accept(RING_LIFE_PLUS_1.get());             // 生命戒指＋1
+                        output.accept(RING_LIFE_PLUS_2.get());             // 生命戒指＋2
+                        output.accept(RING_LIFE_PLUS_3.get());             // 生命戒指＋3
+                        output.accept(RING_TENACIOUS_PLUS_1.get());        // 坚韧者的戒指＋1
+                        output.accept(RING_TENACIOUS_PLUS_2.get());        // 坚韧者的戒指＋2
+                        output.accept(RING_TENACIOUS_PLUS_3.get());        // 坚韧者的戒指＋3
+                        output.accept(RING_PUYO_PLUS_1.get());             // 噗哟噗哟＋1
+                        output.accept(RING_PUYO_PLUS_2.get());             // 噗哟噗哟＋2
+                        output.accept(RING_PUYO_PLUS_3.get());             // 噗哟噗哟＋3
+                        output.accept(RING_HUNYA_PLUS_1.get());            // 呼扭呼扭＋1
+                        output.accept(RING_HUNYA_PLUS_2.get());            // 呼扭呼扭＋2
+                        output.accept(RING_HUNYA_PLUS_3.get());            // 呼扭呼扭＋3
+                        output.accept(RING_VOID_PLUS_1.get());             // 空虚戒指＋1
+                        output.accept(RING_VOID_PLUS_2.get());             // 空虚戒指＋2
+                        output.accept(RING_VOID_PLUS_3.get());             // 空虚戒指＋3
+                        output.accept(RING_EVIL_EYE_PLUS_1.get());         // 邪眼戒指＋1
+                        output.accept(RING_EVIL_EYE_PLUS_2.get());         // 邪眼戒指＋2
+                        output.accept(RING_EVIL_EYE_PLUS_3.get());         // 邪眼戒指＋3
+                        output.accept(RING_GODDESS_PLUS_1.get());          // 女神的戒指＋1
+                        output.accept(RING_GODDESS_PLUS_2.get());          // 女神的戒指＋2
+                        output.accept(RING_GODDESS_PLUS_3.get());          // 女神的戒指＋3
+                        output.accept(RING_IRON_PROTECTION_PLUS_1.get());  // 铁之加护戒指＋1
+                        output.accept(RING_IRON_PROTECTION_PLUS_2.get());  // 铁之加护戒指＋2
+                        output.accept(RING_IRON_PROTECTION_PLUS_3.get());  // 铁之加护戒指＋3
+                        output.accept(RING_MAGIC_STONE_PLUS_1.get());      // 魔法方石戒指＋1
+                        output.accept(RING_MAGIC_STONE_PLUS_2.get());      // 魔法方石戒指＋2
+                        output.accept(RING_MAGIC_STONE_PLUS_3.get());      // 魔法方石戒指＋3
+                        output.accept(RING_SNIPER_PLUS_1.get());           // 狙击手戒指＋1
+                        output.accept(RING_SNIPER_PLUS_2.get());           // 狙击手戒指＋2
+                        output.accept(RING_SNIPER_PLUS_3.get());           // 狙击手戒指＋3
+                        output.accept(RING_WASP_PLUS_1.get());             // 黄蜂戒指＋1
+                        output.accept(RING_WASP_PLUS_2.get());             // 黄蜂戒指＋2
+                        output.accept(RING_WASP_PLUS_3.get());             // 黄蜂戒指＋3
+                        output.accept(RING_BLADES_PLUS_1.get());           // 刃之戒指＋1
+                        output.accept(RING_BLADES_PLUS_2.get());           // 刃之戒指＋2
+                        output.accept(RING_BLADES_PLUS_3.get());           // 刃之戒指＋3
+                        output.accept(RING_GUARD_PLUS_1.get());            // 守护戒指＋1
+                        output.accept(RING_GUARD_PLUS_2.get());            // 守护戒指＋2
+                        output.accept(RING_GUARD_PLUS_3.get());            // 守护戒指＋3
+                        output.accept(RING_WIND_GOD_PLUS_1.get());         // 风神戒指＋1
+                        output.accept(RING_WIND_GOD_PLUS_2.get());         // 风神戒指＋2
+                        output.accept(RING_WIND_GOD_PLUS_3.get());         // 风神戒指＋3
+                        output.accept(RING_SPELL_PLUS_1.get());            // 咒术戒指＋1
+                        output.accept(RING_SPELL_PLUS_2.get());            // 咒术戒指＋2
+                        output.accept(RING_SPELL_PLUS_3.get());            // 咒术戒指＋3
+                        output.accept(RING_LUNDINIAN_PLUS_1.get());        // 伦蒂尼恩的戒指＋1
+                        output.accept(RING_LUNDINIAN_PLUS_2.get());        // 伦蒂尼恩的戒指＋2
+                        output.accept(RING_LUNDINIAN_PLUS_3.get());        // 伦蒂尼恩的戒指＋3
+                        output.accept(RING_CUT_DOWN.get());                // 削落戒指
+                        output.accept(RING_GHOUL.get());                   // 食尸鬼戒指
+                        output.accept(RING_ALMIGHTY.get());                // 全能戒指
+                        output.accept(RING_SIN_PLUS_1.get());              // 罪恶戒指+1
+                        output.accept(RING_SIN_PLUS_2.get());              // 罪恶戒指+2
+                        output.accept(RING_SIN_PLUS_3.get());              // 罪恶戒指+3
+                        output.accept(RING_UNICORN.get());                 // 独角兽戒指
+                        output.accept(RING_LION.get());                    // 狮子戒指
+                        output.accept(RING_TIGER_FOX.get());               // 虎狐戒指
+                        output.accept(RING_ICE_STONE.get());               // 冰方石戒指
+                        output.accept(RING_OLD_KING.get());                // 古王戒指
+                        output.accept(RING_POLAR_BEAR.get());              // 白熊戒指
+                        output.accept(RING_DEFENSE_KING.get());            // 防王戒指
+                        output.accept(RING_BREAK_RESISTANCE.get());        // 破耐戒指
+                        output.accept(RING_COUNTERATTACK.get());           // 逆袭戒指
+                        output.accept(RING_HOLY_FOREST.get());             // 圣森戒指
+                        output.accept(RING_MOLASSES.get());                // 糖蜜戒指
                     })
                     .build());
 

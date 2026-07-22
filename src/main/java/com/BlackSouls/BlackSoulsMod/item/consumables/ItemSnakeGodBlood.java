@@ -11,7 +11,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +21,7 @@ import java.util.List;
 public class ItemSnakeGodBlood extends Item {
 
     public ItemSnakeGodBlood(Properties properties) {
-        super(properties.stacksTo(99).rarity(Rarity.RARE));
+        super(properties.stacksTo(99));
     }
 
     @Override

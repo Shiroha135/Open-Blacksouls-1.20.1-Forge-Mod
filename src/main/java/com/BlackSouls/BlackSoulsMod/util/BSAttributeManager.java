@@ -31,6 +31,12 @@ public class BSAttributeManager {
                 if (ringCount > 0) {
                     res *= (float) Math.pow(0.8D, ringCount);
                 }
+                res *= (float) Math.pow(0.75D, StatEventHandler.getOriginalRingCount(player,
+                        com.BlackSouls.BlackSoulsMod.item.rings.ItemOriginalRing.Profile.IRON_PROTECTION_PLUS_1));
+                res *= (float) Math.pow(0.70D, StatEventHandler.getOriginalRingCount(player,
+                        com.BlackSouls.BlackSoulsMod.item.rings.ItemOriginalRing.Profile.IRON_PROTECTION_PLUS_2));
+                res *= (float) Math.pow(0.65D, StatEventHandler.getOriginalRingCount(player,
+                        com.BlackSouls.BlackSoulsMod.item.rings.ItemOriginalRing.Profile.IRON_PROTECTION_PLUS_3));
             }
             if (attribute.equals(FIRE)) {
                 int ringCount = StatEventHandler.getBaubleCount(player, BlackSouls.RING_FIRE_STONE.get());
@@ -49,21 +55,36 @@ public class BSAttributeManager {
                 if (miltonHelmetCount > 0) {
                     res *= (float) Math.pow(0.75D, miltonHelmetCount);
                 }
+                res *= (float) Math.pow(0.8D, StatEventHandler.getBaubleCount(player, BlackSouls.RING_EXORCISM.get()));
             }
-            if (attribute.equals(ICE) && BlackSouls.BUFF_FROSTBITE.isPresent() && victim.hasEffect(BlackSouls.BUFF_FROSTBITE.get())) {
-                res *= 1.5F;
+            if (attribute.equals(ICE)) {
+                res *= (float) Math.pow(0.5D, StatEventHandler.getOriginalRingCount(player,
+                        com.BlackSouls.BlackSoulsMod.item.rings.ItemOriginalRing.Profile.ICE_STONE));
+                res *= (float) Math.pow(0.80D, StatEventHandler.getBaubleCount(player, BlackSouls.WINTER_MAGE_COAT.get()));
+                res *= (float) Math.pow(0.70D, StatEventHandler.getBaubleCount(player, BlackSouls.WINTER_KNIGHT_ARMOR.get()));
+                res *= (float) Math.pow(0.80D, StatEventHandler.getBaubleCount(player, BlackSouls.WINTER_KNIGHT_HELMET.get()));
+                res *= (float) Math.pow(1.50D, StatEventHandler.getBaubleCount(player, BlackSouls.WINDLESS_CLOTHES.get()));
+                if (BlackSouls.BUFF_FROSTBITE.isPresent() && victim.hasEffect(BlackSouls.BUFF_FROSTBITE.get())) {
+                    res *= 1.5F;
+                }
             }
             if (attribute.equals(THUNDER)) {
                 int ringCount = StatEventHandler.getBaubleCount(player, BlackSouls.RING_THUNDER_STONE.get());
                 if (ringCount > 0) {
                     res *= (float) Math.pow(0.5D, ringCount);
                 }
+                res *= (float) Math.pow(0.8D, StatEventHandler.getBaubleCount(player, BlackSouls.RING_EXORCISM.get()));
             }
             if (attribute.equals(DARK)) {
                 int ringCount = StatEventHandler.getBaubleCount(player, BlackSouls.RING_DARK_STONE.get());
                 if (ringCount > 0) {
                     res *= (float) Math.pow(0.5D, ringCount);
                 }
+                res *= (float) Math.pow(0.8D, StatEventHandler.getBaubleCount(player, BlackSouls.RING_EXORCISM.get()));
+            }
+            if (attribute.equals(LIGHT)) {
+                res *= (float) Math.pow(0.5D, StatEventHandler.getBaubleCount(player, BlackSouls.RING_HEAVEN.get()));
+                res *= (float) Math.pow(0.8D, StatEventHandler.getBaubleCount(player, BlackSouls.RING_EXORCISM.get()));
             }
             return Math.max(0.0f, res);
         } else {

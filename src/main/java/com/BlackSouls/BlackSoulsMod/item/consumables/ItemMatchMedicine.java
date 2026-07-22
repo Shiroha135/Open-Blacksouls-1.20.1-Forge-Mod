@@ -31,12 +31,12 @@ public class ItemMatchMedicine extends Item {
 
         if (!level.isClientSide()) {
             
-            player.heal(3000.0F);
+            player.heal((float) (3000.0D * StatEventHandler.getItemRecoveryMultiplier(player)));
 
             
             BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
             if (stats != null) {
-                stats.restoreMP(3000); 
+                stats.restoreMP(3000.0D * StatEventHandler.getConsumableRecoveryMultiplier(player));
                 StatEventHandler.syncToClient(player);
             }
 

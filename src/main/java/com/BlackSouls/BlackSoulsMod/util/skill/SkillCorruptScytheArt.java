@@ -107,7 +107,7 @@ public class SkillCorruptScytheArt extends AbstractOriginalWeaponSkill {
     private boolean applyPercentHit(ServerPlayer player, LivingEntity target, double maxHealthRate) {
         double rawDamage = 10.0D * (0.8D + Math.random() * 0.4D)
                 * BSAttributeManager.getBestMultiplier(target, List.of(BSAttributeManager.DARK))
-                + target.getMaxHealth() * maxHealthRate;
+                + target.getMaxHealth() * maxHealthRate * StatEventHandler.getPercentageDamageMultiplier(target);
         return applyRawHit(player, target, rawDamage, false, true, 0.0D);
     }
 

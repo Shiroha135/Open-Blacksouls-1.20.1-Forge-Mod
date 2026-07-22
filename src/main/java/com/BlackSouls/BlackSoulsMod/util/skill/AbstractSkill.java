@@ -72,6 +72,25 @@ public abstract class AbstractSkill {
         return true;
     }
 
+    public boolean canAutoCast(ServerPlayer player, BSPlayerStats stats) {
+        if (player == null || stats == null || !isUnlockedForGUI(player)) {
+            return false;
+        }
+        if (!SkillUtils.shouldBypassManaCost(player) && stats.mp < getEffectiveManaCost(stats)) {
+            return false;
+        }
+        if (!SkillUtils.hasEnoughActionPoints(player, getActionCost())) {
+            return false;
+        }
+        if (SkillUtils.hasInfiniteCooldownAccessory(player)
+                || (SkillUtils.isChronoRewindActive(player) && !"bs2_skill_chrono_clock".equals(getSkillId()))) {
+            return true;
+        }
+        long currentTime = player.level().getGameTime();
+        long lastTime = SkillUtils.getPersistedData(player).getLong(SkillUtils.getCooldownTag(getSkillId()));
+        return currentTime - lastTime >= getBaseCooldownTicks();
+    }
+
     public void consumeAndSetCooldown(ServerPlayer player, BSPlayerStats stats) {
         SkillUtils.consumeMana(player, getEffectiveManaCost(stats));
         SkillUtils.consumeActionPoints(player, getActionCost());

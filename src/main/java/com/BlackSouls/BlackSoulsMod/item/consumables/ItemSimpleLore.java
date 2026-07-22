@@ -13,17 +13,25 @@ import java.util.List;
 
 public class ItemSimpleLore extends Item {
     private final int loreLines;
+    private final boolean italicLore;
 
     public ItemSimpleLore(Properties properties, int loreLines) {
+        this(properties, loreLines, false);
+    }
+
+    public ItemSimpleLore(Properties properties, int loreLines, boolean italicLore) {
         super(properties);
         this.loreLines = loreLines;
+        this.italicLore = italicLore;
     }
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, List<Component> tooltip, @NotNull TooltipFlag flag) {
         for (int i = 1; i <= loreLines; i++) {
             Component line = Component.translatable(this.getDescriptionId() + ".lore." + i);
-            tooltip.add(i == 1 ? line.copy().withStyle(ChatFormatting.WHITE) : line.copy().withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+            tooltip.add(italicLore || i > 1
+                    ? line.copy().withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)
+                    : line.copy().withStyle(ChatFormatting.WHITE));
         }
     }
 }

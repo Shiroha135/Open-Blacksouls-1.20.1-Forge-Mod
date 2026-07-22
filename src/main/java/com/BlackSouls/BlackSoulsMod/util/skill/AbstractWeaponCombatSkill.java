@@ -19,8 +19,22 @@ import java.util.List;
 import java.util.Optional;
 
 abstract class AbstractWeaponCombatSkill extends WeaponSkill {
+    private static final ThreadLocal<LivingEntity> PUPPET_TARGET = new ThreadLocal<>();
+
+    static void setPuppetTarget(LivingEntity target) {
+        PUPPET_TARGET.set(target);
+    }
+
+    static void clearPuppetTarget() {
+        PUPPET_TARGET.remove();
+    }
 
     protected LivingEntity findTarget(Player player, double range) {
+        LivingEntity forcedTarget = PUPPET_TARGET.get();
+        if (forcedTarget != null && forcedTarget.isAlive() && !forcedTarget.isSpectator()
+                && player.distanceToSqr(forcedTarget) <= range * range) {
+            return forcedTarget;
+        }
         LivingEntity target = null;
         double closest = Double.MAX_VALUE;
         Vec3 eyePos = player.getEyePosition(1.0F);
@@ -48,6 +62,11 @@ abstract class AbstractWeaponCombatSkill extends WeaponSkill {
     }
 
     protected List<LivingEntity> findTargets(Player player, double range, int maximum) {
+        LivingEntity forcedTarget = PUPPET_TARGET.get();
+        if (forcedTarget != null && forcedTarget.isAlive() && !forcedTarget.isSpectator()
+                && player.distanceToSqr(forcedTarget) <= range * range) {
+            return List.of(forcedTarget);
+        }
         List<LivingEntity> result = new ArrayList<>();
         LivingEntity primary = findTarget(player, range);
         if (primary != null) {

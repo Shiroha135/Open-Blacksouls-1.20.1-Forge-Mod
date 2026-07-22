@@ -42,7 +42,7 @@ public class ItemHerbBottleM extends ItemLoreBase {
             BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
             if (stats != null) {
                 double maxMana = stats.maxMp;
-                stats.mp = Math.min(maxMana, stats.mp + maxMana * 0.50);
+                stats.mp = Math.min(maxMana, stats.mp + maxMana * 0.50 * StatEventHandler.getConsumableRecoveryMultiplier(player));
                 StatEventHandler.syncToClient(player);
             }
 

@@ -29,10 +29,10 @@ public class ItemTurtleSoup extends Item {
         ItemStack stack = player.getItemInHand(hand);
 
         if (!level.isClientSide()) {
-            player.heal(player.getMaxHealth() * 0.5F);
+            player.heal((float) (player.getMaxHealth() * 0.5F * StatEventHandler.getItemRecoveryMultiplier(player)));
 
             player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
-                stats.mp = Math.min(stats.maxMp, stats.mp + stats.maxMp * 0.5);
+                stats.mp = Math.min(stats.maxMp, stats.mp + stats.maxMp * 0.5 * StatEventHandler.getConsumableRecoveryMultiplier(player));
                 StatEventHandler.syncToClient(player);
             });
 
