@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID, value = Dist.CLIENT)
 public class SoulGainBannerRenderer {
-    private static final ResourceLocation ICON = new ResourceLocation(BlackSouls.MODID, "textures/item/soul_standard.png");
+    private static final ResourceLocation ICON = new ResourceLocation(BlackSouls.MODID, "textures/item/consumable/soul_standard.png");
 
     private static int ticksLeft = 0;
     private static long soulDelta = 0L;

@@ -23,6 +23,7 @@ import com.BlackSouls.BlackSoulsMod.item.ItemNodenSpawn;
 import com.BlackSouls.BlackSoulsMod.potion.*;
 import com.BlackSouls.BlackSoulsMod.sound.BSSoundRegistry;
 import com.BlackSouls.BlackSoulsMod.util.skill.SkillRegistry;
+import com.BlackSouls.BlackSoulsMod.util.skill.SkillOriginalMagic;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -135,6 +136,8 @@ public class BlackSouls {
     public static final RegistryObject<MobEffect> BUFF_DARK_POWER = MOB_EFFECTS.register("dark_power", PotionDarkPower::new);
     public static final RegistryObject<MobEffect> BUFF_SEVERED_LEG = MOB_EFFECTS.register("severed_leg", PotionSeveredLeg::new);
     public static final RegistryObject<MobEffect> BUFF_FROSTBITE = MOB_EFFECTS.register("frostbite", PotionFrostbite::new);
+    public static final RegistryObject<MobEffect> BUFF_INNER_POTENTIAL = MOB_EFFECTS.register("inner_potential", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xD42A47));
+    public static final RegistryObject<MobEffect> BUFF_AWAKENING = MOB_EFFECTS.register("awakening", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0x8E44AD));
     public static final RegistryObject<MobEffect> BUFF_LACERATION = MOB_EFFECTS.register("laceration", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.HARMFUL, 0x8A2030));
     public static final RegistryObject<MobEffect> BUFF_DEFENSE_KING = MOB_EFFECTS.register("defense_king", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xD8C36A));
     public static final RegistryObject<MobEffect> BUFF_PLAYWRIGHT = MOB_EFFECTS.register("playwright_effect", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0x8B1A1A));
@@ -292,6 +295,10 @@ public class BlackSouls {
         return SOUND_EVENTS.register(name, () ->
                 SoundEvent.createVariableRangeEvent(new net.minecraft.resources.ResourceLocation(MODID, name))
         );
+    }
+
+    private static RegistryObject<Item> registerOriginalSkillBook(SkillOriginalMagic.Profile profile) {
+        return ITEMS.register(profile.getBookId(), () -> new ItemOriginalSkillBook(new Item.Properties(), profile));
     }
     // =========================================================================================================================================================================
     // 卖钱用/杂项
@@ -737,6 +744,61 @@ public class BlackSouls {
     public static final RegistryObject<Item> SKILL_BOOK_SOUL_LIGHT = ITEMS.register("skill_book_soul_light", () -> new ItemSkillBookSoulLight(new Item.Properties()));
     public static final RegistryObject<Item> SKILL_BOOK_SOUL_RADIATION = ITEMS.register("skill_book_soul_radiation", () -> new ItemSkillBookSoulRadiation(new Item.Properties()));
     public static final RegistryObject<Item> SKILL_BOOK_CARRHUS_BLOOD_CURSE = ITEMS.register("skill_book_carthus_blood_curse", () -> new ItemSkillBookCarthusBloodCurse(new Item.Properties()));
+    public static final RegistryObject<Item> SKILL_BOOK_SOUL_VOLLEY = registerOriginalSkillBook(SkillOriginalMagic.Profile.SOUL_VOLLEY);
+    public static final RegistryObject<Item> SKILL_BOOK_DISPEL = registerOriginalSkillBook(SkillOriginalMagic.Profile.DISPEL);
+    public static final RegistryObject<Item> SKILL_BOOK_SEE_THROUGH_ATTACK = registerOriginalSkillBook(SkillOriginalMagic.Profile.SEE_THROUGH_ATTACK);
+    public static final RegistryObject<Item> SKILL_BOOK_POISON = registerOriginalSkillBook(SkillOriginalMagic.Profile.POISON);
+    public static final RegistryObject<Item> SKILL_BOOK_POISON_II = registerOriginalSkillBook(SkillOriginalMagic.Profile.POISON_II);
+    public static final RegistryObject<Item> SKILL_BOOK_HYPNOSIS = registerOriginalSkillBook(SkillOriginalMagic.Profile.HYPNOSIS);
+    public static final RegistryObject<Item> SKILL_BOOK_CURE = registerOriginalSkillBook(SkillOriginalMagic.Profile.CURE);
+    public static final RegistryObject<Item> SKILL_BOOK_MAGIC_BLESSING = registerOriginalSkillBook(SkillOriginalMagic.Profile.MAGIC_BLESSING);
+    public static final RegistryObject<Item> SKILL_BOOK_RAMPAGE = registerOriginalSkillBook(SkillOriginalMagic.Profile.RAMPAGE);
+    public static final RegistryObject<Item> SKILL_BOOK_FULL_BLESSING = registerOriginalSkillBook(SkillOriginalMagic.Profile.FULL_BLESSING);
+    public static final RegistryObject<Item> SKILL_BOOK_RESURRECTION = registerOriginalSkillBook(SkillOriginalMagic.Profile.RESURRECTION);
+    public static final RegistryObject<Item> SKILL_BOOK_MANA_ABSORPTION = registerOriginalSkillBook(SkillOriginalMagic.Profile.MANA_ABSORPTION);
+    public static final RegistryObject<Item> SKILL_BOOK_ERASE = registerOriginalSkillBook(SkillOriginalMagic.Profile.ERASE);
+    public static final RegistryObject<Item> SKILL_BOOK_KINGS_COMMAND = registerOriginalSkillBook(SkillOriginalMagic.Profile.KINGS_COMMAND);
+    public static final RegistryObject<Item> SKILL_BOOK_FIRE = registerOriginalSkillBook(SkillOriginalMagic.Profile.FIRE);
+    public static final RegistryObject<Item> SKILL_BOOK_DROWNING_BUBBLE = registerOriginalSkillBook(SkillOriginalMagic.Profile.DROWNING_BUBBLE);
+    public static final RegistryObject<Item> SKILL_BOOK_DARK_SIDE_OF_MOON = registerOriginalSkillBook(SkillOriginalMagic.Profile.DARK_SIDE_OF_MOON);
+    public static final RegistryObject<Item> SKILL_BOOK_FREEZING_MAGIC_BULLET = registerOriginalSkillBook(SkillOriginalMagic.Profile.FREEZING_MAGIC_BULLET);
+    public static final RegistryObject<Item> SKILL_BOOK_HELLFIRE = registerOriginalSkillBook(SkillOriginalMagic.Profile.HELLFIRE);
+    public static final RegistryObject<Item> SKILL_BOOK_DESTRUCTION_STORM = registerOriginalSkillBook(SkillOriginalMagic.Profile.DESTRUCTION_STORM);
+    public static final RegistryObject<Item> SKILL_BOOK_INNER_POTENTIAL = registerOriginalSkillBook(SkillOriginalMagic.Profile.INNER_POTENTIAL);
+    public static final RegistryObject<Item> SKILL_BOOK_GREAT_SOUL_ARROW = registerOriginalSkillBook(SkillOriginalMagic.Profile.GREAT_SOUL_ARROW);
+    public static final RegistryObject<Item> SKILL_BOOK_VERDANT_POWER = registerOriginalSkillBook(SkillOriginalMagic.Profile.VERDANT_POWER);
+    public static final RegistryObject<Item> SKILL_BOOK_ROCK_BODY = registerOriginalSkillBook(SkillOriginalMagic.Profile.ROCK_BODY);
+    public static final RegistryObject<Item> SKILL_BOOK_DARK_ORB = registerOriginalSkillBook(SkillOriginalMagic.Profile.DARK_ORB);
+    public static final RegistryObject<Item> SKILL_BOOK_DARK_DANCE = registerOriginalSkillBook(SkillOriginalMagic.Profile.DARK_DANCE);
+    public static final RegistryObject<Item> SKILL_BOOK_DARK_SWARM = registerOriginalSkillBook(SkillOriginalMagic.Profile.DARK_SWARM);
+    public static final RegistryObject<Item> SKILL_BOOK_DIVINE_THUNDER = registerOriginalSkillBook(SkillOriginalMagic.Profile.DIVINE_THUNDER);
+    public static final RegistryObject<Item> SKILL_BOOK_DIVINE_BEAST_THUNDER = registerOriginalSkillBook(SkillOriginalMagic.Profile.DIVINE_BEAST_THUNDER);
+    public static final RegistryObject<Item> SKILL_BOOK_METEOR_SWARM = registerOriginalSkillBook(SkillOriginalMagic.Profile.METEOR_SWARM);
+    public static final RegistryObject<Item> SKILL_BOOK_FULL_CURSE = registerOriginalSkillBook(SkillOriginalMagic.Profile.FULL_CURSE);
+    public static final RegistryObject<Item> SKILL_BOOK_GREAT_SOUL_ARROW_VOLLEY = registerOriginalSkillBook(SkillOriginalMagic.Profile.GREAT_SOUL_ARROW_VOLLEY);
+    public static final RegistryObject<Item> SKILL_BOOK_FATAL_GUARD = registerOriginalSkillBook(SkillOriginalMagic.Profile.FATAL_GUARD);
+    public static final RegistryObject<Item> SKILL_BOOK_GHOST_FIRE = registerOriginalSkillBook(SkillOriginalMagic.Profile.GHOST_FIRE);
+    public static final RegistryObject<Item> SKILL_BOOK_PHALANX = registerOriginalSkillBook(SkillOriginalMagic.Profile.PHALANX);
+    public static final RegistryObject<Item> SKILL_BOOK_ABSOLUTE_HIT = registerOriginalSkillBook(SkillOriginalMagic.Profile.ABSOLUTE_HIT);
+    public static final RegistryObject<Item> SKILL_BOOK_CHAOS_EXPLOSION = registerOriginalSkillBook(SkillOriginalMagic.Profile.CHAOS_EXPLOSION);
+    public static final RegistryObject<Item> SKILL_BOOK_CRITICAL_STRIKE = registerOriginalSkillBook(SkillOriginalMagic.Profile.CRITICAL_STRIKE);
+    public static final RegistryObject<Item> SKILL_BOOK_SOUL_SHIELD = registerOriginalSkillBook(SkillOriginalMagic.Profile.SOUL_SHIELD);
+    public static final RegistryObject<Item> SKILL_BOOK_DENSE_SPIROCHETE = registerOriginalSkillBook(SkillOriginalMagic.Profile.DENSE_SPIROCHETE);
+    public static final RegistryObject<Item> SKILL_BOOK_SUMMON_MEAT_WALL = registerOriginalSkillBook(SkillOriginalMagic.Profile.SUMMON_MEAT_WALL);
+    public static final RegistryObject<Item> SKILL_BOOK_TORN_GRUDGE = registerOriginalSkillBook(SkillOriginalMagic.Profile.TORN_GRUDGE);
+    public static final RegistryObject<Item> SKILL_BOOK_PIERCING_ICICLE = registerOriginalSkillBook(SkillOriginalMagic.Profile.PIERCING_ICICLE);
+    public static final RegistryObject<Item> SKILL_BOOK_RAIN_OF_RUIN = registerOriginalSkillBook(SkillOriginalMagic.Profile.RAIN_OF_RUIN);
+    public static final RegistryObject<Item> SKILL_BOOK_GLOOMY_SWAMP = registerOriginalSkillBook(SkillOriginalMagic.Profile.GLOOMY_SWAMP);
+    public static final RegistryObject<Item> SKILL_BOOK_ACID_RAIN = registerOriginalSkillBook(SkillOriginalMagic.Profile.ACID_RAIN);
+    public static final RegistryObject<Item> SKILL_BOOK_ROYAL_TEA = registerOriginalSkillBook(SkillOriginalMagic.Profile.ROYAL_TEA);
+    public static final RegistryObject<Item> SKILL_BOOK_GODSPEED_DANCE = registerOriginalSkillBook(SkillOriginalMagic.Profile.GODSPEED_DANCE);
+    public static final RegistryObject<Item> SKILL_BOOK_KATARINA_WHEEL = registerOriginalSkillBook(SkillOriginalMagic.Profile.KATARINA_WHEEL);
+    public static final RegistryObject<Item> SKILL_BOOK_PALADIN_BANNER = registerOriginalSkillBook(SkillOriginalMagic.Profile.PALADIN_BANNER);
+    public static final RegistryObject<Item> SKILL_BOOK_BLACK_WAVE = registerOriginalSkillBook(SkillOriginalMagic.Profile.BLACK_WAVE);
+    public static final RegistryObject<Item> SKILL_BOOK_BLACK_SLASH = registerOriginalSkillBook(SkillOriginalMagic.Profile.BLACK_SLASH);
+    public static final RegistryObject<Item> SKILL_BOOK_AWAKENING = registerOriginalSkillBook(SkillOriginalMagic.Profile.AWAKENING);
+    public static final RegistryObject<Item> SKILL_BOOK_SERPENT_EMBRACE = registerOriginalSkillBook(SkillOriginalMagic.Profile.SERPENT_EMBRACE);
+    public static final RegistryObject<Item> SKILL_BOOK_SOUL_STREAM = registerOriginalSkillBook(SkillOriginalMagic.Profile.SOUL_STREAM);
     // =============================================================================================================================
     // 经验魂(共13种)
     // =============================================================================================================================
@@ -1466,67 +1528,67 @@ public class BlackSouls {
                         // 技能书
                         // ==========================================================================
                         output.accept(SKILL_BOOK_SOUL_ARROW.get());         // 魔书【魂之矢】
-                        // 魔书【魂之连射】
+                        output.accept(SKILL_BOOK_SOUL_VOLLEY.get());        // 魔书【魂之连射】
                         output.accept(SKILL_BOOK_SOUL_LIGHT.get());         // 魔书【魂之光】
                         output.accept(SKILL_BOOK_SOUL_RADIATION.get());     // 魔书【魂之放射】
-                        // 魔书【驱散】
-                        // 魔书【识破攻击】
+                        output.accept(SKILL_BOOK_DISPEL.get());             // 魔书【驱散】
+                        output.accept(SKILL_BOOK_SEE_THROUGH_ATTACK.get()); // 魔书【识破攻击】
                         output.accept(SKILL_BOOK_CARRHUS_BLOOD_CURSE.get());// 魔书【卡萨斯血咒】
-                        // 魔书【毒素】
-                        // 魔书【毒素Ⅱ】
-                        // 魔书【催眠】
-                        // 圣书【治愈】
-                        // 魔书【魔力祝福】
-                        // 魔书【横冲直撞】
-                        // 魔书【全面祝福】
-                        // 圣书【还魂】
-                        // 魔书【魔力吸收】
-                        // 圣书【擦除】
-                        // 魔书【王之号令】
+                        output.accept(SKILL_BOOK_POISON.get());             // 魔书【毒素】
+                        output.accept(SKILL_BOOK_POISON_II.get());          // 魔书【毒素Ⅱ】
+                        output.accept(SKILL_BOOK_HYPNOSIS.get());           // 魔书【催眠】
+                        output.accept(SKILL_BOOK_CURE.get());               // 圣书【治愈】
+                        output.accept(SKILL_BOOK_MAGIC_BLESSING.get());     // 魔书【魔力祝福】
+                        output.accept(SKILL_BOOK_RAMPAGE.get());            // 魔书【横冲直撞】
+                        output.accept(SKILL_BOOK_FULL_BLESSING.get());      // 魔书【全面祝福】
+                        output.accept(SKILL_BOOK_RESURRECTION.get());       // 圣书【还魂】
+                        output.accept(SKILL_BOOK_MANA_ABSORPTION.get());    // 魔书【魔力吸收】
+                        output.accept(SKILL_BOOK_ERASE.get());              // 圣书【擦除】
+                        output.accept(SKILL_BOOK_KINGS_COMMAND.get());      // 魔书【王之号令】
                         output.accept(SKILL_BOOK_REQUIEM.get());            // 魔书【镇魂歌】
                         output.accept(SKILL_BOOK_GRIT.get());               // 魔书【咬紧牙关】
-                        // 魔书【火炎】
-                        // 魔书【沉溺之泡】
-                        // 魔书【月之暗面】
-                        // 魔书【冰结之魔弹】
-                        // 魔书【业火】
-                        // 魔书【破灭风暴】
-                        // 魔书【内在潜力】
-                        // 魔书【魂之巨矢】
-                        // 魔书【新绿之力】
-                        // 魔书【岩之体】
-                        // 魔书【暗之球】
-                        // 魔书【暗之乱舞】
-                        // 魔书【暗之群来】
-                        // 魔书【神雷】
-                        // 魔书【神兽之雷鸣】
-                        // 魔书【流星群】
-                        // 魔书【全面诅咒】
-                        // 魔书【魂之巨矢连射】
+                        output.accept(SKILL_BOOK_FIRE.get());               // 魔书【火炎】
+                        output.accept(SKILL_BOOK_DROWNING_BUBBLE.get());    // 魔书【沉溺之泡】
+                        output.accept(SKILL_BOOK_DARK_SIDE_OF_MOON.get());  // 魔书【月之暗面】
+                        output.accept(SKILL_BOOK_FREEZING_MAGIC_BULLET.get());// 魔书【冰结之魔弹】
+                        output.accept(SKILL_BOOK_HELLFIRE.get());           // 魔书【业火】
+                        output.accept(SKILL_BOOK_DESTRUCTION_STORM.get());  // 魔书【破灭风暴】
+                        output.accept(SKILL_BOOK_INNER_POTENTIAL.get());    // 魔书【内在潜力】
+                        output.accept(SKILL_BOOK_GREAT_SOUL_ARROW.get());   // 魔书【魂之巨矢】
+                        output.accept(SKILL_BOOK_VERDANT_POWER.get());      // 魔书【新绿之力】
+                        output.accept(SKILL_BOOK_ROCK_BODY.get());          // 魔书【岩之体】
+                        output.accept(SKILL_BOOK_DARK_ORB.get());           // 魔书【暗之球】
+                        output.accept(SKILL_BOOK_DARK_DANCE.get());         // 魔书【暗之乱舞】
+                        output.accept(SKILL_BOOK_DARK_SWARM.get());         // 魔书【暗之群来】
+                        output.accept(SKILL_BOOK_DIVINE_THUNDER.get());     // 魔书【神雷】
+                        output.accept(SKILL_BOOK_DIVINE_BEAST_THUNDER.get());// 魔书【神兽之雷鸣】
+                        output.accept(SKILL_BOOK_METEOR_SWARM.get());       // 魔书【流星群】
+                        output.accept(SKILL_BOOK_FULL_CURSE.get());         // 魔书【全面诅咒】
+                        output.accept(SKILL_BOOK_GREAT_SOUL_ARROW_VOLLEY.get());// 魔书【魂之巨矢连射】
                         output.accept(SKILL_BOOK_INVISIBLE.get());          // 魔书【看不见的身体】
-                        // 圣书【致命守护】
-                        // 魔书【幽火】
-                        // 魔书【法拉克斯】
-                        // 魔书【绝对必中】
-                        // 魔书【混沌爆炎】
-                        // 魔书【会心一击】
-                        // 圣书【灵魂盾】
-                        // 魔书【密螺旋体】
-                        // 圣书【肉壁召唤】
-                        // 魔书【撕裂的遗恨】
-                        // 魔书【贯穿冰柱】
-                        // 魔书【灭亡的箭雨】
-                        // 魔书【阴暗之沼】
-                        // 魔书【酸雨】
-                        // 魔书【皇家红茶】
-                        // 魔书【神速之舞】
-                        // 圣书【卡塔丽娜的车轮】
-                        // 圣书【圣骑士的御旗】
-                        // 魔书【黑之波动】
-                        // 魔书【黑之斩击】
-                        // 魔书【觉醒】
-                        // 魔书【毒蛇的拥抱】
-                        // 魔书【魂之奔流】
+                        output.accept(SKILL_BOOK_FATAL_GUARD.get());        // 圣书【致命守护】
+                        output.accept(SKILL_BOOK_GHOST_FIRE.get());         // 魔书【幽火】
+                        output.accept(SKILL_BOOK_PHALANX.get());            // 魔书【法拉克斯】
+                        output.accept(SKILL_BOOK_ABSOLUTE_HIT.get());       // 魔书【绝对必中】
+                        output.accept(SKILL_BOOK_CHAOS_EXPLOSION.get());    // 魔书【混沌爆炎】
+                        output.accept(SKILL_BOOK_CRITICAL_STRIKE.get());    // 魔书【会心一击】
+                        output.accept(SKILL_BOOK_SOUL_SHIELD.get());        // 圣书【灵魂盾】
+                        output.accept(SKILL_BOOK_DENSE_SPIROCHETE.get());   // 魔书【密螺旋体】
+                        output.accept(SKILL_BOOK_SUMMON_MEAT_WALL.get());   // 圣书【肉壁召唤】
+                        output.accept(SKILL_BOOK_TORN_GRUDGE.get());        // 魔书【撕裂的遗恨】
+                        output.accept(SKILL_BOOK_PIERCING_ICICLE.get());    // 魔书【贯穿冰柱】
+                        output.accept(SKILL_BOOK_RAIN_OF_RUIN.get());       // 魔书【灭亡的箭雨】
+                        output.accept(SKILL_BOOK_GLOOMY_SWAMP.get());       // 魔书【阴暗之沼】
+                        output.accept(SKILL_BOOK_ACID_RAIN.get());          // 魔书【酸雨】
+                        output.accept(SKILL_BOOK_ROYAL_TEA.get());          // 魔书【皇家红茶】
+                        output.accept(SKILL_BOOK_GODSPEED_DANCE.get());     // 魔书【神速之舞】
+                        output.accept(SKILL_BOOK_KATARINA_WHEEL.get());     // 圣书【卡塔丽娜的车轮】
+                        output.accept(SKILL_BOOK_PALADIN_BANNER.get());     // 圣书【圣骑士的御旗】
+                        output.accept(SKILL_BOOK_BLACK_WAVE.get());         // 魔书【黑之波动】
+                        output.accept(SKILL_BOOK_BLACK_SLASH.get());        // 魔书【黑之斩击】
+                        output.accept(SKILL_BOOK_AWAKENING.get());          // 魔书【觉醒】
+                        output.accept(SKILL_BOOK_SERPENT_EMBRACE.get());    // 魔书【毒蛇的拥抱】
+                        output.accept(SKILL_BOOK_SOUL_STREAM.get());        // 魔书【魂之奔流】
                     })
                     .build());
     // 注册方法

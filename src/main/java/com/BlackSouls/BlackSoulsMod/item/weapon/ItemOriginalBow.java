@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.item.weapon;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.entity.EntityMeatWall;
 import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketPlayAnim;
@@ -172,6 +173,8 @@ public class ItemOriginalBow extends BowItem {
                 LivingEntity.class,
                 player.getBoundingBox().inflate(range),
                 living -> living != player && living.isAlive() && !living.isSpectator()
+                        && !player.isAlliedTo(living)
+                        && !(living instanceof EntityMeatWall wall && wall.isOwnedBy(player))
         );
         return targets.isEmpty() ? fallback : targets.get(player.getRandom().nextInt(targets.size()));
     }

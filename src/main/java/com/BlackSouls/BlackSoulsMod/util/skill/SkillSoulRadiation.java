@@ -8,6 +8,7 @@ import com.BlackSouls.BlackSoulsMod.network.packets.PacketPlayAnim;
 import com.BlackSouls.BlackSoulsMod.util.SkillUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -38,6 +39,9 @@ public class SkillSoulRadiation extends AbstractSkill {
 
     @Override
     public ChatFormatting getTextColor() { return ChatFormatting.GOLD; }
+
+    @Override
+    public ResourceLocation getIcon() { return new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/original/soul_radiation.png"); }
 
     @Override
     public boolean isUnlockedForGUI(Player player) {

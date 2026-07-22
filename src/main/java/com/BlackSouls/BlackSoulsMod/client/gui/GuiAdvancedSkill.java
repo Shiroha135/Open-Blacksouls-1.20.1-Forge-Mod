@@ -26,9 +26,9 @@ import java.util.List;
 
 public class GuiAdvancedSkill extends Screen {
 
-    private static final ResourceLocation ICON_INVISIBLE = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/invisible.png");
-    private static final ResourceLocation ICON_REQUIEM = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/requiem.png");
-    private static final ResourceLocation ICON_GRIT = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/grit.png");
+    private static final ResourceLocation ICON_INVISIBLE = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/original/invisible_body.png");
+    private static final ResourceLocation ICON_REQUIEM = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/original/requiem.png");
+    private static final ResourceLocation ICON_GRIT = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/original/grit.png");
     private static final ResourceLocation ICON_SHOTGUN = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/gun.png");
     private static final ResourceLocation ICON_VORPAL = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/weapon.png");
     private static final ResourceLocation ICON_AURA_BLADE = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/weapon.png");
@@ -41,10 +41,10 @@ public class GuiAdvancedSkill extends Screen {
     private static final ResourceLocation ICON_ULTIMATE_TRIPLE_SLASH = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/weapon.png");
     private static final ResourceLocation ICON_KNIGHTS_GLORY = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/knights_glory.png");
     private static final ResourceLocation ICON_REINFORCE = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/reinforce.png");
-    private static final ResourceLocation ICON_SOUL_ARROW = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/soul_arrow.png");
-    private static final ResourceLocation ICON_SOUL_LIGHT = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/soul_arrow.png");
-    private static final ResourceLocation ICON_SOUL_RADIATION = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/soul_arrow.png");
-    private static final ResourceLocation ICON_CARTHUS_BLOOD_CURSE = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/reinforce.png");
+    private static final ResourceLocation ICON_SOUL_ARROW = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/original/soul_arrow.png");
+    private static final ResourceLocation ICON_SOUL_LIGHT = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/original/soul_light.png");
+    private static final ResourceLocation ICON_SOUL_RADIATION = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/original/soul_radiation.png");
+    private static final ResourceLocation ICON_CARTHUS_BLOOD_CURSE = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/original/carthus_blood_curse.png");
     private static final ResourceLocation ICON_CHRONO_CLOCK = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/chrono_clock.png");
     private static final ResourceLocation ICON_DECAPITATION = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/decapitation.png");
     private static final ResourceLocation ICON_HIDE_AND_SEEK = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/hide_and_seek.png");

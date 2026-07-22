@@ -44,6 +44,12 @@ public class ClientModEvents {
         event.registerEntityRenderer(BSEntityRegistry.TEST_DUMMY.get(), RenderTestDummy::new);
         event.registerEntityRenderer(BSEntityRegistry.THROWN_BLADE.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(BSEntityRegistry.HELL_PRINCE.get(), RenderHellPrince::new);
+        event.registerEntityRenderer(BSEntityRegistry.MEAT_WALL.get(), RenderMeatWall::new);
+    }
+
+    @SubscribeEvent
+    public static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(RenderMeatWall.LAYER_LOCATION, RenderMeatWall.MeatWallModel::createBodyLayer);
     }
 
     @SubscribeEvent

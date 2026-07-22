@@ -6,6 +6,7 @@ import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.google.common.collect.HashMultimap;
 import com.BlackSouls.BlackSoulsMod.entity.EntityThrownBlade;
+import com.BlackSouls.BlackSoulsMod.entity.EntityMeatWall;
 import com.BlackSouls.BlackSoulsMod.entity.InstantDeathImmuneEntity;
 import com.BlackSouls.BlackSoulsMod.item.rings.ItemOriginalRing;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
@@ -610,6 +611,9 @@ public class StatEventHandler {
 
     public static boolean hurtWithSkillDamage(ServerPlayer player, LivingEntity target, float damage, boolean sureHit, double instantDeathRate) {
         if (target == null || target.isRemoved() || !target.isAlive()) {
+            return false;
+        }
+        if (target instanceof EntityMeatWall wall && wall.isOwnedBy(player)) {
             return false;
         }
 
@@ -1666,6 +1670,12 @@ public class StatEventHandler {
         LivingEntity entity = event.getEntity();
         if (entity == null || entity.level().isClientSide()) return;
 
+        if (entity.tickCount % 20 == 0
+                && BlackSouls.BUFF_INNER_POTENTIAL.isPresent()
+                && entity.hasEffect(BlackSouls.BUFF_INNER_POTENTIAL.get())) {
+            entity.hurt(entity.damageSources().magic(), Math.max(1.0F, entity.getMaxHealth() * 0.05F));
+        }
+
         if (BlackSouls.BUFF_BURN.isPresent() && entity.hasEffect(BlackSouls.BUFF_BURN.get())) {
             if (entity.isInWater()) {
                 entity.removeEffect(BlackSouls.BUFF_BURN.get());
@@ -2588,6 +2598,15 @@ public class StatEventHandler {
             }
             if (BlackSouls.BUFF_NATURAL_RECOVERY.isPresent() && player.hasEffect(BlackSouls.BUFF_NATURAL_RECOVERY.get())) {
                 stats.hpRegenRate += 0.50D;
+            }
+            if (BlackSouls.BUFF_INNER_POTENTIAL.isPresent() && player.hasEffect(BlackSouls.BUFF_INNER_POTENTIAL.get())) {
+                stats.magicAttack *= 2.0D;
+            }
+            if (BlackSouls.BUFF_AWAKENING.isPresent() && player.hasEffect(BlackSouls.BUFF_AWAKENING.get())) {
+                stats.attack *= 0.50D;
+                stats.magicAttack *= 2.0D;
+                stats.critRate += 100.0D;
+                stats.extraActionRate += 1.0D;
             }
             if (BlackSouls.BUFF_HP_REGEN.isPresent() && player.hasEffect(BlackSouls.BUFF_HP_REGEN.get())) {
                 stats.hpRegenRate += 0.10D;

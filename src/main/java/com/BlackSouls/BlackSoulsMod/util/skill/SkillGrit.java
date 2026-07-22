@@ -5,6 +5,7 @@ import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.util.SkillUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
@@ -36,6 +37,11 @@ public class SkillGrit extends AbstractSkill {
     @Override
     public ChatFormatting getTextColor() {
         return ChatFormatting.RED;
+    }
+
+    @Override
+    public ResourceLocation getIcon() {
+        return new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/original/grit.png");
     }
 
     @Override

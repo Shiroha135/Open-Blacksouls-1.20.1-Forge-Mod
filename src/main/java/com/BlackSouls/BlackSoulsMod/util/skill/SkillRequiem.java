@@ -5,6 +5,7 @@ import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.util.SkillUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -37,6 +38,11 @@ public class SkillRequiem extends AbstractSkill {
     @Override
     public ChatFormatting getTextColor() {
         return ChatFormatting.GOLD;
+    }
+
+    @Override
+    public ResourceLocation getIcon() {
+        return new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/original/requiem.png");
     }
 
     @Override

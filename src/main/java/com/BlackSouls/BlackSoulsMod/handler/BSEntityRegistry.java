@@ -43,4 +43,12 @@ public class BSEntityRegistry {
                             .clientTrackingRange(10)
                             .updateInterval(3)
                             .build("hell_prince"));
+
+    public static final RegistryObject<EntityType<EntityMeatWall>> MEAT_WALL =
+            ENTITY_TYPES.register("meat_wall", () ->
+                    EntityType.Builder.of(EntityMeatWall::new, MobCategory.CREATURE)
+                            .sized(1.5F, 2.0F)
+                            .clientTrackingRange(10)
+                            .updateInterval(3)
+                            .build("meat_wall"));
 }
