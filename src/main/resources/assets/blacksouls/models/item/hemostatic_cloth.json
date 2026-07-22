@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "blacksouls:item/hemostatic_cloth"
+    "layer0": "blacksouls:item/consumable/hemostatic_cloth"
   }
 }

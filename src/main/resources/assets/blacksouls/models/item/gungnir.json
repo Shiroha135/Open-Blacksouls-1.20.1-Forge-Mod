@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "blacksouls:item/gungnir"
+    "layer0": "blacksouls:item/weapon/gungnir"
   }
 }

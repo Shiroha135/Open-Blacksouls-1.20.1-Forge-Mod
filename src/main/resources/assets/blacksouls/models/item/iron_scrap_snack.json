@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "blacksouls:item/iron_scrap_snack"
+    "layer0": "blacksouls:item/consumable/iron_scrap_snack"
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "blacksouls:item/broad_spear"
+    "layer0": "blacksouls:item/weapon/broad_spear"
   }
 }

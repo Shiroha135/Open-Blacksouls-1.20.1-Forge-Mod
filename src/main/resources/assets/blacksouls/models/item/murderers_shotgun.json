@@ -1,7 +1,7 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "blacksouls:item/murderers_shotgun"
+    "layer0": "blacksouls:item/weapon/murderers_shotgun"
   },
   "display": {
     "thirdperson_righthand": {

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "blacksouls:item/upgrade_large_shard"
+    "layer0": "blacksouls:item/consumable/upgrade_large_shard"
   }
 }

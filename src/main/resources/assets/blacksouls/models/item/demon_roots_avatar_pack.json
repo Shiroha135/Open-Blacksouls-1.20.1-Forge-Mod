@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "blacksouls:item/demon_roots_avatar_pack"
+    "layer0": "blacksouls:item/accessory/demon_roots_avatar_pack"
   }
 }

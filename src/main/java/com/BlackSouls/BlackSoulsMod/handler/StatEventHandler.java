@@ -530,16 +530,24 @@ public class StatEventHandler {
             return targetStats != null ? targetStats.magicDefense : 0.0D;
         }
         if (com.BlackSouls.BlackSoulsMod.util.BSMobStatManager.hasManagedStats(target)) {
-            return com.BlackSouls.BlackSoulsMod.util.DifficultyManager.scaleManagedStat(
+            double magicDefense = com.BlackSouls.BlackSoulsMod.util.DifficultyManager.scaleManagedStat(
                     target.level(),
                     com.BlackSouls.BlackSoulsMod.util.BSMobStatManager.getStats(target).magicDefense * getMagicDefenseShiftMultiplier(target)
             );
+            if (BlackSouls.BUFF_FROSTBITE.isPresent() && target.hasEffect(BlackSouls.BUFF_FROSTBITE.get())) {
+                magicDefense *= 0.80D;
+            }
+            return magicDefense;
         }
         return 0.0D;
     }
 
     private static boolean isVictimImmuneToInstantDeath(LivingEntity victim) {
         return getBaubleCount(victim, BlackSouls.RING_RESURRECTOR.get()) > 0
+                || (victim instanceof Player player
+                && player.getMainHandItem().getItem() == BlackSouls.HOLY_GUNBLADE.get()
+                && player.getMainHandItem().hasTag()
+                && player.getMainHandItem().getTag().getInt("bs2_upgrade_level") >= 5)
                 || victim instanceof InstantDeathImmuneEntity;
     }
 
@@ -619,12 +627,165 @@ public class StatEventHandler {
         }
     }
 
+    public static void performOriginalWeaponExtraHit(ServerPlayer player, LivingEntity target, double attackMultiplier) {
+        performOriginalWeaponExtraHit(player, target, attackMultiplier, 2.0D);
+    }
+
+    public static CompoundTag getPlayerPersistentData(Player player) {
+        return player.getPersistentData();
+    }
+
+    public static void performOriginalWeaponExtraHit(ServerPlayer player, LivingEntity target, double attackMultiplier, double defenseMultiplier) {
+        if (target == null || target.isRemoved() || !target.isAlive()) return;
+        BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+        if (stats == null) return;
+
+        double rawDamage = stats.attack * attackMultiplier - resolveVictimDirectDefense(target) * defenseMultiplier;
+        rawDamage = Math.max(1.0D, rawDamage);
+        rawDamage *= com.BlackSouls.BlackSoulsMod.util.BSAttributeManager.getBestMultiplier(
+                target,
+                buildPlayerAttackAttributes(player, stats)
+        );
+        rawDamage *= 0.8D + Math.random() * 0.4D;
+        float finalDamage = rollSkillCrit(player, (float) rawDamage);
+
+        CompoundTag data = player.getPersistentData();
+        data.putBoolean(TAG_DAGGER_EXTRA_HIT, true);
+        target.invulnerableTime = 0;
+        try {
+            if (!target.hurt(player.damageSources().playerAttack(player), finalDamage)) {
+                data.remove("bs2_is_crit");
+            }
+        } finally {
+            data.remove(TAG_DAGGER_EXTRA_HIT);
+        }
+    }
+
+    public static void performHolyGunbladeGunfire(ServerPlayer player, LivingEntity primaryTarget, int ammoMode) {
+        if (primaryTarget == null || primaryTarget.isRemoved() || !primaryTarget.isAlive()) return;
+        BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+        if (stats == null) return;
+        List<LivingEntity> targets = ammoMode == 3
+                ? player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(16.0D),
+                target -> target != player && target.isAlive() && !target.isSpectator())
+                : List.of(primaryTarget);
+        if (targets.isEmpty()) targets = List.of(primaryTarget);
+        int animationId = ammoMode == 3 ? 488 : ammoMode == 2 ? 489 : 246;
+        for (LivingEntity target : targets) {
+            NetworkHandler.sendToAllAround(new PacketPlayAnim(animationId, target.getX(), target.getY() + target.getBbHeight() / 2.0F, target.getZ()), target);
+        }
+        if (ammoMode == 3) {
+            player.level().playSound(null, player.blockPosition(), BlackSouls.KEY_EVENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+            for (int hit = 0; hit < 7; hit++) {
+                int delay = 5 + hit * 2;
+                boolean firstHit = hit == 0;
+                List<LivingEntity> volleyTargets = targets;
+                player.serverLevel().getServer().tell(new net.minecraft.server.TickTask(player.serverLevel().getServer().getTickCount() + delay, () -> {
+                    player.level().playSound(null, player.blockPosition(), BlackSouls.GUN1_EVENT.get(), SoundSource.PLAYERS, 1.0F, 1.5F);
+                    for (LivingEntity target : volleyTargets) {
+                        hitGunbladeShot(player, target, stats, 1.0D, 0.5D, 0.20D);
+                        if (firstHit) target.addEffect(new MobEffectInstance(BlackSouls.BUFF_DEFENSELESS.get(), 400, 0));
+                    }
+                }));
+            }
+        } else if (ammoMode == 2) {
+            player.level().playSound(null, player.blockPosition(), BlackSouls.GUN1_EVENT.get(), SoundSource.PLAYERS, 1.0F, 0.7F);
+            player.level().playSound(null, player.blockPosition(), BlackSouls.SWITCH2_EVENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+            hitGunbladeShot(player, primaryTarget, stats, 8.0D, 0.5D, 0.50D);
+            primaryTarget.addEffect(new MobEffectInstance(BlackSouls.BUFF_DEFENSELESS.get(), 400, 1));
+        } else {
+            player.level().playSound(null, player.blockPosition(), BlackSouls.KEY_EVENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+            player.level().playSound(null, player.blockPosition(), BlackSouls.SNIPER_RIFLE_EVENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+            hitGunbladeShot(player, primaryTarget, stats, 5.0D, 0.5D, 0.20D);
+            primaryTarget.addEffect(new MobEffectInstance(BlackSouls.BUFF_DEFENSELESS.get(), 400, 0));
+        }
+    }
+
+    private static void hitGunbladeShot(ServerPlayer player, LivingEntity target, BSPlayerStats stats,
+                                        double attackMultiplier, double defenseMultiplier, double variance) {
+        if (target == null || target.isRemoved() || !target.isAlive()) return;
+        double rawDamage = stats.attack * attackMultiplier - getRpgPhysicalDefense(target) * defenseMultiplier;
+        rawDamage *= (1.0D - variance) + Math.random() * variance * 2.0D;
+        hurtWithSkillDamage(player, target, rollSkillCrit(player, (float) Math.max(1.0D, rawDamage)), true, 0.0D);
+    }
+
+    public static void performMarySueSweep(ServerPlayer player, LivingEntity primaryTarget) {
+        BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+        if (stats == null) return;
+        removeBeneficialEffects(primaryTarget);
+        for (LivingEntity target : player.level().getEntitiesOfClass(
+                LivingEntity.class,
+                player.getBoundingBox().inflate(16.0D),
+                target -> target != player && target != primaryTarget && target.isAlive() && !target.isSpectator()
+        )) {
+            removeBeneficialEffects(target);
+            double rawDamage = stats.attack * 2.0D - getRpgPhysicalDefense(target) * 2.0D;
+            rawDamage *= 0.8D + Math.random() * 0.4D;
+            hurtWithSkillDamage(player, target, rollSkillCrit(player, (float) Math.max(1.0D, rawDamage)), true, 0.0D);
+        }
+    }
+
+    private static void removeBeneficialEffects(LivingEntity target) {
+        for (MobEffectInstance effect : new ArrayList<>(target.getActiveEffects())) {
+            if (effect.getEffect().getCategory() == net.minecraft.world.effect.MobEffectCategory.BENEFICIAL) {
+                target.removeEffect(effect.getEffect());
+            }
+        }
+    }
+
+    public static void performMindEyeCounter(ServerPlayer player, LivingEntity target) {
+        if (target == null || target.isRemoved() || !target.isAlive()) return;
+        BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+        if (stats == null) return;
+        com.BlackSouls.BlackSoulsMod.util.skill.SkillEuniceRapierArt.playRapierEffects(player, target);
+        double rawDamage = stats.attack * 4.0D - getRpgPhysicalDefense(target) * 2.0D;
+        rawDamage *= 0.8D + Math.random() * 0.4D;
+        hurtWithSkillDamage(player, target, rollSkillCrit(player, (float) Math.max(1.0D, rawDamage)), true, 0.0D);
+    }
+
+    public static void performIronBallSweep(ServerPlayer player, LivingEntity primaryTarget) {
+        BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+        if (stats == null) return;
+        for (LivingEntity target : player.level().getEntitiesOfClass(
+                LivingEntity.class,
+                player.getBoundingBox().inflate(8.0D),
+                target -> target != player && target != primaryTarget && target.isAlive() && !target.isSpectator()
+        )) {
+            double rawDamage = stats.attack * 4.0D - resolveVictimDirectDefense(target) * 2.0D;
+            rawDamage = Math.max(1.0D, rawDamage);
+            rawDamage *= com.BlackSouls.BlackSoulsMod.util.BSAttributeManager.getBestMultiplier(
+                    target,
+                    buildPlayerAttackAttributes(player, stats)
+            );
+            rawDamage *= 0.8D + Math.random() * 0.4D;
+            float finalDamage = rollSkillCrit(player, (float) rawDamage);
+            CompoundTag data = player.getPersistentData();
+            data.putBoolean(TAG_DAGGER_EXTRA_HIT, true);
+            target.invulnerableTime = 0;
+            try {
+                if (target.hurt(player.damageSources().playerAttack(player), finalDamage)) {
+                    applyPlayerOnHitStatusEffects(player, target);
+                } else {
+                    data.remove("bs2_is_crit");
+                }
+            } finally {
+                data.remove(TAG_DAGGER_EXTRA_HIT);
+            }
+        }
+    }
+
     public static double getWeaponCounterRate(Player player) {
         if (player == null) return 0.0D;
+        if (BlackSouls.BUFF_HASSO.isPresent() && player.hasEffect(BlackSouls.BUFF_HASSO.get())) return 100.0D;
+        if (BlackSouls.BUFF_COUNTER_STANCE.isPresent() && player.hasEffect(BlackSouls.BUFF_COUNTER_STANCE.get())) return 100.0D;
         ItemStack mainHand = player.getMainHandItem();
         if (mainHand.isEmpty()) return 0.0D;
         if (mainHand.getItem() == BlackSouls.GUNGNIR.get()) return 100.0D;
         if (mainHand.getItem() == BlackSouls.BROAD_SPEAR.get()) return 50.0D;
+        if (mainHand.getItem() == BlackSouls.MIRANDA_AXE.get()) {
+            int level = mainHand.hasTag() ? Math.max(0, Math.min(5, mainHand.getTag().getInt("bs2_upgrade_level"))) : 0;
+            return level >= 5 ? 40.0D : 30.0D;
+        }
         return 0.0D;
     }
 
@@ -671,9 +832,25 @@ public class StatEventHandler {
         CompoundTag data = player.getPersistentData();
         data.putBoolean(TAG_SPEAR_COUNTER, true);
         player.swing(net.minecraft.world.InteractionHand.MAIN_HAND, true);
-        com.BlackSouls.BlackSoulsMod.item.weapon.ItemBroadSpear.playAttackEffects(player, target);
+        boolean hasso = BlackSouls.BUFF_HASSO.isPresent() && player.hasEffect(BlackSouls.BUFF_HASSO.get());
+        if (hasso) {
+            NetworkHandler.sendToAllAround(new PacketPlayAnim(580, target.getX(), target.getY() + target.getBbHeight() / 2.0F, target.getZ()), target);
+            target.level().playSound(null, target.getX(), target.getY(), target.getZ(), BlackSouls.SWORD5_EVENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+            target.level().playSound(null, target.getX(), target.getY(), target.getZ(), BlackSouls.SWORD4_EVENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+            player.serverLevel().getServer().tell(new net.minecraft.server.TickTask(1, () -> {
+                target.level().playSound(null, target.getX(), target.getY(), target.getZ(), BlackSouls.BLOOD_SPLATTER_EVENT.get(), SoundSource.PLAYERS, 1.0F, 0.65F);
+                target.level().playSound(null, target.getX(), target.getY(), target.getZ(), BlackSouls.ABSORB1_EVENT.get(), SoundSource.PLAYERS, 1.0F, 0.8F);
+                target.level().playSound(null, target.getX(), target.getY(), target.getZ(), BlackSouls.DARKNESS7_EVENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+            }));
+        } else if (player.getMainHandItem().getItem() == BlackSouls.HALBERD.get()
+                || player.getMainHandItem().getItem() == BlackSouls.BAHAMUT.get()
+                || player.getMainHandItem().getItem() == BlackSouls.MIRANDA_AXE.get()) {
+            ((com.BlackSouls.BlackSoulsMod.item.weapon.ItemOriginalWeapon) player.getMainHandItem().getItem()).playAttackEffects(player, target);
+        } else {
+            com.BlackSouls.BlackSoulsMod.item.weapon.ItemBroadSpear.playAttackEffects(player, target);
+        }
         try {
-            hurtWithSkillDamage(player, target, finalDamage, false, 0.0D);
+            hurtWithSkillDamage(player, target, finalDamage, hasso, 0.0D);
         } finally {
             data.remove(TAG_SPEAR_COUNTER);
         }
@@ -701,6 +878,24 @@ public class StatEventHandler {
                 return;
             }
 
+            if (player instanceof ServerPlayer serverPlayer
+                    && BlackSouls.BUFF_MIND_EYE.isPresent()
+                    && player.hasEffect(BlackSouls.BUFF_MIND_EYE.get())
+                    && source.getEntity() instanceof LivingEntity attacker
+                    && attacker != player) {
+                event.setCanceled(true);
+                performMindEyeCounter(serverPlayer, attacker);
+                return;
+            }
+
+            if (player.getMainHandItem().getItem() == BlackSouls.RLYEH_STAFF.get()
+                    && (source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_ARMOR)
+                    || source.is(DamageTypes.INDIRECT_MAGIC))
+                    && player.getRandom().nextDouble() < 0.30D) {
+                event.setCanceled(true);
+                return;
+            }
+
             if (tryTriggerSpearCounter(event, player, source)) {
                 return;
             }
@@ -711,7 +906,13 @@ public class StatEventHandler {
                 boolean spearAttack = !mainHand.isEmpty()
                         && (mainHand.getItem() == BlackSouls.BROAD_SPEAR.get()
                         || mainHand.getItem() == BlackSouls.GUNGNIR.get());
-                if (spearAttack && (source.is(DamageTypes.PLAYER_ATTACK)
+                boolean stormRulerAttack = !mainHand.isEmpty()
+                        && mainHand.getItem() == BlackSouls.STORM_RULER.get();
+                boolean mirandaAttack = !mainHand.isEmpty()
+                        && mainHand.getItem() == BlackSouls.MIRANDA_AXE.get();
+                boolean marySueAttack = !mainHand.isEmpty()
+                        && mainHand.getItem() == BlackSouls.MARY_SUES_BRANCH_STAFF.get();
+                if ((spearAttack || stormRulerAttack || mirandaAttack || marySueAttack) && (source.is(DamageTypes.PLAYER_ATTACK)
                         || attackerData.getBoolean(TAG_PRECOMPUTED_SKILL_DAMAGE))) {
                     return;
                 }
@@ -818,6 +1019,25 @@ public class StatEventHandler {
 
         LivingEntity victim = event.getEntity();
 
+        if (event.getSource().getEntity() instanceof Player attacker) {
+            CompoundTag attackerData = attacker.getPersistentData();
+            if (attacker.getMainHandItem().getItem() == BlackSouls.MEAT_CLEAVER_GREATAXE.get()
+                    && !attackerData.getBoolean(TAG_SURE_HIT_SKILL)
+                    && attacker.getRandom().nextDouble() < 0.30D) {
+                event.setCanceled(true);
+                return;
+            }
+            Item heldItem = attacker.getMainHandItem().getItem();
+            boolean warhammer = heldItem == BlackSouls.WARHAMMER.get()
+                    || heldItem == BlackSouls.ABERRANT_WARHAMMER.get();
+            boolean aimed = BlackSouls.BUFF_AIM.isPresent() && attacker.hasEffect(BlackSouls.BUFF_AIM.get());
+            if (warhammer && !aimed && !attackerData.getBoolean(TAG_SURE_HIT_SKILL)
+                    && attacker.getRandom().nextDouble() < 0.30D) {
+                event.setCanceled(true);
+                return;
+            }
+        }
+
         if (EntityHellPrince.isOpeningComboDamage(event.getSource())) {
             return;
         }
@@ -831,6 +1051,12 @@ public class StatEventHandler {
 
         applyManagedMobAttackOverride(event);
 
+        if (BlackSouls.BUFF_COUNTER_STANCE.isPresent()
+                && victim.hasEffect(BlackSouls.BUFF_COUNTER_STANCE.get())
+                && !event.getSource().is(net.minecraft.tags.DamageTypeTags.BYPASSES_ARMOR)) {
+            event.setAmount(event.getAmount() * 0.5F);
+        }
+
         boolean skipUniversalDefense = false;
 
         boolean fromThrownBlade = event.getSource().getDirectEntity() instanceof EntityThrownBlade;
@@ -842,6 +1068,13 @@ public class StatEventHandler {
 
             if (fromThrownBlade || daggerExtraHit || precomputedSkillDamage) {
                 skipUniversalDefense = true;
+            } else if (event.getSource().getDirectEntity() instanceof net.minecraft.world.entity.projectile.AbstractArrow
+                    && attacker.getMainHandItem().getItem() instanceof com.BlackSouls.BlackSoulsMod.item.weapon.ItemOriginalBow bow) {
+                event.setAmount((float) computePlayerBowDamage(attacker, victim, statsFor(attacker), bow));
+                skipUniversalDefense = true;
+                if (attacker instanceof ServerPlayer serverPlayer) {
+                    bow.onProjectileHit(serverPlayer, victim, attacker.getMainHandItem());
+                }
             } else if (event.getSource().is(DamageTypes.INDIRECT_MAGIC)) {
                 skipUniversalDefense = true;
             } else if (event.getSource().is(DamageTypes.PLAYER_ATTACK)) {
@@ -850,7 +1083,9 @@ public class StatEventHandler {
                 handlePlayerAttackVariance(attacker, event);
             }
 
-            if (!fromThrownBlade && !daggerExtraHit) {
+            applyConditionalWeaponDamageBonus(attacker, victim, event);
+
+            if (!fromThrownBlade && !daggerExtraHit && attacker != victim) {
                 applyPlayerOnHitStatusEffects(attacker, victim);
             }
         }
@@ -863,7 +1098,27 @@ public class StatEventHandler {
             MobEffectInstance defenseless = victim.getEffect(BlackSouls.BUFF_DEFENSELESS.get());
             event.setAmount(event.getAmount() * (defenseless != null && defenseless.getAmplifier() > 0 ? 3.0F : 2.0F));
         }
+        if (BlackSouls.BUFF_FRAGILE.isPresent() && victim.hasEffect(BlackSouls.BUFF_FRAGILE.get())) {
+            event.setAmount(event.getAmount() * 1.5F);
+        }
 
+    }
+
+    private static void applyConditionalWeaponDamageBonus(Player attacker, LivingEntity victim, LivingHurtEvent event) {
+        Item item = attacker.getMainHandItem().getItem();
+        boolean cleaverAxe = item == BlackSouls.MEAT_CLEAVER_GREATAXE.get()
+                || item == BlackSouls.SLAUGHTERER_GREATAXE.get();
+        boolean ragnarokRoute = item == BlackSouls.DOUBLE_EDGED_GREATSWORD.get()
+                || item == BlackSouls.RAGNAROK.get();
+        if (cleaverAxe && BlackSouls.BUFF_BLEEDING.isPresent() && victim.hasEffect(BlackSouls.BUFF_BLEEDING.get())) {
+            event.setAmount(event.getAmount() * 2.0F);
+        } else if (ragnarokRoute && BlackSouls.BUFF_STUN.isPresent() && victim.hasEffect(BlackSouls.BUFF_STUN.get())) {
+            event.setAmount(event.getAmount() * 2.0F);
+        } else if (item == BlackSouls.EUNICES_RAPIER.get()
+                && BlackSouls.BUFF_EXPOSED_WEAKNESS.isPresent()
+                && victim.hasEffect(BlackSouls.BUFF_EXPOSED_WEAKNESS.get())) {
+            event.setAmount(event.getAmount() * 1.5F);
+        }
     }
 
     private static void applyManagedMobAttackOverride(LivingHurtEvent event) {
@@ -894,7 +1149,30 @@ public class StatEventHandler {
         Item mainHandItem = attacker.getMainHandItem().getItem();
         boolean isDagger = mainHandItem == BlackSouls.THIEFS_DAGGER.get()
                 || mainHandItem == BlackSouls.GREAT_THIEFS_DAGGER.get();
-        double rawDamage = stats.attack * (isDagger ? 3.0D : 4.0D) - resolveVictimDirectDefense(victim) * 2.0D;
+        boolean isFortress = mainHandItem == BlackSouls.SHIELD_GUARD_FORTRESS.get()
+                || mainHandItem == BlackSouls.GUARDIAN_FORTRESS.get();
+        double rawDamage;
+        if (mainHandItem == BlackSouls.HANS_MACHINE_GUN.get()) {
+            rawDamage = stats.attack * 2.0D - resolveVictimDirectDefense(victim);
+        } else if (mainHandItem == BlackSouls.CORRUPT_JABBERWOCK_SCYTHE.get()) {
+            rawDamage = 10.0D * (0.8D + Math.random() * 0.4D) + victim.getMaxHealth() * 0.01D;
+        } else if (mainHandItem == BlackSouls.MAD_BOW_JUBJUB.get()) {
+            rawDamage = stats.attack * 3.0D - resolveVictimDirectDefense(victim) * 2.0D;
+        } else if (mainHandItem == BlackSouls.LOST_SWORD.get()) {
+            rawDamage = stats.magicAttack * 4.0D - getRpgMagicDefense(victim) * 2.0D;
+        } else if (mainHandItem == BlackSouls.GLACHID.get()) {
+            rawDamage = stats.attack * 4.0D;
+        } else if (mainHandItem == BlackSouls.DIVINE_ANGEL_DUAL_SWORDS.get()) {
+            rawDamage = stats.attack * 3.0D - resolveVictimDirectDefense(victim) * 2.0D;
+        } else if (mainHandItem == BlackSouls.MARY_SUES_BRANCH_STAFF.get()) {
+            rawDamage = stats.attack * 2.0D - resolveVictimDirectDefense(victim) * 2.0D;
+        } else if (mainHandItem == BlackSouls.RAIDENS_DUAL_AXES.get()) {
+            rawDamage = attacker.getHealth() * 0.1D - resolveVictimDirectDefense(victim) * 2.0D;
+        } else {
+            rawDamage = stats.attack * (isDagger ? 3.0D : 4.0D)
+                    + (isFortress ? stats.defense * 2.0D : 0.0D)
+                    - resolveVictimDirectDefense(victim) * 2.0D;
+        }
         boolean isWeapon = mainHandItem instanceof net.minecraft.world.item.TieredItem
                 || mainHandItem instanceof net.minecraft.world.item.ProjectileWeaponItem;
 
@@ -906,15 +1184,38 @@ public class StatEventHandler {
             rawDamage = Math.max(1.0D, rawDamage) * vanillaChargeMultiplier;
         }
 
-        List<String> attackAttrs = buildPlayerAttackAttributes(attacker, stats);
-        rawDamage *= com.BlackSouls.BlackSoulsMod.util.BSAttributeManager.getBestMultiplier(victim, attackAttrs);
-        rawDamage *= (0.8D + Math.random() * 0.4D);
+        if (mainHandItem != BlackSouls.CORRUPT_JABBERWOCK_SCYTHE.get()
+                && mainHandItem != BlackSouls.GLACHID.get()) {
+            List<String> attackAttrs = buildPlayerAttackAttributes(attacker, stats);
+            rawDamage *= com.BlackSouls.BlackSoulsMod.util.BSAttributeManager.getBestMultiplier(victim, attackAttrs);
+            rawDamage *= 0.8D + Math.random() * 0.4D;
+        } else if (mainHandItem == BlackSouls.GLACHID.get()) {
+            rawDamage *= 0.8D + Math.random() * 0.4D;
+        }
 
         if (attacker.getPersistentData().getBoolean("bs2_melee_crit")) {
             rawDamage *= 3.0D;
             attacker.getPersistentData().remove("bs2_melee_crit");
         }
         return rawDamage;
+    }
+
+    private static BSPlayerStats statsFor(Player player) {
+        return player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+    }
+
+    private static double computePlayerBowDamage(Player attacker, LivingEntity victim, BSPlayerStats stats,
+                                                 com.BlackSouls.BlackSoulsMod.item.weapon.ItemOriginalBow bow) {
+        if (stats == null) return 1.0D;
+        double rawDamage = stats.attack * bow.getAttackMultiplier()
+                - resolveVictimDirectDefense(victim) * bow.getDefenseMultiplier();
+        rawDamage = Math.max(1.0D, rawDamage);
+        rawDamage *= com.BlackSouls.BlackSoulsMod.util.BSAttributeManager.getBestMultiplier(
+                victim,
+                buildPlayerAttackAttributes(attacker, stats)
+        );
+        rawDamage *= 0.8D + Math.random() * 0.4D;
+        return rollSkillCrit(attacker, (float) rawDamage);
     }
 
     private static double resolveVictimDirectDefense(LivingEntity victim) {
@@ -934,6 +1235,14 @@ public class StatEventHandler {
         if (!currentWeapon.isEmpty() && (currentWeapon.getItem() == BlackSouls.BRAVE_SWORD_VORPAL.get()
                 || currentWeapon.getItem() == BlackSouls.VORPAL_SWORD.get())) {
             attackAttrs.add(com.BlackSouls.BlackSoulsMod.util.BSAttributeManager.JABBERWOCK_KILLER);
+        }
+        if (!currentWeapon.isEmpty() && (currentWeapon.getItem() == BlackSouls.BEAST_HUNTER_SAW.get()
+                || currentWeapon.getItem() == BlackSouls.BEAST_SLAYING_SAW_SWORD.get())) {
+            attackAttrs.add(com.BlackSouls.BlackSoulsMod.util.BSAttributeManager.BEAST_KILLER);
+        }
+        if (!currentWeapon.isEmpty() && (currentWeapon.getItem() == BlackSouls.DARK_SWORD.get()
+                || currentWeapon.getItem() == BlackSouls.DARK_BLADE.get())) {
+            attackAttrs.add(com.BlackSouls.BlackSoulsMod.util.BSAttributeManager.DARK);
         }
         return attackAttrs;
     }
@@ -958,12 +1267,72 @@ public class StatEventHandler {
         if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.BANDERSNATCH_SWORD.get()) finalStunRate += 30.0;
         if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.CLUB.get()) finalStunRate += 25.0;
         if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.KING_CLUB.get()) finalStunRate += 60.0;
+        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.MAGIC_BLADE.get()
+                || mainHand.getItem() == BlackSouls.DEMON_GOD_BLADE.get())) finalStunRate += 20.0;
+        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.MEAT_CLEAVER_GREATAXE.get()
+                || mainHand.getItem() == BlackSouls.SLAUGHTERER_GREATAXE.get())) finalStunRate += 30.0;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.DOUBLE_EDGED_GREATSWORD.get()) finalStunRate += 30.0;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.RAGNAROK.get()) finalStunRate += 40.0;
+        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.MACE.get()
+                || mainHand.getItem() == BlackSouls.DIVINE_PUNISHMENT_MACE.get())) finalStunRate += 30.0;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.HALBERD.get()) finalStunRate += 25.0;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.BAHAMUT.get()) finalStunRate += 45.0;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.BEAST_HUNTER_SAW.get()) finalStunRate += 10.0;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.BEAST_SLAYING_SAW_SWORD.get()) finalStunRate += 30.0;
+        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.SHIELD_GUARD_FORTRESS.get()
+                || mainHand.getItem() == BlackSouls.GUARDIAN_FORTRESS.get())) finalStunRate += 15.0;
+        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.DARK_SWORD.get()
+                || mainHand.getItem() == BlackSouls.DARK_BLADE.get())) finalStunRate += 20.0;
+        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.BROKEN_SWORD.get()
+                || mainHand.getItem() == BlackSouls.GRUDGE_SWORD.get())) finalStunRate += 5.0;
+        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.WARHAMMER.get()
+                || mainHand.getItem() == BlackSouls.ABERRANT_WARHAMMER.get())) finalStunRate += 50.0;
+        if (!mainHand.isEmpty() && (mainHand.getItem() == BlackSouls.KNUCKLE_DUSTER.get()
+                || mainHand.getItem() == BlackSouls.KAISER_GAUNTLET.get())) finalStunRate += 5.0;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.UCHIGATANA.get()) finalStunRate += 20.0;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.KISHIN_BLADE.get()) finalStunRate += 25.0;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.GREAT_IRON_BALL.get()) {
+            int level = mainHand.hasTag() ? Math.max(0, Math.min(5, mainHand.getTag().getInt("bs2_upgrade_level"))) : 0;
+            finalStunRate += 10.0D + level * 10.0D;
+        }
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.JUDGMENT_SCYTHE.get()) finalStunRate += 6.0D;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.STORM_RULER.get()) finalStunRate += 10.0D;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.MOONLIGHT_GREATSWORD.get()) finalStunRate += 5.0D;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.DEEP_SEA_KNIGHTS_ANCHOR.get()) {
+            int level = mainHand.hasTag() ? Math.max(0, Math.min(5, mainHand.getTag().getInt("bs2_upgrade_level"))) : 0;
+            finalStunRate += level >= 5 ? 80.0D : 60.0D;
+        }
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.LOST_SWORD.get()) finalStunRate += 20.0D;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.GLACHID.get()) finalStunRate += 15.0D;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.SLAUGHTERERS_CHAINSAW.get()) finalStunRate += 5.0D;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.MOCK_TURTLE_SOUP_LADLE.get()) {
+            int level = mainHand.hasTag() ? Math.max(0, Math.min(5, mainHand.getTag().getInt("bs2_upgrade_level"))) : 0;
+            finalStunRate += level >= 5 ? 5.0D : 3.0D;
+        }
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.DIVINE_ANGEL_DUAL_SWORDS.get()) {
+            int level = mainHand.hasTag() ? Math.max(0, Math.min(5, mainHand.getTag().getInt("bs2_upgrade_level"))) : 0;
+            finalStunRate += level >= 5 ? 5.0D : 3.0D;
+        }
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.RAIDENS_DUAL_AXES.get()) {
+            int level = mainHand.hasTag() ? Math.max(0, Math.min(5, mainHand.getTag().getInt("bs2_upgrade_level"))) : 0;
+            finalStunRate += level >= 5 ? 40.0D : 30.0D;
+        }
 
         if (finalStunRate > 0 && Math.random() * 100.0 < finalStunRate && BlackSouls.BUFF_STUN.isPresent()) {
             victim.addEffect(new net.minecraft.world.effect.MobEffectInstance(BlackSouls.BUFF_STUN.get(), 40, 0));
         }
         if (stats.fearRate > 0 && Math.random() * 100.0 < stats.fearRate && BlackSouls.BUFF_FEAR.isPresent()) {
             victim.addEffect(new net.minecraft.world.effect.MobEffectInstance(BlackSouls.BUFF_FEAR.get(), 100, 0));
+        }
+        double bleedRate = 0.0D;
+        if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.MEAT_CLEAVER_GREATAXE.get()) {
+            int level = mainHand.hasTag() ? Math.max(0, Math.min(9, mainHand.getTag().getInt("bs2_upgrade_level"))) : 0;
+            bleedRate = 30.0D + level * 5.0D;
+        } else if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.SLAUGHTERER_GREATAXE.get()) {
+            bleedRate = 100.0D;
+        }
+        if (bleedRate > 0.0D && Math.random() * 100.0D < bleedRate && BlackSouls.BUFF_BLEEDING.isPresent()) {
+            victim.addEffect(new net.minecraft.world.effect.MobEffectInstance(BlackSouls.BUFF_BLEEDING.get(), 600, 0));
         }
     }
 
@@ -1108,6 +1477,13 @@ public class StatEventHandler {
 
         Player player = event.getEntity();
         if (player == null) return;
+
+        if (player.getMainHandItem().getItem() == BlackSouls.RAIDENS_DUAL_AXES.get()) {
+            event.setResult(Event.Result.DENY);
+            event.setDamageModifier(1.0F);
+            player.getPersistentData().remove("bs2_melee_crit");
+            return;
+        }
 
         BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
         double currentCritRate = stats != null ? stats.critRate : 5.0;
@@ -1562,12 +1938,354 @@ public class StatEventHandler {
             if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.KING_CLUB.get()) {
                 stats.attack += 150.0D;
             }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.MAGIC_BLADE.get()) {
+                double[] attackByLevel = {50.0D, 65.0D, 75.0D, 85.0D, 94.0D, 102.0D, 114.0D, 127.0D, 144.0D, 160.0D};
+                stats.attack += attackByLevel[Math.max(0, Math.min(9, upgradeLevel))];
+                stats.hp *= 0.8D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.DEMON_GOD_BLADE.get()) {
+                stats.attack += 190.0D;
+                stats.hp *= 0.9D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.MAGICIANS_STAFF.get()) {
+                double[] attackByLevel = {2.0D, 4.0D, 7.0D, 9.0D, 11.0D, 12.0D, 15.0D, 15.0D, 17.0D, 19.0D};
+                double[] magicByLevel = {10.0D, 15.0D, 20.0D, 28.0D, 35.0D, 42.0D, 49.0D, 56.0D, 66.0D, 77.0D};
+                int level = Math.max(0, Math.min(9, upgradeLevel));
+                stats.attack += attackByLevel[level];
+                stats.magicAttack += magicByLevel[level];
+                stats.mpCostRate *= 0.5D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.ALL_CREATION_STAFF.get()) {
+                stats.attack += 21.0D;
+                stats.magicAttack += 100.0D;
+                stats.mpCostRate = 0.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.MEAT_CLEAVER_GREATAXE.get()) {
+                double[] attackByLevel = {40.0D, 50.0D, 69.0D, 78.0D, 85.0D, 93.0D, 100.0D, 115.0D, 128.0D, 135.0D};
+                double[] speedByLevel = {-10.0D, -15.0D, -20.0D, -25.0D, -30.0D, -35.0D, -40.0D, -45.0D, -50.0D, -55.0D};
+                int level = Math.max(0, Math.min(9, upgradeLevel));
+                stats.attack += attackByLevel[level];
+                stats.speed += speedByLevel[level];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.SLAUGHTERER_GREATAXE.get()) {
+                stats.attack += 150.0D;
+                stats.speed -= 60.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.DOUBLE_EDGED_GREATSWORD.get()) {
+                double[] attackByLevel = {45.0D, 54.0D, 67.0D, 78.0D, 86.0D, 95.0D, 106.0D, 115.0D, 129.0D, 140.0D};
+                stats.attack += attackByLevel[Math.max(0, Math.min(9, upgradeLevel))];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.RAGNAROK.get()) {
+                stats.attack += 200.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.HUNTING_BOW.get()) {
+                double[] attackByLevel = {10.0D, 19.0D, 22.0D, 28.0D, 34.0D, 40.0D, 48.0D, 52.0D, 55.0D, 61.0D};
+                double[] speedByLevel = {5.0D, 10.0D, 15.0D, 22.0D, 30.0D, 40.0D, 48.0D, 53.0D, 62.0D, 70.0D};
+                double[] criticalByLevel = {5.0D, 10.0D, 15.0D, 20.0D, 25.0D, 30.0D, 35.0D, 45.0D, 55.0D, 65.0D};
+                int level = Math.max(0, Math.min(9, upgradeLevel));
+                stats.attack += attackByLevel[level];
+                stats.speed += speedByLevel[level];
+                stats.critRate += criticalByLevel[level];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.BRAVE_BOW.get()) {
+                stats.attack += 70.0D;
+                stats.speed += 80.0D;
+                stats.critRate += 70.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.MACE.get()) {
+                double[] attackByLevel = {28.0D, 34.0D, 40.0D, 50.0D, 60.0D, 70.0D, 80.0D, 90.0D, 100.0D, 110.0D};
+                double[] magicByLevel = {5.0D, 10.0D, 15.0D, 20.0D, 25.0D, 30.0D, 40.0D, 50.0D, 60.0D, 70.0D};
+                int level = Math.max(0, Math.min(9, upgradeLevel));
+                stats.attack += attackByLevel[level];
+                stats.magicAttack += magicByLevel[level];
+                stats.hpRegenRate += level <= 3 ? 0.20D : level <= 6 ? 0.30D : 0.40D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.DIVINE_PUNISHMENT_MACE.get()) {
+                stats.attack += 130.0D;
+                stats.magicAttack += 90.0D;
+                stats.hpRegenRate += 0.50D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.HALBERD.get()) {
+                double[] attackByLevel = {26.0D, 41.0D, 48.0D, 53.0D, 65.0D, 70.0D, 80.0D, 88.0D, 100.0D, 125.0D};
+                stats.attack += attackByLevel[Math.max(0, Math.min(9, upgradeLevel))];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.BAHAMUT.get()) {
+                stats.attack += 170.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.BEAST_HUNTER_SAW.get()) {
+                double[] attackByLevel = {19.0D, 33.0D, 47.0D, 58.0D, 68.0D, 75.0D, 84.0D, 90.0D, 100.0D, 115.0D};
+                double[] speedByLevel = {5.0D, 12.0D, 18.0D, 22.0D, 28.0D, 36.0D, 42.0D, 47.0D, 54.0D, 60.0D};
+                int level = Math.max(0, Math.min(9, upgradeLevel));
+                stats.attack += attackByLevel[level];
+                stats.speed += speedByLevel[level];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.BEAST_SLAYING_SAW_SWORD.get()) {
+                stats.attack += 144.0D;
+                stats.speed += 90.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.SHIELD_GUARD_FORTRESS.get()) {
+                double[] attackByLevel = {10.0D, 15.0D, 22.0D, 30.0D, 36.0D, 48.0D, 51.0D, 58.0D, 65.0D, 80.0D};
+                double[] physicalRateByLevel = {0.95D, 0.90D, 0.85D, 0.80D, 0.75D, 0.70D, 0.65D, 0.60D, 0.55D, 0.50D};
+                int level = Math.max(0, Math.min(9, upgradeLevel));
+                stats.attack += attackByLevel[level];
+                stats.physicalDamageRate *= physicalRateByLevel[level];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.GUARDIAN_FORTRESS.get()) {
+                stats.attack += 100.0D;
+                stats.physicalDamageRate *= 0.45D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.DARK_SWORD.get()) {
+                double[] attackByLevel = {24.0D, 34.0D, 48.0D, 55.0D, 64.0D, 77.0D, 83.0D, 90.0D, 104.0D, 110.0D};
+                stats.attack += attackByLevel[Math.max(0, Math.min(9, upgradeLevel))];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.DARK_BLADE.get()) {
+                stats.attack += 175.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.BROKEN_SWORD.get()) {
+                double[] attackByLevel = {7.0D, 14.0D, 21.0D, 28.0D, 35.0D, 43.0D, 50.0D, 57.0D, 64.0D, 70.0D};
+                stats.attack += attackByLevel[Math.max(0, Math.min(9, upgradeLevel))];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.GRUDGE_SWORD.get()) {
+                stats.attack += 77.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.WARHAMMER.get()) {
+                double[] attackByLevel = {50.0D, 80.0D, 92.0D, 107.0D, 118.0D, 126.0D, 139.0D, 150.0D, 166.0D, 180.0D};
+                double[] magicByLevel = {-50.0D, -80.0D, -92.0D, -107.0D, -118.0D, -126.0D, -117.0D, -106.0D, -90.0D, -76.0D};
+                int level = Math.max(0, Math.min(9, upgradeLevel));
+                stats.attack += attackByLevel[level];
+                stats.magicAttack += magicByLevel[level];
+                stats.critRate += 50.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.ABERRANT_WARHAMMER.get()) {
+                stats.attack += 300.0D;
+                stats.magicAttack -= 500.0D;
+                stats.critRate += 100.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.KNUCKLE_DUSTER.get()) {
+                double[] attackByLevel = {20.0D, 28.0D, 39.0D, 48.0D, 56.0D, 66.0D, 73.0D, 79.0D, 85.0D, 90.0D};
+                double[] speedRateByLevel = {1.05D, 1.10D, 1.15D, 1.20D, 1.25D, 1.30D, 1.35D, 1.40D, 1.45D, 1.50D};
+                int level = Math.max(0, Math.min(9, upgradeLevel));
+                stats.attack += attackByLevel[level];
+                stats.speed *= speedRateByLevel[level];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.KAISER_GAUNTLET.get()) {
+                stats.attack += 100.0D;
+                stats.speed *= 1.60D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.UCHIGATANA.get()) {
+                double[] attackByLevel = {40.0D, 53.0D, 65.0D, 77.0D, 84.0D, 92.0D, 100.0D, 111.0D, 124.0D, 136.0D};
+                stats.attack += attackByLevel[Math.max(0, Math.min(9, upgradeLevel))];
+                stats.magicAttack *= 0.01D;
+                stats.critRate += 50.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.KISHIN_BLADE.get()) {
+                stats.attack += 170.0D;
+                stats.magicAttack *= 0.01D;
+                stats.critRate += 100.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.GREAT_IRON_BALL.get()) {
+                double[] attackByLevel = {18.0D, 36.0D, 58.0D, 72.0D, 92.0D, 130.0D};
+                stats.attack += attackByLevel[Math.max(0, Math.min(5, upgradeLevel))];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.HANS_MACHINE_GUN.get()) {
+                double[] attackByLevel = {20.0D, 30.0D, 40.0D, 50.0D, 60.0D, 70.0D};
+                double[] speedByLevel = {-30.0D, -40.0D, -50.0D, -60.0D, -70.0D, -80.0D};
+                int level = Math.max(0, Math.min(5, upgradeLevel));
+                stats.attack += attackByLevel[level];
+                stats.speed += speedByLevel[level];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.JUDGMENT_SCYTHE.get()) {
+                double bonus = upgradeLevel >= 5 ? 66.0D : 6.0D;
+                stats.hp += bonus;
+                stats.maxMp += bonus;
+                stats.attack += bonus;
+                stats.defense += bonus;
+                stats.magicAttack += bonus;
+                stats.magicDefense += bonus;
+                stats.speed += bonus;
+                stats.luck += bonus;
+                stats.hpRegenRate += 0.06D;
+                stats.mpRegenRate += 0.06D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.STORM_RULER.get()) {
+                double[] attackByLevel = {24.0D, 42.0D, 63.0D, 84.0D, 111.0D, 120.0D};
+                int level = Math.max(0, Math.min(5, upgradeLevel));
+                stats.attack += attackByLevel[level];
+                if (level >= 5) {
+                    stats.maxMp += 300.0D;
+                    stats.speed += 100.0D;
+                }
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.DEMON_STAFF.get()) {
+                double[] magicByLevel = {20.0D, 30.0D, 40.0D, 50.0D, 60.0D, 70.0D};
+                int level = Math.max(0, Math.min(5, upgradeLevel));
+                stats.magicAttack += magicByLevel[level];
+                stats.magicAttack *= level >= 5 ? 2.0D : 1.5D;
+                stats.mpCostRate *= level >= 5 ? 3.0D : 2.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.MOONLIGHT_GREATSWORD.get()) {
+                double[] attackByLevel = {35.0D, 50.0D, 66.0D, 70.0D, 82.0D, 100.0D};
+                int level = Math.max(0, Math.min(5, upgradeLevel));
+                stats.attack += attackByLevel[level];
+                stats.magicAttack += attackByLevel[level];
+                stats.hpRegenRate += level >= 5 ? 0.15D : 0.05D;
+                stats.mpRegenRate += level >= 5 ? 0.15D : 0.05D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.CORRUPT_JABBERWOCK_SCYTHE.get()) {
+                double[] attackByLevel = {5.0D, 10.0D, 15.0D, 20.0D, 25.0D, 30.0D};
+                int level = Math.max(0, Math.min(5, upgradeLevel));
+                stats.attack += attackByLevel[level];
+                stats.magicAttack += attackByLevel[level];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.MAD_BOW_JUBJUB.get()) {
+                double[] attackByLevel = {25.0D, 35.0D, 44.0D, 54.0D, 65.0D, 70.0D};
+                stats.attack += attackByLevel[Math.max(0, Math.min(5, upgradeLevel))];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.MIRANDA_AXE.get()) {
+                double[] attackByLevel = {50.0D, 100.0D, 200.0D, 300.0D, 400.0D, 500.0D};
+                double[] speedByLevel = {-50.0D, -100.0D, -106.0D, -56.0D, -6.0D, -300.0D};
+                int level = Math.max(0, Math.min(5, upgradeLevel));
+                stats.attack += attackByLevel[level];
+                stats.speed += speedByLevel[level];
+                stats.attack *= level >= 5 ? 3.0D : 2.0D;
+                stats.critRate += level >= 5 ? 40.0D : 30.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.RLYEH_STAFF.get()) {
+                double[] magicByLevel = {25.0D, 45.0D, 65.0D, 80.0D, 95.0D, 125.0D};
+                stats.magicAttack += magicByLevel[Math.max(0, Math.min(5, upgradeLevel))];
+                stats.mpRegenRate += 0.50D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.DEEP_SEA_KNIGHTS_ANCHOR.get()) {
+                double[] attackByLevel = {45.0D, 95.0D, 170.0D, 240.0D, 300.0D, 450.0D};
+                double[] speedByLevel = {-100.0D, -120.0D, -106.0D, -76.0D, -56.0D, -6.0D};
+                int level = Math.max(0, Math.min(5, upgradeLevel));
+                stats.attack += attackByLevel[level];
+                stats.speed += speedByLevel[level];
+                stats.attack *= level >= 5 ? 3.0D : 2.0D;
+                stats.critRate -= 100.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.LOST_SWORD.get()) {
+                double[] magicByLevel = {30.0D, 50.0D, 80.0D, 120.0D, 160.0D, 220.0D};
+                int level = Math.max(0, Math.min(5, upgradeLevel));
+                stats.magicAttack += magicByLevel[level];
+                stats.magicDefense += magicByLevel[level];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.GLACHID.get()) {
+                double[] attackByLevel = {30.0D, 60.0D, 90.0D, 120.0D, 140.0D, 160.0D};
+                stats.attack += attackByLevel[Math.max(0, Math.min(5, upgradeLevel))];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.SLAUGHTERERS_CHAINSAW.get()) {
+                double[] attackByLevel = {25.0D, 45.0D, 60.0D, 80.0D, 92.0D, 108.0D};
+                stats.attack += attackByLevel[Math.max(0, Math.min(5, upgradeLevel))];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.MOCK_TURTLE_SOUP_LADLE.get()) {
+                double[] attackByLevel = {1.0D, 2.0D, 3.0D, 4.0D, 5.0D, 6.0D};
+                double[] luckByLevel = {10.0D, 15.0D, 20.0D, 30.0D, 40.0D, 50.0D};
+                double[] luckRateByLevel = {1.05D, 1.10D, 1.20D, 1.30D, 1.40D, 1.50D};
+                int level = Math.max(0, Math.min(5, upgradeLevel));
+                stats.attack += attackByLevel[level];
+                stats.luck += luckByLevel[level];
+                stats.luck *= luckRateByLevel[level];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.DIVINE_ANGEL_DUAL_SWORDS.get()) {
+                double[] attackByLevel = {30.0D, 40.0D, 50.0D, 60.0D, 70.0D, 80.0D};
+                stats.attack += attackByLevel[Math.max(0, Math.min(5, upgradeLevel))];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.HOLY_GUNBLADE.get()) {
+                double[] attackByLevel = {60.0D, 75.0D, 83.0D, 95.0D, 110.0D, 130.0D};
+                stats.attack += attackByLevel[Math.max(0, Math.min(5, upgradeLevel))];
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.MARY_SUES_BRANCH_STAFF.get()) {
+                stats.magicAttack += 500.0D;
+                stats.speed += 500.0D;
+                stats.speed *= 2.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.EUNICES_RAPIER.get()) {
+                double[] attackByLevel = {40.0D, 65.0D, 85.0D, 105.0D, 125.0D, 145.0D};
+                int level = Math.max(0, Math.min(5, upgradeLevel));
+                stats.attack += attackByLevel[level];
+                stats.critRate += level >= 5 ? 20.0D : 15.0D;
+            }
+            if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.RAIDENS_DUAL_AXES.get()) {
+                double[] hpByLevel = {500.0D, 1000.0D, 1500.0D, 2000.0D, 2500.0D, 3000.0D};
+                int level = Math.max(0, Math.min(5, upgradeLevel));
+                stats.hp += hpByLevel[level];
+                stats.hp *= level >= 5 ? 1.40D : 1.30D;
+                stats.critRate -= 100.0D;
+            }
+            if (BlackSouls.BUFF_MANA_REGEN.isPresent() && player.hasEffect(BlackSouls.BUFF_MANA_REGEN.get())) {
+                stats.mpRegenRate += 0.10D;
+            }
+            if (BlackSouls.BUFF_OILY.isPresent() && player.hasEffect(BlackSouls.BUFF_OILY.get())) {
+                stats.speed *= 0.80D;
+            }
             if (BlackSouls.BUFF_STRUGGLE.isPresent() && player.hasEffect(BlackSouls.BUFF_STRUGGLE.get())) {
                 stats.critRate += 30.0D;
             }
             if (BlackSouls.BUFF_BERSERK.isPresent() && player.hasEffect(BlackSouls.BUFF_BERSERK.get())) {
                 stats.attack *= 1.5D;
                 stats.speed *= 1.5D;
+            }
+            if (BlackSouls.BUFF_SELF_HARM.isPresent() && player.hasEffect(BlackSouls.BUFF_SELF_HARM.get())) {
+                stats.attack *= 1.5D;
+                stats.critRate += 50.0D;
+            }
+            if (BlackSouls.BUFF_HAKI.isPresent() && player.hasEffect(BlackSouls.BUFF_HAKI.get())) {
+                stats.hp *= 1.25D;
+                stats.maxMp *= 1.25D;
+                stats.attack *= 1.25D;
+                stats.defense *= 1.25D;
+                stats.magicAttack *= 1.25D;
+                stats.magicDefense *= 1.25D;
+                stats.speed *= 1.25D;
+                stats.luck *= 1.25D;
+            }
+            if (BlackSouls.BUFF_QUICK_RELOAD.isPresent() && player.hasEffect(BlackSouls.BUFF_QUICK_RELOAD.get())) {
+                stats.evasion += 70.0D;
+                stats.speed *= 1.5D;
+            }
+            if (BlackSouls.BUFF_QUICK_RELOAD_CRIT.isPresent() && player.hasEffect(BlackSouls.BUFF_QUICK_RELOAD_CRIT.get())) {
+                stats.critRate += 30.0D;
+            }
+            if (BlackSouls.BUFF_MAD_BIRD_CALL.isPresent() && player.hasEffect(BlackSouls.BUFF_MAD_BIRD_CALL.get())) {
+                stats.attack *= 2.0D;
+                stats.magicAttack *= 2.0D;
+                stats.hpRegenRate += 0.50D;
+            }
+            if (BlackSouls.BUFF_ECLIPSE.isPresent() && player.hasEffect(BlackSouls.BUFF_ECLIPSE.get())) {
+                stats.defense *= 1.25D;
+                stats.magicDefense *= 1.25D;
+                stats.physicalDamageRate *= 0.50D;
+                stats.magicDamageRate *= 0.50D;
+            }
+            if (BlackSouls.BUFF_HIGH_MOBILITY.isPresent() && player.hasEffect(BlackSouls.BUFF_HIGH_MOBILITY.get())) {
+                stats.speed *= 2.0D;
+                stats.extraActionRate += 1.0D;
+            }
+            if (BlackSouls.BUFF_DUAL_SWORD_AURA.isPresent() && player.hasEffect(BlackSouls.BUFF_DUAL_SWORD_AURA.get())) {
+                MobEffectInstance aura = player.getEffect(BlackSouls.BUFF_DUAL_SWORD_AURA.get());
+                int stacks = aura == null ? 0 : Math.min(7, aura.getAmplifier() + 1);
+                stats.attack *= 1.0D + stacks * 0.10D;
+            }
+            if (BlackSouls.BUFF_NATURAL_RECOVERY.isPresent() && player.hasEffect(BlackSouls.BUFF_NATURAL_RECOVERY.get())) {
+                stats.hpRegenRate += 0.50D;
+            }
+            if (BlackSouls.BUFF_HP_REGEN.isPresent() && player.hasEffect(BlackSouls.BUFF_HP_REGEN.get())) {
+                stats.hpRegenRate += 0.10D;
+            }
+            if (BlackSouls.BUFF_HP_MP_UP.isPresent() && player.hasEffect(BlackSouls.BUFF_HP_MP_UP.get())) {
+                stats.hp *= 1.25D;
+                stats.maxMp *= 1.25D;
+            }
+            if (BlackSouls.BUFF_JUGGLING_EVASION.isPresent() && player.hasEffect(BlackSouls.BUFF_JUGGLING_EVASION.get())) {
+                stats.speed *= 1.50D;
+                stats.evasion += 70.0D;
+            }
+            if (BlackSouls.BUFF_NECRONOMICON.isPresent() && player.hasEffect(BlackSouls.BUFF_NECRONOMICON.get())) {
+                stats.mpCostRate = 0.0D;
+            }
+            if (BlackSouls.BUFF_FROSTBITE.isPresent() && player.hasEffect(BlackSouls.BUFF_FROSTBITE.get())) {
+                stats.magicDefense *= 0.80D;
             }
 
             stats.attack *= getAttackShiftMultiplier(player);
@@ -1719,6 +2437,12 @@ public class StatEventHandler {
                 showDamageFeedback(player, victim, damage);
             }
 
+            Item heldItem = player.getMainHandItem().getItem();
+            if (!player.level().isClientSide() && damage > 0.0F
+                    && (heldItem == BlackSouls.MAGIC_BLADE.get() || heldItem == BlackSouls.DEMON_GOD_BLADE.get())) {
+                player.heal(damage);
+            }
+
             BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
             double skillInstantDeathRate = attackerData.getDouble(TAG_SKILL_INSTANT_DEATH_RATE);
             boolean skillInstantDeathRolled = skillInstantDeathRate > 0.0D
@@ -1788,6 +2512,10 @@ public class StatEventHandler {
 
     @SubscribeEvent
     public static void onLivingHeal(LivingHealEvent event) {
+        if (BlackSouls.BUFF_WEAKNESS.isPresent() && event.getEntity().hasEffect(BlackSouls.BUFF_WEAKNESS.get())) {
+            event.setCanceled(true);
+            return;
+        }
         if (event.getEntity() instanceof Player player) {
             if (getBaubleCount(player, BlackSouls.RING_GOD_FISH.get()) > 0 || getBaubleCount(player, BlackSouls.OMINOUS_CLOTHES.get()) > 0) {
                 event.setCanceled(true);
@@ -1805,7 +2533,19 @@ public class StatEventHandler {
             return;
         }
 
+        if (BlackSouls.BUFF_JUGGLING_EVASION.isPresent()
+                && event.getEntity().hasEffect(BlackSouls.BUFF_JUGGLING_EVASION.get())
+                && event.getEffectInstance().getEffect().getCategory() == net.minecraft.world.effect.MobEffectCategory.HARMFUL) {
+            event.setResult(Event.Result.DENY);
+            return;
+        }
+
         if (event.getEntity() instanceof Player player) {
+            if (player.getMainHandItem().getItem() == BlackSouls.MARY_SUES_BRANCH_STAFF.get()
+                    && event.getEffectInstance().getEffect().getCategory() == net.minecraft.world.effect.MobEffectCategory.HARMFUL) {
+                event.setResult(Event.Result.DENY);
+                return;
+            }
             BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
             if (stats != null) {
                 if (BlackSouls.BUFF_POISON.isPresent() && event.getEffectInstance().getEffect() == BlackSouls.BUFF_POISON.get() && stats.poisonResistRate >= 1.0) {
@@ -1893,6 +2633,26 @@ public class StatEventHandler {
         }
 
         Player player = event.player;
+        if (player instanceof ServerPlayer serverPlayer) {
+            com.BlackSouls.BlackSoulsMod.item.weapon.ItemOriginalBow.tickHansMachineGunBursts(serverPlayer);
+            if (player.getMainHandItem().getItem() == BlackSouls.HOLY_GUNBLADE.get()) {
+                com.BlackSouls.BlackSoulsMod.util.skill.SkillHolyGunbladeArt.ensureAmmoState(serverPlayer);
+            } else {
+                player.removeEffect(BlackSouls.BUFF_GUNBLADE_AMMO_I.get());
+                player.removeEffect(BlackSouls.BUFF_GUNBLADE_AMMO_II.get());
+                player.removeEffect(BlackSouls.BUFF_GUNBLADE_AMMO_III.get());
+            }
+            if (player.getMainHandItem().getItem() != BlackSouls.DIVINE_ANGEL_DUAL_SWORDS.get()) {
+                player.removeEffect(BlackSouls.BUFF_DUAL_SWORD_AURA.get());
+            }
+            if (player.getMainHandItem().getItem() == BlackSouls.MARY_SUES_BRANCH_STAFF.get()) {
+                for (MobEffectInstance effect : new ArrayList<>(player.getActiveEffects())) {
+                    if (effect.getEffect().getCategory() == net.minecraft.world.effect.MobEffectCategory.HARMFUL) {
+                        player.removeEffect(effect.getEffect());
+                    }
+                }
+            }
+        }
         BaubleCounter counts = new BaubleCounter(player);
         applyPassiveSnakeDressPoison(player, counts);
         updateChronoClockState(player, counts.hasChronoClock());
@@ -2230,6 +2990,11 @@ public class StatEventHandler {
     public static void onEntityHurt(LivingHurtEvent event) {
         if (!event.getEntity().level().isClientSide()) {
             net.minecraft.world.entity.LivingEntity target = event.getEntity();
+            if (BlackSouls.BUFF_OILY.isPresent()
+                    && target.hasEffect(BlackSouls.BUFF_OILY.get())
+                    && event.getSource().is(net.minecraft.tags.DamageTypeTags.IS_FIRE)) {
+                event.setAmount(event.getAmount() * 1.5F);
+            }
             if (target.hasEffect(BlackSouls.BUFF_SLEEP.get())) {
 
                 float originalDamage = event.getAmount();

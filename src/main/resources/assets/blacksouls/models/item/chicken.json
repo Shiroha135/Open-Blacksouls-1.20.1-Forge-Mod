@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "blacksouls:item/meat"
+    "layer0": "blacksouls:item/consumable/meat"
   }
 }

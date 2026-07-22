@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "blacksouls:item/snake_bone_return"
+    "layer0": "blacksouls:item/consumable/snake_bone_return"
   }
 }

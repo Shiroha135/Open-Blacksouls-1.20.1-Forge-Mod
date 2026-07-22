@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "blacksouls:item/soul_four_leaf_clover"
+    "layer0": "blacksouls:item/consumable/soul_four_leaf_clover"
   }
 }

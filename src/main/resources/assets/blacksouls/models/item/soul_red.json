@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "blacksouls:item/soul_red"
+    "layer0": "blacksouls:item/consumable/soul_red"
   }
 }

@@ -1,7 +1,7 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "blacksouls:item/great_thiefs_dagger"
+    "layer0": "blacksouls:item/weapon/great_thiefs_dagger"
   },
   "display": {
     "thirdperson_righthand": {

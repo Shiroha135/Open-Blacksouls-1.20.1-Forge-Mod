@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "blacksouls:item/retrieval_poker"
+    "layer0": "blacksouls:item/consumable/retrieval_poker"
   }
 }

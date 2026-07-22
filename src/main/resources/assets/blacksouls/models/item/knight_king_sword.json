@@ -1,7 +1,7 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "blacksouls:item/knight_king_sword"
+    "layer0": "blacksouls:item/weapon/knight_king_sword"
   },
   "display": {
     "thirdperson_righthand": {

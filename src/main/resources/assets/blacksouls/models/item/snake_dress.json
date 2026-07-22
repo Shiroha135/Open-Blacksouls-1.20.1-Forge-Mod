@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "blacksouls:item/snake_dress"
+    "layer0": "blacksouls:item/accessory/snake_dress"
   }
 }

@@ -2,6 +2,7 @@ package com.BlackSouls.BlackSoulsMod;
 
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.handler.BSEntityRegistry;
+import com.BlackSouls.BlackSoulsMod.entity.EntityThrownBlade;
 import com.BlackSouls.BlackSoulsMod.item.ItemMaxHpMeat;
 import com.BlackSouls.BlackSoulsMod.item.ItemMaxStatsFood;
 import com.BlackSouls.BlackSoulsMod.item.material.ItemAbandonedTrash;
@@ -86,6 +87,32 @@ public class BlackSouls {
     public static final RegistryObject<MobEffect> BUFF_DAGGER_GUARD = MOB_EFFECTS.register("dagger_guard", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0x9CA8B8));
     public static final RegistryObject<MobEffect> BUFF_BERSERK = MOB_EFFECTS.register("berserk", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xC63B2D));
     public static final RegistryObject<MobEffect> BUFF_STRUGGLE = MOB_EFFECTS.register("struggle", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xE6B94A));
+    public static final RegistryObject<MobEffect> BUFF_HASSO = MOB_EFFECTS.register("hasso", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0x8B2035));
+    public static final RegistryObject<MobEffect> BUFF_MANA_REGEN = MOB_EFFECTS.register("mana_regen", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0x79C8FF));
+    public static final RegistryObject<MobEffect> BUFF_OILY = MOB_EFFECTS.register("oily", () -> new PotionSpeedShift(net.minecraft.world.effect.MobEffectCategory.HARMFUL, 0x4A3723, "2d564afc-d614-4871-8d67-4bf98ac4d811", -0.20D));
+    public static final RegistryObject<MobEffect> BUFF_WEAKNESS = MOB_EFFECTS.register("weakness", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.HARMFUL, 0x6F5842));
+    public static final RegistryObject<MobEffect> BUFF_HP_REGEN = MOB_EFFECTS.register("hp_regen", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0x8FD486));
+    public static final RegistryObject<MobEffect> BUFF_HP_MP_UP = MOB_EFFECTS.register("hp_mp_up", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xD58BE8));
+    public static final RegistryObject<MobEffect> BUFF_JUGGLING_EVASION = MOB_EFFECTS.register("juggling_evasion", () -> new PotionSpeedShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xB5F3D8, "c3456a45-308c-46f4-b1ce-06f84e59ac44", 0.50D));
+    public static final RegistryObject<MobEffect> BUFF_NECRONOMICON = MOB_EFFECTS.register("necronomicon", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0x38204F));
+    public static final RegistryObject<MobEffect> BUFF_COUNTER_STANCE = MOB_EFFECTS.register("counter_stance", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xD7B46A));
+    public static final RegistryObject<MobEffect> BUFF_FRAGILE = MOB_EFFECTS.register("fragile", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.HARMFUL, 0x8B6C78));
+    public static final RegistryObject<MobEffect> BUFF_SELF_HARM = MOB_EFFECTS.register("self_harm", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0x9E2535));
+    public static final RegistryObject<MobEffect> BUFF_AIM = MOB_EFFECTS.register("aim", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xD8C99C));
+    public static final RegistryObject<MobEffect> BUFF_HAKI = MOB_EFFECTS.register("haki", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xE4A745));
+    public static final RegistryObject<MobEffect> BUFF_QUICK_RELOAD = MOB_EFFECTS.register("quick_reload", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xCAD7E8));
+    public static final RegistryObject<MobEffect> BUFF_QUICK_RELOAD_CRIT = MOB_EFFECTS.register("quick_reload_crit", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xF2C35A));
+    public static final RegistryObject<MobEffect> BUFF_MAD_BIRD_CALL = MOB_EFFECTS.register("mad_bird_call", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xA7324A));
+    public static final RegistryObject<MobEffect> BUFF_ECLIPSE = MOB_EFFECTS.register("eclipse", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xD7C98B));
+    public static final RegistryObject<MobEffect> BUFF_HIGH_MOBILITY = MOB_EFFECTS.register("high_mobility", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0x55CFE8));
+    public static final RegistryObject<MobEffect> BUFF_SLAUGHTER_MODE = MOB_EFFECTS.register("slaughter_mode", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xA91E28));
+    public static final RegistryObject<MobEffect> BUFF_DUAL_SWORD_AURA = MOB_EFFECTS.register("dual_sword_aura", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xE8F5FF));
+    public static final RegistryObject<MobEffect> BUFF_GUNBLADE_AMMO_I = MOB_EFFECTS.register("gunblade_ammo_i", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xF2D6A2));
+    public static final RegistryObject<MobEffect> BUFF_GUNBLADE_AMMO_II = MOB_EFFECTS.register("gunblade_ammo_ii", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xF2A65A));
+    public static final RegistryObject<MobEffect> BUFF_GUNBLADE_AMMO_III = MOB_EFFECTS.register("gunblade_ammo_iii", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xE04B3F));
+    public static final RegistryObject<MobEffect> BUFF_EXPOSED_WEAKNESS = MOB_EFFECTS.register("exposed_weakness", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.HARMFUL, 0xF0E5C0));
+    public static final RegistryObject<MobEffect> BUFF_MIND_EYE = MOB_EFFECTS.register("mind_eye", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xCFEFFF));
+    public static final RegistryObject<MobEffect> BUFF_NATURAL_RECOVERY = MOB_EFFECTS.register("natural_recovery", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0x88E6A5));
     public static final RegistryObject<MobEffect> BUFF_MAGIC_ATK_UP = MOB_EFFECTS.register("magic_atk_up", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xFF8ED8));
     public static final RegistryObject<MobEffect> BUFF_MAGIC_ATK_UP_2 = MOB_EFFECTS.register("magic_atk_up_2", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.BENEFICIAL, 0xFFC5F1));
     public static final RegistryObject<MobEffect> BUFF_MAGIC_ATK_DOWN = MOB_EFFECTS.register("magic_atk_down", () -> new PotionStatShift(net.minecraft.world.effect.MobEffectCategory.HARMFUL, 0x8C3A72));
@@ -112,25 +139,43 @@ public class BlackSouls {
     // 音效注册
     // ===========================================================================================================
     public static final RegistryObject<SoundEvent> ACID_EVENT = registerSound("acid");
+    public static final RegistryObject<SoundEvent> ABSORB1_EVENT = registerSound("absorb1");
     public static final RegistryObject<SoundEvent> ATTACK3_EVENT = registerSound("attack3");
     public static final RegistryObject<SoundEvent> BATTLE3_EVENT =  registerSound("battle3");
     public static final RegistryObject<SoundEvent> BLIND_EVENT = registerSound("blind");
+    public static final RegistryObject<SoundEvent> BLOW2_EVENT = registerSound("blow2");
+    public static final RegistryObject<SoundEvent> BLOW1_EVENT = registerSound("blow1");
+    public static final RegistryObject<SoundEvent> BLOW4_EVENT = registerSound("blow4");
     public static final RegistryObject<SoundEvent> BLOW6_EVENT = registerSound("blow6");
     public static final RegistryObject<SoundEvent> BLOW7_EVENT = registerSound("blow7");
+    public static final RegistryObject<SoundEvent> BLOW3_EVENT = registerSound("blow3");
+    public static final RegistryObject<SoundEvent> BLOW5_EVENT = registerSound("blow5");
     public static final RegistryObject<SoundEvent> BREAK_EVENT = registerSound("break");
+    public static final RegistryObject<SoundEvent> BOW1_EVENT = registerSound("bow1");
+    public static final RegistryObject<SoundEvent> BOW2_EVENT = registerSound("bow2");
+    public static final RegistryObject<SoundEvent> BOW4_EVENT = registerSound("bow4");
     public static final RegistryObject<SoundEvent> CRASH_EVENT = registerSound("crash");
     public static final RegistryObject<SoundEvent> CURSOR1_EVENT = registerSound("cursor1");
     public static final RegistryObject<SoundEvent> DAO_EVENT = registerSound("dao");
+    public static final RegistryObject<SoundEvent> BLOOD_SPLATTER_EVENT = registerSound("blood_splatter");
     public static final RegistryObject<SoundEvent> DARKNESS3_EVENT = registerSound("darkness3");
+    public static final RegistryObject<SoundEvent> DARKNESS1_EVENT = registerSound("darkness1");
+    public static final RegistryObject<SoundEvent> DARKNESS4_EVENT = registerSound("darkness4");
     public static final RegistryObject<SoundEvent> DARKNESS5_EVENT = registerSound("darkness5");
+    public static final RegistryObject<SoundEvent> DARKNESS6_EVENT = registerSound("darkness6");
     public static final RegistryObject<SoundEvent> DARKNESS7_EVENT = registerSound("darkness7");
+    public static final RegistryObject<SoundEvent> DARKNESS8_EVENT = registerSound("darkness8");
     public static final RegistryObject<SoundEvent> DAMAGE4_EVENT = registerSound("damage4");
+    public static final RegistryObject<SoundEvent> DAMAGE2_EVENT = registerSound("damage2");
     public static final RegistryObject<SoundEvent> DOWN2_EVENT = registerSound("down2");
     public static final RegistryObject<SoundEvent> EARTH6_EVENT = registerSound("earth6");
     public static final RegistryObject<SoundEvent> EARTH1_EVENT = registerSound("earth1");
+    public static final RegistryObject<SoundEvent> EARTH2_EVENT = registerSound("earth2");
     public static final RegistryObject<SoundEvent> EARTH5_EVENT = registerSound("earth5");
     public static final RegistryObject<SoundEvent> EVASION1_EVENT  = registerSound("evasion1");
     public static final RegistryObject<SoundEvent> EXPLOSION3_EVENT =registerSound("explosion3");
+    public static final RegistryObject<SoundEvent> EXPLOSION2_EVENT = registerSound("explosion2");
+    public static final RegistryObject<SoundEvent> EQUIP1_EVENT = registerSound("equip1");
     public static final RegistryObject<SoundEvent> FIRE2_EVENT = registerSound("fire2");
     public static final RegistryObject<SoundEvent> FIRE1_EVENT = registerSound("fire1");
     public static final RegistryObject<SoundEvent> FIRE3_EVENT = registerSound("fire3");
@@ -144,6 +189,7 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> FOG2_EVENT = registerSound("fog2");
     public static final RegistryObject<SoundEvent> GUCHA004A_EVENT = registerSound("gucha004a");
     public static final RegistryObject<SoundEvent> GUN1_EVENT = registerSound("gun1");
+    public static final RegistryObject<SoundEvent> GUN2_EVENT = registerSound("gun2");
     public static final RegistryObject<SoundEvent> ICE1_EVENT = registerSound("ice1");
     public static final RegistryObject<SoundEvent> ICE2_EVENT = registerSound("ice2");
     public static final RegistryObject<SoundEvent> ICE4_EVENT = registerSound("ice4");
@@ -153,6 +199,9 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> ITEM1_EVENT = registerSound("item1");
     public static final RegistryObject<SoundEvent> KEY_EVENT = registerSound("key");
     public static final RegistryObject<SoundEvent> MAGIC1_EVENT = registerSound("magic1");
+    public static final RegistryObject<SoundEvent> MAGIC2_EVENT = registerSound("magic2");
+    public static final RegistryObject<SoundEvent> MAGIC4_EVENT = registerSound("magic4");
+    public static final RegistryObject<SoundEvent> MAGIC7_EVENT = registerSound("magic7");
     public static final RegistryObject<SoundEvent> MBJH_ME03_EVENT = registerSound("mbjh_me03");
     public static final RegistryObject<SoundEvent> MONSTER4_EVENT = registerSound("monster4");
     public static final RegistryObject<SoundEvent> MONSTER1_EVENT = registerSound("monster1");
@@ -163,28 +212,39 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> RAISE1_EVENT = registerSound("raise1");
     public static final RegistryObject<SoundEvent> SAINT6_EVENT = registerSound("saint6");
     public static final RegistryObject<SoundEvent> SAINT7_EVENT = registerSound("saint7");
+    public static final RegistryObject<SoundEvent> SAINT8_EVENT = registerSound("saint8");
     public static final RegistryObject<SoundEvent> SAINT9_EVENT = registerSound("saint9");
+    public static final RegistryObject<SoundEvent> SAINT3_EVENT = registerSound("saint3");
     public static final RegistryObject<SoundEvent> SAND_EVENT = registerSound("sand");
     public static final RegistryObject<SoundEvent> PUSH_EVENT = registerSound("push");
     public static final RegistryObject<SoundEvent> SHOTGUN_FIRE_EVENT = registerSound("shotgun_fire");
     public static final RegistryObject<SoundEvent> SKILL1_EVENT =  registerSound("skill1");
     public static final RegistryObject<SoundEvent> SKILL3_EVENT =  registerSound("skill3");
+    public static final RegistryObject<SoundEvent> SKILL2_EVENT = registerSound("skill2");
     public static final RegistryObject<SoundEvent> SLASH1_EVENT = registerSound("slash1");
     public static final RegistryObject<SoundEvent> SLASH2_EVENT = registerSound("slash2");
     public static final RegistryObject<SoundEvent> SLASH3_EVENT = registerSound("slash3");
     public static final RegistryObject<SoundEvent> SLASH4_EVENT = registerSound("slash4");
+    public static final RegistryObject<SoundEvent> SLASH5_EVENT = registerSound("slash5");
+    public static final RegistryObject<SoundEvent> SLASH6_EVENT = registerSound("slash6");
+    public static final RegistryObject<SoundEvent> SLASH7_EVENT = registerSound("slash7");
     public static final RegistryObject<SoundEvent> SLASH8_EVENT = registerSound("slash8");
     public static final RegistryObject<SoundEvent> SLASH9_EVENT = registerSound("slash9");
     public static final RegistryObject<SoundEvent> SLASH10_EVENT = registerSound("slash10");
     public static final RegistryObject<SoundEvent> SLASH11_EVENT = registerSound("slash11");
     public static final RegistryObject<SoundEvent> SLASH12_EVENT = registerSound("slash12");
     public static final RegistryObject<SoundEvent> SLEEP_EVENT = registerSound("sleep");
+    public static final RegistryObject<SoundEvent> SILENCE_EVENT = registerSound("silence");
     public static final RegistryObject<SoundEvent> SONG_EVENT = registerSound("song");
     public static final RegistryObject<SoundEvent> SWORD1_EVENT = registerSound("sword1");
     public static final RegistryObject<SoundEvent> SWORD3_EVENT = registerSound("sword3");
     public static final RegistryObject<SoundEvent> SWORD4_EVENT = registerSound("sword4");
     public static final RegistryObject<SoundEvent> SWORD5_EVENT = registerSound("sword5");
+    public static final RegistryObject<SoundEvent> DAO2_EVENT = registerSound("dao2");
+    public static final RegistryObject<SoundEvent> DAO3_EVENT = registerSound("dao3");
     public static final RegistryObject<SoundEvent> THUNDER1_EVENT = registerSound("thunder1");
+    public static final RegistryObject<SoundEvent> TELEPORT_EVENT = registerSound("teleport");
+    public static final RegistryObject<SoundEvent> SWORD_STAB_EVENT = registerSound("sword_stab");
     public static final RegistryObject<SoundEvent> THUNDER7_EVENT = registerSound("thunder7");
     public static final RegistryObject<SoundEvent> THUNDER5_EVENT = registerSound("thunder5");
     public static final RegistryObject<SoundEvent> THUNDER8_EVENT = registerSound("thunder8");
@@ -194,8 +254,29 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> UP4_EVENT = registerSound("up4");
     public static final RegistryObject<SoundEvent> WATER1_EVENT = registerSound("water1");
     public static final RegistryObject<SoundEvent> WIND1_EVENT = registerSound("wind1");
+    public static final RegistryObject<SoundEvent> WIND5_EVENT = registerSound("wind5");
+    public static final RegistryObject<SoundEvent> WIND8_EVENT = registerSound("wind8");
     public static final RegistryObject<SoundEvent> WIND7_EVENT = registerSound("wind7");
     public static final RegistryObject<SoundEvent> WIND10_EVENT = registerSound("wind10");
+    public static final RegistryObject<SoundEvent> WIND6_EVENT = registerSound("wind6");
+    public static final RegistryObject<SoundEvent> UP1_EVENT = registerSound("up1");
+    public static final RegistryObject<SoundEvent> COLLAPSE2_EVENT = registerSound("collapse2");
+    public static final RegistryObject<SoundEvent> POLLEN_EVENT = registerSound("pollen");
+    public static final RegistryObject<SoundEvent> BIRD_CRY_EVENT = registerSound("bird_cry");
+    public static final RegistryObject<SoundEvent> WIND2_EVENT = registerSound("wind2");
+    public static final RegistryObject<SoundEvent> ITEM3_EVENT = registerSound("item3");
+    public static final RegistryObject<SoundEvent> DIVE_EVENT = registerSound("dive");
+    public static final RegistryObject<SoundEvent> POISON_EVENT = registerSound("poison");
+    public static final RegistryObject<SoundEvent> WATER6_EVENT = registerSound("water6");
+    public static final RegistryObject<SoundEvent> HEAL4_EVENT = registerSound("heal4");
+    public static final RegistryObject<SoundEvent> METAL1_EVENT = registerSound("metal1");
+    public static final RegistryObject<SoundEvent> METAL2_EVENT = registerSound("metal2");
+    public static final RegistryObject<SoundEvent> CHAINSAW_REV_EVENT = registerSound("chainsaw_rev");
+    public static final RegistryObject<SoundEvent> MAGIC5_EVENT = registerSound("magic5");
+    public static final RegistryObject<SoundEvent> SWITCH2_EVENT = registerSound("switch2");
+    public static final RegistryObject<SoundEvent> THUNDER6_EVENT = registerSound("thunder6");
+    public static final RegistryObject<SoundEvent> SNIPER_RIFLE_EVENT = registerSound("sniper_rifle");
+    public static final RegistryObject<SoundEvent> GUN_GIRD1_EVENT = registerSound("gun_gird1");
 
     //boss战洛德
     public static final RegistryObject<SoundEvent> HELL_PRINCE_BGM_EVENT = registerSound("hell_prince_bgm");
@@ -310,6 +391,41 @@ public class BlackSouls {
     public static final RegistryObject<Item> THROWING_KNIFE = ITEMS.register("throwing_knife", () -> new ItemThrowingKnife(new Item.Properties()));
     // 手术刀
     public static final RegistryObject<Item> SCALPEL = ITEMS.register("scalpel", () -> new ItemScalpel(new Item.Properties()));
+    // 魔石
+    public static final RegistryObject<Item> MAGIC_STONE = ITEMS.register("magic_stone", () -> new ItemMagicStone(new Item.Properties()));
+    // 火焰壶
+    public static final RegistryObject<Item> FIRE_BOMB = ITEMS.register("fire_bomb", () -> new ItemThrownConsumable(new Item.Properties(), EntityThrownBlade.MODE_FIRE_BOMB, false, 204, EVASION1_EVENT));
+    // 屎块
+    public static final RegistryObject<Item> DUNG_PIE = ITEMS.register("dung_pie", () -> new ItemThrownConsumable(new Item.Properties(), EntityThrownBlade.MODE_DUNG_PIE, false, 205, EVASION1_EVENT));
+    // 万能钥匙
+    public static final RegistryObject<Item> MASTER_KEY = ITEMS.register("master_key", () -> new ItemMasterKey(new Item.Properties()));
+    // 油壶
+    public static final RegistryObject<Item> OIL_URN = ITEMS.register("oil_urn", () -> new ItemThrownConsumable(new Item.Properties(), EntityThrownBlade.MODE_OIL_URN, true, 206, EVASION1_EVENT));
+    // 不死者杀手菇
+    public static final RegistryObject<Item> UNDEAD_KILLER_MUSHROOM = ITEMS.register("undead_killer_mushroom", () -> new ItemThrownConsumable(new Item.Properties(), EntityThrownBlade.MODE_UNDEAD_KILLER_MUSHROOM, true, 210, EVASION1_EVENT));
+    // 精力剂
+    public static final RegistryObject<Item> STAMINA_TONIC = ITEMS.register("stamina_tonic", () -> new ItemStaminaTonic(new Item.Properties()));
+    public static final RegistryObject<Item> FAIRY_FEATHER = ITEMS.register("fairy_feather", () -> new ItemParameterBoost(new Item.Properties(), ItemParameterBoost.Mode.SPEED));
+    public static final RegistryObject<Item> BLOODSTAINED_KEY = ITEMS.register("bloodstained_key", () -> new ItemSimpleLore(new Item.Properties().stacksTo(1), 1));
+    public static final RegistryObject<Item> DRINK_ME = ITEMS.register("drink_me", () -> new ItemUnavailableStoryConsumable(new Item.Properties().stacksTo(1), "message.blacksouls.story_map_only"));
+    public static final RegistryObject<Item> EAT_ME = ITEMS.register("eat_me", () -> new ItemUnavailableStoryConsumable(new Item.Properties().stacksTo(1), "message.blacksouls.story_map_only"));
+    public static final RegistryObject<Item> RABBIT_KEY = ITEMS.register("rabbit_key", () -> new ItemSimpleLore(new Item.Properties().stacksTo(1), 2));
+    public static final RegistryObject<Item> GOLDEN_EGG = ITEMS.register("golden_egg", () -> new ItemSoul(new Item.Properties(), 250000, "item.blacksouls.golden_egg.lore.1", "item.blacksouls.golden_egg.lore.2"));
+    public static final RegistryObject<Item> TRAIN_TICKET = ITEMS.register("train_ticket", () -> new ItemSimpleLore(new Item.Properties().stacksTo(1), 1));
+    public static final RegistryObject<Item> ENTRY_PASS = ITEMS.register("entry_pass", () -> new ItemSimpleLore(new Item.Properties().stacksTo(1), 1));
+    public static final RegistryObject<Item> ALICE_ITEM = ITEMS.register("alice", () -> new ItemSimpleLore(new Item.Properties().stacksTo(1), 1));
+    public static final RegistryObject<Item> MAD_GEAR = ITEMS.register("mad_gear", () -> new ItemMadGear(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> NIGHTMARE_LANTERN = ITEMS.register("nightmare_lantern", () -> new ItemThrownConsumable(new Item.Properties(), EntityThrownBlade.MODE_NIGHTMARE_LANTERN, false, 204, EVASION1_EVENT));
+    public static final RegistryObject<Item> SATYRS_THING = ITEMS.register("satyrs_thing", () -> new ItemGrantWhiteStickyThing(new Item.Properties()));
+    public static final RegistryObject<Item> ANCIENT_KINGS_BONE_DUST = ITEMS.register("ancient_kings_bone_dust", () -> new ItemReturnToBonfire(new Item.Properties()));
+    public static final RegistryObject<Item> SQUIRREL_FUR = ITEMS.register("squirrel_fur", () -> new ItemUnavailableStoryConsumable(new Item.Properties(), "message.blacksouls.chaos_dungeon_only"));
+    public static final RegistryObject<Item> FILTHY_LIQUID = ITEMS.register("filthy_liquid", () -> new ItemFilthyLiquid(new Item.Properties()));
+    public static final RegistryObject<Item> BLUEBIRD_FEATHER = ITEMS.register("bluebird_feather", () -> new ItemParameterBoost(new Item.Properties(), ItemParameterBoost.Mode.LUCK));
+    public static final RegistryObject<Item> TINKER_BELLS_SCALE_POWDER = ITEMS.register("tinker_bells_scale_powder", () -> new ItemTinkerBellScalePowder(new Item.Properties()));
+    public static final RegistryObject<Item> OUIJA_BOARD = ITEMS.register("ouija_board", () -> new ItemAreaAttackConsumable(new Item.Properties(), ItemAreaAttackConsumable.Mode.OUIJA_BOARD));
+    public static final RegistryObject<Item> ROLDS_FOUNTAIN_PEN = ITEMS.register("rolds_fountain_pen", () -> new ItemParameterBoost(new Item.Properties(), ItemParameterBoost.Mode.HP_MP));
+    public static final RegistryObject<Item> COLD_VALLEY_BREATH = ITEMS.register("cold_valley_breath", () -> new ItemAreaAttackConsumable(new Item.Properties(), ItemAreaAttackConsumable.Mode.COLD_VALLEY_BREATH));
+    public static final RegistryObject<Item> NECRONOMICON = ITEMS.register("necronomicon", () -> new ItemNecronomicon(new Item.Properties()));
     // 炭松脂
     public static final RegistryObject<Item> CHARCOAL_PINE_RESIN = ITEMS.register("charcoal_pine_resin", () -> new ItemWeaponResin(new Item.Properties(), BUFF_FIRE_POWER, 2000, 57, FIRE4_EVENT, null, 0, true, -1.1F));
     // 黄金松脂
@@ -441,6 +557,54 @@ public class BlackSouls {
     public static final RegistryObject<Item> VORPAL_SWORD = ITEMS.register("vorpal_sword", () -> new ItemVorpalSword(new Item.Properties()));
     public static final RegistryObject<Item> CLUB = ITEMS.register("club", () -> new ItemClub(new Item.Properties()));
     public static final RegistryObject<Item> KING_CLUB = ITEMS.register("king_club", () -> new ItemKingClub(new Item.Properties()));
+    public static final RegistryObject<Item> MAGIC_BLADE = ITEMS.register("magic_blade", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.MAGIC_BLADE, new Item.Properties()));
+    public static final RegistryObject<Item> DEMON_GOD_BLADE = ITEMS.register("demon_god_blade", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.DEMON_GOD_BLADE, new Item.Properties()));
+    public static final RegistryObject<Item> MAGICIANS_STAFF = ITEMS.register("magicians_staff", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.MAGICIANS_STAFF, new Item.Properties()));
+    public static final RegistryObject<Item> ALL_CREATION_STAFF = ITEMS.register("all_creation_staff", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.ALL_CREATION_STAFF, new Item.Properties()));
+    public static final RegistryObject<Item> DOUBLE_EDGED_GREATSWORD = ITEMS.register("double_edged_greatsword", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.DOUBLE_EDGED_GREATSWORD, new Item.Properties()));
+    public static final RegistryObject<Item> RAGNAROK = ITEMS.register("ragnarok", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.RAGNAROK, new Item.Properties()));
+    public static final RegistryObject<Item> MEAT_CLEAVER_GREATAXE = ITEMS.register("meat_cleaver_greataxe", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.MEAT_CLEAVER_GREATAXE, new Item.Properties()));
+    public static final RegistryObject<Item> SLAUGHTERER_GREATAXE = ITEMS.register("slaughterer_greataxe", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.SLAUGHTERER_GREATAXE, new Item.Properties()));
+    public static final RegistryObject<Item> HUNTING_BOW = ITEMS.register("hunting_bow", () -> new ItemOriginalBow(ItemOriginalBow.Profile.HUNTING, new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> BRAVE_BOW = ITEMS.register("brave_bow", () -> new ItemOriginalBow(ItemOriginalBow.Profile.BRAVE, new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> MACE = ITEMS.register("mace", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.MACE, new Item.Properties()));
+    public static final RegistryObject<Item> DIVINE_PUNISHMENT_MACE = ITEMS.register("divine_punishment_mace", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.DIVINE_PUNISHMENT_MACE, new Item.Properties()));
+    public static final RegistryObject<Item> HALBERD = ITEMS.register("halberd", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.HALBERD, new Item.Properties()));
+    public static final RegistryObject<Item> BAHAMUT = ITEMS.register("bahamut", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.BAHAMUT, new Item.Properties()));
+    public static final RegistryObject<Item> BEAST_HUNTER_SAW = ITEMS.register("beast_hunter_saw", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.BEAST_HUNTER_SAW, new Item.Properties()));
+    public static final RegistryObject<Item> BEAST_SLAYING_SAW_SWORD = ITEMS.register("beast_slaying_saw_sword", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.BEAST_SLAYING_SAW_SWORD, new Item.Properties()));
+    public static final RegistryObject<Item> SHIELD_GUARD_FORTRESS = ITEMS.register("shield_guard_fortress", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.SHIELD_GUARD_FORTRESS, new Item.Properties()));
+    public static final RegistryObject<Item> GUARDIAN_FORTRESS = ITEMS.register("guardian_fortress", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.GUARDIAN_FORTRESS, new Item.Properties()));
+    public static final RegistryObject<Item> DARK_SWORD = ITEMS.register("dark_sword", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.DARK_SWORD, new Item.Properties()));
+    public static final RegistryObject<Item> DARK_BLADE = ITEMS.register("dark_blade", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.DARK_BLADE, new Item.Properties()));
+    public static final RegistryObject<Item> BROKEN_SWORD = ITEMS.register("broken_sword", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.BROKEN_SWORD, new Item.Properties()));
+    public static final RegistryObject<Item> GRUDGE_SWORD = ITEMS.register("grudge_sword", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.GRUDGE_SWORD, new Item.Properties()));
+    public static final RegistryObject<Item> WARHAMMER = ITEMS.register("warhammer", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.WARHAMMER, new Item.Properties()));
+    public static final RegistryObject<Item> ABERRANT_WARHAMMER = ITEMS.register("aberrant_warhammer", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.ABERRANT_WARHAMMER, new Item.Properties()));
+    public static final RegistryObject<Item> KNUCKLE_DUSTER = ITEMS.register("knuckle_duster", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.KNUCKLE_DUSTER, new Item.Properties()));
+    public static final RegistryObject<Item> KAISER_GAUNTLET = ITEMS.register("kaiser_gauntlet", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.KAISER_GAUNTLET, new Item.Properties()));
+    public static final RegistryObject<Item> UCHIGATANA = ITEMS.register("uchigatana", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.UCHIGATANA, new Item.Properties()));
+    public static final RegistryObject<Item> KISHIN_BLADE = ITEMS.register("kishin_blade", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.KISHIN_BLADE, new Item.Properties()));
+    public static final RegistryObject<Item> GREAT_IRON_BALL = ITEMS.register("great_iron_ball", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.GREAT_IRON_BALL, new Item.Properties()));
+    public static final RegistryObject<Item> HANS_MACHINE_GUN = ITEMS.register("hans_machine_gun", () -> new ItemOriginalBow(ItemOriginalBow.Profile.HANS_MACHINE_GUN, new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> JUDGMENT_SCYTHE = ITEMS.register("judgment_scythe", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.JUDGMENT_SCYTHE, new Item.Properties()));
+    public static final RegistryObject<Item> STORM_RULER = ITEMS.register("storm_ruler", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.STORM_RULER, new Item.Properties()));
+    public static final RegistryObject<Item> DEMON_STAFF = ITEMS.register("demon_staff", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.DEMON_STAFF, new Item.Properties()));
+    public static final RegistryObject<Item> MOONLIGHT_GREATSWORD = ITEMS.register("moonlight_greatsword", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.MOONLIGHT_GREATSWORD, new Item.Properties()));
+    public static final RegistryObject<Item> CORRUPT_JABBERWOCK_SCYTHE = ITEMS.register("corrupt_jabberwock_scythe", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.CORRUPT_JABBERWOCK_SCYTHE, new Item.Properties()));
+    public static final RegistryObject<Item> MAD_BOW_JUBJUB = ITEMS.register("mad_bow_jubjub", () -> new ItemOriginalBow(ItemOriginalBow.Profile.MAD_BOW_JUBJUB, new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> MIRANDA_AXE = ITEMS.register("miranda_axe", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.MIRANDA_AXE, new Item.Properties()));
+    public static final RegistryObject<Item> RLYEH_STAFF = ITEMS.register("rlyeh_staff", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.RLYEH_STAFF, new Item.Properties()));
+    public static final RegistryObject<Item> DEEP_SEA_KNIGHTS_ANCHOR = ITEMS.register("deep_sea_knights_anchor", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.DEEP_SEA_KNIGHTS_ANCHOR, new Item.Properties()));
+    public static final RegistryObject<Item> LOST_SWORD = ITEMS.register("lost_sword", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.LOST_SWORD, new Item.Properties()));
+    public static final RegistryObject<Item> GLACHID = ITEMS.register("glachid", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.GLACHID, new Item.Properties()));
+    public static final RegistryObject<Item> SLAUGHTERERS_CHAINSAW = ITEMS.register("slaughterers_chainsaw", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.SLAUGHTERERS_CHAINSAW, new Item.Properties()));
+    public static final RegistryObject<Item> MOCK_TURTLE_SOUP_LADLE = ITEMS.register("mock_turtle_soup_ladle", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.MOCK_TURTLE_SOUP_LADLE, new Item.Properties()));
+    public static final RegistryObject<Item> DIVINE_ANGEL_DUAL_SWORDS = ITEMS.register("divine_angel_dual_swords", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.DIVINE_ANGEL_DUAL_SWORDS, new Item.Properties()));
+    public static final RegistryObject<Item> HOLY_GUNBLADE = ITEMS.register("holy_gunblade", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.HOLY_GUNBLADE, new Item.Properties()));
+    public static final RegistryObject<Item> MARY_SUES_BRANCH_STAFF = ITEMS.register("mary_sues_branch_staff", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.MARY_SUES_BRANCH_STAFF, new Item.Properties()));
+    public static final RegistryObject<Item> EUNICES_RAPIER = ITEMS.register("eunices_rapier", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.EUNICES_RAPIER, new Item.Properties()));
+    public static final RegistryObject<Item> RAIDENS_DUAL_AXES = ITEMS.register("raidens_dual_axes", () -> new ItemOriginalWeapon(ItemOriginalWeapon.Profile.RAIDENS_DUAL_AXES, new Item.Properties()));
     // =========================================================================================================================================================================
     // 技能书
     // =========================================================================================================================================================================
@@ -623,7 +787,6 @@ public class BlackSouls {
     public static final RegistryObject<Item> DEV_LEGENDARY_MODE = ITEMS.register("dev_legendary_mode", () -> new ItemDevDifficultyMode(new Item.Properties(), ItemDevDifficultyMode.ModeType.LEGENDARY));
     public static final RegistryObject<Item> DEV_MALICE_MODE = ITEMS.register("dev_malice_mode", () -> new ItemDevDifficultyMode(new Item.Properties(), ItemDevDifficultyMode.ModeType.MALICE));
     public static final RegistryObject<Item> DEV_ETERNITY_MODE = ITEMS.register("dev_eternity_mode", () -> new ItemDevDifficultyMode(new Item.Properties(), ItemDevDifficultyMode.ModeType.ETERNITY));
-    //public static final RegistryObject<Item> ULTIMATE_NANA_SWORD = ITEMS.register("ultimate_nana_sword", () -> new ItemUltimateNanaSword(new Item.Properties()));
     public static final RegistryObject<Item> KING_EXIT_AVATAR_PACK = ITEMS.register(
             "king_exit_avatar_pack",
             () -> new ItemKingExitAvatarPack(
@@ -688,25 +851,79 @@ public class BlackSouls {
                     .title(Component.translatable("itemGroup.blacksouls_weapon"))
                     .displayItems((parameters, output) -> {
                         // ===========================================================
-                        // 武器/盾
+                        // 普通武器
                         // ===========================================================
-                        output.accept(ANDOR_SWORD.get());                  // 安多鲁之剑
-                        output.accept(DRAKE_SWORD.get());                  // 飞龙剑
                         output.accept(KNIGHT_SWORD.get());                 // 骑士之剑
                         output.accept(KNIGHT_KING_SWORD.get());            // 骑士王之剑
-                        output.accept(VORPAL_BLADE.get());                 // 沃柏尔之刃
-                        output.accept(MURDERERS_SHOTGUN.get());            // 杀人魔霰弹枪
-                        output.accept(BRAVE_SWORD_VORPAL.get());           // 勇剑沃柏尔
                         output.accept(THIEFS_DAGGER.get());                // 盗贼短刀
                         output.accept(GREAT_THIEFS_DAGGER.get());          // 大盗贼的短刀
                         output.accept(GREAT_SWORD.get());                  // 大剑
                         output.accept(GIANT_SWORD.get());                  // 巨人剑
+                        output.accept(MAGIC_BLADE.get());                  // 魔刀
+                        output.accept(DEMON_GOD_BLADE.get());              // 魔神刀
                         output.accept(BROAD_SPEAR.get());                  // 阔头枪
                         output.accept(GUNGNIR.get());                      // 冈格尼尔
-                        output.accept(BANDERSNATCH_SWORD.get());           // 暴剑班达斯奈奇
-                        output.accept(VORPAL_SWORD.get());                 // 沃柏尔之剑
                         output.accept(CLUB.get());                         // 棍棒
                         output.accept(KING_CLUB.get());                    // 王棒
+                        output.accept(MAGICIANS_STAFF.get());              // 魔术师之杖
+                        output.accept(ALL_CREATION_STAFF.get());           // 万象之杖
+                        output.accept(HUNTING_BOW.get());                  // 猎弓
+                        output.accept(BRAVE_BOW.get());                    // 勇者之弓
+                        output.accept(MEAT_CLEAVER_GREATAXE.get());        // 断肉大斧
+                        output.accept(SLAUGHTERER_GREATAXE.get());         // 虐杀者大斧
+                        output.accept(MACE.get());                         // 锤矛
+                        output.accept(DIVINE_PUNISHMENT_MACE.get());       // 神罚的锤矛
+                        output.accept(HALBERD.get());                      // 斧枪
+                        output.accept(BAHAMUT.get());                      // 巴哈姆特
+                        output.accept(BEAST_HUNTER_SAW.get());             // 猎兽锯
+                        output.accept(BEAST_SLAYING_SAW_SWORD.get());      // 猎杀魔兽之锯剑
+                        output.accept(SHIELD_GUARD_FORTRESS.get());        // 盾卫堡垒
+                        output.accept(GUARDIAN_FORTRESS.get());            // 守护者堡垒
+                        output.accept(DARK_SWORD.get());                   // 黑暗剑
+                        output.accept(DARK_BLADE.get());                   // 黑暗之刃
+                        output.accept(BROKEN_SWORD.get());                 // 断剑
+                        output.accept(GRUDGE_SWORD.get());                 // 怨恨之剑
+                        output.accept(WARHAMMER.get());                    // 战锤
+                        output.accept(ABERRANT_WARHAMMER.get());           // 异形战锤
+                        output.accept(KNUCKLE_DUSTER.get());               // 指虎
+                        output.accept(KAISER_GAUNTLET.get());              // 凯撒拳套
+                        output.accept(VORPAL_BLADE.get());                 // 沃柏尔之刃
+                        output.accept(VORPAL_SWORD.get());                 // 沃柏尔之剑
+                        output.accept(UCHIGATANA.get());                   // 打刀
+                        output.accept(KISHIN_BLADE.get());                 // 鬼神刀
+                        output.accept(BRAVE_SWORD_VORPAL.get());           // 勇剑沃柏尔
+                        output.accept(DOUBLE_EDGED_GREATSWORD.get());      // 双刃大剑
+                        output.accept(RAGNAROK.get());                     // 诸神黄昏
+                        // ===========================================================
+                        // 特殊武器
+                        // ===========================================================
+                        output.accept(GREAT_IRON_BALL.get());              // 大铁球
+                        output.accept(HANS_MACHINE_GUN.get());             // 汉斯的机关枪
+                        output.accept(JUDGMENT_SCYTHE.get());              // 审判者大镰
+                        output.accept(STORM_RULER.get());                  // 暴风之律
+                        output.accept(ANDOR_SWORD.get());                  // 安多鲁之剑
+                        output.accept(DRAKE_SWORD.get());                  // 飞龙剑
+                        output.accept(DEMON_STAFF.get());                  // 恶魔之杖
+                        output.accept(MOONLIGHT_GREATSWORD.get());         // 月光大剑
+                        output.accept(BANDERSNATCH_SWORD.get());           // 暴剑班达斯奈奇
+                        output.accept(CORRUPT_JABBERWOCK_SCYTHE.get());    // 腐镰贾巴沃克
+                        output.accept(MAD_BOW_JUBJUB.get());               // 狂弓贾布加布
+                        output.accept(MIRANDA_AXE.get());                  // 米兰达之斧
+                        output.accept(RLYEH_STAFF.get());                  // 拉莱耶之杖
+                        output.accept(DEEP_SEA_KNIGHTS_ANCHOR.get());      // 深海骑士的锚
+                        output.accept(LOST_SWORD.get());                   // 失落之剑
+                        output.accept(GLACHID.get());                      // 格拉奇德
+                        output.accept(SLAUGHTERERS_CHAINSAW.get());        // 屠宰者的电锯
+                        output.accept(MOCK_TURTLE_SOUP_LADLE.get());       // 假海龟的大汤勺
+                        output.accept(DIVINE_ANGEL_DUAL_SWORDS.get());     // 神天使双剑
+                        output.accept(HOLY_GUNBLADE.get());                // 神圣铳剑
+                        output.accept(MARY_SUES_BRANCH_STAFF.get());       // 玛丽苏的枝杖
+                        output.accept(EUNICES_RAPIER.get());               // 尤妮丝的刺剑
+                        output.accept(RAIDENS_DUAL_AXES.get());            // 莱登的双斧
+                        // ===========================================================
+                        // 盾系列
+                        // ===========================================================
+                        output.accept(MURDERERS_SHOTGUN.get());            // 杀人魔霰弹枪
                     })
                     .build());
 
@@ -903,7 +1120,7 @@ public class BlackSouls {
                         output.accept(RABBIT_WATCH.get());                 // 兔子的怀表
                         output.accept(INVISIBLE_PEPPER.get());             // 看不见的胡椒
                         output.accept(ABANDONED_TRASH.get());              // 废弃垃圾
-                        // 魔石
+                        output.accept(MAGIC_STONE.get());                  // 魔石
                         output.accept(MAIDENSFRAGRANCE.get());             // 少女之香
                         output.accept(FAIRY_SCALE_POWDER.get());           // 妖精的鳞粉
                         output.accept(MYSTERIOUS_SHARD.get());             // 神秘的碎片
@@ -911,8 +1128,8 @@ public class BlackSouls {
                         output.accept(UPGRADE_LARGE_SHARD.get());          // 强化石大碎片
                         output.accept(UPGRADE_CHUNK.get());                // 强化石块
                         output.accept(UPGRADE_SLAB.get());                 // 强化石圆盘
-                        // 火焰壶
-                        // 屎块
+                        output.accept(FIRE_BOMB.get());                    // 火焰壶
+                        output.accept(DUNG_PIE.get());                     // 屎块
                         output.accept(CHARCOAL_PINE_RESIN.get());          // 炭松脂
                         output.accept(GOLD_PINE_RESIN.get());              // 黄金松脂
                         output.accept(DARK_PINE_RESIN.get());              // 暗松脂
@@ -928,19 +1145,19 @@ public class BlackSouls {
                         output.accept(SOUL_CRESTFALLEN_KNIGHT.get());      // 灰心的骑士的灵魂
                         output.accept(SOUL_CRESTFALLEN_KNIGHT_LARGE.get());// 灰心的骑士的大块灵魂
                         output.accept(ORANGE_MARMALADE.get());             // 橘子果酱
-                        // 万能钥匙
+                        output.accept(MASTER_KEY.get());                   // 万能钥匙
                         output.accept(BLACKWELL_BLOOD_VIAL.get());         // 布莱克威尔的输血药
                         output.accept(CANDY.get());                        // 糖果
-                        // 油壶
+                        output.accept(OIL_URN.get());                      // 油壶
                         output.accept(THROWING_KNIFE.get());               // 投掷小刀
-                        // 不死者杀手菇
+                        output.accept(UNDEAD_KILLER_MUSHROOM.get());       // 不死者杀手菇
                         output.accept(PURE_WATER.get());                   // 水
-                        // 精力剂
+                        output.accept(STAMINA_TONIC.get());                // 精力剂
                         output.accept(SNAKE_BONE_RETURN.get());            // 归还蛇骨
                         output.accept(MUDDY_FISH.get());                   // 浑浊之鱼
                         output.accept(WHITE_STICKY_THING.get());           // 又白又黏的那啥
                         output.accept(IRON_SCRAP_SNACK.get());             // 铁渣点心
-                        // 妖精之羽
+                        output.accept(FAIRY_FEATHER.get());                // 妖精之羽
                         output.accept(GOLDENMEAD.get());                   // 黄金的蜂蜜酒
                         output.accept(CARPENTER_NAIL.get());               // 大工的钉子
                         output.accept(PRESCRIPTION_MEDICINE.get());        // 处方药
@@ -949,13 +1166,13 @@ public class BlackSouls {
                         output.accept(GOAT_MEAT.get());                    // 山羊的肉
                         output.accept(PREGNANT_CAKE_MEAT.get());           // 孕妇蛋糕之肉
                         output.accept(BLACK_ASH.get());                    // 黑之灰
-                        // 染血的钥匙
-                        // 喝了我吧
-                        // 吃了我吧
-                        // 兔之键
-                        // 黄金之卵
-                        // 列车票
-                        // 通行证
+                        output.accept(BLOODSTAINED_KEY.get());             // 染血的钥匙
+                        output.accept(DRINK_ME.get());                     // 喝了我吧
+                        output.accept(EAT_ME.get());                       // 吃了我吧
+                        output.accept(RABBIT_KEY.get());                   // 兔之键
+                        output.accept(GOLDEN_EGG.get());                   // 黄金之卵
+                        output.accept(TRAIN_TICKET.get());                 // 列车票
+                        output.accept(ENTRY_PASS.get());                   // 通行证
                         output.accept(QUEEN_EGG_TART.get());               // 女王的蛋挞
                         output.accept(CANDLE_EMBER.get());                 // 蜡烛的余烬
                         output.accept(ROASTED_CHEESE.get());               // 烤起司
@@ -963,33 +1180,33 @@ public class BlackSouls {
                         output.accept(SOUL_BLACK_DEFILED.get());           // 污秽的黑之魂
                         output.accept(DREAM_SOUL.get());                   // 梦之魂
                         output.accept(SNAKE_GOD_BLOOD.get());              // 蛇神的血
-                        // 爱丽丝
+                        output.accept(ALICE_ITEM.get());                   // 爱丽丝
                         output.accept(BILLS_BENTO.get());                  // 比尔的便当
                         output.accept(SOUL_OUTSIDER.get());                // 外来者之魂
                         output.accept(SOUL_HERO.get());                    // 英雄的灵魂
                         output.accept(SOUL_GREAT_HERO.get());              // 伟大英雄的灵魂
                         output.accept(MATCH_MEDICINE.get());               // 火柴药
-                        // 疯狂的齿轮
-                        // 噩梦提灯
+                        output.accept(MAD_GEAR.get());                     // 疯狂的齿轮
+                        output.accept(NIGHTMARE_LANTERN.get());            // 噩梦提灯
                         output.accept(CHICKEN.get());                      // 鸡肉
                         output.accept(CHRISTMAS_CHICKEN.get());            // 圣诞鸡肉
                         output.accept(MYSTERIOUS_MEAT.get());              // 来路不明的肉
-                        // 色情魔的那玩意
+                        output.accept(SATYRS_THING.get());                 // 色情魔的那玩意
                         output.accept(MERMAIDSONG.get());                  // 人鱼的歌声
-                        // 古王的骨粉
-                        // 松鼠的毛
+                        output.accept(ANCIENT_KINGS_BONE_DUST.get());      // 古王的骨粉
+                        output.accept(SQUIRREL_FUR.get());                 // 松鼠的毛
                         output.accept(ICE_PINE_RESIN.get());               // 冰松脂
                         output.accept(SCALPEL.get());                      // 手术刀
                         output.accept(STAR_WATER.get());                   // 星水
-                        // 脏液
-                        // 青鸟的羽毛
-                        // 叮当仙子的鳞粉
-                        // 威加盘
-                        // 洛德的万年钢笔
+                        output.accept(FILTHY_LIQUID.get());                // 脏液
+                        output.accept(BLUEBIRD_FEATHER.get());             // 青鸟的羽毛
+                        output.accept(TINKER_BELLS_SCALE_POWDER.get());    // 叮当仙子的鳞粉
+                        output.accept(OUIJA_BOARD.get());                  // 威加盘
+                        output.accept(ROLDS_FOUNTAIN_PEN.get());           // 洛德的万年钢笔
                         output.accept(CURSING_FLOWER.get());               // 咒骂之花
-                        // 冷谷的气息
+                        output.accept(COLD_VALLEY_BREATH.get());           // 冷谷的气息
                         output.accept(HELANRITHWINE.get());                // 海兰里斯酒
-                        // 死灵之书
+                        output.accept(NECRONOMICON.get());                 // 死灵之书
                         // ==========================================================================
                         // 童话书系列(共32本)
                         // ==========================================================================

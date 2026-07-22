@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "blacksouls:item/antidote_herb"
+    "layer0": "blacksouls:item/consumable/antidote_herb"
   }
 }

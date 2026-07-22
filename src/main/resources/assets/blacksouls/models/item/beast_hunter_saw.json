@@ -1,0 +1,4 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": { "layer0": "blacksouls:item/weapon/beast_hunter_saw" }
+}

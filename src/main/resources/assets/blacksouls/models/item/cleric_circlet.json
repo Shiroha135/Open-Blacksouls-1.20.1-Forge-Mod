@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "blacksouls:item/cleric_circlet"
+    "layer0": "blacksouls:item/accessory/cleric_circlet"
   }
 }

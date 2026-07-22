@@ -1,7 +1,7 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "blacksouls:item/vorpal_blade"
+    "layer0": "blacksouls:item/weapon/vorpal_blade"
   },
   "display": {
     "thirdperson_righthand": {

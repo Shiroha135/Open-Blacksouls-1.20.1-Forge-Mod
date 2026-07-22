@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "blacksouls:item/bunny_girl_uniform"
+    "layer0": "blacksouls:item/accessory/bunny_girl_uniform"
   }
 }

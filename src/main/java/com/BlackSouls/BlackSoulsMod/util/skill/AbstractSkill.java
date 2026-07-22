@@ -31,8 +31,13 @@ public abstract class AbstractSkill {
 
     public abstract boolean isUnlockedForGUI(Player player);
 
+    protected float getEffectiveManaCost(BSPlayerStats stats) {
+        double rate = stats == null ? 1.0D : stats.mpCostRate;
+        return (float) Math.max(0.0D, getManaCost() * rate);
+    }
+
     public boolean canCast(ServerPlayer player, BSPlayerStats stats) {
-        if (!SkillUtils.shouldBypassManaCost(player) && stats.mp < getManaCost()) {
+        if (!SkillUtils.shouldBypassManaCost(player) && stats.mp < getEffectiveManaCost(stats)) {
             player.sendSystemMessage(Component.translatable("message.blacksouls.skill.no_mp").withStyle(ChatFormatting.RED));
             return false;
         }
@@ -68,7 +73,7 @@ public abstract class AbstractSkill {
     }
 
     public void consumeAndSetCooldown(ServerPlayer player, BSPlayerStats stats) {
-        SkillUtils.consumeMana(player, getManaCost());
+        SkillUtils.consumeMana(player, getEffectiveManaCost(stats));
         SkillUtils.consumeActionPoints(player, getActionCost());
         if (!SkillUtils.hasInfiniteCooldownAccessory(player)
                 && !(SkillUtils.isChronoRewindActive(player) && !"bs2_skill_chrono_clock".equals(getSkillId()))) {

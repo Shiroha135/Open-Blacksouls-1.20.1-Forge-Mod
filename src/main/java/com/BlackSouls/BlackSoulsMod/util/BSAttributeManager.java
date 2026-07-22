@@ -50,6 +50,9 @@ public class BSAttributeManager {
                     res *= (float) Math.pow(0.75D, miltonHelmetCount);
                 }
             }
+            if (attribute.equals(ICE) && BlackSouls.BUFF_FROSTBITE.isPresent() && victim.hasEffect(BlackSouls.BUFF_FROSTBITE.get())) {
+                res *= 1.5F;
+            }
             if (attribute.equals(THUNDER)) {
                 int ringCount = StatEventHandler.getBaubleCount(player, BlackSouls.RING_THUNDER_STONE.get());
                 if (ringCount > 0) {
@@ -64,6 +67,9 @@ public class BSAttributeManager {
             }
             return Math.max(0.0f, res);
         } else {
+            if (attribute.equals(ICE) && BlackSouls.BUFF_FROSTBITE.isPresent() && victim.hasEffect(BlackSouls.BUFF_FROSTBITE.get())) {
+                res *= 1.5F;
+            }
             String mobName = victim.getType().getDescriptionId();
 
             if (mobName.contains("crazy_bird")) {

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "blacksouls:item/girls_photo"
+    "layer0": "blacksouls:item/consumable/girls_photo"
   }
 }

@@ -26,10 +26,18 @@ public class ItemPureWater extends Item {
         ItemStack stack = player.getItemInHand(hand);
 
         if (!level.isClientSide()) {
+            boolean cured = false;
             if (BlackSouls.BUFF_BURN.isPresent() && player.hasEffect(BlackSouls.BUFF_BURN.get())) {
                 player.removeEffect(BlackSouls.BUFF_BURN.get());
                 player.clearFire();
+                cured = true;
+            }
+            if (BlackSouls.BUFF_OILY.isPresent() && player.hasEffect(BlackSouls.BUFF_OILY.get())) {
+                player.removeEffect(BlackSouls.BUFF_OILY.get());
+                cured = true;
+            }
 
+            if (cured) {
                 level.playSound(null, player.getX(), player.getY(), player.getZ(),
                         BlackSouls.WATER1_EVENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 

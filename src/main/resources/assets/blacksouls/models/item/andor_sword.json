@@ -1,7 +1,7 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "blacksouls:item/andor_sword"
+    "layer0": "blacksouls:item/weapon/andor_sword"
   },
   "display": {
     "thirdperson_righthand": {

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "blacksouls:item/king_exit_avatar_pack"
+    "layer0": "blacksouls:item/accessory/king_exit_avatar_pack"
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "blacksouls:item/upgrade_slab"
+    "layer0": "blacksouls:item/consumable/upgrade_slab"
   }
 }

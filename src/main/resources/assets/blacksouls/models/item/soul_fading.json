@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "blacksouls:item/soul_weak"
+    "layer0": "blacksouls:item/consumable/soul_weak"
   }
 }

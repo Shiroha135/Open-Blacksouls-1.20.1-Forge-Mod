@@ -1,4 +1,46 @@
 {
+  "absorb1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:absorb1"
+    ]
+  },
+  "blood_splatter": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:blood_splatter"
+    ]
+  },
+  "blow3": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:blow3"
+    ]
+  },
+  "blow5": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:blow5"
+    ]
+  },
+  "saint8": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:saint8"
+    ]
+  },
+  "up1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:up1"
+    ]
+  },
+  "wind6": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:wind6"
+    ]
+  },
   "acid": {
     "category": "player",
     "sounds": [
@@ -539,6 +581,149 @@
       }
     ]
   },
+  "blow2": {
+    "category": "player",
+    "sounds": ["blacksouls:blow2"]
+  },
+  "bow1": {
+    "category": "player",
+    "sounds": ["blacksouls:bow1"]
+  },
+  "bow2": {
+    "category": "player",
+    "sounds": ["blacksouls:bow2"]
+  },
+  "bow4": {
+    "category": "player",
+    "sounds": ["blacksouls:bow4"]
+  },
+  "explosion2": {
+    "category": "player",
+    "sounds": ["blacksouls:explosion2"]
+  },
+  "magic2": {
+    "category": "player",
+    "sounds": ["blacksouls:magic2"]
+  },
+  "magic4": {
+    "category": "player",
+    "sounds": ["blacksouls:magic4"]
+  },
+  "silence": {
+    "category": "player",
+    "sounds": ["blacksouls:silence"]
+  },
+  "blow4": {
+    "category": "player",
+    "sounds": ["blacksouls:blow4"]
+  },
+  "darkness4": {
+    "category": "player",
+    "sounds": ["blacksouls:darkness4"]
+  },
+  "slash5": {
+    "category": "player",
+    "sounds": ["blacksouls:slash5"]
+  },
+  "slash6": {
+    "category": "player",
+    "sounds": ["blacksouls:slash6"]
+  },
+  "slash7": {
+    "category": "player",
+    "sounds": ["blacksouls:slash7"]
+  },
+  "teleport": {
+    "category": "player",
+    "sounds": ["blacksouls:teleport"]
+  },
+  "sword_stab": {
+    "category": "player",
+    "sounds": ["blacksouls:sword_stab"]
+  },
+  "damage2": {
+    "category": "player",
+    "sounds": ["blacksouls:damage2"]
+  },
+  "earth2": {
+    "category": "player",
+    "sounds": ["blacksouls:earth2"]
+  },
+  "skill2": {
+    "category": "player",
+    "sounds": ["blacksouls:skill2"]
+  },
+  "dao2": {
+    "category": "player",
+    "sounds": ["blacksouls:dao2"]
+  },
+  "dao3": {
+    "category": "player",
+    "sounds": ["blacksouls:dao3"]
+  },
+  "blow1": {
+    "category": "player",
+    "sounds": ["blacksouls:blow1"]
+  },
+  "gun2": {
+    "category": "player",
+    "sounds": ["blacksouls:gun2"]
+  },
+  "equip1": {
+    "category": "player",
+    "sounds": ["blacksouls:equip1"]
+  },
+  "wind5": {
+    "category": "player",
+    "sounds": ["blacksouls:wind5"]
+  },
+  "wind8": {
+    "category": "player",
+    "sounds": ["blacksouls:wind8"]
+  },
+  "saint3": {
+    "category": "player",
+    "sounds": ["blacksouls:saint3"]
+  },
+  "collapse2": {
+    "category": "player",
+    "sounds": ["blacksouls:collapse2"]
+  },
+  "darkness6": {
+    "category": "player",
+    "sounds": ["blacksouls:darkness6"]
+  },
+  "darkness1": {
+    "category": "player",
+    "sounds": ["blacksouls:darkness1"]
+  },
+  "pollen": {
+    "category": "player",
+    "sounds": ["blacksouls:pollen"]
+  },
+  "darkness8": {
+    "category": "player",
+    "sounds": ["blacksouls:darkness8"]
+  },
+  "magic7": {
+    "category": "player",
+    "sounds": ["blacksouls:magic7"]
+  },
+  "bird_cry": { "category": "player", "sounds": ["blacksouls:bird_cry"] },
+  "wind2": { "category": "player", "sounds": ["blacksouls:wind2"] },
+  "item3": { "category": "player", "sounds": ["blacksouls:item3"] },
+  "dive": { "category": "player", "sounds": ["blacksouls:dive"] },
+  "poison": { "category": "player", "sounds": ["blacksouls:poison"] },
+  "water6": { "category": "player", "sounds": ["blacksouls:water6"] },
+  "heal4": { "category": "player", "sounds": ["blacksouls:heal4"] },
+  "metal1": { "category": "player", "sounds": ["blacksouls:metal1"] },
+  "metal2": { "category": "player", "sounds": ["blacksouls:metal2"] },
+  "chainsaw_rev": { "category": "player", "sounds": ["blacksouls:chainsaw_rev"] },
+  "magic5": { "category": "player", "sounds": ["blacksouls:magic5"] },
+  "switch2": { "category": "player", "sounds": ["blacksouls:switch2"] },
+  "thunder6": { "category": "player", "sounds": ["blacksouls:thunder6"] },
+  "sniper_rifle": { "category": "player", "sounds": ["blacksouls:sniper_rifle"] },
+  "gun_gird1": { "category": "player", "sounds": ["blacksouls:gun_gird1"] },
   "hell_prince_bgm": {
     "category": "hostile",
     "sounds": [

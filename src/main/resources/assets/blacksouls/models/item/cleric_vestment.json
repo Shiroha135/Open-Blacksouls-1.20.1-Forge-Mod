@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "blacksouls:item/cleric_vestment"
+    "layer0": "blacksouls:item/accessory/cleric_vestment"
   }
 }

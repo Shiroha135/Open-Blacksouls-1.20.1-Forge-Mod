@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "blacksouls:item/fairy_scale_powder"
+    "layer0": "blacksouls:item/consumable/fairy_scale_powder"
   }
 }

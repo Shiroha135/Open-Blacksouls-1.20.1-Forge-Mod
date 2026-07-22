@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "blacksouls:item/cursing_flower"
+    "layer0": "blacksouls:item/consumable/cursing_flower"
   }
 }

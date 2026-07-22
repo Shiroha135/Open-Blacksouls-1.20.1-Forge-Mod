@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "blacksouls:item/dev_stat_tool"
+    "layer0": "blacksouls:item/consumable/dev_stat_tool"
   }
 }

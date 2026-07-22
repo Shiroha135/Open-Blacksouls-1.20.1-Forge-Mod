@@ -62,6 +62,18 @@ public class BSItemSellRegistry {
         register(BlackSouls.SNAKE_GOD_BLOOD.get(),1000,"lore.blacksouls.snake_god_blood");
         register(BlackSouls.GOAT_MEAT.get(),4000,"lore.blacksouls.goat_meat");
         register(BlackSouls.PREGNANT_CAKE_MEAT.get(),4000,"lore.blacksouls.pregnant_cake_meat");
+        register(BlackSouls.FAIRY_FEATHER.get(), 150);
+        register(BlackSouls.GOLDEN_EGG.get(), 250000);
+        register(BlackSouls.NIGHTMARE_LANTERN.get(), 500);
+        register(BlackSouls.SATYRS_THING.get(), 1);
+        register(BlackSouls.SQUIRREL_FUR.get(), 250);
+        register(BlackSouls.FILTHY_LIQUID.get(), 150);
+        register(BlackSouls.BLUEBIRD_FEATHER.get(), 150);
+        register(BlackSouls.TINKER_BELLS_SCALE_POWDER.get(), 5000);
+        register(BlackSouls.OUIJA_BOARD.get(), 5000);
+        register(BlackSouls.ROLDS_FOUNTAIN_PEN.get(), 500);
+        register(BlackSouls.COLD_VALLEY_BREATH.get(), 1000);
+        register(BlackSouls.NECRONOMICON.get(), 150000);
     }
 
     private static void register(Item item, long price, String descKey) {

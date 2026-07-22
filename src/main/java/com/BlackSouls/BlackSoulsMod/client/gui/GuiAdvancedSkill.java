@@ -200,8 +200,7 @@ public class GuiAdvancedSkill extends Screen {
         // 附属 mod（如 Yuki）只需注册 AbstractSkill 并 override isUnlockedForGUI/getIcon/getManaCost 即可。
         for (AbstractSkill skill : SkillRegistry.getAvailableSkills(player)) {
             String id = skill.getSkillId();
-            // 跳过 BS 自带技能（上面已经手动 addSkill 过，避免重复）
-            if (id.startsWith("bs2_skill_")) continue;
+            if (skillButtons.stream().anyMatch(button -> button.skillId.equals(id))) continue;
             ResourceLocation icon = skill.getIcon();
             addSkill(id, icon);
         }

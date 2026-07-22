@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "blacksouls:item/mysterious_hat"
+    "layer0": "blacksouls:item/accessory/mysterious_hat"
   }
 }

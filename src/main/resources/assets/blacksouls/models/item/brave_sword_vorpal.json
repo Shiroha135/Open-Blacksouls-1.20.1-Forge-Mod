@@ -1,7 +1,7 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "blacksouls:item/brave_sword_vorpal"
+    "layer0": "blacksouls:item/weapon/brave_sword_vorpal"
   },
   "display": {
     "thirdperson_righthand": {

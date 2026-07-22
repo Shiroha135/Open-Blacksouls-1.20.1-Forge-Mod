@@ -20,14 +20,47 @@ public class WeaponUpgradeHandler {
                 || weapon == BlackSouls.GREAT_SWORD.get()
                 || weapon == BlackSouls.BROAD_SPEAR.get()
                 || weapon == BlackSouls.VORPAL_BLADE.get()
-                || weapon == BlackSouls.CLUB.get()) {
+                || weapon == BlackSouls.CLUB.get()
+                || weapon == BlackSouls.MAGIC_BLADE.get()
+                || weapon == BlackSouls.MAGICIANS_STAFF.get()
+                || weapon == BlackSouls.DOUBLE_EDGED_GREATSWORD.get()
+                || weapon == BlackSouls.MEAT_CLEAVER_GREATAXE.get()
+                || weapon == BlackSouls.HUNTING_BOW.get()
+                || weapon == BlackSouls.MACE.get()
+                || weapon == BlackSouls.HALBERD.get()
+                || weapon == BlackSouls.BEAST_HUNTER_SAW.get()
+                || weapon == BlackSouls.SHIELD_GUARD_FORTRESS.get()
+                || weapon == BlackSouls.DARK_SWORD.get()
+                || weapon == BlackSouls.BROKEN_SWORD.get()
+                || weapon == BlackSouls.WARHAMMER.get()
+                || weapon == BlackSouls.KNUCKLE_DUSTER.get()
+                || weapon == BlackSouls.UCHIGATANA.get()) {
             return getKnightSwordRoute(currentLevel);
         }
 
         
         if (weapon == BlackSouls.ANDOR_SWORD.get()
                 || weapon == BlackSouls.DRAKE_SWORD.get()
-                || weapon == BlackSouls.BANDERSNATCH_SWORD.get()) {
+                || weapon == BlackSouls.BANDERSNATCH_SWORD.get()
+                || weapon == BlackSouls.GREAT_IRON_BALL.get()
+                || weapon == BlackSouls.HANS_MACHINE_GUN.get()
+                || weapon == BlackSouls.JUDGMENT_SCYTHE.get()
+                || weapon == BlackSouls.STORM_RULER.get()
+                || weapon == BlackSouls.DEMON_STAFF.get()
+                || weapon == BlackSouls.MOONLIGHT_GREATSWORD.get()
+                || weapon == BlackSouls.CORRUPT_JABBERWOCK_SCYTHE.get()
+                || weapon == BlackSouls.MAD_BOW_JUBJUB.get()
+                || weapon == BlackSouls.MIRANDA_AXE.get()
+                || weapon == BlackSouls.RLYEH_STAFF.get()
+                || weapon == BlackSouls.DEEP_SEA_KNIGHTS_ANCHOR.get()
+                || weapon == BlackSouls.LOST_SWORD.get()
+                || weapon == BlackSouls.GLACHID.get()
+                || weapon == BlackSouls.SLAUGHTERERS_CHAINSAW.get()
+                || weapon == BlackSouls.MOCK_TURTLE_SOUP_LADLE.get()
+                || weapon == BlackSouls.DIVINE_ANGEL_DUAL_SWORDS.get()
+                || weapon == BlackSouls.HOLY_GUNBLADE.get()
+                || weapon == BlackSouls.EUNICES_RAPIER.get()
+                || weapon == BlackSouls.RAIDENS_DUAL_AXES.get()) {
             return getSpecialWeaponRoute(currentLevel);
         }
 
@@ -74,7 +107,7 @@ public class WeaponUpgradeHandler {
         ItemStack material = event.getRight();
 
         
-        if (weapon.isEmpty() || !(weapon.getItem() instanceof ItemBSWeaponBase)) return;
+        if (weapon.isEmpty()) return;
         if (material.isEmpty()) return;
 
         
@@ -129,6 +162,20 @@ public class WeaponUpgradeHandler {
         if (weapon == BlackSouls.BROAD_SPEAR.get()) return BlackSouls.GUNGNIR.get();
         if (weapon == BlackSouls.VORPAL_BLADE.get()) return BlackSouls.VORPAL_SWORD.get();
         if (weapon == BlackSouls.CLUB.get()) return BlackSouls.KING_CLUB.get();
+        if (weapon == BlackSouls.MAGIC_BLADE.get()) return BlackSouls.DEMON_GOD_BLADE.get();
+        if (weapon == BlackSouls.MAGICIANS_STAFF.get()) return BlackSouls.ALL_CREATION_STAFF.get();
+        if (weapon == BlackSouls.DOUBLE_EDGED_GREATSWORD.get()) return BlackSouls.RAGNAROK.get();
+        if (weapon == BlackSouls.MEAT_CLEAVER_GREATAXE.get()) return BlackSouls.SLAUGHTERER_GREATAXE.get();
+        if (weapon == BlackSouls.HUNTING_BOW.get()) return BlackSouls.BRAVE_BOW.get();
+        if (weapon == BlackSouls.MACE.get()) return BlackSouls.DIVINE_PUNISHMENT_MACE.get();
+        if (weapon == BlackSouls.HALBERD.get()) return BlackSouls.BAHAMUT.get();
+        if (weapon == BlackSouls.BEAST_HUNTER_SAW.get()) return BlackSouls.BEAST_SLAYING_SAW_SWORD.get();
+        if (weapon == BlackSouls.SHIELD_GUARD_FORTRESS.get()) return BlackSouls.GUARDIAN_FORTRESS.get();
+        if (weapon == BlackSouls.DARK_SWORD.get()) return BlackSouls.DARK_BLADE.get();
+        if (weapon == BlackSouls.BROKEN_SWORD.get()) return BlackSouls.GRUDGE_SWORD.get();
+        if (weapon == BlackSouls.WARHAMMER.get()) return BlackSouls.ABERRANT_WARHAMMER.get();
+        if (weapon == BlackSouls.KNUCKLE_DUSTER.get()) return BlackSouls.KAISER_GAUNTLET.get();
+        if (weapon == BlackSouls.UCHIGATANA.get()) return BlackSouls.KISHIN_BLADE.get();
         return null;
     }
 
