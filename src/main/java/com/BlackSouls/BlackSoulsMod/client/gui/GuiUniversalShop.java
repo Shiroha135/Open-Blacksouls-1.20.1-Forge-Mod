@@ -26,7 +26,8 @@ public class GuiUniversalShop extends Screen {
 
     public enum ShopType {
         COLORED_SOULS("gui.blacksouls.shop.title.souls"),
-        CLOCK_MAKER("gui.blacksouls.shop.title.clock");
+        CLOCK_MAKER("gui.blacksouls.shop.title.clock"),
+        WHITE_BEAR("gui.blacksouls.shop.title.white_bear");
         final String titleKey;
         ShopType(String titleKey) { this.titleKey = titleKey; }
     }
@@ -46,13 +47,11 @@ public class GuiUniversalShop extends Screen {
         final RegistryObject<Item> itemReg;
         final long price;
         final String descKey;
-        final ResourceLocation texture;
         final ItemStack renderStack;
         ShopItem(RegistryObject<Item> itemReg, long price, String descKey) {
             this.itemReg = itemReg;
             this.price = price;
             this.descKey = descKey;
-            this.texture = new ResourceLocation(BlackSouls.MODID, "textures/item/" + itemReg.getId().getPath() + ".png");
             this.renderStack = new ItemStack(itemReg.get());
         }
     }
@@ -63,6 +62,7 @@ public class GuiUniversalShop extends Screen {
     private int currentTab = 0;
     private int currentSubTab = 0;
     private int selectedIndex = 0;
+    private int buyScroll = 0;
     private long currentSouls = 0;
 
     private boolean isSelectingQuantity = false;
@@ -87,6 +87,7 @@ public class GuiUniversalShop extends Screen {
 
         this.isSelectingQuantity = false;
         this.actionQuantity = 1;
+        this.buyScroll = 0;
 
         if (this.minecraft.player != null) {
             this.minecraft.player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> this.currentSouls = stats.souls);
@@ -109,6 +110,56 @@ public class GuiUniversalShop extends Screen {
             shopItems.add(new ShopItem(BlackSouls.SOUL_FOUR_LEAF_CLOVER, 5000, "lore.blacksouls.soul_four_leaf_clover"));
         } else if (this.shopType == ShopType.CLOCK_MAKER) {
             shopItems.add(new ShopItem(BlackSouls.RABBIT_WATCH, 5000, "lore.blacksouls.rabbit_watch"));
+        } else if (this.shopType == ShopType.WHITE_BEAR) {
+            initWhiteBearItems();
+        }
+    }
+
+    private void initWhiteBearItems() {
+        int progress = 0;
+        if (this.minecraft != null && this.minecraft.player != null) {
+            BSPlayerStats stats = this.minecraft.player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+            if (stats != null) {
+                progress = stats.whiteBearProgress;
+            }
+        }
+
+        shopItems.add(new ShopItem(BlackSouls.BLOOD_VIAL, 200, "item.blacksouls.blood_vial.lore.1"));
+        shopItems.add(new ShopItem(BlackSouls.FIRE_BOMB, 300, "item.blacksouls.fire_bomb.lore.1"));
+        shopItems.add(new ShopItem(BlackSouls.THROWING_KNIFE, 25, "item.blacksouls.throwing_knife.lore.1"));
+        if (progress >= 1) {
+            shopItems.add(new ShopItem(BlackSouls.ANTIDOTE_HERB, 80, "item.blacksouls.antidote_herb.lore.1"));
+            shopItems.add(new ShopItem(BlackSouls.HEMOSTATIC_CLOTH, 100, "item.blacksouls.hemostatic_cloth.lore.1"));
+            shopItems.add(new ShopItem(BlackSouls.HOMEWARD_BONE_DUST, 500, "item.blacksouls.homeward_bone_dust.lore.1"));
+            shopItems.add(new ShopItem(BlackSouls.MASTER_KEY, 1000, "item.blacksouls.master_key.lore.1"));
+        }
+        if (progress >= 3) {
+            shopItems.add(new ShopItem(BlackSouls.INVISIBLE_PEPPER, 500, "item.blacksouls.invisible_pepper.lore.1"));
+            shopItems.add(new ShopItem(BlackSouls.FAIRY_SCALE_POWDER, 200, "item.blacksouls.fairy_scale_powder.lore.1"));
+            shopItems.add(new ShopItem(BlackSouls.DUNG_PIE, 100, "item.blacksouls.dung_pie.lore.1"));
+        }
+        if (progress >= 7) {
+            shopItems.add(new ShopItem(BlackSouls.MAGIC_STONE, 250, "item.blacksouls.magic_stone.lore.1"));
+            shopItems.add(new ShopItem(BlackSouls.CHARCOAL_PINE_RESIN, 800, "item.blacksouls.charcoal_pine_resin.lore.1"));
+            shopItems.add(new ShopItem(BlackSouls.GOLD_PINE_RESIN, 800, "item.blacksouls.gold_pine_resin.lore.1"));
+            shopItems.add(new ShopItem(BlackSouls.DARK_PINE_RESIN, 800, "item.blacksouls.dark_pine_resin.lore.1"));
+            shopItems.add(new ShopItem(BlackSouls.ICE_PINE_RESIN, 800, "item.blacksouls.ice_pine_resin.lore.1"));
+        }
+        if (progress >= 5) {
+            shopItems.add(new ShopItem(BlackSouls.UPGRADE_SHARD, 800, "item.blacksouls.upgrade_material.lore"));
+        }
+        if (progress >= 7) {
+            shopItems.add(new ShopItem(BlackSouls.UPGRADE_LARGE_SHARD, 2000, "item.blacksouls.upgrade_material.lore"));
+        }
+        if (progress >= 8) {
+            shopItems.add(new ShopItem(BlackSouls.STAMINA_TONIC, 500, "item.blacksouls.stamina_tonic.lore.1"));
+            shopItems.add(new ShopItem(BlackSouls.CANDLE_EMBER, 500, "item.blacksouls.candle_ember.lore.1"));
+        }
+        if (progress >= 9) {
+            shopItems.add(new ShopItem(BlackSouls.UPGRADE_CHUNK, 4000, "item.blacksouls.upgrade_material.lore"));
+        }
+        if (progress >= 12) {
+            shopItems.add(new ShopItem(BlackSouls.GODDESS_BLOOD, 8000, "item.blacksouls.goddess_blood.lore.1"));
         }
     }
 
@@ -312,21 +363,19 @@ public class GuiUniversalShop extends Screen {
     }
 
     private void drawBuyItemList(GuiGraphics guiGraphics, int listStartX, int listStartY) {
+        int visibleRows = getVisibleBuyRows();
         for (int i = 0; i < shopItems.size(); i++) {
             if (isSelectingQuantity && i != selectedIndex) continue;
+            if (!isSelectingQuantity && (i < buyScroll || i >= buyScroll + visibleRows)) continue;
 
             ShopItem item = shopItems.get(i);
-            int rowY = listStartY + (isSelectingQuantity ? 0 : (i * 22));
+            int rowY = listStartY + (isSelectingQuantity ? 0 : ((i - buyScroll) * 22));
 
             if (i == selectedIndex && !isSelectingQuantity) {
                 guiGraphics.fill(listStartX, rowY - 3, listW - 8, rowY + 18, 0x66FFFFFF);
             }
 
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-            guiGraphics.blit(item.texture, listStartX + 2, rowY, 16, 16, 0, 0, 16, 16, 16, 16);
-            RenderSystem.disableBlend();
+            guiGraphics.renderItem(item.renderStack, listStartX + 2, rowY);
 
             guiGraphics.drawString(font, I18n.get(item.renderStack.getDescriptionId()), listStartX + 22, rowY + 3, COLOR_TEXT_HIGHLIGHT, false);
 
@@ -433,11 +482,15 @@ public class GuiUniversalShop extends Screen {
         int listSize = (currentTab == 0 ? shopItems.size() : playerSellableItems.size());
         int itemWidth = (currentTab == 0) ? listW : (this.width / 2);
 
-        for (int i = 0; i < listSize; i++) {
+        int firstIndex = currentTab == 0 && !isSelectingQuantity ? buyScroll : 0;
+        int lastIndex = currentTab == 0 && !isSelectingQuantity
+                ? Math.min(listSize, buyScroll + getVisibleBuyRows())
+                : listSize;
+        for (int i = firstIndex; i < lastIndex; i++) {
             if (isSelectingQuantity && i != selectedIndex) continue;
 
             int col = isSelectingQuantity ? 0 : (i % columns);
-            int row = isSelectingQuantity ? 0 : (i / columns);
+            int row = isSelectingQuantity ? 0 : (currentTab == 0 ? i - buyScroll : i / columns);
             int cellX = (currentTab == 0 || isSelectingQuantity) ? listStartX : (col * itemWidth);
             int rowY = listStartY + row * 22;
             int currentItemW = (currentTab == 0) ? (listW - 16) : (isSelectingQuantity ? (listW - 8) : itemWidth);
@@ -455,6 +508,7 @@ public class GuiUniversalShop extends Screen {
                     }
                 } else {
                     selectedIndex = i;
+                    ensureBuySelectionVisible();
                     isSelectingQuantity = false;
                     playCursorSound();
                     updateSelectionState();
@@ -479,6 +533,7 @@ public class GuiUniversalShop extends Screen {
         currentTab = tabIndex;
         if (tabIndex == 0) currentSubTab = 0;
         selectedIndex = 0;
+        buyScroll = 0;
         isSelectingQuantity = false;
         updatePlayerInventoryList();
     }
@@ -568,12 +623,46 @@ public class GuiUniversalShop extends Screen {
         }
 
         if (selectionChanged) {
+            ensureBuySelectionVisible();
             playCursorSound();
             updateSelectionState();
             return true;
         }
 
         return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+        if (currentTab == 0 && !isSelectingQuantity && !shopItems.isEmpty()) {
+            int maxScroll = Math.max(0, shopItems.size() - getVisibleBuyRows());
+            int next = Math.max(0, Math.min(maxScroll, buyScroll - (int) Math.signum(delta)));
+            if (next != buyScroll) {
+                buyScroll = next;
+                selectedIndex = Math.max(buyScroll, Math.min(selectedIndex, buyScroll + getVisibleBuyRows() - 1));
+                updateSelectionState();
+                playCursorSound();
+            }
+            return true;
+        }
+        return super.mouseScrolled(mouseX, mouseY, delta);
+    }
+
+    private int getVisibleBuyRows() {
+        return Math.max(1, (baseListH - 16) / 22);
+    }
+
+    private void ensureBuySelectionVisible() {
+        if (currentTab != 0) {
+            return;
+        }
+        int visibleRows = getVisibleBuyRows();
+        if (selectedIndex < buyScroll) {
+            buyScroll = selectedIndex;
+        } else if (selectedIndex >= buyScroll + visibleRows) {
+            buyScroll = selectedIndex - visibleRows + 1;
+        }
+        buyScroll = Math.max(0, Math.min(buyScroll, Math.max(0, shopItems.size() - visibleRows)));
     }
 
     private void clampQuantity() {

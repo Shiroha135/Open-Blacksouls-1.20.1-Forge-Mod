@@ -1,121 +1,131 @@
 package com.BlackSouls.BlackSoulsMod.client.gui;
 
+import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.client.render.BonfireEffectRenderer;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketSetDifficulty;
-import com.BlackSouls.BlackSoulsMod.network.packets.PacketSetExtraMode;
+import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundSimpleActionPacket;
 import com.BlackSouls.BlackSoulsMod.util.DifficultyManager;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 
-public class GuiDifficulty extends Screen {
-
-    private static final int GUI_WIDTH = 228;
-    private static final int GUI_HEIGHT = 284;
-
-    private int guiLeft;
-    private int guiTop;
+public class GuiDifficulty extends net.minecraft.client.gui.screens.Screen {
+    private static final int MESSAGE_WIDTH = 520;
+    private static final int MESSAGE_HEIGHT = 104;
+    private Stage stage = Stage.INTRO;
+    private int revealedCodePoints;
+    private int revealTick;
+    private boolean widgetsShown;
+    private int messageLeft;
+    private int messageTop;
+    private int messageWidth;
 
     public GuiDifficulty() {
         super(Component.translatable("gui.blacksouls.difficulty.title"));
+        NetworkHandler.INSTANCE.sendToServer(new ServerboundSimpleActionPacket(
+                ServerboundSimpleActionPacket.Action.VISIT_DIFFICULTY_STATUE));
     }
 
     @Override
     protected void init() {
-        super.init();
-        this.guiLeft = (this.width - GUI_WIDTH) / 2;
-        this.guiTop = (this.height - GUI_HEIGHT) / 2;
-        this.clearWidgets();
-
-        int btnWidth = 46;
-        int btnHeight = 20;
-        int startX = guiLeft + 25;
-        int startY = guiTop + 50;
-
-        for (int i = 0; i < 9; i++) {
-            int row = i / 3;
-            int col = i % 3;
-            int x = startX + col * 50;
-            int y = startY + row * 30;
-            int level = i + 1;
-
-            BSGhostButton button = new BSGhostButton(x, y, btnWidth, btnHeight,
-                    Component.translatable("gui.blacksouls.difficulty.lv", level), press -> {
-                if (this.minecraft != null) {
-                    if (this.minecraft.player != null) {
-                        this.minecraft.player.playSound(net.minecraft.sounds.SoundEvents.UI_BUTTON_CLICK.value(), 1.0F, 2.0F);
-                    }
-                    try {
-                        NetworkHandler.INSTANCE.sendToServer(new PacketSetDifficulty(level));
-                    } catch (Exception ignored) {
-                    }
-                    DifficultyManager.currentDifficulty = level;
-                    this.init();
-                }
-            });
-
-            double mult = DifficultyManager.getMultiplier(level);
-            button.setTooltip(Tooltip.create(Component.translatable("gui.blacksouls.difficulty.multiplier", String.format("%.1f", mult))));
-            this.addRenderableWidget(button);
+        messageWidth = Math.min(MESSAGE_WIDTH, width - 24);
+        messageLeft = (width - messageWidth) / 2;
+        messageTop = height - MESSAGE_HEIGHT - 18;
+        clearWidgets();
+        widgetsShown = false;
+        if (stage == Stage.LEVELS) {
+            addDifficultyButtons();
+        } else if (stage == Stage.CONFIRM && isTextComplete()) {
+            addConfirmationButtons();
         }
+    }
 
-        int modeStartX = guiLeft + 20;
-        int modeStartY = guiTop + 152;
-        int modeButtonWidth = 58;
-        int modeButtonHeight = 20;
-        int modeGapX = 64;
-        int modeGapY = 26;
-
-        addModeButton(modeStartX, modeStartY, modeButtonWidth, modeButtonHeight,
-                Component.translatable("gui.blacksouls.difficulty.mode_revenge_short"),
-                getModeDisplayName(PacketSetExtraMode.ItemMode.REVENGE),
-                DifficultyManager.revengeUnlocked, DifficultyManager.revengeMode, PacketSetExtraMode.ItemMode.REVENGE);
-        addModeButton(modeStartX + modeGapX, modeStartY, modeButtonWidth, modeButtonHeight,
-                Component.translatable("gui.blacksouls.difficulty.mode_death_short"),
-                getModeDisplayName(PacketSetExtraMode.ItemMode.DEATH),
-                DifficultyManager.deathUnlocked, DifficultyManager.deathMode, PacketSetExtraMode.ItemMode.DEATH);
-        addModeButton(modeStartX + modeGapX * 2, modeStartY, modeButtonWidth, modeButtonHeight,
-                Component.translatable("gui.blacksouls.difficulty.mode_legendary_short"),
-                getModeDisplayName(PacketSetExtraMode.ItemMode.LEGENDARY),
-                DifficultyManager.legendaryUnlocked, DifficultyManager.legendaryMode, PacketSetExtraMode.ItemMode.LEGENDARY);
-        addModeButton(modeStartX + 32, modeStartY + modeGapY, modeButtonWidth, modeButtonHeight,
-                Component.translatable("gui.blacksouls.difficulty.mode_malice_short"),
-                getModeDisplayName(PacketSetExtraMode.ItemMode.MALICE),
-                DifficultyManager.maliceUnlocked, DifficultyManager.maliceMode, PacketSetExtraMode.ItemMode.MALICE);
-        addModeButton(modeStartX + 32 + modeGapX, modeStartY + modeGapY, modeButtonWidth, modeButtonHeight,
-                Component.translatable("gui.blacksouls.difficulty.mode_eternity_short"),
-                getModeDisplayName(PacketSetExtraMode.ItemMode.ETERNITY),
-                DifficultyManager.eternityUnlocked, DifficultyManager.eternityMode, PacketSetExtraMode.ItemMode.ETERNITY);
-
-        this.addRenderableWidget(new BSGhostButton(guiLeft + 74, guiTop + 250, 80, 20,
-                Component.translatable("gui.blacksouls.difficulty.close"), button -> {
-            if (this.minecraft != null) {
-                if (com.BlackSouls.BlackSoulsMod.BlackSouls.CURSOR1_EVENT != null) {
-                    this.minecraft.getSoundManager().play(
-                            net.minecraft.client.resources.sounds.SimpleSoundInstance.forUI(
-                                    com.BlackSouls.BlackSoulsMod.BlackSouls.CURSOR1_EVENT.get(), 1.0F, 1.0F)
-                    );
-                }
-                this.minecraft.setScreen(null);
+    @Override
+    public void tick() {
+        if (stage == Stage.LEVELS || isTextComplete()) {
+            if (stage == Stage.CONFIRM && !widgetsShown) {
+                addConfirmationButtons();
             }
-        }));
+            return;
+        }
+        revealTick++;
+        if (revealTick >= 1) {
+            revealTick = 0;
+            revealedCodePoints++;
+            if (stage == Stage.CONFIRM && isTextComplete()) {
+                addConfirmationButtons();
+            }
+        }
     }
 
     @Override
     public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(guiGraphics);
-        BSGuiUtils.drawRMWindow(guiGraphics, guiLeft, guiTop, GUI_WIDTH, GUI_HEIGHT);
+        renderBackground(guiGraphics);
+        BSGuiUtils.drawRMWindow(guiGraphics, messageLeft, messageTop, messageWidth, MESSAGE_HEIGHT);
 
-        guiGraphics.drawCenteredString(font, Component.translatable("gui.blacksouls.difficulty.title"), this.width / 2, guiTop + 15, 0xFF0000);
-        guiGraphics.drawCenteredString(font, Component.translatable("gui.blacksouls.difficulty.current", DifficultyManager.currentDifficulty), this.width / 2, guiTop + 30, 0xFFFF00);
-        guiGraphics.drawCenteredString(font, Component.translatable("gui.blacksouls.difficulty.modes"), this.width / 2, guiTop + 138, 0xFFCC66);
-        drawCenteredWrappedText(guiGraphics, Component.literal(getActiveModesText()), this.width / 2, guiTop + 208, GUI_WIDTH - 20, 0xAAAAFF);
+        String text = visibleText();
+        List<net.minecraft.util.FormattedCharSequence> lines = font.split(Component.literal(text), messageWidth - 32);
+        int y = messageTop + 17;
+        for (net.minecraft.util.FormattedCharSequence line : lines) {
+            guiGraphics.drawString(font, line, messageLeft + 18, y, 0xFFFFFFFF, true);
+            y += font.lineHeight + 2;
+        }
+
+        if (stage == Stage.INTRO && isTextComplete()) {
+            int bob = ((System.currentTimeMillis() / 250L) & 1L) == 0L ? 0 : 2;
+            guiGraphics.drawCenteredString(font, "▼", width / 2, messageTop + MESSAGE_HEIGHT - 18 + bob, 0xFFFFFFFF);
+        }
+
+        if (stage == Stage.LEVELS) {
+            int menuWidth = width < 360 || height < 360 ? 244 : 132;
+            int menuHeight = width < 360 || height < 360 ? 130 : 232;
+            int menuLeft = (width - menuWidth) / 2;
+            int menuTop = Math.max(8, messageTop - menuHeight - 8);
+            BSGuiUtils.drawRMWindow(guiGraphics, menuLeft, menuTop, menuWidth, menuHeight);
+        }
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (button != GLFW.GLFW_MOUSE_BUTTON_LEFT) {
+            return false;
+        }
+        if (!isTextComplete() && stage != Stage.LEVELS) {
+            revealAll();
+            return true;
+        }
+        if (super.mouseClicked(mouseX, mouseY, button)) {
+            return true;
+        }
+        if (stage == Stage.INTRO) {
+            setStage(Stage.CONFIRM);
+            return true;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
+            onClose();
+            return true;
+        }
+        if (keyCode == GLFW.GLFW_KEY_ENTER || keyCode == GLFW.GLFW_KEY_SPACE) {
+            if (!isTextComplete() && stage != Stage.LEVELS) {
+                revealAll();
+            } else if (stage == Stage.INTRO) {
+                setStage(Stage.CONFIRM);
+            }
+            return true;
+        }
+        return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
     @Override
@@ -123,79 +133,108 @@ public class GuiDifficulty extends Screen {
         return false;
     }
 
-    private void addModeButton(int x, int y, int width, int height, Component shortLabel, Component fullLabel,
-                               boolean unlocked, boolean enabled, PacketSetExtraMode.ItemMode mode) {
-        BSGhostButton button = new BSGhostButton(x, y, width, height, Component.literal(shortLabel.getString()), press -> {
-            if (this.minecraft != null) {
-                NetworkHandler.INSTANCE.sendToServer(new PacketSetExtraMode(mode, !enabled));
-                applyLocalMode(mode, !enabled);
-                this.init();
+    private void addConfirmationButtons() {
+        if (widgetsShown) {
+            return;
+        }
+        widgetsShown = true;
+        int x = messageLeft + messageWidth - 92;
+        addRenderableWidget(new BSGhostButton(x, messageTop + 14, 70, 20,
+                Component.translatable("gui.blacksouls.difficulty.yes"), button -> {
+            playCursor();
+            setStage(Stage.LEVELS);
+        }));
+        addRenderableWidget(new BSGhostButton(x, messageTop + 40, 70, 20,
+                Component.translatable("gui.blacksouls.difficulty.no"), button -> {
+            playCursor();
+            onClose();
+        }));
+    }
+
+    private void addDifficultyButtons() {
+        clearWidgets();
+        widgetsShown = true;
+        boolean compact = width < 360 || height < 360;
+        int menuWidth = compact ? 244 : 132;
+        int menuHeight = compact ? 130 : 232;
+        int menuLeft = (width - menuWidth) / 2;
+        int menuTop = Math.max(8, messageTop - menuHeight - 8);
+        for (int level = 0; level <= 9; level++) {
+            int col = compact ? level / 5 : 0;
+            int row = compact ? level % 5 : level;
+            int x = menuLeft + 11 + col * 116;
+            int y = menuTop + 11 + row * 22;
+            int selected = level;
+            addRenderableWidget(new BSGhostButton(x, y, 110, 20,
+                    Component.translatable("gui.blacksouls.difficulty.lv", level), button -> selectDifficulty(selected)));
+        }
+    }
+
+    private void selectDifficulty(int difficulty) {
+        playCursor();
+        NetworkHandler.INSTANCE.sendToServer(new PacketSetDifficulty(difficulty));
+        DifficultyManager.currentDifficulty = difficulty;
+        BonfireEffectRenderer.whiteFlashTicks = 20;
+        onClose();
+    }
+
+    private void setStage(Stage newStage) {
+        stage = newStage;
+        revealedCodePoints = 0;
+        revealTick = 0;
+        clearWidgets();
+        widgetsShown = false;
+        if (stage == Stage.LEVELS) {
+            addDifficultyButtons();
+        }
+    }
+
+    private String fullText() {
+        if (stage == Stage.INTRO) {
+            String deaths = Component.translatable("gui.blacksouls.difficulty.deaths", DifficultyManager.deathCount).getString();
+            if (DifficultyManager.loopCount > 0) {
+                return deaths + "\n\n\n" + Component.translatable(
+                        "gui.blacksouls.difficulty.loops", DifficultyManager.loopCount).getString();
             }
-        });
-        button.active = unlocked;
-        if (!unlocked) {
-            button.setTooltip(Tooltip.create(Component.translatable("gui.blacksouls.difficulty.mode_locked_full", fullLabel)));
-        } else {
-            button.setTooltip(Tooltip.create(Component.translatable(
-                    enabled ? "gui.blacksouls.difficulty.mode_on_full" : "gui.blacksouls.difficulty.mode_off_full",
-                    fullLabel)));
+            return deaths;
         }
-        this.addRenderableWidget(button);
+        return Component.translatable("gui.blacksouls.difficulty.ask").getString()
+                + "\n" + Component.translatable("gui.blacksouls.difficulty.explain").getString()
+                + "\n" + Component.translatable(
+                        "gui.blacksouls.difficulty.current_original", DifficultyManager.currentDifficulty).getString();
     }
 
-    private Component getModeDisplayName(PacketSetExtraMode.ItemMode mode) {
-        return switch (mode) {
-            case REVENGE -> Component.translatable("gui.blacksouls.difficulty.mode_revenge");
-            case DEATH -> Component.translatable("gui.blacksouls.difficulty.mode_death");
-            case LEGENDARY -> Component.translatable("gui.blacksouls.difficulty.mode_legendary");
-            case MALICE -> Component.translatable("gui.blacksouls.difficulty.mode_malice");
-            case ETERNITY -> Component.translatable("gui.blacksouls.difficulty.mode_eternity");
-        };
+    private String visibleText() {
+        String full = fullText();
+        if (stage == Stage.LEVELS || isTextComplete()) {
+            return full;
+        }
+        int count = Math.min(revealedCodePoints, full.codePointCount(0, full.length()));
+        return full.substring(0, full.offsetByCodePoints(0, count));
     }
 
-    private void applyLocalMode(PacketSetExtraMode.ItemMode mode, boolean enabled) {
-        switch (mode) {
-            case REVENGE -> DifficultyManager.revengeMode = enabled;
-            case DEATH -> DifficultyManager.deathMode = enabled;
-            case LEGENDARY -> DifficultyManager.legendaryMode = enabled;
-            case MALICE -> DifficultyManager.maliceMode = enabled;
-            case ETERNITY -> DifficultyManager.eternityMode = enabled;
+    private boolean isTextComplete() {
+        String full = fullText();
+        return revealedCodePoints >= full.codePointCount(0, full.length());
+    }
+
+    private void revealAll() {
+        String full = fullText();
+        revealedCodePoints = full.codePointCount(0, full.length());
+        if (stage == Stage.CONFIRM) {
+            addConfirmationButtons();
         }
     }
 
-    private String getActiveModesText() {
-        StringBuilder builder = new StringBuilder(Component.translatable("gui.blacksouls.difficulty.active_modes_prefix").getString());
-        boolean hasAny = false;
-        if (DifficultyManager.revengeMode) {
-            builder.append(Component.translatable("gui.blacksouls.difficulty.mode_revenge").getString()).append(' ');
-            hasAny = true;
+    private void playCursor() {
+        if (minecraft != null && BlackSouls.CURSOR1_EVENT != null && BlackSouls.CURSOR1_EVENT.isPresent()) {
+            minecraft.getSoundManager().play(SimpleSoundInstance.forUI(BlackSouls.CURSOR1_EVENT.get(), 1.0F, 1.0F));
         }
-        if (DifficultyManager.deathMode) {
-            builder.append(Component.translatable("gui.blacksouls.difficulty.mode_death").getString()).append(' ');
-            hasAny = true;
-        }
-        if (DifficultyManager.legendaryMode) {
-            builder.append(Component.translatable("gui.blacksouls.difficulty.mode_legendary").getString()).append(' ');
-            hasAny = true;
-        }
-        if (DifficultyManager.maliceMode) {
-            builder.append(Component.translatable("gui.blacksouls.difficulty.mode_malice").getString()).append(' ');
-            hasAny = true;
-        }
-        if (DifficultyManager.eternityMode) {
-            builder.append(Component.translatable("gui.blacksouls.difficulty.mode_eternity").getString()).append(' ');
-            hasAny = true;
-        }
-        if (!hasAny) {
-            builder.append(Component.translatable("gui.blacksouls.difficulty.none").getString());
-        }
-        return builder.toString().trim();
     }
 
-    private void drawCenteredWrappedText(GuiGraphics guiGraphics, Component text, int centerX, int startY, int maxWidth, int color) {
-        List<net.minecraft.util.FormattedCharSequence> lines = this.font.split(text, maxWidth);
-        for (int i = 0; i < lines.size(); i++) {
-            guiGraphics.drawCenteredString(this.font, lines.get(i), centerX, startY + i * (this.font.lineHeight + 1), color);
-        }
+    private enum Stage {
+        INTRO,
+        CONFIRM,
+        LEVELS
     }
 }

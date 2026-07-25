@@ -180,6 +180,14 @@ public class ServerEventHandler {
             });
         }
         if (deadEntity instanceof ServerPlayer serverPlayer) {
+            com.BlackSouls.BlackSoulsMod.capability.BSWorldData data =
+                    com.BlackSouls.BlackSoulsMod.capability.BSWorldData.get(serverPlayer.server.overworld());
+            data.deathCount++;
+            data.setDirty();
+            com.BlackSouls.BlackSoulsMod.network.NetworkHandler.INSTANCE.send(
+                    net.minecraftforge.network.PacketDistributor.ALL.noArg(),
+                    new com.BlackSouls.BlackSoulsMod.network.packets.PacketSyncDifficulty(data)
+            );
             serverPlayer.connection.send(new net.minecraft.network.protocol.game.ClientboundStopSoundPacket(
                     new ResourceLocation(BlackSouls.MODID, "hell_prince_bgm"),
                     SoundSource.HOSTILE

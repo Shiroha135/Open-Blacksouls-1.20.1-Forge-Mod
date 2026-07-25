@@ -724,6 +724,12 @@
   "thunder6": { "category": "player", "sounds": ["blacksouls:thunder6"] },
   "sniper_rifle": { "category": "player", "sounds": ["blacksouls:sniper_rifle"] },
   "gun_gird1": { "category": "player", "sounds": ["blacksouls:gun_gird1"] },
+  "lock_rattle": {
+    "category": "block",
+    "sounds": [
+      "blacksouls:lock_rattle"
+    ]
+  },
   "hell_prince_bgm": {
     "category": "hostile",
     "sounds": [

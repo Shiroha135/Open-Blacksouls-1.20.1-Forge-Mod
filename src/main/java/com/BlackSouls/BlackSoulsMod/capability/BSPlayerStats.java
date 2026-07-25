@@ -27,6 +27,9 @@ public class BSPlayerStats {
     public static final double HARD_CAP_OTHER = 109998;
 
     public boolean hasVisitedLibrary = false;
+    public boolean whiteBearIntroduced = false;
+    public boolean whiteBearFreeSoulsClaimed = false;
+    public int whiteBearProgress = 0;
 
     public double hp = 638, mp = 100, maxMp = 100;
     public double attack = 16, defense = 16, magicAttack = 10, magicDefense = 10, luck = 10, speed = 40;
@@ -147,6 +150,9 @@ public class BSPlayerStats {
         nbt.putDouble("BonusSPEED", bonusSpeed);
         nbt.putInt("Sen", sen);
         nbt.putBoolean("HasVisitedLibrary", this.hasVisitedLibrary);
+        nbt.putBoolean("WhiteBearIntroduced", this.whiteBearIntroduced);
+        nbt.putBoolean("WhiteBearFreeSoulsClaimed", this.whiteBearFreeSoulsClaimed);
+        nbt.putInt("WhiteBearProgress", this.whiteBearProgress);
         nbt.putDouble("BurnRate", burnRate);
         nbt.putDouble("InstantDeathRate", instantDeathRate);
         nbt.putDouble("StunRate", stunRate);
@@ -221,6 +227,9 @@ public class BSPlayerStats {
         this.bonusSpeed = nbt.getDouble("BonusSPEED");
         this.sen = nbt.getInt("Sen");
         this.hasVisitedLibrary = nbt.getBoolean("HasVisitedLibrary");
+        this.whiteBearIntroduced = nbt.getBoolean("WhiteBearIntroduced");
+        this.whiteBearFreeSoulsClaimed = nbt.getBoolean("WhiteBearFreeSoulsClaimed");
+        this.whiteBearProgress = Math.max(0, Math.min(12, nbt.getInt("WhiteBearProgress")));
         this.burnRate = nbt.getDouble("BurnRate");
         this.instantDeathRate = nbt.getDouble("InstantDeathRate");
         this.stunRate = nbt.getDouble("StunRate");

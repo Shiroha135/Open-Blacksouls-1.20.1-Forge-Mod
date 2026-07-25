@@ -207,6 +207,8 @@
   // 开发者道具
   //======================================================================
   "item.blacksouls.dev_stat_tool": "§6§l开发者权杖",
+  "message.blacksouls.dev.dialogue_reset.entity": "已将%s的对话状态重置为初次见面。",
+  "message.blacksouls.dev.dialogue_reset.white_bear": "已将白熊的对话状态重置为初次见面。",
   "item.blacksouls.dev_time_ring": "§c§l开发者时戒",
   "item.blacksouls.dev_time_ring.lore.1": "装备时，技能冷却无效。",
   "item.blacksouls.dev_time_ring.lore.2": "只为测试而生的违规道具。",
@@ -1386,6 +1388,13 @@
   "gui.blacksouls.difficulty.close": "关闭面板",
   "gui.blacksouls.difficulty.lv": "难度%d",
   "gui.blacksouls.difficulty.multiplier": "全属性 %s 倍",
+  "gui.blacksouls.difficulty.deaths": "在这片世界迎来了%d次死亡。",
+  "gui.blacksouls.difficulty.loops": "然后，现在是第%d次的轮回。",
+  "gui.blacksouls.difficulty.ask": "要改变难易度吗？",
+  "gui.blacksouls.difficulty.explain": "数字越大难易度就越高。",
+  "gui.blacksouls.difficulty.current_original": "（现在的难易度%d）",
+  "gui.blacksouls.difficulty.yes": "是",
+  "gui.blacksouls.difficulty.no": "否",
   "message.blacksouls.difficulty.no_permission": "[错误]只有服主或管理员才能更改世界难度！",
   "message.blacksouls.difficulty.broadcast": "[公告]玩家%s将世界难度调整为: 难度%s",
   //===========================================================================
@@ -1527,6 +1536,7 @@
   //============================================
   "gui.blacksouls.shop.title.souls": "购买有色魂",
   "gui.blacksouls.shop.title.clock": "制作时计",
+  "gui.blacksouls.shop.title.white_bear": "白熊商店",
   "gui.blacksouls.shop.tab.buy": "购入",
   "gui.blacksouls.shop.tab.sell": "卖出",
   "gui.blacksouls.shop.tab.cancel": "取消",
@@ -2791,5 +2801,26 @@
   "item.blacksouls.miracle_shrine_maiden_garb.stat.1": "魔力 +50%",
   "item.blacksouls.miracle_shrine_maiden_garb.stat.2": "魔法防御 +50%",
   "item.blacksouls.miracle_shrine_maiden_garb.stat.3": "最大魔力 -99%",
-  "effect.blacksouls.playwright_effect": "剧作家效果"
+  "effect.blacksouls.playwright_effect": "剧作家效果",
+  "gui.blacksouls.white_bear.name": "白熊",
+  "dialogue.blacksouls.white_bear.intro_1": "哟，你这是……这可真是场灾难啊。竟然会掉到这种地方，实在令人同情。",
+  "dialogue.blacksouls.white_bear.intro_2": "我也是同业者哟，和你一样呢。被她们随心所欲地使唤着，对她们来说我们只是玩具一样的存在吧。",
+  "dialogue.blacksouls.white_bear.intro_3": "……不要摆出这种表情鸭。你的目的一直都是寻找爱丽丝吧？放心吧，肯定能找得到的。",
+  "dialogue.blacksouls.white_bear.intro_4": "就让我继续助你一臂之力吧。只要你不介意连小熊的手都要借用的话。唔库库……",
+  "dialogue.blacksouls.white_bear.greeting": "……哟，你顺利地回来了啊。有什么需要我办的事情么？",
+  "dialogue.blacksouls.white_bear.free_souls_1": "喂，我说你啊，一点魂都没有的话，本来能买到的东西也买不了了啊。",
+  "dialogue.blacksouls.white_bear.free_souls_2": "……真是拿你没办法啊。仅限一回哟？来吧，想要什么直接和我说吧。",
+  "dialogue.blacksouls.white_bear.reinforce_hint": "武器强化仍按现有的强化规则进行。把武器与对应强化素材带齐再来吧。",
+  "dialogue.blacksouls.white_bear.exit": "虽然这么说可能有点不负责任……你要加油啊。",
+  "gui.blacksouls.white_bear.option.buy": "购买道具",
+  "gui.blacksouls.white_bear.option.reinforce": "武器强化",
+  "gui.blacksouls.white_bear.option.storage": "仓库",
+  "gui.blacksouls.white_bear.option.exit": "离开",
+  "message.blacksouls.lock.normal": "门上着锁。需要万能钥匙。",
+  "message.blacksouls.lock.story": "门上着锁。需要：%s",
+  "message.blacksouls.lock.locked": "门上着锁。",
+  "message.blacksouls.lock.opened": "锁被打开了。",
+  "message.blacksouls.lock.dev.normal": "已设置普通锁：使用万能钥匙开启。",
+  "message.blacksouls.lock.dev.story": "已设置剧情锁：使用 %s 开启。",
+  "message.blacksouls.lock.dev.removed": "已解除这扇门的锁定设置。"
 }

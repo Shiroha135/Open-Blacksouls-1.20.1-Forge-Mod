@@ -22,6 +22,7 @@ public class SeekServiceBannerRenderer {
     private static String deltaText = "0";
 
     public static void show(int delta) {
+        TextBannerRenderer.hide();
         senDelta = delta;
         deltaText = (delta > 0 ? "+" : "") + delta;
         ticksLeft = 60;
@@ -55,7 +56,7 @@ public class SeekServiceBannerRenderer {
         int screenHeight = guiGraphics.guiHeight();
 
         int barHeight = mc.font.lineHeight * 2 + 12;
-        int barY = screenHeight - barHeight;
+        int barY = screenHeight - barHeight - lowerBannerHeight();
         int titleY = barY + 3;
         int valueY = barY + mc.font.lineHeight + 5;
 
@@ -78,5 +79,20 @@ public class SeekServiceBannerRenderer {
                 deltaText
         );
         guiGraphics.drawString(mc.font, valueText, 22, valueY, 0x55FF55, false);
+    }
+
+    private static int lowerBannerHeight() {
+        int height = SoulGainBannerRenderer.isVisible() ? SoulGainBannerRenderer.getReservedHeight() : 0;
+        try {
+            Class<?> overlay = Class.forName(
+                    "cn.zhenhongliya.blacksouls2compat.client.AcquisitionRewardOverlay"
+            );
+            Object value = overlay.getMethod("getReservedHeight").invoke(null);
+            if (value instanceof Integer reservedHeight) {
+                height = Math.max(height, reservedHeight);
+            }
+        } catch (ReflectiveOperationException | LinkageError ignored) {
+        }
+        return height;
     }
 }

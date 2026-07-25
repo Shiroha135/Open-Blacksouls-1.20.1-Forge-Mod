@@ -23,9 +23,18 @@ public class SoulGainBannerRenderer {
     private static String deltaText = "0S";
 
     public static void show(long delta) {
+        TextBannerRenderer.hide();
         soulDelta = delta;
         deltaText = (delta > 0 ? "+" : "") + delta + "S";
         ticksLeft = 60;
+    }
+
+    public static boolean isVisible() {
+        return ticksLeft > 0;
+    }
+
+    public static int getReservedHeight() {
+        return Minecraft.getInstance().font.lineHeight * 2 + 12;
     }
 
     @SubscribeEvent

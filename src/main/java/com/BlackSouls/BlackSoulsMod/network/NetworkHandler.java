@@ -52,6 +52,7 @@ public class NetworkHandler {
         register(PacketSetExtraMode.class, PacketSetExtraMode::toBytes, PacketSetExtraMode::new, PacketSetExtraMode::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ServerboundNodenRewardPacket.class, ServerboundNodenRewardPacket::toBytes, ServerboundNodenRewardPacket::new, ServerboundNodenRewardPacket::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ClientboundBannerPacket.class, ClientboundBannerPacket::toBytes, ClientboundBannerPacket::new, ClientboundBannerPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ClientboundTextBannerPacket.class, ClientboundTextBannerPacket::toBytes, ClientboundTextBannerPacket::new, ClientboundTextBannerPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(PacketClaimPurgeTaskReward.class, PacketClaimPurgeTaskReward::toBytes, PacketClaimPurgeTaskReward::new, PacketClaimPurgeTaskReward::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ServerboundSimpleActionPacket.class, ServerboundSimpleActionPacket::toBytes, ServerboundSimpleActionPacket::new, ServerboundSimpleActionPacket::handle, NetworkDirection.PLAY_TO_SERVER);
         register(PacketDevSetStats.class, PacketDevSetStats::toBytes, PacketDevSetStats::new, PacketDevSetStats::handle, NetworkDirection.PLAY_TO_SERVER);
@@ -64,6 +65,8 @@ public class NetworkHandler {
         register(PacketUpdateBonfireName.class, PacketUpdateBonfireName::toBytes, PacketUpdateBonfireName::new, PacketUpdateBonfireName::handle, NetworkDirection.PLAY_TO_SERVER);
         register(PacketPlayAnim.class, PacketPlayAnim::toBytes, PacketPlayAnim::new, PacketPlayAnim::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(PacketSyncUnlockedAvatars.class, PacketSyncUnlockedAvatars::toBytes, PacketSyncUnlockedAvatars::new, PacketSyncUnlockedAvatars::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(PacketOpenWhiteBearDialogue.class, PacketOpenWhiteBearDialogue::toBytes, PacketOpenWhiteBearDialogue::new, PacketOpenWhiteBearDialogue::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ServerboundWhiteBearActionPacket.class, ServerboundWhiteBearActionPacket::toBytes, ServerboundWhiteBearActionPacket::new, ServerboundWhiteBearActionPacket::handle, NetworkDirection.PLAY_TO_SERVER);
 
     }
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {

@@ -39,12 +39,35 @@ public class ServerboundSimpleActionPacket {
                         );
                     }
                 }
+                case VISIT_DIFFICULTY_STATUE -> {
+                    com.BlackSouls.BlackSoulsMod.capability.BSWorldData data =
+                            com.BlackSouls.BlackSoulsMod.capability.BSWorldData.get(player.server.overworld());
+                    int vanillaDeaths = player.getStats().getValue(
+                            net.minecraft.stats.Stats.CUSTOM, net.minecraft.stats.Stats.DEATHS);
+                    if (vanillaDeaths > data.deathCount) {
+                        data.deathCount = vanillaDeaths;
+                        data.setDirty();
+                    }
+                    net.minecraft.world.item.Item ring =
+                            com.BlackSouls.BlackSoulsMod.BlackSouls.RING_MASOCHIST.get();
+                    boolean ownsRing = player.getInventory().contains(new net.minecraft.world.item.ItemStack(ring))
+                            || StatEventHandler.getBaubleCount(player, ring) > 0;
+                    if (data.deathCount > 0 && !ownsRing) {
+                        net.minecraft.world.item.ItemStack reward = new net.minecraft.world.item.ItemStack(ring);
+                        if (!player.getInventory().add(reward)) {
+                            player.drop(reward, false);
+                        }
+                    }
+                    com.BlackSouls.BlackSoulsMod.network.NetworkHandler.sendToPlayer(
+                            new PacketSyncDifficulty(data), player);
+                }
             }
         });
     }
 
     public enum Action {
         REFRESH_PURGE_COMMISSIONS,
-        REQUEST_RESPAWN
+        REQUEST_RESPAWN,
+        VISIT_DIFFICULTY_STATUE
     }
 }

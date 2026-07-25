@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.client.gui;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.client.render.FadedBannerRenderer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -51,7 +52,7 @@ public class GuiCovenantUpgradeBanner extends Screen {
 
         int topBannerY = (this.height - BANNER_TOP_H) / 2;
 
-        guiGraphics.fill(0, topBannerY, this.width, topBannerY + BANNER_TOP_H, 0xBB000000);
+        FadedBannerRenderer.draw(guiGraphics, 0, topBannerY, this.width, topBannerY + BANNER_TOP_H);
 
         String textSuccess = I18n.get("gui.blacksouls.covenant.banner.upgrade_success");
         int textSuccessY = topBannerY + (BANNER_TOP_H - font.lineHeight) / 2;
@@ -62,7 +63,7 @@ public class GuiCovenantUpgradeBanner extends Screen {
         int botBannerX = 0;
         int botBannerY = this.height - botBannerH;
 
-        guiGraphics.fill(botBannerX, botBannerY, botBannerX + botBannerW, this.height, 0xBB000000);
+        FadedBannerRenderer.draw(guiGraphics, botBannerX, botBannerY, botBannerX + botBannerW, this.height);
 
         String textLostTitle = I18n.get("gui.blacksouls.dialogue.covenant.lost_souls");
         int textLostY = botBannerY - font.lineHeight - 5;

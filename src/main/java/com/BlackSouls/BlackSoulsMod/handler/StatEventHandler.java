@@ -1088,9 +1088,12 @@ public class StatEventHandler {
 
     @SubscribeEvent
     public static void onLivingHurt(LivingHurtEvent event) {
-        if (event.getSource().is(DamageTypes.FELL_OUT_OF_WORLD)) return;
-
         LivingEntity victim = event.getEntity();
+        if (victim instanceof Player player) {
+            event.setAmount(com.BlackSouls.BlackSoulsMod.util.VanillaHealthScaling.scaleVanillaDamage(
+                    player, event.getSource(), event.getAmount()));
+        }
+        if (event.getSource().is(DamageTypes.FELL_OUT_OF_WORLD)) return;
 
         if (victim instanceof Player player
                 && event.getSource().getEntity() instanceof LivingEntity opponent

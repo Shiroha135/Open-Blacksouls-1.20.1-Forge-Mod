@@ -21,7 +21,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class EntityNoden extends PathfinderMob {
+public class EntityNoden extends PathfinderMob implements DialogueResettable {
 
     private static final double NODEN_MAX_HEALTH = Integer.MAX_VALUE;
 
@@ -52,6 +52,32 @@ public class EntityNoden extends PathfinderMob {
 
     public void setSitting(boolean sitting) {
         this.entityData.set(DATA_SITTING, sitting);
+    }
+
+    @Override
+    public void resetDialogue(ServerPlayer player) {
+        this.entityData.set(DATA_TALK_COUNT, 0);
+        player.getCapability(com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats.CAPABILITY).ifPresent(stats -> {
+            stats.unlockedCovenants.remove("noden");
+            if ("noden".equals(stats.activeCovenant)) {
+                stats.activeCovenant = "";
+            }
+            stats.nodenCovenantLevel = 0;
+            NetworkHandler.sendToPlayer(
+                    new com.BlackSouls.BlackSoulsMod.network.packets.PacketSyncStats(stats.serializeNBT()),
+                    player
+            );
+        });
+        Advancement advancement = player.server.getAdvancements()
+                .getAdvancement(new ResourceLocation("blacksouls", "first_talk_noden"));
+        if (advancement != null) {
+            net.minecraft.advancements.AdvancementProgress progress = player.getAdvancements().getOrStartProgress(advancement);
+            java.util.List<String> completedCriteria = new java.util.ArrayList<>();
+            progress.getCompletedCriteria().forEach(completedCriteria::add);
+            for (String criterion : completedCriteria) {
+                player.getAdvancements().revoke(advancement, criterion);
+            }
+        }
     }
 
     @Override

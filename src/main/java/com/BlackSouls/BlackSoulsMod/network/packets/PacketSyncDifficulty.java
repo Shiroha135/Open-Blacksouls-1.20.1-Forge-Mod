@@ -9,6 +9,8 @@ import java.util.function.Supplier;
 
 public class PacketSyncDifficulty {
     private int difficulty;
+    private int deathCount;
+    private int loopCount;
     private boolean revengeMode;
     private boolean deathMode;
     private boolean legendaryMode;
@@ -22,6 +24,8 @@ public class PacketSyncDifficulty {
 
     public PacketSyncDifficulty(BSWorldData data) {
         this.difficulty = data.difficulty;
+        this.deathCount = data.deathCount;
+        this.loopCount = data.loopCount;
         this.revengeMode = data.isRevengeMode();
         this.deathMode = data.isDeathMode();
         this.legendaryMode = data.isLegendaryMode();
@@ -36,6 +40,8 @@ public class PacketSyncDifficulty {
 
     public PacketSyncDifficulty(FriendlyByteBuf buf) {
         this.difficulty = buf.readInt();
+        this.deathCount = buf.readInt();
+        this.loopCount = buf.readInt();
         this.revengeMode = buf.readBoolean();
         this.deathMode = buf.readBoolean();
         this.legendaryMode = buf.readBoolean();
@@ -50,6 +56,8 @@ public class PacketSyncDifficulty {
 
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeInt(this.difficulty);
+        buf.writeInt(this.deathCount);
+        buf.writeInt(this.loopCount);
         buf.writeBoolean(this.revengeMode);
         buf.writeBoolean(this.deathMode);
         buf.writeBoolean(this.legendaryMode);
@@ -65,6 +73,8 @@ public class PacketSyncDifficulty {
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             DifficultyManager.currentDifficulty = this.difficulty;
+            DifficultyManager.deathCount = this.deathCount;
+            DifficultyManager.loopCount = this.loopCount;
             DifficultyManager.revengeMode = this.revengeMode;
             DifficultyManager.deathMode = this.deathMode;
             DifficultyManager.legendaryMode = this.legendaryMode;

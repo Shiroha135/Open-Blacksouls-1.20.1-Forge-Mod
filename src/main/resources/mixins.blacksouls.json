@@ -10,7 +10,10 @@
     "ServerLevelMixin",
     "ServerGamePacketListenerImplMixin",
     "ItemStackMaxStackMixin",
-    "SlotMaxStackMixin"
+    "SlotMaxStackMixin",
+    "FoodDataMixin",
+    "MobEffectMixin",
+    "AbsoptionMobEffectMixin"
   ],
   "client": [
     "AbstractContainerScreenAccessor",

@@ -12,7 +12,7 @@ import net.minecraftforge.network.PacketDistributor;
 import java.util.function.Supplier;
 
 public class PacketSetDifficulty {
-    private static final int MIN_DIFFICULTY = 1;
+    private static final int MIN_DIFFICULTY = 0;
     private static final int MAX_DIFFICULTY = 9;
 
     public int difficulty;
@@ -36,10 +36,6 @@ public class PacketSetDifficulty {
         ctx.enqueueWork(() -> {
             ServerPlayer serverPlayer = ctx.getSender();
             if (serverPlayer != null) {
-                if (!serverPlayer.hasPermissions(4)) {
-                    serverPlayer.sendSystemMessage(Component.translatable("message.blacksouls.difficulty.no_permission").withStyle(ChatFormatting.RED));
-                    return;
-                }
                 if (difficulty < MIN_DIFFICULTY || difficulty > MAX_DIFFICULTY) {
                     return;
                 }

@@ -18,7 +18,9 @@ import java.util.WeakHashMap;
 
 public class DifficultyManager {
 
-    public static int currentDifficulty = 1;
+    public static int currentDifficulty = 0;
+    public static int deathCount = 0;
+    public static int loopCount = 0;
     public static boolean revengeMode = false;
     public static boolean deathMode = false;
     public static boolean legendaryMode = false;
@@ -79,6 +81,8 @@ public class DifficultyManager {
 
     public static void applyClientState(BSWorldData data) {
         currentDifficulty = data.difficulty;
+        deathCount = data.deathCount;
+        loopCount = data.loopCount;
         revengeMode = data.isRevengeMode();
         deathMode = data.isDeathMode();
         legendaryMode = data.isLegendaryMode();

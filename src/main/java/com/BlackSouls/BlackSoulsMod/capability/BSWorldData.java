@@ -17,7 +17,9 @@ import java.util.List;
 
 public class BSWorldData extends SavedData {
     private static final String DATA_NAME = BlackSouls.MODID + "_WorldData";
-    public int difficulty = 1;
+    public int difficulty = 0;
+    public int deathCount = 0;
+    public int loopCount = 0;
     private boolean revengeMode = false;
     private boolean deathMode = false;
     private boolean legendaryMode = false;
@@ -46,7 +48,9 @@ public class BSWorldData extends SavedData {
 
     public static BSWorldData load(CompoundTag nbt) {
         BSWorldData data = new BSWorldData();
-        data.difficulty = nbt.getInt("Difficulty");
+        data.difficulty = nbt.contains("Difficulty", Tag.TAG_INT) ? nbt.getInt("Difficulty") : 0;
+        data.deathCount = nbt.getInt("DeathCount");
+        data.loopCount = nbt.getInt("LoopCount");
         data.revengeMode = nbt.getBoolean("RevengeMode");
         data.deathMode = nbt.getBoolean("DeathMode");
         data.legendaryMode = nbt.getBoolean("LegendaryMode");
@@ -70,6 +74,8 @@ public class BSWorldData extends SavedData {
     @Override
     public @NotNull CompoundTag save(CompoundTag nbt) {
         nbt.putInt("Difficulty", this.difficulty);
+        nbt.putInt("DeathCount", this.deathCount);
+        nbt.putInt("LoopCount", this.loopCount);
         nbt.putBoolean("RevengeMode", this.revengeMode);
         nbt.putBoolean("DeathMode", this.deathMode);
         nbt.putBoolean("LegendaryMode", this.legendaryMode);

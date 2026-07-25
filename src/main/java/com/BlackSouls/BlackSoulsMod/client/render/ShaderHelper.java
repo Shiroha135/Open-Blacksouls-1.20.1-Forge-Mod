@@ -34,6 +34,7 @@ public class ShaderHelper {
     public static ShaderInstance heldItemBloomShader;
     public static ShaderInstance heldItemBloomBlurShader;
     public static ShaderInstance chronoStarShader;
+    public static ShaderInstance fadedBannerShader;
     @SubscribeEvent
     public static void onRegisterShaders(RegisterShadersEvent event) {
 
@@ -126,6 +127,15 @@ public class ShaderHelper {
                             DefaultVertexFormat.POSITION_TEX_COLOR
                     ),
                     shader -> chronoStarShader = shader
+            );
+
+            event.registerShader(
+                    new ShaderInstance(
+                            event.getResourceProvider(),
+                            new ResourceLocation(BlackSouls.MODID, "faded_banner"),
+                            DefaultVertexFormat.POSITION_TEX
+                    ),
+                    shader -> fadedBannerShader = shader
             );
 
             LOGGER.info("BlackSouls shaders loaded successfully.");

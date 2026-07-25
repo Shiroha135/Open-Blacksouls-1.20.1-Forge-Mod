@@ -1,5 +1,6 @@
 package com.BlackSouls.BlackSoulsMod.client.gui;
 
+import com.BlackSouls.BlackSoulsMod.client.render.FadedBannerRenderer;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
@@ -28,7 +29,7 @@ public class GuiCovenantFailBanner extends Screen {
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         int MAIN_BOX_H = 90;
         int mainBoxTop = this.height - MAIN_BOX_H;
-        guiGraphics.fill(0, mainBoxTop, this.width, this.height, 0xBB000000);
+        FadedBannerRenderer.draw(guiGraphics, 0, mainBoxTop, this.width, this.height);
         String text = I18n.get("gui.blacksouls.covenant.banner.fail");
         int textX = 20;
         int textY = mainBoxTop + 25;

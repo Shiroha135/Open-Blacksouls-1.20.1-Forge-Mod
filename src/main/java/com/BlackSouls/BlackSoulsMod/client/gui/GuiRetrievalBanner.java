@@ -1,6 +1,6 @@
 package com.BlackSouls.BlackSoulsMod.client.gui;
 
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.BlackSouls.BlackSoulsMod.client.render.FadedBannerRenderer;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -35,11 +35,7 @@ public class GuiRetrievalBanner extends Screen {
         int y1 = (int)(screenHeight * 0.33F);
         int y2 = y1 + bannerHeight;
 
-        int color = 170 << 24;
-
-        RenderSystem.enableBlend();
-        guiGraphics.fill(0, y1, screenWidth, y2, color);
-        RenderSystem.disableBlend();
+        FadedBannerRenderer.draw(guiGraphics, 0, y1, screenWidth, y2);
 
         guiGraphics.pose().pushPose();
         guiGraphics.pose().scale(TEXT_SCALE, TEXT_SCALE, 1.0F);

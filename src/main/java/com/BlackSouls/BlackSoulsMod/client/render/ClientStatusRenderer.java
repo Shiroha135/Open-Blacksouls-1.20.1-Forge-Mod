@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.ClipContext;
@@ -41,7 +42,7 @@ public class ClientStatusRenderer {
         LivingEntity entity = event.getEntity();
         Minecraft mc = Minecraft.getInstance();
 
-        if (mc.player == null || entity instanceof Player || entity.distanceToSqr(mc.player) > 400 || !hasClearStatusLine(mc, entity)) return;
+        if (mc.player == null || entity instanceof Player || entity instanceof ArmorStand || entity.distanceToSqr(mc.player) > 400 || !hasClearStatusLine(mc, entity)) return;
 
         PoseStack poseStack = event.getPoseStack();
         MultiBufferSource buffer = event.getMultiBufferSource();

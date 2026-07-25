@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.client.gui;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.client.render.FadedBannerRenderer;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketSetCovenant;
 import net.minecraft.client.Minecraft;
@@ -52,7 +53,7 @@ public class GuiCovenantUpgradeConfirm extends Screen {
     @Override
     public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
         int bannerY = this.height - BANNER_H;
-        guiGraphics.fill(0, bannerY, this.width, this.height, 0xBB000000);
+        FadedBannerRenderer.draw(guiGraphics, 0, bannerY, this.width, this.height);
 
         String textPart1 = I18n.get("gui.blacksouls.covenant.confirm.cost", cost);
         String textPart2 = I18n.get("gui.blacksouls.covenant.confirm.target");

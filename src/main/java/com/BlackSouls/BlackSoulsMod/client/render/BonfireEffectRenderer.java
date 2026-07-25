@@ -32,7 +32,7 @@ public class BonfireEffectRenderer {
     @SubscribeEvent
     public static void onRenderOverlay(RenderGuiOverlayEvent.Pre event) {
         if (event.getOverlay().id().getPath().equals("title_text")) {
-            if (darkOverlayTicks > 0) {
+            if (darkOverlayTicks > 0 && bonfireLitTicks <= 0) {
                 GuiGraphics graphics = event.getGuiGraphics();
                 int screenWidth = graphics.guiWidth();
                 int screenHeight = graphics.guiHeight();
@@ -42,11 +42,7 @@ public class BonfireEffectRenderer {
                 float alpha = 1.0f;
                 if (darkOverlayTicks > 50) alpha = (60 - darkOverlayTicks) / 10.0f;
                 else if (darkOverlayTicks < 10) alpha = darkOverlayTicks / 10.0f;
-                int alphaInt = (int) (alpha * 170.0f);
-                int color = alphaInt << 24;
-                RenderSystem.enableBlend();
-                graphics.fill(0, y1, screenWidth, y2, color);
-                RenderSystem.disableBlend();
+                FadedBannerRenderer.draw(graphics, 0, y1, screenWidth, y2, alpha);
             }
         }
     }
@@ -83,11 +79,8 @@ public class BonfireEffectRenderer {
                 int bannerHeight = (int)(screenHeight * 0.15F);
                 int y1 = (int)(screenHeight * 0.33F);
                 int y2 = y1 + bannerHeight;
-                int bannerAlpha = (int) (alpha * 170.0f);
-                int bannerColor = bannerAlpha << 24;
-
                 RenderSystem.enableBlend();
-                graphics.fill(0, y1, screenWidth, y2, bannerColor);
+                FadedBannerRenderer.draw(graphics, 0, y1, screenWidth, y2, alpha);
 
                 int textAlpha = (int) (alpha * 255.0f);
                 int textColor = (textAlpha << 24) | 0xFFAA00;

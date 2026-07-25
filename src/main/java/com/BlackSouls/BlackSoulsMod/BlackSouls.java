@@ -204,6 +204,7 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> ICE11_EVENT = registerSound("ice11");
     public static final RegistryObject<SoundEvent> ITEM1_EVENT = registerSound("item1");
     public static final RegistryObject<SoundEvent> KEY_EVENT = registerSound("key");
+    public static final RegistryObject<SoundEvent> LOCK_RATTLE_EVENT = registerSound("lock_rattle");
     public static final RegistryObject<SoundEvent> MAGIC1_EVENT = registerSound("magic1");
     public static final RegistryObject<SoundEvent> MAGIC2_EVENT = registerSound("magic2");
     public static final RegistryObject<SoundEvent> MAGIC4_EVENT = registerSound("magic4");
