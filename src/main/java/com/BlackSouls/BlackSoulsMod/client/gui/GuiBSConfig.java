@@ -12,7 +12,7 @@ import java.util.List;
 public class GuiBSConfig extends Screen {
 
     private static final int GUI_WIDTH = 250;
-    private static final int GUI_HEIGHT = 250;
+    private static final int GUI_HEIGHT = 296;
 
     private final Screen parent;
     private int guiLeft;
@@ -20,6 +20,7 @@ public class GuiBSConfig extends Screen {
     private boolean allowPlayerExtraModes;
     private boolean enableLowSenJumpscare;
     private boolean showCombatDamageChat;
+    private BSConfig.CombatMode combatMode;
 
     public GuiBSConfig(Screen parent) {
         super(Component.translatable("gui.blacksouls.config.title"));
@@ -27,6 +28,7 @@ public class GuiBSConfig extends Screen {
         this.allowPlayerExtraModes = BSConfig.ALLOW_PLAYER_EXTRA_MODES.get();
         this.enableLowSenJumpscare = BSConfig.ENABLE_LOW_SEN_JUMPSCARE.get();
         this.showCombatDamageChat = BSConfig.SHOW_COMBAT_DAMAGE_CHAT.get();
+        this.combatMode = BSConfig.COMBAT_MODE.get();
     }
 
     @Override
@@ -57,18 +59,28 @@ public class GuiBSConfig extends Screen {
         combatChatButton.setTooltip(Tooltip.create(Component.translatable("gui.blacksouls.config.combat_damage_chat.desc")));
         this.addRenderableWidget(combatChatButton);
 
-        this.addRenderableWidget(new BSGhostButton(guiLeft + 42, guiTop + 212, 64, 20,
+        BSGhostButton combatModeButton = new BSGhostButton(guiLeft + 20, guiTop + 196, 210, 20, getCombatModeText(), button -> {
+            this.combatMode = this.combatMode == BSConfig.CombatMode.BLACK_SOULS_TURN_BASED
+                    ? BSConfig.CombatMode.MINECRAFT_REALTIME
+                    : BSConfig.CombatMode.BLACK_SOULS_TURN_BASED;
+            button.setMessage(getCombatModeText());
+        });
+        combatModeButton.setTooltip(Tooltip.create(Component.translatable("gui.blacksouls.config.combat_mode.desc")));
+        this.addRenderableWidget(combatModeButton);
+
+        this.addRenderableWidget(new BSGhostButton(guiLeft + 42, guiTop + 258, 64, 20,
                 Component.translatable("gui.blacksouls.config.save"), button -> {
             BSConfig.ALLOW_PLAYER_EXTRA_MODES.set(this.allowPlayerExtraModes);
             BSConfig.ENABLE_LOW_SEN_JUMPSCARE.set(this.enableLowSenJumpscare);
             BSConfig.SHOW_COMBAT_DAMAGE_CHAT.set(this.showCombatDamageChat);
+            BSConfig.COMBAT_MODE.set(this.combatMode);
             BSConfig.COMMON_SPEC.save();
             if (this.minecraft != null) {
                 this.minecraft.setScreen(this.parent);
             }
         }));
 
-        this.addRenderableWidget(new BSGhostButton(guiLeft + 144, guiTop + 212, 64, 20,
+        this.addRenderableWidget(new BSGhostButton(guiLeft + 144, guiTop + 258, 64, 20,
                 Component.translatable("gui.blacksouls.config.cancel"), button -> {
             if (this.minecraft != null) {
                 this.minecraft.setScreen(this.parent);
@@ -86,6 +98,7 @@ public class GuiBSConfig extends Screen {
         drawWrappedText(guiGraphics, Component.translatable("gui.blacksouls.config.allow_extra_modes.desc"), guiLeft + 20, guiTop + 82, GUI_WIDTH - 40, 0xFFB8B8FF);
         drawWrappedText(guiGraphics, Component.translatable("gui.blacksouls.config.low_sen_jumpscare.desc"), guiLeft + 20, guiTop + 128, GUI_WIDTH - 40, 0xFFB8B8FF);
         drawWrappedText(guiGraphics, Component.translatable("gui.blacksouls.config.combat_damage_chat.desc"), guiLeft + 20, guiTop + 174, GUI_WIDTH - 40, 0xFFB8B8FF);
+        drawWrappedText(guiGraphics, Component.translatable("gui.blacksouls.config.combat_mode.desc"), guiLeft + 20, guiTop + 220, GUI_WIDTH - 40, 0xFFB8B8FF);
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
@@ -111,6 +124,12 @@ public class GuiBSConfig extends Screen {
         return Component.translatable(this.showCombatDamageChat
                 ? "gui.blacksouls.config.combat_damage_chat.on"
                 : "gui.blacksouls.config.combat_damage_chat.off");
+    }
+
+    private Component getCombatModeText() {
+        return Component.translatable(this.combatMode == BSConfig.CombatMode.BLACK_SOULS_TURN_BASED
+                ? "gui.blacksouls.config.combat_mode.turn_based"
+                : "gui.blacksouls.config.combat_mode.realtime");
     }
 
     private void drawWrappedText(GuiGraphics guiGraphics, Component text, int x, int y, int maxWidth, int color) {

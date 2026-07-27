@@ -38,7 +38,6 @@ public class SkillRegistry {
     );
 
     public static void init() {
-        register(new SkillDifficulty());
         register(new SkillSoulArrow());
         register(new SkillOriginalMagic(SkillOriginalMagic.Profile.SOUL_VOLLEY));
         register(new SkillSoulLight());
@@ -197,6 +196,21 @@ public class SkillRegistry {
 
     public static void register(AbstractSkill skill) {
         SKILLS.put(skill.getSkillId(), skill);
+    }
+
+    public static Set<String> getSkillBookSkillIds() {
+        java.util.LinkedHashSet<String> skillIds = new java.util.LinkedHashSet<>();
+        skillIds.add("bs2_skill_grit");
+        skillIds.add("bs2_skill_invisible_body");
+        skillIds.add("bs2_skill_requiem");
+        skillIds.add("bs2_skill_soul_arrow");
+        skillIds.add("bs2_skill_soul_light");
+        skillIds.add("bs2_skill_soul_radiation");
+        skillIds.add("bs2_skill_carthus_blood_curse");
+        for (SkillOriginalMagic.Profile profile : SkillOriginalMagic.Profile.values()) {
+            skillIds.add(profile.getSkillId());
+        }
+        return java.util.Collections.unmodifiableSet(skillIds);
     }
 
     public static List<AbstractSkill> getAvailableSkills(Player player) {

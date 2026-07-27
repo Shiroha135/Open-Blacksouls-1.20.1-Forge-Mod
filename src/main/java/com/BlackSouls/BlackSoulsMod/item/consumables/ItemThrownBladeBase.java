@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod.item.consumables;
 import com.BlackSouls.BlackSoulsMod.entity.EntityThrownBlade;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.TickTask;
 import net.minecraft.sounds.SoundEvent;
@@ -52,19 +53,7 @@ public abstract class ItemThrownBladeBase extends Item {
         ItemStack stack = player.getItemInHand(hand);
 
         if (!level.isClientSide()) {
-            level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                    firstSound.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
-
-            if (delayedSound != null && delayedSoundTicks > 0) {
-                MinecraftServer server = level.getServer();
-                if (server != null) {
-                    double x = player.getX();
-                    double y = player.getY();
-                    double z = player.getZ();
-                    server.tell(new TickTask(server.getTickCount() + delayedSoundTicks, () ->
-                            level.playSound(null, x, y, z, delayedSound.get(), SoundSource.PLAYERS, 1.0F, 1.0F)));
-                }
-            }
+            playLaunchSounds(level, player);
 
             EntityThrownBlade projectile = new EntityThrownBlade(level, player, stack, mode, sureHit, bleedTicks);
             projectile.setAnimationId(animationId);
@@ -88,6 +77,35 @@ public abstract class ItemThrownBladeBase extends Item {
         }
 
         return InteractionResultHolder.consume(stack);
+    }
+
+    public boolean useInTurnBattle(ServerPlayer player, ItemStack stack, LivingEntity target) {
+        Level level = player.level();
+        playLaunchSounds(level, player);
+        EntityThrownBlade projectile = new EntityThrownBlade(level, player, stack, mode, sureHit, bleedTicks);
+        projectile.setAnimationId(animationId);
+        projectile.setPos(player.getX(), player.getEyeY() - 0.2D, player.getZ());
+        projectile.hitDirect(target);
+        if (!player.getAbilities().instabuild) {
+            stack.shrink(1);
+        }
+        return true;
+    }
+
+    private void playLaunchSounds(Level level, Player player) {
+        level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                firstSound.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+
+        if (delayedSound != null && delayedSoundTicks > 0) {
+            MinecraftServer server = level.getServer();
+            if (server != null) {
+                double x = player.getX();
+                double y = player.getY();
+                double z = player.getZ();
+                server.tell(new TickTask(server.getTickCount() + delayedSoundTicks, () ->
+                        level.playSound(null, x, y, z, delayedSound.get(), SoundSource.PLAYERS, 1.0F, 1.0F)));
+            }
+        }
     }
 
     private LivingEntity findTarget(Player player, double range) {

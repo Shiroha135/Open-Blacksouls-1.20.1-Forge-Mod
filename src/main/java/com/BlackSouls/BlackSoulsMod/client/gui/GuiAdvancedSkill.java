@@ -35,7 +35,6 @@ public class GuiAdvancedSkill extends Screen {
     private static final ResourceLocation ICON_WEAPON_BREAK = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/weapon.png");
     private static final ResourceLocation ICON_ARMOR_BREAK = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/weapon.png");
     private static final ResourceLocation ICON_DRAGON_SHOCKWAVE = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/dragon_shockwave.png");
-    private static final ResourceLocation ICON_DIFFICULTY = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/difficulty.png");
     private static final ResourceLocation ICON_RADIANT_BLADE = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/weapon.png");
     private static final ResourceLocation ICON_HELLFIRE_BLADE = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/hellfire_blade.png");
     private static final ResourceLocation ICON_ULTIMATE_TRIPLE_SLASH = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/weapon.png");
@@ -192,8 +191,6 @@ public class GuiAdvancedSkill extends Screen {
                 || mainHand.getItem() == BlackSouls.VORPAL_SWORD.get())) {
             addSkill("bs2_skill_reinforce", ICON_REINFORCE);
         }
-        // 所有角色自带难度设置技能
-        if (SkillUtils.hasLearnedSkill(player, "bs2_skill_difficulty")) addSkill("bs2_skill_difficulty", ICON_DIFFICULTY);
         if (SkillUtils.hasChronoClockEquipped(player)) addSkill("bs2_skill_chrono_clock", ICON_CHRONO_CLOCK);
 
         // 开放 API：遍历 SkillRegistry 中所有 isUnlockedForGUI=true 的技能，自动加入 GUI。
@@ -368,7 +365,6 @@ public class GuiAdvancedSkill extends Screen {
             case "bs2_skill_shotgun_blast" -> 0.0F;
             case "bs2_skill_aura_blade" -> 15.0F;
             case "bs2_skill_dragon_shockwave" -> 15.0F;
-            case "bs2_skill_difficulty" -> 0.0F;
             //新版技能蓝耗分割线
             case "bs2_skill_radiant_blade" -> 30.0F;//辉耀之剑蓝耗
             case "bs2_skill_knights_glory" -> 40.0F;//骑士的荣耀蓝耗

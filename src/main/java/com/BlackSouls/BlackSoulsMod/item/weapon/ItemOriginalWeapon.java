@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.TooltipFlag;
@@ -279,6 +280,45 @@ public class ItemOriginalWeapon extends ItemBSWeaponBase {
         }
     }
 
+    public int getTurnBattleAnimationId(Player player) {
+        return switch (profile) {
+            case MAGIC_BLADE, DEMON_GOD_BLADE -> 126;
+            case MAGICIANS_STAFF, ALL_CREATION_STAFF -> 213;
+            case MEAT_CLEAVER_GREATAXE, SLAUGHTERER_GREATAXE -> 130;
+            case DOUBLE_EDGED_GREATSWORD, RAGNAROK -> 520;
+            case MACE, DIVINE_PUNISHMENT_MACE -> 211;
+            case HALBERD, BAHAMUT -> 230;
+            case BEAST_HUNTER_SAW, BEAST_SLAYING_SAW_SWORD -> 232;
+            case SHIELD_GUARD_FORTRESS, GUARDIAN_FORTRESS -> 160;
+            case DARK_SWORD, DARK_BLADE -> 166;
+            case BROKEN_SWORD, GRUDGE_SWORD -> 7;
+            case WARHAMMER, ABERRANT_WARHAMMER -> 235;
+            case KNUCKLE_DUSTER, KAISER_GAUNTLET -> 239;
+            case UCHIGATANA, KISHIN_BLADE -> 340;
+            case GREAT_IRON_BALL -> 129;
+            case JUDGMENT_SCYTHE -> 220;
+            case STORM_RULER -> 131;
+            case DEMON_STAFF -> 19;
+            case MOONLIGHT_GREATSWORD -> 176;
+            case CORRUPT_JABBERWOCK_SCYTHE -> 318;
+            case MIRANDA_AXE -> 140;
+            case RLYEH_STAFF -> 349;
+            case DEEP_SEA_KNIGHTS_ANCHOR -> 359;
+            case LOST_SWORD -> 375;
+            case GLACHID -> 379;
+            case SLAUGHTERERS_CHAINSAW -> 384;
+            case MOCK_TURTLE_SOUP_LADLE -> 388;
+            case DIVINE_ANGEL_DUAL_SWORDS -> {
+                int hits = getDualSwordAura(player) + 1;
+                yield hits >= 8 ? 516 : hits >= 4 ? 517 : 515;
+            }
+            case HOLY_GUNBLADE -> 519;
+            case MARY_SUES_BRANCH_STAFF -> 0;
+            case EUNICES_RAPIER -> 548;
+            case RAIDENS_DUAL_AXES -> 551;
+        };
+    }
+
     private static LivingEntity findRandomAttackTarget(ServerPlayer player, LivingEntity fallback, double range) {
         List<LivingEntity> targets = player.level().getEntitiesOfClass(
                 LivingEntity.class,
@@ -356,7 +396,7 @@ public class ItemOriginalWeapon extends ItemBSWeaponBase {
         return stack.hasTag() ? Math.max(0, Math.min(5, stack.getTag().getInt("bs2_upgrade_level"))) : 0;
     }
 
-    private static int getDualSwordAura(ServerPlayer player) {
+    private static int getDualSwordAura(Player player) {
         net.minecraft.world.effect.MobEffectInstance effect = player.getEffect(BlackSouls.BUFF_DUAL_SWORD_AURA.get());
         return effect == null ? 0 : Math.min(7, effect.getAmplifier() + 1);
     }

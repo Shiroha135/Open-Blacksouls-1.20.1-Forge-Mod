@@ -1,8 +1,11 @@
 package com.BlackSouls.BlackSoulsMod.handler;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.BSConfig;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.capability.BSWorldData;
+import com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager;
+import com.BlackSouls.BlackSoulsMod.entity.EntityTurnBattleMonster;
 import com.BlackSouls.BlackSoulsMod.util.DifficultyManager;
 import com.BlackSouls.BlackSoulsMod.util.SkillUtils;
 import net.minecraft.ChatFormatting;
@@ -17,6 +20,8 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.item.TridentItem;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityLeaveLevelEvent;
@@ -39,10 +44,6 @@ public class SkillEventHandler {
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         Player player = event.getEntity();
-
-        if (!SkillUtils.hasLearnedSkill(player, "bs2_skill_difficulty")) {
-            SkillUtils.learnSkill(player, "bs2_skill_difficulty");
-        }
 
         syncData(player);
 
@@ -75,6 +76,26 @@ public class SkillEventHandler {
             */
 
             player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
+                boolean changed = stats.unlockedSkills.remove("bs2_skill_difficulty");
+                if ("bs2_skill_difficulty".equals(stats.skillZ)) {
+                    stats.skillZ = "";
+                    changed = true;
+                }
+                if ("bs2_skill_difficulty".equals(stats.skillX)) {
+                    stats.skillX = "";
+                    changed = true;
+                }
+                if ("bs2_skill_difficulty".equals(stats.skillC)) {
+                    stats.skillC = "";
+                    changed = true;
+                }
+                if ("bs2_skill_difficulty".equals(stats.skillV)) {
+                    stats.skillV = "";
+                    changed = true;
+                }
+                if (changed) {
+                    StatEventHandler.syncToClient(serverPlayer);
+                }
             });
         }
     }
@@ -259,6 +280,18 @@ public class SkillEventHandler {
 
     @SubscribeEvent
     public static void onPlayerAttackCheck(AttackEntityEvent event) {
+        if (BSConfig.COMBAT_MODE.get() == BSConfig.CombatMode.BLACK_SOULS_TURN_BASED
+                && event.getTarget() instanceof EntityTurnBattleMonster enemy) {
+            if (!event.getEntity().level().isClientSide() && event.getEntity() instanceof ServerPlayer serverPlayer) {
+                event.setCanceled(true);
+                TurnBattleManager.tryStart(serverPlayer, enemy);
+            }
+            return;
+        }
+        if (TurnBattleManager.isInBattle(event.getEntity())) {
+            event.setCanceled(true);
+            return;
+        }
         if (BlackSouls.BUFF_STUN.isPresent() && event.getEntity().hasEffect(BlackSouls.BUFF_STUN.get())) {
             event.setCanceled(true);
             return;
@@ -312,6 +345,14 @@ public class SkillEventHandler {
 
     @SubscribeEvent
     public static void onPlayerInteract(PlayerInteractEvent event) {
+        if (TurnBattleManager.isInBattle(event.getEntity())
+                && event instanceof PlayerInteractEvent.RightClickItem
+                && (TurnBattleManager.isBattleWeapon(event.getItemStack())
+                || event.getItemStack().getItem() instanceof ProjectileWeaponItem
+                || event.getItemStack().getItem() instanceof TridentItem)) {
+            event.setCanceled(true);
+            return;
+        }
         if (BlackSouls.BUFF_STUN.isPresent() && event.getEntity().hasEffect(BlackSouls.BUFF_STUN.get())) {
             if (event.isCancelable()) {
                 event.setCanceled(true);

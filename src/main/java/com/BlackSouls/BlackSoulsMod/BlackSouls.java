@@ -20,8 +20,13 @@ import com.BlackSouls.BlackSoulsMod.item.weapon.*;
 import com.BlackSouls.BlackSoulsMod.item.ItemBaubleBase;
 import com.BlackSouls.BlackSoulsMod.item.ItemDevTool;
 import com.BlackSouls.BlackSoulsMod.item.ItemNodenSpawn;
+import com.BlackSouls.BlackSoulsMod.item.ItemCorpseEatingRabbitSpawn;
+import com.BlackSouls.BlackSoulsMod.item.ItemOriginalEnemySpawnEgg;
 import com.BlackSouls.BlackSoulsMod.potion.*;
 import com.BlackSouls.BlackSoulsMod.sound.BSSoundRegistry;
+import com.BlackSouls.BlackSoulsMod.util.BSOriginalItemData;
+import com.BlackSouls.BlackSoulsMod.util.BSOriginalEnemyData;
+import com.BlackSouls.BlackSoulsMod.util.BSOriginalEnemyPhaseData;
 import com.BlackSouls.BlackSoulsMod.util.skill.SkillRegistry;
 import com.BlackSouls.BlackSoulsMod.util.skill.SkillOriginalMagic;
 import net.minecraft.core.registries.Registries;
@@ -32,6 +37,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -44,6 +50,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.List;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Mod(BlackSouls.MODID)
 public class BlackSouls {
@@ -205,6 +214,12 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> ITEM1_EVENT = registerSound("item1");
     public static final RegistryObject<SoundEvent> KEY_EVENT = registerSound("key");
     public static final RegistryObject<SoundEvent> LOCK_RATTLE_EVENT = registerSound("lock_rattle");
+    public static final RegistryObject<SoundEvent> TURN_BATTLE_BGM_EVENT = registerSound("turn_battle_bgm");
+    public static final RegistryObject<SoundEvent> TURN_BATTLE_VICTORY_EVENT = registerSound("turn_battle_victory");
+    public static final RegistryObject<SoundEvent> TURN_BATTLE_START_EVENT = registerSound("turn_battle_start");
+    public static final RegistryObject<SoundEvent> TURN_ENEMY_ATTACK_EVENT = registerSound("turn_enemy_attack");
+    public static final RegistryObject<SoundEvent> TURN_ENEMY_DAMAGE_EVENT = registerSound("turn_enemy_damage");
+    public static final RegistryObject<SoundEvent> TURN_PLAYER_DAMAGE_EVENT = registerSound("turn_player_damage");
     public static final RegistryObject<SoundEvent> MAGIC1_EVENT = registerSound("magic1");
     public static final RegistryObject<SoundEvent> MAGIC2_EVENT = registerSound("magic2");
     public static final RegistryObject<SoundEvent> MAGIC4_EVENT = registerSound("magic4");
@@ -419,7 +434,7 @@ public class BlackSouls {
     public static final RegistryObject<Item> FAIRY_FEATHER = ITEMS.register("fairy_feather", () -> new ItemParameterBoost(new Item.Properties(), ItemParameterBoost.Mode.SPEED));
     public static final RegistryObject<Item> BLOODSTAINED_KEY = ITEMS.register("bloodstained_key", () -> new ItemSimpleLore(new Item.Properties().stacksTo(1), 1));
     public static final RegistryObject<Item> DRINK_ME = ITEMS.register("drink_me", () -> new ItemUnavailableStoryConsumable(new Item.Properties().stacksTo(1), "message.blacksouls.story_map_only"));
-    public static final RegistryObject<Item> EAT_ME = ITEMS.register("eat_me", () -> new ItemUnavailableStoryConsumable(new Item.Properties().stacksTo(1), "message.blacksouls.story_map_only"));
+    public static final RegistryObject<Item> EAT_ME = ITEMS.register("eat_me", () -> new ItemEatMe(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> RABBIT_KEY = ITEMS.register("rabbit_key", () -> new ItemSimpleLore(new Item.Properties().stacksTo(1), 2));
     public static final RegistryObject<Item> GOLDEN_EGG = ITEMS.register("golden_egg", () -> new ItemSoul(new Item.Properties(), 250000, "item.blacksouls.golden_egg.lore.1", "item.blacksouls.golden_egg.lore.2"));
     public static final RegistryObject<Item> TRAIN_TICKET = ITEMS.register("train_ticket", () -> new ItemSimpleLore(new Item.Properties().stacksTo(1), 1, true));
@@ -1017,6 +1032,19 @@ public class BlackSouls {
     // =================================================================================================
     public static final RegistryObject<Item> NODEN_SPAWN_EGG = ITEMS.register("noden_spawn_egg",
             () -> new ItemNodenSpawn(new Item.Properties().stacksTo(16)));
+    public static final RegistryObject<Item> CORPSE_EATING_RABBIT_SPAWN_EGG = ITEMS.register("corpse_eating_rabbit_spawn_egg",
+            () -> new ItemCorpseEatingRabbitSpawn(new Item.Properties().stacksTo(16)));
+    public static final RegistryObject<Item> HEADLESS_UNDEAD_SPAWN_EGG = ITEMS.register("headless_undead_spawn_egg",
+            () -> new ForgeSpawnEggItem(BSEntityRegistry.HEADLESS_UNDEAD, 0x69645E, 0x9D1720,
+                    new Item.Properties()));
+    public static final RegistryObject<Item> CORRUPT_DOG_SPAWN_EGG = ITEMS.register("corrupt_dog_spawn_egg",
+            () -> new ForgeSpawnEggItem(BSEntityRegistry.CORRUPT_DOG, 0x574C42, 0x7B1918,
+                    new Item.Properties()));
+    public static final RegistryObject<Item> WEREWOLF_SPAWN_EGG = ITEMS.register("werewolf_spawn_egg",
+            () -> new ForgeSpawnEggItem(BSEntityRegistry.WEREWOLF, 0x3A302C, 0x8D1616,
+                    new Item.Properties()));
+    public static final Map<Integer, RegistryObject<Item>> ORIGINAL_ENEMY_SPAWN_EGGS =
+            registerOriginalEnemySpawnEggs();
     //创造模式专属物品栏
 
     @SuppressWarnings("unused")
@@ -1024,8 +1052,10 @@ public class BlackSouls {
             () -> CreativeModeTab.builder()
                     .icon(() -> new ItemStack(SOUL_BLACK.get())) // 用黑之魂作为图标
                     .title(Component.translatable("itemGroup.blacksouls_entity"))
+                    .withSearchBar(30)
                     .displayItems((parameters, output) -> {
                         output.accept(NODEN_SPAWN_EGG.get());              // 诺登召唤
+                        ORIGINAL_ENEMY_SPAWN_EGGS.values().forEach(egg -> output.accept(egg.get()));
                     })
                     .build());
 
@@ -1346,252 +1376,33 @@ public class BlackSouls {
                     .icon(() -> new ItemStack(BLOOD_VIAL.get()))
                     .title(Component.translatable("itemGroup.blacksouls_consumable"))
                     .withSearchBar(30)
-                    .displayItems((parameters, output) -> {
-                        // ==========================================================================
-                        // 一般道具
-                        // ==========================================================================
-                        output.accept(HERB_BOTTLE.get());                  // 药草瓶
-                        output.accept(HERB_BOTTLE_M.get());                // 药草瓶M
-                        output.accept(BLOOD_VIAL.get());                   // 输血药
-                        output.accept(ANTIDOTE_HERB.get());                // 解毒草
-                        output.accept(HEMOSTATIC_CLOTH.get());             // 止血布
-                        output.accept(SEDATIVE.get());                     // 镇静剂
-                        output.accept(PIGEON_EGG.get());                   // 鸽子蛋
-                        output.accept(GODDESS_BLOOD.get());                // 女神之血
-                        output.accept(SOUL_GREEN.get());                   // 绿之魂
-                        output.accept(SOUL_PURPLE.get());                  // 紫之魂
-                        output.accept(SOUL_RED.get());                     // 赤之魂
-                        output.accept(SOUL_BLUE.get());                    // 青之魂
-                        output.accept(SOUL_YELLOW.get());                  // 黄之魂
-                        output.accept(SOUL_GRAY.get());                    // 灰之魂
-                        output.accept(SOUL_WHITE.get());                   // 白之魂
-                        output.accept(SOUL_FOUR_LEAF_CLOVER.get());        // 四叶之魂
-                        output.accept(SOUL_BLACK.get());                   // 黑之魂
-                        output.accept(HOMEWARD_BONE_DUST.get());           // 归还骨粉
-                        output.accept(RABBIT_WATCH.get());                 // 兔子的怀表
-                        output.accept(INVISIBLE_PEPPER.get());             // 看不见的胡椒
-                        output.accept(ABANDONED_TRASH.get());              // 废弃垃圾
-                        output.accept(MAGIC_STONE.get());                  // 魔石
-                        output.accept(MAIDENSFRAGRANCE.get());             // 少女之香
-                        output.accept(FAIRY_SCALE_POWDER.get());           // 妖精的鳞粉
-                        output.accept(MYSTERIOUS_SHARD.get());             // 神秘的碎片
-                        output.accept(UPGRADE_SHARD.get());                // 强化石的碎片
-                        output.accept(UPGRADE_LARGE_SHARD.get());          // 强化石大碎片
-                        output.accept(UPGRADE_CHUNK.get());                // 强化石块
-                        output.accept(UPGRADE_SLAB.get());                 // 强化石圆盘
-                        output.accept(FIRE_BOMB.get());                    // 火焰壶
-                        output.accept(DUNG_PIE.get());                     // 屎块
-                        output.accept(CHARCOAL_PINE_RESIN.get());          // 炭松脂
-                        output.accept(GOLD_PINE_RESIN.get());              // 黄金松脂
-                        output.accept(DARK_PINE_RESIN.get());              // 暗松脂
-                        output.accept(SOUL_FADING.get());                  // 即将消逝的灵魂
-                        output.accept(SOUL_LOST_UNDEAD.get());             // 被遗弃遗体的灵魂
-                        output.accept(SOUL_LOST_UNDEAD_LARGE.get());       // 被抛弃的遗体的大块灵魂
-                        output.accept(SOUL_NAMELESS_TRAVELER.get());       // 来历不明的旅人的灵魂
-                        output.accept(SOUL_NAMELESS_TRAVELER_LARGE.get()); // 来历不明的旅人的大块灵魂
-                        output.accept(SOUL_NAMELESS_SOLDIER.get());        // 无名士兵的灵魂
-                        output.accept(SOUL_NAMELESS_SOLDIER_LARGE.get());  // 无名士兵的大块灵魂
-                        output.accept(SOUL_EXHAUSTED_WARRIOR.get());       // 力竭的战士的灵魂
-                        output.accept(SOUL_EXHAUSTED_WARRIOR_LARGE.get()); // 力竭的战士的大块灵魂
-                        output.accept(SOUL_CRESTFALLEN_KNIGHT.get());      // 灰心的骑士的灵魂
-                        output.accept(SOUL_CRESTFALLEN_KNIGHT_LARGE.get());// 灰心的骑士的大块灵魂
-                        output.accept(ORANGE_MARMALADE.get());             // 橘子果酱
-                        output.accept(MASTER_KEY.get());                   // 万能钥匙
-                        output.accept(BLACKWELL_BLOOD_VIAL.get());         // 布莱克威尔的输血药
-                        output.accept(CANDY.get());                        // 糖果
-                        output.accept(OIL_URN.get());                      // 油壶
-                        output.accept(THROWING_KNIFE.get());               // 投掷小刀
-                        output.accept(UNDEAD_KILLER_MUSHROOM.get());       // 不死者杀手菇
-                        output.accept(PURE_WATER.get());                   // 水
-                        output.accept(STAMINA_TONIC.get());                // 精力剂
-                        output.accept(SNAKE_BONE_RETURN.get());            // 归还蛇骨
-                        output.accept(MUDDY_FISH.get());                   // 浑浊之鱼
-                        output.accept(WHITE_STICKY_THING.get());           // 又白又黏的那啥
-                        output.accept(IRON_SCRAP_SNACK.get());             // 铁渣点心
-                        output.accept(FAIRY_FEATHER.get());                // 妖精之羽
-                        output.accept(GOLDENMEAD.get());                   // 黄金的蜂蜜酒
-                        output.accept(CARPENTER_NAIL.get());               // 大工的钉子
-                        output.accept(PRESCRIPTION_MEDICINE.get());        // 处方药
-                        output.accept(GIRLS_PHOTO.get());                  // 少女的写真
-                        output.accept(RETRIEVAL_POKER.get());              // 再思的扑克
-                        output.accept(GOAT_MEAT.get());                    // 山羊的肉
-                        output.accept(PREGNANT_CAKE_MEAT.get());           // 孕妇蛋糕之肉
-                        output.accept(BLACK_ASH.get());                    // 黑之灰
-                        output.accept(BLOODSTAINED_KEY.get());             // 染血的钥匙
-                        output.accept(DRINK_ME.get());                     // 喝了我吧
-                        output.accept(EAT_ME.get());                       // 吃了我吧
-                        output.accept(RABBIT_KEY.get());                   // 兔之键
-                        output.accept(GOLDEN_EGG.get());                   // 黄金之卵
-                        output.accept(TRAIN_TICKET.get());                 // 列车票
-                        output.accept(ENTRY_PASS.get());                   // 通行证
-                        output.accept(QUEEN_EGG_TART.get());               // 女王的蛋挞
-                        output.accept(CANDLE_EMBER.get());                 // 蜡烛的余烬
-                        output.accept(ROASTED_CHEESE.get());               // 烤起司
-                        output.accept(TURTLE_SOUP.get());                  // 海龟汤
-                        output.accept(SOUL_BLACK_DEFILED.get());           // 污秽的黑之魂
-                        output.accept(DREAM_SOUL.get());                   // 梦之魂
-                        output.accept(SNAKE_GOD_BLOOD.get());              // 蛇神的血
-                        output.accept(ALICE_ITEM.get());                   // 爱丽丝
-                        output.accept(BILLS_BENTO.get());                  // 比尔的便当
-                        output.accept(SOUL_OUTSIDER.get());                // 外来者之魂
-                        output.accept(SOUL_HERO.get());                    // 英雄的灵魂
-                        output.accept(SOUL_GREAT_HERO.get());              // 伟大英雄的灵魂
-                        output.accept(MATCH_MEDICINE.get());               // 火柴药
-                        output.accept(MAD_GEAR.get());                     // 疯狂的齿轮
-                        output.accept(NIGHTMARE_LANTERN.get());            // 噩梦提灯
-                        output.accept(CHICKEN.get());                      // 鸡肉
-                        output.accept(CHRISTMAS_CHICKEN.get());            // 圣诞鸡肉
-                        output.accept(MYSTERIOUS_MEAT.get());              // 来路不明的肉
-                        output.accept(SATYRS_THING.get());                 // 色情魔的那玩意
-                        output.accept(MERMAIDSONG.get());                  // 人鱼的歌声
-                        output.accept(ANCIENT_KINGS_BONE_DUST.get());      // 古王的骨粉
-                        output.accept(SQUIRREL_FUR.get());                 // 松鼠的毛
-                        output.accept(ICE_PINE_RESIN.get());               // 冰松脂
-                        output.accept(SCALPEL.get());                      // 手术刀
-                        output.accept(STAR_WATER.get());                   // 星水
-                        output.accept(FILTHY_LIQUID.get());                // 脏液
-                        output.accept(BLUEBIRD_FEATHER.get());             // 青鸟的羽毛
-                        output.accept(TINKER_BELLS_SCALE_POWDER.get());    // 叮当仙子的鳞粉
-                        output.accept(OUIJA_BOARD.get());                  // 威加盘
-                        output.accept(ROLDS_FOUNTAIN_PEN.get());           // 洛德的万年钢笔
-                        output.accept(CURSING_FLOWER.get());               // 咒骂之花
-                        output.accept(COLD_VALLEY_BREATH.get());           // 冷谷的气息
-                        output.accept(HELANRITHWINE.get());                // 海兰里斯酒
-                        output.accept(NECRONOMICON.get());                 // 死灵之书
-                        // ==========================================================================
-                        // 童话书系列(共32本)
-                        // ==========================================================================
-                        output.accept(BOOK_RASCAL.get());                  // 童话【我昔日的拉斯卡尔】
-                        output.accept(BOOK_FOX_AND_GRAPES.get());          // 童话【狐狸与酸葡萄】
-                        output.accept(BOOK_UGLY_DUCKLING.get());           // 童话【丑小鸭】
-                        output.accept(BOOK_HIGH_JUMPER.get());             // 童话【跳高者】
-                        output.accept(BOOK_WOLF_AND_GOATS.get());          // 童话【狼和X只小山羊】
-                        output.accept(BOOK_HANSEL_AND_GRETEL.get());       // 童话【糖果屋】
-                        output.accept(BOOK_SINBAD.get());                  // 童话【辛巴达航海记】
-                        output.accept(BOOK_BREMEN_MUSICIANS.get());        // 童话【不来梅的乐队】
-                        output.accept(BOOK_IRON_HANS.get());               // 童话【铁汉斯】
-                        output.accept(BOOK_DOG_OF_FLANDERS.get());         // 童话【弗兰德斯的狗】
-                        output.accept(BOOK_LITTLE_PRINCE.get());           // 童话【小王子】
-                        output.accept(BOOK_ARMORED_KNIGHT.get());          // 童话【穿着铠甲的骑士】
-                        output.accept(BOOK_DONKEY_EARS_KING.get());        // 童话【驴耳朵的国王】
-                        output.accept(BOOK_PETER_PAN.get());               // 童话【彼得・潘】
-                        output.accept(BOOK_MONKEY_AND_CRAB.get());         // 童话【猿蟹合战】
-                        output.accept(BOOK_WIZARD_OF_OZ.get());            // 童话【绿野仙踪】
-                        output.accept(BOOK_MATCH_GIRL.get());              // 童话【卖火柴的小女孩】
-                        output.accept(BOOK_GOLDEN_GOOSE.get());            // 童话【下金蛋的鹅】
-                        output.accept(BOOK_GREEDY_DOG.get());              // 童话【贪心的狗】
-                        output.accept(BOOK_PULL_TURNIP.get());             // 童话【拔萝卜】
-                        output.accept(BOOK_KACHI_KACHI_YAMA.get());        // 童话【咔擦咔擦山】
-                        output.accept(BOOK_INABA_BLACK_RABBIT.get());      // 童话【因幡的黑兔】
-                        output.accept(BOOK_ROBIN_HOOD.get());              // 童话【罗宾汉】
-                        output.accept(BOOK_BLUEBEARD.get());               // 童话【蓝胡子】
-                        output.accept(BOOK_DADDY_LONG_LEGS.get());         // 童话【长腿叔叔】
-                        output.accept(BOOK_BOY_WHO_CRIED_WOLF.get());      // 童话【狼来了】
-                        output.accept(BOOK_WINNIE_THE_POOH.get());         // 童话【小熊维尼】
-                        output.accept(BOOK_PINOCCHIO.get());               // 童话【匹诺曹】
-                        output.accept(BOOK_NIGHTINGALE.get());             // 童话【夜莺】
-                        output.accept(BOOK_BLANK.get());                   // 童话【　　　　】
-                        output.accept(BOOK_SNOW_QUEEN.get());              // 童话【冰雪女王】
-                        output.accept(BOOK_SNOW_MAIDEN.get());             // 童话【雪之少女】
-                        // ==========================================================================
-                        // Boss灵魂
-                        // ==========================================================================
-                        output.accept(SOUL_SKULL_BEAST.get());             // 猎颅兽的灵魂
-                        output.accept(SOUL_BOREDOM.get());                 // 解闷的灵魂
-                        output.accept(SOUL_PREGNANT_WOMAN.get());          // 孕妇的灵魂
-                        output.accept(SOUL_BELL_CALLER.get());             // 唤铃的灵魂
-                        output.accept(SOUL_BEAST_PELT.get());              // 披兽皮的灵魂
-                        output.accept(SOUL_GREAT_EAGLE.get());             // 大鹫的灵魂
-                        output.accept(SOUL_NARCISSIST.get());              // 自恋的灵魂
-                        output.accept(SOUL_JACK.get());                    // 杰克的灵魂
-                        output.accept(SOUL_DORM_HEAD.get());               // 学寮长的灵魂
-                        output.accept(SOUL_SHINING_STAR.get());            // 辉星的灵魂
-                        output.accept(SOUL_OLD_KNIGHT.get());              // 老骑士的灵魂
-                        output.accept(SOUL_GIANT_HOUSE.get());             // 巨人之家的灵魂
-                        output.accept(SOUL_KNIGHT_OF_HEARTS.get());        // 红桃骑士的灵魂
-                        output.accept(SOUL_KNIGHT_OF_SPADES.get());        // 黑桃骑士的灵魂
-                        output.accept(SOUL_KNIGHT_OF_CLUBS.get());         // 草花骑士的灵魂
-                        output.accept(SOUL_SLAVE_EMPEROR.get());           // 奴隶帝的灵魂
-                        output.accept(SOUL_SLAVE_QUEEN.get());             // 奴隶后的灵魂
-                        output.accept(SOUL_TORTURE_QUEEN.get());           // 拷问具女王的灵魂
-                        output.accept(SOUL_BANDERSNATCH.get());            // 班达斯奈奇的灵魂
-                        output.accept(SOUL_JUBJUB.get());                  // 贾布加布的灵魂
-                        output.accept(SOUL_JABBERWOCK.get());              // 贾巴沃克的灵魂
-                        output.accept(SOUL_DIVINE_FISH.get());             // 神之异鱼的灵魂
-                        output.accept(SOUL_DEEP_SEA_KNIGHT.get());         // 深海骑士的灵魂
-                        output.accept(SOUL_EVIL_DRAGON_HUNTER.get());      // 邪龙狩猎者的灵魂
-                        output.accept(SOUL_APPOINTED_WET_NURSE.get());     // 被任命的乳娘们的灵魂
-                        output.accept(SOUL_FLORENCE.get());                // 弗洛伦斯的灵魂
-                        output.accept(SOUL_WINTER_BELL_WIND.get());        // 冬钟之风的灵魂
-                        output.accept(SOUL_WHITE_UNICORN.get());           // 白之独角兽的灵魂
-                        output.accept(SOUL_WHITE_LION.get());              // 白狮子的灵魂
-                        // ==========================================================================
-                        // 技能书
-                        // ==========================================================================
-                        output.accept(SKILL_BOOK_SOUL_ARROW.get());         // 魔书【魂之矢】
-                        output.accept(SKILL_BOOK_SOUL_VOLLEY.get());        // 魔书【魂之连射】
-                        output.accept(SKILL_BOOK_SOUL_LIGHT.get());         // 魔书【魂之光】
-                        output.accept(SKILL_BOOK_SOUL_RADIATION.get());     // 魔书【魂之放射】
-                        output.accept(SKILL_BOOK_DISPEL.get());             // 魔书【驱散】
-                        output.accept(SKILL_BOOK_SEE_THROUGH_ATTACK.get()); // 魔书【识破攻击】
-                        output.accept(SKILL_BOOK_CARRHUS_BLOOD_CURSE.get());// 魔书【卡萨斯血咒】
-                        output.accept(SKILL_BOOK_POISON.get());             // 魔书【毒素】
-                        output.accept(SKILL_BOOK_POISON_II.get());          // 魔书【毒素Ⅱ】
-                        output.accept(SKILL_BOOK_HYPNOSIS.get());           // 魔书【催眠】
-                        output.accept(SKILL_BOOK_CURE.get());               // 圣书【治愈】
-                        output.accept(SKILL_BOOK_MAGIC_BLESSING.get());     // 魔书【魔力祝福】
-                        output.accept(SKILL_BOOK_RAMPAGE.get());            // 魔书【横冲直撞】
-                        output.accept(SKILL_BOOK_FULL_BLESSING.get());      // 魔书【全面祝福】
-                        output.accept(SKILL_BOOK_RESURRECTION.get());       // 圣书【还魂】
-                        output.accept(SKILL_BOOK_MANA_ABSORPTION.get());    // 魔书【魔力吸收】
-                        output.accept(SKILL_BOOK_ERASE.get());              // 圣书【擦除】
-                        output.accept(SKILL_BOOK_KINGS_COMMAND.get());      // 魔书【王之号令】
-                        output.accept(SKILL_BOOK_REQUIEM.get());            // 魔书【镇魂歌】
-                        output.accept(SKILL_BOOK_GRIT.get());               // 魔书【咬紧牙关】
-                        output.accept(SKILL_BOOK_FIRE.get());               // 魔书【火炎】
-                        output.accept(SKILL_BOOK_DROWNING_BUBBLE.get());    // 魔书【沉溺之泡】
-                        output.accept(SKILL_BOOK_DARK_SIDE_OF_MOON.get());  // 魔书【月之暗面】
-                        output.accept(SKILL_BOOK_FREEZING_MAGIC_BULLET.get());// 魔书【冰结之魔弹】
-                        output.accept(SKILL_BOOK_HELLFIRE.get());           // 魔书【业火】
-                        output.accept(SKILL_BOOK_DESTRUCTION_STORM.get());  // 魔书【破灭风暴】
-                        output.accept(SKILL_BOOK_INNER_POTENTIAL.get());    // 魔书【内在潜力】
-                        output.accept(SKILL_BOOK_GREAT_SOUL_ARROW.get());   // 魔书【魂之巨矢】
-                        output.accept(SKILL_BOOK_VERDANT_POWER.get());      // 魔书【新绿之力】
-                        output.accept(SKILL_BOOK_ROCK_BODY.get());          // 魔书【岩之体】
-                        output.accept(SKILL_BOOK_DARK_ORB.get());           // 魔书【暗之球】
-                        output.accept(SKILL_BOOK_DARK_DANCE.get());         // 魔书【暗之乱舞】
-                        output.accept(SKILL_BOOK_DARK_SWARM.get());         // 魔书【暗之群来】
-                        output.accept(SKILL_BOOK_DIVINE_THUNDER.get());     // 魔书【神雷】
-                        output.accept(SKILL_BOOK_DIVINE_BEAST_THUNDER.get());// 魔书【神兽之雷鸣】
-                        output.accept(SKILL_BOOK_METEOR_SWARM.get());       // 魔书【流星群】
-                        output.accept(SKILL_BOOK_FULL_CURSE.get());         // 魔书【全面诅咒】
-                        output.accept(SKILL_BOOK_GREAT_SOUL_ARROW_VOLLEY.get());// 魔书【魂之巨矢连射】
-                        output.accept(SKILL_BOOK_INVISIBLE.get());          // 魔书【看不见的身体】
-                        output.accept(SKILL_BOOK_FATAL_GUARD.get());        // 圣书【致命守护】
-                        output.accept(SKILL_BOOK_GHOST_FIRE.get());         // 魔书【幽火】
-                        output.accept(SKILL_BOOK_PHALANX.get());            // 魔书【法拉克斯】
-                        output.accept(SKILL_BOOK_ABSOLUTE_HIT.get());       // 魔书【绝对必中】
-                        output.accept(SKILL_BOOK_CHAOS_EXPLOSION.get());    // 魔书【混沌爆炎】
-                        output.accept(SKILL_BOOK_CRITICAL_STRIKE.get());    // 魔书【会心一击】
-                        output.accept(SKILL_BOOK_SOUL_SHIELD.get());        // 圣书【灵魂盾】
-                        output.accept(SKILL_BOOK_DENSE_SPIROCHETE.get());   // 魔书【密螺旋体】
-                        output.accept(SKILL_BOOK_SUMMON_MEAT_WALL.get());   // 圣书【肉壁召唤】
-                        output.accept(SKILL_BOOK_TORN_GRUDGE.get());        // 魔书【撕裂的遗恨】
-                        output.accept(SKILL_BOOK_PIERCING_ICICLE.get());    // 魔书【贯穿冰柱】
-                        output.accept(SKILL_BOOK_RAIN_OF_RUIN.get());       // 魔书【灭亡的箭雨】
-                        output.accept(SKILL_BOOK_GLOOMY_SWAMP.get());       // 魔书【阴暗之沼】
-                        output.accept(SKILL_BOOK_ACID_RAIN.get());          // 魔书【酸雨】
-                        output.accept(SKILL_BOOK_ROYAL_TEA.get());          // 魔书【皇家红茶】
-                        output.accept(SKILL_BOOK_GODSPEED_DANCE.get());     // 魔书【神速之舞】
-                        output.accept(SKILL_BOOK_KATARINA_WHEEL.get());     // 圣书【卡塔丽娜的车轮】
-                        output.accept(SKILL_BOOK_PALADIN_BANNER.get());     // 圣书【圣骑士的御旗】
-                        output.accept(SKILL_BOOK_BLACK_WAVE.get());         // 魔书【黑之波动】
-                        output.accept(SKILL_BOOK_BLACK_SLASH.get());        // 魔书【黑之斩击】
-                        output.accept(SKILL_BOOK_AWAKENING.get());          // 魔书【觉醒】
-                        output.accept(SKILL_BOOK_SERPENT_EMBRACE.get());    // 魔书【毒蛇的拥抱】
-                        output.accept(SKILL_BOOK_SOUL_STREAM.get());        // 魔书【魂之奔流】
-                    })
+                    .displayItems((parameters, output) ->
+                            BSOriginalItemData.fillCreativeTab(output, BSOriginalItemData.Category.NORMAL))
                     .build());
+
+    @SuppressWarnings("unused")
+    public static final RegistryObject<CreativeModeTab> BLACK_SOULS_IMPORTANT_TAB = CREATIVE_MODE_TABS.register("blacksouls_important",
+            () -> CreativeModeTab.builder()
+                    .icon(() -> new ItemStack(BLOODSTAINED_KEY.get()))
+                    .title(Component.translatable("itemGroup.blacksouls_important"))
+                    .withSearchBar(30)
+                    .displayItems((parameters, output) ->
+                            BSOriginalItemData.fillCreativeTab(output, BSOriginalItemData.Category.IMPORTANT))
+                    .build());
+
+    private static Map<Integer, RegistryObject<Item>> registerOriginalEnemySpawnEggs() {
+        Map<Integer, RegistryObject<Item>> result = new LinkedHashMap<>();
+        for (BSOriginalEnemyData.Entry profile : BSOriginalEnemyData.values()) {
+            if (!profile.spawnable() || BSOriginalEnemyPhaseData.isPhaseSuccessor(profile.id())) {
+                continue;
+            }
+            String registryName = String.format("original_enemy_%03d_spawn_egg", profile.id());
+            result.put(profile.id(), ITEMS.register(registryName,
+                    () -> new ItemOriginalEnemySpawnEgg(profile, new Item.Properties().stacksTo(16))));
+        }
+        return Collections.unmodifiableMap(result);
+    }
+
     // 注册方法
     private void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
         event.register(BSPlayerStats.class);

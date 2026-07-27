@@ -19,12 +19,16 @@ import net.minecraftforge.common.util.LazyOptional;
 public class BSPlayerStats {
     public static final Capability<BSPlayerStats> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 
-    private static final int MAX_LEVEL = 999;
+    public static final int NORMAL_MAX_LEVEL = 999;
+    public static final int DEVELOPER_MAX_LEVEL = Integer.MAX_VALUE - 2;
     private static final long[] EXP_THRESHOLDS = createExpThresholds();
 
     public static final double HARD_CAP_HP = 1099998;
     public static final double HARD_CAP_MP = 109998;
     public static final double HARD_CAP_OTHER = 109998;
+
+    public boolean developerNoCooldown = false;
+    public boolean developerLimitBreak = false;
 
     public boolean hasVisitedLibrary = false;
     public boolean whiteBearIntroduced = false;
@@ -137,6 +141,8 @@ public class BSPlayerStats {
     public CompoundTag serializeNBT() {
         CompoundTag nbt = new CompoundTag();
         nbt.putInt("Level", level);
+        nbt.putBoolean("DeveloperNoCooldown", developerNoCooldown);
+        nbt.putBoolean("DeveloperLimitBreak", developerLimitBreak);
         nbt.putLong("Exp", currentExp);
         nbt.putDouble("MP", mp);
         nbt.putDouble("CurrentActionPoints", currentActionPoints);
@@ -213,7 +219,9 @@ public class BSPlayerStats {
     }
 
     public void deserializeNBT(CompoundTag nbt) {
-        this.level = nbt.getInt("Level");
+        this.level = Math.max(1, nbt.getInt("Level"));
+        this.developerNoCooldown = nbt.getBoolean("DeveloperNoCooldown");
+        this.developerLimitBreak = nbt.getBoolean("DeveloperLimitBreak");
         this.currentExp = nbt.getLong("Exp");
         this.mp = nbt.getDouble("MP");
         this.currentActionPoints = nbt.contains("CurrentActionPoints") ? nbt.getDouble("CurrentActionPoints") : 1.0;
@@ -313,14 +321,31 @@ public class BSPlayerStats {
     }
 
     public void addExp(long amount) {
-        if (this.level >= MAX_LEVEL) {
+        int levelLimit = getLevelLimit();
+        if (this.level >= levelLimit || amount <= 0L) {
             return;
         }
-        this.currentExp += amount;
-        while (this.level < MAX_LEVEL && this.currentExp >= getExpToReachLevel(this.level + 1)) {
-            this.level++;
+        this.currentExp = amount > Long.MAX_VALUE - this.currentExp ? Long.MAX_VALUE : this.currentExp + amount;
+        if (this.currentExp >= getExpToReachLevel(this.level + 1)) {
+            int low = this.level + 1;
+            int high = levelLimit;
+            int reached = this.level;
+            while (low <= high) {
+                int middle = low + (high - low) / 2;
+                if (getExpToReachLevel(middle) <= this.currentExp) {
+                    reached = middle;
+                    low = middle + 1;
+                } else {
+                    high = middle - 1;
+                }
+            }
+            this.level = reached;
         }
         recalculateStats();
+    }
+
+    public int getLevelLimit() {
+        return this.developerLimitBreak ? DEVELOPER_MAX_LEVEL : NORMAL_MAX_LEVEL;
     }
 
     public boolean consumeMP(float amount) {
@@ -336,7 +361,7 @@ public class BSPlayerStats {
     }
 
     public void recalculateStats() {
-        int l = Math.min(MAX_LEVEL, this.level);
+        int l = Math.max(1, Math.min(getLevelLimit(), this.level));
 
         double baseHp = getRMStat(l, 638, 6680, 61);
         double baseMp = getRMStat(l, 100, 205, 1);
@@ -361,14 +386,25 @@ public class BSPlayerStats {
             finalHp *= hpMultiplier;
         }
 
-        this.hp = Math.min(HARD_CAP_HP, finalHp);
-        this.maxMp = Math.min(HARD_CAP_MP, baseMp + this.bonusMp);
-        this.attack = Math.min(HARD_CAP_OTHER, baseAtk + this.bonusAtk);
-        this.defense = Math.min(HARD_CAP_OTHER, baseDef + this.bonusDef);
-        this.magicAttack = Math.min(HARD_CAP_OTHER, baseMatk + this.bonusMatk);
-        this.magicDefense = Math.min(HARD_CAP_OTHER, baseMdef + this.bonusMdef);
-        this.luck = Math.min(HARD_CAP_OTHER, baseLuc + this.bonusLuc);
-        this.speed = Math.min(HARD_CAP_OTHER, baseSpeed + this.bonusSpeed);
+        if (this.developerLimitBreak) {
+            this.hp = Math.max(1.0D, finalHp);
+            this.maxMp = Math.max(0.0D, baseMp + this.bonusMp);
+            this.attack = Math.max(0.0D, baseAtk + this.bonusAtk);
+            this.defense = Math.max(0.0D, baseDef + this.bonusDef);
+            this.magicAttack = Math.max(0.0D, baseMatk + this.bonusMatk);
+            this.magicDefense = Math.max(0.0D, baseMdef + this.bonusMdef);
+            this.luck = Math.max(0.0D, baseLuc + this.bonusLuc);
+            this.speed = Math.max(0.0D, baseSpeed + this.bonusSpeed);
+        } else {
+            this.hp = Math.min(HARD_CAP_HP, finalHp);
+            this.maxMp = Math.min(HARD_CAP_MP, baseMp + this.bonusMp);
+            this.attack = Math.min(HARD_CAP_OTHER, baseAtk + this.bonusAtk);
+            this.defense = Math.min(HARD_CAP_OTHER, baseDef + this.bonusDef);
+            this.magicAttack = Math.min(HARD_CAP_OTHER, baseMatk + this.bonusMatk);
+            this.magicDefense = Math.min(HARD_CAP_OTHER, baseMdef + this.bonusMdef);
+            this.luck = Math.min(HARD_CAP_OTHER, baseLuc + this.bonusLuc);
+            this.speed = Math.min(HARD_CAP_OTHER, baseSpeed + this.bonusSpeed);
+        }
 
         this.critRate = Math.min(100.0, 5.0 + this.bonusCritRate);
         this.evasion = Math.min(100.0, 0.0 + this.evasion);
@@ -444,7 +480,7 @@ public class BSPlayerStats {
     }
 
     private static long[] createExpThresholds() {
-        long[] thresholds = new long[MAX_LEVEL + 2];
+        long[] thresholds = new long[NORMAL_MAX_LEVEL + 2];
         for (int level = 2; level < thresholds.length; level++) {
             thresholds[level] = calculateExpThreshold(level);
         }

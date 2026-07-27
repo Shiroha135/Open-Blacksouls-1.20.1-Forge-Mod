@@ -32,13 +32,13 @@ public class ItemDreamSoul extends Item {
 
             if (stats != null) {
                 
-                if (stats.level >= 999) {
+                if (stats.level >= stats.getLevelLimit()) {
                     player.sendSystemMessage(Component.translatable("message.blacksouls.max_level").withStyle(ChatFormatting.RED));
                     return InteractionResultHolder.fail(stack);
                 }
 
                 
-                int targetLevel = Math.min(999, stats.level + 5);
+                int targetLevel = Math.min(stats.getLevelLimit(), stats.level > Integer.MAX_VALUE - 5 ? stats.getLevelLimit() : stats.level + 5);
                 long expNeeded = stats.getExpToReachLevel(targetLevel) - stats.getExpToReachLevel(stats.level);
 
                 

@@ -51,4 +51,53 @@ public class BSEntityRegistry {
                             .clientTrackingRange(10)
                             .updateInterval(3)
                             .build("meat_wall"));
+
+    public static final RegistryObject<EntityType<EntityCorpseEatingRabbit>> CORPSE_EATING_RABBIT =
+            ENTITY_TYPES.register("corpse_eating_rabbit", () ->
+                    EntityType.Builder.of(EntityCorpseEatingRabbit::new, MobCategory.MONSTER)
+                            .sized(0.72F, 1.15F)
+                            .clientTrackingRange(10)
+                            .updateInterval(3)
+                            .build("corpse_eating_rabbit"));
+
+    public static final RegistryObject<EntityType<EntityOriginalDatabaseEnemy>> ORIGINAL_ENEMY =
+            ENTITY_TYPES.register("original_enemy", () ->
+                    EntityType.Builder.of(EntityOriginalDatabaseEnemy::new, MobCategory.MONSTER)
+                            .sized(0.8F, 1.8F)
+                            .clientTrackingRange(10)
+                            .updateInterval(3)
+                            .build("original_enemy"));
+
+    public static final RegistryObject<EntityType<EntityOriginalTurnBattleEnemy>> HEADLESS_UNDEAD =
+            ENTITY_TYPES.register("headless_undead", () ->
+                    EntityType.Builder.<EntityOriginalTurnBattleEnemy>of(
+                                    (type, level) -> new EntityOriginalTurnBattleEnemy(
+                                            type, level, EntityOriginalTurnBattleEnemy.Profile.HEADLESS_UNDEAD),
+                                    MobCategory.MONSTER)
+                            .sized(0.62F, 1.8F)
+                            .clientTrackingRange(10)
+                            .updateInterval(3)
+                            .build("headless_undead"));
+
+    public static final RegistryObject<EntityType<EntityOriginalTurnBattleEnemy>> CORRUPT_DOG =
+            ENTITY_TYPES.register("corrupt_dog", () ->
+                    EntityType.Builder.<EntityOriginalTurnBattleEnemy>of(
+                                    (type, level) -> new EntityOriginalTurnBattleEnemy(
+                                            type, level, EntityOriginalTurnBattleEnemy.Profile.CORRUPT_DOG),
+                                    MobCategory.MONSTER)
+                            .sized(0.9F, 1.05F)
+                            .clientTrackingRange(10)
+                            .updateInterval(3)
+                            .build("corrupt_dog"));
+
+    public static final RegistryObject<EntityType<EntityOriginalTurnBattleEnemy>> WEREWOLF =
+            ENTITY_TYPES.register("werewolf", () ->
+                    EntityType.Builder.<EntityOriginalTurnBattleEnemy>of(
+                                    (type, level) -> new EntityOriginalTurnBattleEnemy(
+                                            type, level, EntityOriginalTurnBattleEnemy.Profile.WEREWOLF),
+                                    MobCategory.MONSTER)
+                            .sized(1.1F, 1.9F)
+                            .clientTrackingRange(10)
+                            .updateInterval(3)
+                            .build("werewolf"));
 }

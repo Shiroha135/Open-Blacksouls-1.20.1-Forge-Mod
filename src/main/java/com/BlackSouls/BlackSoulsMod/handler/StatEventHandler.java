@@ -1060,7 +1060,7 @@ public class StatEventHandler {
                     serverPlayer.setHealth(serverPlayer.getMaxHealth());
                     serverPlayer.getFoodData().setFoodLevel(20);
                     serverPlayer.getFoodData().setSaturation(5.0f);
-                    serverPlayer.setRespawnPosition(level.dimension(), pos, player.getYRot(), true, false);
+                    serverPlayer.setRespawnPosition(level.dimension(), pos.above(), player.getYRot(), true, false);
                     com.BlackSouls.BlackSoulsMod.util.SkillUtils.setMana(serverPlayer, com.BlackSouls.BlackSoulsMod.util.SkillUtils.getMaxMana(serverPlayer));
                     serverPlayer.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
                         double maxActionPoints = SkillUtils.getMaxActionPoints(serverPlayer, stats);
@@ -2842,14 +2842,16 @@ public class StatEventHandler {
 
     private static void clampCalculatedStats(Player player, BSPlayerStats stats) {
         stats.evasion = Math.max(0.0, Math.min(100.0, stats.evasion));
-        stats.hp = Math.min(CAP_HP, stats.hp);
-        stats.maxMp = Math.min(CAP_MP, stats.maxMp);
-        stats.attack = Math.min(CAP_ATK, stats.attack);
-        stats.defense = Math.min(CAP_DEF, stats.defense);
-        stats.magicAttack = Math.min(CAP_MATK, stats.magicAttack);
-        stats.magicDefense = Math.min(CAP_MDEF, stats.magicDefense);
-        stats.luck = Math.min(CAP_LUCK, stats.luck);
-        stats.speed = Math.min(CAP_SPEED, stats.speed);
+        if (!stats.developerLimitBreak) {
+            stats.hp = Math.min(CAP_HP, stats.hp);
+            stats.maxMp = Math.min(CAP_MP, stats.maxMp);
+            stats.attack = Math.min(CAP_ATK, stats.attack);
+            stats.defense = Math.min(CAP_DEF, stats.defense);
+            stats.magicAttack = Math.min(CAP_MATK, stats.magicAttack);
+            stats.magicDefense = Math.min(CAP_MDEF, stats.magicDefense);
+            stats.luck = Math.min(CAP_LUCK, stats.luck);
+            stats.speed = Math.min(CAP_SPEED, stats.speed);
+        }
         if (stats.mp > stats.maxMp) {
             stats.mp = stats.maxMp;
         }

@@ -69,24 +69,25 @@ public class SoulGainBannerRenderer {
         int titleY = barY + 3;
         int valueY = barY + mc.font.lineHeight + 5;
 
-        guiGraphics.fill(0, barY, screenWidth, screenHeight, 0xBB000000);
-
         String titleKey = soulDelta >= 0
                 ? "gui.blacksouls.soul.banner.soul_up"
                 : "gui.blacksouls.soul.banner.soul_down";
-        guiGraphics.drawString(mc.font, I18n.get(titleKey), 4, titleY, 0xFFFFFFFF, false);
+        String titleText = I18n.get(titleKey);
+        String valueText = I18n.get(
+                "gui.blacksouls.soul.banner.current_value",
+                stats.souls,
+                deltaText
+        );
+        int titleWidth = mc.font.width(titleText) + 8;
+        guiGraphics.fill(0, barY, titleWidth, valueY - 2, 0xBB000000);
+        guiGraphics.fill(0, valueY - 2, screenWidth, screenHeight, 0xBB000000);
+        guiGraphics.drawString(mc.font, titleText, 4, titleY, 0xFFFFFFFF, false);
 
         RenderSystem.enableBlend();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         guiGraphics.blit(ICON, 4, valueY - 1, 0, 0, 16, 16, 16, 16);
         RenderSystem.disableBlend();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-
-        String valueText = I18n.get(
-                "gui.blacksouls.soul.banner.current_value",
-                stats.souls,
-                deltaText
-        );
 
         int valueColor = soulDelta >= 0 ? 0xFFFF55 : 0xFF5555;
         guiGraphics.drawString(mc.font, valueText, 22, valueY, valueColor, false);

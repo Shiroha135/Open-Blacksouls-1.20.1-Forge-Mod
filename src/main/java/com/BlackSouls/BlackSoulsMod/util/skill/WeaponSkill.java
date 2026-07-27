@@ -23,4 +23,13 @@ public abstract class WeaponSkill extends AbstractSkill {
         }
         return super.canCast(player, stats);
     }
+
+    @Override
+    public boolean canCastInTurnBattle(ServerPlayer player, BSPlayerStats stats) {
+        if (!isWeaponEquipped(player)) {
+            player.sendSystemMessage(Component.translatable("message.blacksouls.skill.wrong_weapon").withStyle(ChatFormatting.RED));
+            return false;
+        }
+        return super.canCastInTurnBattle(player, stats);
+    }
 }

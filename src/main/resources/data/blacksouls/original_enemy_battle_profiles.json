@@ -1,0 +1,1893 @@
+[
+  {
+    "profileId": 74,
+    "troopId": 125,
+    "members": [
+      {
+        "profileId": 74,
+        "states": []
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 75,
+    "troopId": 125,
+    "members": [
+      {
+        "profileId": 75,
+        "states": []
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 91,
+    "troopId": 91,
+    "members": [
+      {
+        "profileId": 91,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_fb9a5dab73",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.2,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 92,
+    "troopId": 91,
+    "members": [
+      {
+        "profileId": 92,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_fb9a5dab73",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.2,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 127,
+    "troopId": 163,
+    "members": [
+      {
+        "profileId": 127,
+        "states": []
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 129,
+    "troopId": 163,
+    "members": [
+      {
+        "profileId": 129,
+        "states": []
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 165,
+    "troopId": 193,
+    "members": [
+      {
+        "profileId": 165,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_d781c2b525",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 166,
+    "troopId": 193,
+    "members": [
+      {
+        "profileId": 166,
+        "states": [
+          42
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_d84f136ad0",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 184,
+    "troopId": 174,
+    "members": [
+      {
+        "profileId": 184,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_ff69fe362d",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 185,
+    "troopId": 174,
+    "members": [
+      {
+        "profileId": 185,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 198,
+    "troopId": 183,
+    "members": [
+      {
+        "profileId": 198,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_eefc4dec9f",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 199,
+    "troopId": 183,
+    "members": [
+      {
+        "profileId": 199,
+        "states": [
+          42
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_e83f401897",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 223,
+    "troopId": 210,
+    "members": [
+      {
+        "profileId": 223,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_bb125ea93e",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 224,
+    "troopId": 210,
+    "members": [
+      {
+        "profileId": 224,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_bb125ea93e",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 225,
+    "troopId": 210,
+    "members": [
+      {
+        "profileId": 225,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_bb125ea93e",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 229,
+    "troopId": 293,
+    "members": [
+      {
+        "profileId": 229,
+        "states": []
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 230,
+    "troopId": 293,
+    "members": [
+      {
+        "profileId": 230,
+        "states": []
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 242,
+    "troopId": 214,
+    "members": [
+      {
+        "profileId": 240,
+        "states": []
+      },
+      {
+        "profileId": 242,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_8b181ff845",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 243,
+    "troopId": 214,
+    "members": [
+      {
+        "profileId": 240,
+        "states": []
+      },
+      {
+        "profileId": 243,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_8b181ff845",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 252,
+    "troopId": 222,
+    "members": [
+      {
+        "profileId": 252,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_886ece2613",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 253,
+    "troopId": 222,
+    "members": [
+      {
+        "profileId": 253,
+        "states": [
+          42
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_ddb57ac593",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 254,
+    "troopId": 222,
+    "members": [
+      {
+        "profileId": 254,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_cea1a5f1b4",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 268,
+    "troopId": 309,
+    "members": [
+      {
+        "profileId": 268,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_e1dad7a949",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 269,
+    "troopId": 309,
+    "members": [
+      {
+        "profileId": 269,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_e1dad7a949",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 275,
+    "troopId": 324,
+    "members": [
+      {
+        "profileId": 275,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_1adabe130f",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "blacksouls:textures/gui/battle/background/battleback_ce044e597c.png",
+    "battleback1Width": 580,
+    "battleback1Height": 444,
+    "battleback2": "blacksouls:textures/gui/battle/background/battleback_176f5bfcbc.png",
+    "battleback2Width": 580,
+    "battleback2Height": 444
+  },
+  {
+    "profileId": 276,
+    "troopId": 324,
+    "members": [
+      {
+        "profileId": 276,
+        "states": []
+      },
+      {
+        "profileId": 278,
+        "states": []
+      },
+      {
+        "profileId": 278,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_1adabe130f",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "blacksouls:textures/gui/battle/background/battleback_ce044e597c.png",
+    "battleback1Width": 580,
+    "battleback1Height": 444,
+    "battleback2": "blacksouls:textures/gui/battle/background/battleback_176f5bfcbc.png",
+    "battleback2Width": 580,
+    "battleback2Height": 444
+  },
+  {
+    "profileId": 277,
+    "troopId": 324,
+    "members": [
+      {
+        "profileId": 277,
+        "states": [
+          42
+        ]
+      },
+      {
+        "profileId": 278,
+        "states": []
+      },
+      {
+        "profileId": 278,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_9db35406e9",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "blacksouls:textures/gui/battle/background/battleback_ce044e597c.png",
+    "battleback1Width": 580,
+    "battleback1Height": 444,
+    "battleback2": "blacksouls:textures/gui/battle/background/battleback_176f5bfcbc.png",
+    "battleback2Width": 580,
+    "battleback2Height": 444
+  },
+  {
+    "profileId": 279,
+    "troopId": 326,
+    "members": [
+      {
+        "profileId": 279,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_d8a2f1c186",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 280,
+    "troopId": 326,
+    "members": [
+      {
+        "profileId": 280,
+        "states": [
+          42
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_10ffef3bcd",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 283,
+    "troopId": 328,
+    "members": [
+      {
+        "profileId": 283,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_2fa4503610",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 284,
+    "troopId": 328,
+    "members": [
+      {
+        "profileId": 284,
+        "states": [
+          42
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_a79e81824c",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 298,
+    "troopId": 341,
+    "members": [
+      {
+        "profileId": 298,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_36ce5750a7",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 299,
+    "troopId": 341,
+    "members": [
+      {
+        "profileId": 299,
+        "states": [
+          114
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_bbddf11041",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 322,
+    "troopId": 360,
+    "members": [
+      {
+        "profileId": 322,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_2c3279a65c",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 323,
+    "troopId": 360,
+    "members": [
+      {
+        "profileId": 323,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_2c3279a65c",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 334,
+    "troopId": 364,
+    "members": [
+      {
+        "profileId": 334,
+        "states": [
+          42
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_9b95afe347",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "blacksouls:textures/gui/battle/background/battleback_64328e62d7.png",
+    "battleback1Width": 580,
+    "battleback1Height": 444,
+    "battleback2": "blacksouls:textures/gui/battle/background/battleback_b7ea3ec1f5.png",
+    "battleback2Width": 580,
+    "battleback2Height": 444
+  },
+  {
+    "profileId": 335,
+    "troopId": 364,
+    "members": [
+      {
+        "profileId": 335,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_31540ef853",
+    "bgmVolume": 1.0,
+    "bgmPitch": 0.5,
+    "battleback1": "blacksouls:textures/gui/battle/background/battleback_64328e62d7.png",
+    "battleback1Width": 580,
+    "battleback1Height": 444,
+    "battleback2": "blacksouls:textures/gui/battle/background/battleback_b7ea3ec1f5.png",
+    "battleback2Width": 580,
+    "battleback2Height": 444
+  },
+  {
+    "profileId": 337,
+    "troopId": 0,
+    "members": [
+      {
+        "profileId": 337,
+        "states": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 338,
+    "troopId": 0,
+    "members": [
+      {
+        "profileId": 338,
+        "states": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 394,
+    "troopId": 443,
+    "members": [
+      {
+        "profileId": 394,
+        "states": []
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 395,
+    "troopId": 443,
+    "members": [
+      {
+        "profileId": 395,
+        "states": []
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 426,
+    "troopId": 0,
+    "members": [
+      {
+        "profileId": 426,
+        "states": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 459,
+    "troopId": 523,
+    "members": [
+      {
+        "profileId": 459,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_410261e9ba",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 460,
+    "troopId": 523,
+    "members": [
+      {
+        "profileId": 460,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_410261e9ba",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 463,
+    "troopId": 525,
+    "members": [
+      {
+        "profileId": 461,
+        "states": []
+      },
+      {
+        "profileId": 463,
+        "states": []
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 464,
+    "troopId": 525,
+    "members": [
+      {
+        "profileId": 461,
+        "states": []
+      },
+      {
+        "profileId": 464,
+        "states": [
+          42
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_e83f401897",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 468,
+    "troopId": 0,
+    "members": [
+      {
+        "profileId": 468,
+        "states": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 469,
+    "troopId": 531,
+    "members": [
+      {
+        "profileId": 469,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_3aa7257a1a",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 470,
+    "troopId": 531,
+    "members": [
+      {
+        "profileId": 470,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_3aa7257a1a",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 471,
+    "troopId": 531,
+    "members": [
+      {
+        "profileId": 471,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_3aa7257a1a",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 472,
+    "troopId": 531,
+    "members": [
+      {
+        "profileId": 472,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_7a8571ca63",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 477,
+    "troopId": 532,
+    "members": [
+      {
+        "profileId": 477,
+        "states": []
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 478,
+    "troopId": 532,
+    "members": [
+      {
+        "profileId": 478,
+        "states": []
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 479,
+    "troopId": 533,
+    "members": [
+      {
+        "profileId": 479,
+        "states": [
+          145,
+          146,
+          147
+        ]
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 480,
+    "troopId": 533,
+    "members": [
+      {
+        "profileId": 480,
+        "states": [
+          146,
+          147
+        ]
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 481,
+    "troopId": 533,
+    "members": [
+      {
+        "profileId": 481,
+        "states": [
+          147
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_648dd53729",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 482,
+    "troopId": 534,
+    "members": [
+      {
+        "profileId": 482,
+        "states": []
+      },
+      {
+        "profileId": 483,
+        "states": [
+          10
+        ]
+      },
+      {
+        "profileId": 483,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_413f3a90df",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.1,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 484,
+    "troopId": 534,
+    "members": [
+      {
+        "profileId": 484,
+        "states": [
+          10,
+          149
+        ]
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 492,
+    "troopId": 569,
+    "members": [
+      {
+        "profileId": 492,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_b624b8acf1",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 493,
+    "troopId": 569,
+    "members": [
+      {
+        "profileId": 495,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_4fe8ce89e5",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 494,
+    "troopId": 569,
+    "members": [
+      {
+        "profileId": 495,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_4fe8ce89e5",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 495,
+    "troopId": 569,
+    "members": [
+      {
+        "profileId": 495,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_4fe8ce89e5",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 513,
+    "troopId": 566,
+    "members": [
+      {
+        "profileId": 513,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_fb9a5dab73",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 514,
+    "troopId": 566,
+    "members": [
+      {
+        "profileId": 514,
+        "states": [
+          42
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_fb9a5dab73",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 518,
+    "troopId": 603,
+    "members": [
+      {
+        "profileId": 518,
+        "states": [
+          10,
+          166
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_0338ff6da3",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 519,
+    "troopId": 603,
+    "members": [
+      {
+        "profileId": 519,
+        "states": [
+          166
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_31540ef853",
+    "bgmVolume": 1.0,
+    "bgmPitch": 0.8,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 521,
+    "troopId": 0,
+    "members": [
+      {
+        "profileId": 521,
+        "states": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 524,
+    "troopId": 0,
+    "members": [
+      {
+        "profileId": 524,
+        "states": [
+          2,
+          3
+        ]
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 535,
+    "troopId": 600,
+    "members": [
+      {
+        "profileId": 535,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 536,
+    "troopId": 600,
+    "members": [
+      {
+        "profileId": 536,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_65e7fd1c87",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 545,
+    "troopId": 606,
+    "members": [
+      {
+        "profileId": 545,
+        "states": [
+          10,
+          202
+        ]
+      },
+      {
+        "profileId": 546,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_9cd6f8866c",
+    "bgmVolume": 1.0,
+    "bgmPitch": 0.8,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 547,
+    "troopId": 606,
+    "members": [
+      {
+        "profileId": 547,
+        "states": [
+          10
+        ]
+      },
+      {
+        "profileId": 549,
+        "states": [
+          10
+        ]
+      },
+      {
+        "profileId": 549,
+        "states": [
+          10
+        ]
+      },
+      {
+        "profileId": 549,
+        "states": [
+          10
+        ]
+      },
+      {
+        "profileId": 549,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_9cd6f8866c",
+    "bgmVolume": 1.0,
+    "bgmPitch": 0.8,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 550,
+    "troopId": 606,
+    "members": [
+      {
+        "profileId": 550,
+        "states": [
+          202,
+          203
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_2c80764518",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 556,
+    "troopId": 613,
+    "members": [
+      {
+        "profileId": 556,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_dd68c65b53",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 557,
+    "troopId": 613,
+    "members": [
+      {
+        "profileId": 557,
+        "states": [
+          10
+        ]
+      },
+      {
+        "profileId": 556,
+        "states": [
+          10
+        ]
+      },
+      {
+        "profileId": 556,
+        "states": [
+          10
+        ]
+      },
+      {
+        "profileId": 556,
+        "states": [
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_dd68c65b53",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 560,
+    "troopId": 620,
+    "members": [
+      {
+        "profileId": 560,
+        "states": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          10
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_b09aa22379",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 561,
+    "troopId": 620,
+    "members": [
+      {
+        "profileId": 562,
+        "states": [
+          221
+        ]
+      },
+      {
+        "profileId": 561,
+        "states": [
+          10,
+          221
+        ]
+      },
+      {
+        "profileId": 563,
+        "states": [
+          221
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_28c2bccb36",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "blacksouls:textures/gui/battle/background/battleback_7412c5e577.png",
+    "battleback1Width": 800,
+    "battleback1Height": 611,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 566,
+    "troopId": 620,
+    "members": [
+      {
+        "profileId": 566,
+        "states": [
+          10,
+          221
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_909978adf6",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "blacksouls:textures/gui/battle/background/battleback_5531130c8c.png",
+    "battleback1Width": 1200,
+    "battleback1Height": 899,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 567,
+    "troopId": 620,
+    "members": [
+      {
+        "profileId": 567,
+        "states": [
+          10,
+          221,
+          242
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_f6e9d2944e",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "blacksouls:textures/gui/battle/background/battleback_acca8a7efb.png",
+    "battleback1Width": 800,
+    "battleback1Height": 611,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 568,
+    "troopId": 620,
+    "members": [
+      {
+        "profileId": 569,
+        "states": [
+          10,
+          221
+        ]
+      },
+      {
+        "profileId": 568,
+        "states": [
+          10,
+          221
+        ]
+      },
+      {
+        "profileId": 569,
+        "states": [
+          10,
+          221
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_3049508b8a",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "blacksouls:textures/gui/battle/background/battleback_14ea20bd51.png",
+    "battleback1Width": 800,
+    "battleback1Height": 611,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 570,
+    "troopId": 620,
+    "members": [
+      {
+        "profileId": 570,
+        "states": [
+          10,
+          221
+        ]
+      },
+      {
+        "profileId": 580,
+        "states": [
+          10,
+          221
+        ]
+      },
+      {
+        "profileId": 581,
+        "states": [
+          10,
+          221
+        ]
+      },
+      {
+        "profileId": 582,
+        "states": [
+          10,
+          221
+        ]
+      },
+      {
+        "profileId": 583,
+        "states": [
+          10,
+          221
+        ]
+      },
+      {
+        "profileId": 584,
+        "states": [
+          10,
+          221
+        ]
+      },
+      {
+        "profileId": 585,
+        "states": [
+          10,
+          221
+        ]
+      },
+      {
+        "profileId": 586,
+        "states": [
+          10,
+          221
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_e120d8ae18",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "blacksouls:textures/gui/battle/background/battleback_1e95e628d9.png",
+    "battleback1Width": 800,
+    "battleback1Height": 800,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 577,
+    "troopId": 620,
+    "members": [
+      {
+        "profileId": 577,
+        "states": [
+          10,
+          221
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_e120d8ae18",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "blacksouls:textures/gui/battle/background/battleback_1e95e628d9.png",
+    "battleback1Width": 800,
+    "battleback1Height": 800,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 579,
+    "troopId": 620,
+    "members": [
+      {
+        "profileId": 579,
+        "states": [
+          10,
+          221
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_e120d8ae18",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "blacksouls:textures/gui/battle/background/battleback_1e95e628d9.png",
+    "battleback1Width": 800,
+    "battleback1Height": 800,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  }
+]

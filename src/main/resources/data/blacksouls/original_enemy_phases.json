@@ -1,0 +1,317 @@
+[
+  {
+    "from": 91,
+    "to": 92,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 91
+  },
+  {
+    "from": 74,
+    "to": 75,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 125
+  },
+  {
+    "from": 127,
+    "to": 129,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 163
+  },
+  {
+    "from": 185,
+    "to": 184,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 174
+  },
+  {
+    "from": 198,
+    "to": 199,
+    "thresholdPercent": 50.0,
+    "recoverAll": false,
+    "troopId": 183
+  },
+  {
+    "from": 165,
+    "to": 166,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 193
+  },
+  {
+    "from": 223,
+    "to": 224,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 210
+  },
+  {
+    "from": 224,
+    "to": 225,
+    "thresholdPercent": 50,
+    "recoverAll": false,
+    "troopId": 210
+  },
+  {
+    "from": 242,
+    "to": 243,
+    "thresholdPercent": 50.0,
+    "recoverAll": false,
+    "troopId": 214
+  },
+  {
+    "from": 252,
+    "to": 253,
+    "thresholdPercent": 50.0,
+    "recoverAll": false,
+    "troopId": 222
+  },
+  {
+    "from": 253,
+    "to": 254,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 222
+  },
+  {
+    "from": 229,
+    "to": 230,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 293
+  },
+  {
+    "from": 268,
+    "to": 269,
+    "thresholdPercent": 50.0,
+    "recoverAll": false,
+    "troopId": 309
+  },
+  {
+    "from": 275,
+    "to": 276,
+    "thresholdPercent": 50.0,
+    "recoverAll": false,
+    "troopId": 324
+  },
+  {
+    "from": 276,
+    "to": 277,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 324
+  },
+  {
+    "from": 279,
+    "to": 280,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 326
+  },
+  {
+    "from": 283,
+    "to": 284,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 328
+  },
+  {
+    "from": 298,
+    "to": 299,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 341
+  },
+  {
+    "from": 322,
+    "to": 323,
+    "thresholdPercent": 50.0,
+    "recoverAll": false,
+    "troopId": 360
+  },
+  {
+    "from": 335,
+    "to": 334,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 364
+  },
+  {
+    "from": 394,
+    "to": 395,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 443
+  },
+  {
+    "from": 459,
+    "to": 460,
+    "thresholdPercent": 50.0,
+    "recoverAll": false,
+    "troopId": 523
+  },
+  {
+    "from": 463,
+    "to": 464,
+    "thresholdPercent": 50.0,
+    "recoverAll": false,
+    "troopId": 525
+  },
+  {
+    "from": 469,
+    "to": 470,
+    "thresholdPercent": 1,
+    "recoverAll": true,
+    "troopId": 531
+  },
+  {
+    "from": 470,
+    "to": 471,
+    "thresholdPercent": 1,
+    "recoverAll": true,
+    "troopId": 531
+  },
+  {
+    "from": 471,
+    "to": 472,
+    "thresholdPercent": 1,
+    "recoverAll": true,
+    "troopId": 531
+  },
+  {
+    "from": 477,
+    "to": 478,
+    "thresholdPercent": 50.0,
+    "recoverAll": false,
+    "troopId": 532
+  },
+  {
+    "from": 479,
+    "to": 480,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 533
+  },
+  {
+    "from": 480,
+    "to": 481,
+    "thresholdPercent": 1,
+    "recoverAll": true,
+    "troopId": 533
+  },
+  {
+    "from": 484,
+    "to": 482,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 534
+  },
+  {
+    "from": 513,
+    "to": 514,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 566
+  },
+  {
+    "from": 492,
+    "to": 493,
+    "thresholdPercent": 1.0,
+    "recoverAll": false,
+    "troopId": 569
+  },
+  {
+    "from": 493,
+    "to": 494,
+    "thresholdPercent": 1.0,
+    "recoverAll": false,
+    "troopId": 569
+  },
+  {
+    "from": 494,
+    "to": 495,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 569
+  },
+  {
+    "from": 535,
+    "to": 536,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 600
+  },
+  {
+    "from": 518,
+    "to": 519,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 603
+  },
+  {
+    "from": 545,
+    "to": 547,
+    "thresholdPercent": 50,
+    "recoverAll": true,
+    "troopId": 606
+  },
+  {
+    "from": 547,
+    "to": 550,
+    "thresholdPercent": 1,
+    "recoverAll": true,
+    "troopId": 606
+  },
+  {
+    "from": 556,
+    "to": 557,
+    "thresholdPercent": 50.0,
+    "recoverAll": false,
+    "troopId": 613
+  },
+  {
+    "from": 560,
+    "to": 561,
+    "thresholdPercent": 1.0,
+    "recoverAll": true,
+    "troopId": 620
+  },
+  {
+    "from": 561,
+    "to": 566,
+    "thresholdPercent": 1,
+    "recoverAll": true,
+    "troopId": 620
+  },
+  {
+    "from": 566,
+    "to": 567,
+    "thresholdPercent": 1,
+    "recoverAll": true,
+    "troopId": 620
+  },
+  {
+    "from": 567,
+    "to": 568,
+    "thresholdPercent": 1,
+    "recoverAll": true,
+    "troopId": 620
+  },
+  {
+    "from": 568,
+    "to": 579,
+    "thresholdPercent": 1,
+    "recoverAll": true,
+    "troopId": 620
+  },
+  {
+    "from": 579,
+    "to": 570,
+    "thresholdPercent": 1,
+    "recoverAll": true,
+    "troopId": 620
+  }
+]

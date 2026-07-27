@@ -56,6 +56,7 @@ public class NetworkHandler {
         register(PacketClaimPurgeTaskReward.class, PacketClaimPurgeTaskReward::toBytes, PacketClaimPurgeTaskReward::new, PacketClaimPurgeTaskReward::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ServerboundSimpleActionPacket.class, ServerboundSimpleActionPacket::toBytes, ServerboundSimpleActionPacket::new, ServerboundSimpleActionPacket::handle, NetworkDirection.PLAY_TO_SERVER);
         register(PacketDevSetStats.class, PacketDevSetStats::toBytes, PacketDevSetStats::new, PacketDevSetStats::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(PacketDevAction.class, PacketDevAction::toBytes, PacketDevAction::new, PacketDevAction::handle, NetworkDirection.PLAY_TO_SERVER);
         register(PacketSetCovenant.class, PacketSetCovenant::toBytes, PacketSetCovenant::new, PacketSetCovenant::handle, NetworkDirection.PLAY_TO_SERVER);
         register(PacketTeleportToBonfire.class, PacketTeleportToBonfire::toBytes, PacketTeleportToBonfire::new, PacketTeleportToBonfire::handle, NetworkDirection.PLAY_TO_SERVER);
         register(PacketConvertSouls.class, PacketConvertSouls::toBytes, PacketConvertSouls::new, PacketConvertSouls::handle, NetworkDirection.PLAY_TO_SERVER);
@@ -67,6 +68,11 @@ public class NetworkHandler {
         register(PacketSyncUnlockedAvatars.class, PacketSyncUnlockedAvatars::toBytes, PacketSyncUnlockedAvatars::new, PacketSyncUnlockedAvatars::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(PacketOpenWhiteBearDialogue.class, PacketOpenWhiteBearDialogue::toBytes, PacketOpenWhiteBearDialogue::new, PacketOpenWhiteBearDialogue::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(ServerboundWhiteBearActionPacket.class, ServerboundWhiteBearActionPacket::toBytes, ServerboundWhiteBearActionPacket::new, ServerboundWhiteBearActionPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ClientboundTurnBattlePacket.class, ClientboundTurnBattlePacket::toBytes, ClientboundTurnBattlePacket::new, ClientboundTurnBattlePacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ServerboundTurnBattleActionPacket.class, ServerboundTurnBattleActionPacket::toBytes, ServerboundTurnBattleActionPacket::new, ServerboundTurnBattleActionPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ServerboundTurnBattlePresentationPacket.class, ServerboundTurnBattlePresentationPacket::toBytes, ServerboundTurnBattlePresentationPacket::new, ServerboundTurnBattlePresentationPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ClientboundLostItemPacket.class, ClientboundLostItemPacket::toBytes, ClientboundLostItemPacket::new, ClientboundLostItemPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ClientboundPlayerSizePacket.class, ClientboundPlayerSizePacket::toBytes, ClientboundPlayerSizePacket::new, ClientboundPlayerSizePacket::handle, NetworkDirection.PLAY_TO_CLIENT);
 
     }
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {

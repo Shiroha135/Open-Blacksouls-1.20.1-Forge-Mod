@@ -76,6 +76,10 @@ public class EntityThrownBlade extends ThrowableItemProjectile {
         this.entityData.set(DATA_ANIMATION_ID, animationId);
     }
 
+    public void hitDirect(LivingEntity target) {
+        onHitEntity(new EntityHitResult(target));
+    }
+
     @Override
     public void tick() {
         super.tick();

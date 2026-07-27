@@ -7,6 +7,7 @@ import com.BlackSouls.BlackSoulsMod.capability.DoorLockSavedData.LockType;
 import com.BlackSouls.BlackSoulsMod.event.LockedDoorInteractEvent;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundTextBannerPacket;
+import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundLostItemPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -85,7 +86,10 @@ public final class DoorLockInteractionHandler {
 
         ItemStack key = player.getItemInHand(keyHand);
         if (lock.consume() && !player.getAbilities().instabuild) {
+            ItemStack lost = key.copy();
+            lost.setCount(1);
             key.shrink(1);
+            NetworkHandler.sendToPlayer(new ClientboundLostItemPacket(lost), player);
         }
         data.removeLock(lockPos);
         open(level, lockPos, player);

@@ -28,9 +28,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.joml.Matrix4f;
 
-import java.util.Collection;
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ClientStatusRenderer {
@@ -118,7 +119,13 @@ public class ClientStatusRenderer {
     }
 
     private static void drawActiveEffects(LivingEntity entity, Matrix4f matrix, Minecraft mc) {
-        Collection<MobEffectInstance> activeEffects = entity.getActiveEffects();
+        List<MobEffectInstance> activeEffects = entity.getActiveEffects().stream()
+                .filter(effect -> {
+                    net.minecraft.resources.ResourceLocation id =
+                            ForgeRegistries.MOB_EFFECTS.getKey(effect.getEffect());
+                    return id != null && BlackSouls.MODID.equals(id.getNamespace());
+                })
+                .toList();
         int totalIcons = activeEffects.size();
         if (totalIcons == 0) return;
 

@@ -103,7 +103,7 @@ public class GuiPlayerAttributes extends Screen {
         String curExpStr = String.valueOf(stats.currentExp);
         guiGraphics.drawString(font, curExpStr, rightEdge - font.width(curExpStr), expY, valColor, false);
         guiGraphics.drawString(font, I18n.get("gui.blacksouls.stat.next_exp"), guiLeft + 15, expY + 16, labelColor, false);
-        String nextExpStr = stats.level >= 999 ? "---" : String.valueOf(Math.max(0, stats.maxExp - stats.currentExp));
+        String nextExpStr = stats.level >= stats.getLevelLimit() ? "---" : String.valueOf(Math.max(0, stats.maxExp - stats.currentExp));
         guiGraphics.drawString(font, nextExpStr, rightEdge - font.width(nextExpStr), expY + 16, valColor, false);
         guiGraphics.fill(guiLeft + 10, expY + 34, guiLeft + GUI_WIDTH - 10, expY + 35, 0x33FFFFFF);
         int statY = expY + 42;

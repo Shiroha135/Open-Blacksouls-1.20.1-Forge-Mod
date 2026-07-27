@@ -35,6 +35,12 @@ public class ShaderHelper {
     public static ShaderInstance heldItemBloomBlurShader;
     public static ShaderInstance chronoStarShader;
     public static ShaderInstance fadedBannerShader;
+    public static ShaderInstance battleTransitionShader;
+    public static ShaderInstance noraKawaseDownShader;
+    public static ShaderInstance noraKawaseUpShader;
+    public static ShaderInstance noraMaskedBlurShader;
+    public static ShaderInstance noraRoundedRectShader;
+    public static ShaderInstance noraSkijaGlassShader;
     @SubscribeEvent
     public static void onRegisterShaders(RegisterShadersEvent event) {
 
@@ -136,6 +142,36 @@ public class ShaderHelper {
                             DefaultVertexFormat.POSITION_TEX
                     ),
                     shader -> fadedBannerShader = shader
+            );
+
+            event.registerShader(
+                    new ShaderInstance(
+                            event.getResourceProvider(),
+                            new ResourceLocation(BlackSouls.MODID, "battle_transition"),
+                            DefaultVertexFormat.POSITION_TEX
+                    ),
+                    shader -> battleTransitionShader = shader
+            );
+
+            event.registerShader(
+                    new ShaderInstance(event.getResourceProvider(), new ResourceLocation(BlackSouls.MODID, "nora_kawase_down"), DefaultVertexFormat.POSITION_TEX),
+                    shader -> noraKawaseDownShader = shader
+            );
+            event.registerShader(
+                    new ShaderInstance(event.getResourceProvider(), new ResourceLocation(BlackSouls.MODID, "nora_kawase_up"), DefaultVertexFormat.POSITION_TEX),
+                    shader -> noraKawaseUpShader = shader
+            );
+            event.registerShader(
+                    new ShaderInstance(event.getResourceProvider(), new ResourceLocation(BlackSouls.MODID, "nora_masked_blur"), DefaultVertexFormat.POSITION_TEX_COLOR),
+                    shader -> noraMaskedBlurShader = shader
+            );
+            event.registerShader(
+                    new ShaderInstance(event.getResourceProvider(), new ResourceLocation(BlackSouls.MODID, "nora_rounded_rect"), DefaultVertexFormat.POSITION_TEX_COLOR),
+                    shader -> noraRoundedRectShader = shader
+            );
+            event.registerShader(
+                    new ShaderInstance(event.getResourceProvider(), new ResourceLocation(BlackSouls.MODID, "nora_skija_glass"), DefaultVertexFormat.POSITION_TEX_COLOR),
+                    shader -> noraSkijaGlassShader = shader
             );
 
             LOGGER.info("BlackSouls shaders loaded successfully.");

@@ -5,6 +5,7 @@ import com.BlackSouls.BlackSoulsMod.client.gui.GuiBSConfig;
 import com.BlackSouls.BlackSoulsMod.client.render.*;
 import com.BlackSouls.BlackSoulsMod.client.tooltip.ClientSpongeNameTooltipComponent;
 import com.BlackSouls.BlackSoulsMod.client.tooltip.SpongeNameTooltipComponent;
+import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalTurnBattleEnemy;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
@@ -45,6 +46,17 @@ public class ClientModEvents {
         event.registerEntityRenderer(BSEntityRegistry.THROWN_BLADE.get(), ThrownItemRenderer::new);
         event.registerEntityRenderer(BSEntityRegistry.HELL_PRINCE.get(), RenderHellPrince::new);
         event.registerEntityRenderer(BSEntityRegistry.MEAT_WALL.get(), RenderMeatWall::new);
+        event.registerEntityRenderer(BSEntityRegistry.CORPSE_EATING_RABBIT.get(), RenderCorpseEatingRabbit::new);
+        event.registerEntityRenderer(BSEntityRegistry.ORIGINAL_ENEMY.get(), RenderOriginalDatabaseEnemy::new);
+        event.registerEntityRenderer(BSEntityRegistry.HEADLESS_UNDEAD.get(),
+                context -> new RenderOriginalTurnBattleEnemy(
+                        context, EntityOriginalTurnBattleEnemy.Profile.HEADLESS_UNDEAD));
+        event.registerEntityRenderer(BSEntityRegistry.CORRUPT_DOG.get(),
+                context -> new RenderOriginalTurnBattleEnemy(
+                        context, EntityOriginalTurnBattleEnemy.Profile.CORRUPT_DOG));
+        event.registerEntityRenderer(BSEntityRegistry.WEREWOLF.get(),
+                context -> new RenderOriginalTurnBattleEnemy(
+                        context, EntityOriginalTurnBattleEnemy.Profile.WEREWOLF));
     }
 
     @SubscribeEvent

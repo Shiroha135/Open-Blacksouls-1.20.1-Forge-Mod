@@ -60,12 +60,19 @@ public class SeekServiceBannerRenderer {
         int titleY = barY + 3;
         int valueY = barY + mc.font.lineHeight + 5;
 
-        guiGraphics.fill(0, barY, screenWidth, screenHeight, 0xBB000000);
-
         String titleKey = senDelta >= 0
                 ? "gui.blacksouls.seek_service.banner.sen_up"
                 : "gui.blacksouls.seek_service.banner.sen_down";
-        guiGraphics.drawString(mc.font, I18n.get(titleKey), 4, titleY, 0xFFFFFFFF, false);
+        String titleText = I18n.get(titleKey);
+        String valueText = I18n.get(
+                "gui.blacksouls.seek_service.banner.current_value",
+                stats.sen,
+                deltaText
+        );
+        int titleWidth = mc.font.width(titleText) + 8;
+        guiGraphics.fill(0, barY, titleWidth, valueY - 2, 0xBB000000);
+        guiGraphics.fill(0, valueY - 2, screenWidth, screenHeight - lowerBannerHeight(), 0xBB000000);
+        guiGraphics.drawString(mc.font, titleText, 4, titleY, 0xFFFFFFFF, false);
 
         RenderSystem.enableBlend();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -73,11 +80,6 @@ public class SeekServiceBannerRenderer {
         RenderSystem.disableBlend();
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-        String valueText = I18n.get(
-                "gui.blacksouls.seek_service.banner.current_value",
-                stats.sen,
-                deltaText
-        );
         guiGraphics.drawString(mc.font, valueText, 22, valueY, 0x55FF55, false);
     }
 

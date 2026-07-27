@@ -33,7 +33,8 @@ public class RenderRMSpriteMonster<T extends Monster> extends EntityRenderer<T> 
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
 
-        float width = this.renderHeight * this.aspectRatio;
+        float renderHeight = resolveRenderHeight(entity);
+        float width = renderHeight * resolveAspectRatio(entity);
         float halfWidth = width * 0.5F;
 
         VertexConsumer consumer = buffer.getBuffer(RenderType.entityTranslucent(this.getTextureLocation(entity)));
@@ -43,8 +44,8 @@ public class RenderRMSpriteMonster<T extends Monster> extends EntityRenderer<T> 
 
         vertex(consumer, poseMatrix, normalMatrix, packedLight, -halfWidth, 0.0F, 0.0F, 1.0F);
         vertex(consumer, poseMatrix, normalMatrix, packedLight, halfWidth, 0.0F, 1.0F, 1.0F);
-        vertex(consumer, poseMatrix, normalMatrix, packedLight, halfWidth, this.renderHeight, 1.0F, 0.0F);
-        vertex(consumer, poseMatrix, normalMatrix, packedLight, -halfWidth, this.renderHeight, 0.0F, 0.0F);
+        vertex(consumer, poseMatrix, normalMatrix, packedLight, halfWidth, renderHeight, 1.0F, 0.0F);
+        vertex(consumer, poseMatrix, normalMatrix, packedLight, -halfWidth, renderHeight, 0.0F, 0.0F);
 
         poseStack.popPose();
         super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
@@ -62,6 +63,18 @@ public class RenderRMSpriteMonster<T extends Monster> extends EntityRenderer<T> 
 
     @Override
     public ResourceLocation getTextureLocation(T entity) {
+        return resolveTexture(entity);
+    }
+
+    protected ResourceLocation resolveTexture(T entity) {
         return this.texture;
+    }
+
+    protected float resolveRenderHeight(T entity) {
+        return this.renderHeight;
+    }
+
+    protected float resolveAspectRatio(T entity) {
+        return this.aspectRatio;
     }
 }

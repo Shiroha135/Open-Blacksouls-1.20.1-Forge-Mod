@@ -29,6 +29,10 @@ public abstract class AbstractSkill {
         return SkillUtils.DEFAULT_SKILL_ACTION_COST;
     }
 
+    public int getTurnCooldownRounds() {
+        return Math.max(0, (int) Math.ceil(getBaseCooldownTicks() / 200.0D));
+    }
+
     public abstract boolean isUnlockedForGUI(Player player);
 
     protected float getEffectiveManaCost(BSPlayerStats stats) {
@@ -37,18 +41,7 @@ public abstract class AbstractSkill {
     }
 
     public boolean canCast(ServerPlayer player, BSPlayerStats stats) {
-        if (!SkillUtils.shouldBypassManaCost(player) && stats.mp < getEffectiveManaCost(stats)) {
-            player.sendSystemMessage(Component.translatable("message.blacksouls.skill.no_mp").withStyle(ChatFormatting.RED));
-            return false;
-        }
-
-        if (!SkillUtils.hasEnoughActionPoints(player, getActionCost())) {
-            player.sendSystemMessage(Component.literal(String.format(
-                    "行动值不足！(%.2f/%.2f，需要%.2f)",
-                    SkillUtils.getCurrentActionPoints(player),
-                    SkillUtils.getMaxActionPoints(player),
-                    getActionCost()
-            )).withStyle(ChatFormatting.GREEN));
+        if (!canCastInTurnBattle(player, stats)) {
             return false;
         }
 
@@ -69,6 +62,24 @@ public abstract class AbstractSkill {
             return false;
         }
 
+        return true;
+    }
+
+    public boolean canCastInTurnBattle(ServerPlayer player, BSPlayerStats stats) {
+        if (!SkillUtils.shouldBypassManaCost(player) && stats.mp < getEffectiveManaCost(stats)) {
+            player.sendSystemMessage(Component.translatable("message.blacksouls.skill.no_mp").withStyle(ChatFormatting.RED));
+            return false;
+        }
+
+        if (!SkillUtils.hasEnoughActionPoints(player, getActionCost())) {
+            player.sendSystemMessage(Component.literal(String.format(
+                    "行动值不足！(%.2f/%.2f，需要%.2f)",
+                    SkillUtils.getCurrentActionPoints(player),
+                    SkillUtils.getMaxActionPoints(player),
+                    getActionCost()
+            )).withStyle(ChatFormatting.GREEN));
+            return false;
+        }
         return true;
     }
 
@@ -98,6 +109,12 @@ public abstract class AbstractSkill {
                 && !(SkillUtils.isChronoRewindActive(player) && !"bs2_skill_chrono_clock".equals(getSkillId()))) {
             SkillUtils.getPersistedData(player).putLong(SkillUtils.getCooldownTag(getSkillId()), player.level().getGameTime());
         }
+        StatEventHandler.syncToClient(player);
+    }
+
+    public void consumeForTurnBattle(ServerPlayer player, BSPlayerStats stats) {
+        SkillUtils.consumeMana(player, getEffectiveManaCost(stats));
+        SkillUtils.consumeActionPoints(player, getActionCost());
         StatEventHandler.syncToClient(player);
     }
 

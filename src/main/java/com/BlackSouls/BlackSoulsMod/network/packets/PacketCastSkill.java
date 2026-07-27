@@ -2,6 +2,7 @@ package com.BlackSouls.BlackSoulsMod.network.packets;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
+import com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager;
 import com.BlackSouls.BlackSoulsMod.util.skill.AbstractSkill;
 import com.BlackSouls.BlackSoulsMod.util.skill.SkillRegistry;
 import net.minecraft.ChatFormatting;
@@ -37,6 +38,9 @@ public class PacketCastSkill {
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
             if (player == null) return;
+            if (TurnBattleManager.isInBattle(player)) {
+                return;
+            }
 
             if (BlackSouls.BUFF_STUN.isPresent() && player.hasEffect(BlackSouls.BUFF_STUN.get())) {
                 player.sendSystemMessage(Component.translatable("message.blacksouls.skill.stunned").withStyle(ChatFormatting.GRAY));

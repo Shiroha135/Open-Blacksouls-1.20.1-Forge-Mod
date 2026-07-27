@@ -36,6 +36,16 @@ public class SkillKatanaArt extends AbstractOriginalWeaponSkill {
     @Override
     public boolean canCast(ServerPlayer player, BSPlayerStats stats) {
         if (!super.canCast(player, stats)) return false;
+        return hasEnoughHealth(player);
+    }
+
+    @Override
+    public boolean canCastInTurnBattle(ServerPlayer player, BSPlayerStats stats) {
+        if (!super.canCastInTurnBattle(player, stats)) return false;
+        return hasEnoughHealth(player);
+    }
+
+    private boolean hasEnoughHealth(ServerPlayer player) {
         float healthCost = player.getMaxHealth() * getHealthCostRate();
         if (player.getHealth() <= healthCost) {
             player.sendSystemMessage(Component.translatable("message.blacksouls.skill.not_enough_hp").withStyle(ChatFormatting.RED));

@@ -1,6 +1,8 @@
 package com.BlackSouls.BlackSoulsMod.network.packets;
 
 import com.BlackSouls.BlackSoulsMod.client.render.ClientVFXHandler;
+import com.BlackSouls.BlackSoulsMod.client.gui.GuiTurnBattle;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
@@ -41,6 +43,11 @@ public class PacketPlayAnim {
 
     private static class ClientHandler {
         public static void handle(PacketPlayAnim msg) {
+            Minecraft minecraft = Minecraft.getInstance();
+            if (minecraft.screen instanceof GuiTurnBattle battle) {
+                battle.queueExternalAnimation(msg.animId, msg.x, msg.y, msg.z);
+                return;
+            }
             ClientVFXHandler.playAnim(msg.animId, msg.x, msg.y, msg.z);
         }
     }

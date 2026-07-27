@@ -58,6 +58,27 @@ public class SkillSmolderingFrenzy extends AbstractBandersnatchSkill {
     }
 
     @Override
+    public boolean canCastInTurnBattle(ServerPlayer player, BSPlayerStats stats) {
+        if (getCharge(player) < 9) {
+            return super.canCastInTurnBattle(player, stats);
+        }
+        if (!isWeaponEquipped(player)) {
+            player.sendSystemMessage(Component.translatable("message.blacksouls.skill.wrong_weapon").withStyle(ChatFormatting.RED));
+            return false;
+        }
+        if (!SkillUtils.hasEnoughActionPoints(player, getActionCost())) {
+            player.sendSystemMessage(Component.literal(String.format(
+                    "行动值不足！(%.2f/%.2f，需要%.2f)",
+                    SkillUtils.getCurrentActionPoints(player),
+                    SkillUtils.getMaxActionPoints(player),
+                    getActionCost()
+            )).withStyle(ChatFormatting.GREEN));
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public void consumeAndSetCooldown(ServerPlayer player, BSPlayerStats stats) {
         if (getCharge(player) >= 9) {
             SkillUtils.consumeActionPoints(player, getActionCost());
@@ -65,6 +86,16 @@ public class SkillSmolderingFrenzy extends AbstractBandersnatchSkill {
             return;
         }
         super.consumeAndSetCooldown(player, stats);
+    }
+
+    @Override
+    public void consumeForTurnBattle(ServerPlayer player, BSPlayerStats stats) {
+        if (getCharge(player) >= 9) {
+            SkillUtils.consumeActionPoints(player, getActionCost());
+            StatEventHandler.syncToClient(player);
+            return;
+        }
+        super.consumeForTurnBattle(player, stats);
     }
 
     @Override

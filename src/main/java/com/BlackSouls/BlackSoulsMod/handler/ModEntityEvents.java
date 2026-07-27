@@ -16,5 +16,16 @@ public class ModEntityEvents {
         event.put(BSEntityRegistry.HELL_PRINCE.get(), EntityHellPrince.createAttributes().build());
         event.put(BSEntityRegistry.TEST_DUMMY.get(), EntityTestDummy.createAttributes().build());
         event.put(BSEntityRegistry.MEAT_WALL.get(), EntityMeatWall.createAttributes().build());
+        event.put(BSEntityRegistry.CORPSE_EATING_RABBIT.get(), EntityCorpseEatingRabbit.createAttributes().build());
+        event.put(BSEntityRegistry.ORIGINAL_ENEMY.get(), EntityOriginalDatabaseEnemy.createAttributes().build());
+        event.put(BSEntityRegistry.HEADLESS_UNDEAD.get(),
+                EntityOriginalTurnBattleEnemy.createAttributes(
+                        EntityOriginalTurnBattleEnemy.Profile.HEADLESS_UNDEAD).build());
+        event.put(BSEntityRegistry.CORRUPT_DOG.get(),
+                EntityOriginalTurnBattleEnemy.createAttributes(
+                        EntityOriginalTurnBattleEnemy.Profile.CORRUPT_DOG).build());
+        event.put(BSEntityRegistry.WEREWOLF.get(),
+                EntityOriginalTurnBattleEnemy.createAttributes(
+                        EntityOriginalTurnBattleEnemy.Profile.WEREWOLF).build());
     }
 }

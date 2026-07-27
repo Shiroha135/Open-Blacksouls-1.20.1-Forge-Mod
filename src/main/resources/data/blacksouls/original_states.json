@@ -1,0 +1,912 @@
+[
+  {
+    "id": 1,
+    "name": "无法战斗",
+    "iconIndex": 1
+  },
+  {
+    "id": 2,
+    "name": "毒",
+    "iconIndex": 18
+  },
+  {
+    "id": 3,
+    "name": "猛毒",
+    "iconIndex": 530
+  },
+  {
+    "id": 4,
+    "name": "剧毒",
+    "iconIndex": 529
+  },
+  {
+    "id": 5,
+    "name": "油腻",
+    "iconIndex": 561
+  },
+  {
+    "id": 6,
+    "name": "睡眠",
+    "iconIndex": 22
+  },
+  {
+    "id": 7,
+    "name": "强击溃无防备",
+    "iconIndex": 8
+  },
+  {
+    "id": 8,
+    "name": "击溃无防备",
+    "iconIndex": 24
+  },
+  {
+    "id": 9,
+    "name": "防御",
+    "iconIndex": 506
+  },
+  {
+    "id": 11,
+    "name": "保护",
+    "iconIndex": 121
+  },
+  {
+    "id": 12,
+    "name": "亡者",
+    "iconIndex": 603
+  },
+  {
+    "id": 13,
+    "name": "晕眩",
+    "iconIndex": 21
+  },
+  {
+    "id": 14,
+    "name": "HP再生",
+    "iconIndex": 26
+  },
+  {
+    "id": 15,
+    "name": "MP再生",
+    "iconIndex": 26
+  },
+  {
+    "id": 16,
+    "name": "闪避",
+    "iconIndex": 28
+  },
+  {
+    "id": 17,
+    "name": "沉默",
+    "iconIndex": 20
+  },
+  {
+    "id": 18,
+    "name": "临终之力",
+    "iconIndex": 619
+  },
+  {
+    "id": 19,
+    "name": "反击架势２",
+    "iconIndex": 27
+  },
+  {
+    "id": 20,
+    "name": "反击架势",
+    "iconIndex": 27
+  },
+  {
+    "id": 21,
+    "name": "炙炎之力",
+    "iconIndex": 104
+  },
+  {
+    "id": 22,
+    "name": "冰之力",
+    "iconIndex": 105
+  },
+  {
+    "id": 23,
+    "name": "闪电之力",
+    "iconIndex": 106
+  },
+  {
+    "id": 24,
+    "name": "暗之力",
+    "iconIndex": 111
+  },
+  {
+    "id": 25,
+    "name": "免疫异常",
+    "iconIndex": 29
+  },
+  {
+    "id": 26,
+    "name": "出血",
+    "iconIndex": 573
+  },
+  {
+    "id": 27,
+    "name": "镇魂歌",
+    "iconIndex": 112
+  },
+  {
+    "id": 28,
+    "name": "发狂",
+    "iconIndex": 605
+  },
+  {
+    "id": 29,
+    "name": "燃烧",
+    "iconIndex": 609
+  },
+  {
+    "id": 30,
+    "name": "泥",
+    "iconIndex": 19
+  },
+  {
+    "id": 31,
+    "name": "压低",
+    "iconIndex": 131
+  },
+  {
+    "id": 32,
+    "name": "蓄力１５０",
+    "iconIndex": 30
+  },
+  {
+    "id": 33,
+    "name": "不可破防",
+    "iconIndex": 553
+  },
+  {
+    "id": 34,
+    "name": "咏唱",
+    "iconIndex": 117
+  },
+  {
+    "id": 35,
+    "name": "蓄力２００",
+    "iconIndex": 122
+  },
+  {
+    "id": 36,
+    "name": "肚子叫",
+    "iconIndex": 30
+  },
+  {
+    "id": 37,
+    "name": "僵尸吃饱",
+    "iconIndex": 619
+  },
+  {
+    "id": 38,
+    "name": "暴走",
+    "iconIndex": 25
+  },
+  {
+    "id": 39,
+    "name": "杂耍闪避",
+    "iconIndex": 28
+  },
+  {
+    "id": 40,
+    "name": "岩之体",
+    "iconIndex": 613
+  },
+  {
+    "id": 41,
+    "name": "骑士的荣耀",
+    "iconIndex": 555
+  },
+  {
+    "id": 42,
+    "name": "愤怒",
+    "iconIndex": 571
+  },
+  {
+    "id": 43,
+    "name": "小红帽发怒",
+    "iconIndex": 608
+  },
+  {
+    "id": 44,
+    "name": "找头",
+    "iconIndex": 528
+  },
+  {
+    "id": 45,
+    "name": "暴击率+30%",
+    "iconIndex": 14
+  },
+  {
+    "id": 46,
+    "name": "自伤",
+    "iconIndex": 539
+  },
+  {
+    "id": 47,
+    "name": "命中率＋100%",
+    "iconIndex": 591
+  },
+  {
+    "id": 48,
+    "name": "自动恢复５０",
+    "iconIndex": 26
+  },
+  {
+    "id": 49,
+    "name": "闪避率上升",
+    "iconIndex": 474
+  },
+  {
+    "id": 50,
+    "name": "最终BOSS蓄力",
+    "iconIndex": 30
+  },
+  {
+    "id": 51,
+    "name": "最终BOSS蓄力２",
+    "iconIndex": 30
+  },
+  {
+    "id": 52,
+    "name": "内在潜力",
+    "iconIndex": 136
+  },
+  {
+    "id": 53,
+    "name": "法拉克斯",
+    "iconIndex": 547
+  },
+  {
+    "id": 54,
+    "name": "日蚀",
+    "iconIndex": 615
+  },
+  {
+    "id": 55,
+    "name": "虚弱",
+    "iconIndex": 552
+  },
+  {
+    "id": 56,
+    "name": "恐怖",
+    "iconIndex": 590
+  },
+  {
+    "id": 57,
+    "name": "暴击率+100%",
+    "iconIndex": 25
+  },
+  {
+    "id": 59,
+    "name": "咬紧牙关",
+    "iconIndex": 139
+  },
+  {
+    "id": 60,
+    "name": "班达斯奈奇弱化",
+    "iconIndex": 1
+  },
+  {
+    "id": 61,
+    "name": "脆弱",
+    "iconIndex": 618
+  },
+  {
+    "id": 62,
+    "name": "加速",
+    "iconIndex": 46
+  },
+  {
+    "id": 63,
+    "name": "减速",
+    "iconIndex": 62
+  },
+  {
+    "id": 64,
+    "name": "死刑宣告",
+    "iconIndex": 549
+  },
+  {
+    "id": 65,
+    "name": "会心闪避",
+    "iconIndex": 110
+  },
+  {
+    "id": 74,
+    "name": "１",
+    "iconIndex": 585
+  },
+  {
+    "id": 75,
+    "name": "２",
+    "iconIndex": 585
+  },
+  {
+    "id": 76,
+    "name": "３",
+    "iconIndex": 585
+  },
+  {
+    "id": 77,
+    "name": "怒帕托拉休",
+    "iconIndex": 571
+  },
+  {
+    "id": 78,
+    "name": "邪气",
+    "iconIndex": 569
+  },
+  {
+    "id": 79,
+    "name": "咒缚",
+    "iconIndex": 568
+  },
+  {
+    "id": 80,
+    "name": "骰子１",
+    "iconIndex": 753
+  },
+  {
+    "id": 81,
+    "name": "骰子２",
+    "iconIndex": 754
+  },
+  {
+    "id": 82,
+    "name": "骰子３",
+    "iconIndex": 755
+  },
+  {
+    "id": 83,
+    "name": "骰子４",
+    "iconIndex": 756
+  },
+  {
+    "id": 84,
+    "name": "骰子５",
+    "iconIndex": 757
+  },
+  {
+    "id": 85,
+    "name": "骰子６",
+    "iconIndex": 758
+  },
+  {
+    "id": 95,
+    "name": "九蓄",
+    "iconIndex": 589
+  },
+  {
+    "id": 113,
+    "name": "高机动",
+    "iconIndex": 585
+  },
+  {
+    "id": 116,
+    "name": "高机动",
+    "iconIndex": 585
+  },
+  {
+    "id": 117,
+    "name": "黑猫华尔兹",
+    "iconIndex": 560
+  },
+  {
+    "id": 118,
+    "name": "触手守护",
+    "iconIndex": 555
+  },
+  {
+    "id": 122,
+    "name": "",
+    "iconIndex": 541
+  },
+  {
+    "id": 127,
+    "name": "屠宰",
+    "iconIndex": 281
+  },
+  {
+    "id": 128,
+    "name": "必中化",
+    "iconIndex": 698
+  },
+  {
+    "id": 131,
+    "name": "贾巴邪气",
+    "iconIndex": 569
+  },
+  {
+    "id": 132,
+    "name": "魔法反射",
+    "iconIndex": 31
+  },
+  {
+    "id": 133,
+    "name": "灵魂盾",
+    "iconIndex": 161
+  },
+  {
+    "id": 135,
+    "name": "击溃不可（嘘）",
+    "iconIndex": 30
+  },
+  {
+    "id": 136,
+    "name": "蓄力１５０（嘘）",
+    "iconIndex": 553
+  },
+  {
+    "id": 137,
+    "name": "炎耐性下降",
+    "iconIndex": 561
+  },
+  {
+    "id": 138,
+    "name": "雷耐性下降",
+    "iconIndex": 562
+  },
+  {
+    "id": 139,
+    "name": "光耐性下降",
+    "iconIndex": 567
+  },
+  {
+    "id": 140,
+    "name": "暗耐性下降",
+    "iconIndex": 568
+  },
+  {
+    "id": 142,
+    "name": "王子暴击率+100%",
+    "iconIndex": 570
+  },
+  {
+    "id": 143,
+    "name": "不灭之炎",
+    "iconIndex": 747
+  },
+  {
+    "id": 144,
+    "name": "自动恢复10",
+    "iconIndex": 26
+  },
+  {
+    "id": 145,
+    "name": "1计量槽",
+    "iconIndex": 187
+  },
+  {
+    "id": 146,
+    "name": "2计量槽",
+    "iconIndex": 187
+  },
+  {
+    "id": 147,
+    "name": "3计量槽",
+    "iconIndex": 187
+  },
+  {
+    "id": 149,
+    "name": "深眠",
+    "iconIndex": 534
+  },
+  {
+    "id": 150,
+    "name": "HP再生３",
+    "iconIndex": 26
+  },
+  {
+    "id": 151,
+    "name": "反击（仙度瑞拉）",
+    "iconIndex": 27
+  },
+  {
+    "id": 152,
+    "name": "魔法反射（仙度瑞拉）",
+    "iconIndex": 31
+  },
+  {
+    "id": 153,
+    "name": "内在潜力（仙度瑞拉）",
+    "iconIndex": 136
+  },
+  {
+    "id": 155,
+    "name": "呕吐物",
+    "iconIndex": 606
+  },
+  {
+    "id": 156,
+    "name": "拘束",
+    "iconIndex": 535
+  },
+  {
+    "id": 157,
+    "name": "重力",
+    "iconIndex": 568
+  },
+  {
+    "id": 158,
+    "name": "HP再生５",
+    "iconIndex": 26
+  },
+  {
+    "id": 159,
+    "name": "护士领域",
+    "iconIndex": 568
+  },
+  {
+    "id": 160,
+    "name": "天兽领域",
+    "iconIndex": 568
+  },
+  {
+    "id": 161,
+    "name": "免疫击溃",
+    "iconIndex": 501
+  },
+  {
+    "id": 162,
+    "name": "冻疮",
+    "iconIndex": 563
+  },
+  {
+    "id": 163,
+    "name": "裂伤",
+    "iconIndex": 749
+  },
+  {
+    "id": 164,
+    "name": "洛德效果",
+    "iconIndex": 781
+  },
+  {
+    "id": 165,
+    "name": "断腿",
+    "iconIndex": 476
+  },
+  {
+    "id": 167,
+    "name": "肉壁生存状态",
+    "iconIndex": 291
+  },
+  {
+    "id": 168,
+    "name": "圣骑士的御旗",
+    "iconIndex": 509
+  },
+  {
+    "id": 169,
+    "name": "觉醒",
+    "iconIndex": 619
+  },
+  {
+    "id": 170,
+    "name": "防王效果",
+    "iconIndex": 676
+  },
+  {
+    "id": 171,
+    "name": "",
+    "iconIndex": 282
+  },
+  {
+    "id": 172,
+    "name": "１剑气",
+    "iconIndex": 794
+  },
+  {
+    "id": 173,
+    "name": "２剑气",
+    "iconIndex": 794
+  },
+  {
+    "id": 174,
+    "name": "３剑气",
+    "iconIndex": 794
+  },
+  {
+    "id": 175,
+    "name": "４剑气",
+    "iconIndex": 794
+  },
+  {
+    "id": 176,
+    "name": "５剑气",
+    "iconIndex": 794
+  },
+  {
+    "id": 177,
+    "name": "６剑气",
+    "iconIndex": 794
+  },
+  {
+    "id": 178,
+    "name": "７剑气",
+    "iconIndex": 794
+  },
+  {
+    "id": 190,
+    "name": "铳弹切换１",
+    "iconIndex": 753
+  },
+  {
+    "id": 191,
+    "name": "铳弹切换２",
+    "iconIndex": 754
+  },
+  {
+    "id": 192,
+    "name": "铳弹切换３",
+    "iconIndex": 755
+  },
+  {
+    "id": 194,
+    "name": "天使的宣告",
+    "iconIndex": 337
+  },
+  {
+    "id": 196,
+    "name": "伊塔库亚领域",
+    "iconIndex": 568
+  },
+  {
+    "id": 197,
+    "name": "吹飞",
+    "iconIndex": 101
+  },
+  {
+    "id": 198,
+    "name": "麻痹",
+    "iconIndex": 7
+  },
+  {
+    "id": 199,
+    "name": "魔法反射（卡纳奇）",
+    "iconIndex": 31
+  },
+  {
+    "id": 200,
+    "name": "紫夜领域",
+    "iconIndex": 568
+  },
+  {
+    "id": 201,
+    "name": "琳达梅尔领域",
+    "iconIndex": 568
+  },
+  {
+    "id": 203,
+    "name": "琳达梅尔领域２",
+    "iconIndex": 568
+  },
+  {
+    "id": 204,
+    "name": "",
+    "iconIndex": 808
+  },
+  {
+    "id": 205,
+    "name": "",
+    "iconIndex": 808
+  },
+  {
+    "id": 206,
+    "name": "",
+    "iconIndex": 808
+  },
+  {
+    "id": 207,
+    "name": "",
+    "iconIndex": 808
+  },
+  {
+    "id": 209,
+    "name": "↓心眼刀↓",
+    "iconIndex": 815
+  },
+  {
+    "id": 210,
+    "name": "",
+    "iconIndex": 815
+  },
+  {
+    "id": 211,
+    "name": "尤妮丝领域",
+    "iconIndex": 568
+  },
+  {
+    "id": 212,
+    "name": "莱登领域",
+    "iconIndex": 568
+  },
+  {
+    "id": 213,
+    "name": "",
+    "iconIndex": 59
+  },
+  {
+    "id": 215,
+    "name": "缓缓降低１",
+    "iconIndex": 769
+  },
+  {
+    "id": 216,
+    "name": "缓缓降低２",
+    "iconIndex": 770
+  },
+  {
+    "id": 217,
+    "name": "缓缓降低３",
+    "iconIndex": 771
+  },
+  {
+    "id": 218,
+    "name": "缓缓降低４",
+    "iconIndex": 772
+  },
+  {
+    "id": 219,
+    "name": "缓缓降低５",
+    "iconIndex": 773
+  },
+  {
+    "id": 220,
+    "name": "缓缓降低６",
+    "iconIndex": 774
+  },
+  {
+    "id": 222,
+    "name": "行动次数追加酒",
+    "iconIndex": 308
+  },
+  {
+    "id": 223,
+    "name": "死灵之书",
+    "iconIndex": 372
+  },
+  {
+    "id": 224,
+    "name": "时间停止",
+    "iconIndex": 280
+  },
+  {
+    "id": 225,
+    "name": "恶辣剧场攻击力-100%下降",
+    "iconIndex": 816
+  },
+  {
+    "id": 226,
+    "name": "恶辣剧场防御力-100%下降",
+    "iconIndex": 817
+  },
+  {
+    "id": 227,
+    "name": "恶辣剧场魔力-100%下降",
+    "iconIndex": 818
+  },
+  {
+    "id": 228,
+    "name": "恶辣剧场魔法防御-100%下降",
+    "iconIndex": 819
+  },
+  {
+    "id": 229,
+    "name": "狮子与独角兽１",
+    "iconIndex": 769
+  },
+  {
+    "id": 230,
+    "name": "狮子与独角兽２",
+    "iconIndex": 770
+  },
+  {
+    "id": 231,
+    "name": "狮子与独角兽３",
+    "iconIndex": 771
+  },
+  {
+    "id": 232,
+    "name": "狮子与独角兽４",
+    "iconIndex": 772
+  },
+  {
+    "id": 233,
+    "name": "狮子与独角兽５",
+    "iconIndex": 773
+  },
+  {
+    "id": 234,
+    "name": "狮子与独角兽６",
+    "iconIndex": 774
+  },
+  {
+    "id": 235,
+    "name": "纯白牢狱领域１",
+    "iconIndex": 769
+  },
+  {
+    "id": 236,
+    "name": "纯白牢狱领域２",
+    "iconIndex": 770
+  },
+  {
+    "id": 237,
+    "name": "纯白牢狱领域３",
+    "iconIndex": 771
+  },
+  {
+    "id": 238,
+    "name": "纯白牢狱领域４",
+    "iconIndex": 772
+  },
+  {
+    "id": 239,
+    "name": "纯白牢狱领域５",
+    "iconIndex": 773
+  },
+  {
+    "id": 240,
+    "name": "纯白牢狱领域６",
+    "iconIndex": 774
+  },
+  {
+    "id": 241,
+    "name": "无貌领域",
+    "iconIndex": 568
+  },
+  {
+    "id": 242,
+    "name": "无貌行动１",
+    "iconIndex": 753
+  },
+  {
+    "id": 243,
+    "name": "无貌行动２",
+    "iconIndex": 754
+  },
+  {
+    "id": 244,
+    "name": "无貌行动３",
+    "iconIndex": 755
+  },
+  {
+    "id": 245,
+    "name": "无貌行动４",
+    "iconIndex": 756
+  },
+  {
+    "id": 246,
+    "name": "无貌行动５",
+    "iconIndex": 757
+  },
+  {
+    "id": 247,
+    "name": "无貌行动６",
+    "iconIndex": 758
+  },
+  {
+    "id": 248,
+    "name": "女王爱丽丝领域",
+    "iconIndex": 568
+  },
+  {
+    "id": 249,
+    "name": "古兰・吉涅尔领域",
+    "iconIndex": 568
+  },
+  {
+    "id": 251,
+    "name": "反击（梅贝尔）",
+    "iconIndex": 27
+  },
+  {
+    "id": 252,
+    "name": "八相",
+    "iconIndex": 27
+  }
+]

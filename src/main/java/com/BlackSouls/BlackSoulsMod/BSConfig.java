@@ -14,6 +14,12 @@ public class BSConfig {
     public static ForgeConfigSpec.BooleanValue ALLOW_PLAYER_EXTRA_MODES;
     public static ForgeConfigSpec.BooleanValue ENABLE_LOW_SEN_JUMPSCARE;
     public static ForgeConfigSpec.BooleanValue SHOW_COMBAT_DAMAGE_CHAT;
+    public static ForgeConfigSpec.EnumValue<CombatMode> COMBAT_MODE;
+
+    public enum CombatMode {
+        BLACK_SOULS_TURN_BASED,
+        MINECRAFT_REALTIME
+    }
 
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -35,6 +41,10 @@ public class BSConfig {
         SHOW_COMBAT_DAMAGE_CHAT = builder
                 .translation("config.blacksouls.show_combat_damage_chat")
                 .define("showCombatDamageChat", true);
+
+        COMBAT_MODE = builder
+                .translation("config.blacksouls.combat_mode")
+                .defineEnum("combatMode", CombatMode.BLACK_SOULS_TURN_BASED);
 
         builder.pop();
 

@@ -4,7 +4,6 @@ import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.client.gui.GuiAdvancedSkill;
 import com.BlackSouls.BlackSoulsMod.client.gui.GuiCovenant;
-import com.BlackSouls.BlackSoulsMod.client.gui.GuiDifficulty;
 import com.BlackSouls.BlackSoulsMod.client.gui.GuiPlayerStats;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketCastSkill;
@@ -84,12 +83,6 @@ public class KeyHandler {
             else if (keyBind.equals("V")) skillToCast = stats.skillV;
 
             if (skillToCast == null || skillToCast.isEmpty()) return;
-
-            if (skillToCast.equals("bs2_skill_difficulty")) {
-                Minecraft.getInstance().player.playSound(net.minecraft.sounds.SoundEvents.UI_BUTTON_CLICK.get(), 1.0F, 1.0F);
-                Minecraft.getInstance().setScreen(new GuiDifficulty());
-                return;
-            }
 
             boolean canCast = false;
 

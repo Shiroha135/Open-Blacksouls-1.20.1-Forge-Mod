@@ -11,6 +11,7 @@ public class VFXAnimation {
     public int rows1;
     public int rows2;
     public List<VFXFrame> frames = new ArrayList<>();
+    public List<VFXSoundTiming> soundTimings = new ArrayList<>();
 
     public VFXAnimation(String tex1, String tex2, int r1, int r2) {
         this.texture1 = (tex1 == null || tex1.isEmpty()) ? null : new ResourceLocation(tex1);

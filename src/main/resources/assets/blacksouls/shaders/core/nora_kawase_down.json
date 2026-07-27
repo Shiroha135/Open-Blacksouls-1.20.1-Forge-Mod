@@ -1,0 +1,15 @@
+{
+  "vertex": "blacksouls:nora_kawase",
+  "fragment": "blacksouls:nora_kawase_down",
+  "attributes": [
+    "Position",
+    "UV0"
+  ],
+  "samplers": [
+    { "name": "Sampler0" }
+  ],
+  "uniforms": [
+    { "name": "HalfTexelSize", "type": "float", "count": 2, "values": [ 1.0, 1.0 ] },
+    { "name": "Offset", "type": "float", "count": 1, "values": [ 1.0 ] }
+  ]
+}

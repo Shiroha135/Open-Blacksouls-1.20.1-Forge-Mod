@@ -1,0 +1,10624 @@
+{
+  "1": [
+    {
+      "frame": 0,
+      "sound": "blow3",
+      "volume": 0.95,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "blow1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "blow3",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "2": [
+    {
+      "frame": 0,
+      "sound": "fire1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "blow3",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "3": [
+    {
+      "frame": 0,
+      "sound": "ice4",
+      "volume": 1.0,
+      "pitch": 0.75
+    },
+    {
+      "frame": 0,
+      "sound": "blow3",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "4": [
+    {
+      "frame": 0,
+      "sound": "thunder8",
+      "volume": 1.0,
+      "pitch": 0.8
+    },
+    {
+      "frame": 0,
+      "sound": "blow3",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "5": [
+    {
+      "frame": 0,
+      "sound": "blow1",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "blow1",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "blow3",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "blow1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "blow5",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "blow1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 12,
+      "sound": "blow3",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 14,
+      "sound": "blow3",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 17,
+      "sound": "blow5",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "6": [
+    {
+      "frame": 0,
+      "sound": "blow1",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "blow1",
+      "volume": 0.9,
+      "pitch": 0.9
+    },
+    {
+      "frame": 1,
+      "sound": "blow1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "blow1",
+      "volume": 0.9,
+      "pitch": 1.2
+    },
+    {
+      "frame": 3,
+      "sound": "blow3",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "blow1",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "blow1",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "blow5",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "blow1",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 12,
+      "sound": "blow3",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 14,
+      "sound": "blow3",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 15,
+      "sound": "blow5",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 17,
+      "sound": "blow3",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 19,
+      "sound": "blow1",
+      "volume": 1.0,
+      "pitch": 1.1
+    },
+    {
+      "frame": 21,
+      "sound": "blow1",
+      "volume": 1.0,
+      "pitch": 1.1
+    },
+    {
+      "frame": 23,
+      "sound": "blow5",
+      "volume": 1.0,
+      "pitch": 0.95
+    },
+    {
+      "frame": 25,
+      "sound": "blow1",
+      "volume": 1.0,
+      "pitch": 1.1
+    }
+  ],
+  "7": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "8": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "fire1",
+      "volume": 1.0,
+      "pitch": 1.2
+    }
+  ],
+  "9": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "ice4",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "10": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "thunder8",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "11": [
+    {
+      "frame": 0,
+      "sound": "sword3",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "slash2",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "slash3",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "ice7",
+      "volume": 0.9,
+      "pitch": 0.9
+    }
+  ],
+  "12": [
+    {
+      "frame": 0,
+      "sound": "sword3",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "slash8",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "slash8",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 14,
+      "sound": "slash3",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "13": [
+    {
+      "frame": 0,
+      "sound": "thunder1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "14": [
+    {
+      "frame": 0,
+      "sound": "thunder1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "fire1",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "15": [
+    {
+      "frame": 0,
+      "sound": "thunder1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "ice4",
+      "volume": 1.0,
+      "pitch": 0.75
+    }
+  ],
+  "16": [
+    {
+      "frame": 0,
+      "sound": "thunder1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "thunder8",
+      "volume": 1.0,
+      "pitch": 0.8
+    }
+  ],
+  "17": [
+    {
+      "frame": 0,
+      "sound": "thunder1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 11,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "18": [
+    {
+      "frame": 0,
+      "sound": "wind8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 4,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 7,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 10,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 13,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 16,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.2
+    }
+  ],
+  "19": [
+    {
+      "frame": 1,
+      "sound": "slash4",
+      "volume": 1.0,
+      "pitch": 0.9
+    }
+  ],
+  "20": [
+    {
+      "frame": 0,
+      "sound": "fire1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "slash4",
+      "volume": 1.0,
+      "pitch": 0.9
+    }
+  ],
+  "21": [
+    {
+      "frame": 1,
+      "sound": "ice4",
+      "volume": 1.0,
+      "pitch": 0.75
+    },
+    {
+      "frame": 1,
+      "sound": "slash4",
+      "volume": 1.0,
+      "pitch": 0.9
+    }
+  ],
+  "22": [
+    {
+      "frame": 1,
+      "sound": "thunder8",
+      "volume": 1.0,
+      "pitch": 0.8
+    },
+    {
+      "frame": 1,
+      "sound": "slash4",
+      "volume": 1.0,
+      "pitch": 0.9
+    }
+  ],
+  "23": [
+    {
+      "frame": 1,
+      "sound": "slash4",
+      "volume": 1.0,
+      "pitch": 0.9
+    },
+    {
+      "frame": 6,
+      "sound": "slash5",
+      "volume": 1.0,
+      "pitch": 0.9
+    },
+    {
+      "frame": 11,
+      "sound": "slash4",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "24": [
+    {
+      "frame": 1,
+      "sound": "slash7",
+      "volume": 1.0,
+      "pitch": 1.1
+    },
+    {
+      "frame": 5,
+      "sound": "slash4",
+      "volume": 1.0,
+      "pitch": 0.9
+    },
+    {
+      "frame": 8,
+      "sound": "slash5",
+      "volume": 1.0,
+      "pitch": 0.9
+    },
+    {
+      "frame": 12,
+      "sound": "slash7",
+      "volume": 1.0,
+      "pitch": 1.1
+    },
+    {
+      "frame": 15,
+      "sound": "slash9",
+      "volume": 1.0,
+      "pitch": 1.1
+    }
+  ],
+  "25": [
+    {
+      "frame": 3,
+      "sound": "fire1",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "26": [
+    {
+      "frame": 3,
+      "sound": "ice4",
+      "volume": 1.0,
+      "pitch": 0.75
+    }
+  ],
+  "27": [
+    {
+      "frame": 3,
+      "sound": "thunder8",
+      "volume": 1.0,
+      "pitch": 0.8
+    }
+  ],
+  "28": [
+    {
+      "frame": 0,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "29": [
+    {
+      "frame": 0,
+      "sound": "saint8",
+      "volume": 0.9,
+      "pitch": 1.25
+    }
+  ],
+  "31": [
+    {
+      "frame": 0,
+      "sound": "fog1",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.9,
+      "pitch": 1.1
+    }
+  ],
+  "33": [
+    {
+      "frame": 0,
+      "sound": "saint7",
+      "volume": 1.0,
+      "pitch": 1.4
+    }
+  ],
+  "34": [
+    {
+      "frame": 0,
+      "sound": "monster1",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "35": [
+    {
+      "frame": 0,
+      "sound": "wind7",
+      "volume": 0.9,
+      "pitch": 0.5
+    },
+    {
+      "frame": 2,
+      "sound": "blow4",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "36": [
+    {
+      "frame": 2,
+      "sound": "thunder8",
+      "volume": 0.9,
+      "pitch": 1.1
+    },
+    {
+      "frame": 2,
+      "sound": "blow5",
+      "volume": 1.0,
+      "pitch": 0.5
+    }
+  ],
+  "37": [
+    {
+      "frame": 0,
+      "sound": "ice1",
+      "volume": 1.0,
+      "pitch": 0.5
+    }
+  ],
+  "38": [
+    {
+      "frame": 0,
+      "sound": "ice8",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "saint7",
+      "volume": 1.0,
+      "pitch": 1.5
+    }
+  ],
+  "39": [
+    {
+      "frame": 0,
+      "sound": "saint7",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "40": [
+    {
+      "frame": 0,
+      "sound": "raise3",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "ice8",
+      "volume": 0.9,
+      "pitch": 1.0
+    }
+  ],
+  "41": [
+    {
+      "frame": 0,
+      "sound": "ice8",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "42": [
+    {
+      "frame": 0,
+      "sound": "saint7",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "flash3",
+      "volume": 1.0,
+      "pitch": 1.5
+    }
+  ],
+  "43": [
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 1.0,
+      "pitch": 0.8
+    },
+    {
+      "frame": 10,
+      "sound": "up1",
+      "volume": 1.0,
+      "pitch": 1.5
+    }
+  ],
+  "44": [
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 1.0,
+      "pitch": 0.8
+    },
+    {
+      "frame": 10,
+      "sound": "up1",
+      "volume": 1.0,
+      "pitch": 1.5
+    }
+  ],
+  "45": [
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 1.0,
+      "pitch": 0.8
+    }
+  ],
+  "46": [
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 1.0,
+      "pitch": 0.8
+    }
+  ],
+  "47": [
+    {
+      "frame": 0,
+      "sound": "darkness4",
+      "volume": 1.0,
+      "pitch": 0.85
+    }
+  ],
+  "48": [
+    {
+      "frame": 0,
+      "sound": "wind5",
+      "volume": 0.9,
+      "pitch": 0.85
+    },
+    {
+      "frame": 2,
+      "sound": "darkness6",
+      "volume": 1.0,
+      "pitch": 0.5
+    },
+    {
+      "frame": 5,
+      "sound": "darkness6",
+      "volume": 1.0,
+      "pitch": 0.5
+    }
+  ],
+  "50": [
+    {
+      "frame": 0,
+      "sound": "poison",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "51": [
+    {
+      "frame": 1,
+      "sound": "blind",
+      "volume": 1.0,
+      "pitch": 0.75
+    }
+  ],
+  "55": [
+    {
+      "frame": 0,
+      "sound": "push",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "56": [
+    {
+      "frame": 0,
+      "sound": "darkness5",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "thunder1",
+      "volume": 0.9,
+      "pitch": 1.25
+    }
+  ],
+  "57": [
+    {
+      "frame": 0,
+      "sound": "fire4",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "58": [
+    {
+      "frame": 0,
+      "sound": "fire6",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "59": [
+    {
+      "frame": 0,
+      "sound": "fire7",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "60": [
+    {
+      "frame": 0,
+      "sound": "fire8",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "61": [
+    {
+      "frame": 0,
+      "sound": "ice4",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "thunder1",
+      "volume": 0.9,
+      "pitch": 1.5
+    }
+  ],
+  "62": [
+    {
+      "frame": 0,
+      "sound": "ice8",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "ice4",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "63": [
+    {
+      "frame": 0,
+      "sound": "wind8",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "65": [
+    {
+      "frame": 1,
+      "sound": "thunder5",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "66": [
+    {
+      "frame": 0,
+      "sound": "thunder10",
+      "volume": 1.0,
+      "pitch": 0.85
+    },
+    {
+      "frame": 3,
+      "sound": "thunder8",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "67": [
+    {
+      "frame": 1,
+      "sound": "thunder6",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "68": [
+    {
+      "frame": 0,
+      "sound": "thunder10",
+      "volume": 1.0,
+      "pitch": 1.2
+    }
+  ],
+  "69": [
+    {
+      "frame": 0,
+      "sound": "dive",
+      "volume": 0.9,
+      "pitch": 1.35
+    },
+    {
+      "frame": 7,
+      "sound": "water1",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "70": [
+    {
+      "frame": 0,
+      "sound": "water1",
+      "volume": 1.0,
+      "pitch": 0.5
+    }
+  ],
+  "71": [
+    {
+      "frame": 5,
+      "sound": "earth5",
+      "volume": 1.0,
+      "pitch": 0.5
+    }
+  ],
+  "72": [
+    {
+      "frame": 1,
+      "sound": "earth1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "earth5",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "73": [
+    {
+      "frame": 0,
+      "sound": "wind5",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "74": [
+    {
+      "frame": 0,
+      "sound": "wind5",
+      "volume": 1.0,
+      "pitch": 0.8
+    },
+    {
+      "frame": 1,
+      "sound": "wind8",
+      "volume": 1.0,
+      "pitch": 0.7
+    }
+  ],
+  "75": [
+    {
+      "frame": 0,
+      "sound": "ice7",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 0,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 4,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 6,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.1
+    }
+  ],
+  "76": [
+    {
+      "frame": 0,
+      "sound": "flash3",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 0,
+      "sound": "skill1",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 11,
+      "sound": "explosion3",
+      "volume": 0.6,
+      "pitch": 0.7
+    },
+    {
+      "frame": 11,
+      "sound": "saint7",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 13,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 14,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 15,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 16,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 17,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 18,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 19,
+      "sound": "saint6",
+      "volume": 0.8,
+      "pitch": 0.8
+    }
+  ],
+  "77": [
+    {
+      "frame": 0,
+      "sound": "darkness3",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "78": [
+    {
+      "frame": 0,
+      "sound": "teleport",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "79": [
+    {
+      "frame": 0,
+      "sound": "explosion2",
+      "volume": 1.0,
+      "pitch": 1.05
+    }
+  ],
+  "80": [
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "ice8",
+      "volume": 0.9,
+      "pitch": 1.0
+    }
+  ],
+  "82": [
+    {
+      "frame": 0,
+      "sound": "monster1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "slash6",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "83": [
+    {
+      "frame": 0,
+      "sound": "slash6",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "fire1",
+      "volume": 1.0,
+      "pitch": 1.2
+    }
+  ],
+  "84": [
+    {
+      "frame": 0,
+      "sound": "slash6",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "ice4",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "85": [
+    {
+      "frame": 0,
+      "sound": "slash6",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "thunder8",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "86": [
+    {
+      "frame": 1,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "slash6",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "slash8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "slash6",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 18,
+      "sound": "slash11",
+      "volume": 0.9,
+      "pitch": 0.9
+    }
+  ],
+  "87": [
+    {
+      "frame": 0,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 15,
+      "sound": "slash3",
+      "volume": 1.0,
+      "pitch": 1.05
+    },
+    {
+      "frame": 15,
+      "sound": "attack3",
+      "volume": 0.9,
+      "pitch": 0.8
+    },
+    {
+      "frame": 16,
+      "sound": "battle3",
+      "volume": 0.9,
+      "pitch": 1.0
+    }
+  ],
+  "88": [
+    {
+      "frame": 1,
+      "sound": "slash2",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "slash2",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 15,
+      "sound": "slash2",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 22,
+      "sound": "wind8",
+      "volume": 0.7,
+      "pitch": 1.5
+    },
+    {
+      "frame": 22,
+      "sound": "slash9",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "89": [
+    {
+      "frame": 1,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.1
+    },
+    {
+      "frame": 5,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.1
+    },
+    {
+      "frame": 11,
+      "sound": "slash2",
+      "volume": 1.0,
+      "pitch": 1.1
+    },
+    {
+      "frame": 15,
+      "sound": "slash3",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "90": [
+    {
+      "frame": 0,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "wind2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 6,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 9,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 12,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 15,
+      "sound": "down2",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 15,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.2
+    }
+  ],
+  "91": [
+    {
+      "frame": 0,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "92": [
+    {
+      "frame": 0,
+      "sound": "gun2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "93": [
+    {
+      "frame": 10,
+      "sound": "skill1",
+      "volume": 0.8,
+      "pitch": 0.95
+    },
+    {
+      "frame": 15,
+      "sound": "skill2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 22,
+      "sound": "ice7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 26,
+      "sound": "battle3",
+      "volume": 0.85,
+      "pitch": 1.0
+    }
+  ],
+  "95": [
+    {
+      "frame": 0,
+      "sound": "push",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "raise1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "96": [
+    {
+      "frame": 0,
+      "sound": "blind",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 14,
+      "sound": "crash",
+      "volume": 0.8,
+      "pitch": 1.2
+    }
+  ],
+  "97": [
+    {
+      "frame": 6,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "98": [
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "wind2",
+      "volume": 0.65,
+      "pitch": 0.7
+    },
+    {
+      "frame": 9,
+      "sound": "fire2",
+      "volume": 0.8,
+      "pitch": 1.1
+    }
+  ],
+  "99": [
+    {
+      "frame": 0,
+      "sound": "wind2",
+      "volume": 0.65,
+      "pitch": 0.7
+    },
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "ice7",
+      "volume": 0.7,
+      "pitch": 1.0
+    },
+    {
+      "frame": 23,
+      "sound": "sand",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 23,
+      "sound": "ice11",
+      "volume": 0.9,
+      "pitch": 1.0
+    }
+  ],
+  "100": [
+    {
+      "frame": 0,
+      "sound": "wind2",
+      "volume": 0.65,
+      "pitch": 0.7
+    },
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "101": [
+    {
+      "frame": 0,
+      "sound": "wind2",
+      "volume": 0.65,
+      "pitch": 0.7
+    },
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "darkness8",
+      "volume": 0.75,
+      "pitch": 1.0
+    },
+    {
+      "frame": 23,
+      "sound": "water1",
+      "volume": 0.9,
+      "pitch": 0.5
+    }
+  ],
+  "102": [
+    {
+      "frame": 0,
+      "sound": "wind2",
+      "volume": 0.65,
+      "pitch": 0.7
+    },
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "103": [
+    {
+      "frame": 0,
+      "sound": "wind2",
+      "volume": 0.65,
+      "pitch": 0.7
+    },
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "wind2",
+      "volume": 0.75,
+      "pitch": 1.25
+    },
+    {
+      "frame": 23,
+      "sound": "magic7",
+      "volume": 0.9,
+      "pitch": 1.0
+    }
+  ],
+  "104": [
+    {
+      "frame": 0,
+      "sound": "wind2",
+      "volume": 0.65,
+      "pitch": 0.7
+    },
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "saint6",
+      "volume": 0.75,
+      "pitch": 1.1
+    },
+    {
+      "frame": 19,
+      "sound": "saint7",
+      "volume": 0.9,
+      "pitch": 1.0
+    }
+  ],
+  "105": [
+    {
+      "frame": 0,
+      "sound": "wind2",
+      "volume": 0.65,
+      "pitch": 0.7
+    },
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 25,
+      "sound": "darkness8",
+      "volume": 0.9,
+      "pitch": 1.0
+    }
+  ],
+  "106": [
+    {
+      "frame": 0,
+      "sound": "thunder7",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 23,
+      "sound": "battle3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 34,
+      "sound": "explosion3",
+      "volume": 0.9,
+      "pitch": 0.9
+    }
+  ],
+  "107": [
+    {
+      "frame": 0,
+      "sound": "magic2",
+      "volume": 0.7,
+      "pitch": 1.5
+    },
+    {
+      "frame": 7,
+      "sound": "saint7",
+      "volume": 0.8,
+      "pitch": 1.1
+    }
+  ],
+  "108": [
+    {
+      "frame": 0,
+      "sound": "magic2",
+      "volume": 0.7,
+      "pitch": 1.5
+    },
+    {
+      "frame": 7,
+      "sound": "saint7",
+      "volume": 0.8,
+      "pitch": 1.1
+    }
+  ],
+  "109": [
+    {
+      "frame": 11,
+      "sound": "ice1",
+      "volume": 0.8,
+      "pitch": 0.7
+    }
+  ],
+  "110": [
+    {
+      "frame": 0,
+      "sound": "ice7",
+      "volume": 0.8,
+      "pitch": 1.25
+    }
+  ],
+  "111": [
+    {
+      "frame": 0,
+      "sound": "equip1",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "112": [
+    {
+      "frame": 0,
+      "sound": "wind1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "115": [
+    {
+      "frame": 9,
+      "sound": "raise1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "116": [
+    {
+      "frame": 0,
+      "sound": "slash9",
+      "volume": 1.0,
+      "pitch": 0.7
+    }
+  ],
+  "117": [
+    {
+      "frame": 0,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "ice11",
+      "volume": 0.6,
+      "pitch": 1.5
+    },
+    {
+      "frame": 4,
+      "sound": "break",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "118": [
+    {
+      "frame": 0,
+      "sound": "magic2",
+      "volume": 0.7,
+      "pitch": 1.5
+    },
+    {
+      "frame": 7,
+      "sound": "saint7",
+      "volume": 0.8,
+      "pitch": 1.1
+    }
+  ],
+  "119": [
+    {
+      "frame": 0,
+      "sound": "ice7",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "saint7",
+      "volume": 1.0,
+      "pitch": 1.15
+    }
+  ],
+  "121": [
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.9,
+      "pitch": 0.7
+    }
+  ],
+  "122": [
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.9,
+      "pitch": 0.7
+    }
+  ],
+  "123": [
+    {
+      "frame": 0,
+      "sound": "gucha004a",
+      "volume": 0.9,
+      "pitch": 0.5
+    }
+  ],
+  "124": [
+    {
+      "frame": 0,
+      "sound": "ice7",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "saint7",
+      "volume": 1.0,
+      "pitch": 0.8
+    }
+  ],
+  "125": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "126": [
+    {
+      "frame": 0,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "127": [
+    {
+      "frame": 0,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "128": [
+    {
+      "frame": 0,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash11",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "129": [
+    {
+      "frame": 0,
+      "sound": "down2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 7,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "130": [
+    {
+      "frame": 0,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "131": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "wind10",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "132": [
+    {
+      "frame": 0,
+      "sound": "slash3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "133": [
+    {
+      "frame": 0,
+      "sound": "wind10",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "sword3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "134": [
+    {
+      "frame": 0,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 3,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 6,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 9,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "135": [
+    {
+      "frame": 0,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "crash",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "136": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "flash1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 3,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "137": [
+    {
+      "frame": 0,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "ice11",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "138": [
+    {
+      "frame": 0,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 5,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 1.4
+    },
+    {
+      "frame": 7,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 1.3
+    },
+    {
+      "frame": 9,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 11,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 1.1
+    }
+  ],
+  "139": [
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 7,
+      "sound": "magic4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 21,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 21,
+      "sound": "battle3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 23,
+      "sound": "crash",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 23,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 25,
+      "sound": "crash",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 25,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 27,
+      "sound": "crash",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 27,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 29,
+      "sound": "crash",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 29,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 31,
+      "sound": "crash",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "140": [
+    {
+      "frame": 0,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 0.85
+    }
+  ],
+  "141": [
+    {
+      "frame": 0,
+      "sound": "slash4",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 0,
+      "sound": "down2",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 1,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 7,
+      "sound": "down2",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 7,
+      "sound": "slash4",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 8,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 9,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.1
+    }
+  ],
+  "142": [
+    {
+      "frame": 0,
+      "sound": "blind",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "darkness7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "143": [
+    {
+      "frame": 0,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "break",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "144": [
+    {
+      "frame": 0,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "wind1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 6,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 10,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "145": [
+    {
+      "frame": 0,
+      "sound": "sword_stab",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "darkness6",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "150": [
+    {
+      "frame": 0,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "slash3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "155": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 2,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 5,
+      "sound": "sword3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 11,
+      "sound": "slash3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "158": [
+    {
+      "frame": 0,
+      "sound": "sword4",
+      "volume": 1.0,
+      "pitch": 1.3
+    },
+    {
+      "frame": 9,
+      "sound": "sword4",
+      "volume": 1.0,
+      "pitch": 1.3
+    }
+  ],
+  "159": [
+    {
+      "frame": 0,
+      "sound": "thunder1",
+      "volume": 0.85,
+      "pitch": 0.75
+    },
+    {
+      "frame": 2,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "sword3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "160": [
+    {
+      "frame": 0,
+      "sound": "sword1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "161": [
+    {
+      "frame": 0,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 2,
+      "sound": "blow4",
+      "volume": 0.8,
+      "pitch": 0.65
+    },
+    {
+      "frame": 4,
+      "sound": "blow4",
+      "volume": 0.8,
+      "pitch": 0.65
+    },
+    {
+      "frame": 7,
+      "sound": "blow4",
+      "volume": 0.8,
+      "pitch": 0.65
+    }
+  ],
+  "162": [
+    {
+      "frame": 0,
+      "sound": "sword2",
+      "volume": 0.8,
+      "pitch": 0.7
+    }
+  ],
+  "164": [
+    {
+      "frame": 0,
+      "sound": "thunder1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 11,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "165": [
+    {
+      "frame": 0,
+      "sound": "wind8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 4,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 7,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 10,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 13,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 16,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.2
+    }
+  ],
+  "166": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "darkness4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "167": [
+    {
+      "frame": 0,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "sword3",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 2,
+      "sound": "darkness4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "absorb1",
+      "volume": 0.8,
+      "pitch": 0.7
+    }
+  ],
+  "168": [
+    {
+      "frame": 0,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "absorb1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 1,
+      "sound": "darkness7",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "169": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "fire3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "172": [
+    {
+      "frame": 0,
+      "sound": "saint7",
+      "volume": 1.0,
+      "pitch": 0.5
+    }
+  ],
+  "173": [
+    {
+      "frame": 0,
+      "sound": "darkness1",
+      "volume": 0.9,
+      "pitch": 0.7
+    }
+  ],
+  "174": [
+    {
+      "frame": 0,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "175": [
+    {
+      "frame": 0,
+      "sound": "monster4",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "176": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "flash1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 3,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "177": [
+    {
+      "frame": 0,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 1,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 2,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 3,
+      "sound": "saint3",
+      "volume": 0.6,
+      "pitch": 1.5
+    },
+    {
+      "frame": 3,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 4,
+      "sound": "saint3",
+      "volume": 0.6,
+      "pitch": 1.4
+    },
+    {
+      "frame": 4,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 5,
+      "sound": "magic2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 6,
+      "sound": "saint3",
+      "volume": 0.6,
+      "pitch": 1.45
+    },
+    {
+      "frame": 6,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 7,
+      "sound": "saint3",
+      "volume": 0.6,
+      "pitch": 1.3
+    },
+    {
+      "frame": 7,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 8,
+      "sound": "saint3",
+      "volume": 0.6,
+      "pitch": 1.35
+    },
+    {
+      "frame": 8,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 9,
+      "sound": "saint3",
+      "volume": 0.6,
+      "pitch": 1.4
+    },
+    {
+      "frame": 9,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 10,
+      "sound": "saint3",
+      "volume": 0.6,
+      "pitch": 1.5
+    },
+    {
+      "frame": 10,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 11,
+      "sound": "saint3",
+      "volume": 0.6,
+      "pitch": 1.35
+    },
+    {
+      "frame": 11,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 12,
+      "sound": "saint3",
+      "volume": 0.6,
+      "pitch": 1.45
+    },
+    {
+      "frame": 12,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 13,
+      "sound": "saint3",
+      "volume": 0.6,
+      "pitch": 1.3
+    },
+    {
+      "frame": 14,
+      "sound": "saint3",
+      "volume": 0.6,
+      "pitch": 1.5
+    },
+    {
+      "frame": 15,
+      "sound": "saint3",
+      "volume": 0.6,
+      "pitch": 1.4
+    }
+  ],
+  "178": [
+    {
+      "frame": 0,
+      "sound": "battle3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "saint6",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "raise1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 14,
+      "sound": "flash1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 14,
+      "sound": "earth1",
+      "volume": 0.7,
+      "pitch": 0.5
+    },
+    {
+      "frame": 14,
+      "sound": "damage2",
+      "volume": 0.75,
+      "pitch": 0.5
+    }
+  ],
+  "179": [
+    {
+      "frame": 0,
+      "sound": "monster4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "slash3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "fire2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "fire8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "fire7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 11,
+      "sound": "fire7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "fire7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 15,
+      "sound": "fire7",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "180": [
+    {
+      "frame": 0,
+      "sound": "sword_stab",
+      "volume": 0.9,
+      "pitch": 1.4
+    }
+  ],
+  "181": [
+    {
+      "frame": 0,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "gucha004a",
+      "volume": 0.8,
+      "pitch": 0.75
+    }
+  ],
+  "182": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "darkness4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "185": [
+    {
+      "frame": 0,
+      "sound": "monster4",
+      "volume": 1.0,
+      "pitch": 0.5
+    }
+  ],
+  "188": [
+    {
+      "frame": 13,
+      "sound": "darkness7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 13,
+      "sound": "absorb1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "189": [
+    {
+      "frame": 0,
+      "sound": "blind",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "darkness7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "190": [
+    {
+      "frame": 0,
+      "sound": "sword_stab",
+      "volume": 0.9,
+      "pitch": 1.05
+    },
+    {
+      "frame": 1,
+      "sound": "sword_stab",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 5,
+      "sound": "sword_stab",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "sword_stab",
+      "volume": 1.0,
+      "pitch": 1.1
+    },
+    {
+      "frame": 14,
+      "sound": "sword_stab",
+      "volume": 1.0,
+      "pitch": 0.9
+    }
+  ],
+  "191": [
+    {
+      "frame": 0,
+      "sound": "darkness1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "192": [
+    {
+      "frame": 0,
+      "sound": "sword_stab",
+      "volume": 0.9,
+      "pitch": 1.05
+    },
+    {
+      "frame": 1,
+      "sound": "sword_stab",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 5,
+      "sound": "sword_stab",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "sword_stab",
+      "volume": 1.0,
+      "pitch": 1.1
+    },
+    {
+      "frame": 14,
+      "sound": "sword_stab",
+      "volume": 1.0,
+      "pitch": 0.9
+    }
+  ],
+  "193": [
+    {
+      "frame": 0,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 14,
+      "sound": "up4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "194": [
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "twine",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "twine",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "195": [
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 17,
+      "sound": "ice11",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "196": [
+    {
+      "frame": 0,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "197": [
+    {
+      "frame": 0,
+      "sound": "dive",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "blow5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "water1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "sand",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "198": [
+    {
+      "frame": 0,
+      "sound": "wind2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "gucha004a",
+      "volume": 0.2,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "gucha004a",
+      "volume": 0.3,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "gucha004a",
+      "volume": 0.4,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "gucha004a",
+      "volume": 0.5,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "gucha004a",
+      "volume": 0.6,
+      "pitch": 1.0
+    },
+    {
+      "frame": 11,
+      "sound": "gucha004a",
+      "volume": 0.7,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "gucha004a",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "199": [
+    {
+      "frame": 0,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 1,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 2,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 3,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 4,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 5,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 6,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 7,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 8,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 9,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 10,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 11,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 13,
+      "sound": "explosion2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 14,
+      "sound": "explosion3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "200": [
+    {
+      "frame": 0,
+      "sound": "magic7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 7,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 11,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 15,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 17,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 20,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 21,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.2
+    }
+  ],
+  "201": [
+    {
+      "frame": 0,
+      "sound": "down2",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 23,
+      "sound": "explosion3",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 23,
+      "sound": "darkness3",
+      "volume": 0.8,
+      "pitch": 0.8
+    }
+  ],
+  "202": [
+    {
+      "frame": 0,
+      "sound": "saint7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 0,
+      "sound": "magic2",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "204": [
+    {
+      "frame": 0,
+      "sound": "evasion1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "fire1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "fire2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "205": [
+    {
+      "frame": 0,
+      "sound": "evasion1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "poison",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 6,
+      "sound": "poison",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "206": [
+    {
+      "frame": 0,
+      "sound": "evasion1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "dive",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "water1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "207": [
+    {
+      "frame": 0,
+      "sound": "down2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 3,
+      "sound": "slash11",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "208": [
+    {
+      "frame": 0,
+      "sound": "up4",
+      "volume": 0.8,
+      "pitch": 1.1
+    }
+  ],
+  "209": [
+    {
+      "frame": 0,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "pollen",
+      "volume": 0.8,
+      "pitch": 1.3
+    },
+    {
+      "frame": 2,
+      "sound": "pollen",
+      "volume": 0.8,
+      "pitch": 1.3
+    },
+    {
+      "frame": 4,
+      "sound": "pollen",
+      "volume": 0.8,
+      "pitch": 1.3
+    },
+    {
+      "frame": 6,
+      "sound": "pollen",
+      "volume": 0.8,
+      "pitch": 1.3
+    },
+    {
+      "frame": 8,
+      "sound": "pollen",
+      "volume": 0.8,
+      "pitch": 1.3
+    }
+  ],
+  "210": [
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 0,
+      "sound": "darkness3",
+      "volume": 0.6,
+      "pitch": 0.7
+    }
+  ],
+  "211": [
+    {
+      "frame": 0,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 4,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 4,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "212": [
+    {
+      "frame": 0,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 3,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "213": [
+    {
+      "frame": 0,
+      "sound": "evasion1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "blow3",
+      "volume": 0.8,
+      "pitch": 0.8
+    }
+  ],
+  "214": [
+    {
+      "frame": 0,
+      "sound": "skill1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "blow4",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 8,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 8,
+      "sound": "damage4",
+      "volume": 0.8,
+      "pitch": 0.7
+    }
+  ],
+  "215": [
+    {
+      "frame": 0,
+      "sound": "water1",
+      "volume": 0.9,
+      "pitch": 1.5
+    }
+  ],
+  "216": [
+    {
+      "frame": 0,
+      "sound": "down2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "crash",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 16,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 16,
+      "sound": "up1",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 16,
+      "sound": "up1",
+      "volume": 0.8,
+      "pitch": 0.8
+    }
+  ],
+  "217": [
+    {
+      "frame": 0,
+      "sound": "key",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 5,
+      "sound": "break",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "218": [
+    {
+      "frame": 1,
+      "sound": "gucha004a",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 1,
+      "sound": "blow4",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 1,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "219": [
+    {
+      "frame": 0,
+      "sound": "sword3",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "slash2",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "slash3",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 11,
+      "sound": "slash3",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 15,
+      "sound": "slash3",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "220": [
+    {
+      "frame": 0,
+      "sound": "sword3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "221": [
+    {
+      "frame": 0,
+      "sound": "darkness5",
+      "volume": 0.75,
+      "pitch": 1.2
+    },
+    {
+      "frame": 0,
+      "sound": "sword3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "223": [
+    {
+      "frame": 4,
+      "sound": "explosion3",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "225": [
+    {
+      "frame": 0,
+      "sound": "bow1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "bow2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "bow1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "bow1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "bow2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "bow2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 16,
+      "sound": "slash11",
+      "volume": 0.1,
+      "pitch": 1.0
+    },
+    {
+      "frame": 18,
+      "sound": "slash10",
+      "volume": 0.15,
+      "pitch": 1.0
+    },
+    {
+      "frame": 20,
+      "sound": "slash11",
+      "volume": 0.2,
+      "pitch": 0.9
+    },
+    {
+      "frame": 22,
+      "sound": "slash11",
+      "volume": 0.25,
+      "pitch": 1.0
+    },
+    {
+      "frame": 24,
+      "sound": "slash10",
+      "volume": 0.3,
+      "pitch": 1.0
+    },
+    {
+      "frame": 26,
+      "sound": "slash11",
+      "volume": 0.4,
+      "pitch": 1.0
+    },
+    {
+      "frame": 28,
+      "sound": "slash11",
+      "volume": 0.5,
+      "pitch": 1.1
+    },
+    {
+      "frame": 30,
+      "sound": "slash11",
+      "volume": 0.6,
+      "pitch": 0.9
+    },
+    {
+      "frame": 32,
+      "sound": "slash10",
+      "volume": 0.7,
+      "pitch": 0.9
+    },
+    {
+      "frame": 34,
+      "sound": "slash11",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 36,
+      "sound": "slash11",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 38,
+      "sound": "slash11",
+      "volume": 0.8,
+      "pitch": 1.1
+    }
+  ],
+  "226": [
+    {
+      "frame": 0,
+      "sound": "bow4",
+      "volume": 0.9,
+      "pitch": 1.5
+    },
+    {
+      "frame": 8,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "bow2",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 8,
+      "sound": "bow1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "227": [
+    {
+      "frame": 0,
+      "sound": "bow4",
+      "volume": 0.9,
+      "pitch": 1.5
+    },
+    {
+      "frame": 8,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "bow2",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 8,
+      "sound": "bow1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "slash11",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 14,
+      "sound": "slash11",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "228": [
+    {
+      "frame": 0,
+      "sound": "magic2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 7,
+      "sound": "saint6",
+      "volume": 0.8,
+      "pitch": 1.2
+    }
+  ],
+  "229": [
+    {
+      "frame": 0,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "absorb1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 17,
+      "sound": "raise3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 17,
+      "sound": "silence",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 19,
+      "sound": "flash3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 20,
+      "sound": "explosion2",
+      "volume": 0.7,
+      "pitch": 0.8
+    },
+    {
+      "frame": 20,
+      "sound": "battle3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "230": [
+    {
+      "frame": 0,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 2,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "231": [
+    {
+      "frame": 0,
+      "sound": "sword3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "sword1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "sword1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 11,
+      "sound": "down2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 17,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 18,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "232": [
+    {
+      "frame": 0,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "233": [
+    {
+      "frame": 0,
+      "sound": "twine",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 6,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "234": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "slash3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "slash5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "slash6",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "slash7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "slash8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 14,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 14,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "235": [
+    {
+      "frame": 0,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 0,
+      "sound": "earth2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "damage2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "236": [
+    {
+      "frame": 0,
+      "sound": "earth5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "237": [
+    {
+      "frame": 0,
+      "sound": "saint7",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "238": [
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 1.0,
+      "pitch": 1.5
+    },
+    {
+      "frame": 5,
+      "sound": "saint7",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "239": [
+    {
+      "frame": 0,
+      "sound": "evasion1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "blow3",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 4,
+      "sound": "evasion1",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 7,
+      "sound": "blow4",
+      "volume": 0.8,
+      "pitch": 0.8
+    }
+  ],
+  "240": [
+    {
+      "frame": 0,
+      "sound": "evasion1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "ice11",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 5,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "241": [
+    {
+      "frame": 0,
+      "sound": "wind10",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 6,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 8,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 10,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 12,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 14,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 16,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 18,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "242": [
+    {
+      "frame": 0,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "slash8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "slash3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "243": [
+    {
+      "frame": 0,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "slash4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "244": [
+    {
+      "frame": 0,
+      "sound": "slash3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "245": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 12,
+      "sound": "sword3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 19,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "246": [
+    {
+      "frame": 0,
+      "sound": "key",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "break",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 5,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 5,
+      "sound": "sniper_rifle",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "247": [
+    {
+      "frame": 0,
+      "sound": "key",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "break",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 6,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 0.6
+    },
+    {
+      "frame": 7,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "248": [
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "up4",
+      "volume": 0.8,
+      "pitch": 1.2
+    }
+  ],
+  "249": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "evasion1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "dao",
+      "volume": 0.8,
+      "pitch": 0.8
+    }
+  ],
+  "250": [
+    {
+      "frame": 0,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "flash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "251": [
+    {
+      "frame": 0,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 2,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 3,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 4,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 5,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 6,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 7,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 8,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 9,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 10,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 11,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 13,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "253": [
+    {
+      "frame": 0,
+      "sound": "ice7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "darkness4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "255": [
+    {
+      "frame": 0,
+      "sound": "magic2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 11,
+      "sound": "magic1",
+      "volume": 0.8,
+      "pitch": 0.8
+    }
+  ],
+  "256": [
+    {
+      "frame": 0,
+      "sound": "darkness5",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "258": [
+    {
+      "frame": 0,
+      "sound": "fog1",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.9,
+      "pitch": 1.1
+    }
+  ],
+  "260": [
+    {
+      "frame": 9,
+      "sound": "gucha004a",
+      "volume": 0.9,
+      "pitch": 0.5
+    }
+  ],
+  "262": [
+    {
+      "frame": 0,
+      "sound": "water1",
+      "volume": 1.0,
+      "pitch": 0.95
+    }
+  ],
+  "263": [
+    {
+      "frame": 7,
+      "sound": "water6",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "265": [
+    {
+      "frame": 0,
+      "sound": "darkness8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 15,
+      "sound": "darkness3",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 15,
+      "sound": "blind",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 20,
+      "sound": "darkness7",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "266": [
+    {
+      "frame": 0,
+      "sound": "fire6",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "268": [
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "explosion3",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 11,
+      "sound": "explosion2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "270": [
+    {
+      "frame": 0,
+      "sound": "saint7",
+      "volume": 1.0,
+      "pitch": 0.5
+    }
+  ],
+  "271": [
+    {
+      "frame": 2,
+      "sound": "gucha004a",
+      "volume": 0.7,
+      "pitch": 1.2
+    },
+    {
+      "frame": 4,
+      "sound": "gucha004a",
+      "volume": 0.7,
+      "pitch": 1.2
+    },
+    {
+      "frame": 7,
+      "sound": "gucha004a",
+      "volume": 0.7,
+      "pitch": 1.2
+    },
+    {
+      "frame": 10,
+      "sound": "gucha004a",
+      "volume": 0.7,
+      "pitch": 1.2
+    },
+    {
+      "frame": 13,
+      "sound": "gucha004a",
+      "volume": 0.7,
+      "pitch": 1.2
+    },
+    {
+      "frame": 16,
+      "sound": "gucha004a",
+      "volume": 0.7,
+      "pitch": 1.05
+    }
+  ],
+  "272": [
+    {
+      "frame": 5,
+      "sound": "gucha004a",
+      "volume": 0.9,
+      "pitch": 0.5
+    }
+  ],
+  "273": [
+    {
+      "frame": 1,
+      "sound": "thunder8",
+      "volume": 1.0,
+      "pitch": 0.8
+    },
+    {
+      "frame": 1,
+      "sound": "slash4",
+      "volume": 1.0,
+      "pitch": 0.9
+    }
+  ],
+  "274": [
+    {
+      "frame": 0,
+      "sound": "slash6",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "fire1",
+      "volume": 1.0,
+      "pitch": 1.2
+    }
+  ],
+  "275": [
+    {
+      "frame": 0,
+      "sound": "slash6",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "ice4",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "276": [
+    {
+      "frame": 0,
+      "sound": "thunder1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "278": [
+    {
+      "frame": 1,
+      "sound": "thunder5",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "279": [
+    {
+      "frame": 0,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 1,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 2,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 3,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 4,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 5,
+      "sound": "blow1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 5,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 7,
+      "sound": "blow1",
+      "volume": 0.8,
+      "pitch": 0.6
+    },
+    {
+      "frame": 9,
+      "sound": "blow1",
+      "volume": 0.8,
+      "pitch": 0.6
+    },
+    {
+      "frame": 11,
+      "sound": "blow1",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "282": [
+    {
+      "frame": 0,
+      "sound": "push",
+      "volume": 0.9,
+      "pitch": 1.0
+    }
+  ],
+  "283": [
+    {
+      "frame": 0,
+      "sound": "thunder1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "285": [
+    {
+      "frame": 8,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "gucha004a",
+      "volume": 0.9,
+      "pitch": 0.6
+    }
+  ],
+  "287": [
+    {
+      "frame": 0,
+      "sound": "wind10",
+      "volume": 0.5,
+      "pitch": 0.5
+    },
+    {
+      "frame": 14,
+      "sound": "fire8",
+      "volume": 0.8,
+      "pitch": 0.7
+    }
+  ],
+  "288": [
+    {
+      "frame": 16,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "289": [
+    {
+      "frame": 2,
+      "sound": "darkness3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "290": [
+    {
+      "frame": 2,
+      "sound": "darkness3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "291": [
+    {
+      "frame": 9,
+      "sound": "gucha004a",
+      "volume": 0.9,
+      "pitch": 0.5
+    }
+  ],
+  "293": [
+    {
+      "frame": 0,
+      "sound": "ice8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "saint7",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "294": [
+    {
+      "frame": 0,
+      "sound": "skill1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 9,
+      "sound": "saint7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 12,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "295": [
+    {
+      "frame": 3,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 11,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "296": [
+    {
+      "frame": 0,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "sand",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "darkness6",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "darkness6",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "darkness6",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "297": [
+    {
+      "frame": 0,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "flash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "298": [
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "magic2",
+      "volume": 0.7,
+      "pitch": 1.5
+    }
+  ],
+  "299": [
+    {
+      "frame": 0,
+      "sound": "poison",
+      "volume": 0.8,
+      "pitch": 0.6
+    }
+  ],
+  "300": [
+    {
+      "frame": 0,
+      "sound": "poison",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "301": [
+    {
+      "frame": 0,
+      "sound": "saint8",
+      "volume": 0.9,
+      "pitch": 1.25
+    }
+  ],
+  "303": [
+    {
+      "frame": 1,
+      "sound": "sword_stab",
+      "volume": 1.0,
+      "pitch": 0.7
+    },
+    {
+      "frame": 2,
+      "sound": "sword_stab",
+      "volume": 1.0,
+      "pitch": 0.7
+    },
+    {
+      "frame": 3,
+      "sound": "sword_stab",
+      "volume": 1.0,
+      "pitch": 0.7
+    },
+    {
+      "frame": 4,
+      "sound": "sword_stab",
+      "volume": 1.0,
+      "pitch": 0.7
+    },
+    {
+      "frame": 5,
+      "sound": "sword_stab",
+      "volume": 1.0,
+      "pitch": 0.7
+    }
+  ],
+  "304": [
+    {
+      "frame": 0,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "fire3",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 3,
+      "sound": "fire3",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 6,
+      "sound": "fire3",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 9,
+      "sound": "fire8",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "305": [
+    {
+      "frame": 0,
+      "sound": "thunder6",
+      "volume": 0.8,
+      "pitch": 0.7
+    }
+  ],
+  "306": [
+    {
+      "frame": 0,
+      "sound": "darkness1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "down2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "darkness8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "darkness3",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 9,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "307": [
+    {
+      "frame": 0,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "blow5",
+      "volume": 0.6,
+      "pitch": 0.5
+    }
+  ],
+  "309": [
+    {
+      "frame": 0,
+      "sound": "down2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "blow5",
+      "volume": 0.6,
+      "pitch": 0.5
+    }
+  ],
+  "310": [
+    {
+      "frame": 0,
+      "sound": "ice8",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "saint7",
+      "volume": 1.0,
+      "pitch": 1.5
+    }
+  ],
+  "311": [
+    {
+      "frame": 0,
+      "sound": "thunder1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "blow5",
+      "volume": 0.6,
+      "pitch": 0.5
+    },
+    {
+      "frame": 3,
+      "sound": "saint7",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "312": [
+    {
+      "frame": 0,
+      "sound": "thunder1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "blow5",
+      "volume": 0.6,
+      "pitch": 0.5
+    },
+    {
+      "frame": 3,
+      "sound": "saint7",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "313": [
+    {
+      "frame": 1,
+      "sound": "slash6",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "slash8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "slash6",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 18,
+      "sound": "slash11",
+      "volume": 0.9,
+      "pitch": 0.9
+    }
+  ],
+  "314": [
+    {
+      "frame": 0,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "earth5",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "315": [
+    {
+      "frame": 0,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 4,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 4,
+      "sound": "damage4",
+      "volume": 0.8,
+      "pitch": 0.75
+    }
+  ],
+  "316": [
+    {
+      "frame": 0,
+      "sound": "fire1",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "317": [
+    {
+      "frame": 0,
+      "sound": "thunder7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 0,
+      "sound": "battle3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "318": [
+    {
+      "frame": 0,
+      "sound": "sword3",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 2,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 0.85
+    },
+    {
+      "frame": 3,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.2
+    }
+  ],
+  "319": [
+    {
+      "frame": 0,
+      "sound": "down2",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 14,
+      "sound": "fog1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 14,
+      "sound": "darkness6",
+      "volume": 0.8,
+      "pitch": 0.7
+    }
+  ],
+  "320": [
+    {
+      "frame": 0,
+      "sound": "monster4",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 15,
+      "sound": "darkness4",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 15,
+      "sound": "collapse2",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 15,
+      "sound": "darkness1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "321": [
+    {
+      "frame": 0,
+      "sound": "pollen",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 0,
+      "sound": "blind",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 10,
+      "sound": "darkness8",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 23,
+      "sound": "darkness7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 28,
+      "sound": "crash",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 28,
+      "sound": "darkness4",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 28,
+      "sound": "darkness5",
+      "volume": 0.6,
+      "pitch": 1.2
+    }
+  ],
+  "322": [
+    {
+      "frame": 0,
+      "sound": "bow2",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 0,
+      "sound": "bow1",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 6,
+      "sound": "damage4",
+      "volume": 0.8,
+      "pitch": 0.9
+    }
+  ],
+  "323": [
+    {
+      "frame": 0,
+      "sound": "blind",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 14,
+      "sound": "crash",
+      "volume": 0.8,
+      "pitch": 1.2
+    }
+  ],
+  "324": [
+    {
+      "frame": 0,
+      "sound": "blind",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 14,
+      "sound": "crash",
+      "volume": 0.8,
+      "pitch": 1.2
+    }
+  ],
+  "325": [
+    {
+      "frame": 0,
+      "sound": "sword5",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "sword4",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "sword5",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "sword4",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 14,
+      "sound": "sword3",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "326": [
+    {
+      "frame": 0,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 4,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 4,
+      "sound": "damage4",
+      "volume": 0.8,
+      "pitch": 0.75
+    }
+  ],
+  "327": [
+    {
+      "frame": 1,
+      "sound": "slash4",
+      "volume": 1.0,
+      "pitch": 0.9
+    }
+  ],
+  "329": [
+    {
+      "frame": 23,
+      "sound": "battle3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 34,
+      "sound": "ice11",
+      "volume": 0.9,
+      "pitch": 0.9
+    },
+    {
+      "frame": 37,
+      "sound": "ice11",
+      "volume": 0.95,
+      "pitch": 1.3
+    },
+    {
+      "frame": 40,
+      "sound": "ice11",
+      "volume": 0.95,
+      "pitch": 1.3
+    },
+    {
+      "frame": 46,
+      "sound": "ice11",
+      "volume": 0.95,
+      "pitch": 1.3
+    },
+    {
+      "frame": 50,
+      "sound": "ice11",
+      "volume": 0.95,
+      "pitch": 1.3
+    },
+    {
+      "frame": 52,
+      "sound": "ice11",
+      "volume": 0.95,
+      "pitch": 1.3
+    },
+    {
+      "frame": 54,
+      "sound": "ice11",
+      "volume": 0.95,
+      "pitch": 1.3
+    },
+    {
+      "frame": 55,
+      "sound": "ice11",
+      "volume": 0.95,
+      "pitch": 1.3
+    }
+  ],
+  "330": [
+    {
+      "frame": 0,
+      "sound": "blind",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 14,
+      "sound": "crash",
+      "volume": 0.8,
+      "pitch": 1.2
+    }
+  ],
+  "331": [
+    {
+      "frame": 0,
+      "sound": "wind5",
+      "volume": 0.9,
+      "pitch": 0.85
+    },
+    {
+      "frame": 2,
+      "sound": "darkness6",
+      "volume": 1.0,
+      "pitch": 0.5
+    },
+    {
+      "frame": 5,
+      "sound": "darkness6",
+      "volume": 1.0,
+      "pitch": 0.5
+    }
+  ],
+  "332": [
+    {
+      "frame": 0,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 4,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 4,
+      "sound": "damage4",
+      "volume": 0.8,
+      "pitch": 0.75
+    }
+  ],
+  "333": [
+    {
+      "frame": 14,
+      "sound": "gucha004a",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 19,
+      "sound": "gucha004a",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 24,
+      "sound": "gucha004a",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "335": [
+    {
+      "frame": 0,
+      "sound": "darkness3",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "fire4",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "thunder5",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "336": [
+    {
+      "frame": 0,
+      "sound": "magic7",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 0,
+      "sound": "wind8",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 13,
+      "sound": "wind10",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "337": [
+    {
+      "frame": 0,
+      "sound": "dao2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "dao",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "sword3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "dao3",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "skill2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "338": [
+    {
+      "frame": 0,
+      "sound": "dao2",
+      "volume": 0.8,
+      "pitch": 1.15
+    },
+    {
+      "frame": 3,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "slash3",
+      "volume": 0.3,
+      "pitch": 1.5
+    },
+    {
+      "frame": 6,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "slash3",
+      "volume": 0.5,
+      "pitch": 1.5
+    },
+    {
+      "frame": 8,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "slash3",
+      "volume": 0.6,
+      "pitch": 1.5
+    },
+    {
+      "frame": 10,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 12,
+      "sound": "slash3",
+      "volume": 0.7,
+      "pitch": 1.5
+    },
+    {
+      "frame": 12,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 14,
+      "sound": "dao3",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 14,
+      "sound": "slash3",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 14,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 14,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "339": [
+    {
+      "frame": 0,
+      "sound": "dao2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "dao",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "dao",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 12,
+      "sound": "dao3",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "340": [
+    {
+      "frame": 0,
+      "sound": "dao2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "341": [
+    {
+      "frame": 0,
+      "sound": "magic5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash7",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "343": [
+    {
+      "frame": 5,
+      "sound": "slash9",
+      "volume": 1.0,
+      "pitch": 0.6
+    }
+  ],
+  "346": [
+    {
+      "frame": 0,
+      "sound": "water1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 1,
+      "sound": "water6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 8,
+      "sound": "water1",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 17,
+      "sound": "water1",
+      "volume": 0.8,
+      "pitch": 0.6
+    }
+  ],
+  "347": [
+    {
+      "frame": 0,
+      "sound": "dive",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "water1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "sand",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "348": [
+    {
+      "frame": 0,
+      "sound": "darkness1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "down2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "darkness8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "darkness3",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 9,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "349": [
+    {
+      "frame": 0,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 4,
+      "sound": "water1",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 4,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "350": [
+    {
+      "frame": 0,
+      "sound": "wind2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "saint7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 11,
+      "sound": "item3",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "351": [
+    {
+      "frame": 9,
+      "sound": "gucha004a",
+      "volume": 0.9,
+      "pitch": 0.7
+    }
+  ],
+  "352": [
+    {
+      "frame": 0,
+      "sound": "slash11",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "darkness1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "353": [
+    {
+      "frame": 0,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "slash11",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "354": [
+    {
+      "frame": 0,
+      "sound": "ice1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 5,
+      "sound": "ice1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 10,
+      "sound": "ice1",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "355": [
+    {
+      "frame": 0,
+      "sound": "wind1",
+      "volume": 0.8,
+      "pitch": 0.75
+    },
+    {
+      "frame": 6,
+      "sound": "dive",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "356": [
+    {
+      "frame": 0,
+      "sound": "dive",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "water1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 0,
+      "sound": "poison",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 0,
+      "sound": "water6",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "dive",
+      "volume": 0.8,
+      "pitch": 0.85
+    },
+    {
+      "frame": 8,
+      "sound": "dive",
+      "volume": 0.8,
+      "pitch": 0.9
+    }
+  ],
+  "358": [
+    {
+      "frame": 0,
+      "sound": "water6",
+      "volume": 0.5,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.8,
+      "pitch": 0.7
+    }
+  ],
+  "359": [
+    {
+      "frame": 0,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 2,
+      "sound": "dive",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "water1",
+      "volume": 0.8,
+      "pitch": 1.3
+    }
+  ],
+  "361": [
+    {
+      "frame": 0,
+      "sound": "water6",
+      "volume": 0.5,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.8,
+      "pitch": 0.7
+    }
+  ],
+  "362": [
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "363": [
+    {
+      "frame": 0,
+      "sound": "bow2",
+      "volume": 0.95,
+      "pitch": 1.3
+    },
+    {
+      "frame": 1,
+      "sound": "bow2",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "bow2",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 3,
+      "sound": "bow2",
+      "volume": 1.0,
+      "pitch": 1.1
+    },
+    {
+      "frame": 4,
+      "sound": "bow2",
+      "volume": 1.0,
+      "pitch": 1.2
+    },
+    {
+      "frame": 5,
+      "sound": "blow4",
+      "volume": 1.0,
+      "pitch": 0.8
+    }
+  ],
+  "365": [
+    {
+      "frame": 0,
+      "sound": "earth2",
+      "volume": 1.0,
+      "pitch": 0.85
+    }
+  ],
+  "366": [
+    {
+      "frame": 0,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "flash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "367": [
+    {
+      "frame": 0,
+      "sound": "darkness3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "368": [
+    {
+      "frame": 0,
+      "sound": "blind",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 0,
+      "sound": "darkness3",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 10,
+      "sound": "down2",
+      "volume": 0.7,
+      "pitch": 0.5
+    }
+  ],
+  "371": [
+    {
+      "frame": 0,
+      "sound": "slash4",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 3,
+      "sound": "slash12",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "dao",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 8,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "372": [
+    {
+      "frame": 0,
+      "sound": "slash12",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "skill3",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "373": [
+    {
+      "frame": 0,
+      "sound": "wind10",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 18,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 23,
+      "sound": "earth6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 23,
+      "sound": "dao",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 23,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "375": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "376": [
+    {
+      "frame": 0,
+      "sound": "saint7",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "377": [
+    {
+      "frame": 0,
+      "sound": "saint7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 0,
+      "sound": "heal4",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 10,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 19,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 28,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 37,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "378": [
+    {
+      "frame": 0,
+      "sound": "saint7",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 0,
+      "sound": "flash3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 2,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 4,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 6,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 8,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 10,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 12,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "379": [
+    {
+      "frame": 0,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "380": [
+    {
+      "frame": 0,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "skill3",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 3,
+      "sound": "slash8",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "381": [
+    {
+      "frame": 0,
+      "sound": "battle3",
+      "volume": 0.6,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "wind8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash11",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 5,
+      "sound": "slash11",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 6,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "slash11",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 8,
+      "sound": "slash11",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 9,
+      "sound": "slash10",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 10,
+      "sound": "slash11",
+      "volume": 0.8,
+      "pitch": 1.1
+    }
+  ],
+  "382": [
+    {
+      "frame": 0,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "pollen",
+      "volume": 0.8,
+      "pitch": 1.3
+    },
+    {
+      "frame": 2,
+      "sound": "pollen",
+      "volume": 0.8,
+      "pitch": 1.3
+    },
+    {
+      "frame": 4,
+      "sound": "pollen",
+      "volume": 0.8,
+      "pitch": 1.3
+    },
+    {
+      "frame": 6,
+      "sound": "pollen",
+      "volume": 0.8,
+      "pitch": 1.3
+    },
+    {
+      "frame": 8,
+      "sound": "pollen",
+      "volume": 0.8,
+      "pitch": 1.3
+    }
+  ],
+  "384": [
+    {
+      "frame": 0,
+      "sound": "gucha004a",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 2,
+      "sound": "gucha004a",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 4,
+      "sound": "gucha004a",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "385": [
+    {
+      "frame": 2,
+      "sound": "explosion3",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "explosion2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "387": [
+    {
+      "frame": 8,
+      "sound": "dao",
+      "volume": 1.0,
+      "pitch": 0.65
+    },
+    {
+      "frame": 8,
+      "sound": "gucha004a",
+      "volume": 0.9,
+      "pitch": 0.6
+    }
+  ],
+  "388": [
+    {
+      "frame": 1,
+      "sound": "blow7",
+      "volume": 1.0,
+      "pitch": 1.5
+    }
+  ],
+  "389": [
+    {
+      "frame": 0,
+      "sound": "fire3",
+      "volume": 1.0,
+      "pitch": 0.85
+    },
+    {
+      "frame": 1,
+      "sound": "slash4",
+      "volume": 1.0,
+      "pitch": 0.5
+    }
+  ],
+  "390": [
+    {
+      "frame": 0,
+      "sound": "wind6",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "391": [
+    {
+      "frame": 0,
+      "sound": "fire2",
+      "volume": 0.6,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "fire2",
+      "volume": 0.6,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "fire2",
+      "volume": 0.6,
+      "pitch": 1.0
+    },
+    {
+      "frame": 12,
+      "sound": "fire2",
+      "volume": 0.6,
+      "pitch": 1.0
+    }
+  ],
+  "392": [
+    {
+      "frame": 0,
+      "sound": "monster4",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 5,
+      "sound": "slash8",
+      "volume": 1.0,
+      "pitch": 0.6
+    }
+  ],
+  "393": [
+    {
+      "frame": 0,
+      "sound": "monster4",
+      "volume": 0.8,
+      "pitch": 1.05
+    },
+    {
+      "frame": 7,
+      "sound": "slash5",
+      "volume": 1.0,
+      "pitch": 0.6
+    }
+  ],
+  "394": [
+    {
+      "frame": 0,
+      "sound": "blind",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "fire3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "fire2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "fire7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 20,
+      "sound": "battle3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 22,
+      "sound": "fire8",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 22,
+      "sound": "fire7",
+      "volume": 0.8,
+      "pitch": 0.8
+    }
+  ],
+  "395": [
+    {
+      "frame": 0,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "wind1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "396": [
+    {
+      "frame": 0,
+      "sound": "saint6",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "397": [
+    {
+      "frame": 0,
+      "sound": "gucha004a",
+      "volume": 0.9,
+      "pitch": 0.5
+    }
+  ],
+  "399": [
+    {
+      "frame": 0,
+      "sound": "wind5",
+      "volume": 1.0,
+      "pitch": 0.8
+    },
+    {
+      "frame": 1,
+      "sound": "wind8",
+      "volume": 1.0,
+      "pitch": 0.7
+    }
+  ],
+  "401": [
+    {
+      "frame": 0,
+      "sound": "fire3",
+      "volume": 1.0,
+      "pitch": 0.85
+    }
+  ],
+  "403": [
+    {
+      "frame": 0,
+      "sound": "explosion2",
+      "volume": 1.0,
+      "pitch": 0.75
+    }
+  ],
+  "404": [
+    {
+      "frame": 0,
+      "sound": "darkness5",
+      "volume": 0.9,
+      "pitch": 0.5
+    }
+  ],
+  "405": [
+    {
+      "frame": 0,
+      "sound": "sword_stab",
+      "volume": 0.8,
+      "pitch": 1.15
+    },
+    {
+      "frame": 3,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "406": [
+    {
+      "frame": 1,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 2,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.85
+    },
+    {
+      "frame": 3,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.8
+    }
+  ],
+  "407": [
+    {
+      "frame": 0,
+      "sound": "mbjh_me03",
+      "volume": 0.8,
+      "pitch": 1.35
+    }
+  ],
+  "408": [
+    {
+      "frame": 0,
+      "sound": "saint8",
+      "volume": 0.9,
+      "pitch": 1.25
+    }
+  ],
+  "411": [
+    {
+      "frame": 3,
+      "sound": "dive",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "412": [
+    {
+      "frame": 3,
+      "sound": "gucha004a",
+      "volume": 0.8,
+      "pitch": 1.4
+    }
+  ],
+  "413": [
+    {
+      "frame": 1,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.1
+    },
+    {
+      "frame": 5,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.1
+    },
+    {
+      "frame": 11,
+      "sound": "slash2",
+      "volume": 1.0,
+      "pitch": 1.1
+    },
+    {
+      "frame": 15,
+      "sound": "slash3",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "414": [
+    {
+      "frame": 0,
+      "sound": "blow3",
+      "volume": 0.95,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "blow2",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "blow4",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "415": [
+    {
+      "frame": 8,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "gucha004a",
+      "volume": 0.9,
+      "pitch": 0.6
+    }
+  ],
+  "416": [
+    {
+      "frame": 3,
+      "sound": "dive",
+      "volume": 0.9,
+      "pitch": 0.7
+    }
+  ],
+  "417": [
+    {
+      "frame": 0,
+      "sound": "monster1",
+      "volume": 1.0,
+      "pitch": 0.5
+    }
+  ],
+  "419": [
+    {
+      "frame": 0,
+      "sound": "fog1",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.9,
+      "pitch": 1.1
+    }
+  ],
+  "420": [
+    {
+      "frame": 0,
+      "sound": "slash9",
+      "volume": 1.0,
+      "pitch": 0.65
+    },
+    {
+      "frame": 1,
+      "sound": "fire1",
+      "volume": 1.0,
+      "pitch": 1.2
+    }
+  ],
+  "422": [
+    {
+      "frame": 0,
+      "sound": "fire7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "fire8",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "423": [
+    {
+      "frame": 0,
+      "sound": "thunder7",
+      "volume": 1.0,
+      "pitch": 0.6
+    },
+    {
+      "frame": 3,
+      "sound": "sword_stab",
+      "volume": 0.9,
+      "pitch": 0.8
+    },
+    {
+      "frame": 3,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 16,
+      "sound": "gucha004a",
+      "volume": 0.9,
+      "pitch": 0.5
+    }
+  ],
+  "424": [
+    {
+      "frame": 0,
+      "sound": "ice7",
+      "volume": 0.8,
+      "pitch": 1.25
+    }
+  ],
+  "425": [
+    {
+      "frame": 1,
+      "sound": "thunder8",
+      "volume": 1.0,
+      "pitch": 0.8
+    },
+    {
+      "frame": 1,
+      "sound": "slash4",
+      "volume": 1.0,
+      "pitch": 0.9
+    }
+  ],
+  "426": [
+    {
+      "frame": 0,
+      "sound": "thunder1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "427": [
+    {
+      "frame": 0,
+      "sound": "ice1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 5,
+      "sound": "ice1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 10,
+      "sound": "ice1",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "428": [
+    {
+      "frame": 0,
+      "sound": "fire2",
+      "volume": 0.9,
+      "pitch": 1.0
+    }
+  ],
+  "430": [
+    {
+      "frame": 5,
+      "sound": "slash10",
+      "volume": 1.0,
+      "pitch": 0.6
+    }
+  ],
+  "432": [
+    {
+      "frame": 0,
+      "sound": "slash12",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "slash8",
+      "volume": 1.0,
+      "pitch": 0.85
+    }
+  ],
+  "434": [
+    {
+      "frame": 0,
+      "sound": "monster4",
+      "volume": 1.0,
+      "pitch": 0.75
+    },
+    {
+      "frame": 2,
+      "sound": "thunder1",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "435": [
+    {
+      "frame": 0,
+      "sound": "monster4",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 0,
+      "sound": "slash6",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 1,
+      "sound": "fire8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "fire7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "fire7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "fire7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "fire7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "fire7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "fire7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "fire7",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "437": [
+    {
+      "frame": 0,
+      "sound": "blind",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 0,
+      "sound": "darkness3",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 10,
+      "sound": "down2",
+      "volume": 0.7,
+      "pitch": 0.5
+    }
+  ],
+  "438": [
+    {
+      "frame": 0,
+      "sound": "explosion3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 20,
+      "sound": "fire8",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "439": [
+    {
+      "frame": 0,
+      "sound": "silence",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 15,
+      "sound": "darkness4",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 15,
+      "sound": "collapse2",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 35,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "440": [
+    {
+      "frame": 14,
+      "sound": "wind2",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 22,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "441": [
+    {
+      "frame": 0,
+      "sound": "fire2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "442": [
+    {
+      "frame": 0,
+      "sound": "darkness3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "darkness8",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "443": [
+    {
+      "frame": 0,
+      "sound": "water1",
+      "volume": 1.0,
+      "pitch": 0.5
+    }
+  ],
+  "444": [
+    {
+      "frame": 3,
+      "sound": "fire1",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "445": [
+    {
+      "frame": 0,
+      "sound": "fire6",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "446": [
+    {
+      "frame": 0,
+      "sound": "fire8",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 0,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 6,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 12,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 18,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "447": [
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 0.8,
+      "pitch": 0.8
+    }
+  ],
+  "448": [
+    {
+      "frame": 0,
+      "sound": "dao2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "449": [
+    {
+      "frame": 0,
+      "sound": "dao2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 8,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 13,
+      "sound": "raise1",
+      "volume": 0.5,
+      "pitch": 1.0
+    },
+    {
+      "frame": 17,
+      "sound": "sword1",
+      "volume": 0.8,
+      "pitch": 1.2
+    }
+  ],
+  "450": [
+    {
+      "frame": 0,
+      "sound": "dao2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 0,
+      "sound": "wind1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "skill2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "magic4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "451": [
+    {
+      "frame": 0,
+      "sound": "dao2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "slash3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "flash3",
+      "volume": 0.7,
+      "pitch": 1.0
+    },
+    {
+      "frame": 17,
+      "sound": "saint7",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "452": [
+    {
+      "frame": 0,
+      "sound": "dao2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "wind8",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 0,
+      "sound": "magic7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 12,
+      "sound": "slash2",
+      "volume": 0.5,
+      "pitch": 1.5
+    },
+    {
+      "frame": 14,
+      "sound": "slash2",
+      "volume": 0.6,
+      "pitch": 1.5
+    },
+    {
+      "frame": 16,
+      "sound": "slash2",
+      "volume": 0.7,
+      "pitch": 1.5
+    },
+    {
+      "frame": 18,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 20,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 22,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "453": [
+    {
+      "frame": 0,
+      "sound": "dao2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 11,
+      "sound": "wind1",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 13,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "454": [
+    {
+      "frame": 0,
+      "sound": "dao2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "wind1",
+      "volume": 0.8,
+      "pitch": 0.8
+    }
+  ],
+  "455": [
+    {
+      "frame": 14,
+      "sound": "dao3",
+      "volume": 0.8,
+      "pitch": 1.1
+    }
+  ],
+  "456": [
+    {
+      "frame": 6,
+      "sound": "up1",
+      "volume": 0.8,
+      "pitch": 0.9
+    }
+  ],
+  "457": [
+    {
+      "frame": 6,
+      "sound": "up1",
+      "volume": 0.8,
+      "pitch": 0.9
+    }
+  ],
+  "458": [
+    {
+      "frame": 6,
+      "sound": "up4",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 14,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "459": [
+    {
+      "frame": 6,
+      "sound": "up4",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 14,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "460": [
+    {
+      "frame": 0,
+      "sound": "ice1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 5,
+      "sound": "ice1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 10,
+      "sound": "ice1",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "461": [
+    {
+      "frame": 0,
+      "sound": "wind5",
+      "volume": 0.9,
+      "pitch": 0.85
+    },
+    {
+      "frame": 2,
+      "sound": "darkness6",
+      "volume": 1.0,
+      "pitch": 0.5
+    },
+    {
+      "frame": 5,
+      "sound": "darkness6",
+      "volume": 1.0,
+      "pitch": 0.5
+    }
+  ],
+  "462": [
+    {
+      "frame": 0,
+      "sound": "flash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "flash1",
+      "volume": 0.8,
+      "pitch": 0.6
+    },
+    {
+      "frame": 4,
+      "sound": "flash1",
+      "volume": 0.8,
+      "pitch": 1.4
+    }
+  ],
+  "463": [
+    {
+      "frame": 0,
+      "sound": "flash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "464": [
+    {
+      "frame": 0,
+      "sound": "flash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "flash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "flash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "flash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 11,
+      "sound": "flash3",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 17,
+      "sound": "saint7",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "465": [
+    {
+      "frame": 0,
+      "sound": "wind10",
+      "volume": 0.5,
+      "pitch": 0.5
+    },
+    {
+      "frame": 14,
+      "sound": "fire8",
+      "volume": 0.8,
+      "pitch": 0.7
+    }
+  ],
+  "466": [
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 1.0,
+      "pitch": 0.8
+    },
+    {
+      "frame": 10,
+      "sound": "thunder8",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 10,
+      "sound": "up1",
+      "volume": 1.0,
+      "pitch": 1.5
+    }
+  ],
+  "467": [
+    {
+      "frame": 0,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 17,
+      "sound": "raise1",
+      "volume": 0.65,
+      "pitch": 1.2
+    }
+  ],
+  "468": [
+    {
+      "frame": 0,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 2,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 4,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 6,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 8,
+      "sound": "ice7",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 12,
+      "sound": "sword2",
+      "volume": 0.8,
+      "pitch": 1.2
+    }
+  ],
+  "469": [
+    {
+      "frame": 2,
+      "sound": "dive",
+      "volume": 0.8,
+      "pitch": 0.7
+    }
+  ],
+  "471": [
+    {
+      "frame": 0,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 2,
+      "sound": "darkness1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "473": [
+    {
+      "frame": 0,
+      "sound": "blind",
+      "volume": 0.7,
+      "pitch": 0.8
+    },
+    {
+      "frame": 0,
+      "sound": "darkness3",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 12,
+      "sound": "darkness4",
+      "volume": 0.8,
+      "pitch": 0.7
+    }
+  ],
+  "474": [
+    {
+      "frame": 0,
+      "sound": "darkness8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 8,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 8,
+      "sound": "magic7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.65
+    },
+    {
+      "frame": 12,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.55
+    },
+    {
+      "frame": 14,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 16,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.6
+    },
+    {
+      "frame": 18,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 20,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.55
+    },
+    {
+      "frame": 22,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.65
+    },
+    {
+      "frame": 24,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "475": [
+    {
+      "frame": 0,
+      "sound": "thunder7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 0,
+      "sound": "thunder10",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 0,
+      "sound": "battle3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "476": [
+    {
+      "frame": 0,
+      "sound": "blind",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 0,
+      "sound": "darkness3",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 10,
+      "sound": "down2",
+      "volume": 0.7,
+      "pitch": 0.5
+    }
+  ],
+  "477": [
+    {
+      "frame": 0,
+      "sound": "dao",
+      "volume": 0.8,
+      "pitch": 0.6
+    }
+  ],
+  "478": [
+    {
+      "frame": 0,
+      "sound": "darkness3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "darkness3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "darkness3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "down2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "481": [
+    {
+      "frame": 8,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "gucha004a",
+      "volume": 0.9,
+      "pitch": 0.75
+    }
+  ],
+  "483": [
+    {
+      "frame": 0,
+      "sound": "ice7",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 0,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 4,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 6,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 7,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 8,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 9,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 10,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 11,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 12,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.1
+    }
+  ],
+  "484": [
+    {
+      "frame": 0,
+      "sound": "down2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "saint7",
+      "volume": 0.7,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "ice1",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "485": [
+    {
+      "frame": 12,
+      "sound": "ice1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 15,
+      "sound": "ice1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 17,
+      "sound": "ice1",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "487": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "skill3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "488": [
+    {
+      "frame": 0,
+      "sound": "key",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "key",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 5,
+      "sound": "blow5",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 6,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 7,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 7,
+      "sound": "break",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 8,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 9,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 9,
+      "sound": "blow5",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 10,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 11,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 11,
+      "sound": "break",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 12,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 13,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 13,
+      "sound": "blow5",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 14,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 15,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 15,
+      "sound": "break",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 16,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 17,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 18,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 19,
+      "sound": "blow5",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 19,
+      "sound": "break",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 19,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "489": [
+    {
+      "frame": 0,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 2,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 4,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 6,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 10,
+      "sound": "switch2",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 13,
+      "sound": "gun1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 13,
+      "sound": "crash",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "491": [
+    {
+      "frame": 0,
+      "sound": "saint6",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "ice8",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "493": [
+    {
+      "frame": 0,
+      "sound": "heal4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "494": [
+    {
+      "frame": 0,
+      "sound": "flash3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "saint7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "saint6",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "495": [
+    {
+      "frame": 0,
+      "sound": "saint6",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "496": [
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 21,
+      "sound": "flash3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "497": [
+    {
+      "frame": 0,
+      "sound": "down2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "saint7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "ice1",
+      "volume": 1.0,
+      "pitch": 0.5
+    }
+  ],
+  "498": [
+    {
+      "frame": 0,
+      "sound": "magic1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "magic2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "flash3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "saint6",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "499": [
+    {
+      "frame": 0,
+      "sound": "ice7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "ice1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 14,
+      "sound": "ice1",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 15,
+      "sound": "ice1",
+      "volume": 0.8,
+      "pitch": 1.4
+    },
+    {
+      "frame": 16,
+      "sound": "poison",
+      "volume": 0.8,
+      "pitch": 0.7
+    }
+  ],
+  "500": [
+    {
+      "frame": 0,
+      "sound": "down2",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 14,
+      "sound": "fog1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 14,
+      "sound": "darkness6",
+      "volume": 0.8,
+      "pitch": 0.7
+    }
+  ],
+  "502": [
+    {
+      "frame": 0,
+      "sound": "blow3",
+      "volume": 0.95,
+      "pitch": 1.5
+    }
+  ],
+  "503": [
+    {
+      "frame": 0,
+      "sound": "slash12",
+      "volume": 0.95,
+      "pitch": 0.75
+    },
+    {
+      "frame": 1,
+      "sound": "slash5",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "504": [
+    {
+      "frame": 4,
+      "sound": "blow7",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "blow6",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 11,
+      "sound": "blow4",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "505": [
+    {
+      "frame": 0,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 1,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 2,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 3,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 4,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 5,
+      "sound": "blow1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 5,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 7,
+      "sound": "blow1",
+      "volume": 0.8,
+      "pitch": 0.6
+    },
+    {
+      "frame": 9,
+      "sound": "blow1",
+      "volume": 0.8,
+      "pitch": 0.6
+    },
+    {
+      "frame": 11,
+      "sound": "blow1",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "506": [
+    {
+      "frame": 0,
+      "sound": "monster1",
+      "volume": 0.8,
+      "pitch": 1.15
+    },
+    {
+      "frame": 8,
+      "sound": "slash2",
+      "volume": 1.0,
+      "pitch": 0.9
+    },
+    {
+      "frame": 8,
+      "sound": "gucha004a",
+      "volume": 0.9,
+      "pitch": 0.9
+    }
+  ],
+  "508": [
+    {
+      "frame": 0,
+      "sound": "ice7",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 0,
+      "sound": "wind8",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 0,
+      "sound": "wind10",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 4,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 8,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 10,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 12,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 14,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 16,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 18,
+      "sound": "ice2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "509": [
+    {
+      "frame": 0,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 2,
+      "sound": "pollen",
+      "volume": 0.8,
+      "pitch": 1.3
+    },
+    {
+      "frame": 4,
+      "sound": "pollen",
+      "volume": 0.8,
+      "pitch": 1.4
+    },
+    {
+      "frame": 6,
+      "sound": "pollen",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 8,
+      "sound": "pollen",
+      "volume": 0.8,
+      "pitch": 1.3
+    },
+    {
+      "frame": 10,
+      "sound": "pollen",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 12,
+      "sound": "pollen",
+      "volume": 0.8,
+      "pitch": 1.1
+    }
+  ],
+  "510": [
+    {
+      "frame": 0,
+      "sound": "darkness8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 8,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 8,
+      "sound": "magic7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.65
+    },
+    {
+      "frame": 12,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.55
+    },
+    {
+      "frame": 14,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 16,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.6
+    },
+    {
+      "frame": 18,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 20,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.55
+    },
+    {
+      "frame": 22,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.65
+    },
+    {
+      "frame": 24,
+      "sound": "blow2",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "511": [
+    {
+      "frame": 0,
+      "sound": "ice8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "ice1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "ice11",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 3,
+      "sound": "ice11",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 5,
+      "sound": "ice11",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "512": [
+    {
+      "frame": 0,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "attack3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "poison",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "poison",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 6,
+      "sound": "poison",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 7,
+      "sound": "poison",
+      "volume": 0.8,
+      "pitch": 0.9
+    }
+  ],
+  "513": [
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 0,
+      "sound": "darkness3",
+      "volume": 0.6,
+      "pitch": 0.7
+    }
+  ],
+  "514": [
+    {
+      "frame": 0,
+      "sound": "fog1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "sand",
+      "volume": 0.8,
+      "pitch": 0.6
+    }
+  ],
+  "515": [
+    {
+      "frame": 0,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "516": [
+    {
+      "frame": 0,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 12,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 14,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "517": [
+    {
+      "frame": 0,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 0,
+      "sound": "sword3",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "slash3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "slash4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "518": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "slash2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "skill3",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "519": [
+    {
+      "frame": 0,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "520": [
+    {
+      "frame": 0,
+      "sound": "slash4",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "521": [
+    {
+      "frame": 0,
+      "sound": "evasion1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "blow3",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 2,
+      "sound": "blow5",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "522": [
+    {
+      "frame": 0,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 5,
+      "sound": "earth5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 0.9
+    }
+  ],
+  "523": [
+    {
+      "frame": 0,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 0,
+      "sound": "saint8",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 0,
+      "sound": "wind6",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 2,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 4,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 6,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 8,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 10,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 12,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 13,
+      "sound": "skill3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "524": [
+    {
+      "frame": 0,
+      "sound": "darkness4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "darkness5",
+      "volume": 0.8,
+      "pitch": 1.25
+    },
+    {
+      "frame": 0,
+      "sound": "slash12",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "slash8",
+      "volume": 1.0,
+      "pitch": 0.85
+    }
+  ],
+  "526": [
+    {
+      "frame": 0,
+      "sound": "wind1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "blow7",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "527": [
+    {
+      "frame": 0,
+      "sound": "wind1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "wind10",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "528": [
+    {
+      "frame": 0,
+      "sound": "wind8",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "wind10",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "wind10",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "wind10",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "529": [
+    {
+      "frame": 0,
+      "sound": "wind8",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 0,
+      "sound": "wind1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "wind6",
+      "volume": 0.7,
+      "pitch": 0.9
+    }
+  ],
+  "530": [
+    {
+      "frame": 0,
+      "sound": "wind8",
+      "volume": 1.0,
+      "pitch": 0.65
+    }
+  ],
+  "531": [
+    {
+      "frame": 0,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 9,
+      "sound": "poison",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 9,
+      "sound": "fog1",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "532": [
+    {
+      "frame": 0,
+      "sound": "darkness5",
+      "volume": 0.8,
+      "pitch": 1.25
+    }
+  ],
+  "534": [
+    {
+      "frame": 0,
+      "sound": "saint6",
+      "volume": 0.9,
+      "pitch": 0.7
+    },
+    {
+      "frame": 0,
+      "sound": "saint8",
+      "volume": 0.9,
+      "pitch": 0.8
+    },
+    {
+      "frame": 7,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 9,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 11,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 13,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 15,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 17,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 19,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 21,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 23,
+      "sound": "saint9",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "535": [
+    {
+      "frame": 1,
+      "sound": "sniper_rifle",
+      "volume": 1.0,
+      "pitch": 0.75
+    },
+    {
+      "frame": 1,
+      "sound": "ice11",
+      "volume": 0.8,
+      "pitch": 0.9
+    }
+  ],
+  "537": [
+    {
+      "frame": 0,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 1,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 2,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 3,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 4,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 5,
+      "sound": "blow1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 5,
+      "sound": "blow6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 7,
+      "sound": "blow1",
+      "volume": 0.8,
+      "pitch": 0.6
+    },
+    {
+      "frame": 9,
+      "sound": "blow1",
+      "volume": 0.8,
+      "pitch": 0.6
+    },
+    {
+      "frame": 11,
+      "sound": "blow1",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "538": [
+    {
+      "frame": 0,
+      "sound": "darkness4",
+      "volume": 1.0,
+      "pitch": 0.85
+    }
+  ],
+  "539": [
+    {
+      "frame": 0,
+      "sound": "poison",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "540": [
+    {
+      "frame": 0,
+      "sound": "fog1",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.9,
+      "pitch": 0.7
+    }
+  ],
+  "542": [
+    {
+      "frame": 11,
+      "sound": "damage4",
+      "volume": 1.0,
+      "pitch": 0.5
+    }
+  ],
+  "544": [
+    {
+      "frame": 0,
+      "sound": "darkness5",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 0,
+      "sound": "explosion3",
+      "volume": 1.0,
+      "pitch": 0.9
+    }
+  ],
+  "545": [
+    {
+      "frame": 0,
+      "sound": "skill3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "skill1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "darkness5",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 7,
+      "sound": "flash1",
+      "volume": 0.8,
+      "pitch": 0.5
+    }
+  ],
+  "546": [
+    {
+      "frame": 0,
+      "sound": "darkness4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "fire2",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "547": [
+    {
+      "frame": 0,
+      "sound": "darkness4",
+      "volume": 0.8,
+      "pitch": 0.85
+    },
+    {
+      "frame": 0,
+      "sound": "up4",
+      "volume": 0.8,
+      "pitch": 1.1
+    }
+  ],
+  "548": [
+    {
+      "frame": 0,
+      "sound": "wind7",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 3,
+      "sound": "slash11",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 3,
+      "sound": "ice4",
+      "volume": 0.8,
+      "pitch": 1.3
+    }
+  ],
+  "549": [
+    {
+      "frame": 0,
+      "sound": "saint7",
+      "volume": 1.0,
+      "pitch": 1.4
+    }
+  ],
+  "550": [
+    {
+      "frame": 0,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "ice4",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "slash1",
+      "volume": 1.0,
+      "pitch": 1.0
+    }
+  ],
+  "551": [
+    {
+      "frame": 0,
+      "sound": "earth5",
+      "volume": 0.8,
+      "pitch": 0.75
+    },
+    {
+      "frame": 1,
+      "sound": "slash9",
+      "volume": 0.8,
+      "pitch": 0.8
+    }
+  ],
+  "552": [
+    {
+      "frame": 1,
+      "sound": "slash1",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 3,
+      "sound": "slash5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "slash6",
+      "volume": 0.8,
+      "pitch": 0.85
+    },
+    {
+      "frame": 9,
+      "sound": "slash7",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 12,
+      "sound": "earth5",
+      "volume": 0.8,
+      "pitch": 0.75
+    }
+  ],
+  "553": [
+    {
+      "frame": 0,
+      "sound": "magic5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 12,
+      "sound": "blow5",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 16,
+      "sound": "thunder10",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 16,
+      "sound": "thunder6",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 17,
+      "sound": "thunder10",
+      "volume": 0.05,
+      "pitch": 1.5
+    },
+    {
+      "frame": 18,
+      "sound": "thunder10",
+      "volume": 0.1,
+      "pitch": 1.5
+    },
+    {
+      "frame": 19,
+      "sound": "thunder10",
+      "volume": 0.15,
+      "pitch": 1.5
+    },
+    {
+      "frame": 20,
+      "sound": "thunder10",
+      "volume": 0.2,
+      "pitch": 1.5
+    },
+    {
+      "frame": 21,
+      "sound": "thunder10",
+      "volume": 0.25,
+      "pitch": 1.5
+    },
+    {
+      "frame": 22,
+      "sound": "thunder10",
+      "volume": 0.3,
+      "pitch": 1.5
+    },
+    {
+      "frame": 23,
+      "sound": "thunder10",
+      "volume": 0.35,
+      "pitch": 1.5
+    },
+    {
+      "frame": 24,
+      "sound": "thunder10",
+      "volume": 0.4,
+      "pitch": 1.5
+    },
+    {
+      "frame": 25,
+      "sound": "thunder10",
+      "volume": 0.45,
+      "pitch": 1.5
+    },
+    {
+      "frame": 26,
+      "sound": "thunder10",
+      "volume": 0.5,
+      "pitch": 1.5
+    },
+    {
+      "frame": 27,
+      "sound": "thunder10",
+      "volume": 0.55,
+      "pitch": 1.5
+    },
+    {
+      "frame": 28,
+      "sound": "thunder10",
+      "volume": 0.6,
+      "pitch": 1.5
+    },
+    {
+      "frame": 29,
+      "sound": "thunder10",
+      "volume": 0.65,
+      "pitch": 1.5
+    },
+    {
+      "frame": 30,
+      "sound": "thunder10",
+      "volume": 0.7,
+      "pitch": 1.5
+    },
+    {
+      "frame": 31,
+      "sound": "thunder10",
+      "volume": 0.75,
+      "pitch": 1.5
+    }
+  ],
+  "554": [
+    {
+      "frame": 0,
+      "sound": "fog1",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.9,
+      "pitch": 1.1
+    }
+  ],
+  "556": [
+    {
+      "frame": 0,
+      "sound": "twine",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 4,
+      "sound": "twine",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 17,
+      "sound": "down2",
+      "volume": 0.6,
+      "pitch": 1.0
+    },
+    {
+      "frame": 18,
+      "sound": "wind1",
+      "volume": 0.9,
+      "pitch": 1.0
+    },
+    {
+      "frame": 19,
+      "sound": "wind1",
+      "volume": 0.9,
+      "pitch": 1.0
+    }
+  ],
+  "559": [
+    {
+      "frame": 0,
+      "sound": "wind8",
+      "volume": 1.0,
+      "pitch": 0.65
+    },
+    {
+      "frame": 3,
+      "sound": "earth5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "earth5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 7,
+      "sound": "earth5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 9,
+      "sound": "earth5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 11,
+      "sound": "earth5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "earth5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 15,
+      "sound": "earth5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 17,
+      "sound": "earth5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 19,
+      "sound": "earth5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 21,
+      "sound": "earth5",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "560": [
+    {
+      "frame": 0,
+      "sound": "down2",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 23,
+      "sound": "explosion3",
+      "volume": 0.7,
+      "pitch": 1.0
+    },
+    {
+      "frame": 23,
+      "sound": "darkness3",
+      "volume": 0.8,
+      "pitch": 0.8
+    }
+  ],
+  "561": [
+    {
+      "frame": 0,
+      "sound": "fog2",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 27,
+      "sound": "ice8",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "562": [
+    {
+      "frame": 16,
+      "sound": "ice8",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 16,
+      "sound": "ice7",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "566": [
+    {
+      "frame": 0,
+      "sound": "twine",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "twine",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 6,
+      "sound": "twine",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 9,
+      "sound": "twine",
+      "volume": 0.8,
+      "pitch": 0.8
+    }
+  ],
+  "567": [
+    {
+      "frame": 0,
+      "sound": "ice11",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "ice11",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "ice11",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "ice11",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "ice11",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 12,
+      "sound": "crash",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 12,
+      "sound": "ice11",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "569": [
+    {
+      "frame": 0,
+      "sound": "thunder6",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ],
+  "570": [
+    {
+      "frame": 0,
+      "sound": "magic7",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 3,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 5,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 0.9
+    },
+    {
+      "frame": 7,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 10,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.1
+    },
+    {
+      "frame": 11,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 13,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 15,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 17,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 20,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 0.7
+    },
+    {
+      "frame": 21,
+      "sound": "earth1",
+      "volume": 0.8,
+      "pitch": 1.2
+    }
+  ],
+  "571": [
+    {
+      "frame": 0,
+      "sound": "sand",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 0,
+      "sound": "water1",
+      "volume": 0.8,
+      "pitch": 0.5
+    },
+    {
+      "frame": 3,
+      "sound": "dive",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 6,
+      "sound": "water1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 7,
+      "sound": "dive",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 11,
+      "sound": "dive",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 12,
+      "sound": "water1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 13,
+      "sound": "dive",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 16,
+      "sound": "water1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 17,
+      "sound": "water1",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 18,
+      "sound": "dive",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 20,
+      "sound": "dive",
+      "volume": 0.8,
+      "pitch": 1.5
+    },
+    {
+      "frame": 22,
+      "sound": "water1",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "575": [
+    {
+      "frame": 12,
+      "sound": "darkness4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 12,
+      "sound": "fog1",
+      "volume": 0.8,
+      "pitch": 1.5
+    }
+  ],
+  "576": [
+    {
+      "frame": 3,
+      "sound": "thunder10",
+      "volume": 0.8,
+      "pitch": 0.8
+    }
+  ],
+  "577": [
+    {
+      "frame": 0,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 2,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 4,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 6,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 8,
+      "sound": "saint3",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 15,
+      "sound": "flash3",
+      "volume": 0.8,
+      "pitch": 1.2
+    },
+    {
+      "frame": 17,
+      "sound": "battle3",
+      "volume": 0.8,
+      "pitch": 1.2
+    }
+  ],
+  "580": [
+    {
+      "frame": 0,
+      "sound": "sword5",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 0,
+      "sound": "sword4",
+      "volume": 0.8,
+      "pitch": 1.0
+    },
+    {
+      "frame": 1,
+      "sound": "absorb1",
+      "volume": 0.8,
+      "pitch": 0.8
+    },
+    {
+      "frame": 1,
+      "sound": "darkness7",
+      "volume": 0.8,
+      "pitch": 1.0
+    }
+  ]
+}

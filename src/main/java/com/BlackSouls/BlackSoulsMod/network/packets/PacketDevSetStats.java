@@ -10,7 +10,7 @@ import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-@SuppressWarnings("DataFlowIssue") 
+@SuppressWarnings("DataFlowIssue")
 public class PacketDevSetStats {
     private static final double MAX_ABSOLUTE_BONUS = 1_000_000_000.0D;
 
@@ -19,7 +19,7 @@ public class PacketDevSetStats {
     public long souls;
     public int sen;
 
-    public PacketDevSetStats() {} 
+    public PacketDevSetStats() {}
 
     public PacketDevSetStats(int level, double hp, double mp, double atk, double def, double mAtk, double mDef, double luck, double speed, long souls, int sen) {
         this.level = level;
@@ -72,40 +72,37 @@ public class PacketDevSetStats {
                     player.sendSystemMessage(Component.translatable("message.blacksouls.dev.no_permission").withStyle(ChatFormatting.RED));
                     return;
                 }
-                if (!hasValidValues()) {
+                BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).resolve().orElse(null);
+                if (stats == null || !hasValidValues(stats)) {
                     return;
                 }
 
-                BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).resolve().orElse(null);
+                stats.level = level;
+                stats.bonusHp = bonusHp;
+                stats.bonusMp = bonusMp;
+                stats.bonusAtk = bonusAtk;
+                stats.bonusDef = bonusDef;
+                stats.bonusMatk = bonusMagicAttack;
+                stats.bonusMdef = bonusMagicDefense;
+                stats.bonusLuc = bonusLuck;
+                stats.bonusSpeed = bonusSpeed;
+                stats.souls = souls;
+                stats.sen = sen;
 
-                if (stats != null) {
-                    stats.level = level;
-                    stats.bonusHp = bonusHp;
-                    stats.bonusMp = bonusMp;
-                    stats.bonusAtk = bonusAtk;
-                    stats.bonusDef = bonusDef;
-                    stats.bonusMatk = bonusMagicAttack;
-                    stats.bonusMdef = bonusMagicDefense;
-                    stats.bonusLuc = bonusLuck;
-                    stats.bonusSpeed = bonusSpeed; 
-                    stats.souls = souls;        
-                    stats.sen = sen;            
+                stats.recalculateStats();
+                player.setHealth(player.getMaxHealth());
+                stats.mp = stats.maxMp;
 
-                    stats.recalculateStats();
-                    player.setHealth(player.getMaxHealth());
-                    stats.mp = stats.maxMp;
-
-                    StatEventHandler.syncToClient(player);
-                    player.sendSystemMessage(Component.translatable("message.blacksouls.dev.success").withStyle(ChatFormatting.GREEN));
-                }
+                StatEventHandler.syncToClient(player);
+                player.sendSystemMessage(Component.translatable("message.blacksouls.dev.success").withStyle(ChatFormatting.GREEN));
             }
         });
         ctx.setPacketHandled(true);
         return true;
     }
 
-    private boolean hasValidValues() {
-        return level >= 1 && level <= 999 && souls >= 0L && sen >= 0
+    private boolean hasValidValues(BSPlayerStats stats) {
+        return level >= 1 && level <= stats.getLevelLimit() && souls >= 0L && sen >= 0
                 && isValidBonus(bonusHp) && isValidBonus(bonusMp)
                 && isValidBonus(bonusAtk) && isValidBonus(bonusDef)
                 && isValidBonus(bonusMagicAttack) && isValidBonus(bonusMagicDefense)

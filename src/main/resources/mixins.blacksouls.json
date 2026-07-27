@@ -18,7 +18,9 @@
   "client": [
     "AbstractContainerScreenAccessor",
     "client.GuiAccessor",
-    "client.ItemInHandRendererAccessor"
+    "client.ItemInHandRendererAccessor",
+    "client.FontManagerResourceMixin",
+    "client.FontSetGlobalMixin"
   ],
   "injectors": {
     "defaultRequire": 1

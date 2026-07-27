@@ -37,6 +37,10 @@ public class AnimationRegistry {
         int pattern; float x; float y; float zoom; float angle; float opacity; boolean mirror;
     }
 
+    private static class RawTiming {
+        int frame; String sound; float volume; float pitch;
+    }
+
     private static String processAndGetTexture(String texName, int hue, Map<String, Integer> rowCache, Set<ResourceLocation> generatedCache) {
         if (texName == null || texName.isEmpty()) return "";
         texName = texName.toLowerCase();
@@ -172,8 +176,38 @@ public class AnimationRegistry {
                 }
                 ANIMATIONS.put(raw.id, vfxAnim);
             }
+            loadSoundTimings();
         } catch (Exception e) {
             BlackSouls.LOGGER.error("Failed to load VFX animations", e);
+        }
+    }
+
+    private static void loadSoundTimings() {
+        ResourceLocation jsonPath = new ResourceLocation("blacksouls", "bs_animation_sounds.json");
+        try (Reader reader = new InputStreamReader(
+                Minecraft.getInstance().getResourceManager().getResourceOrThrow(jsonPath).open(),
+                StandardCharsets.UTF_8)) {
+            Type mapType = new TypeToken<Map<String, List<RawTiming>>>(){}.getType();
+            Map<String, List<RawTiming>> rawTimings = new Gson().fromJson(reader, mapType);
+            for (Map.Entry<String, List<RawTiming>> entry : rawTimings.entrySet()) {
+                VFXAnimation animation = ANIMATIONS.get(Integer.parseInt(entry.getKey()));
+                if (animation == null || entry.getValue() == null) {
+                    continue;
+                }
+                for (RawTiming timing : entry.getValue()) {
+                    if (timing.sound == null || timing.sound.isBlank()) {
+                        continue;
+                    }
+                    ResourceLocation sound = timing.sound.indexOf(':') >= 0
+                            ? new ResourceLocation(timing.sound)
+                            : new ResourceLocation(BlackSouls.MODID, timing.sound);
+                    animation.soundTimings.add(new VFXSoundTiming(
+                            timing.frame, sound, timing.volume, timing.pitch));
+                }
+                animation.soundTimings.sort(java.util.Comparator.comparingInt(VFXSoundTiming::frame));
+            }
+        } catch (Exception e) {
+            BlackSouls.LOGGER.error("Failed to load VFX animation sounds", e);
         }
     }
 }

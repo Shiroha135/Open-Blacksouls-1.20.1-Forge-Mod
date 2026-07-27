@@ -48,6 +48,14 @@ public class ItemOriginalBow extends BowItem {
         return profile == Profile.HANS_MACHINE_GUN ? 1.0D : 2.0D;
     }
 
+    public int getTurnBattleAnimationId() {
+        return switch (profile) {
+            case HUNTING, BRAVE -> 226;
+            case HANS_MACHINE_GUN -> 92;
+            case MAD_BOW_JUBJUB -> 322;
+        };
+    }
+
     public void onProjectileHit(ServerPlayer player, LivingEntity target, ItemStack stack) {
         playHitEffects(player, target);
         if (profile == Profile.HANS_MACHINE_GUN) {

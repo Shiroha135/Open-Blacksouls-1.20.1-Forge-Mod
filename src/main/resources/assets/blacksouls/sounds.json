@@ -583,147 +583,286 @@
   },
   "blow2": {
     "category": "player",
-    "sounds": ["blacksouls:blow2"]
+    "sounds": [
+      "blacksouls:blow2"
+    ]
   },
   "bow1": {
     "category": "player",
-    "sounds": ["blacksouls:bow1"]
+    "sounds": [
+      "blacksouls:bow1"
+    ]
   },
   "bow2": {
     "category": "player",
-    "sounds": ["blacksouls:bow2"]
+    "sounds": [
+      "blacksouls:bow2"
+    ]
   },
   "bow4": {
     "category": "player",
-    "sounds": ["blacksouls:bow4"]
+    "sounds": [
+      "blacksouls:bow4"
+    ]
   },
   "explosion2": {
     "category": "player",
-    "sounds": ["blacksouls:explosion2"]
+    "sounds": [
+      "blacksouls:explosion2"
+    ]
   },
   "magic2": {
     "category": "player",
-    "sounds": ["blacksouls:magic2"]
+    "sounds": [
+      "blacksouls:magic2"
+    ]
   },
   "magic4": {
     "category": "player",
-    "sounds": ["blacksouls:magic4"]
+    "sounds": [
+      "blacksouls:magic4"
+    ]
   },
   "silence": {
     "category": "player",
-    "sounds": ["blacksouls:silence"]
+    "sounds": [
+      "blacksouls:silence"
+    ]
   },
   "blow4": {
     "category": "player",
-    "sounds": ["blacksouls:blow4"]
+    "sounds": [
+      "blacksouls:blow4"
+    ]
   },
   "darkness4": {
     "category": "player",
-    "sounds": ["blacksouls:darkness4"]
+    "sounds": [
+      "blacksouls:darkness4"
+    ]
   },
   "slash5": {
     "category": "player",
-    "sounds": ["blacksouls:slash5"]
+    "sounds": [
+      "blacksouls:slash5"
+    ]
   },
   "slash6": {
     "category": "player",
-    "sounds": ["blacksouls:slash6"]
+    "sounds": [
+      "blacksouls:slash6"
+    ]
   },
   "slash7": {
     "category": "player",
-    "sounds": ["blacksouls:slash7"]
+    "sounds": [
+      "blacksouls:slash7"
+    ]
   },
   "teleport": {
     "category": "player",
-    "sounds": ["blacksouls:teleport"]
+    "sounds": [
+      "blacksouls:teleport"
+    ]
   },
   "sword_stab": {
     "category": "player",
-    "sounds": ["blacksouls:sword_stab"]
+    "sounds": [
+      "blacksouls:sword_stab"
+    ]
   },
   "damage2": {
     "category": "player",
-    "sounds": ["blacksouls:damage2"]
+    "sounds": [
+      "blacksouls:damage2"
+    ]
   },
   "earth2": {
     "category": "player",
-    "sounds": ["blacksouls:earth2"]
+    "sounds": [
+      "blacksouls:earth2"
+    ]
   },
   "skill2": {
     "category": "player",
-    "sounds": ["blacksouls:skill2"]
+    "sounds": [
+      "blacksouls:skill2"
+    ]
   },
   "dao2": {
     "category": "player",
-    "sounds": ["blacksouls:dao2"]
+    "sounds": [
+      "blacksouls:dao2"
+    ]
   },
   "dao3": {
     "category": "player",
-    "sounds": ["blacksouls:dao3"]
+    "sounds": [
+      "blacksouls:dao3"
+    ]
   },
   "blow1": {
     "category": "player",
-    "sounds": ["blacksouls:blow1"]
+    "sounds": [
+      "blacksouls:blow1"
+    ]
   },
   "gun2": {
     "category": "player",
-    "sounds": ["blacksouls:gun2"]
+    "sounds": [
+      "blacksouls:gun2"
+    ]
   },
   "equip1": {
     "category": "player",
-    "sounds": ["blacksouls:equip1"]
+    "sounds": [
+      "blacksouls:equip1"
+    ]
   },
   "wind5": {
     "category": "player",
-    "sounds": ["blacksouls:wind5"]
+    "sounds": [
+      "blacksouls:wind5"
+    ]
   },
   "wind8": {
     "category": "player",
-    "sounds": ["blacksouls:wind8"]
+    "sounds": [
+      "blacksouls:wind8"
+    ]
   },
   "saint3": {
     "category": "player",
-    "sounds": ["blacksouls:saint3"]
+    "sounds": [
+      "blacksouls:saint3"
+    ]
   },
   "collapse2": {
     "category": "player",
-    "sounds": ["blacksouls:collapse2"]
+    "sounds": [
+      "blacksouls:collapse2"
+    ]
   },
   "darkness6": {
     "category": "player",
-    "sounds": ["blacksouls:darkness6"]
+    "sounds": [
+      "blacksouls:darkness6"
+    ]
   },
   "darkness1": {
     "category": "player",
-    "sounds": ["blacksouls:darkness1"]
+    "sounds": [
+      "blacksouls:darkness1"
+    ]
   },
   "pollen": {
     "category": "player",
-    "sounds": ["blacksouls:pollen"]
+    "sounds": [
+      "blacksouls:pollen"
+    ]
   },
   "darkness8": {
     "category": "player",
-    "sounds": ["blacksouls:darkness8"]
+    "sounds": [
+      "blacksouls:darkness8"
+    ]
   },
   "magic7": {
     "category": "player",
-    "sounds": ["blacksouls:magic7"]
+    "sounds": [
+      "blacksouls:magic7"
+    ]
   },
-  "bird_cry": { "category": "player", "sounds": ["blacksouls:bird_cry"] },
-  "wind2": { "category": "player", "sounds": ["blacksouls:wind2"] },
-  "item3": { "category": "player", "sounds": ["blacksouls:item3"] },
-  "dive": { "category": "player", "sounds": ["blacksouls:dive"] },
-  "poison": { "category": "player", "sounds": ["blacksouls:poison"] },
-  "water6": { "category": "player", "sounds": ["blacksouls:water6"] },
-  "heal4": { "category": "player", "sounds": ["blacksouls:heal4"] },
-  "metal1": { "category": "player", "sounds": ["blacksouls:metal1"] },
-  "metal2": { "category": "player", "sounds": ["blacksouls:metal2"] },
-  "chainsaw_rev": { "category": "player", "sounds": ["blacksouls:chainsaw_rev"] },
-  "magic5": { "category": "player", "sounds": ["blacksouls:magic5"] },
-  "switch2": { "category": "player", "sounds": ["blacksouls:switch2"] },
-  "thunder6": { "category": "player", "sounds": ["blacksouls:thunder6"] },
-  "sniper_rifle": { "category": "player", "sounds": ["blacksouls:sniper_rifle"] },
-  "gun_gird1": { "category": "player", "sounds": ["blacksouls:gun_gird1"] },
+  "bird_cry": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:bird_cry"
+    ]
+  },
+  "wind2": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:wind2"
+    ]
+  },
+  "item3": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:item3"
+    ]
+  },
+  "dive": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:dive"
+    ]
+  },
+  "poison": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:poison"
+    ]
+  },
+  "water6": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:water6"
+    ]
+  },
+  "heal4": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:heal4"
+    ]
+  },
+  "metal1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:metal1"
+    ]
+  },
+  "metal2": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:metal2"
+    ]
+  },
+  "chainsaw_rev": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:chainsaw_rev"
+    ]
+  },
+  "magic5": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:magic5"
+    ]
+  },
+  "switch2": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:switch2"
+    ]
+  },
+  "thunder6": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:thunder6"
+    ]
+  },
+  "sniper_rifle": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:sniper_rifle"
+    ]
+  },
+  "gun_gird1": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:gun_gird1"
+    ]
+  },
   "lock_rattle": {
     "category": "block",
     "sounds": [
@@ -735,6 +874,414 @@
     "sounds": [
       {
         "name": "blacksouls:hell_prince_bgm",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_victory": {
+    "category": "music",
+    "sounds": [
+      "blacksouls:turn_battle_victory"
+    ]
+  },
+  "turn_battle_start": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:turn_battle_start"
+    ]
+  },
+  "turn_enemy_attack": {
+    "category": "hostile",
+    "sounds": [
+      "blacksouls:turn_enemy_attack"
+    ]
+  },
+  "turn_enemy_damage": {
+    "category": "hostile",
+    "sounds": [
+      "blacksouls:turn_enemy_damage"
+    ]
+  },
+  "turn_player_damage": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:turn_player_damage"
+    ]
+  },
+  "turn_battle_bgm_fb9a5dab73": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_fb9a5dab73",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_ff69fe362d": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_ff69fe362d",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_eefc4dec9f": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_eefc4dec9f",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_e83f401897": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_e83f401897",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_d781c2b525": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_d781c2b525",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_d84f136ad0": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_d84f136ad0",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_bb125ea93e": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_bb125ea93e",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_8b181ff845": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_8b181ff845",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_886ece2613": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_886ece2613",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_ddb57ac593": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_ddb57ac593",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_cea1a5f1b4": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_cea1a5f1b4",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_e1dad7a949": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_e1dad7a949",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_1adabe130f": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_1adabe130f",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_9db35406e9": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_9db35406e9",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_d8a2f1c186": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_d8a2f1c186",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_10ffef3bcd": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_10ffef3bcd",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_2fa4503610": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_2fa4503610",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_a79e81824c": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_a79e81824c",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_36ce5750a7": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_36ce5750a7",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_bbddf11041": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_bbddf11041",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_2c3279a65c": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_2c3279a65c",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_31540ef853": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_31540ef853",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_9b95afe347": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_9b95afe347",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_410261e9ba": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_410261e9ba",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_3aa7257a1a": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_3aa7257a1a",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_7a8571ca63": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_7a8571ca63",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_648dd53729": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_648dd53729",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_413f3a90df": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_413f3a90df",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_b624b8acf1": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_b624b8acf1",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_4fe8ce89e5": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_4fe8ce89e5",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_65e7fd1c87": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_65e7fd1c87",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_0338ff6da3": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_0338ff6da3",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_9cd6f8866c": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_9cd6f8866c",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_2c80764518": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_2c80764518",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_dd68c65b53": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_dd68c65b53",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_b09aa22379": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_b09aa22379",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_28c2bccb36": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_28c2bccb36",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_909978adf6": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_909978adf6",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_f6e9d2944e": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_f6e9d2944e",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_3049508b8a": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_3049508b8a",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_bgm_e120d8ae18": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_e120d8ae18",
         "stream": true
       }
     ]
