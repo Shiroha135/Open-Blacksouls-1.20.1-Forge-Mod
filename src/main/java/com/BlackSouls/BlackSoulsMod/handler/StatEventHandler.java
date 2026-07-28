@@ -4,6 +4,7 @@ import com.BlackSouls.BlackSoulsMod.BSConfig;
 import com.BlackSouls.BlackSoulsMod.api.event.BSStatsRecalcEvent;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager;
 import com.google.common.collect.HashMultimap;
 import com.BlackSouls.BlackSoulsMod.entity.EntityThrownBlade;
 import com.BlackSouls.BlackSoulsMod.entity.EntityMeatWall;
@@ -961,14 +962,6 @@ public class StatEventHandler {
                 return;
             }
 
-            if (player.getMainHandItem().getItem() == BlackSouls.RLYEH_STAFF.get()
-                    && (source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_ARMOR)
-                    || source.is(DamageTypes.INDIRECT_MAGIC))
-                    && player.getRandom().nextDouble() < 0.30D) {
-                event.setCanceled(true);
-                return;
-            }
-
             if (tryTriggerSpearCounter(event, player, source)) {
                 return;
             }
@@ -992,7 +985,10 @@ public class StatEventHandler {
             }
 
             player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
-                if (stats.evasion > 0 && Math.random() * 100 < stats.evasion) {
+                boolean magicAttack = source.is(DamageTypes.MAGIC)
+                        || source.is(DamageTypes.INDIRECT_MAGIC);
+                double evasionRate = magicAttack ? stats.magicEvasion : stats.evasion;
+                if (evasionRate > 0 && Math.random() * 100 < evasionRate) {
                     event.setCanceled(true);
                     if (!player.level().isClientSide()) {
                         ((ServerLevel) player.level()).sendParticles(
@@ -1001,8 +997,8 @@ public class StatEventHandler {
                                 3, 0.2, 0.2, 0.2, 0.05
                         );
                         player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
-                                SoundEvents.PLAYER_ATTACK_SWEEP,
-                                SoundSource.PLAYERS, 1.0F, 2.0F);
+                                magicAttack ? BlackSouls.EVASION2_EVENT.get() : BlackSouls.EVASION1_EVENT.get(),
+                                SoundSource.PLAYERS, 0.8F, 1.0F);
                     }
                 }
             });
@@ -2485,6 +2481,7 @@ public class StatEventHandler {
             if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.RLYEH_STAFF.get()) {
                 double[] magicByLevel = {25.0D, 45.0D, 65.0D, 80.0D, 95.0D, 125.0D};
                 stats.magicAttack += magicByLevel[Math.max(0, Math.min(5, upgradeLevel))];
+                stats.magicEvasion += 30.0D;
                 stats.mpRegenRate += 0.50D;
             }
             if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.DEEP_SEA_KNIGHTS_ANCHOR.get()) {
@@ -2686,6 +2683,7 @@ public class StatEventHandler {
                 stats.defense *= 0.01;
             }
             MinecraftForge.EVENT_BUS.post(new BSStatsRecalcEvent(player, stats));
+            stats.magicEvasion += stats.evasion;
             clampCalculatedStats(player, stats);
             syncVanillaAttributes(player, stats);
         }
@@ -2813,6 +2811,7 @@ public class StatEventHandler {
 
     private static void resetDerivedStats(BSPlayerStats stats) {
         stats.evasion = 0.0;
+        stats.magicEvasion = 0.0;
         stats.critRate = 5.0;
         stats.burnRate = 0.0;
         stats.hpRegenRate = 0.0;
@@ -2842,6 +2841,7 @@ public class StatEventHandler {
 
     private static void clampCalculatedStats(Player player, BSPlayerStats stats) {
         stats.evasion = Math.max(0.0, Math.min(100.0, stats.evasion));
+        stats.magicEvasion = Math.max(0.0, Math.min(100.0, stats.magicEvasion));
         if (!stats.developerLimitBreak) {
             stats.hp = Math.min(CAP_HP, stats.hp);
             stats.maxMp = Math.min(CAP_MP, stats.maxMp);
@@ -3011,8 +3011,9 @@ public class StatEventHandler {
     }
 
     private static void showDamageFeedback(Player player, LivingEntity victim, float damage) {
+        long displayedDamage = Math.max(0L, Math.round((double) damage));
         if (BSConfig.SHOW_COMBAT_DAMAGE_CHAT.get()) {
-            String damageStr = String.format("%.0f", damage);
+            String damageStr = Long.toString(displayedDamage);
             Component msg = Component.translatable("message.blacksouls.combat.damage", player.getName().getString(), damageStr)
                     .withStyle(ChatFormatting.WHITE);
             player.sendSystemMessage(msg);
@@ -3026,7 +3027,7 @@ public class StatEventHandler {
         PacketDistributor.TargetPoint p = new PacketDistributor.TargetPoint(victim.getX(), victim.getY(), victim.getZ(), 64, player.level().dimension());
         try {
             NetworkHandler.INSTANCE.send(PacketDistributor.NEAR.with(() -> p),
-                    new PacketSpawnDamageText(victim.getX(), victim.getY() + victim.getBbHeight() / 2.0, victim.getZ(), damage, isCrit));
+                    new PacketSpawnDamageText(victim.getX(), victim.getY() + victim.getBbHeight() / 2.0, victim.getZ(), displayedDamage, isCrit));
         } catch (Exception ignored) {
         }
     }
@@ -3369,7 +3370,8 @@ public class StatEventHandler {
             }
         }
 
-        if (serverPlayer.tickCount % 20 == 0) {
+        if (serverPlayer.tickCount % 20 == 0
+                && !TurnBattleManager.isInBattle(serverPlayer)) {
             if (stats.mp < stats.maxMp) {
                 double regenAmount = 1.0 + (stats.maxMp * stats.mpRegenRate);
                 stats.mp += regenAmount;

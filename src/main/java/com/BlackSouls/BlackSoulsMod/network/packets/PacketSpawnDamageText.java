@@ -10,10 +10,10 @@ import java.util.function.Supplier;
 
 public class PacketSpawnDamageText {
     private final double x, y, z;
-    private final float damage;
+    private final long damage;
     private final boolean isCrit;
 
-    public PacketSpawnDamageText(double x, double y, double z, float damage, boolean isCrit) {
+    public PacketSpawnDamageText(double x, double y, double z, long damage, boolean isCrit) {
         this.x = x; this.y = y; this.z = z;
         this.damage = damage; this.isCrit = isCrit;
     }
@@ -22,13 +22,13 @@ public class PacketSpawnDamageText {
         this.x = buf.readDouble();
         this.y = buf.readDouble();
         this.z = buf.readDouble();
-        this.damage = buf.readFloat();
+        this.damage = buf.readLong();
         this.isCrit = buf.readBoolean();
     }
 
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeDouble(this.x); buf.writeDouble(this.y); buf.writeDouble(this.z);
-        buf.writeFloat(this.damage); buf.writeBoolean(this.isCrit);
+        buf.writeLong(this.damage); buf.writeBoolean(this.isCrit);
     }
 
     public void handle(Supplier<NetworkEvent.Context> ctx) {

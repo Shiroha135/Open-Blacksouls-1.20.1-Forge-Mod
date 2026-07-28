@@ -1285,5 +1285,83 @@
         "stream": true
       }
     ]
+  },
+  "turn_battle_bgm_gran_beasts": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_gran_beasts",
+        "stream": true
+      }
+    ]
+  },
+  "turn_battle_domain": {
+    "category": "master",
+    "sounds": [
+      "blacksouls:turn_battle_domain"
+    ]
+  },
+  "gran_blood_splatter_01": {
+    "category": "master",
+    "sounds": [
+      "blacksouls:gran_blood_splatter_01"
+    ]
+  },
+  "gran_blood_splatter_02": {
+    "category": "master",
+    "sounds": [
+      "blacksouls:gran_blood_splatter_02"
+    ]
+  },
+  "gran_bone_break": {
+    "category": "master",
+    "sounds": [
+      "blacksouls:gran_bone_break"
+    ]
+  },
+  "gran_bone": {
+    "category": "master",
+    "sounds": [
+      "blacksouls:gran_bone"
+    ]
+  },
+  "gran_flesh_crush": {
+    "category": "master",
+    "sounds": [
+      "blacksouls:gran_flesh_crush"
+    ]
+  },
+  "gran_hallucination": {
+    "category": "master",
+    "sounds": [
+      "blacksouls:gran_hallucination"
+    ]
+  },
+  "evasion2": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:evasion2"
+    ]
+  },
+  "turn_boss_collapse_start": {
+    "category": "hostile",
+    "sounds": [
+      "blacksouls:turn_boss_collapse_start"
+    ]
+  },
+  "turn_boss_collapse_loop": {
+    "category": "hostile",
+    "sounds": [
+      "blacksouls:turn_boss_collapse_loop"
+    ]
+  },
+  "turn_battle_bgm_gran_pure_greed": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:turn_battle_bgm_gran_pure_greed",
+        "stream": true
+      }
+    ]
   }
 }

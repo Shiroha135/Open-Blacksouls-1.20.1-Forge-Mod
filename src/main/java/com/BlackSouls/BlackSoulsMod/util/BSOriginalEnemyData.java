@@ -75,7 +75,9 @@ public final class BSOriginalEnemyData {
                             action.has("successRate") ? action.get("successRate").getAsInt() : 100,
                             action.has("elementId") ? action.get("elementId").getAsInt() : 0,
                             action.has("scope") ? action.get("scope").getAsInt() : 1,
-                            List.copyOf(stateEffects)
+                            List.copyOf(stateEffects),
+                            action.has("followUpSkillId") ? action.get("followUpSkillId").getAsInt() : 0,
+                            !action.has("selectable") || action.get("selectable").getAsBoolean()
                     ));
                 }
                 List<Drop> drops = new ArrayList<>();
@@ -116,7 +118,9 @@ public final class BSOriginalEnemyData {
                         List.copyOf(actions),
                         List.copyOf(drops),
                         List.copyOf(initialStates),
-                        json.get("spawnable").getAsBoolean()
+                        json.get("spawnable").getAsBoolean(),
+                        json.has("actionCount") ? Math.max(1, json.get("actionCount").getAsInt()) : 1,
+                        json.has("collapseType") ? Math.max(0, json.get("collapseType").getAsInt()) : 0
                 );
                 entries.put(entry.id(), entry);
             }
@@ -135,7 +139,11 @@ public final class BSOriginalEnemyData {
         if (normalized.isEmpty()) {
             normalized = name.isEmpty() ? "攻击" : name;
         }
-        return "使用了" + normalized;
+        while (normalized.endsWith("！") || normalized.endsWith("!")
+                || normalized.endsWith("。")) {
+            normalized = normalized.substring(0, normalized.length() - 1).trim();
+        }
+        return normalized;
     }
 
     private static String findPrimaryActionName(List<Action> actions) {
@@ -149,17 +157,24 @@ public final class BSOriginalEnemyData {
                         double health, double mp, double attack, double defense, double magicAttack,
                         double magicDefense, double agility, double luck, long souls, double movementSpeed,
                         float worldRenderHeight, float shadowRadius, int primaryColor, int secondaryColor,
-                        String attackText, int attackAnimationId, int attackRepeats, List<Action> actions,
-                        List<Drop> drops, List<Integer> initialStates, boolean spawnable) {
+                         String attackText, int attackAnimationId, int attackRepeats, List<Action> actions,
+                         List<Drop> drops, List<Integer> initialStates, boolean spawnable,
+                         int actionCount, int collapseType) {
         public float aspectRatio() {
             return (float) textureWidth / Math.max(1, textureHeight);
+        }
+
+        public Action findAction(int skillId) {
+            return actions.stream().filter(action -> action.skillId() == skillId)
+                    .findFirst().orElse(null);
         }
     }
 
     public record Action(int skillId, String name, String text, int animationId, int repeats, int rating,
                          int conditionType, double conditionParam1, double conditionParam2, int damageType,
                          String formula, int variance, boolean critical, int hitType, int successRate,
-                         int elementId, int scope, List<StateEffect> stateEffects) {
+                         int elementId, int scope, List<StateEffect> stateEffects,
+                         int followUpSkillId, boolean selectable) {
     }
 
     public record StateEffect(int code, int stateId, double chance) {

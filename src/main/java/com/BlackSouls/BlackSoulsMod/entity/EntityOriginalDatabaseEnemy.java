@@ -196,10 +196,12 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
     public BSOriginalEnemyData.Action selectTurnBattleAction(RandomSource random, int turn,
                                                               Set<Integer> activeStates) {
         List<BSOriginalEnemyData.Action> valid = getProfile().actions().stream()
+                .filter(BSOriginalEnemyData.Action::selectable)
                 .filter(action -> isActionConditionMet(action, turn, activeStates))
                 .toList();
         if (valid.isEmpty()) {
             valid = getProfile().actions().stream()
+                    .filter(BSOriginalEnemyData.Action::selectable)
                     .filter(action -> action.conditionType() == 0)
                     .toList();
         }

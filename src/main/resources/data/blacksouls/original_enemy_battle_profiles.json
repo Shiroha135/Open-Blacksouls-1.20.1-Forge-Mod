@@ -1574,6 +1574,89 @@
     "battleback2Height": 416
   },
   {
+    "profileId": 552,
+    "troopId": 608,
+    "members": [
+      {
+        "profileId": 552,
+        "states": [
+          39
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_fb9a5dab73",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.2,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416,
+    "introPages": [
+      "地狱王子",
+      "「发狂啊发狂啊咕咕。\n　是鸽子。一只黑色的鸽子。\n　是只一头扑在撒落的饵料上的悲哀的鸽子啊」",
+      "「人类沉溺于娱乐的毒性。因此我必须给予饵料才行。\n　我那150出戏曲，请好好品尝下吧」"
+    ],
+    "preemptiveSkillId": 960
+  },
+  {
+    "profileId": 553,
+    "troopId": 609,
+    "members": [
+      {
+        "profileId": 553,
+        "states": [
+          9
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_fb9a5dab73",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.2,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416,
+    "introPages": [
+      "地狱王子",
+      "「嚯。我的作品开始变得千篇一律了。\n　嚯。观众的数量也减少了。\n　嚯嚯，得创作出更加能让人捧腹大笑的戏剧才行」",
+      "「只会装得了不起的无能之人用烟灰缸砸死就好了。\n　吸哈吸哈吸哈。\n　那个时候，一边鉴赏生的尸体一边抽的烟草是特别的啊」"
+    ],
+    "preemptiveSkillId": 960
+  },
+  {
+    "profileId": 554,
+    "troopId": 610,
+    "members": [
+      {
+        "profileId": 554,
+        "states": [
+          164
+        ]
+      }
+    ],
+    "bgm": "blacksouls:hell_prince_bgm",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416,
+    "introPages": [
+      "地狱王子",
+      "「所谓的创作，是一种孤独又自命不凡的过家家。\n　没有别人来评价的话就无法在舞台上散发光彩」",
+      "「观众们为了接受新生的事物，\n　就会和过去的产物进行比较。\n　比起那种拖泥带水的作品，我的孩子才是毫无疑问的杰作」",
+      "「童话是什么破玩意。给小孩看的故事是那么畅销的东西吗？\n　这里可是丑陋的大人的世界啊。\n　金钱啊药物啊女人啊，已经被欲望的虹笔涂满了污秽」",
+      "「童话什么的都去吃屎吧。\n　无法直视现实只能当装饰的眼瞳就让我来打碎掉吧」"
+    ],
+    "preemptiveSkillId": 960
+  },
+  {
     "profileId": 556,
     "troopId": 613,
     "members": [
@@ -1653,9 +1736,9 @@
     "bgm": "blacksouls:turn_battle_bgm_b09aa22379",
     "bgmVolume": 1.0,
     "bgmPitch": 1.0,
-    "battleback1": "",
-    "battleback1Width": 544,
-    "battleback1Height": 416,
+    "battleback1": "blacksouls:textures/gui/battle/background/map374_troop620_blur.png",
+    "battleback1Width": 640,
+    "battleback1Height": 480,
     "battleback2": "",
     "battleback2Width": 544,
     "battleback2Height": 416
@@ -1690,6 +1773,35 @@
     "battleback1": "blacksouls:textures/gui/battle/background/battleback_7412c5e577.png",
     "battleback1Width": 800,
     "battleback1Height": 611,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
+    "profileId": 564,
+    "troopId": 620,
+    "members": [
+      {
+        "profileId": 565,
+        "states": [
+          10,
+          221
+        ]
+      },
+      {
+        "profileId": 564,
+        "states": [
+          10,
+          221
+        ]
+      }
+    ],
+    "bgm": "blacksouls:turn_battle_bgm_gran_pure_greed",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "blacksouls:textures/gui/battle/background/gran_beasts.png",
+    "battleback1Width": 800,
+    "battleback1Height": 610,
     "battleback2": "",
     "battleback2Width": 544,
     "battleback2Height": 416
@@ -1836,12 +1948,12 @@
         ]
       }
     ],
-    "bgm": "blacksouls:turn_battle_bgm_e120d8ae18",
+    "bgm": "blacksouls:turn_battle_bgm_gran_beasts",
     "bgmVolume": 1.0,
     "bgmPitch": 1.0,
-    "battleback1": "blacksouls:textures/gui/battle/background/battleback_1e95e628d9.png",
+    "battleback1": "blacksouls:textures/gui/battle/background/bg-chaos.png",
     "battleback1Width": 800,
-    "battleback1Height": 800,
+    "battleback1Height": 611,
     "battleback2": "",
     "battleback2Width": 544,
     "battleback2Height": 416
@@ -1858,12 +1970,12 @@
         ]
       }
     ],
-    "bgm": "blacksouls:turn_battle_bgm_e120d8ae18",
+    "bgm": "blacksouls:turn_battle_bgm_gran_beasts",
     "bgmVolume": 1.0,
     "bgmPitch": 1.0,
-    "battleback1": "blacksouls:textures/gui/battle/background/battleback_1e95e628d9.png",
+    "battleback1": "blacksouls:textures/gui/battle/background/bg-chaos.png",
     "battleback1Width": 800,
-    "battleback1Height": 800,
+    "battleback1Height": 611,
     "battleback2": "",
     "battleback2Width": 544,
     "battleback2Height": 416

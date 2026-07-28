@@ -10,7 +10,10 @@
     "ServerLevelMixin",
     "ServerGamePacketListenerImplMixin",
     "ItemStackMaxStackMixin",
+    "InventoryMaxStackMixin",
+    "SimpleContainerMaxStackMixin",
     "SlotMaxStackMixin",
+    "MobEffectInstanceBattleMixin",
     "FoodDataMixin",
     "MobEffectMixin",
     "AbsoptionMobEffectMixin"
@@ -20,7 +23,8 @@
     "client.GuiAccessor",
     "client.ItemInHandRendererAccessor",
     "client.FontManagerResourceMixin",
-    "client.FontSetGlobalMixin"
+    "client.FontSetGlobalMixin",
+    "client.MobEffectInstanceClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -3,12 +3,16 @@ package com.BlackSouls.BlackSoulsMod.client.gui;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.client.render.AnimationRegistry;
+import com.BlackSouls.BlackSoulsMod.client.render.BSAvatarRenderer;
 import com.BlackSouls.BlackSoulsMod.client.render.BattleScreenVFXRenderer;
 import com.BlackSouls.BlackSoulsMod.client.render.BattleTransitionRenderer;
+import com.BlackSouls.BlackSoulsMod.client.render.FadedBannerRenderer;
 import com.BlackSouls.BlackSoulsMod.client.render.TurnBattleVfxResolver;
 import com.BlackSouls.BlackSoulsMod.client.render.VFXAnimation;
 import com.BlackSouls.BlackSoulsMod.client.render.VFXSoundTiming;
 import com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager;
+import com.BlackSouls.BlackSoulsMod.combat.TurnBattleDomainData;
+import com.BlackSouls.BlackSoulsMod.client.ClientSkillInfo;
 import com.BlackSouls.BlackSoulsMod.entity.EntityTurnBattleMonster;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundTurnBattlePacket;
@@ -16,6 +20,7 @@ import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundTurnBattleActionP
 import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundTurnBattlePresentationPacket;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalBattleProfileData;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalEnemyData;
+import com.BlackSouls.BlackSoulsMod.util.BSOriginalEnemyPhaseData;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalStateData;
 import com.BlackSouls.BlackSoulsMod.util.SkillUtils;
 import com.BlackSouls.BlackSoulsMod.util.skill.AbstractSkill;
@@ -60,6 +65,12 @@ public class GuiTurnBattle extends Screen {
             new ResourceLocation(BlackSouls.MODID, "textures/gui/battle/battle_start.png");
     private static final ResourceLocation BATTLE_START1_TEXTURE =
             new ResourceLocation(BlackSouls.MODID, "textures/gui/battle/battle_start1.png");
+    private static final ResourceLocation BATTLE_MIST_TEXTURE =
+            new ResourceLocation(BlackSouls.MODID, "textures/gui/battle/mist.png");
+    private static final ResourceLocation[] CURTAIN_TEXTURES = java.util.stream.IntStream.range(0, 9)
+            .mapToObj(index -> new ResourceLocation(BlackSouls.MODID,
+                    "textures/gui/battle/curtain/curtain_" + index + ".png"))
+            .toArray(ResourceLocation[]::new);
     private static final float MAP_TRANSITION_FRAMES = 35.0F;
     private static final float BATTLE_REVEAL_FRAMES = 10.0F;
     private static final long VFX_FRAME_DURATION_MILLIS = 66L;
@@ -97,6 +108,8 @@ public class GuiTurnBattle extends Screen {
     private float enemyMaxHealth;
     private int enemyProfileId;
     private Component message;
+    private final List<String> introPages = new ArrayList<>();
+    private int introPageIndex;
     private boolean canAct;
     private boolean pendingCanAct;
     private View view = View.INTRO;
@@ -117,6 +130,7 @@ public class GuiTurnBattle extends Screen {
     private double displayAp = -1.0D;
     private double displayMaxAp = 1.0D;
     private long soulReward;
+    private final List<ItemStack> rewardItems = new ArrayList<>();
     private SimpleSoundInstance battleMusic;
     private boolean encounterSoundPlayed;
     private long encounterStartedAt = -1L;
@@ -148,11 +162,29 @@ public class GuiTurnBattle extends Screen {
     private final Map<String, ResourceLocation> turnSkillIcons = new HashMap<>();
     private TurnBattleVfxResolver.Cue pendingPlayerVfx = TurnBattleVfxResolver.Cue.NONE;
     private boolean pendingPlayerTargetsAll;
+    private int pendingPlayerVfxStartAge = 2;
+    private boolean pendingCounterSound;
+    private int pendingEnemyEvasionSound;
     private final List<ActiveBattleVfx> activeBattleVfx = new ArrayList<>();
     private final List<ScheduledDamageHit> scheduledEnemyHits = new ArrayList<>();
     private final List<DamagePopup> enemyDamagePopups = new ArrayList<>();
+    private final List<PlayerDamagePopup> playerDamagePopups = new ArrayList<>();
+    private final List<ScheduledIncomingHit> scheduledIncomingHits = new ArrayList<>();
+    private final List<ScheduledRevival> scheduledRevivals = new ArrayList<>();
     private boolean awaitingPresentation;
     private int enemyAttackAge = 27;
+    private boolean incomingSequenceActive;
+    private boolean playerDown;
+    private String activeEnemyActionHeader = "";
+    private int curtainTransitionTicks;
+    private PendingCurtainPhase pendingCurtainPhase;
+    private boolean curtainRestoresInput;
+    private long domainBannerStartedAt = -1L;
+    private boolean domainBannerSoundPlayed;
+    private final java.util.Set<String> shownDomainTitles = new java.util.HashSet<>();
+    private final long mistStartedAt = System.currentTimeMillis();
+    private int granFinalPresentationTicks;
+    private int granFinalPresentationSoundStep = -1;
 
     public GuiTurnBattle(int entityId, int battleProfileId,
                          List<ClientboundTurnBattlePacket.EnemySnapshot> enemies,
@@ -163,6 +195,7 @@ public class GuiTurnBattle extends Screen {
         this.battleProfileId = battleProfileId;
         replaceEnemies(enemies, true);
         this.message = message;
+        setIntroPages(message);
         this.canAct = canAct;
         this.skillCooldowns.putAll(skillCooldowns);
         this.enemyAnimationId = enemyAnimationId;
@@ -199,9 +232,17 @@ public class GuiTurnBattle extends Screen {
             float displayed = resetVisuals || old == null
                     ? snapshot.health() : old.displayHealth;
             float alpha = resetVisuals || old == null ? 1.0F : old.displayAlpha;
-            this.enemies.add(new EnemyVisual(snapshot.entityId(), snapshot.name(),
-                    snapshot.health(), snapshot.maxHealth(), snapshot.profileId(),
-                    snapshot.states(), displayed, alpha));
+            int profileId = snapshot.profileId();
+            if (old != null && old.profileId >= 570 && old.profileId < 577
+                    && profileId > old.profileId && profileId <= 577) {
+                profileId = old.profileId + 1;
+            }
+            EnemyVisual visual = new EnemyVisual(snapshot.entityId(), snapshot.name(),
+                    snapshot.health(), snapshot.maxHealth(), profileId,
+                    snapshot.states(), displayed, alpha);
+            visual.targetProfileId = snapshot.profileId();
+            visual.profileMorphTicks = profileId == snapshot.profileId() ? 0 : 6;
+            this.enemies.add(visual);
         }
         this.targetSelection = firstLivingEnemyIndex();
         this.lastTargetIndex = Math.max(0, Math.min(
@@ -260,18 +301,38 @@ public class GuiTurnBattle extends Screen {
                            int actingEnemyIndex, boolean phaseChanged,
                            boolean awaitingPresentation,
                            List<ClientboundTurnBattlePacket.DamageHit> playerHits,
+                           List<ClientboundTurnBattlePacket.IncomingHit> incomingHits,
                            Component message, boolean canAct,
                            ClientboundTurnBattlePacket.Outcome outcome, long soulReward,
+                           List<ItemStack> rewardItems,
                            Map<String, Integer> skillCooldowns, int enemyAnimationId) {
+        int previousBattleProfileId = this.battleProfileId;
+        boolean granFinalEntrance = phaseChanged
+                && previousBattleProfileId == 579 && battleProfileId == 570;
+        boolean granCurtainTransition = phaseChanged
+                && isGranCurtainTransition(this.battleProfileId, battleProfileId);
         Map<Integer, Float> previousHealth = new HashMap<>();
         for (EnemyVisual enemy : this.enemies) {
             previousHealth.put(enemy.entityId, enemy.health);
         }
-        boolean environmentChanged = this.battleProfileId != battleProfileId;
-        this.battleProfileId = battleProfileId;
-        this.actingEnemyIndex = Math.max(0, Math.min(
-                Math.max(0, enemies.size() - 1), actingEnemyIndex));
-        replaceEnemies(enemies, phaseChanged);
+        if (granCurtainTransition) {
+            this.pendingCurtainPhase = new PendingCurtainPhase(
+                    battleProfileId, List.copyOf(enemies), actingEnemyIndex, enemyAnimationId);
+        } else {
+            boolean environmentChanged = this.battleProfileId != battleProfileId;
+            this.battleProfileId = battleProfileId;
+            this.actingEnemyIndex = Math.max(0, Math.min(
+                    Math.max(0, enemies.size() - 1), actingEnemyIndex));
+            replaceEnemies(enemies, phaseChanged);
+            updateBattleEnvironment(environmentChanged);
+            this.enemyAnimationId = enemyAnimationId;
+        }
+        if (granFinalEntrance) {
+            stopBattleMusic();
+            this.battleMusicDelay = 65;
+            this.granFinalPresentationTicks = 65;
+            this.granFinalPresentationSoundStep = -1;
+        }
         if (!playerHits.isEmpty()) {
             Map<Integer, Integer> totalDamage = new HashMap<>();
             for (ClientboundTurnBattlePacket.DamageHit hit : playerHits) {
@@ -290,26 +351,38 @@ public class GuiTurnBattle extends Screen {
             }
             syncPrimaryEnemy();
         }
-        updateBattleEnvironment(environmentChanged);
         this.message = message;
         this.pendingCanAct = canAct;
         this.canAct = false;
         this.outcome = outcome;
         this.soulReward = soulReward;
+        this.rewardItems.clear();
+        rewardItems.stream().map(ItemStack::copy).forEach(this.rewardItems::add);
         this.skillCooldowns.clear();
         this.skillCooldowns.putAll(skillCooldowns);
-        this.enemyAnimationId = enemyAnimationId;
         this.awaitingPresentation = awaitingPresentation;
-        captureEnemyVisual();
+        if (!granCurtainTransition) {
+            captureEnemyVisual();
+        }
         if (phaseChanged) {
-            this.enemyAlpha = 0.0F;
-            this.phaseTransitionTicks = 24;
+            if (granCurtainTransition) {
+                this.enemyAlpha = 1.0F;
+                this.phaseTransitionTicks = 0;
+                this.curtainTransitionTicks = 54;
+                this.curtainRestoresInput = true;
+                scheduleDomainBanner(battleProfileId, granFinalEntrance ? 3600L : 2700L);
+            } else {
+                this.enemyAlpha = 0.0F;
+                this.phaseTransitionTicks = 24;
+                this.curtainTransitionTicks = 0;
+                scheduleDomainBanner(battleProfileId, granFinalEntrance ? 3600L : 1200L);
+            }
             this.enemyActionPoints = 0.0F;
             this.enemyActionWaitTicks = ENEMY_START_WAIT_TICKS;
         }
         if (outcome == ClientboundTurnBattlePacket.Outcome.NONE
                 && canAct && message.getString().isEmpty()) {
-            this.canAct = true;
+            this.canAct = !granCurtainTransition;
             this.pendingCanAct = true;
             this.view = View.COMMAND;
             this.selection = 0;
@@ -318,6 +391,9 @@ public class GuiTurnBattle extends Screen {
             this.sequenceTicks = 0;
             this.pendingPlayerVfx = TurnBattleVfxResolver.Cue.NONE;
             this.pendingPlayerTargetsAll = false;
+            this.pendingPlayerVfxStartAge = 2;
+            this.pendingCounterSound = false;
+            this.pendingEnemyEvasionSound = 0;
             return;
         }
         this.view = View.MESSAGE;
@@ -327,53 +403,113 @@ public class GuiTurnBattle extends Screen {
                 ? this.minecraft.player.getDisplayName().getString() : "";
         String targetName = this.enemyName.getString();
         this.effectAge = 0;
-        this.playerUsedNormalAttack = !playerName.isEmpty() && report.startsWith(playerName + "的攻击！");
+        boolean playerCountered = !playerName.isEmpty()
+                && (report.contains(playerName + "的反击！")
+                || report.contains(playerName + "发动了反击！"));
+        this.playerUsedNormalAttack = !playerName.isEmpty()
+                && (report.startsWith(playerName + "的攻击！") || playerCountered);
         boolean playerUsedSkill = !playerName.isEmpty() && report.startsWith(playerName + "使用了");
+        this.pendingPlayerVfxStartAge = 2;
+        this.pendingCounterSound = playerCountered;
+        if (playerCountered && this.minecraft != null && this.minecraft.player != null) {
+            this.pendingPlayerVfx = TurnBattleVfxResolver.resolveWeapon(
+                    this.minecraft.player, this.minecraft.player.getMainHandItem());
+            this.pendingPlayerTargetsAll = false;
+        }
         if (!this.playerUsedNormalAttack && !playerUsedSkill) {
             this.pendingPlayerVfx = TurnBattleVfxResolver.Cue.NONE;
         }
         this.enemyWasDamaged = !playerHits.isEmpty() || phaseChanged || this.enemies.stream()
                 .anyMatch(enemy -> report.contains("对" + enemy.name.getString() + "造成了"));
-        this.playerWasDamaged = !playerName.isEmpty() && report.contains(playerName + "受到了");
+        this.playerWasDamaged = !incomingHits.isEmpty()
+                || !playerName.isEmpty() && report.contains(playerName + "受到了");
         this.enemyAttacked = this.enemies.stream()
                 .anyMatch(enemy -> report.contains(enemy.name.getString()))
                 && (this.playerWasDamaged || report.contains("但是攻击落空了"));
+        this.pendingEnemyEvasionSound = report.contains("但是攻击落空了")
+                ? resolveEnemyEvasionSound(report) : 0;
         this.enemyDamageNumber = extractDamage(report, "造成了\\s*(\\d+)\\s*点伤害");
         this.playerDamageNumber = extractDamage(report, "受到了\\s*(\\d+)\\s*点伤害");
         this.enemyDamageCritical = report.contains("会心一击");
-        int animationImpactAge = this.enemyWasDamaged ? playerImpactAge(this.pendingPlayerVfx) : 5;
-        this.enemyImpactAge = scheduleDamageHits(playerHits, animationImpactAge);
+        int incomingEndAge;
+        if (playerCountered) {
+            this.enemyAttackAge = 27;
+            incomingEndAge = scheduleIncomingHits(incomingHits, this.enemyAttackAge + 6);
+            this.pendingPlayerVfxStartAge = Math.max(this.enemyAttackAge + 8, incomingEndAge + 2);
+            int counterImpactAge = this.pendingPlayerVfxStartAge
+                    + Math.max(3, playerImpactAge(this.pendingPlayerVfx) - 2);
+            this.enemyImpactAge = scheduleDamageHitsFrom(playerHits, counterImpactAge);
+        } else {
+            int animationImpactAge = this.enemyWasDamaged ? playerImpactAge(this.pendingPlayerVfx) : 5;
+            this.enemyImpactAge = scheduleDamageHits(playerHits, animationImpactAge);
+            this.enemyAttackAge = this.enemyAttacked
+                    ? Math.max(27, this.enemyImpactAge + (this.enemyWasDamaged ? 10 : 0)) : 27;
+            incomingEndAge = scheduleIncomingHits(incomingHits, this.enemyAttackAge + 6);
+        }
         if (playerHits.isEmpty() && this.enemyWasDamaged && this.enemyDamageNumber > 0) {
             this.scheduledEnemyHits.add(new ScheduledDamageHit(
                     this.lastTargetIndex, this.enemyDamageNumber,
                     this.enemyDamageCritical, this.enemyImpactAge, true, 0));
         }
-        this.enemyAttackAge = this.enemyAttacked
-                ? Math.max(27, this.enemyImpactAge + (this.enemyWasDamaged ? 10 : 0)) : 27;
         int presentationEnd = Math.max(62, this.enemyImpactAge + 22);
         if (this.enemyAttacked) {
-            presentationEnd = Math.max(presentationEnd, this.enemyAttackAge + 30);
+            presentationEnd = Math.max(presentationEnd,
+                    Math.max(this.enemyAttackAge + 30, incomingEndAge + 20));
         }
         if (outcome == ClientboundTurnBattlePacket.Outcome.VICTORY) {
             presentationEnd = Math.max(presentationEnd, this.enemyImpactAge + 28);
         }
+        for (EnemyVisual enemy : this.enemies) {
+            if (enemy.health > 0.0F && enemy.finalHealth <= 0.0F && isBossCollapse(enemy)) {
+                presentationEnd = Math.max(presentationEnd,
+                        this.enemyImpactAge + bossCollapseDuration(enemy) + 8);
+            }
+        }
         this.sequenceTicks = presentationEnd;
         this.holdEnemyGaugeTicks = 0;
-        this.holdPlayerGaugeTicks = this.playerWasDamaged ? this.enemyAttackAge + 6 : 0;
+        this.holdPlayerGaugeTicks = this.playerWasDamaged ? presentationEnd + 2 : 0;
         this.scheduledEnemyHits.sort(java.util.Comparator.comparingInt(ScheduledDamageHit::triggerAge));
         this.enemyDamagePopups.clear();
         this.enemyDamagePopupStartedAt = -1L;
         this.playerDamagePopupStartedAt = -1L;
+        this.playerDamagePopups.clear();
+        this.activeEnemyActionHeader = report.lines()
+                .filter(line -> this.enemies.stream()
+                        .anyMatch(enemy -> line.startsWith(enemy.name.getString())))
+                .reduce((first, second) -> second)
+                .orElseGet(() -> report.lines().findFirst().orElse(report));
     }
 
     @Override
     public void tick() {
         updateDisplayedStats();
         updateEnemyActionGauge();
+        tickGranFinalPresentation();
         if (this.phaseTransitionTicks > 0
                 && this.outcome == ClientboundTurnBattlePacket.Outcome.NONE) {
             this.phaseTransitionTicks--;
             this.enemyAlpha = 1.0F - this.phaseTransitionTicks / 24.0F;
+        }
+        if (this.curtainTransitionTicks > 0) {
+            this.curtainTransitionTicks--;
+            if (this.curtainTransitionTicks == 27) {
+                applyPendingCurtainPhase();
+            }
+            if (this.curtainTransitionTicks == 0 && this.curtainRestoresInput) {
+                this.curtainRestoresInput = false;
+                this.canAct = this.pendingCanAct;
+                if (this.canAct) {
+                    this.view = View.COMMAND;
+                    this.selection = 0;
+                    this.menuScrollRow = 0;
+                }
+            }
+        }
+        if (!this.domainBannerSoundPlayed && this.domainBannerStartedAt >= 0L
+                && System.currentTimeMillis() >= this.domainBannerStartedAt
+                && TurnBattleDomainData.get(this.battleProfileId) != null) {
+            this.domainBannerSoundPlayed = true;
+            playUiSound(BlackSouls.TURN_BATTLE_DOMAIN_EVENT.get(), 1.0F);
         }
         if (this.battleMusicDelay > 0 && --this.battleMusicDelay == 0
                 && this.outcome == ClientboundTurnBattlePacket.Outcome.NONE) {
@@ -387,7 +523,11 @@ public class GuiTurnBattle extends Screen {
         }
         if (this.view == View.MESSAGE) {
             this.effectAge++;
-            if (this.effectAge == 2 && this.pendingPlayerVfx.valid()) {
+            if (this.effectAge == this.pendingPlayerVfxStartAge && this.pendingCounterSound) {
+                playUiSound(BlackSouls.EVASION1_EVENT.get(), 1.0F);
+                this.pendingCounterSound = false;
+            }
+            if (this.effectAge == this.pendingPlayerVfxStartAge && this.pendingPlayerVfx.valid()) {
                 if (this.pendingPlayerTargetsAll) {
                     boolean playSounds = true;
                     for (int i = 0; i < this.enemies.size(); i++) {
@@ -404,13 +544,25 @@ public class GuiTurnBattle extends Screen {
             }
             triggerScheduledDamageHits();
             if (this.effectAge == this.enemyAttackAge && this.enemyAttacked) {
-                playUiSound(BlackSouls.TURN_ENEMY_ATTACK_EVENT.get(), 1.0F);
+                VFXAnimation animation = AnimationRegistry.ANIMATIONS.get(this.enemyAnimationId);
+                if (animation == null || animation.soundTimings.isEmpty()) {
+                    playUiSound(BlackSouls.TURN_ENEMY_ATTACK_EVENT.get(), 1.0F);
+                }
                 queueBattleVfx(new TurnBattleVfxResolver.Cue(
-                        this.enemyAnimationId, TurnBattleVfxResolver.Target.PLAYER), false);
+                        this.enemyAnimationId, TurnBattleVfxResolver.Target.PLAYER), true);
             }
-            if (this.effectAge == this.enemyAttackAge + 6 && this.enemyAttacked) {
+            triggerIncomingHits();
+            triggerScheduledRevivals();
+            if (this.effectAge == this.enemyAttackAge + 6 && this.enemyAttacked
+                    && !this.incomingSequenceActive) {
                 this.enemyActionPoints = 0.0F;
                 this.enemyActionWaitTicks = 0;
+                if (this.pendingEnemyEvasionSound == 2) {
+                    playUiSound(BlackSouls.EVASION2_EVENT.get(), 1.0F, 0.8F);
+                } else if (this.pendingEnemyEvasionSound == 1) {
+                    playUiSound(BlackSouls.EVASION1_EVENT.get(), 1.0F, 0.8F);
+                }
+                this.pendingEnemyEvasionSound = 0;
                 if (this.playerWasDamaged) {
                     playUiSound(BlackSouls.TURN_PLAYER_DAMAGE_EVENT.get(), 1.0F);
                     this.playerHitTicks = 10;
@@ -423,7 +575,8 @@ public class GuiTurnBattle extends Screen {
             return;
         }
         this.sequenceTicks--;
-        if (this.outcome == ClientboundTurnBattlePacket.Outcome.VICTORY && this.sequenceTicks < 24) {
+        if (this.outcome == ClientboundTurnBattlePacket.Outcome.VICTORY
+                && !hasActiveBossCollapse() && this.sequenceTicks < 24) {
             this.enemyAlpha = Math.max(0.0F, this.sequenceTicks / 24.0F);
         }
         if (this.sequenceTicks > 0) {
@@ -459,13 +612,18 @@ public class GuiTurnBattle extends Screen {
             return;
         }
         graphics.pose().pushPose();
-        if (this.playerHitTicks > 0) {
-            int shake = (this.playerHitTicks & 1) == 0 ? 2 : -2;
+        int shake = this.playerHitTicks > 0 ? ((this.playerHitTicks & 1) == 0 ? 2 : -2) : 0;
+        if (granFinalPresentationAge() >= 45 && this.granFinalPresentationTicks > 0) {
+            int power = 4 + (granFinalPresentationAge() & 1) * 3;
+            shake += (granFinalPresentationAge() & 2) == 0 ? power : -power;
+        }
+        if (shake != 0) {
             graphics.pose().translate(shake, 0.0F, 0.0F);
         }
         drawBattleBackdrop(graphics);
         drawEnemy(graphics);
         drawBattleEffects(graphics);
+        drawCurtainTransition(graphics);
         if (this.view == View.INTRO) {
             drawIntro(graphics);
         } else {
@@ -480,6 +638,8 @@ public class GuiTurnBattle extends Screen {
                 drawCommandWindow(graphics, mouseX, mouseY);
             }
         }
+        drawDomainBanner(graphics);
+        drawGranFinalFlash(graphics);
         graphics.pose().popPose();
         super.render(graphics, mouseX, mouseY, partialTick);
     }
@@ -530,13 +690,216 @@ public class GuiTurnBattle extends Screen {
                     this.battleback2Height, this.battleback2Width,
                     this.battleback2Height);
         }
-        if (this.battleback1 == null && this.battleback2 == null) {
-            RenderSystem.setShaderColor(0.65F, 0.13F, 0.13F, 0.54F);
-            graphics.blit(BATTLE_START_TEXTURE, 0, 0, this.width, this.height,
-                    0.0F, 0.0F, 544, 416, 544, 416);
+        drawBattleMist(graphics);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.disableBlend();
+    }
+
+    private void drawBattleMist(GuiGraphics graphics) {
+        int sceneHeight = Math.max(1, this.height - statusHeight());
+        double elapsedFrames = (System.currentTimeMillis() - this.mistStartedAt) * 0.18D;
+        float scaleX = this.width / 544.0F;
+        float scaleY = sceneHeight / 416.0F;
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA,
+                GlStateManager.DestFactor.ONE);
+        for (int index = 0; index < 10; index++) {
+            int initialZ = Math.floorMod(mistHash(index, 0), 570);
+            double progressed = initialZ + elapsedFrames;
+            int cycle;
+            float z;
+            if (progressed < 600.0D) {
+                cycle = 0;
+                z = (float) progressed;
+            } else {
+                double afterReset = progressed - 600.0D;
+                cycle = 1 + (int) Math.floor(afterReset / 580.0D);
+                z = 20.0F + (float) (afterReset % 580.0D);
+            }
+            int baseX = Math.floorMod(mistHash(index, cycle), 272) + 136;
+            float x = ((baseX - 272.0F) * z / 128.0F + baseX) * scaleX;
+            float y = (z / 4.0F + 160.0F) * scaleY;
+            float zoom = z * 0.003F + 0.25F;
+            int drawWidth = Math.max(1, Math.round(256.0F * zoom * scaleX));
+            int drawHeight = Math.max(1, Math.round(128.0F * zoom * scaleY));
+            int drawX = Math.round(x - drawWidth * 0.5F);
+            int drawY = Math.round(y - drawHeight * 0.5F);
+            float opacity = Math.min(255.0F,
+                    z >= 536.0F ? Math.max(0.0F, (600.0F - z) * 4.0F) : z) / 255.0F;
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, opacity);
+            if (Math.floorMod(mistHash(index, cycle + 97), 3) == 0) {
+                graphics.pose().pushPose();
+                graphics.pose().translate(drawX + drawWidth, 0.0F, 0.0F);
+                graphics.pose().scale(-1.0F, 1.0F, 1.0F);
+                graphics.blit(BATTLE_MIST_TEXTURE, 0, drawY, drawWidth, drawHeight,
+                        0.0F, 0.0F, 256, 128, 256, 128);
+                graphics.pose().popPose();
+            } else {
+                graphics.blit(BATTLE_MIST_TEXTURE, drawX, drawY, drawWidth, drawHeight,
+                        0.0F, 0.0F, 256, 128, 256, 128);
+            }
         }
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.defaultBlendFunc();
+    }
+
+    private static int mistHash(int index, int cycle) {
+        int value = index * 0x6D2B79F5 + cycle * 0x1B873593 + 0x5F356495;
+        value ^= value >>> 16;
+        value *= 0x7FEB352D;
+        value ^= value >>> 15;
+        return value;
+    }
+
+    private int granFinalPresentationAge() {
+        return this.granFinalPresentationTicks <= 0 ? 65
+                : 65 - this.granFinalPresentationTicks;
+    }
+
+    private void tickGranFinalPresentation() {
+        if (this.granFinalPresentationTicks <= 0) {
+            return;
+        }
+        int age = granFinalPresentationAge();
+        if (age >= 0 && this.granFinalPresentationSoundStep < 0) {
+            playUiSound(BlackSouls.GUCHA004A_EVENT.get(), 1.0F);
+            playUiSound(BlackSouls.GRAN_BLOOD_SPLATTER_01_EVENT.get(), 0.95F);
+            this.granFinalPresentationSoundStep = 0;
+        }
+        if (age >= 10 && this.granFinalPresentationSoundStep < 1) {
+            playUiSound(BlackSouls.GUCHA004A_EVENT.get(), 1.0F);
+            playUiSound(BlackSouls.GRAN_BONE_BREAK_EVENT.get(), 0.60F);
+            this.granFinalPresentationSoundStep = 1;
+        }
+        if (age >= 20 && this.granFinalPresentationSoundStep < 2) {
+            playUiSound(BlackSouls.GRAN_BLOOD_SPLATTER_02_EVENT.get(), 0.95F);
+            playUiSound(BlackSouls.GRAN_BONE_EVENT.get(), 0.70F);
+            this.granFinalPresentationSoundStep = 2;
+        }
+        if (age >= 30 && this.granFinalPresentationSoundStep < 3) {
+            playUiSound(BlackSouls.GRAN_FLESH_CRUSH_EVENT.get(), 1.0F);
+            this.granFinalPresentationSoundStep = 3;
+        }
+        if (age >= 45 && this.granFinalPresentationSoundStep < 4) {
+            playUiSound(BlackSouls.GRAN_HALLUCINATION_EVENT.get(), 1.30F, 0.80F);
+            this.granFinalPresentationSoundStep = 4;
+        }
+        this.granFinalPresentationTicks--;
+    }
+
+    private void drawGranFinalFlash(GuiGraphics graphics) {
+        if (this.granFinalPresentationTicks <= 0) {
+            return;
+        }
+        int age = granFinalPresentationAge();
+        int start;
+        int end;
+        if (age < 10) {
+            start = 0;
+            end = 10;
+        } else if (age < 20) {
+            start = 10;
+            end = 20;
+        } else if (age < 30) {
+            start = 20;
+            end = 30;
+        } else if (age < 45) {
+            start = 30;
+            end = 45;
+        } else {
+            return;
+        }
+        float fade = (end - age) / (float) Math.max(1, end - start);
+        int alpha = Math.max(0, Math.min(210, Math.round(210.0F * fade)));
+        graphics.fill(0, 0, this.width, this.height, alpha << 24 | 0x00FF0000);
+    }
+
+    private void drawCurtainTransition(GuiGraphics graphics) {
+        if (this.curtainTransitionTicks <= 0) {
+            return;
+        }
+        int elapsed = 54 - this.curtainTransitionTicks;
+        int frame = elapsed < 24 ? 1 + elapsed / 3
+                : elapsed < 30 ? 0
+                : Math.max(1, 8 - (elapsed - 30) / 3);
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        graphics.blit(CURTAIN_TEXTURES[frame], 0, 0, this.width, this.height,
+                0.0F, 0.0F, 640, 480, 640, 480);
         RenderSystem.disableBlend();
+    }
+
+    private static boolean isGranCurtainTransition(int fromProfileId, int toProfileId) {
+        return fromProfileId != toProfileId
+                && isGranCurtainProfile(fromProfileId) && isGranCurtainProfile(toProfileId);
+    }
+
+    private static boolean isGranCurtainProfile(int profileId) {
+        return switch (profileId) {
+            case 560, 561, 564, 566, 567, 568, 579, 570 -> true;
+            default -> false;
+        };
+    }
+
+    private void applyPendingCurtainPhase() {
+        PendingCurtainPhase pending = this.pendingCurtainPhase;
+        if (pending == null) {
+            return;
+        }
+        boolean environmentChanged = this.battleProfileId != pending.battleProfileId();
+        this.battleProfileId = pending.battleProfileId();
+        this.actingEnemyIndex = Math.max(0, Math.min(
+                Math.max(0, pending.enemies().size() - 1), pending.actingEnemyIndex()));
+        replaceEnemies(pending.enemies(), true);
+        updateBattleEnvironment(environmentChanged);
+        this.enemyAnimationId = pending.enemyAnimationId();
+        captureEnemyVisual();
+        this.enemyAlpha = 1.0F;
+        this.phaseTransitionTicks = 0;
+        this.pendingCurtainPhase = null;
+    }
+
+    private void drawDomainBanner(GuiGraphics graphics) {
+        TurnBattleDomainData.Domain domain = TurnBattleDomainData.get(this.battleProfileId);
+        if (domain == null || this.domainBannerStartedAt < 0L) {
+            return;
+        }
+        long elapsed = System.currentTimeMillis() - this.domainBannerStartedAt;
+        if (elapsed < 0L || elapsed >= 5200L) {
+            return;
+        }
+        float alpha = elapsed < 500L ? elapsed / 500.0F
+                : elapsed > 4500L ? (5200L - elapsed) / 700.0F : 1.0F;
+        int lineCount = 1 + domain.lines().size();
+        int contentHeight = 24 + lineCount * (this.font.lineHeight + 4);
+        int bannerHeight = Math.max(116, contentHeight * 2);
+        int top = Math.max(18, (this.height - statusHeight() - bannerHeight) / 2);
+        FadedBannerRenderer.draw(graphics, 0, top, this.width,
+                top + bannerHeight, alpha);
+        int alphaByte = Math.max(0, Math.min(255, Math.round(255.0F * alpha)));
+        int titleColor = alphaByte << 24 | 0x00FF7D3F;
+        int descriptionColor = alphaByte << 24 | 0x00E86E55;
+        int textHeight = this.font.lineHeight + 6
+                + domain.lines().size() * (this.font.lineHeight + 4);
+        int textX = 16;
+        int y = top + (bannerHeight - textHeight) / 2;
+        graphics.drawString(this.font, domain.title(), textX, y, titleColor, false);
+        y += this.font.lineHeight + 6;
+        for (String line : domain.lines()) {
+            graphics.drawString(this.font, line, textX, y, descriptionColor, false);
+            y += this.font.lineHeight + 4;
+        }
+    }
+
+    private void scheduleDomainBanner(int profileId, long delayMillis) {
+        TurnBattleDomainData.Domain domain = TurnBattleDomainData.get(profileId);
+        if (domain == null || !this.shownDomainTitles.add(domain.title())) {
+            return;
+        }
+        this.domainBannerStartedAt = System.currentTimeMillis() + delayMillis;
+        this.domainBannerSoundPlayed = false;
     }
 
     private void drawEnemy(GuiGraphics graphics) {
@@ -551,16 +914,27 @@ public class GuiTurnBattle extends Screen {
             if (alpha <= 0.01F) {
                 continue;
             }
+            boolean bossCollapse = isBossCollapse(enemy) && enemy.health <= 0.0F;
+            int collapseOffsetY = bossCollapse
+                    ? Math.round(geometry.height * 0.48F * bossCollapseProgress(enemy)) : 0;
             int shake = i == this.lastTargetIndex && this.enemyHitTicks > 0
-                    ? ((this.enemyHitTicks & 1) == 0 ? 3 : -3) : 0;
+                    ? ((this.enemyHitTicks & 1) == 0 ? 3 : -3)
+                    : bossCollapse ? ((enemy.collapseTicks & 1) == 0 ? 2 : -2) : 0;
             RenderSystem.enableBlend();
+            if (bossCollapse) {
+                RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA,
+                        GlStateManager.DestFactor.ONE);
+            }
             float greenBlue = i == this.lastTargetIndex && this.enemyHitTicks > 0
-                    || alpha < 1.0F ? 0.28F : 1.0F;
+                    ? 0.28F : bossCollapse ? 1.0F : alpha < 1.0F ? 0.28F : 1.0F;
             RenderSystem.setShaderColor(1.0F, greenBlue, greenBlue, alpha);
-            graphics.blit(geometry.texture, geometry.x + shake, geometry.y,
+            graphics.blit(geometry.texture, geometry.x + shake, geometry.y + collapseOffsetY,
                     geometry.width, geometry.height, 0.0F, 0.0F,
                     geometry.textureWidth, geometry.textureHeight,
                     geometry.textureWidth, geometry.textureHeight);
+            if (bossCollapse) {
+                RenderSystem.defaultBlendFunc();
+            }
             if (this.view == View.TARGETS && i == this.targetSelection
                     && enemy.health > 0.0F) {
                 float pulse = 0.20F + 0.18F * (0.5F + 0.5F
@@ -614,8 +988,51 @@ public class GuiTurnBattle extends Screen {
         int h = Math.min(120, Math.max(84, this.height / 4));
         int y = this.height - h;
         BSGuiUtils.drawRMWindow(graphics, 0, y, this.width, h);
-        graphics.drawString(this.font, this.enemyName.copy().append("出现了！"), 14, y + 15, 0xFFFFFFFF, false);
+        int lineY = y + 15;
+        String page = this.introPages.isEmpty()
+                ? this.enemyName.getString() + "出现了！"
+                : this.introPages.get(Math.min(this.introPageIndex, this.introPages.size() - 1));
+        for (String rawLine : page.split("\n", -1)) {
+            List<FormattedCharSequence> wrapped = this.font.split(
+                    Component.literal(rawLine), Math.max(1, this.width - 28));
+            if (wrapped.isEmpty()) {
+                lineY += this.font.lineHeight + 3;
+                continue;
+            }
+            for (FormattedCharSequence line : wrapped) {
+                graphics.drawString(this.font, line, 14, lineY, 0xFFFFFFFF, false);
+                lineY += this.font.lineHeight + 3;
+            }
+        }
         drawContinueArrow(graphics, this.width / 2, this.height - 13);
+    }
+
+    private void setIntroPages(Component intro) {
+        this.introPages.clear();
+        for (String page : intro.getString().split("\f", -1)) {
+            if (!page.isBlank()) {
+                this.introPages.add(page);
+            }
+        }
+        this.introPageIndex = 0;
+    }
+
+    private void advanceIntro() {
+        if (this.introPageIndex + 1 < this.introPages.size()) {
+            this.introPageIndex++;
+            return;
+        }
+        if (BSOriginalBattleProfileData.get(this.battleProfileId).preemptiveSkillId() > 0) {
+            this.view = View.MESSAGE;
+            this.canAct = false;
+            this.pendingCanAct = false;
+            this.message = Component.empty();
+            NetworkHandler.sendToServer(new ServerboundTurnBattlePresentationPacket());
+            return;
+        }
+        scheduleDomainBanner(this.battleProfileId, 0L);
+        this.view = View.COMMAND;
+        this.selection = 0;
     }
 
     private void drawBattleMessage(GuiGraphics graphics) {
@@ -627,7 +1044,9 @@ public class GuiTurnBattle extends Screen {
     }
 
     private void drawResult(GuiGraphics graphics) {
-        int h = Math.min(120, Math.max(84, this.height / 4));
+        int itemLineHeight = this.font.lineHeight + 4;
+        int desiredHeight = 58 + Math.max(1, this.rewardItems.size()) * itemLineHeight;
+        int h = Math.min(this.height - 20, Math.max(84, desiredHeight));
         int y = this.height - h;
         BSGuiUtils.drawRMWindow(graphics, 0, y, this.width, h);
         String playerName = this.minecraft != null && this.minecraft.player != null
@@ -636,6 +1055,17 @@ public class GuiTurnBattle extends Screen {
             graphics.drawString(this.font, playerName + "胜利！", 14, y + 14, 0xFFFFFFFF, false);
             graphics.drawString(this.font, "获得了 " + this.soulReward + "S 魂！", 14,
                     y + 14 + this.font.lineHeight + 4, 0xFFFFFFFF, false);
+            int itemY = y + 14 + (this.font.lineHeight + 4) * 2 + 3;
+            for (ItemStack stack : this.rewardItems) {
+                if (itemY + this.font.lineHeight > this.height - 14) {
+                    break;
+                }
+                String line = "获得了" + stack.getHoverName().getString() + "。";
+                graphics.drawString(this.font,
+                        this.font.plainSubstrByWidth(line, Math.max(20, this.width - 28)),
+                        14, itemY, 0xFFFFFFFF, false);
+                itemY += itemLineHeight;
+            }
         } else {
             int lineY = y + 14;
             for (String line : this.message.getString().split("\\n", -1)) {
@@ -670,13 +1100,23 @@ public class GuiTurnBattle extends Screen {
         int mpEnd = mpX + mpWidth;
         int apX = mpEnd + 6;
         int apEnd = this.width - 10;
-        graphics.drawString(this.font, name, 10, rowY, 0xFFFFFFFF, false);
+        int nameColor = this.playerDown ? 0xFFFF4444
+                : this.displayPlayerHealth / Math.max(1.0F, this.displayPlayerMaxHealth) <= 0.25F
+                ? 0xFFFFFF55 : 0xFFFFFFFF;
+        drawBattlePortrait(graphics, 10, rowY,
+                nameEnd - 16, rowY + this.font.lineHeight);
+        graphics.drawString(this.font, name, 10, rowY, nameColor, false);
         if (this.view == View.TARGETS) {
             drawTargetStatusWindow(graphics, y, nameEnd);
             return;
         }
         int effectX = 10 + this.font.width(name) + 6;
         if (effectX < hpX - 6) {
+            if (this.playerDown) {
+                drawOriginalStateIcons(graphics, List.of(1), effectX, rowY - 3,
+                        Math.min(16, hpX - effectX - 6), false);
+                effectX += 17;
+            }
             drawEffectIcons(graphics, this.minecraft.player, effectX, rowY - 3,
                     hpX - effectX - 6, false);
         }
@@ -686,6 +1126,27 @@ public class GuiTurnBattle extends Screen {
                 this.displayMp / Math.max(1.0D, this.displayMaxMp), 0xFF287FD8);
         drawThinGauge(graphics, apX, apEnd, rowY, "AP", apPercent + "%",
                 this.displayAp / Math.max(0.0001D, this.displayMaxAp), 0xFF36C84A);
+    }
+
+    private void drawBattlePortrait(GuiGraphics graphics, int x, int top,
+                                    int width, int bottom) {
+        if (width <= 4 || bottom <= top) {
+            return;
+        }
+        String avatar = ClientSkillInfo.getAvatar();
+        if (avatar == null || avatar.isBlank()) {
+            avatar = "knight_face";
+        }
+        int size = Math.max(width, bottom - top + 34);
+        int drawY = top - Math.max(8, (size - (bottom - top)) / 2);
+        graphics.enableScissor(x, top, x + width, bottom);
+        RenderSystem.enableBlend();
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, this.playerDown ? 0.55F : 1.0F);
+        BSAvatarRenderer.draw(graphics, BSAvatarRenderer.getTexture(avatar), avatar,
+                x, drawY, size);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.disableBlend();
+        graphics.disableScissor();
     }
 
     private void drawTargetStatusWindow(GuiGraphics graphics, int statusY, int nameEnd) {
@@ -881,7 +1342,9 @@ public class GuiTurnBattle extends Screen {
                 textureWidth = Math.max(1, profile.textureWidth());
                 textureHeight = Math.max(1, profile.textureHeight());
             }
-            int spriteHeight = maxHeight;
+            int spriteHeight = enemy.profileId == 579
+                    ? Math.min(Math.max(maxHeight, 220), Math.max(52, statusTop - 70))
+                    : maxHeight;
             int spriteWidth = Math.max(1, Math.round(spriteHeight
                     * (float) textureWidth / textureHeight));
             int maxWidth = Math.max(34, cellWidth - 20);
@@ -1009,8 +1472,22 @@ public class GuiTurnBattle extends Screen {
             drawDamagePopup(graphics, popup.damage, popup.startedAt,
                     enemyCenterX + laneOffset, enemyCenterY, popup.critical);
         }
-        drawDamagePopup(graphics, this.playerDamageNumber, this.playerDamagePopupStartedAt,
-                playerCenterX, playerCenterY - 16, false);
+        Iterator<PlayerDamagePopup> playerPopupIterator = this.playerDamagePopups.iterator();
+        while (playerPopupIterator.hasNext()) {
+            PlayerDamagePopup popup = playerPopupIterator.next();
+            float frame = (System.currentTimeMillis() - popup.startedAt()) * 60.0F / 1000.0F;
+            if (frame >= 30.0F) {
+                playerPopupIterator.remove();
+                continue;
+            }
+            int laneOffset = (popup.wave() % 3 - 1) * 9;
+            drawDamagePopup(graphics, popup.damage(), popup.startedAt(),
+                    playerCenterX + laneOffset, playerCenterY - 16, popup.critical());
+        }
+        if (!this.incomingSequenceActive) {
+            drawDamagePopup(graphics, this.playerDamageNumber, this.playerDamagePopupStartedAt,
+                    playerCenterX, playerCenterY - 16, false);
+        }
     }
 
     private void drawDamagePopup(GuiGraphics graphics, int damage, long startedAt,
@@ -1127,6 +1604,104 @@ public class GuiTurnBattle extends Screen {
             lastAge = Math.max(lastAge, triggerAge);
         }
         return Math.max(animationImpactAge, lastAge);
+    }
+
+    private int scheduleDamageHitsFrom(List<ClientboundTurnBattlePacket.DamageHit> hits,
+                                       int firstAge) {
+        this.scheduledEnemyHits.clear();
+        if (hits.isEmpty()) {
+            return firstAge;
+        }
+        Map<Integer, Integer> lastWaveByTarget = new HashMap<>();
+        for (ClientboundTurnBattlePacket.DamageHit hit : hits) {
+            lastWaveByTarget.merge(hit.targetEntityId(), hit.wave(), Math::max);
+        }
+        int lastAge = firstAge;
+        for (ClientboundTurnBattlePacket.DamageHit hit : hits) {
+            int targetIndex = enemyIndexByEntityId(hit.targetEntityId());
+            if (targetIndex < 0) {
+                continue;
+            }
+            int triggerAge = firstAge + Math.max(0, hit.wave()) * 5;
+            boolean finalHit = hit.wave() >= lastWaveByTarget.getOrDefault(
+                    hit.targetEntityId(), hit.wave());
+            this.scheduledEnemyHits.add(new ScheduledDamageHit(targetIndex,
+                    hit.damage(), hit.critical(), triggerAge, finalHit, hit.wave()));
+            lastAge = Math.max(lastAge, triggerAge);
+        }
+        return lastAge;
+    }
+
+    private int scheduleIncomingHits(List<ClientboundTurnBattlePacket.IncomingHit> hits,
+                                     int firstAge) {
+        this.scheduledIncomingHits.clear();
+        this.scheduledRevivals.clear();
+        this.incomingSequenceActive = !hits.isEmpty();
+        int age = firstAge;
+        int wave = 0;
+        for (ClientboundTurnBattlePacket.IncomingHit hit : hits) {
+            this.scheduledIncomingHits.add(new ScheduledIncomingHit(hit, age, wave++));
+            if (hit.knockedDown() && hit.revived()) {
+                int reviveAge = age + 10;
+                this.scheduledRevivals.add(new ScheduledRevival(
+                        reviveAge, Math.max(1, hit.reviveHealth())));
+                age = reviveAge + 6;
+            } else {
+                age += 7;
+            }
+        }
+        return hits.isEmpty() ? 0 : age;
+    }
+
+    private void triggerIncomingHits() {
+        Iterator<ScheduledIncomingHit> iterator = this.scheduledIncomingHits.iterator();
+        while (iterator.hasNext()) {
+            ScheduledIncomingHit scheduled = iterator.next();
+            if (scheduled.triggerAge() > this.effectAge) {
+                break;
+            }
+            iterator.remove();
+            ClientboundTurnBattlePacket.IncomingHit hit = scheduled.hit();
+            this.enemyActionPoints = 0.0F;
+            this.enemyActionWaitTicks = 0;
+            this.displayPlayerHealth = hit.knockedDown()
+                    ? 0.0F : Math.max(0.0F, this.displayPlayerHealth - hit.damage());
+            this.playerHitTicks = 10;
+            this.playerDamagePopups.add(new PlayerDamagePopup(
+                    hit.damage(), hit.critical(), System.currentTimeMillis(), scheduled.wave()));
+            playUiSound(BlackSouls.TURN_PLAYER_DAMAGE_EVENT.get(), 1.0F);
+            String playerName = this.minecraft != null && this.minecraft.player != null
+                    ? this.minecraft.player.getDisplayName().getString() : "玩家";
+            StringBuilder text = new StringBuilder(this.activeEnemyActionHeader);
+            if (hit.critical()) {
+                text.append("\n会心一击！");
+            }
+            text.append("\n").append(playerName).append("受到了 ")
+                    .append(hit.damage()).append(" 点伤害！");
+            if (hit.knockedDown()) {
+                this.playerDown = true;
+                text.append("\n").append(playerName).append("倒下了！");
+                playUiSound(BlackSouls.PLAYER_DEATH_EVENT.get(), 1.0F);
+            }
+            this.message = Component.literal(text.toString());
+        }
+    }
+
+    private void triggerScheduledRevivals() {
+        Iterator<ScheduledRevival> iterator = this.scheduledRevivals.iterator();
+        while (iterator.hasNext()) {
+            ScheduledRevival revival = iterator.next();
+            if (revival.triggerAge() > this.effectAge) {
+                break;
+            }
+            iterator.remove();
+            this.playerDown = false;
+            this.displayPlayerHealth = revival.health();
+            String playerName = this.minecraft != null && this.minecraft.player != null
+                    ? this.minecraft.player.getDisplayName().getString() : "玩家";
+            this.message = Component.literal(this.activeEnemyActionHeader
+                    + "\n" + playerName + "复活了！");
+        }
     }
 
     private int enemyIndexByEntityId(int entityId) {
@@ -1697,8 +2272,7 @@ public class GuiTurnBattle extends Screen {
         }
         if (this.view == View.INTRO) {
             playUiSound(BlackSouls.SWORD1_EVENT.get(), 1.0F);
-            this.view = View.COMMAND;
-            this.selection = 0;
+            advanceIntro();
             return true;
         }
         if (this.view == View.RESULT) {
@@ -1874,8 +2448,7 @@ public class GuiTurnBattle extends Screen {
         if (this.view == View.INTRO) {
             if (isConfirm(keyCode)) {
                 playUiSound(BlackSouls.SWORD1_EVENT.get(), 1.0F);
-                this.view = View.COMMAND;
-                this.selection = 0;
+                advanceIntro();
             }
             return true;
         }
@@ -2097,6 +2670,8 @@ public class GuiTurnBattle extends Screen {
     private void send(ServerboundTurnBattleActionPacket.Action action, int value, int target) {
         this.pendingPlayerVfx = TurnBattleVfxResolver.Cue.NONE;
         this.pendingPlayerTargetsAll = false;
+        this.pendingPlayerVfxStartAge = 2;
+        this.pendingCounterSound = false;
         if (this.minecraft != null && this.minecraft.player != null) {
             if (action == ServerboundTurnBattleActionPacket.Action.ATTACK) {
                 this.pendingPlayerVfx = TurnBattleVfxResolver.resolveWeapon(
@@ -2124,10 +2699,6 @@ public class GuiTurnBattle extends Screen {
             return;
         }
         BSPlayerStats stats = this.minecraft.player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
-        for (EnemyVisual enemy : this.enemies) {
-            enemy.displayAlpha = approach(enemy.displayAlpha,
-                    enemy.health > 0.0F ? 1.0F : 0.0F, 0.35F);
-        }
         this.displayPlayerHealth = this.minecraft.player.getHealth();
         this.displayPlayerMaxHealth = this.minecraft.player.getMaxHealth();
         this.displayMp = stats == null ? 0.0D : stats.mp;
@@ -2199,6 +2770,36 @@ public class GuiTurnBattle extends Screen {
         }
         initializeDisplayedStats();
         BSPlayerStats stats = this.minecraft.player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+        for (EnemyVisual enemy : this.enemies) {
+            if (enemy.health > 0.0F) {
+                enemy.collapseTicks = 0;
+                enemy.collapseSoundStep = -1;
+                enemy.displayAlpha = approach(enemy.displayAlpha, 1.0F, 0.22F);
+            } else if (isBossCollapse(enemy)) {
+                if (enemy.collapseTicks == 0) {
+                    playUiSound(BlackSouls.TURN_BOSS_COLLAPSE_START_EVENT.get(), 0.5F, 0.8F);
+                    enemy.collapseSoundStep = 0;
+                }
+                enemy.collapseTicks++;
+                int soundStep = enemy.collapseTicks / 7;
+                if (soundStep > enemy.collapseSoundStep && enemy.collapseTicks > 1
+                        && enemy.collapseTicks < bossCollapseDuration(enemy)) {
+                    enemy.collapseSoundStep = soundStep;
+                    playUiSound(BlackSouls.TURN_BOSS_COLLAPSE_LOOP_EVENT.get(), 1.0F, 0.8F);
+                }
+                enemy.displayAlpha = Math.max(0.0F, 1.0F - bossCollapseProgress(enemy));
+            } else {
+                enemy.displayAlpha = approach(enemy.displayAlpha, 0.0F, 0.22F);
+            }
+            if (enemy.profileId < enemy.targetProfileId) {
+                if (enemy.profileMorphTicks > 0) {
+                    enemy.profileMorphTicks--;
+                } else {
+                    enemy.profileId++;
+                    enemy.profileMorphTicks = enemy.profileId < enemy.targetProfileId ? 6 : 0;
+                }
+            }
+        }
         if (this.holdEnemyGaugeTicks > 0) {
             this.holdEnemyGaugeTicks--;
         } else {
@@ -2234,6 +2835,52 @@ public class GuiTurnBattle extends Screen {
     private static int extractDamage(String text, String expression) {
         Matcher matcher = Pattern.compile(expression).matcher(text);
         return matcher.find() ? Integer.parseInt(matcher.group(1)) : 0;
+    }
+
+    private int resolveEnemyEvasionSound(String report) {
+        if (this.enemies.isEmpty()) {
+            return 1;
+        }
+        int index = Math.max(0, Math.min(this.enemies.size() - 1, this.actingEnemyIndex));
+        BSOriginalEnemyData.Entry profile = BSOriginalEnemyData.get(this.enemies.get(index).profileId);
+        BSOriginalEnemyData.Action fallback = null;
+        for (BSOriginalEnemyData.Action action : profile.actions()) {
+            if (action.animationId() != this.enemyAnimationId) {
+                continue;
+            }
+            if (fallback == null) {
+                fallback = action;
+            }
+            if ((!action.name().isBlank() && report.contains(action.name()))
+                    || (!action.text().isBlank() && report.contains(action.text()))) {
+                return action.hitType() == 2 ? 2 : 1;
+            }
+        }
+        return fallback != null && fallback.hitType() == 2 ? 2 : 1;
+    }
+
+    private boolean isBossCollapse(EnemyVisual enemy) {
+        return enemy.profileId > 0
+                && BSOriginalEnemyData.get(enemy.profileId).collapseType() == 1
+                && !BSOriginalEnemyPhaseData.hasNext(enemy.profileId);
+    }
+
+    private boolean hasActiveBossCollapse() {
+        return this.enemies.stream().anyMatch(enemy -> enemy.health <= 0.0F
+                && enemy.displayAlpha > 0.01F && isBossCollapse(enemy));
+    }
+
+    private int bossCollapseDuration(EnemyVisual enemy) {
+        if (enemy.profileId <= 0) {
+            return 80;
+        }
+        return Math.max(80, Math.min(220,
+                BSOriginalEnemyData.get(enemy.profileId).textureHeight() / 3));
+    }
+
+    private float bossCollapseProgress(EnemyVisual enemy) {
+        return Math.min(1.0F, enemy.collapseTicks
+                / (float) Math.max(1, bossCollapseDuration(enemy)));
     }
 
     private void startBattleMusic() {
@@ -2328,7 +2975,12 @@ public class GuiTurnBattle extends Screen {
     }
 
     private record TargetListGeometry(int x, int y, int width, int height,
-                                      int rowHeight, int visibleRows) {
+                                       int rowHeight, int visibleRows) {
+    }
+
+    private record PendingCurtainPhase(int battleProfileId,
+                                       List<ClientboundTurnBattlePacket.EnemySnapshot> enemies,
+                                       int actingEnemyIndex, int enemyAnimationId) {
     }
 
     private record EnemyGeometry(int cellX, int cellWidth, int x, int y,
@@ -2342,10 +2994,14 @@ public class GuiTurnBattle extends Screen {
         private float health;
         private float finalHealth;
         private final float maxHealth;
-        private final int profileId;
+        private int profileId;
+        private int targetProfileId;
+        private int profileMorphTicks;
         private final List<Integer> states;
         private float displayHealth;
         private float displayAlpha;
+        private int collapseTicks;
+        private int collapseSoundStep = -1;
 
         private EnemyVisual(int entityId, Component name, float health,
                             float maxHealth, int profileId, List<Integer> states,
@@ -2356,6 +3012,7 @@ public class GuiTurnBattle extends Screen {
             this.finalHealth = health;
             this.maxHealth = maxHealth;
             this.profileId = profileId;
+            this.targetProfileId = profileId;
             this.states = List.copyOf(states);
             this.displayHealth = displayHealth;
             this.displayAlpha = displayAlpha;
@@ -2364,6 +3021,16 @@ public class GuiTurnBattle extends Screen {
 
     private record ScheduledDamageHit(int targetIndex, int damage, boolean critical,
                                       int triggerAge, boolean finalHit, int wave) {
+    }
+
+    private record ScheduledIncomingHit(ClientboundTurnBattlePacket.IncomingHit hit,
+                                        int triggerAge, int wave) {
+    }
+
+    private record ScheduledRevival(int triggerAge, int health) {
+    }
+
+    private record PlayerDamagePopup(int damage, boolean critical, long startedAt, int wave) {
     }
 
     private record DamagePopup(int targetIndex, int damage, boolean critical,

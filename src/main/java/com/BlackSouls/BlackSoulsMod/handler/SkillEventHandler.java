@@ -119,6 +119,10 @@ public class SkillEventHandler {
             return;
         }
 
+        if (TurnBattleManager.isInBattle(event.player)) {
+            return;
+        }
+
         if (stats.unlockedSkills.contains(INVISIBLE_BODY_SKILL)) {
             float current = (float) stats.mp;
             float max = (float) stats.maxMp;
@@ -250,6 +254,54 @@ public class SkillEventHandler {
                 }
             }
         }
+    }
+
+    public static void applyTurnBattleDamage(ServerPlayer player, int damage) {
+        applyTurnBattleDamageDetailed(player, damage);
+    }
+
+    public static TurnBattleDamageResult applyTurnBattleDamageDetailed(ServerPlayer player, int damage) {
+        if (player == null || damage <= 0 || !player.isAlive()) {
+            return new TurnBattleDamageResult(0, false, false, 0);
+        }
+        if (damage >= player.getHealth()) {
+            boolean requiem = BlackSouls.BUFF_REQUIEM.isPresent()
+                    && player.hasEffect(BlackSouls.BUFF_REQUIEM.get());
+            if (requiem) {
+                int revivedHealth = reviveTurnBattlePlayer(player);
+                return new TurnBattleDamageResult(damage, true, true, revivedHealth);
+            }
+            if (getBaubleCount(player, BlackSouls.GUARDIAN_ANGEL.get()) > 0
+                    && player.getRandom().nextDouble() < 0.80D) {
+                int revivedHealth = reviveTurnBattlePlayer(player);
+                return new TurnBattleDamageResult(damage, true, true, revivedHealth);
+            }
+            if (getBaubleCount(player, BlackSouls.RING_DRAGON_GUARD.get()) > 0) {
+                if (player.getRandom().nextDouble() < 0.75D) {
+                    breakEquippedRing(player, BlackSouls.RING_DRAGON_GUARD.get());
+                }
+                int revivedHealth = reviveTurnBattlePlayer(player);
+                return new TurnBattleDamageResult(damage, true, true, revivedHealth);
+            }
+            player.setHealth(0.0F);
+            player.hurtMarked = true;
+            return new TurnBattleDamageResult(damage, true, false, 0);
+        }
+        player.setHealth(Math.max(0.0F, player.getHealth() - damage));
+        player.hurtMarked = true;
+        return new TurnBattleDamageResult(damage, false, false, 0);
+    }
+
+    private static int reviveTurnBattlePlayer(ServerPlayer player) {
+        int revivedHealth = Math.max(1, Math.min(500, (int) Math.floor(player.getMaxHealth())));
+        player.setHealth(revivedHealth);
+        player.invulnerableTime = 0;
+        player.hurtMarked = true;
+        return revivedHealth;
+    }
+
+    public record TurnBattleDamageResult(int damage, boolean knockedDown,
+                                         boolean revived, int reviveHealth) {
     }
 
     private static int getBaubleCount(LivingEntity entity, Item item) {

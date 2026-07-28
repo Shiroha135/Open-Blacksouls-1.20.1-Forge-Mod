@@ -39,6 +39,7 @@ public class GuiPlayerAttributes extends Screen {
     private final String[] leftValues = new String[LEFT_LABELS.length];
     private final String[] rightValues = {"100%", null, null, "0%", "0%", "0%", null, "250%", "100%"};
     private int cachedEvasion = Integer.MIN_VALUE;
+    private int cachedMagicEvasion = Integer.MIN_VALUE;
     private int cachedCritRate = Integer.MIN_VALUE;
     private int cachedCounterRate = Integer.MIN_VALUE;
     private double cachedMpRegenRate = Double.NaN;
@@ -127,6 +128,11 @@ public class GuiPlayerAttributes extends Screen {
         if (this.rightValues[2] == null || critRate != this.cachedCritRate) {
             this.cachedCritRate = critRate;
             this.rightValues[2] = critRate + "%";
+        }
+        int magicEvasion = (int) stats.magicEvasion;
+        if (magicEvasion != this.cachedMagicEvasion) {
+            this.cachedMagicEvasion = magicEvasion;
+            this.rightValues[3] = magicEvasion + "%";
         }
         int counterRate = (int) StatEventHandler.getWeaponCounterRate(player);
         if (counterRate != this.cachedCounterRate) {

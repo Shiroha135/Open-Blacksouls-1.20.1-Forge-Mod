@@ -6,6 +6,7 @@ import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalDatabaseEnemy;
 import com.BlackSouls.BlackSoulsMod.entity.EntityTurnBattleMonster;
 import com.BlackSouls.BlackSoulsMod.handler.BSEntityRegistry;
+import com.BlackSouls.BlackSoulsMod.handler.SkillEventHandler;
 import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
 import com.BlackSouls.BlackSoulsMod.item.consumables.ItemThrownBladeBase;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
@@ -22,19 +23,25 @@ import com.BlackSouls.BlackSoulsMod.util.skill.AbstractSkill;
 import com.BlackSouls.BlackSoulsMod.util.skill.SkillRegistry;
 import com.BlackSouls.BlackSoulsMod.util.skill.WeaponSkill;
 import java.util.ArrayList;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import net.minecraft.network.protocol.game.ClientboundUpdateMobEffectPacket;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -49,6 +56,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID)
 public final class TurnBattleManager {
     private static final int ESCAPE_GRACE_TICKS = 160;
+    private static final int EFFECT_TICKS_PER_ACTION = 200;
     private static final int GRAN_STAGE_PROFILE = 570;
     private static final int GRAN_FINAL_STAGE_PROFILE = 577;
     private static final int GRAN_FRAGMENT_FIRST_PROFILE = 580;
@@ -94,6 +102,8 @@ public final class TurnBattleManager {
     private static final Map<UUID, UUID> ENEMY_SESSIONS = new HashMap<>();
     private static final ThreadLocal<Boolean> INTERNAL_BATTLE_ITEM_DAMAGE =
             ThreadLocal.withInitial(() -> false);
+    private static final ThreadLocal<Boolean> ADVANCING_BATTLE_EFFECTS =
+            ThreadLocal.withInitial(() -> false);
 
     private TurnBattleManager() {
     }
@@ -110,13 +120,26 @@ public final class TurnBattleManager {
         Session session = new Session(enemy.getUUID(), player.position(), enemy.position(), profileId);
         PLAYER_SESSIONS.put(player.getUUID(), session);
         configureInitialEnemies(player, enemy, session);
-        sendState(player, true,
-                Component.literal(enemy.getDisplayName().getString() + "出现了！"),
-                true, ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+        session.openingPending = BSOriginalBattleProfileData.get(profileId).preemptiveSkillId() > 0;
+        session.resolving = session.openingPending;
+        sendState(player, true, battleIntro(session.battleProfileId, enemy),
+                !session.openingPending, ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+    }
+
+    private static Component battleIntro(int profileId, EntityTurnBattleMonster enemy) {
+        List<String> pages = BSOriginalBattleProfileData.get(profileId).introPages();
+        return pages.isEmpty()
+                ? Component.literal(enemy.getDisplayName().getString() + "出现了！")
+                : Component.literal(String.join("\f", pages));
     }
 
     public static boolean isInBattle(Entity entity) {
         return PLAYER_SESSIONS.containsKey(entity.getUUID()) || ENEMY_SESSIONS.containsKey(entity.getUUID());
+    }
+
+    public static boolean shouldFreezeEffectTick(LivingEntity entity) {
+        return !entity.level().isClientSide()
+                && !ADVANCING_BATTLE_EFFECTS.get() && isInBattle(entity);
     }
 
     public static void handleAction(ServerPlayer player, ServerboundTurnBattleActionPacket.Action action,
@@ -136,6 +159,14 @@ public final class TurnBattleManager {
         if (session.remainingPlayerActions <= 0) {
             session.remainingPlayerActions = rollPlayerActionCount(player, stats);
         }
+        if (player.hasEffect(BlackSouls.BUFF_STUN.get())) {
+            session.remainingPlayerActions = 0;
+            advanceSkillCooldowns(session);
+            StatEventHandler.syncToClient(player);
+            beginEnemySequence(player, stats, session,
+                    Component.literal(player.getDisplayName().getString() + "因眩晕无法行动！"));
+            return;
+        }
 
         Component playerMessage;
         boolean consumeTurn = true;
@@ -150,7 +181,7 @@ public final class TurnBattleManager {
                             ClientboundTurnBattlePacket.Outcome.NONE, 0L);
                     return;
                 }
-                ActionResult result = performAttack(player, target, stats);
+                ActionResult result = performAttack(player, target, stats, session);
                 playerMessage = result.message;
                 playerHits = result.hits;
             }
@@ -164,11 +195,18 @@ public final class TurnBattleManager {
                 EntityTurnBattleMonster target = firstAliveEnemy(player, session);
                 ActionResult result = target == null
                         ? new ActionResult(Component.literal("没有可用的目标。"), false)
-                        : performItem(player, target, stats, selection);
+                        : performItem(player, target, stats, session, selection);
                 playerMessage = result.message;
                 consumeTurn = result.consumeTurn;
             }
             case GUARD -> {
+                TurnBattleDomainData.Domain domain = TurnBattleDomainData.get(session.battleProfileId);
+                if (domain != null && domain.guardDisabled()) {
+                    session.resolving = false;
+                    sendState(player, true, Component.literal("领域封锁了防御。"), true,
+                            ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+                    return;
+                }
                 guard = true;
                 playerMessage = Component.literal(player.getDisplayName().getString() + "采取了防御姿态！");
             }
@@ -230,46 +268,69 @@ public final class TurnBattleManager {
             return;
         }
 
-        Component enemyMessage = performEnemyGroupTurn(player, stats, session.guardQueued, session);
-        session.guardQueued = false;
         advanceSkillCooldowns(session);
         StatEventHandler.syncToClient(player);
-        Component turnMessage = Component.literal(playerMessage.getString() + "\n" + enemyMessage.getString());
-        if (player.getHealth() <= 0.0F || !player.isAlive()) {
-            finish(player, session, ClientboundTurnBattlePacket.Outcome.DEFEAT,
-                    turnMessage, false, 0L);
-            return;
-        }
-        session.remainingPlayerActions = rollPlayerActionCount(player, stats);
-        session.resolving = false;
-        sendState(player, true, turnMessage, true,
-                ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+        beginEnemySequence(player, stats, session, playerMessage);
     }
 
-    private static ActionResult performAttack(ServerPlayer player, EntityTurnBattleMonster enemy, BSPlayerStats stats) {
+    private static ActionResult performAttack(ServerPlayer player, EntityTurnBattleMonster enemy,
+                                              BSPlayerStats stats, Session session) {
         String actor = player.getDisplayName().getString();
         String target = enemy.getDisplayName().getString();
+        TurnBattleDomainData.Domain domain = TurnBattleDomainData.get(session.battleProfileId);
+        if (domain != null && domain.normalAttackDisabled()) {
+            return new ActionResult(Component.literal("领域封锁了通常攻击。"), false);
+        }
         if (player.getRandom().nextDouble() >= 0.90D) {
             return new ActionResult(Component.literal(actor + "的攻击！\n但是没有命中" + target + "！"), true);
         }
         double enemyDefense = DifficultyManager.scaleManagedStat(
                 enemy.level(), enemy.getTurnBattleDefense());
-        double damage = varied(player, Math.max(
-                1.0D, stats.attack * 4.0D - enemyDefense * 2.0D));
-        boolean critical = player.getRandom().nextDouble() < (stats.critRate + stats.bonusCritRate) / 100.0D;
-        if (critical) {
-            damage *= 3.0D;
+        int dualSwordAura = getDualSwordAura(player);
+        int hitCount = player.getMainHandItem().is(BlackSouls.DIVINE_ANGEL_DUAL_SWORDS.get())
+                ? dualSwordAura + 1 : 1;
+        List<ClientboundTurnBattlePacket.DamageHit> hits = new ArrayList<>();
+        int totalDamage = 0;
+        boolean critical = false;
+        for (int hit = 0; hit < hitCount; hit++) {
+            double multiplier = hit == 0 ? 4.0D : 3.0D;
+            double damage = varied(player, Math.max(
+                    1.0D, stats.attack * domainAttackRate(session)
+                            * multiplier - enemyDefense * 2.0D));
+            boolean hitCritical = player.getRandom().nextDouble()
+                    < (stats.critRate + stats.bonusCritRate) / 100.0D;
+            if (hitCritical) {
+                damage *= 3.0D;
+                critical = true;
+            }
+            int dealt = Math.max(1, (int) Math.round(damage));
+            enemy.setTurnBattleHealth(enemy.getTurnBattleHealth() - dealt);
+            totalDamage += dealt;
+            hits.add(new ClientboundTurnBattlePacket.DamageHit(
+                    enemy.getId(), dealt, hitCritical, hit));
         }
-        int dealt = Math.max(1, (int) Math.round(damage));
-        enemy.setTurnBattleHealth(enemy.getTurnBattleHealth() - dealt);
+        if (player.getMainHandItem().is(BlackSouls.DIVINE_ANGEL_DUAL_SWORDS.get())) {
+            int nextAura = Math.min(7, dualSwordAura + 1);
+            player.addEffect(new MobEffectInstance(
+                    BlackSouls.BUFF_DUAL_SWORD_AURA.get(), 400, nextAura - 1,
+                    false, false, true));
+            StatEventHandler.applyStats(player);
+            StatEventHandler.syncToClient(player);
+        }
         StringBuilder message = new StringBuilder(actor).append("的攻击！\n");
         if (critical) {
             message.append("会心一击！\n");
         }
-        message.append("对").append(target).append("造成了 ").append(dealt).append(" 点伤害！");
-        return new ActionResult(Component.literal(message.toString()), true,
-                List.of(new ClientboundTurnBattlePacket.DamageHit(
-                        enemy.getId(), dealt, critical, 0)));
+        message.append("对").append(target).append("造成了 ").append(totalDamage).append(" 点伤害！");
+        return new ActionResult(Component.literal(message.toString()), true, hits);
+    }
+
+    private static int getDualSwordAura(ServerPlayer player) {
+        if (!BlackSouls.BUFF_DUAL_SWORD_AURA.isPresent()) {
+            return 0;
+        }
+        MobEffectInstance effect = player.getEffect(BlackSouls.BUFF_DUAL_SWORD_AURA.get());
+        return effect == null ? 0 : Math.min(7, effect.getAmplifier() + 1);
     }
 
     public static boolean skillRequiresTarget(AbstractSkill skill) {
@@ -283,12 +344,23 @@ public final class TurnBattleManager {
 
     private static ActionResult performSkill(ServerPlayer player, BSPlayerStats stats,
                                              Session session, int selection, int targetIndex) {
+        if (player.hasEffect(BlackSouls.BUFF_SILENCE.get())) {
+            return new ActionResult(Component.literal("沉默状态下无法使用技·魔法。"), false);
+        }
         if (selection < 0) {
             return new ActionResult(Component.literal("这个技能当前不可用。"), false);
         }
         AbstractSkill skill = SkillRegistry.SKILLS.values().stream().skip(selection).findFirst().orElse(null);
         if (skill == null || !skill.isUnlockedForGUI(player)) {
             return new ActionResult(Component.literal("这个技能当前不可用。"), false);
+        }
+        TurnBattleDomainData.Domain domain = TurnBattleDomainData.get(session.battleProfileId);
+        if (domain != null && domain.skillDisabled()) {
+            return new ActionResult(Component.literal("领域封锁了技·魔法。"), false);
+        }
+        if (domain != null && domain.buffDisabled()
+                && NON_DAMAGE_SKILLS.contains(skill.getSkillId())) {
+            return new ActionResult(Component.literal("领域封锁了强化。"), false);
         }
         boolean infiniteCooldown = SkillUtils.hasInfiniteCooldownAccessory(player);
         int remainingCooldown = infiniteCooldown ? 0 : session.skillCooldowns.getOrDefault(skill.getSkillId(), 0);
@@ -348,8 +420,8 @@ public final class TurnBattleManager {
                                 ? enemy.getTurnBattleDefense()
                                 : enemy.getTurnBattleMagicDefense());
                 double baseDamage = skill instanceof WeaponSkill
-                        ? stats.attack * 4.0D - enemyDefense * 2.0D
-                        : stats.magicAttack * 5.0D - enemyDefense * 2.0D;
+                        ? stats.attack * domainAttackRate(session) * 4.0D - enemyDefense * 2.0D
+                        : stats.magicAttack * domainMagicRate(session) * 5.0D - enemyDefense * 2.0D;
                 double damage = varied(player, Math.max(1.0D, baseDamage));
                 int dealt = Math.max(1, (int) Math.round(damage));
                 enemy.setTurnBattleHealth(enemy.getTurnBattleHealth() - dealt);
@@ -428,8 +500,35 @@ public final class TurnBattleManager {
     public static void handlePresentationComplete(ServerPlayer player) {
         Session session = PLAYER_SESSIONS.get(player.getUUID());
         EntityTurnBattleMonster rootEnemy = getRootEnemy(player, session);
-        if (session == null || rootEnemy == null || !session.resolving
-                || !session.awaitingPhasePresentation) {
+        if (session == null || rootEnemy == null || !session.resolving) {
+            return;
+        }
+        BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+        if (stats == null) {
+            finish(player, session, ClientboundTurnBattlePacket.Outcome.ESCAPED,
+                    Component.literal("战斗中断。"), false, 0L);
+            return;
+        }
+        if (session.openingPending) {
+            beginOpeningSequence(player, stats, session);
+            return;
+        }
+        if (session.counterVictoryPending && session.awaitingPhasePresentation) {
+            session.counterVictoryPending = false;
+            session.awaitingPhasePresentation = false;
+            session.presentationDeadline = 0L;
+            long reward = rewardVictory(player, stats, session);
+            finish(player, session, ClientboundTurnBattlePacket.Outcome.VICTORY,
+                    Component.literal("敌群被打倒了！"), true, reward);
+            return;
+        }
+        if (session.enemySequenceActive && session.awaitingPhasePresentation) {
+            session.awaitingPhasePresentation = false;
+            session.presentationDeadline = 0L;
+            presentNextEnemyAction(player, stats, session);
+            return;
+        }
+        if (!session.awaitingPhasePresentation) {
             return;
         }
         session.awaitingPhasePresentation = false;
@@ -442,8 +541,7 @@ public final class TurnBattleManager {
             return;
         }
         session.phaseChanged = true;
-        session.remainingPlayerActions = rollPlayerActionCount(player,
-                player.getCapability(BSPlayerStats.CAPABILITY).orElse(null));
+        session.remainingPlayerActions = rollPlayerActionCount(player, stats);
         session.guardQueued = false;
         StatEventHandler.syncToClient(player);
         sendState(player, true, Component.empty(), true,
@@ -593,7 +691,11 @@ public final class TurnBattleManager {
     }
 
     private static ActionResult performItem(ServerPlayer player, EntityTurnBattleMonster enemy,
-                                            BSPlayerStats stats, int slot) {
+                                            BSPlayerStats stats, Session session, int slot) {
+        TurnBattleDomainData.Domain domain = TurnBattleDomainData.get(session.battleProfileId);
+        if (domain != null && domain.itemDisabled()) {
+            return new ActionResult(Component.literal("领域封锁了道具使用。"), false);
+        }
         if (slot < 0 || slot >= player.getInventory().getContainerSize()) {
             return new ActionResult(Component.literal("请选择要使用的道具。"), false);
         }
@@ -691,78 +793,207 @@ public final class TurnBattleManager {
         return entry != null && entry.canUseInBattle();
     }
 
-    private static Component performEnemyGroupTurn(ServerPlayer player, BSPlayerStats stats,
-                                                   boolean guard, Session session) {
-        StringBuilder message = new StringBuilder();
+    private static void beginEnemySequence(ServerPlayer player, BSPlayerStats stats,
+                                           Session session, Component prefix) {
+        session.enemyActionQueue.clear();
+        session.roundEffectSnapshots.clear();
+        session.roundEffectSnapshots.putAll(captureBattleEffects(player));
+        session.enemySequenceCountsAsRound = true;
         List<EntityTurnBattleMonster> enemies = getEnemies(player, session);
-        for (int i = 0; i < enemies.size(); i++) {
-            EntityTurnBattleMonster enemy = enemies.get(i);
-            if (enemy.isTurnBattleDefeated() || isDormantGranStage(enemy) || !player.isAlive()) {
+        for (EntityTurnBattleMonster enemy : enemies) {
+            if (enemy.isTurnBattleDefeated() || isDormantGranStage(enemy)) {
                 continue;
             }
-            session.actingEnemyIndex = i;
-            Component result = performEnemyTurn(player, enemy, stats, guard, session);
-            if (!result.getString().isEmpty()) {
-                if (!message.isEmpty()) {
-                    message.append("\n");
-                }
-                message.append(result.getString());
+            int actionCount = enemy instanceof EntityOriginalDatabaseEnemy originalEnemy
+                    ? originalEnemy.getProfile().actionCount() : 1;
+            if (session.battleProfileId == 567) {
+                actionCount += Math.min(4, Math.max(0, session.enemyTurn - 1));
+            }
+            for (int actionIndex = 0; actionIndex < actionCount; actionIndex++) {
+                session.enemyActionQueue.addLast(new PendingEnemyAction(
+                        enemy.getUUID(), 0, actionIndex == actionCount - 1));
             }
         }
-        return Component.literal(message.toString());
+        session.enemySequencePrefix = prefix.getString();
+        session.enemySequenceGuard = session.guardQueued;
+        session.guardQueued = false;
+        session.enemySequenceActive = true;
+        presentNextEnemyAction(player, stats, session);
     }
 
-    private static Component performEnemyTurn(ServerPlayer player, EntityTurnBattleMonster battleEnemy,
-                                              BSPlayerStats stats, boolean guard, Session session) {
+    private static void beginOpeningSequence(ServerPlayer player, BSPlayerStats stats,
+                                             Session session) {
+        int skillId = BSOriginalBattleProfileData.get(session.battleProfileId).preemptiveSkillId();
+        EntityTurnBattleMonster enemy = getEnemies(player, session).stream()
+                .filter(candidate -> !candidate.isTurnBattleDefeated() && !isDormantGranStage(candidate))
+                .findFirst().orElse(null);
+        session.openingPending = false;
+        if (skillId <= 0 || enemy == null) {
+            session.resolving = false;
+            sendState(player, true, Component.empty(), true,
+                    ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+            return;
+        }
+        session.enemyActionQueue.clear();
+        session.roundEffectSnapshots.clear();
+        session.enemySequenceCountsAsRound = false;
+        session.enemyActionQueue.addLast(new PendingEnemyAction(enemy.getUUID(), skillId, false));
+        session.enemySequencePrefix = "";
+        session.enemySequenceGuard = false;
+        session.enemySequenceActive = true;
+        presentNextEnemyAction(player, stats, session);
+    }
+
+    private static void presentNextEnemyAction(ServerPlayer player, BSPlayerStats stats,
+                                               Session session) {
+        while (!session.enemyActionQueue.isEmpty()) {
+            PendingEnemyAction pending = session.enemyActionQueue.removeFirst();
+            Entity entity = player.serverLevel().getEntity(pending.enemyId());
+            if (!(entity instanceof EntityTurnBattleMonster battleEnemy)
+                    || battleEnemy.isTurnBattleDefeated() || isDormantGranStage(battleEnemy)) {
+                continue;
+            }
+            session.actingEnemyIndex = Math.max(0, session.enemyIds.indexOf(battleEnemy.getUUID()));
+            int playerHitCountBefore = session.playerHits.size();
+            EnemyActionResult result = performEnemyAction(player, battleEnemy, stats,
+                    session.enemySequenceGuard, session, pending.skillId());
+            boolean countered = session.playerHits.size() > playerHitCountBefore;
+            boolean counterPhase = false;
+            if (countered) {
+                updateGranStage(player, session);
+                EntityTurnBattleMonster rootEnemy = getRootEnemy(player, session);
+                counterPhase = rootEnemy != null && canAdvanceEnemyPhase(player, rootEnemy, session);
+            }
+            if (countered && (counterPhase || allEnemiesDefeated(player, session))) {
+                session.enemyActionQueue.clear();
+                session.enemySequenceActive = false;
+                session.enemySequenceCountsAsRound = false;
+                session.roundEffectSnapshots.clear();
+                session.counterVictoryPending = !counterPhase && allEnemiesDefeated(player, session);
+            } else if (result.followUpSkillId() > 0) {
+                session.enemyActionQueue.addFirst(new PendingEnemyAction(
+                        pending.enemyId(), result.followUpSkillId(), pending.advanceTurnAfter()));
+            } else if (pending.advanceTurnAfter()) {
+                int turn = session.enemyTurns.getOrDefault(pending.enemyId(), 1);
+                session.enemyTurns.put(pending.enemyId(), turn + 1);
+            }
+            String text = result.message().getString();
+            if (!session.enemySequencePrefix.isEmpty()) {
+                text = text.isEmpty() ? session.enemySequencePrefix
+                        : session.enemySequencePrefix + "\n" + text;
+                session.enemySequencePrefix = "";
+            }
+            StatEventHandler.syncToClient(player);
+            if (player.getHealth() <= 0.0F || !player.isAlive()) {
+                finish(player, session, ClientboundTurnBattlePacket.Outcome.DEFEAT,
+                        Component.literal(text), false, 0L);
+                return;
+            }
+            session.awaitingPhasePresentation = true;
+            session.presentationDeadline = player.serverLevel().getGameTime() + 200L;
+            sendState(player, true, Component.literal(text), false,
+                    ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+            return;
+        }
+        session.enemySequenceActive = false;
+        session.awaitingPhasePresentation = false;
+        session.presentationDeadline = 0L;
+        if (session.enemySequenceCountsAsRound) {
+            session.enemyTurn++;
+            advanceBattleEffects(player, session.roundEffectSnapshots);
+            restoreTurnBattleMana(stats);
+        }
+        session.enemySequenceCountsAsRound = false;
+        session.roundEffectSnapshots.clear();
+        if (player.getHealth() <= 0.0F || !player.isAlive()) {
+            finish(player, session, ClientboundTurnBattlePacket.Outcome.DEFEAT,
+                    Component.literal("状态效果使" + player.getDisplayName().getString()
+                            + "倒下了！"), false, 0L);
+            return;
+        }
+        session.remainingPlayerActions = rollPlayerActionCount(player, stats);
+        StatEventHandler.syncToClient(player);
+        session.resolving = false;
+        sendState(player, true, Component.empty(), true,
+                ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+    }
+
+    private static EnemyActionResult performEnemyAction(ServerPlayer player,
+                                                        EntityTurnBattleMonster battleEnemy,
+                                                        BSPlayerStats stats, boolean guard,
+                                                        Session session, int forcedSkillId) {
         String enemy = battleEnemy.getDisplayName().getString();
         Set<Integer> activeStates = session.enemyStates.computeIfAbsent(
                 battleEnemy.getUUID(), ignored -> new HashSet<>());
+        TurnBattleDomainData.Domain domain = TurnBattleDomainData.get(session.battleProfileId);
+        double defenseRate = domainDefenseRate(session);
+        double magicDefenseRate = domainMagicDefenseRate(session);
+        double effectiveEvasion = domain != null && session.battleProfileId == 570
+                ? 0.0D : stats.evasion;
         int turn = session.enemyTurns.getOrDefault(battleEnemy.getUUID(), 1);
-        BSOriginalEnemyData.Action action = battleEnemy instanceof EntityOriginalDatabaseEnemy originalEnemy
-                ? originalEnemy.selectTurnBattleAction(player.getRandom(), turn, activeStates)
-                : null;
-        session.enemyTurns.put(battleEnemy.getUUID(), turn + 1);
-        session.enemyTurn++;
+        BSOriginalEnemyData.Action action = null;
+        if (battleEnemy instanceof EntityOriginalDatabaseEnemy originalEnemy) {
+            action = forcedSkillId > 0
+                    ? originalEnemy.getProfile().findAction(forcedSkillId)
+                    : originalEnemy.selectTurnBattleAction(player.getRandom(), turn, activeStates);
+        }
         if (action == null) {
             session.lastEnemyAnimationId = battleEnemy.getTurnBattleAttackAnimationId();
             String attackText = battleEnemy.getTurnBattleAttackText();
             if (player.getRandom().nextDouble() >= Mth.clamp(
-                    0.95D - stats.evasion / 100.0D, 0.05D, 0.99D)) {
-                return Component.literal(enemy + attackText + "！\n但是攻击落空了！");
+                    0.95D - effectiveEvasion / 100.0D, 0.05D, 0.99D)) {
+                return new EnemyActionResult(
+                        Component.literal(enemy + attackText + "！\n但是攻击落空了！"), 0);
             }
             double enemyAttack = DifficultyManager.scaleManagedStat(
                     battleEnemy.level(), battleEnemy.getTurnBattleAttack());
-            double damage = varied(player, Math.max(
-                    1.0D, enemyAttack * 4.0D - stats.defense * 2.0D));
-            damage *= Math.max(1, battleEnemy.getTurnBattleAttackRepeats());
-            boolean critical = player.getRandom().nextDouble() < 0.05D;
-            if (critical) {
-                damage *= 3.0D;
+            boolean anyCritical = false;
+            boolean counterCritical = false;
+            int counterDamage = 0;
+            int counterWave = session.playerHits.size();
+            int repeats = Math.max(1, battleEnemy.getTurnBattleAttackRepeats());
+            for (int hit = 0; hit < repeats && player.isAlive(); hit++) {
+                double damage = varied(player, Math.max(
+                        1.0D, enemyAttack * 4.0D - stats.defense * defenseRate * 2.0D));
+                boolean critical = player.getRandom().nextDouble() < 0.05D;
+                if (critical) {
+                    damage *= 3.0D;
+                    anyCritical = true;
+                }
+                if (guard) {
+                    damage *= 0.5D;
+                }
+                damage *= Math.max(0.0D, stats.physicalDamageRate);
+                applyIncomingHit(session, player, safeDamageInt(damage), critical);
+                CounterHit counter = tryTurnBattleCounter(player, battleEnemy, stats, session, counterWave);
+                if (counter != null) {
+                    counterDamage += counter.damage();
+                    counterCritical |= counter.critical();
+                    counterWave++;
+                    if (battleEnemy.isTurnBattleDefeated()) {
+                        break;
+                    }
+                }
             }
-            if (guard) {
-                damage *= 0.5D;
-            }
-            damage *= Math.max(0.0D, stats.physicalDamageRate);
-            int dealt = safeDamageInt(damage);
-            player.setHealth(Math.max(0.0F, player.getHealth() - dealt));
-            return Component.literal(enemy + attackText + "！\n"
-                    + (critical ? "会心一击！\n" : "")
-                    + player.getDisplayName().getString() + "受到了 " + dealt + " 点伤害！");
+            return new EnemyActionResult(Component.literal(enemy + attackText + "！"
+                    + (anyCritical ? "\n会心一击！" : "")
+                    + counterText(player, battleEnemy, counterDamage, counterCritical)), 0);
         }
 
-        session.lastEnemyAnimationId = action.animationId() > 0
-                ? action.animationId() : battleEnemy.getTurnBattleAttackAnimationId();
+        session.lastEnemyAnimationId = action.animationId();
         String actionHeader = enemy + action.text() + "！";
-        applyEnemyStateEffects(action, activeStates, player);
+        applyEnemySelfStateEffects(action, activeStates, player);
         if (action.conditionType() == 4) {
             activeStates.remove((int) action.conditionParam1());
         }
 
         double difficulty = DifficultyManager.getCurrentTotalMultiplierForLevel(battleEnemy.level());
+        boolean roldEffect = activeStates.contains(164);
+        double roldMultiplier = roldEffect ? 2.0D : 1.0D;
         TurnBattleFormulaEvaluator.Context context = new TurnBattleFormulaEvaluator.Context(
-                battleEnemy.getTurnBattleAttack() * difficulty,
+                battleEnemy.getTurnBattleAttack() * difficulty * roldMultiplier,
                 battleEnemy.getTurnBattleDefense() * difficulty,
-                battleEnemy.getTurnBattleMagicAttack() * difficulty,
+                battleEnemy.getTurnBattleMagicAttack() * difficulty * roldMultiplier,
                 battleEnemy.getTurnBattleMagicDefense() * difficulty,
                 battleEnemy.getTurnBattleAgility() * difficulty,
                 battleEnemy.getTurnBattleLuck() * difficulty,
@@ -771,9 +1002,9 @@ public final class TurnBattleManager {
                 battleEnemy.getTurnBattleMana(),
                 battleEnemy.getTurnBattleMaxMana(),
                 stats.attack,
-                stats.defense,
+                stats.defense * defenseRate,
                 stats.magicAttack,
-                stats.magicDefense,
+                stats.magicDefense * magicDefenseRate,
                 stats.speed,
                 stats.luck,
                 player.getHealth(),
@@ -789,58 +1020,176 @@ public final class TurnBattleManager {
             double before = battleEnemy.getTurnBattleHealth();
             battleEnemy.setTurnBattleHealth(before + healed);
             int restored = safeDamageInt(battleEnemy.getTurnBattleHealth() - before);
-            return Component.literal(actionHeader + "\n" + enemy + "恢复了 " + restored + " 点生命！");
+            return new EnemyActionResult(Component.literal(
+                    actionHeader + "\n" + enemy + "恢复了 " + restored + " 点生命！"),
+                    action.followUpSkillId());
         }
         if (action.damageType() == 4) {
-            return Component.literal(actionHeader);
+            applyEnemyTargetStateEffects(action, player, 1);
+            CounterHit counter = action.scope() == 11 || action.hitType() != 1
+                    ? null : tryTurnBattleCounter(player, battleEnemy, stats, session, 0);
+            if (counter != null) {
+                return new EnemyActionResult(Component.literal(actionHeader
+                        + counterText(player, battleEnemy, counter.damage(), counter.critical())),
+                        battleEnemy.isTurnBattleDefeated() ? 0 : action.followUpSkillId());
+            }
+            return new EnemyActionResult(Component.literal(actionHeader), action.followUpSkillId());
         }
         if (action.damageType() != 1 && action.damageType() != 2
                 && action.damageType() != 5 && action.damageType() != 6) {
-            return Component.literal(actionHeader);
+            applyEnemyTargetStateEffects(action, player, 1);
+            CounterHit counter = action.scope() == 11 || action.hitType() != 1
+                    ? null : tryTurnBattleCounter(player, battleEnemy, stats, session, 0);
+            if (counter != null) {
+                return new EnemyActionResult(Component.literal(actionHeader
+                        + counterText(player, battleEnemy, counter.damage(), counter.critical())),
+                        battleEnemy.isTurnBattleDefeated() ? 0 : action.followUpSkillId());
+            }
+            return new EnemyActionResult(Component.literal(actionHeader), action.followUpSkillId());
         }
 
         int landedHits = 0;
-        boolean critical = false;
-        double total = 0.0D;
-        int repeats = Math.max(1, action.repeats());
+        List<HitValue> hitValues = new ArrayList<>();
+        int targetRepeats = action.scope() >= 3 && action.scope() <= 6
+                ? action.scope() - 2 : 1;
+        int repeats = Math.max(1, action.repeats()) * targetRepeats;
         for (int hit = 0; hit < repeats; hit++) {
-            double hitChance = Mth.clamp(action.successRate() / 100.0D
-                    - (action.hitType() == 1 ? stats.evasion / 100.0D : 0.0D), 0.0D, 1.0D);
+            double actionEvasion = action.hitType() == 1 ? effectiveEvasion
+                    : action.hitType() == 2 ? stats.magicEvasion : 0.0D;
+            double hitChance = roldEffect && action.hitType() == 1 ? 1.0D
+                    : Mth.clamp(action.successRate() / 100.0D
+                    - actionEvasion / 100.0D, 0.0D, 1.0D);
             if (player.getRandom().nextDouble() >= hitChance) {
                 continue;
             }
             landedHits++;
             double value = varied(player, baseValue, action.variance());
-            if (action.critical() && player.getRandom().nextDouble() < 0.05D) {
+            boolean hitCritical = action.critical()
+                    && (roldEffect || player.getRandom().nextDouble() < 0.05D);
+            if (hitCritical) {
                 value *= 3.0D;
-                critical = true;
             }
             if (guard && (action.damageType() == 1 || action.damageType() == 5)) {
                 value *= 0.5D;
             }
-            total += Math.max(0.0D, value);
+            value = Math.max(0.0D, value);
+            hitValues.add(new HitValue(value, hitCritical));
         }
         if (landedHits == 0) {
-            return Component.literal(actionHeader + "\n但是攻击落空了！");
+            return new EnemyActionResult(Component.literal(
+                    actionHeader + "\n但是攻击落空了！"), action.followUpSkillId());
         }
+        double hpRateDamage = originalHpRateDamage(action, player, stats);
+        if (hpRateDamage > 0.0D) {
+            for (int index = 0; index < hitValues.size(); index++) {
+                HitValue hit = hitValues.get(index);
+                hitValues.set(index, new HitValue(hit.damage() + hpRateDamage, hit.critical()));
+            }
+        }
+        int counterDamage = 0;
+        boolean counterCritical = false;
         if (action.damageType() == 2 || action.damageType() == 6) {
-            int lostMana = Math.min(safeDamageInt(total), safeDamageInt(stats.mp));
-            stats.mp = Math.max(0.0D, stats.mp - lostMana);
-            return Component.literal(actionHeader + "\n"
-                    + player.getDisplayName().getString() + "失去了 " + lostMana + " MP！");
+            int lostMana = 0;
+            for (HitValue hit : hitValues) {
+                int hitMana = Math.min(safeDamageInt(hit.damage()), safeDamageInt(stats.mp));
+                stats.mp = Math.max(0.0D, stats.mp - hitMana);
+                lostMana += hitMana;
+                applyEnemyTargetStateEffects(action, player, 1);
+                CounterHit counter = action.hitType() == 1
+                        ? tryTurnBattleCounter(player, battleEnemy, stats, session, session.playerHits.size())
+                        : null;
+                if (counter != null) {
+                    counterDamage += counter.damage();
+                    counterCritical |= counter.critical();
+                    if (battleEnemy.isTurnBattleDefeated()) {
+                        break;
+                    }
+                }
+            }
+            int followUpSkillId = battleEnemy.isTurnBattleDefeated() ? 0 : action.followUpSkillId();
+            return new EnemyActionResult(Component.literal(actionHeader + "\n"
+                    + player.getDisplayName().getString() + "失去了 " + lostMana + " MP！"
+                    + counterText(player, battleEnemy, counterDamage, counterCritical)), followUpSkillId);
         }
 
         boolean magicLike = action.hitType() == 2
                 || action.formula().contains("a.mat") && !action.formula().contains("a.atk");
-        total *= Math.max(0.0D, magicLike ? stats.magicDamageRate : stats.physicalDamageRate);
-        int dealt = safeDamageInt(total);
-        player.setHealth(Math.max(0.0F, player.getHealth() - dealt));
-        if (action.damageType() == 5 && dealt > 0) {
-            battleEnemy.setTurnBattleHealth(battleEnemy.getTurnBattleHealth() + dealt);
+        double damageRate = Math.max(0.0D,
+                magicLike ? stats.magicDamageRate : stats.physicalDamageRate);
+        boolean processedCritical = false;
+        for (HitValue hit : hitValues) {
+            int hitDamage = safeDamageInt(hit.damage() * damageRate);
+            processedCritical |= hit.critical();
+            applyIncomingHit(session, player, hitDamage, hit.critical());
+            if (action.damageType() == 5 && hitDamage > 0) {
+                battleEnemy.setTurnBattleHealth(battleEnemy.getTurnBattleHealth() + hitDamage);
+            }
+            applyEnemyTargetStateEffects(action, player, 1);
+            CounterHit counter = action.hitType() == 1
+                    ? tryTurnBattleCounter(player, battleEnemy, stats, session, session.playerHits.size())
+                    : null;
+            if (counter != null) {
+                counterDamage += counter.damage();
+                counterCritical |= counter.critical();
+            }
+            if (!player.isAlive()) {
+                break;
+            }
+            if (battleEnemy.isTurnBattleDefeated()) {
+                break;
+            }
         }
-        return Component.literal(actionHeader + "\n"
-                + (critical ? "会心一击！\n" : "")
-                + player.getDisplayName().getString() + "受到了 " + dealt + " 点伤害！");
+        int followUpSkillId = battleEnemy.isTurnBattleDefeated() ? 0 : action.followUpSkillId();
+        return new EnemyActionResult(Component.literal(actionHeader
+                + (processedCritical ? "\n会心一击！" : "")
+                + counterText(player, battleEnemy, counterDamage, counterCritical)), followUpSkillId);
+    }
+
+    private static CounterHit tryTurnBattleCounter(ServerPlayer player,
+                                                   EntityTurnBattleMonster enemy,
+                                                   BSPlayerStats stats, Session session,
+                                                   int wave) {
+        if (!player.isAlive()) {
+            return null;
+        }
+        double counterRate = StatEventHandler.getWeaponCounterRate(player);
+        if (counterRate <= 0.0D
+                || counterRate < 100.0D && player.getRandom().nextDouble() * 100.0D >= counterRate) {
+            return null;
+        }
+        double enemyDefense = DifficultyManager.scaleManagedStat(
+                enemy.level(), enemy.getTurnBattleDefense());
+        double damage = varied(player, Math.max(1.0D,
+                stats.attack * domainAttackRate(session) * 4.0D - enemyDefense * 2.0D));
+        boolean critical = player.getRandom().nextDouble()
+                < (stats.critRate + stats.bonusCritRate) / 100.0D;
+        if (critical) {
+            damage *= 3.0D;
+        }
+        int dealt = Math.max(1, safeDamageInt(damage));
+        enemy.setTurnBattleHealth(enemy.getTurnBattleHealth() - dealt);
+        session.playerHits.add(new ClientboundTurnBattlePacket.DamageHit(
+                enemy.getId(), dealt, critical, wave));
+        return new CounterHit(dealt, critical);
+    }
+
+    private static String counterText(ServerPlayer player, EntityTurnBattleMonster enemy,
+                                      int damage, boolean critical) {
+        if (damage <= 0) {
+            return "";
+        }
+        return "\n" + player.getDisplayName().getString() + "的反击！"
+                + (critical ? "\n会心一击！" : "")
+                + "\n对" + enemy.getDisplayName().getString() + "造成了 " + damage + " 点伤害！";
+    }
+
+    private static void applyIncomingHit(Session session, ServerPlayer player,
+                                         int damage, boolean critical) {
+        SkillEventHandler.TurnBattleDamageResult result =
+                SkillEventHandler.applyTurnBattleDamageDetailed(player, damage);
+        session.incomingHits.add(new ClientboundTurnBattlePacket.IncomingHit(
+                result.damage(), critical, result.knockedDown(),
+                result.revived(), result.reviveHealth()));
     }
 
     private static double varied(ServerPlayer player, double value) {
@@ -864,8 +1213,82 @@ public final class TurnBattleManager {
         return (int) Math.min(Integer.MAX_VALUE, Math.max(0L, Math.round(value)));
     }
 
-    private static void applyEnemyStateEffects(BSOriginalEnemyData.Action action, Set<Integer> activeStates,
-                                               ServerPlayer player) {
+    private static void restoreTurnBattleMana(BSPlayerStats stats) {
+        if (stats == null || stats.maxMp <= 0.0D || stats.mpRegenRate <= 0.0D) {
+            return;
+        }
+        double restored = Math.floor(stats.maxMp * stats.mpRegenRate);
+        if (restored > 0.0D) {
+            stats.mp = Math.min(stats.maxMp, stats.mp + restored);
+        }
+    }
+
+    private static double domainAttackRate(Session session) {
+        TurnBattleDomainData.Domain domain = TurnBattleDomainData.get(session.battleProfileId);
+        if (domain == null) {
+            return 1.0D;
+        }
+        if (session.battleProfileId == 561) {
+            int elapsedRounds = Math.max(0, session.enemyTurn - 1);
+            return Math.max(0.0D, 1.0D - Math.min(5, elapsedRounds) * 0.20D);
+        }
+        return domain.attackRate();
+    }
+
+    private static double domainMagicRate(Session session) {
+        TurnBattleDomainData.Domain domain = TurnBattleDomainData.get(session.battleProfileId);
+        if (domain == null) {
+            return 1.0D;
+        }
+        if (session.battleProfileId == 561) {
+            int elapsedRounds = Math.max(0, session.enemyTurn - 11);
+            return Math.max(0.0D, 1.0D - Math.min(5, elapsedRounds) * 0.20D);
+        }
+        return domain.magicRate();
+    }
+
+    private static double domainDefenseRate(Session session) {
+        TurnBattleDomainData.Domain domain = TurnBattleDomainData.get(session.battleProfileId);
+        if (domain == null) {
+            return 1.0D;
+        }
+        if (session.battleProfileId == 561) {
+            int elapsedRounds = Math.max(0, session.enemyTurn - 6);
+            return Math.max(0.0D, 1.0D - Math.min(5, elapsedRounds) * 0.20D);
+        }
+        if (session.battleProfileId == 558 || session.battleProfileId == 564) {
+            return Math.max(0.0D, 1.0D - session.enemyTurn * 0.10D);
+        }
+        return domain.defenseRate();
+    }
+
+    private static double domainMagicDefenseRate(Session session) {
+        TurnBattleDomainData.Domain domain = TurnBattleDomainData.get(session.battleProfileId);
+        if (domain == null) {
+            return 1.0D;
+        }
+        if (session.battleProfileId == 561) {
+            int elapsedRounds = Math.max(0, session.enemyTurn - 16);
+            return Math.max(0.0D, 1.0D - Math.min(5, elapsedRounds) * 0.20D);
+        }
+        return domain.magicDefenseRate();
+    }
+
+    private static double originalHpRateDamage(BSOriginalEnemyData.Action action,
+                                               ServerPlayer player, BSPlayerStats stats) {
+        double maxHealth = Math.max(player.getMaxHealth(), stats.hp);
+        double damage = 0.0D;
+        for (BSOriginalEnemyData.StateEffect effect : action.stateEffects()) {
+            if (effect.code() == 11 && effect.chance() < 0.0D) {
+                damage += maxHealth * -effect.chance();
+            }
+        }
+        return damage;
+    }
+
+    private static void applyEnemySelfStateEffects(BSOriginalEnemyData.Action action,
+                                                   Set<Integer> activeStates,
+                                                   ServerPlayer player) {
         if (action.scope() != 11) {
             return;
         }
@@ -881,13 +1304,84 @@ public final class TurnBattleManager {
         }
     }
 
+    private static void applyEnemyTargetStateEffects(BSOriginalEnemyData.Action action,
+                                                     ServerPlayer player, int landedHits) {
+        if (action.scope() == 11 || landedHits <= 0) {
+            return;
+        }
+        boolean changed = false;
+        for (BSOriginalEnemyData.StateEffect effect : action.stateEffects()) {
+            if (effect.code() != 21 || effect.stateId() <= 0) {
+                continue;
+            }
+            double chance = 1.0D - Math.pow(1.0D - Mth.clamp(effect.chance(), 0.0D, 1.0D), landedHits);
+            if (player.getRandom().nextDouble() >= chance) {
+                continue;
+            }
+            MobEffect mobEffect = originalPlayerStateEffect(effect.stateId());
+            if (mobEffect == null) {
+                continue;
+            }
+            player.addEffect(new MobEffectInstance(mobEffect,
+                    originalPlayerStateDuration(effect.stateId()),
+                    originalPlayerStateAmplifier(effect.stateId()), false, true, true));
+            changed = true;
+        }
+        if (changed) {
+            StatEventHandler.applyStats(player);
+            StatEventHandler.syncToClient(player);
+        }
+    }
+
+    private static MobEffect originalPlayerStateEffect(int stateId) {
+        return switch (stateId) {
+            case 2 -> BlackSouls.BUFF_POISON.get();
+            case 3 -> BlackSouls.BUFF_SEVERE_POISON.get();
+            case 5 -> BlackSouls.BUFF_OILY.get();
+            case 6 -> BlackSouls.BUFF_SLEEP.get();
+            case 7, 8 -> BlackSouls.BUFF_DEFENSELESS.get();
+            case 13 -> BlackSouls.BUFF_STUN.get();
+            case 17 -> BlackSouls.BUFF_SILENCE.get();
+            case 26 -> BlackSouls.BUFF_BLEEDING.get();
+            case 28 -> BlackSouls.BUFF_MADNESS.get();
+            case 29 -> BlackSouls.BUFF_BURN.get();
+            case 39 -> BlackSouls.BUFF_JUGGLING_EVASION.get();
+            case 55 -> BlackSouls.BUFF_WEAKNESS.get();
+            case 56 -> BlackSouls.BUFF_FEAR.get();
+            case 61 -> BlackSouls.BUFF_FRAGILE.get();
+            case 162 -> BlackSouls.BUFF_FROSTBITE.get();
+            case 163 -> BlackSouls.BUFF_LACERATION.get();
+            case 165 -> BlackSouls.BUFF_SEVERED_LEG.get();
+            default -> null;
+        };
+    }
+
+    private static int originalPlayerStateDuration(int stateId) {
+        return switch (stateId) {
+            case 2, 3, 55 -> 2000;
+            case 5, 6, 26, 39, 61, 162 -> 800;
+            case 7, 8, 17, 28, 29 -> 400;
+            case 13 -> 200;
+            case 56 -> 1000;
+            case 163 -> 800;
+            case 165 -> 600;
+            default -> 400;
+        };
+    }
+
+    private static int originalPlayerStateAmplifier(int stateId) {
+        return stateId == 7 ? 1 : 0;
+    }
+
     private static long rewardVictory(ServerPlayer player, BSPlayerStats stats,
                                       Session session) {
         long soulReward = 0L;
+        session.rewardItems.clear();
         for (EntityTurnBattleMonster enemy : getEnemies(player, session)) {
             soulReward += DifficultyManager.scaleManagedSoulReward(
                     enemy.level(), enemy.getTurnBattleSoulReward());
             for (ItemStack drop : enemy.rollTurnBattleDrops(player.getRandom())) {
+                mergeRewardItem(session.rewardItems, drop);
                 if (!player.getInventory().add(drop)) {
                     player.drop(drop, false);
                 }
@@ -896,12 +1390,26 @@ public final class TurnBattleManager {
         stats.souls += soulReward;
         if (player.getRandom().nextInt(5) == 0) {
             ItemStack drop = new ItemStack(BlackSouls.SOUL_WHITE.get());
+            mergeRewardItem(session.rewardItems, drop);
             if (!player.getInventory().add(drop)) {
                 player.drop(drop, false);
             }
         }
         NetworkHandler.sendToPlayer(new PacketSyncStats(stats.serializeNBT()), player);
         return soulReward;
+    }
+
+    private static void mergeRewardItem(List<ItemStack> rewards, ItemStack stack) {
+        if (stack.isEmpty()) {
+            return;
+        }
+        for (ItemStack reward : rewards) {
+            if (ItemStack.isSameItemSameTags(reward, stack)) {
+                reward.grow(stack.getCount());
+                return;
+            }
+        }
+        rewards.add(stack.copy());
     }
 
     private static void finish(ServerPlayer player, Session session,
@@ -952,10 +1460,11 @@ public final class TurnBattleManager {
                 active, rootEntityId, session.battleProfileId, snapshots,
                 session.actingEnemyIndex, session.lastEnemyAnimationId,
                 session.phaseChanged, session.awaitingPhasePresentation,
-                session.playerHits, message, canAct, outcome, soulReward,
-                session.skillCooldowns), player);
+                session.playerHits, session.incomingHits, message, canAct, outcome, soulReward,
+                session.rewardItems, session.skillCooldowns), player);
         session.phaseChanged = false;
         session.playerHits.clear();
+        session.incomingHits.clear();
     }
 
     private static EntityTurnBattleMonster getRootEnemy(ServerPlayer player, Session session) {
@@ -1054,6 +1563,7 @@ public final class TurnBattleManager {
         session.enemyStates.get(stage.getUUID()).add(221);
         session.enemyTurns.put(stage.getUUID(), 1);
         session.actingEnemyIndex = Math.max(0, session.enemyIds.indexOf(stage.getUUID()));
+        session.phaseChanged = true;
     }
 
     private static int rollPlayerActionCount(ServerPlayer player, BSPlayerStats stats) {
@@ -1165,6 +1675,48 @@ public final class TurnBattleManager {
         }
     }
 
+    private static Map<MobEffect, EffectSnapshot> captureBattleEffects(ServerPlayer player) {
+        Map<MobEffect, EffectSnapshot> snapshots = new HashMap<>();
+        for (MobEffectInstance instance : player.getActiveEffects()) {
+            snapshots.put(instance.getEffect(), new EffectSnapshot(
+                    instance, instance.getDuration(), instance.getAmplifier()));
+        }
+        return snapshots;
+    }
+
+    private static void advanceBattleEffects(ServerPlayer player,
+                                             Map<MobEffect, EffectSnapshot> snapshots) {
+        ADVANCING_BATTLE_EFFECTS.set(true);
+        boolean previousInternalDamage = INTERNAL_BATTLE_ITEM_DAMAGE.get();
+        INTERNAL_BATTLE_ITEM_DAMAGE.set(true);
+        try {
+            for (Map.Entry<MobEffect, EffectSnapshot> entry : snapshots.entrySet()) {
+                MobEffectInstance current = player.getEffect(entry.getKey());
+                EffectSnapshot snapshot = entry.getValue();
+                if (current == null || current != snapshot.instance
+                        || current.getDuration() != snapshot.duration
+                        || current.getAmplifier() != snapshot.amplifier
+                        || current.isInfiniteDuration()) {
+                    continue;
+                }
+                boolean active = true;
+                for (int tick = 0; tick < EFFECT_TICKS_PER_ACTION && active; tick++) {
+                    active = current.tick(player, () -> {
+                    });
+                }
+                if (!active) {
+                    player.removeEffect(entry.getKey());
+                } else {
+                    player.connection.send(new ClientboundUpdateMobEffectPacket(
+                            player.getId(), current));
+                }
+            }
+        } finally {
+            INTERNAL_BATTLE_ITEM_DAMAGE.set(previousInternalDamage);
+            ADVANCING_BATTLE_EFFECTS.set(false);
+        }
+    }
+
     private record ActionResult(Component message, boolean consumeTurn,
                                 List<ClientboundTurnBattlePacket.DamageHit> hits) {
         private ActionResult(Component message, boolean consumeTurn) {
@@ -1173,6 +1725,21 @@ public final class TurnBattleManager {
     }
 
     private record PhaseAdvance(String message) {
+    }
+
+    private record EffectSnapshot(MobEffectInstance instance, int duration, int amplifier) {
+    }
+
+    private record PendingEnemyAction(UUID enemyId, int skillId, boolean advanceTurnAfter) {
+    }
+
+    private record EnemyActionResult(Component message, int followUpSkillId) {
+    }
+
+    private record HitValue(double damage, boolean critical) {
+    }
+
+    private record CounterHit(int damage, boolean critical) {
     }
 
     private static final class Session {
@@ -1184,6 +1751,9 @@ public final class TurnBattleManager {
         private final Map<String, Integer> skillCooldowns = new HashMap<>();
         private final Map<UUID, Set<Integer>> enemyStates = new HashMap<>();
         private final Map<UUID, Integer> enemyTurns = new HashMap<>();
+        private final Map<MobEffect, EffectSnapshot> roundEffectSnapshots = new HashMap<>();
+        private final Deque<PendingEnemyAction> enemyActionQueue = new ArrayDeque<>();
+        private final List<ItemStack> rewardItems = new ArrayList<>();
         private int battleProfileId;
         private int enemyTurn = 1;
         private int lastEnemyAnimationId = 1;
@@ -1191,10 +1761,17 @@ public final class TurnBattleManager {
         private boolean phaseChanged;
         private boolean resolving;
         private boolean awaitingPhasePresentation;
+        private boolean openingPending;
+        private boolean enemySequenceActive;
+        private boolean enemySequenceCountsAsRound;
+        private boolean counterVictoryPending;
+        private boolean enemySequenceGuard;
+        private String enemySequencePrefix = "";
         private boolean guardQueued;
         private int remainingPlayerActions;
         private long presentationDeadline;
         private final List<ClientboundTurnBattlePacket.DamageHit> playerHits = new ArrayList<>();
+        private final List<ClientboundTurnBattlePacket.IncomingHit> incomingHits = new ArrayList<>();
 
         private Session(UUID rootEnemyId, Vec3 playerAnchor, Vec3 enemyAnchor,
                         int battleProfileId) {

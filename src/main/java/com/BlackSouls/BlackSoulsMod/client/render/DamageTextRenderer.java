@@ -25,27 +25,27 @@ public class DamageTextRenderer {
     public static class DamageText {
         public double x, y, z;
         public double motionY;
-        public float damage;
+        public long damage;
         public boolean isCrit;
         public int age;
         public int maxAge;
         public double randomOffsetX;
         public String text;
 
-        public DamageText(double x, double y, double z, float damage, boolean isCrit) {
+        public DamageText(double x, double y, double z, long damage, boolean isCrit) {
             this.x = x; this.y = y; this.z = z;
             this.damage = damage; this.isCrit = isCrit;
             this.age = 0;
             this.maxAge = isCrit ? 45 : 30;
             this.motionY = isCrit ? 0.08 : 0.04;
             this.randomOffsetX = (Math.random() - 0.5) * 0.1;
-            this.text = Integer.toString(Math.round(damage)) + (isCrit ? "!" : "");
+            this.text = Long.toString(damage) + (isCrit ? "!" : "");
         }
     }
 
     private static final Deque<DamageText> TEXTS = new ArrayDeque<>();
 
-    public static void addText(double x, double y, double z, float damage, boolean isCrit) {
+    public static void addText(double x, double y, double z, long damage, boolean isCrit) {
         while (TEXTS.size() >= MAX_TEXTS) {
             TEXTS.removeFirst();
         }

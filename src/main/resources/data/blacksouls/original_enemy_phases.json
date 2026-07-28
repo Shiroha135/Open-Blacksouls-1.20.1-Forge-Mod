@@ -281,6 +281,13 @@
   },
   {
     "from": 561,
+    "to": 564,
+    "thresholdPercent": 1,
+    "recoverAll": true,
+    "troopId": 620
+  },
+  {
+    "from": 564,
     "to": 566,
     "thresholdPercent": 1,
     "recoverAll": true,

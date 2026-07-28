@@ -17,6 +17,12 @@ import java.util.Set;
 
 public final class BSOriginalEnemyPhaseData {
     private static final Map<Integer, Transition> TRANSITIONS = loadTransitions();
+    private static final Set<Integer> HIDDEN_SPAWN_VARIANTS = Set.of(
+            553, 554,
+            565,
+            571, 572, 573, 574, 575, 576, 577,
+            580, 581, 582, 583, 584, 585, 586
+    );
 
     private BSOriginalEnemyPhaseData() {
     }
@@ -32,6 +38,10 @@ public final class BSOriginalEnemyPhaseData {
     public static boolean isPhaseSuccessor(int profileId) {
         return TRANSITIONS.values().stream()
                 .anyMatch(transition -> transition.to() == profileId);
+    }
+
+    public static boolean shouldShowSpawnEgg(int profileId) {
+        return !isPhaseSuccessor(profileId) && !HIDDEN_SPAWN_VARIANTS.contains(profileId);
     }
 
     public static int countPhasesFrom(int profileId) {

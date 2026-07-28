@@ -27,7 +27,7 @@ public final class BSOriginalBattleProfileData {
         }
         return new Entry(profileId, 0, List.of(new Member(profileId, List.of())),
                 null, 1.0F, 1.0F, null, 544, 416,
-                null, 544, 416);
+                null, 544, 416, List.of(), 0);
     }
 
     private static Map<Integer, Entry> loadEntries() {
@@ -66,7 +66,10 @@ public final class BSOriginalBattleProfileData {
                         integer(json, "battleback1Height", 416),
                         resource(json, "battleback2"),
                         integer(json, "battleback2Width", 544),
-                        integer(json, "battleback2Height", 416)
+                        integer(json, "battleback2Height", 416),
+                        strings(json, "introPages"),
+                        json.has("preemptiveSkillId")
+                                ? Math.max(0, json.get("preemptiveSkillId").getAsInt()) : 0
                 );
                 entries.put(entry.profileId(), entry);
             }
@@ -85,11 +88,26 @@ public final class BSOriginalBattleProfileData {
         return json.has(key) ? Math.max(1, json.get(key).getAsInt()) : fallback;
     }
 
+    private static List<String> strings(JsonObject json, String key) {
+        if (!json.has(key) || !json.get(key).isJsonArray()) {
+            return List.of();
+        }
+        List<String> values = new ArrayList<>();
+        for (JsonElement element : json.getAsJsonArray(key)) {
+            String value = element.getAsString();
+            if (!value.isBlank()) {
+                values.add(value);
+            }
+        }
+        return List.copyOf(values);
+    }
+
     public record Entry(int profileId, int troopId, List<Member> members,
                         ResourceLocation bgm, float bgmVolume, float bgmPitch,
                         ResourceLocation battleback1, int battleback1Width,
                         int battleback1Height, ResourceLocation battleback2,
-                        int battleback2Width, int battleback2Height) {
+                        int battleback2Width, int battleback2Height,
+                        List<String> introPages, int preemptiveSkillId) {
     }
 
     public record Member(int profileId, List<Integer> states) {

@@ -37,7 +37,7 @@ public class BSPlayerStats {
 
     public double hp = 638, mp = 100, maxMp = 100;
     public double attack = 16, defense = 16, magicAttack = 10, magicDefense = 10, luck = 10, speed = 40;
-    public double critRate = 5.0, bonusCritRate = 0.0, evasion = 0;
+    public double critRate = 5.0, bonusCritRate = 0.0, evasion = 0, magicEvasion = 0;
     public int level = 1;
     public long currentExp = 0, maxExp = 31;
     public double bonusHp = 0, bonusMp = 0, bonusAtk = 0, bonusDef = 0, bonusMatk = 0, bonusMdef = 0, bonusLuc = 0, bonusSpeed = 0;
@@ -407,7 +407,8 @@ public class BSPlayerStats {
         }
 
         this.critRate = Math.min(100.0, 5.0 + this.bonusCritRate);
-        this.evasion = Math.min(100.0, 0.0 + this.evasion);
+        this.evasion = Math.min(100.0, Math.max(0.0, this.evasion));
+        this.magicEvasion = Math.min(100.0, Math.max(0.0, this.magicEvasion));
         this.maxExp = getExpToReachLevel(this.level + 1);
     }
 

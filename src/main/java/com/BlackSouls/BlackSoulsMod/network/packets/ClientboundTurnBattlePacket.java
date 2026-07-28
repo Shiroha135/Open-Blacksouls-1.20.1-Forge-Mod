@@ -9,6 +9,7 @@ import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 
 public class ClientboundTurnBattlePacket {
@@ -21,18 +22,22 @@ public class ClientboundTurnBattlePacket {
     private final boolean phaseChanged;
     private final boolean awaitingPresentation;
     private final List<DamageHit> playerHits;
+    private final List<IncomingHit> incomingHits;
     private final Component message;
     private final boolean canAct;
     private final Outcome outcome;
     private final long soulReward;
+    private final List<ItemStack> rewardItems;
     private final Map<String, Integer> skillCooldowns;
 
     public ClientboundTurnBattlePacket(boolean active, int rootEntityId, int battleProfileId,
                                        List<EnemySnapshot> enemies, int actingEnemyIndex,
                                        int enemyAnimationId, boolean phaseChanged,
                                        boolean awaitingPresentation, List<DamageHit> playerHits,
+                                       List<IncomingHit> incomingHits,
                                        Component message, boolean canAct, Outcome outcome,
-                                       long soulReward, Map<String, Integer> skillCooldowns) {
+                                       long soulReward, List<ItemStack> rewardItems,
+                                       Map<String, Integer> skillCooldowns) {
         this.active = active;
         this.rootEntityId = rootEntityId;
         this.battleProfileId = battleProfileId;
@@ -42,10 +47,12 @@ public class ClientboundTurnBattlePacket {
         this.phaseChanged = phaseChanged;
         this.awaitingPresentation = awaitingPresentation;
         this.playerHits = List.copyOf(playerHits);
+        this.incomingHits = List.copyOf(incomingHits);
         this.message = message;
         this.canAct = canAct;
         this.outcome = outcome;
         this.soulReward = soulReward;
+        this.rewardItems = rewardItems.stream().map(ItemStack::copy).toList();
         this.skillCooldowns = Map.copyOf(skillCooldowns);
     }
 
@@ -69,10 +76,22 @@ public class ClientboundTurnBattlePacket {
             hits.add(DamageHit.read(buffer));
         }
         this.playerHits = List.copyOf(hits);
+        int incomingHitCount = buffer.readVarInt();
+        List<IncomingHit> incoming = new ArrayList<>(incomingHitCount);
+        for (int i = 0; i < incomingHitCount; i++) {
+            incoming.add(IncomingHit.read(buffer));
+        }
+        this.incomingHits = List.copyOf(incoming);
         this.message = buffer.readComponent();
         this.canAct = buffer.readBoolean();
         this.outcome = PacketHandlers.readEnum(buffer, Outcome.values());
         this.soulReward = buffer.readVarLong();
+        int rewardCount = buffer.readVarInt();
+        List<ItemStack> rewards = new ArrayList<>(rewardCount);
+        for (int i = 0; i < rewardCount; i++) {
+            rewards.add(buffer.readItem());
+        }
+        this.rewardItems = List.copyOf(rewards);
         int cooldownCount = buffer.readVarInt();
         Map<String, Integer> cooldowns = new HashMap<>();
         for (int i = 0; i < cooldownCount; i++) {
@@ -93,10 +112,14 @@ public class ClientboundTurnBattlePacket {
         buffer.writeBoolean(this.awaitingPresentation);
         buffer.writeVarInt(this.playerHits.size());
         this.playerHits.forEach(hit -> hit.write(buffer));
+        buffer.writeVarInt(this.incomingHits.size());
+        this.incomingHits.forEach(hit -> hit.write(buffer));
         buffer.writeComponent(this.message);
         buffer.writeBoolean(this.canAct);
         PacketHandlers.writeEnum(buffer, this.outcome);
         buffer.writeVarLong(this.soulReward);
+        buffer.writeVarInt(this.rewardItems.size());
+        this.rewardItems.forEach(buffer::writeItem);
         buffer.writeVarInt(this.skillCooldowns.size());
         this.skillCooldowns.forEach((skillId, rounds) -> {
             buffer.writeUtf(skillId);
@@ -111,9 +134,9 @@ public class ClientboundTurnBattlePacket {
                     && battle.matches(this.rootEntityId)) {
                 battle.applyState(this.active, this.battleProfileId, this.enemies,
                         this.actingEnemyIndex, this.phaseChanged,
-                        this.awaitingPresentation, this.playerHits, this.message,
+                        this.awaitingPresentation, this.playerHits, this.incomingHits, this.message,
                         this.canAct, this.outcome, this.soulReward,
-                        this.skillCooldowns, this.enemyAnimationId);
+                        this.rewardItems, this.skillCooldowns, this.enemyAnimationId);
             } else if (this.active) {
                 minecraft.setScreen(new GuiTurnBattle(this.rootEntityId,
                         this.battleProfileId, this.enemies, this.message,
@@ -133,6 +156,22 @@ public class ClientboundTurnBattlePacket {
             buffer.writeVarInt(this.damage);
             buffer.writeBoolean(this.critical);
             buffer.writeVarInt(this.wave);
+        }
+    }
+
+    public record IncomingHit(int damage, boolean critical, boolean knockedDown,
+                              boolean revived, int reviveHealth) {
+        private static IncomingHit read(FriendlyByteBuf buffer) {
+            return new IncomingHit(buffer.readVarInt(), buffer.readBoolean(),
+                    buffer.readBoolean(), buffer.readBoolean(), buffer.readVarInt());
+        }
+
+        private void write(FriendlyByteBuf buffer) {
+            buffer.writeVarInt(this.damage);
+            buffer.writeBoolean(this.critical);
+            buffer.writeBoolean(this.knockedDown);
+            buffer.writeBoolean(this.revived);
+            buffer.writeVarInt(this.reviveHealth);
         }
     }
 

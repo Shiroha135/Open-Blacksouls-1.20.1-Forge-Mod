@@ -188,6 +188,7 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> EARTH2_EVENT = registerSound("earth2");
     public static final RegistryObject<SoundEvent> EARTH5_EVENT = registerSound("earth5");
     public static final RegistryObject<SoundEvent> EVASION1_EVENT  = registerSound("evasion1");
+    public static final RegistryObject<SoundEvent> EVASION2_EVENT  = registerSound("evasion2");
     public static final RegistryObject<SoundEvent> EXPLOSION3_EVENT =registerSound("explosion3");
     public static final RegistryObject<SoundEvent> EXPLOSION2_EVENT = registerSound("explosion2");
     public static final RegistryObject<SoundEvent> EQUIP1_EVENT = registerSound("equip1");
@@ -217,6 +218,13 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> TURN_BATTLE_BGM_EVENT = registerSound("turn_battle_bgm");
     public static final RegistryObject<SoundEvent> TURN_BATTLE_VICTORY_EVENT = registerSound("turn_battle_victory");
     public static final RegistryObject<SoundEvent> TURN_BATTLE_START_EVENT = registerSound("turn_battle_start");
+    public static final RegistryObject<SoundEvent> TURN_BATTLE_DOMAIN_EVENT = registerSound("turn_battle_domain");
+    public static final RegistryObject<SoundEvent> GRAN_BLOOD_SPLATTER_01_EVENT = registerSound("gran_blood_splatter_01");
+    public static final RegistryObject<SoundEvent> GRAN_BLOOD_SPLATTER_02_EVENT = registerSound("gran_blood_splatter_02");
+    public static final RegistryObject<SoundEvent> GRAN_BONE_BREAK_EVENT = registerSound("gran_bone_break");
+    public static final RegistryObject<SoundEvent> GRAN_BONE_EVENT = registerSound("gran_bone");
+    public static final RegistryObject<SoundEvent> GRAN_FLESH_CRUSH_EVENT = registerSound("gran_flesh_crush");
+    public static final RegistryObject<SoundEvent> GRAN_HALLUCINATION_EVENT = registerSound("gran_hallucination");
     public static final RegistryObject<SoundEvent> TURN_ENEMY_ATTACK_EVENT = registerSound("turn_enemy_attack");
     public static final RegistryObject<SoundEvent> TURN_ENEMY_DAMAGE_EVENT = registerSound("turn_enemy_damage");
     public static final RegistryObject<SoundEvent> TURN_PLAYER_DAMAGE_EVENT = registerSound("turn_player_damage");
@@ -283,6 +291,8 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> WIND6_EVENT = registerSound("wind6");
     public static final RegistryObject<SoundEvent> UP1_EVENT = registerSound("up1");
     public static final RegistryObject<SoundEvent> COLLAPSE2_EVENT = registerSound("collapse2");
+    public static final RegistryObject<SoundEvent> TURN_BOSS_COLLAPSE_START_EVENT = registerSound("turn_boss_collapse_start");
+    public static final RegistryObject<SoundEvent> TURN_BOSS_COLLAPSE_LOOP_EVENT = registerSound("turn_boss_collapse_loop");
     public static final RegistryObject<SoundEvent> POLLEN_EVENT = registerSound("pollen");
     public static final RegistryObject<SoundEvent> BIRD_CRY_EVENT = registerSound("bird_cry");
     public static final RegistryObject<SoundEvent> WIND2_EVENT = registerSound("wind2");
@@ -1393,7 +1403,7 @@ public class BlackSouls {
     private static Map<Integer, RegistryObject<Item>> registerOriginalEnemySpawnEggs() {
         Map<Integer, RegistryObject<Item>> result = new LinkedHashMap<>();
         for (BSOriginalEnemyData.Entry profile : BSOriginalEnemyData.values()) {
-            if (!profile.spawnable() || BSOriginalEnemyPhaseData.isPhaseSuccessor(profile.id())) {
+            if (!profile.spawnable() || !BSOriginalEnemyPhaseData.shouldShowSpawnEgg(profile.id())) {
                 continue;
             }
             String registryName = String.format("original_enemy_%03d_spawn_egg", profile.id());
