@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.item;
 
 import com.BlackSouls.BlackSoulsMod.entity.DialogueResettable;
+import com.BlackSouls.BlackSoulsMod.entity.EntityRedHood;
 import com.BlackSouls.BlackSoulsMod.network.WhiteBearShopService;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -60,6 +61,17 @@ public class ItemDevTool extends Item {
             LivingEntity target,
             InteractionHand hand
     ) {
+        if (hand == InteractionHand.MAIN_HAND && target instanceof EntityRedHood redHood) {
+            if (player.isShiftKeyDown()) {
+                if (player.level().isClientSide) {
+                    DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
+                            ClientHandler.openRedHoodAnimationEditor(redHood.getId(), redHood.getMmdAnimation()));
+                }
+            } else if (!player.level().isClientSide) {
+                redHood.facePlayer(player);
+            }
+            return InteractionResult.sidedSuccess(player.level().isClientSide);
+        }
         if (player.isShiftKeyDown() && target instanceof DialogueResettable resettable) {
             if (!player.level().isClientSide && player instanceof ServerPlayer serverPlayer) {
                 resettable.resetDialogue(serverPlayer);
@@ -117,6 +129,15 @@ public class ItemDevTool extends Item {
         private static void openGui() {
             net.minecraft.client.Minecraft.getInstance().setScreen(
                     new com.BlackSouls.BlackSoulsMod.client.gui.GuiDevPanel()
+            );
+        }
+
+        private static void openRedHoodAnimationEditor(int entityId, String currentAnimation) {
+            net.minecraft.client.Minecraft.getInstance().setScreen(
+                    new com.BlackSouls.BlackSoulsMod.client.gui.GuiRedHoodAnimationEditor(
+                            entityId,
+                            currentAnimation
+                    )
             );
         }
     }

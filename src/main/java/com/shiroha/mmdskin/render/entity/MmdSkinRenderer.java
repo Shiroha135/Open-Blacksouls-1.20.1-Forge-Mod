@@ -3,6 +3,7 @@ package com.shiroha.mmdskin.render.entity;
 import com.shiroha.mmdskin.player.render.InventoryRenderHelper;
 
 import com.shiroha.mmdskin.MmdSkin;
+import com.shiroha.mmdskin.config.ModelConfigManager;
 import com.shiroha.mmdskin.model.runtime.ManagedModel;
 import com.shiroha.mmdskin.model.runtime.ModelRequestKey;
 import com.shiroha.mmdskin.render.bootstrap.ClientRenderRuntime;
@@ -44,13 +45,23 @@ public class MmdSkinRenderer<T extends Entity> extends EntityRenderer<T> {
     @Override
     public void render(T entityIn, float entityYaw, float tickDelta, PoseStack matrixStackIn,
                        MultiBufferSource bufferIn, int packedLightIn) {
-        super.render(entityIn, entityYaw, tickDelta, matrixStackIn, bufferIn, packedLightIn);
-
         ManagedModel model = ClientRenderRuntime.get().modelRepository()
                 .acquire(ModelRequestKey.mob(entityIn, modelName));
-        if (model == null) return;
+        if (model == null) {
+            super.render(entityIn, entityYaw, tickDelta, matrixStackIn, bufferIn, packedLightIn);
+            return;
+        }
 
         float[] size = parseModelSize(model, reusableSize);
+        float effectiveScale = size[0] * ModelConfigManager.getConfig(model.modelName()).modelScale;
+        if (entityIn instanceof LivingEntity living && living.isBaby()) {
+            effectiveScale *= 0.5f;
+        }
+        float labelOffset = entityIn.getBbHeight() * (effectiveScale - 1.0f);
+        matrixStackIn.pushPose();
+        matrixStackIn.translate(0.0D, labelOffset, 0.0D);
+        super.render(entityIn, entityYaw, tickDelta, matrixStackIn, bufferIn, packedLightIn);
+        matrixStackIn.popPose();
 
         reusablePose.reset();
         EntityAnimationResolver.resolve(entityIn, model, entityYaw, tickDelta, reusablePose);

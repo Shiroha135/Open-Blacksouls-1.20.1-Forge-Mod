@@ -3100,5 +3100,17 @@
   "message.blacksouls.dev.limit_break.enabled": "开发者破限：已开启",
   "message.blacksouls.dev.limit_break.disabled": "开发者破限：已关闭",
   "message.blacksouls.dev.skills.unlocked": "已解锁 %s 个技能书技能（共 %s 个）",
-  "message.blacksouls.dev.skills.forgotten": "已遗忘 %s 个技能书技能"
+  "message.blacksouls.dev.skills.forgotten": "已遗忘 %s 个技能书技能",
+  "gui.blacksouls.red_hood.animation.title": "小红帽动作设定",
+  "gui.blacksouls.red_hood.animation.current": "当前动作：%s",
+  "gui.blacksouls.red_hood.animation.idle": "默认待机",
+  "gui.blacksouls.red_hood.animation.search": "搜索动作",
+  "gui.blacksouls.red_hood.animation.restore": "恢复待机",
+  "gui.blacksouls.red_hood.animation.empty": "没有匹配的动作",
+  "gui.blacksouls.fog_gate.prompt": "浓雾包裹着这里。",
+  "gui.blacksouls.fog_gate.proceed": "前进",
+  "gui.blacksouls.fog_gate.leave": "离开",
+  "gui.blacksouls.scene_spawner.range": "范围 X×Z",
+  "gui.blacksouls.scene_spawner.range_x": "活动范围 X",
+  "gui.blacksouls.scene_spawner.range_z": "活动范围 Z"
 }

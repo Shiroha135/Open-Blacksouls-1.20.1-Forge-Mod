@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class GuiCovenantUpgradeBanner extends Screen {
 
-    private static final ResourceLocation TEX_SOUL_ICON = new ResourceLocation(BlackSouls.MODID, "textures/item/soul_weak.png");
+    private static final ResourceLocation TEX_SOUL_ICON = new ResourceLocation(BlackSouls.MODID, "textures/item/consumable/soul_weak.png");
 
     private int timeLeft;
     private final String npcNameKey;

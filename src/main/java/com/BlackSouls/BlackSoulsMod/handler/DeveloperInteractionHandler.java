@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod.handler;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BonfireEntry;
 import com.BlackSouls.BlackSoulsMod.entity.DialogueResettable;
+import com.BlackSouls.BlackSoulsMod.entity.EntityRedHood;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.WhiteBearShopService;
 import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundBonfireEditorPacket;
@@ -88,6 +89,10 @@ public final class DeveloperInteractionHandler {
     }
 
     private static void resetEntity(PlayerInteractEvent event, net.minecraft.world.entity.Entity target) {
+        if (target instanceof EntityRedHood
+                && event.getEntity().getMainHandItem().is(BlackSouls.DEV_STAT_TOOL.get())) {
+            return;
+        }
         if (!isDeveloperReset(event.getEntity().getMainHandItem(), event.getEntity().isShiftKeyDown())
                 || !(target instanceof DialogueResettable resettable)) {
             return;

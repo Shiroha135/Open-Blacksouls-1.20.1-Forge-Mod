@@ -2653,5 +2653,17 @@
   "message.blacksouls.dev.limit_break.enabled": "Developer limit break enabled",
   "message.blacksouls.dev.limit_break.disabled": "Developer limit break disabled",
   "message.blacksouls.dev.skills.unlocked": "Unlocked %s skill-book skills (%s total)",
-  "message.blacksouls.dev.skills.forgotten": "Forgot %s skill-book skills"
+  "message.blacksouls.dev.skills.forgotten": "Forgot %s skill-book skills",
+  "gui.blacksouls.red_hood.animation.title": "Red Hood Animation",
+  "gui.blacksouls.red_hood.animation.current": "Current: %s",
+  "gui.blacksouls.red_hood.animation.idle": "Default Idle",
+  "gui.blacksouls.red_hood.animation.search": "Search animations",
+  "gui.blacksouls.red_hood.animation.restore": "Restore Idle",
+  "gui.blacksouls.red_hood.animation.empty": "No matching animations",
+  "gui.blacksouls.fog_gate.prompt": "A thick fog shrouds this place.",
+  "gui.blacksouls.fog_gate.proceed": "Proceed",
+  "gui.blacksouls.fog_gate.leave": "Leave",
+  "gui.blacksouls.scene_spawner.range": "Range XxZ",
+  "gui.blacksouls.scene_spawner.range_x": "Patrol range X",
+  "gui.blacksouls.scene_spawner.range_z": "Patrol range Z"
 }

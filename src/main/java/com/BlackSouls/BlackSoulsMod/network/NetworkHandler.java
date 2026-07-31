@@ -77,6 +77,13 @@ public class NetworkHandler {
         register(ClientboundStoryNamePacket.class, ClientboundStoryNamePacket::toBytes, ClientboundStoryNamePacket::new, ClientboundStoryNamePacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(ServerboundConfirmStoryNamePacket.class, ServerboundConfirmStoryNamePacket::toBytes, ServerboundConfirmStoryNamePacket::new, ServerboundConfirmStoryNamePacket::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ServerboundRedHoodDialogueCompletePacket.class, ServerboundRedHoodDialogueCompletePacket::toBytes, ServerboundRedHoodDialogueCompletePacket::new, ServerboundRedHoodDialogueCompletePacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ServerboundSetRedHoodAnimationPacket.class, ServerboundSetRedHoodAnimationPacket::toBytes, ServerboundSetRedHoodAnimationPacket::new, ServerboundSetRedHoodAnimationPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ClientboundOpenFogGatePromptPacket.class, ClientboundOpenFogGatePromptPacket::toBytes, ClientboundOpenFogGatePromptPacket::new, ClientboundOpenFogGatePromptPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ServerboundFogGateProceedPacket.class, ServerboundFogGateProceedPacket::toBytes, ServerboundFogGateProceedPacket::new, ServerboundFogGateProceedPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ClientboundFogGateWalkPacket.class, ClientboundFogGateWalkPacket::toBytes, ClientboundFogGateWalkPacket::new, ClientboundFogGateWalkPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ServerboundSetSceneSpawnerBoundsPacket.class, ServerboundSetSceneSpawnerBoundsPacket::toBytes, ServerboundSetSceneSpawnerBoundsPacket::new, ServerboundSetSceneSpawnerBoundsPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ClientboundCurrentScenePacket.class, ClientboundCurrentScenePacket::toBytes, ClientboundCurrentScenePacket::new, ClientboundCurrentScenePacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ServerboundRequestCurrentScenePacket.class, ServerboundRequestCurrentScenePacket::toBytes, ServerboundRequestCurrentScenePacket::new, ServerboundRequestCurrentScenePacket::handle, NetworkDirection.PLAY_TO_SERVER);
 
     }
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {

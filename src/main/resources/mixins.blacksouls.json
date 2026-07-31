@@ -17,12 +17,20 @@
     "FoodDataMixin",
     "MobEffectMixin",
     "AbsoptionMobEffectMixin",
-    "CampfireBlockMixin"
+    "CampfireBlockMixin",
+    "FogGateBlockMixin",
+    "compat.MapTriggerBlockEntityMixin",
+    "compat.SceneSpawnerBlockEntityMixin",
+    "compat.SceneSpawnManagerMixin"
   ],
   "client": [
     "AbstractContainerScreenAccessor",
     "client.GuiAccessor",
     "client.ItemInHandRendererAccessor",
+    "client.MapTriggerBlockEntityAccessor",
+    "client.MapTriggerRendererMixin",
+    "client.SceneSpawnerScreenMixin",
+    "client.FogGateRendererMixin",
     "client.FontManagerResourceMixin",
     "client.FontSetGlobalMixin",
     "client.MobEffectInstanceClientMixin"

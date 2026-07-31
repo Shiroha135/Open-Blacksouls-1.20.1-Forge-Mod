@@ -3,15 +3,16 @@ package com.BlackSouls.BlackSoulsMod.client.gui;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.client.ClientSkillInfo;
+import com.BlackSouls.BlackSoulsMod.client.ClientSceneState;
 import com.BlackSouls.BlackSoulsMod.client.ClientStoryName;
 import com.BlackSouls.BlackSoulsMod.client.render.BSAvatarRenderer;
+import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
+import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundRequestCurrentScenePacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -22,8 +23,6 @@ public class GuiPlayerStats extends Screen {
 
     private static final int GUI_WIDTH = 370;
     private static final int GUI_HEIGHT = 250;
-    private static final String UNKNOWN_BIOME = "???";
-
     private static final Component[] MENU_LABELS = {
             Component.translatable("gui.blacksouls.menu.skills"),
             Component.translatable("gui.blacksouls.menu.covenants"),
@@ -44,6 +43,8 @@ public class GuiPlayerStats extends Screen {
         this.guiLeft = (this.width - GUI_WIDTH) / 2;
         this.guiTop = (this.height - GUI_HEIGHT) / 2;
         this.clearWidgets();
+        ClientSceneState.clear();
+        NetworkHandler.sendToServer(new ServerboundRequestCurrentScenePacket());
     }
 
     @Override
@@ -104,7 +105,12 @@ public class GuiPlayerStats extends Screen {
         guiGraphics.drawString(font, soulSymbolText, soulStartX + font.width(soulNumText), soulY + 20, tagColor, false);
 
         guiGraphics.drawString(font, I18n.get("gui.blacksouls.stat.location"), locX + 12, locY + 10, tagColor, false);
-        guiGraphics.drawString(font, getBiomeName(player), locX + 12, locY + 28, 0xFFFFFF, false);
+        String sceneName = ClientSceneState.getDisplayName();
+        int maxLocationWidth = locW - 24;
+        if (font.width(sceneName) > maxLocationWidth) {
+            sceneName = font.plainSubstrByWidth(sceneName, maxLocationWidth - font.width("...")) + "...";
+        }
+        guiGraphics.drawString(font, sceneName, locX + 12, locY + 28, 0xFFFFFF, false);
 
         int mainY = guiTop;
         int avatarX = mainX + 12, avatarY = mainY + 12, avatarSize = 60;
@@ -149,20 +155,6 @@ public class GuiPlayerStats extends Screen {
         guiGraphics.drawString(font, mpTxt, barStartX + barW - font.width(mpTxt) - 2, mpY, 0xFFFFFF, true);
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
-    }
-
-    @SuppressWarnings("resource")
-    private String getBiomeName(Player player) {
-        if (player == null) return UNKNOWN_BIOME;
-        net.minecraft.world.level.Level level = player.level();
-        BlockPos pos = player.blockPosition();
-        ResourceLocation biomeKey = level.registryAccess().registryOrThrow(Registries.BIOME).getKey(level.getBiome(pos).value());
-        if (biomeKey != null) {
-            String transKey = "biome." + biomeKey.getNamespace() + "." + biomeKey.getPath();
-            if (I18n.exists(transKey)) return I18n.get(transKey);
-            return biomeKey.getPath();
-        }
-        return UNKNOWN_BIOME;
     }
 
     @Override

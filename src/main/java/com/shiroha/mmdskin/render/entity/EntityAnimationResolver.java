@@ -8,6 +8,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import org.joml.Vector3f;
 
+import java.util.Objects;
+
 /**
  * 通用实体动画状态解析器。
  */
@@ -26,6 +28,20 @@ public final class EntityAnimationResolver {
         }
         params.bodyPitch = 0.0f;
         params.translation.zero();
+
+        if (entity instanceof CustomEntityAnimationProvider provider) {
+            String animation = provider.getMmdAnimation();
+            if (animation != null && !animation.isBlank()
+                    && changeCustomAnimationOnce(model, animation, 0)) {
+                return;
+            }
+            if (model.entityState().playCustomAnim) {
+                model.entityState().playCustomAnim = false;
+                model.entityState().playStageAnim = false;
+                model.entityState().invalidateStateLayers();
+                model.modelInstance().resetPhysics();
+            }
+        }
 
         if (entity instanceof LivingEntity living) {
             if (living.getHealth() <= 0.0f) {
@@ -55,6 +71,27 @@ public final class EntityAnimationResolver {
         } else {
             changeAnimOnce(model, EntityAnimState.State.Idle, 0);
         }
+    }
+
+    private static boolean changeCustomAnimationOnce(ManagedModel model, String animation, int layer) {
+        if (model.entityState().playCustomAnim
+                && Objects.equals(model.entityState().layerAnimationKeys[layer], animation)) {
+            return true;
+        }
+        long handle = model.animationLibrary().animation(animation);
+        if (handle == 0L) {
+            return false;
+        }
+        model.entityState().playCustomAnim = true;
+        model.entityState().playStageAnim = false;
+        model.entityState().invalidateStateLayers();
+        model.entityState().layerAnimationKeys[layer] = animation;
+        model.modelInstance().setLayerLoop(layer, true);
+        model.modelInstance().transitionAnim(handle, layer, 0.25f);
+        model.modelInstance().changeAnim(0L, 1);
+        model.modelInstance().changeAnim(0L, 2);
+        model.modelInstance().resetPhysics();
+        return true;
     }
 
     private static void changeAnimOnce(ManagedModel model,

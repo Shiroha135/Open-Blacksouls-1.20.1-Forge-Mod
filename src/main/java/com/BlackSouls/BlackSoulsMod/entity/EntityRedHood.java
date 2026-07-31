@@ -3,11 +3,15 @@ package com.BlackSouls.BlackSoulsMod.entity;
 import com.BlackSouls.BlackSoulsMod.handler.RedHoodStoryHandler;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketOpenDialogue;
+import com.shiroha.mmdskin.render.entity.CustomEntityAnimationProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,7 +28,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-public class EntityRedHood extends PathfinderMob implements DialogueResettable {
+public class EntityRedHood extends PathfinderMob implements DialogueResettable, CustomEntityAnimationProvider {
+    public static final int MAX_MMD_ANIMATION_LENGTH = 128;
+    private static final EntityDataAccessor<String> MMD_ANIMATION = SynchedEntityData.defineId(
+            EntityRedHood.class,
+            EntityDataSerializers.STRING
+    );
     private int storyStage;
     private String dialogueScene = "intro";
     private boolean storyInitialized;
@@ -44,6 +53,37 @@ public class EntityRedHood extends PathfinderMob implements DialogueResettable {
                 .add(Attributes.MAX_HEALTH, 1024.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.0D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(MMD_ANIMATION, "");
+    }
+
+    @Override
+    public String getMmdAnimation() {
+        return this.entityData.get(MMD_ANIMATION);
+    }
+
+    public void setMmdAnimation(String animation) {
+        String normalized = animation == null ? "" : animation.strip();
+        if (normalized.length() > MAX_MMD_ANIMATION_LENGTH) {
+            normalized = normalized.substring(0, MAX_MMD_ANIMATION_LENGTH);
+        }
+        this.entityData.set(MMD_ANIMATION, normalized);
+    }
+
+    public void facePlayer(Player player) {
+        double dx = player.getX() - this.getX();
+        double dz = player.getZ() - this.getZ();
+        float yaw = (float) (net.minecraft.util.Mth.atan2(dz, dx) * (180F / Math.PI)) - 90F;
+        this.setYRot(yaw);
+        this.yRotO = yaw;
+        this.setYHeadRot(yaw);
+        this.yHeadRotO = yaw;
+        this.setYBodyRot(yaw);
+        this.yBodyRotO = yaw;
     }
 
     public void setStoryContext(int stage, String scene, GlobalPos anchor) {
@@ -94,12 +134,6 @@ public class EntityRedHood extends PathfinderMob implements DialogueResettable {
         if (hand != InteractionHand.MAIN_HAND) {
             return super.mobInteract(player, hand);
         }
-        double dx = player.getX() - this.getX();
-        double dz = player.getZ() - this.getZ();
-        float yaw = (float) (net.minecraft.util.Mth.atan2(dz, dx) * (180F / Math.PI)) - 90F;
-        this.setYRot(yaw);
-        this.setYHeadRot(yaw);
-        this.yBodyRot = yaw;
         if (!this.level().isClientSide && player instanceof ServerPlayer serverPlayer) {
             if (!this.storyInitialized) {
                 RedHoodStoryHandler.initializePlacedEntity(this);
@@ -134,6 +168,7 @@ public class EntityRedHood extends PathfinderMob implements DialogueResettable {
         tag.putBoolean("RedHoodStoryInitialized", this.storyInitialized);
         tag.putString("RedHoodAnchorDimension", this.anchorDimension);
         tag.putLong("RedHoodAnchorPosition", this.anchorPosition);
+        tag.putString("RedHoodMmdAnimation", this.getMmdAnimation());
     }
 
     @Override
@@ -147,6 +182,7 @@ public class EntityRedHood extends PathfinderMob implements DialogueResettable {
         this.storyInitialized = tag.getBoolean("RedHoodStoryInitialized");
         this.anchorDimension = tag.getString("RedHoodAnchorDimension");
         this.anchorPosition = tag.getLong("RedHoodAnchorPosition");
+        this.setMmdAnimation(tag.getString("RedHoodMmdAnimation"));
     }
 
     @Override

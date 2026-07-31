@@ -41,6 +41,7 @@ public class ShaderHelper {
     public static ShaderInstance noraMaskedBlurShader;
     public static ShaderInstance noraRoundedRectShader;
     public static ShaderInstance noraSkijaGlassShader;
+    public static ShaderInstance fogGateShader;
     @SubscribeEvent
     public static void onRegisterShaders(RegisterShadersEvent event) {
 
@@ -172,6 +173,10 @@ public class ShaderHelper {
             event.registerShader(
                     new ShaderInstance(event.getResourceProvider(), new ResourceLocation(BlackSouls.MODID, "nora_skija_glass"), DefaultVertexFormat.POSITION_TEX_COLOR),
                     shader -> noraSkijaGlassShader = shader
+            );
+            event.registerShader(
+                    new ShaderInstance(event.getResourceProvider(), new ResourceLocation(BlackSouls.MODID, "fog_gate"), DefaultVertexFormat.POSITION_COLOR_TEX),
+                    shader -> fogGateShader = shader
             );
 
             LOGGER.info("BlackSouls shaders loaded successfully.");
