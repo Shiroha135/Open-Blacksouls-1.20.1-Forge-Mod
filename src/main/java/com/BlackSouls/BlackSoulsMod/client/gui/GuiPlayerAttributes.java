@@ -2,6 +2,7 @@ package com.BlackSouls.BlackSoulsMod.client.gui;
 
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.client.ClientSkillInfo;
+import com.BlackSouls.BlackSoulsMod.client.ClientStoryName;
 import com.BlackSouls.BlackSoulsMod.client.render.BSAvatarRenderer;
 import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -64,7 +65,7 @@ public class GuiPlayerAttributes extends Screen {
         int labelColor = 0x5555FF;
         int valColor = 0xFFFFFF;
         int topY = offsetY + 15;
-        String playerName = player.getName().getString();
+        String playerName = ClientStoryName.get(player);
         guiGraphics.drawString(font, playerName, guiLeft + 15, topY, valColor, false);
         int lvX = guiLeft + 130;
         guiGraphics.drawString(font, "Lv", lvX, topY, labelColor, false);

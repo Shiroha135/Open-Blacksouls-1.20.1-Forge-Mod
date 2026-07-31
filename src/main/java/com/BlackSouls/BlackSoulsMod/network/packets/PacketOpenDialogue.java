@@ -16,16 +16,40 @@ public class PacketOpenDialogue {
     private final boolean isLaterDialogue;
     private final int entityId;
     private final int covLevel;
+    private final boolean completeRedHoodDialogue;
+    private final int redHoodStoryStage;
+    private final boolean killOnlyOptions;
     private final boolean valid;
 
     
     public PacketOpenDialogue(String nameKey, String avatarId, String[] dialogues, boolean isLaterDialogue, int entityId, int covLevel) {
+        this(nameKey, avatarId, dialogues, isLaterDialogue, entityId, covLevel, false, -1, false);
+    }
+
+    public PacketOpenDialogue(String nameKey, String avatarId, String[] dialogues, boolean isLaterDialogue,
+                              int entityId, int covLevel, boolean killOnlyOptions) {
+        this(nameKey, avatarId, dialogues, isLaterDialogue, entityId, covLevel,
+                false, -1, killOnlyOptions);
+    }
+
+    public PacketOpenDialogue(String nameKey, String avatarId, String[] dialogues, boolean isLaterDialogue,
+                              int entityId, int covLevel, boolean completeRedHoodDialogue, int redHoodStoryStage) {
+        this(nameKey, avatarId, dialogues, isLaterDialogue, entityId, covLevel,
+                completeRedHoodDialogue, redHoodStoryStage, false);
+    }
+
+    public PacketOpenDialogue(String nameKey, String avatarId, String[] dialogues, boolean isLaterDialogue,
+                              int entityId, int covLevel, boolean completeRedHoodDialogue,
+                              int redHoodStoryStage, boolean killOnlyOptions) {
         this.nameKey = nameKey;
         this.avatarId = avatarId;
         this.dialogues = dialogues;
         this.isLaterDialogue = isLaterDialogue;
         this.entityId = entityId;
         this.covLevel = covLevel;
+        this.completeRedHoodDialogue = completeRedHoodDialogue;
+        this.redHoodStoryStage = redHoodStoryStage;
+        this.killOnlyOptions = killOnlyOptions;
         this.valid = true;
     }
 
@@ -39,6 +63,9 @@ public class PacketOpenDialogue {
             this.isLaterDialogue = false;
             this.entityId = -1;
             this.covLevel = -1;
+            this.completeRedHoodDialogue = false;
+            this.redHoodStoryStage = -1;
+            this.killOnlyOptions = false;
             this.valid = false;
             return;
         }
@@ -49,6 +76,9 @@ public class PacketOpenDialogue {
         this.isLaterDialogue = buf.readBoolean();
         this.entityId = buf.readVarInt();
         this.covLevel = buf.readVarInt();
+        this.completeRedHoodDialogue = buf.readBoolean();
+        this.redHoodStoryStage = buf.readVarInt();
+        this.killOnlyOptions = buf.readBoolean();
         this.valid = true;
     }
 
@@ -64,6 +94,9 @@ public class PacketOpenDialogue {
         buf.writeBoolean(this.isLaterDialogue);
         buf.writeVarInt(this.entityId);
         buf.writeVarInt(this.covLevel);
+        buf.writeBoolean(this.completeRedHoodDialogue);
+        buf.writeVarInt(this.redHoodStoryStage);
+        buf.writeBoolean(this.killOnlyOptions);
     }
 
     
@@ -80,7 +113,9 @@ public class PacketOpenDialogue {
         public static void doOpen(PacketOpenDialogue msg) {
             net.minecraft.client.Minecraft.getInstance().setScreen(new com.BlackSouls.BlackSoulsMod.client.gui.GuiDialogueEnhanced(
                     msg.nameKey, msg.avatarId, msg.dialogues,
-                    msg.isLaterDialogue, msg.entityId, msg.covLevel
+                    msg.isLaterDialogue, msg.entityId, msg.covLevel,
+                    msg.completeRedHoodDialogue, msg.redHoodStoryStage,
+                    msg.killOnlyOptions
             ));
         }
     }

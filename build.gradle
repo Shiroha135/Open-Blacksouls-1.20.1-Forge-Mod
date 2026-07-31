@@ -16,6 +16,7 @@ base {
 mixin {
     add sourceSets.main, "mixins.blacksouls.refmap.json"
     config "mixins.blacksouls.json"
+    config "mmdskin-forge.mixins.json"
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
@@ -36,6 +37,9 @@ minecraft {
                 "${mod_id}" {
                     source sourceSets.main
                 }
+                "mmdskin" {
+                    source sourceSets.main
+                }
             }
         }
 
@@ -43,6 +47,7 @@ minecraft {
 
         client {
             args '-mixin.config=mixins.blacksouls.json'
+            args '-mixin.config=mmdskin-forge.mixins.json'
             property 'forge.enabledGameTestNamespaces', mod_id
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
@@ -52,6 +57,7 @@ minecraft {
             property 'forge.enabledGameTestNamespaces', mod_id
             args '--nogui'
             args '-mixin.config=mixins.blacksouls.json'
+            args '-mixin.config=mmdskin-forge.mixins.json'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
         }
@@ -70,6 +76,8 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    mavenCentral()
+
     maven {
         url = "https://maven.theillusivec4.top/"
         content {
@@ -94,6 +102,10 @@ repositories {
     }
 }
 
+configurations {
+    mmdEmbedded
+}
+
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
@@ -104,6 +116,9 @@ dependencies {
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:5.14.1+1.20.1")
 
     runtimeOnly fg.deobf("maven.modrinth:embeddium:0.3.31+mc1.20.1")
+
+    implementation 'javazoom:jlayer:1.0.1'
+    mmdEmbedded 'javazoom:jlayer:1.0.1'
 
 }
 
@@ -132,9 +147,23 @@ tasks.register('copyMaps', Copy) {
 tasks.named('processResources').configure {
     finalizedBy 'copyMaps'
 }
+tasks.withType(JavaExec).configureEach {
+    dependsOn 'copyMaps'
+}
 
 tasks.named('jar', Jar).configure {
     dependsOn 'copyMaps'
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from {
+        configurations.mmdEmbedded.collect { dependency -> zipTree(dependency) }
+    }
+
+    exclude 'META-INF/MANIFEST.MF'
+    exclude 'META-INF/*.SF'
+    exclude 'META-INF/*.RSA'
+    exclude 'META-INF/*.DSA'
+    exclude 'module-info.class'
 
     manifest {
         attributes([
@@ -145,7 +174,7 @@ tasks.named('jar', Jar).configure {
                 'Implementation-Version'  : project.jar.archiveVersion,
                 'Implementation-Vendor'   : mod_authors,
                 'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                'MixinConfigs'            : 'mixins.blacksouls.json'
+                'MixinConfigs'            : 'mixins.blacksouls.json,mmdskin-forge.mixins.json'
         ])
     }
     finalizedBy 'reobfJar'

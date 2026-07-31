@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod.client.gui;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.client.ClientSkillInfo;
+import com.BlackSouls.BlackSoulsMod.client.ClientStoryName;
 import com.BlackSouls.BlackSoulsMod.client.render.BSAvatarRenderer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
@@ -118,7 +119,7 @@ public class GuiPlayerStats extends Screen {
 
         int textX = mainX + 80;
         int textY = mainY + 12;
-        String playerName = player.getName().getString();
+        String playerName = ClientStoryName.get(player);
         guiGraphics.drawString(font, playerName, textX, textY, 0xFFFFFF, false);
         guiGraphics.drawString(font, I18n.get("gui.blacksouls.title.undead"), textX + font.width(playerName) + 25, textY, 0xFFFFFF, false);
 

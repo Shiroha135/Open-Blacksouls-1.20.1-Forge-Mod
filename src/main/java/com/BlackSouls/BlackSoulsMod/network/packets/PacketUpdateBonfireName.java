@@ -1,13 +1,16 @@
 package com.BlackSouls.BlackSoulsMod.network.packets;
 
+import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSWorldData;
-import com.BlackSouls.BlackSoulsMod.capability.BonfireEntry;
+import com.BlackSouls.BlackSoulsMod.util.BonfireMetadata;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
 import net.minecraftforge.network.NetworkEvent;
 import java.util.function.Supplier;
 
@@ -44,16 +47,29 @@ public class PacketUpdateBonfireName {
     public boolean handle(Supplier<NetworkEvent.Context> ctx) {
         PacketHandlers.handleServer(ctx, context -> {
             ServerPlayer player = context.getSender();
-            if (player != null && player.getServer() != null && this.pos != null && !this.newName.isBlank()) {
+            if (player == null || player.getServer() == null || this.pos == null
+                    || !player.isCreative()
+                    || !player.level().dimension().equals(this.pos.dimension())
+                    || player.blockPosition().distSqr(this.pos.pos()) > 64.0D
+                    || !player.getMainHandItem().is(BlackSouls.DEV_STAT_TOOL.get())) {
+                return;
+            }
+            ServerLevel level = player.getServer().getLevel(this.pos.dimension());
+            if (level == null || !level.getBlockState(this.pos.pos()).is(BlockTags.CAMPFIRES)) {
+                return;
+            }
+            String cleanName = this.newName.strip();
+            if (cleanName.isBlank()) {
+                cleanName = BonfireMetadata.DEFAULT_NAME;
+            }
+            String cleanDescription = this.newDesc.strip();
+            if (BonfireMetadata.write(level, this.pos.pos(), cleanName, cleanDescription)) {
                 BSWorldData data = BSWorldData.get(player.getServer().overworld());
-                for (BonfireEntry entry : data.activatedBonfires) {
-                    if (entry.pos.equals(pos)) {
-                        entry.name = newName;
-                        entry.description = newDesc;
-                        data.setDirty();
-                        break;
-                    }
-                }
+                data.updateBonfire(this.pos, cleanName, cleanDescription);
+                player.displayClientMessage(
+                        net.minecraft.network.chat.Component.translatable("message.blacksouls.bonfire.editor.saved"),
+                        true
+                );
             }
         });
         return true;

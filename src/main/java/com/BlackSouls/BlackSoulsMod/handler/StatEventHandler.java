@@ -394,10 +394,19 @@ public class StatEventHandler {
     }
 
     private static double getGuardEffectMultiplier(LivingEntity entity) {
-        return Math.pow(1.5D, getBaubleCount(entity, BlackSouls.RING_TENACIOUS.get()))
+        double multiplier = Math.pow(1.5D, getBaubleCount(entity, BlackSouls.RING_TENACIOUS.get()))
                 * Math.pow(2.0D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_1))
                 * Math.pow(2.5D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_2))
                 * Math.pow(3.0D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_3));
+        if (entity instanceof Player player && hasPorcupineShield(player)) {
+            multiplier *= 2.0D;
+        }
+        return multiplier;
+    }
+
+    private static boolean hasPorcupineShield(Player player) {
+        return player.getMainHandItem().is(BlackSouls.PORCUPINE_SHIELD.get())
+                || player.getOffhandItem().is(BlackSouls.PORCUPINE_SHIELD.get());
     }
 
     private static boolean hasRegisteredEffect(LivingEntity entity, RegistryObject<net.minecraft.world.effect.MobEffect> effect) {
@@ -832,6 +841,7 @@ public class StatEventHandler {
                 + getOriginalRingCount(player, ItemOriginalRing.Profile.SIN_PLUS_2) * 60.0D
                 + getOriginalRingCount(player, ItemOriginalRing.Profile.SIN_PLUS_3) * 70.0D
                 + getOriginalRingCount(player, ItemOriginalRing.Profile.COUNTERATTACK) * 100.0D;
+        if (hasPorcupineShield(player)) rate += 30.0D;
         ItemStack mainHand = player.getMainHandItem();
         if (mainHand.isEmpty()) return Math.min(100.0D, rate);
         if (mainHand.getItem() == BlackSouls.GUNGNIR.get()) rate += 100.0D;
@@ -896,6 +906,17 @@ public class StatEventHandler {
                 target.level().playSound(null, target.getX(), target.getY(), target.getZ(), BlackSouls.ABSORB1_EVENT.get(), SoundSource.PLAYERS, 1.0F, 0.8F);
                 target.level().playSound(null, target.getX(), target.getY(), target.getZ(), BlackSouls.DARKNESS7_EVENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
             }));
+        } else if (hasPorcupineShield(player)) {
+            target.level().playSound(
+                    null,
+                    target.getX(),
+                    target.getY(),
+                    target.getZ(),
+                    net.minecraft.sounds.SoundEvents.SHIELD_BLOCK,
+                    SoundSource.PLAYERS,
+                    1.0F,
+                    1.0F
+            );
         } else if (player.getMainHandItem().getItem() == BlackSouls.HALBERD.get()
                 || player.getMainHandItem().getItem() == BlackSouls.BAHAMUT.get()
                 || player.getMainHandItem().getItem() == BlackSouls.MIRANDA_AXE.get()) {
@@ -1021,6 +1042,12 @@ public class StatEventHandler {
                 if (!level.isClientSide() && player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
                     com.BlackSouls.BlackSoulsMod.capability.BSWorldData data = com.BlackSouls.BlackSoulsMod.capability.BSWorldData.get(level.getServer().overworld());
                     boolean isFirstTime = data.addBonfire(level, pos, player);
+                    BonfireStateHandler.light(level, pos);
+                    RedHoodStoryHandler.onBonfireRest(
+                            serverPlayer,
+                            (net.minecraft.server.level.ServerLevel) level,
+                            pos
+                    );
 
                     if (BlackSouls.FIRE6_EVENT != null) {
                         level.playSound(null, pos, BlackSouls.FIRE6_EVENT.get(), net.minecraft.sounds.SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -1451,6 +1478,7 @@ public class StatEventHandler {
         } else if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.SLAUGHTERER_GREATAXE.get()) {
             bleedRate = 100.0D;
         }
+        if (hasPorcupineShield(attacker)) bleedRate += 30.0D;
         if (bleedRate > 0.0D && Math.random() * 100.0D < bleedRate && BlackSouls.BUFF_BLEEDING.isPresent()) {
             victim.addEffect(new net.minecraft.world.effect.MobEffectInstance(BlackSouls.BUFF_BLEEDING.get(), 600, 0));
         }
@@ -2652,6 +2680,7 @@ public class StatEventHandler {
             if (!offHand.isEmpty() && offHand.getItem() == BlackSouls.MURDERERS_SHOTGUN.get()) {
                 stats.attack += 50.0; stats.speed *= 0.95;
             }
+            if (hasPorcupineShield(player)) stats.speed *= 0.97D;
 
             stats.weaponEnchantments.clear();
 

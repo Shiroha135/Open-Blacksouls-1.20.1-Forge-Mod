@@ -15,6 +15,15 @@ description='''
 这是一个基于BlackSouls系列制作的模组，加入了独特的技能系统、蓝量机制以及相关特色道具。
 '''
 
+[[mods]]
+modId="mmdskin"
+version="1.0.5-1.20.1-blacksouls"
+displayName="MMD Skin for BLACKSOULS"
+authors="shiroha233, kjkjkAIStudio, asuka-mio, Gengorou-C"
+description='''
+将 MMD 模型渲染、动作、物理和舞台功能直接集成到 BLACKSOULS 主模组中。
+'''
+
 # ====================================================
 # 基础前置依赖（必选） (Forge & Minecraft)
 # ====================================================
@@ -26,6 +35,20 @@ ordering="NONE"
 side="BOTH"
 
 [[dependencies.blacksouls]]
+modId="minecraft"
+mandatory=true
+versionRange="${minecraft_version_range}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.mmdskin]]
+modId="forge"
+mandatory=true
+versionRange="${forge_version_range}"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.mmdskin]]
 modId="minecraft"
 mandatory=true
 versionRange="${minecraft_version_range}"

@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod.client.gui;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.client.ClientSkillInfo;
+import com.BlackSouls.BlackSoulsMod.client.ClientStoryName;
 import com.BlackSouls.BlackSoulsMod.client.render.BSAvatarRenderer;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketBindSkill;
@@ -263,7 +264,7 @@ public class GuiAdvancedSkill extends Screen {
 
         int textBaseX = rightX + 80;
 
-        String playerName = player.getName().getString();
+        String playerName = ClientStoryName.get(player);
         int nameWidth = font.width(playerName);
         guiGraphics.drawString(font, playerName, textBaseX, guiTop + 15, 0xFFFFFF, false);
         guiGraphics.drawString(font, UNDEAD, textBaseX + nameWidth + 25, guiTop + 15, 0xFFFFFF, false);

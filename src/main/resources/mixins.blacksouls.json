@@ -16,7 +16,8 @@
     "MobEffectInstanceBattleMixin",
     "FoodDataMixin",
     "MobEffectMixin",
-    "AbsoptionMobEffectMixin"
+    "AbsoptionMobEffectMixin",
+    "CampfireBlockMixin"
   ],
   "client": [
     "AbstractContainerScreenAccessor",

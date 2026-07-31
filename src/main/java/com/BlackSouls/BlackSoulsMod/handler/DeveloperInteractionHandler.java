@@ -1,11 +1,18 @@
 package com.BlackSouls.BlackSoulsMod.handler;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.capability.BonfireEntry;
 import com.BlackSouls.BlackSoulsMod.entity.DialogueResettable;
+import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.WhiteBearShopService;
+import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundBonfireEditorPacket;
+import com.BlackSouls.BlackSoulsMod.util.BonfireMetadata;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -28,7 +35,33 @@ public final class DeveloperInteractionHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onBlockInteract(PlayerInteractEvent.RightClickBlock event) {
-        if (!isDeveloperReset(event.getEntity().getMainHandItem(), event.getEntity().isShiftKeyDown())) {
+        if (event.getHand() != InteractionHand.MAIN_HAND
+                || !isDeveloperReset(event.getEntity().getMainHandItem(), event.getEntity().isShiftKeyDown())) {
+            return;
+        }
+        if (event.getLevel().getBlockState(event.getPos()).is(BlockTags.CAMPFIRES)) {
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.SUCCESS);
+            if (event.getEntity() instanceof ServerPlayer player) {
+                if (!player.isCreative()) {
+                    player.displayClientMessage(Component.translatable("message.blacksouls.dev.no_permission"), true);
+                    return;
+                }
+                if (!BonfireMetadata.isSupported(event.getLevel(), event.getPos())) {
+                    player.displayClientMessage(
+                            Component.translatable("message.blacksouls.bonfire.editor.unsupported"),
+                            true
+                    );
+                    return;
+                }
+                BonfireMetadata.Data metadata = BonfireMetadata.read(event.getLevel(), event.getPos());
+                BonfireEntry entry = new BonfireEntry(
+                        GlobalPos.of(event.getLevel().dimension(), event.getPos()),
+                        metadata.name(),
+                        metadata.description()
+                );
+                NetworkHandler.sendToPlayer(new ClientboundBonfireEditorPacket(entry), player);
+            }
             return;
         }
         ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(

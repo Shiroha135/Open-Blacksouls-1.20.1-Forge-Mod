@@ -131,7 +131,7 @@ public class ClientboundTurnBattlePacket {
         PacketHandlers.handleClient(supplier, () -> {
             Minecraft minecraft = Minecraft.getInstance();
             if (minecraft.screen instanceof GuiTurnBattle battle
-                    && battle.matches(this.rootEntityId)) {
+                    && (battle.matches(this.rootEntityId) || !this.active)) {
                 battle.applyState(this.active, this.battleProfileId, this.enemies,
                         this.actingEnemyIndex, this.phaseChanged,
                         this.awaitingPresentation, this.playerHits, this.incomingHits, this.message,

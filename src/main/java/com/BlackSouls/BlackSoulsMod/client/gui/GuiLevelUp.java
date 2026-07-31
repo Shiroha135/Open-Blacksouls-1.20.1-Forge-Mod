@@ -2,6 +2,7 @@ package com.BlackSouls.BlackSoulsMod.client.gui;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
+import com.BlackSouls.BlackSoulsMod.client.ClientStoryName;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketConvertSouls;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -58,7 +59,7 @@ public class GuiLevelUp extends Screen {
     protected void init() {
         super.init();
         if (this.minecraft != null && this.minecraft.player != null) {
-            this.playerName = this.minecraft.player.getDisplayName().getString();
+            this.playerName = ClientStoryName.get(this.minecraft.player);
             this.minecraft.player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> this.currentSouls = stats.souls);
         }
         this.avatarTex = new ResourceLocation(BlackSouls.MODID, "textures/gui/avatars/" + npcAvatarId + ".png");

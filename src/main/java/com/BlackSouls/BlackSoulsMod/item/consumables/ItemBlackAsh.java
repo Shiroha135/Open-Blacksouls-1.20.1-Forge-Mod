@@ -3,12 +3,11 @@ package com.BlackSouls.BlackSoulsMod.item.consumables;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
+import com.BlackSouls.BlackSoulsMod.util.LibraryDestination;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -26,10 +25,7 @@ import java.util.List;
 
 public class ItemBlackAsh extends Item {
 
-    private static final ResourceKey<Level> LIBRARY_KEY = ResourceKey.create(
-            Registries.DIMENSION,
-            new ResourceLocation("blacksouls", "library")
-    );
+    private static final ResourceKey<Level> LIBRARY_KEY = LibraryDestination.DIMENSION;
 
     public ItemBlackAsh(Properties properties) {
         super(properties.stacksTo(1));
@@ -40,14 +36,10 @@ public class ItemBlackAsh extends Item {
         ItemStack stack = player.getItemInHand(hand);
 
         if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
-
-            
             if (serverPlayer.level().dimension().equals(LIBRARY_KEY)) {
                 teleportToOverworldSpawn(serverPlayer);
                 return InteractionResultHolder.consume(stack);
             }
-
-            
             boolean success = teleportToLibrary(serverPlayer);
             if (!success) {
                 return InteractionResultHolder.fail(stack);
@@ -66,9 +58,14 @@ public class ItemBlackAsh extends Item {
             serverPlayer.sendSystemMessage(Component.translatable("message.blacksouls.no_bonfire").withStyle(ChatFormatting.RED));
             return false;
         }
+        if (!LibraryDestination.isLandingSafe(targetLevel)) {
+            serverPlayer.sendSystemMessage(Component.translatable("message.blacksouls.library_unavailable").withStyle(ChatFormatting.RED));
+            return false;
+        }
 
         
         stats.souls = 0;
+        stats.hasVisitedLibrary = true;
         StatEventHandler.syncToClient(serverPlayer);
 
         serverPlayer.level().playSound(
@@ -81,12 +78,14 @@ public class ItemBlackAsh extends Item {
         );
 
         
-        double bonfireX = 5.68;
-        double bonfireY = -50.0;
-        double bonfireZ = 12.4;
-        float targetYaw = 90.0F;
-
-        serverPlayer.teleportTo(targetLevel, bonfireX, bonfireY, bonfireZ, targetYaw, 0.0F);
+        serverPlayer.teleportTo(
+                targetLevel,
+                LibraryDestination.X,
+                LibraryDestination.Y,
+                LibraryDestination.Z,
+                LibraryDestination.YAW,
+                0.0F
+        );
 
         targetLevel.playSound(
                 null,
@@ -103,7 +102,6 @@ public class ItemBlackAsh extends Item {
 
     private void teleportToOverworldSpawn(ServerPlayer serverPlayer) {
         ServerLevel overworld = serverPlayer.server.overworld();
-
         BlockPos spawnPos = overworld.getSharedSpawnPos();
         float spawnYaw = overworld.getSharedSpawnAngle();
 
@@ -134,7 +132,7 @@ public class ItemBlackAsh extends Item {
                 1.0F
         );
 
-        
+        serverPlayer.sendSystemMessage(Component.translatable("message.blacksouls.black_ash_use").withStyle(ChatFormatting.DARK_PURPLE));
     }
 
     @Override

@@ -1,0 +1,182 @@
+package com.shiroha.mmdskin.ui.selector.adapter;
+
+import com.shiroha.mmdskin.bridge.runtime.NativeModelPort;
+import com.shiroha.mmdskin.bridge.runtime.NativeModelQueryPort;
+import com.shiroha.mmdskin.config.ModelConfigData;
+import com.shiroha.mmdskin.config.ModelConfigManager;
+import com.shiroha.mmdskin.compat.maid.runtime.MaidMMDModelManager;
+import com.shiroha.mmdskin.model.runtime.ManagedModel;
+import com.shiroha.mmdskin.model.runtime.ModelRequestKey;
+import com.shiroha.mmdskin.render.bootstrap.ClientRenderRuntime;
+import com.shiroha.mmdskin.ui.config.ModelSelectorConfig;
+import com.shiroha.mmdskin.ui.selector.application.MaterialVisibilityApplicationService.MaterialEntryState;
+import com.shiroha.mmdskin.ui.selector.application.MaterialVisibilityApplicationService.MaterialScreenContext;
+import com.shiroha.mmdskin.ui.selector.port.MaterialVisibilityGateway;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+/** 文件职责：为材质可见性界面提供模型上下文与材质读写能力。 */
+public class DefaultMaterialVisibilityGateway implements MaterialVisibilityGateway {
+    private static final Logger LOGGER = LogManager.getLogger();
+
+    private final Supplier<? extends NativeModelPort> nativeModelPortSupplier;
+    private final Supplier<? extends NativeModelQueryPort> nativeModelQueryPortSupplier;
+    private final Function<String, ModelConfigData> configLoader;
+    private final BiConsumer<String, Set<Integer>> hiddenMaterialsSaver;
+
+    public DefaultMaterialVisibilityGateway(NativeModelPort nativeModelPort,
+                                            NativeModelQueryPort nativeModelQueryPort) {
+        this(() -> nativeModelPort, () -> nativeModelQueryPort);
+    }
+
+    public DefaultMaterialVisibilityGateway(Supplier<? extends NativeModelPort> nativeModelPortSupplier,
+                                            Supplier<? extends NativeModelQueryPort> nativeModelQueryPortSupplier) {
+        this(
+                nativeModelPortSupplier,
+                nativeModelQueryPortSupplier,
+                ModelConfigManager::getConfig,
+                DefaultMaterialVisibilityGateway::persistHiddenMaterials
+        );
+    }
+
+    DefaultMaterialVisibilityGateway(Supplier<? extends NativeModelPort> nativeModelPortSupplier,
+                                     Supplier<? extends NativeModelQueryPort> nativeModelQueryPortSupplier,
+                                     Function<String, ModelConfigData> configLoader,
+                                     BiConsumer<String, Set<Integer>> hiddenMaterialsSaver) {
+        this.nativeModelPortSupplier = nativeModelPortSupplier;
+        this.nativeModelQueryPortSupplier = nativeModelQueryPortSupplier;
+        this.configLoader = configLoader;
+        this.hiddenMaterialsSaver = hiddenMaterialsSaver;
+    }
+
+    @Override
+    public Optional<MaterialScreenContext> createPlayerContext() {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.player == null) {
+            return Optional.empty();
+        }
+
+        String modelName = ModelSelectorConfig.getInstance().getSelectedModel();
+        if (modelName == null || modelName.isEmpty()) {
+            LOGGER.warn("Player has no selected model");
+            return Optional.empty();
+        }
+
+        ManagedModel model = ClientRenderRuntime.get().modelRepository()
+                .acquire(ModelRequestKey.player(minecraft.player, modelName));
+        if (model == null) {
+            LOGGER.warn("Cannot resolve player model {}", modelName);
+            return Optional.empty();
+        }
+
+        return Optional.of(new MaterialScreenContext(model.modelInstance().getModelHandle(), modelName, modelName));
+    }
+
+    @Override
+    public Optional<MaterialScreenContext> createMaidContext(UUID maidUuid, String maidName) {
+        ManagedModel model = MaidMMDModelManager.getModel(maidUuid);
+        if (model == null) {
+            LOGGER.warn("Cannot resolve maid model {}", maidUuid);
+            return Optional.empty();
+        }
+
+        String displayName = maidName != null
+                ? maidName
+                : Component.translatable("gui.mmdskin.maid.default_name").getString();
+        return Optional.of(new MaterialScreenContext(
+                model.modelInstance().getModelHandle(),
+                displayName,
+                model.modelInstance().getModelName()));
+    }
+
+    @Override
+    public List<MaterialEntryState> loadMaterials(MaterialScreenContext context) {
+        List<MaterialEntryState> materials = new ArrayList<>();
+        NativeModelPort nativeModelPort = nativeModelPortSupplier.get();
+        NativeModelQueryPort nativeModelQueryPort = nativeModelQueryPortSupplier.get();
+        Set<Integer> configuredHiddenMaterials = loadConfiguredHiddenMaterials(context.configModelName());
+        int materialCount = nativeModelPort.getMaterialCount(context.modelHandle());
+        for (int i = 0; i < materialCount; i++) {
+            materials.add(new MaterialEntryState(
+                    i,
+                    nativeModelQueryPort.getMaterialName(context.modelHandle(), i),
+                    isConfiguredVisible(context, nativeModelQueryPort, configuredHiddenMaterials, i)));
+        }
+        return materials;
+    }
+
+    @Override
+    public void setAllVisible(long modelHandle, boolean visible) {
+        try {
+            NativeModelPort nativeModelPort = nativeModelPortSupplier.get();
+            nativeModelPort.setAllMaterialsVisible(modelHandle, visible);
+        } catch (Exception e) {
+            LOGGER.warn("Failed to update material visibility", e);
+        }
+    }
+
+    @Override
+    public void setMaterialVisible(long modelHandle, int materialIndex, boolean visible) {
+        try {
+            NativeModelPort nativeModelPort = nativeModelPortSupplier.get();
+            nativeModelPort.setMaterialVisible(modelHandle, materialIndex, visible);
+        } catch (Exception e) {
+            LOGGER.warn("Failed to update material visibility", e);
+        }
+    }
+
+    @Override
+    public void saveHiddenMaterials(String configModelName, Set<Integer> hiddenMaterials) {
+        try {
+            hiddenMaterialsSaver.accept(
+                    configModelName,
+                    hiddenMaterials == null ? new HashSet<>() : new HashSet<>(hiddenMaterials)
+            );
+        } catch (Exception e) {
+            LOGGER.warn("Failed to save hidden materials for {}", configModelName, e);
+        }
+    }
+
+    private Set<Integer> loadConfiguredHiddenMaterials(String configModelName) {
+        if (configModelName == null || configModelName.isEmpty()) {
+            return Set.of();
+        }
+        try {
+            ModelConfigData config = configLoader.apply(configModelName);
+            if (config == null || config.hiddenMaterials == null || config.hiddenMaterials.isEmpty()) {
+                return Set.of();
+            }
+            return Set.copyOf(config.hiddenMaterials);
+        } catch (Exception e) {
+            LOGGER.warn("Failed to load hidden materials for {}", configModelName, e);
+            return Set.of();
+        }
+    }
+
+    private boolean isConfiguredVisible(MaterialScreenContext context,
+                                        NativeModelQueryPort nativeModelQueryPort,
+                                        Set<Integer> configuredHiddenMaterials,
+                                        int materialIndex) {
+        if (context.configModelName() == null || context.configModelName().isEmpty()) {
+            return nativeModelQueryPort.isMaterialVisible(context.modelHandle(), materialIndex);
+        }
+        return !configuredHiddenMaterials.contains(materialIndex);
+    }
+
+    private static void persistHiddenMaterials(String configModelName, Set<Integer> hiddenMaterials) {
+        ModelConfigData config = ModelConfigManager.getConfig(configModelName);
+        config.hiddenMaterials = hiddenMaterials == null ? new HashSet<>() : new HashSet<>(hiddenMaterials);
+        ModelConfigManager.saveConfig(configModelName, config);
+    }
+}

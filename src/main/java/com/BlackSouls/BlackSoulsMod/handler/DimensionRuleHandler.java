@@ -4,8 +4,11 @@ import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.Event;
@@ -42,9 +45,23 @@ public class DimensionRuleHandler {
     
     @SubscribeEvent
     public static void onMobSpawn(MobSpawnEvent.FinalizeSpawn event) {
-        
-        if (event.getLevel().getLevel().dimension().equals(LIBRARY_DIM)) {
+        MobSpawnType spawnType = event.getSpawnType();
+        if (event.getLevel().getLevel().dimension().equals(LIBRARY_DIM)
+                && (spawnType == MobSpawnType.NATURAL
+                || spawnType == MobSpawnType.CHUNK_GENERATION
+                || spawnType == MobSpawnType.PATROL
+                || spawnType == MobSpawnType.REINFORCEMENT)) {
             event.setSpawnCancelled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onForbiddenEntityJoin(EntityJoinLevelEvent event) {
+        if (!event.getLevel().isClientSide()
+                && event.getLevel().dimension().equals(LIBRARY_DIM)
+                && (event.getEntity().getType() == EntityType.BAT
+                || event.getEntity().getType() == EntityType.GLOW_SQUID)) {
+            event.setCanceled(true);
         }
     }
 }

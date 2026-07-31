@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.handler;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.util.LibraryDestination;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundBannerPacket;
@@ -121,6 +122,9 @@ public class ServerEventHandler {
 
     @SubscribeEvent
     public static void onBonfireInteract(PlayerInteractEvent.RightClickBlock event) {
+        if (event.getEntity().isShiftKeyDown()) {
+            return;
+        }
         BlockState state = event.getLevel().getBlockState(event.getPos());
 
         if (state.is(Blocks.CAMPFIRE) || state.is(Blocks.SOUL_CAMPFIRE)) {
@@ -282,13 +286,18 @@ public class ServerEventHandler {
                         return;
                     }
 
-                    ResourceKey<net.minecraft.world.level.Level> libKey =
-                            ResourceKey.create(Registries.DIMENSION, new ResourceLocation("blacksouls", "library"));
-                    ServerLevel libLevel = server.getLevel(libKey);
+                    ServerLevel libLevel = server.getLevel(LibraryDestination.DIMENSION);
 
-                    if (libLevel != null) {
+                    if (libLevel != null && LibraryDestination.isLandingSafe(libLevel)) {
                         stats.hasVisitedLibrary = true;
-                        serverPlayer.teleportTo(libLevel, 20.5, -50.0, 12.5, 90.0F, 0.0F);
+                        serverPlayer.teleportTo(
+                                libLevel,
+                                LibraryDestination.X,
+                                LibraryDestination.Y,
+                                LibraryDestination.Z,
+                                LibraryDestination.YAW,
+                                0.0F
+                        );
                         serverPlayer.sendSystemMessage(Component.translatable("message.blacksouls.library_awaken").withStyle(ChatFormatting.GRAY));
                     }
                 }

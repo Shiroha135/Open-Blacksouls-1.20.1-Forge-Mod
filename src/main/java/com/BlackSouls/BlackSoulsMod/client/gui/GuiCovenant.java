@@ -2,6 +2,7 @@ package com.BlackSouls.BlackSoulsMod.client.gui;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
+import com.BlackSouls.BlackSoulsMod.client.ClientStoryName;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketSetCovenant;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -67,7 +68,7 @@ public class GuiCovenant extends Screen {
         int valX = guiLeft + 80;
         int statY = guiTop + 10;
 
-        guiGraphics.drawString(this.font, this.minecraft.player.getName().getString(), statX, statY, 0xFFFFFF, false);
+        guiGraphics.drawString(this.font, ClientStoryName.get(this.minecraft.player), statX, statY, 0xFFFFFF, false);
 
         int labelColor = 0x5555FF;
         int valColor = 0xFFFFFF;

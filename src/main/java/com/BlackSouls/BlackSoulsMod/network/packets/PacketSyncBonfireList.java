@@ -5,7 +5,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
@@ -24,27 +23,16 @@ public class PacketSyncBonfireList {
     private final boolean valid;
 
     public PacketSyncBonfireList(List<BonfireEntry> originalList) {
-        this.bonfires = new ArrayList<>(Math.min(originalList.size(), MAX_BONFIRES - 1) + 1);
+        this.bonfires = new ArrayList<>(Math.min(originalList.size(), MAX_BONFIRES));
         for (BonfireEntry entry : originalList) {
-            if (this.bonfires.size() >= MAX_BONFIRES - 1) {
+            if (this.bonfires.size() >= MAX_BONFIRES) {
                 break;
             }
-            if (entry == null || entry.pos == null || entry.name == null
-                    || entry.pos.dimension().location().getPath().contains("library")
-                    || entry.name.contains("图书馆") || entry.name.contains("library_name")) {
+            if (entry == null || entry.pos == null || entry.name == null) {
                 continue;
             }
             this.bonfires.add(entry);
         }
-
-        
-        ResourceKey<Level> libKey = ResourceKey.create(Registries.DIMENSION, new ResourceLocation("blacksouls", "library"));
-        GlobalPos libPos = GlobalPos.of(libKey, BlockPos.ZERO);
-
-        String transName = Component.translatable("gui.blacksouls.bonfire.library_name").getString();
-        String transDesc = Component.translatable("gui.blacksouls.bonfire.library_desc").getString();
-
-        this.bonfires.add(0, new BonfireEntry(libPos, transName, transDesc));
         this.valid = true;
     }
 

@@ -6,11 +6,13 @@ import com.BlackSouls.BlackSoulsMod.client.render.*;
 import com.BlackSouls.BlackSoulsMod.client.tooltip.ClientSpongeNameTooltipComponent;
 import com.BlackSouls.BlackSoulsMod.client.tooltip.SpongeNameTooltipComponent;
 import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalTurnBattleEnemy;
+import com.shiroha.mmdskin.render.entity.MmdSkinRenderFactory;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.entity.RabbitRenderer;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -41,6 +43,8 @@ public class ClientModEvents {
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(BSEntityRegistry.NODEN.get(), RenderNoden::new);
+        event.registerEntityRenderer(BSEntityRegistry.RED_HOOD.get(), new MmdSkinRenderFactory<>("小红帽"));
+        event.registerEntityRenderer(BSEntityRegistry.RABBIT_HOLE_NPC.get(), RabbitRenderer::new);
         event.registerEntityRenderer(BSEntityRegistry.HAIL_CAESAR.get(), RenderHailCaesar::new);
         event.registerEntityRenderer(BSEntityRegistry.TEST_DUMMY.get(), RenderTestDummy::new);
         event.registerEntityRenderer(BSEntityRegistry.THROWN_BLADE.get(), ThrownItemRenderer::new);

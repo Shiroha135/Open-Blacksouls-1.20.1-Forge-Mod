@@ -16,6 +16,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
@@ -28,6 +29,9 @@ public class ItemDevTool extends Item {
 
     @Override
     public boolean doesSneakBypassUse(ItemStack stack, LevelReader level, BlockPos pos, Player player) {
+        if (level.getBlockState(pos).is(BlockTags.CAMPFIRES)) {
+            return true;
+        }
         ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(level.getBlockState(pos).getBlock());
         return blockId != null
                 && blockId.getNamespace().equals("blacksouls2")
@@ -102,7 +106,8 @@ public class ItemDevTool extends Item {
             net.minecraft.resources.ResourceLocation blockId = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(
                     minecraft.level.getBlockState(hit.getBlockPos()).getBlock()
             );
-            return blockId != null
+            return minecraft.level.getBlockState(hit.getBlockPos()).is(net.minecraft.tags.BlockTags.CAMPFIRES)
+                    || blockId != null
                     && blockId.getNamespace().equals("blacksouls2")
                     && (blockId.getPath().equals("acquisition_light")
                     || blockId.getPath().equals("advisory_message")

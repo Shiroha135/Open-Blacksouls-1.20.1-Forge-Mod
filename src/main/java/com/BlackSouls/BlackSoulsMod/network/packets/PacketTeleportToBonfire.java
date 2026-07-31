@@ -18,7 +18,6 @@ import java.util.function.Supplier;
 
 public class PacketTeleportToBonfire {
     private static final int MAX_DIMENSION_ID_LENGTH = 128;
-    private static final ResourceLocation LIBRARY_DIMENSION = new ResourceLocation("blacksouls", "library");
 
     private final ResourceLocation dimension;
     private final BlockPos pos;
@@ -47,42 +46,34 @@ public class PacketTeleportToBonfire {
 
             ResourceKey<Level> dimKey = ResourceKey.create(Registries.DIMENSION, this.dimension);
             ServerLevel targetLevel = player.server.getLevel(dimKey);
-            boolean isLibrary = LIBRARY_DIMENSION.equals(this.dimension);
-            if (targetLevel == null || (!isLibrary && (!targetLevel.isInWorldBounds(this.pos) || !isActivatedBonfire(player, dimKey)))) {
+            if (targetLevel == null
+                    || !targetLevel.isInWorldBounds(this.pos)
+                    || !isActivatedBonfire(player, dimKey)) {
                 return;
             }
 
             if (com.BlackSouls.BlackSoulsMod.BlackSouls.FIRE6_EVENT.isPresent()) {
                 player.level().playSound(null, player.blockPosition(), com.BlackSouls.BlackSoulsMod.BlackSouls.FIRE6_EVENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
             }
-            if (isLibrary) {
-                double bonfireX = 5.68;
-                double bonfireY = -50.0;
-                double bonfireZ = 12.4;
-                float targetYaw = 90.0F;
-
-                player.teleportTo(targetLevel, bonfireX, bonfireY, bonfireZ, targetYaw, 0.0F);
-            } else {
-                BlockPos safePos = this.pos;
-                for (Direction dir : Direction.Plane.HORIZONTAL) {
-                    BlockPos candidate = this.pos.relative(dir);
-                    if (targetLevel.getBlockState(candidate).getCollisionShape(targetLevel, candidate).isEmpty() &&
-                            targetLevel.getBlockState(candidate.above()).getCollisionShape(targetLevel, candidate.above()).isEmpty()) {
-                        safePos = candidate;
-                        break;
-                    }
+            BlockPos safePos = this.pos;
+            for (Direction dir : Direction.Plane.HORIZONTAL) {
+                BlockPos candidate = this.pos.relative(dir);
+                if (targetLevel.getBlockState(candidate).getCollisionShape(targetLevel, candidate).isEmpty() &&
+                        targetLevel.getBlockState(candidate.above()).getCollisionShape(targetLevel, candidate.above()).isEmpty()) {
+                    safePos = candidate;
+                    break;
                 }
-
-                if (safePos.equals(this.pos)) {
-                    safePos = this.pos.north();
-                }
-
-                double dx = this.pos.getX() - safePos.getX();
-                double dz = this.pos.getZ() - safePos.getZ();
-                float defaultYaw = (float)(Math.atan2(dz, dx) * (180D / Math.PI)) - 90.0F;
-
-                player.teleportTo(targetLevel, safePos.getX() + 0.5, safePos.getY(), safePos.getZ() + 0.5, defaultYaw, 15.0F);
             }
+
+            if (safePos.equals(this.pos)) {
+                safePos = this.pos.north();
+            }
+
+            double dx = this.pos.getX() - safePos.getX();
+            double dz = this.pos.getZ() - safePos.getZ();
+            float defaultYaw = (float)(Math.atan2(dz, dx) * (180D / Math.PI)) - 90.0F;
+
+            player.teleportTo(targetLevel, safePos.getX() + 0.5, safePos.getY(), safePos.getZ() + 0.5, defaultYaw, 15.0F);
 
             if (com.BlackSouls.BlackSoulsMod.BlackSouls.FIRE6_EVENT.isPresent()) {
                 targetLevel.playSound(null, player.blockPosition(), com.BlackSouls.BlackSoulsMod.BlackSouls.FIRE6_EVENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);

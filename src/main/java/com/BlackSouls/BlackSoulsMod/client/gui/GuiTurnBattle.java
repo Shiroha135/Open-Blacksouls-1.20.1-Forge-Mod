@@ -2,6 +2,7 @@ package com.BlackSouls.BlackSoulsMod.client.gui;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
+import com.BlackSouls.BlackSoulsMod.client.TurnBattleAudioGate;
 import com.BlackSouls.BlackSoulsMod.client.render.AnimationRegistry;
 import com.BlackSouls.BlackSoulsMod.client.render.BSAvatarRenderer;
 import com.BlackSouls.BlackSoulsMod.client.render.BattleScreenVFXRenderer;
@@ -204,6 +205,7 @@ public class GuiTurnBattle extends Screen {
 
     @Override
     protected void init() {
+        TurnBattleAudioGate.enter(this);
         captureEnemyVisual();
         initializeDisplayedStats();
         initializeEnemyActionGauge();
@@ -2900,7 +2902,7 @@ public class GuiTurnBattle extends Screen {
                     RandomSource.create(), true, 0,
                     SoundInstance.Attenuation.NONE,
                     0.0D, 0.0D, 0.0D, true);
-            this.minecraft.getSoundManager().play(this.battleMusic);
+            TurnBattleAudioGate.play(this.battleMusic);
         }
     }
 
@@ -2910,7 +2912,7 @@ public class GuiTurnBattle extends Screen {
 
     private void playUiSound(SoundEvent sound, float pitch, float volume) {
         if (this.minecraft != null) {
-            this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(sound, pitch, volume));
+            TurnBattleAudioGate.play(SimpleSoundInstance.forUI(sound, pitch, volume));
         }
     }
 
@@ -2931,6 +2933,7 @@ public class GuiTurnBattle extends Screen {
     @Override
     public void removed() {
         stopBattleMusic();
+        TurnBattleAudioGate.leave(this);
         super.removed();
     }
 

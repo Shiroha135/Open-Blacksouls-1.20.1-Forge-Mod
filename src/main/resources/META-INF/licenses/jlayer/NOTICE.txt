@@ -1,0 +1,8 @@
+JLayer 1.0.1
+Copyright JavaZoom
+Project: http://www.javazoom.net/javalayer/javalayer.html
+Maven coordinate: javazoom:jlayer:1.0.1
+
+JLayer is distributed under the GNU Lesser General Public License. Its classes
+are expanded directly into this mod JAR to preserve MP3 stage-audio playback;
+no nested JAR is distributed.

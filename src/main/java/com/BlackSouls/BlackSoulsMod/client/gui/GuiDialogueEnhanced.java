@@ -2,10 +2,12 @@ package com.BlackSouls.BlackSoulsMod.client.gui;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
+import com.BlackSouls.BlackSoulsMod.client.ClientStoryName;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketKillDialogueNPC;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketSetCovenant;
 import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundNodenRewardPacket;
+import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundRedHoodDialogueCompletePacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -28,6 +30,9 @@ public class GuiDialogueEnhanced extends Screen {
     private final boolean showOptionsAfterDialogue;
     private final int entityId;
     private final int covenantLevel;
+    private final boolean completeRedHoodDialogue;
+    private final int redHoodStoryStage;
+    private final boolean killOnlyOptions;
     private String[] currentDialogueKeys;
     private int currentLineIndex = 0;
     private int charDisplayIndex = 0;
@@ -61,6 +66,7 @@ public class GuiDialogueEnhanced extends Screen {
         }
     }
     private final DialogueOption[] mainOptions = {DialogueOption.UPGRADE, DialogueOption.BUY_SOULS, DialogueOption.COVENANT, DialogueOption.KILL, DialogueOption.EXIT};
+    private final DialogueOption[] killOptions = {DialogueOption.KILL, DialogueOption.EXIT};
     private final DialogueOption[] covenantOptions = {DialogueOption.OFFER_SOULS, DialogueOption.EXIT};
     private final DialogueOption[] covenantThirdOptions = {DialogueOption.OFFER_SOULS, DialogueOption.MAKE_CLOCK, DialogueOption.KISS, DialogueOption.EXIT};
     private final DialogueOption[] covenantFourthOptions = {DialogueOption.OFFER_SOULS, DialogueOption.MAKE_CLOCK, DialogueOption.KISS, DialogueOption.SEEK_SERVICE, DialogueOption.EXIT};
@@ -81,6 +87,21 @@ public class GuiDialogueEnhanced extends Screen {
     private static final int OPTION_BOX_PADDING_V = 10;
 
     public GuiDialogueEnhanced(String npcNameKey, String npcAvatarId, String[] dialogueKeys, boolean showOptionsAfterDialogue, int entityId, int covenantLevel) {
+        this(npcNameKey, npcAvatarId, dialogueKeys, showOptionsAfterDialogue, entityId, covenantLevel,
+                false, -1, false);
+    }
+
+    public GuiDialogueEnhanced(String npcNameKey, String npcAvatarId, String[] dialogueKeys,
+                               boolean showOptionsAfterDialogue, int entityId, int covenantLevel,
+                               boolean completeRedHoodDialogue, int redHoodStoryStage) {
+        this(npcNameKey, npcAvatarId, dialogueKeys, showOptionsAfterDialogue, entityId, covenantLevel,
+                completeRedHoodDialogue, redHoodStoryStage, false);
+    }
+
+    public GuiDialogueEnhanced(String npcNameKey, String npcAvatarId, String[] dialogueKeys,
+                               boolean showOptionsAfterDialogue, int entityId, int covenantLevel,
+                               boolean completeRedHoodDialogue, int redHoodStoryStage,
+                               boolean killOnlyOptions) {
         super(Component.translatable(npcNameKey));
         this.npcNameKey = npcNameKey;
         this.npcAvatarId = npcAvatarId;
@@ -91,7 +112,10 @@ public class GuiDialogueEnhanced extends Screen {
         this.showOptionsAfterDialogue = showOptionsAfterDialogue;
         this.entityId = entityId;
         this.covenantLevel = covenantLevel;
-        this.activeOptions = mainOptions;
+        this.completeRedHoodDialogue = completeRedHoodDialogue;
+        this.redHoodStoryStage = redHoodStoryStage;
+        this.killOnlyOptions = killOnlyOptions;
+        this.activeOptions = killOnlyOptions ? killOptions : mainOptions;
     }
 
     private String getCurrentLineText() {
@@ -100,7 +124,7 @@ public class GuiDialogueEnhanced extends Screen {
         if (key.equals("kill_response")) return I18n.get("gui.blacksouls.dialogue.kill_response");
         if (!I18n.exists(key)) return "Translation missing: " + key;
         Player player = Minecraft.getInstance().player;
-        String playerName = player != null ? player.getName().getString() : "master";
+        String playerName = player != null ? ClientStoryName.get(player) : "master";
         return I18n.get(key, playerName);
     }
 
@@ -177,14 +201,16 @@ public class GuiDialogueEnhanced extends Screen {
             RenderSystem.disableBlend();
         }
 
-        int textAreaLeft = contentLeft + AVATAR_AREA_W + 8;
+        int textAreaLeft = npcAvatarTexture == null ? contentLeft : contentLeft + AVATAR_AREA_W + 8;
 
         if (currentLineIndex < currentDialogueKeys.length) {
             String fullText = getCurrentLineText();
             int displayLen = showOptionsMode ? fullText.length() : Math.min(charDisplayIndex, fullText.length());
             String currentText = fullText.substring(0, displayLen);
 
-            int wrapWidth = this.width - AVATAR_AREA_W - (PADDING_H * 2) - 15;
+            int wrapWidth = npcAvatarTexture == null
+                    ? this.width - (PADDING_H * 2) - 15
+                    : this.width - AVATAR_AREA_W - (PADDING_H * 2) - 15;
             List<FormattedCharSequence> wrappedLines = font.split(Component.literal(currentText), wrapWidth);
 
             for (int i = 0; i < wrappedLines.size(); i++) {
@@ -330,6 +356,11 @@ public class GuiDialogueEnhanced extends Screen {
             case FALL_IN_LOVE:
                 break;
             case KILL:
+                if (this.killOnlyOptions) {
+                    NetworkHandler.sendToServer(new PacketKillDialogueNPC(this.entityId));
+                    this.onClose();
+                    break;
+                }
                 this.showOptionsMode = false;
                 this.isKillingMode = true;
                 this.currentDialogueKeys = new String[] { "kill_response" };
@@ -338,6 +369,10 @@ public class GuiDialogueEnhanced extends Screen {
                 this.tickCounter = 0;
                 break;
             case EXIT:
+                if (this.killOnlyOptions) {
+                    this.onClose();
+                    break;
+                }
                 this.showOptionsMode = false;
                 this.isExitMode = true; 
                 this.currentDialogueKeys = new String[] { "gui.blacksouls.dialogue.exit_message" };
@@ -396,9 +431,15 @@ public class GuiDialogueEnhanced extends Screen {
                     this.activeOptions = covenantFifthOptions;
                     this.showOptionsMode = true;
                 } else if (showOptionsAfterDialogue) {
-                    this.activeOptions = mainOptions;
+                    this.activeOptions = this.killOnlyOptions ? killOptions : mainOptions;
                     this.showOptionsMode = true;
                 } else {
+                    if (this.completeRedHoodDialogue) {
+                        NetworkHandler.sendToServer(new ServerboundRedHoodDialogueCompletePacket(
+                                this.entityId,
+                                this.redHoodStoryStage
+                        ));
+                    }
                     this.onClose();
                 }
             } else {

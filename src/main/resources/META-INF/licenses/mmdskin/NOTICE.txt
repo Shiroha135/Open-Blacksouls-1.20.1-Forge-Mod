@@ -1,0 +1,7 @@
+MC-MMD-rust source integrated from release v1.0.5-1.20.1-1.
+Upstream repository: https://github.com/shiroha-233/MC-MMD-rust
+Upstream commit: 74b53ff52ad3b26bd6afcbdc017ae296983caf9f
+
+The bundled Red Hood model was supplied by the BLACKSOULS project owner under
+separate permission from its model author. The model and textures are not
+covered by the MC-MMD-rust MIT license or the BLACKSOULS source license.

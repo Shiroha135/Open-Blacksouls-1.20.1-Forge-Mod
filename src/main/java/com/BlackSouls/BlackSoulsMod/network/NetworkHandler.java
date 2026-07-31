@@ -45,6 +45,7 @@ public class NetworkHandler {
         register(PacketSyncDifficulty.class, PacketSyncDifficulty::toBytes, PacketSyncDifficulty::new, PacketSyncDifficulty::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(PacketWhiteFlash.class, PacketWhiteFlash::toBytes, PacketWhiteFlash::new, PacketWhiteFlash::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(PacketSyncBonfireList.class, PacketSyncBonfireList::toBytes, PacketSyncBonfireList::new, PacketSyncBonfireList::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ClientboundBonfireEditorPacket.class, ClientboundBonfireEditorPacket::toBytes, ClientboundBonfireEditorPacket::new, ClientboundBonfireEditorPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(PacketOpenDialogue.class, PacketOpenDialogue::toBytes, PacketOpenDialogue::new, PacketOpenDialogue::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(PacketCastSkill.class, PacketCastSkill::toBytes, PacketCastSkill::new, PacketCastSkill::handle, NetworkDirection.PLAY_TO_SERVER);
         register(PacketBindSkill.class, PacketBindSkill::toBytes, PacketBindSkill::new, PacketBindSkill::handle, NetworkDirection.PLAY_TO_SERVER);
@@ -73,6 +74,9 @@ public class NetworkHandler {
         register(ServerboundTurnBattlePresentationPacket.class, ServerboundTurnBattlePresentationPacket::toBytes, ServerboundTurnBattlePresentationPacket::new, ServerboundTurnBattlePresentationPacket::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ClientboundLostItemPacket.class, ClientboundLostItemPacket::toBytes, ClientboundLostItemPacket::new, ClientboundLostItemPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(ClientboundPlayerSizePacket.class, ClientboundPlayerSizePacket::toBytes, ClientboundPlayerSizePacket::new, ClientboundPlayerSizePacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ClientboundStoryNamePacket.class, ClientboundStoryNamePacket::toBytes, ClientboundStoryNamePacket::new, ClientboundStoryNamePacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ServerboundConfirmStoryNamePacket.class, ServerboundConfirmStoryNamePacket::toBytes, ServerboundConfirmStoryNamePacket::new, ServerboundConfirmStoryNamePacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ServerboundRedHoodDialogueCompletePacket.class, ServerboundRedHoodDialogueCompletePacket::toBytes, ServerboundRedHoodDialogueCompletePacket::new, ServerboundRedHoodDialogueCompletePacket::handle, NetworkDirection.PLAY_TO_SERVER);
 
     }
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {

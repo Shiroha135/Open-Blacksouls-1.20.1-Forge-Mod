@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.handler.BSEntityRegistry;
 import com.BlackSouls.BlackSoulsMod.entity.EntityThrownBlade;
+import com.BlackSouls.BlackSoulsMod.entity.EntityRabbitHoleNpc;
 import com.BlackSouls.BlackSoulsMod.item.ItemMaxHpMeat;
 import com.BlackSouls.BlackSoulsMod.item.ItemMaxStatsFood;
 import com.BlackSouls.BlackSoulsMod.item.material.ItemAbandonedTrash;
@@ -22,6 +23,7 @@ import com.BlackSouls.BlackSoulsMod.item.ItemDevTool;
 import com.BlackSouls.BlackSoulsMod.item.ItemNodenSpawn;
 import com.BlackSouls.BlackSoulsMod.item.ItemCorpseEatingRabbitSpawn;
 import com.BlackSouls.BlackSoulsMod.item.ItemOriginalEnemySpawnEgg;
+import com.BlackSouls.BlackSoulsMod.item.ItemRabbitHoleNpcSpawn;
 import com.BlackSouls.BlackSoulsMod.potion.*;
 import com.BlackSouls.BlackSoulsMod.sound.BSSoundRegistry;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalItemData;
@@ -171,6 +173,7 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> BOW4_EVENT = registerSound("bow4");
     public static final RegistryObject<SoundEvent> CRASH_EVENT = registerSound("crash");
     public static final RegistryObject<SoundEvent> CURSOR1_EVENT = registerSound("cursor1");
+    public static final RegistryObject<SoundEvent> STORY_NAME_SEA_EVENT = registerSound("story_name_sea");
     public static final RegistryObject<SoundEvent> DAO_EVENT = registerSound("dao");
     public static final RegistryObject<SoundEvent> BLOOD_SPLATTER_EVENT = registerSound("blood_splatter");
     public static final RegistryObject<SoundEvent> DARKNESS3_EVENT = registerSound("darkness3");
@@ -698,6 +701,7 @@ public class BlackSouls {
     public static final RegistryObject<Item> ANDOR_SWORD = ITEMS.register("andor_sword", () -> new ItemAndorSword(new Item.Properties()));
     public static final RegistryObject<Item> DRAKE_SWORD = ITEMS.register("drake_sword", () -> new ItemDrakeSword(new Item.Properties()));
     public static final RegistryObject<Item> KNIGHT_SWORD = ITEMS.register("knight_sword", () -> new ItemKnightSword(new Item.Properties()));
+    public static final RegistryObject<Item> PORCUPINE_SHIELD = ITEMS.register("porcupine_shield", () -> new ItemPorcupineShield(new Item.Properties()));
     public static final RegistryObject<Item> MURDERERS_SHOTGUN = ITEMS.register("murderers_shotgun", () -> new ItemMurderersShotgun(new Item.Properties()));
     public static final RegistryObject<Item> VORPAL_BLADE = ITEMS.register("vorpal_blade", () -> new ItemVorpalBlade(new Item.Properties()));
     public static final RegistryObject<Item> BRAVE_SWORD_VORPAL = ITEMS.register("brave_sword_vorpal", () -> new ItemBraveSwordVorpal(new Item.Properties()));
@@ -991,7 +995,6 @@ public class BlackSouls {
     // 开发者物品
     // ===============================================================================================================================================================================
     public static final RegistryObject<Item> DEV_STAT_TOOL = ITEMS.register("dev_stat_tool", () -> new ItemDevTool(new Item.Properties()));
-    public static final RegistryObject<Item> DEV_TIME_RING = ITEMS.register("dev_time_ring", () -> new ItemBaubleBase(new Item.Properties().rarity(net.minecraft.world.item.Rarity.EPIC)));
     public static final RegistryObject<Item> DEV_REVENGE_MODE = ITEMS.register("dev_revenge_mode", () -> new ItemDevDifficultyMode(new Item.Properties(), ItemDevDifficultyMode.ModeType.REVENGE));
     public static final RegistryObject<Item> DEV_DEATH_MODE = ITEMS.register("dev_death_mode", () -> new ItemDevDifficultyMode(new Item.Properties(), ItemDevDifficultyMode.ModeType.DEATH));
     public static final RegistryObject<Item> DEV_LEGENDARY_MODE = ITEMS.register("dev_legendary_mode", () -> new ItemDevDifficultyMode(new Item.Properties(), ItemDevDifficultyMode.ModeType.LEGENDARY));
@@ -1042,6 +1045,21 @@ public class BlackSouls {
     // =================================================================================================
     public static final RegistryObject<Item> NODEN_SPAWN_EGG = ITEMS.register("noden_spawn_egg",
             () -> new ItemNodenSpawn(new Item.Properties().stacksTo(16)));
+    public static final RegistryObject<Item> RED_HOOD_SPAWN_EGG = ITEMS.register("red_hood_spawn_egg",
+            () -> new ForgeSpawnEggItem(BSEntityRegistry.RED_HOOD, 0x7C1218, 0xD8C8B7,
+                    new Item.Properties()));
+    public static final RegistryObject<Item> RABBIT_HOLE_EV052_SPAWN_EGG =
+            ITEMS.register("rabbit_hole_ev052_spawn_egg",
+                    () -> new ItemRabbitHoleNpcSpawn(new Item.Properties().stacksTo(16),
+                            EntityRabbitHoleNpc.Role.EV052));
+    public static final RegistryObject<Item> RABBIT_HOLE_EV011_SPAWN_EGG =
+            ITEMS.register("rabbit_hole_ev011_spawn_egg",
+                    () -> new ItemRabbitHoleNpcSpawn(new Item.Properties().stacksTo(16),
+                            EntityRabbitHoleNpc.Role.EV011));
+    public static final RegistryObject<Item> RABBIT_HOLE_EV012_SPAWN_EGG =
+            ITEMS.register("rabbit_hole_ev012_spawn_egg",
+                    () -> new ItemRabbitHoleNpcSpawn(new Item.Properties().stacksTo(16),
+                            EntityRabbitHoleNpc.Role.EV012));
     public static final RegistryObject<Item> CORPSE_EATING_RABBIT_SPAWN_EGG = ITEMS.register("corpse_eating_rabbit_spawn_egg",
             () -> new ItemCorpseEatingRabbitSpawn(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> HEADLESS_UNDEAD_SPAWN_EGG = ITEMS.register("headless_undead_spawn_egg",
@@ -1065,6 +1083,10 @@ public class BlackSouls {
                     .withSearchBar(30)
                     .displayItems((parameters, output) -> {
                         output.accept(NODEN_SPAWN_EGG.get());              // 诺登召唤
+                        output.accept(RED_HOOD_SPAWN_EGG.get());
+                        output.accept(RABBIT_HOLE_EV052_SPAWN_EGG.get());
+                        output.accept(RABBIT_HOLE_EV011_SPAWN_EGG.get());
+                        output.accept(RABBIT_HOLE_EV012_SPAWN_EGG.get());
                         ORIGINAL_ENEMY_SPAWN_EGGS.values().forEach(egg -> output.accept(egg.get()));
                     })
                     .build());
@@ -1148,6 +1170,7 @@ public class BlackSouls {
                         // =============================================================
                         // 盾系列
                         // =============================================================
+                        output.accept(PORCUPINE_SHIELD.get());              // 豪猪盾
                         output.accept(MURDERERS_SHOTGUN.get());            // 杀人魔霰弹铳
                     })
                     .build());

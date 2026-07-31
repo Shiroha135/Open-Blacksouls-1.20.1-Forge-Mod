@@ -18,6 +18,21 @@ public class BSEntityRegistry {
                     .updateInterval(3)
                     .build("noden"));
 
+    public static final RegistryObject<EntityType<EntityRedHood>> RED_HOOD = ENTITY_TYPES.register("red_hood",
+            () -> EntityType.Builder.<EntityRedHood>of(EntityRedHood::new, MobCategory.CREATURE)
+                    .sized(0.55F, 1.65F)
+                    .clientTrackingRange(10)
+                    .updateInterval(3)
+                    .build("red_hood"));
+
+    public static final RegistryObject<EntityType<EntityRabbitHoleNpc>> RABBIT_HOLE_NPC =
+            ENTITY_TYPES.register("rabbit_hole_npc", () ->
+                    EntityType.Builder.<EntityRabbitHoleNpc>of(EntityRabbitHoleNpc::new, MobCategory.CREATURE)
+                            .sized(0.4F, 0.5F)
+                            .clientTrackingRange(10)
+                            .updateInterval(3)
+                            .build("rabbit_hole_npc"));
+
     public static final RegistryObject<EntityType<EntityHailCaesar>> HAIL_CAESAR = ENTITY_TYPES.register("hail_caesar",
             () -> EntityType.Builder.of(EntityHailCaesar::new, MobCategory.MONSTER)
                     .sized(1.6F, 2.8F)

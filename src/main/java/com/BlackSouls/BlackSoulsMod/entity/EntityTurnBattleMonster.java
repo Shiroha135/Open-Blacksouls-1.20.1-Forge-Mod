@@ -40,6 +40,11 @@ public abstract class EntityTurnBattleMonster extends Monster {
     }
 
     @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return false;
+    }
+
+    @Override
     public void tick() {
         super.tick();
         if (this.level().isClientSide()) {

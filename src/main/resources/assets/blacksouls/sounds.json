@@ -1363,5 +1363,14 @@
         "stream": true
       }
     ]
+  },
+  "story_name_sea": {
+    "category": "ambient",
+    "sounds": [
+      {
+        "name": "blacksouls:story_name_sea",
+        "stream": true
+      }
+    ]
   }
 }

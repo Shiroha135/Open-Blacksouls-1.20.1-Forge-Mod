@@ -2,6 +2,7 @@ package com.BlackSouls.BlackSoulsMod.client.render;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
+import com.BlackSouls.BlackSoulsMod.client.gui.GuiTurnBattle;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -20,8 +21,26 @@ public class SeekServiceBannerRenderer {
     private static int ticksLeft = 0;
     private static int senDelta = 0;
     private static String deltaText = "0";
+    private static int pendingSenDelta = 0;
+    private static boolean pendingAfterBattle = false;
 
     public static void show(int delta) {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.screen instanceof GuiTurnBattle) {
+            pendingSenDelta = clampDelta((long) pendingSenDelta + delta);
+            pendingAfterBattle = true;
+            ticksLeft = 0;
+            return;
+        }
+        if (pendingAfterBattle) {
+            delta = clampDelta((long) pendingSenDelta + delta);
+            pendingAfterBattle = false;
+            pendingSenDelta = 0;
+        }
+        start(delta);
+    }
+
+    private static void start(int delta) {
         TextBannerRenderer.hide();
         senDelta = delta;
         deltaText = (delta > 0 ? "+" : "") + delta;
@@ -30,7 +49,22 @@ public class SeekServiceBannerRenderer {
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && ticksLeft > 0 && !Minecraft.getInstance().isPaused()) {
+        if (event.phase != TickEvent.Phase.END) {
+            return;
+        }
+        Minecraft minecraft = Minecraft.getInstance();
+        if (pendingAfterBattle) {
+            if (minecraft.player == null) {
+                pendingAfterBattle = false;
+                pendingSenDelta = 0;
+            } else if (!(minecraft.screen instanceof GuiTurnBattle)) {
+                int delta = pendingSenDelta;
+                pendingAfterBattle = false;
+                pendingSenDelta = 0;
+                start(delta);
+            }
+        }
+        if (ticksLeft > 0 && !minecraft.isPaused()) {
             ticksLeft--;
         }
     }
@@ -96,5 +130,9 @@ public class SeekServiceBannerRenderer {
         } catch (ReflectiveOperationException | LinkageError ignored) {
         }
         return height;
+    }
+
+    private static int clampDelta(long value) {
+        return (int) Math.max(Integer.MIN_VALUE, Math.min(Integer.MAX_VALUE, value));
     }
 }

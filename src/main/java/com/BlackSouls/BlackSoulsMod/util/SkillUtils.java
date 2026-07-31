@@ -179,8 +179,7 @@ public class SkillUtils {
 
     public static boolean hasInfiniteCooldownAccessory(Player player) {
         BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).resolve().orElse(null);
-        return stats != null && stats.developerNoCooldown
-                || StatEventHandler.getBaubleCount(player, BlackSouls.DEV_TIME_RING.get()) > 0;
+        return stats != null && stats.developerNoCooldown;
     }
 
     public static boolean hasLearnedSkill(Player player, String skillId) {

@@ -4,6 +4,7 @@ import com.BlackSouls.BlackSoulsMod.BSConfig;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalDatabaseEnemy;
+import com.BlackSouls.BlackSoulsMod.entity.EntityCorpseEatingRabbit;
 import com.BlackSouls.BlackSoulsMod.entity.EntityTurnBattleMonster;
 import com.BlackSouls.BlackSoulsMod.handler.BSEntityRegistry;
 import com.BlackSouls.BlackSoulsMod.handler.SkillEventHandler;
@@ -120,6 +121,8 @@ public final class TurnBattleManager {
         Session session = new Session(enemy.getUUID(), player.position(), enemy.position(), profileId);
         PLAYER_SESSIONS.put(player.getUUID(), session);
         configureInitialEnemies(player, enemy, session);
+        player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats ->
+                session.remainingPlayerActions = rollPlayerActionCount(player, stats));
         session.openingPending = BSOriginalBattleProfileData.get(profileId).preemptiveSkillId() > 0;
         session.resolving = session.openingPending;
         sendState(player, true, battleIntro(session.battleProfileId, enemy),
@@ -145,9 +148,46 @@ public final class TurnBattleManager {
     public static void handleAction(ServerPlayer player, ServerboundTurnBattleActionPacket.Action action,
                                     int selection, int targetIndex) {
         Session session = PLAYER_SESSIONS.get(player.getUUID());
-        EntityTurnBattleMonster rootEnemy = getRootEnemy(player, session);
-        if (session == null || rootEnemy == null || session.resolving) {
+        if (session == null) {
+            BlackSouls.LOGGER.warn("Turn battle action {} from {} has no active session",
+                    action, player.getGameProfile().getName());
+            sendBrokenBattleEnd(player, Component.literal("战斗会话已经失效。"));
             return;
+        }
+        EntityTurnBattleMonster rootEnemy = getRootEnemy(player, session);
+        if (rootEnemy == null) {
+            BlackSouls.LOGGER.warn("Turn battle root {} is missing for player {}",
+                    session.rootEnemyId, player.getGameProfile().getName());
+            finish(player, session, ClientboundTurnBattlePacket.Outcome.ESCAPED,
+                    Component.literal("战斗目标已经消失。"), false, 0L);
+            return;
+        }
+        if (session.resolving) {
+            BlackSouls.LOGGER.warn(
+                    "Turn battle action {} arrived while resolving for {}: opening={}, awaiting={}, enemySequence={}, queue={}",
+                    action, player.getGameProfile().getName(), session.openingPending,
+                    session.awaitingPhasePresentation, session.enemySequenceActive,
+                    session.enemyActionQueue.size());
+            if (session.openingPending) {
+                handlePresentationComplete(player);
+                return;
+            }
+            if (session.awaitingPhasePresentation) {
+                sendState(player, true, Component.literal("战斗行动正在结算……"), false,
+                        ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+                return;
+            }
+            if (session.enemySequenceActive) {
+                BSPlayerStats pendingStats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+                if (pendingStats == null) {
+                    finish(player, session, ClientboundTurnBattlePacket.Outcome.ESCAPED,
+                            Component.literal("战斗中断。"), false, 0L);
+                } else {
+                    presentNextEnemyAction(player, pendingStats, session);
+                }
+                return;
+            }
+            session.resolving = false;
         }
         session.resolving = true;
         BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
@@ -1431,6 +1471,10 @@ public final class TurnBattleManager {
             rootEnemy.teleportTo(session.enemyAnchor.x, session.enemyAnchor.y, session.enemyAnchor.z);
             rootEnemy.setBattleCooldown(ESCAPE_GRACE_TICKS);
         }
+        if (rootEnemy instanceof EntityCorpseEatingRabbit rabbit) {
+            rabbit.finishDialogueRabbitBattle(player,
+                    outcome == ClientboundTurnBattlePacket.Outcome.VICTORY);
+        }
         PLAYER_SESSIONS.remove(player.getUUID());
     }
 
@@ -1465,6 +1509,14 @@ public final class TurnBattleManager {
         session.phaseChanged = false;
         session.playerHits.clear();
         session.incomingHits.clear();
+    }
+
+    private static void sendBrokenBattleEnd(ServerPlayer player, Component message) {
+        NetworkHandler.sendToPlayer(new ClientboundTurnBattlePacket(
+                false, -1, -1, List.of(), 0, 1,
+                false, false, List.of(), List.of(), message, false,
+                ClientboundTurnBattlePacket.Outcome.ESCAPED, 0L,
+                List.of(), Map.of()), player);
     }
 
     private static EntityTurnBattleMonster getRootEnemy(ServerPlayer player, Session session) {
@@ -1685,35 +1737,45 @@ public final class TurnBattleManager {
     }
 
     private static void advanceBattleEffects(ServerPlayer player,
-                                             Map<MobEffect, EffectSnapshot> snapshots) {
+                                              Map<MobEffect, EffectSnapshot> snapshots) {
         ADVANCING_BATTLE_EFFECTS.set(true);
         boolean previousInternalDamage = INTERNAL_BATTLE_ITEM_DAMAGE.get();
         INTERNAL_BATTLE_ITEM_DAMAGE.set(true);
         try {
+            MobEffect requiem = BlackSouls.BUFF_REQUIEM.isPresent()
+                    ? BlackSouls.BUFF_REQUIEM.get() : null;
             for (Map.Entry<MobEffect, EffectSnapshot> entry : snapshots.entrySet()) {
-                MobEffectInstance current = player.getEffect(entry.getKey());
-                EffectSnapshot snapshot = entry.getValue();
-                if (current == null || current != snapshot.instance
-                        || current.getDuration() != snapshot.duration
-                        || current.getAmplifier() != snapshot.amplifier
-                        || current.isInfiniteDuration()) {
-                    continue;
+                if (entry.getKey() != requiem) {
+                    advanceBattleEffect(player, entry.getKey(), entry.getValue());
                 }
-                boolean active = true;
-                for (int tick = 0; tick < EFFECT_TICKS_PER_ACTION && active; tick++) {
-                    active = current.tick(player, () -> {
-                    });
-                }
-                if (!active) {
-                    player.removeEffect(entry.getKey());
-                } else {
-                    player.connection.send(new ClientboundUpdateMobEffectPacket(
-                            player.getId(), current));
-                }
+            }
+            if (requiem != null && snapshots.containsKey(requiem)) {
+                advanceBattleEffect(player, requiem, snapshots.get(requiem));
             }
         } finally {
             INTERNAL_BATTLE_ITEM_DAMAGE.set(previousInternalDamage);
             ADVANCING_BATTLE_EFFECTS.set(false);
+        }
+    }
+
+    private static void advanceBattleEffect(ServerPlayer player, MobEffect effect,
+                                            EffectSnapshot snapshot) {
+        MobEffectInstance current = player.getEffect(effect);
+        if (current == null || current != snapshot.instance
+                || current.getDuration() != snapshot.duration
+                || current.getAmplifier() != snapshot.amplifier
+                || current.isInfiniteDuration()) {
+            return;
+        }
+        boolean active = true;
+        for (int tick = 0; tick < EFFECT_TICKS_PER_ACTION && active; tick++) {
+            active = current.tick(player, () -> {
+            });
+        }
+        if (!active) {
+            player.removeEffect(effect);
+        } else {
+            player.connection.send(new ClientboundUpdateMobEffectPacket(player.getId(), current));
         }
     }
 
