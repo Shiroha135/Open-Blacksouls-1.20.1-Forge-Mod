@@ -9,6 +9,8 @@ public interface SceneSpawnerBounds {
     String ORIGIN_Z_TAG = "BlackSoulsSceneOriginZ";
     String RANGE_X_TAG = "BlackSoulsSceneRangeX";
     String RANGE_Z_TAG = "BlackSoulsSceneRangeZ";
+    String ORIGINAL_NO_AI_TAG = "BlackSoulsSceneOriginalNoAI";
+    String IDLE_LOCK_TAG = "BlackSoulsSceneIdleLock";
 
     int blacksouls$getRangeX();
 

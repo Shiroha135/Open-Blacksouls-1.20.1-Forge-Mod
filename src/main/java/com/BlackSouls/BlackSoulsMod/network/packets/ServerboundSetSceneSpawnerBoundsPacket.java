@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.network.packets;
 
 import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBounds;
+import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBossState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -22,23 +23,28 @@ public final class ServerboundSetSceneSpawnerBoundsPacket {
     private final BlockPos pos;
     private final int rangeX;
     private final int rangeZ;
+    private final boolean bossMode;
 
-    public ServerboundSetSceneSpawnerBoundsPacket(BlockPos pos, int rangeX, int rangeZ) {
+    public ServerboundSetSceneSpawnerBoundsPacket(BlockPos pos, int rangeX, int rangeZ,
+                                                   boolean bossMode) {
         this.pos = pos.immutable();
         this.rangeX = rangeX;
         this.rangeZ = rangeZ;
+        this.bossMode = bossMode;
     }
 
     public ServerboundSetSceneSpawnerBoundsPacket(FriendlyByteBuf buf) {
         pos = buf.readBlockPos();
         rangeX = buf.readVarInt();
         rangeZ = buf.readVarInt();
+        bossMode = buf.readBoolean();
     }
 
     public void toBytes(FriendlyByteBuf buf) {
         buf.writeBlockPos(pos);
         buf.writeVarInt(rangeX);
         buf.writeVarInt(rangeZ);
+        buf.writeBoolean(bossMode);
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
@@ -54,6 +60,9 @@ public final class ServerboundSetSceneSpawnerBoundsPacket {
             BlockEntity blockEntity = player.level().getBlockEntity(pos);
             if (blockEntity instanceof SceneSpawnerBounds bounds) {
                 bounds.blacksouls$setBounds(rangeX, rangeZ);
+            }
+            if (blockEntity instanceof SceneSpawnerBossState bossState) {
+                bossState.blacksouls$setBossMode(bossMode);
             }
         });
     }

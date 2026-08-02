@@ -23,6 +23,8 @@ public final class MapDeployer {
     private static final String MAP_ARCHIVE = "/assets/" + BlackSouls.MODID + "/prebuilt_maps/hakoniwa-v2.zip";
     private static final String LOCK_DATA_RESOURCE = "/assets/" + BlackSouls.MODID + "/prebuilt_maps/blacksouls_door_locks.dat";
     private static final String LOCK_DATA_NAME = "blacksouls_door_locks.dat";
+    private static final String ANIMATED_DOOR_DATA_RESOURCE = "/assets/" + BlackSouls.MODID + "/prebuilt_maps/blacksouls_animated_doors.dat";
+    private static final String ANIMATED_DOOR_DATA_NAME = "blacksouls_animated_doors.dat";
     private static final String MARKER_NAME = "blacksouls_" + MAP_VERSION + ".flag";
     private static final Map<String, Long> EXPECTED_FILES = Map.of(
             "region", 64L,
@@ -34,7 +36,8 @@ public final class MapDeployer {
         Path worldPath = server.getWorldPath(LevelResource.ROOT);
         Path dimensionPath = worldPath.resolve("dimensions").resolve(BlackSouls.MODID).resolve("library");
         Path marker = dimensionPath.resolve(MARKER_NAME);
-        deployLockDataIfMissing(dimensionPath);
+        deploySavedDataIfMissing(dimensionPath, LOCK_DATA_RESOURCE, LOCK_DATA_NAME);
+        deploySavedDataIfMissing(dimensionPath, ANIMATED_DOOR_DATA_RESOURCE, ANIMATED_DOOR_DATA_NAME);
         if (Files.exists(marker) && isMapPresent(dimensionPath)) {
             return;
         }
@@ -108,8 +111,9 @@ public final class MapDeployer {
                             Collectors.counting()
                     ));
         }
-        if (!counts.equals(EXPECTED_FILES)
-                || !Files.isRegularFile(staging.resolve("region").resolve("r.-1.0.mca"))) {
+        boolean incomplete = EXPECTED_FILES.entrySet().stream()
+                .anyMatch(expected -> counts.getOrDefault(expected.getKey(), 0L) < expected.getValue());
+        if (incomplete || !Files.isRegularFile(staging.resolve("region").resolve("r.-1.0.mca"))) {
             throw new IOException("Incomplete map archive: " + counts);
         }
     }
@@ -138,22 +142,22 @@ public final class MapDeployer {
         }
     }
 
-    private static void deployLockDataIfMissing(Path dimensionPath) {
-        Path target = dimensionPath.resolve("data").resolve(LOCK_DATA_NAME);
+    private static void deploySavedDataIfMissing(Path dimensionPath, String resourcePath, String dataName) {
+        Path target = dimensionPath.resolve("data").resolve(dataName);
         if (Files.isRegularFile(target)) {
             return;
         }
-        Path temporary = target.resolveSibling("." + LOCK_DATA_NAME + "-" + UUID.randomUUID() + ".tmp");
-        try (InputStream resource = MapDeployer.class.getResourceAsStream(LOCK_DATA_RESOURCE)) {
+        Path temporary = target.resolveSibling("." + dataName + "-" + UUID.randomUUID() + ".tmp");
+        try (InputStream resource = MapDeployer.class.getResourceAsStream(resourcePath)) {
             if (resource == null) {
-                throw new IOException("Missing map lock data: " + LOCK_DATA_RESOURCE);
+                throw new IOException("Missing map saved data: " + resourcePath);
             }
             Files.createDirectories(target.getParent());
             Files.copy(resource, temporary, StandardCopyOption.REPLACE_EXISTING);
             Files.move(temporary, target, StandardCopyOption.REPLACE_EXISTING);
-            BlackSouls.LOGGER.info("Deployed {} map lock data", MAP_VERSION);
+            BlackSouls.LOGGER.info("Deployed {} map saved data {}", MAP_VERSION, dataName);
         } catch (Exception exception) {
-            BlackSouls.LOGGER.error("Failed to deploy {} map lock data", MAP_VERSION, exception);
+            BlackSouls.LOGGER.error("Failed to deploy {} map saved data {}", MAP_VERSION, dataName, exception);
         } finally {
             try {
                 Files.deleteIfExists(temporary);

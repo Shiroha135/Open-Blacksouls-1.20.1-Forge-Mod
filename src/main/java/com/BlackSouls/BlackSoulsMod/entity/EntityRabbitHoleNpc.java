@@ -25,6 +25,7 @@ import java.util.Locale;
 import java.util.UUID;
 
 public class EntityRabbitHoleNpc extends Rabbit implements DialogueResettable {
+    private static final String RABBIT_FOOD_FLAG = "BlacksoulsCorpseFlag:rabbit_food_eaten";
     private Role role = Role.EV052;
     private boolean foodEaten;
     private UUID battleEnemy;
@@ -132,7 +133,11 @@ public class EntityRabbitHoleNpc extends Rabbit implements DialogueResettable {
                                     ? "entity.blacksouls.rabbit_hole_npc.low_sen_name"
                                     : "entity.blacksouls.rabbit_hole_npc.name",
                             "",
-                            RabbitHoleDialogue.keys(this.role, lowSen, this.foodEaten),
+                            RabbitHoleDialogue.keys(
+                                    this.role,
+                                    lowSen,
+                                    this.foodEaten || serverPlayer.getPersistentData().getBoolean(RABBIT_FOOD_FLAG)
+                            ),
                             true,
                             this.getId(),
                             -1,

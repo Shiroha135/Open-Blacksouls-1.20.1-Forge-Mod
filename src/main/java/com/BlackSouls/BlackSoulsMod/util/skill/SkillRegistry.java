@@ -38,6 +38,9 @@ public class SkillRegistry {
     );
 
     public static void init() {
+        register(new SkillDodge());
+        register(new SkillCrush());
+        register(new SkillSeekAdvice());
         register(new SkillSoulArrow());
         register(new SkillOriginalMagic(SkillOriginalMagic.Profile.SOUL_VOLLEY));
         register(new SkillSoulLight());

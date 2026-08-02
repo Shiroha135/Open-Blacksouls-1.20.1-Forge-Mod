@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod.network.packets;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.util.LibraryDestination;
+import com.BlackSouls.BlackSoulsMod.util.KnightStartingKit;
 import com.BlackSouls.BlackSoulsMod.util.StoryNameData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
@@ -40,6 +41,7 @@ public final class ServerboundConfirmStoryNamePacket {
                 return;
             }
             StoryNameData.confirm(player, normalized);
+            KnightStartingKit.grant(player);
             NetworkHandler.sendToPlayer(new ClientboundStoryNamePacket(false, normalized), player);
             teleportToStoryStart(player);
         });

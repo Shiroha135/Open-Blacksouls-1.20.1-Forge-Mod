@@ -43,7 +43,6 @@ public class GuiPlayerStats extends Screen {
         this.guiLeft = (this.width - GUI_WIDTH) / 2;
         this.guiTop = (this.height - GUI_HEIGHT) / 2;
         this.clearWidgets();
-        ClientSceneState.clear();
         NetworkHandler.sendToServer(new ServerboundRequestCurrentScenePacket());
     }
 

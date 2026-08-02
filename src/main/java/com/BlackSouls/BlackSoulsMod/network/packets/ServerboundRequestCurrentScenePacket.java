@@ -30,6 +30,9 @@ public final class ServerboundRequestCurrentScenePacket {
             String sceneId = separator >= 0 && separator + 1 < stored.length()
                     ? stored.substring(separator + 1)
                     : stored;
+            if (sceneId.isBlank()) {
+                return;
+            }
             NetworkHandler.sendToPlayer(new ClientboundCurrentScenePacket(sceneId), player);
         });
     }

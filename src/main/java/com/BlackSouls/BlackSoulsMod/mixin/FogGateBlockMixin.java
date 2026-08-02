@@ -26,7 +26,7 @@ public abstract class FogGateBlockMixin {
     private static final ResourceLocation BLACKSOULS$DEVELOPER_SCEPTER =
             new ResourceLocation("blacksouls", "dev_stat_tool");
 
-    @Inject(method = "m_6227_", at = @At("HEAD"), cancellable = true, remap = false)
+    @Inject(method = {"use", "m_6227_"}, at = @At("HEAD"), cancellable = true, remap = false)
     private void blacksouls$openTraversalPrompt(
             BlockState state,
             Level level,
@@ -47,7 +47,7 @@ public abstract class FogGateBlockMixin {
         callback.setReturnValue(InteractionResult.sidedSuccess(level.isClientSide));
     }
 
-    @Inject(method = "m_214162_", at = @At("HEAD"), cancellable = true, remap = false)
+    @Inject(method = {"animateTick", "m_214162_"}, at = @At("HEAD"), cancellable = true, remap = false)
     private void blacksouls$disableFogParticles(
             BlockState state,
             Level level,

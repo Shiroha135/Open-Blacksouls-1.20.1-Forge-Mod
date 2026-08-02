@@ -701,6 +701,7 @@ public class BlackSouls {
     public static final RegistryObject<Item> ANDOR_SWORD = ITEMS.register("andor_sword", () -> new ItemAndorSword(new Item.Properties()));
     public static final RegistryObject<Item> DRAKE_SWORD = ITEMS.register("drake_sword", () -> new ItemDrakeSword(new Item.Properties()));
     public static final RegistryObject<Item> KNIGHT_SWORD = ITEMS.register("knight_sword", () -> new ItemKnightSword(new Item.Properties()));
+    public static final RegistryObject<Item> KNIGHT_SHIELD = ITEMS.register("knight_shield", () -> new ItemKnightShield(new Item.Properties()));
     public static final RegistryObject<Item> PORCUPINE_SHIELD = ITEMS.register("porcupine_shield", () -> new ItemPorcupineShield(new Item.Properties()));
     public static final RegistryObject<Item> MURDERERS_SHOTGUN = ITEMS.register("murderers_shotgun", () -> new ItemMurderersShotgun(new Item.Properties()));
     public static final RegistryObject<Item> VORPAL_BLADE = ITEMS.register("vorpal_blade", () -> new ItemVorpalBlade(new Item.Properties()));
@@ -1170,6 +1171,7 @@ public class BlackSouls {
                         // =============================================================
                         // 盾系列
                         // =============================================================
+                        output.accept(KNIGHT_SHIELD.get());                 // 骑士盾
                         output.accept(PORCUPINE_SHIELD.get());              // 豪猪盾
                         output.accept(MURDERERS_SHOTGUN.get());            // 杀人魔霰弹铳
                     })

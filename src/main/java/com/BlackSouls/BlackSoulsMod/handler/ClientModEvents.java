@@ -1,6 +1,8 @@
 package com.BlackSouls.BlackSoulsMod.handler;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.BSConfig;
+import com.BlackSouls.BlackSoulsMod.client.WindowBranding;
 import com.BlackSouls.BlackSoulsMod.client.gui.GuiBSConfig;
 import com.BlackSouls.BlackSoulsMod.client.render.*;
 import com.BlackSouls.BlackSoulsMod.client.tooltip.ClientSpongeNameTooltipComponent;
@@ -35,6 +37,7 @@ public class ClientModEvents {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
+            WindowBranding.apply(BSConfig.ENABLE_ORIGINAL_WINDOW_BRANDING.get());
             ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
                     () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, parent) -> new GuiBSConfig(parent)));
         });

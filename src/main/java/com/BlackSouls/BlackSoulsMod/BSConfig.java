@@ -10,6 +10,7 @@ public class BSConfig {
 
     public static final ForgeConfigSpec COMMON_SPEC;
     public static final ForgeConfigSpec CLIENT_SPEC;
+    public static ForgeConfigSpec.BooleanValue ENABLE_ORIGINAL_WINDOW_BRANDING;
     public static ForgeConfigSpec.BooleanValue ENABLE_CUSTOM_MAIN_MENU;
     public static ForgeConfigSpec.BooleanValue ALLOW_PLAYER_EXTRA_MODES;
     public static ForgeConfigSpec.BooleanValue ENABLE_LOW_SEN_JUMPSCARE;
@@ -51,6 +52,14 @@ public class BSConfig {
         COMMON_SPEC = builder.build();
 
         ForgeConfigSpec.Builder clientBuilder = new ForgeConfigSpec.Builder();
+
+        clientBuilder.translation("config.blacksouls.client").push("client");
+
+        ENABLE_ORIGINAL_WINDOW_BRANDING = clientBuilder
+                .translation("config.blacksouls.enable_original_window_branding")
+                .define("enableOriginalWindowBranding", true);
+
+        clientBuilder.pop();
 
         CLIENT_SPEC = clientBuilder.build();
     }

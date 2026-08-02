@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.client.render;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.client.gui.GuiTurnBattle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
@@ -13,25 +14,51 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID, value = Dist.CLIENT)
 public final class TextBannerRenderer {
-    private static final int DURATION = 60;
+    private static final int DEFAULT_DURATION = 60;
     private static Component message = Component.empty();
     private static int ticksLeft;
+    private static int activeDuration = DEFAULT_DURATION;
+    private static int rgb = 0xFFFFFF;
+    private static boolean centered;
+    private static boolean waitingForBattleEnd;
 
     public static void show(Component text) {
         message = text.copy();
-        ticksLeft = DURATION;
+        activeDuration = DEFAULT_DURATION;
+        ticksLeft = activeDuration;
+        rgb = 0xFFFFFF;
+        centered = false;
+        waitingForBattleEnd = false;
+    }
+
+    public static void showCentered(Component text, int color, int duration) {
+        message = text.copy();
+        activeDuration = Math.max(20, duration);
+        ticksLeft = 0;
+        rgb = color & 0xFFFFFF;
+        centered = true;
+        waitingForBattleEnd = true;
     }
 
     public static void hide() {
         ticksLeft = 0;
         message = Component.empty();
+        waitingForBattleEnd = false;
     }
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
-        if (event.phase == TickEvent.Phase.END
-                && ticksLeft > 0
-                && !Minecraft.getInstance().isPaused()) {
+        if (event.phase != TickEvent.Phase.END) {
+            return;
+        }
+        Minecraft minecraft = Minecraft.getInstance();
+        if (waitingForBattleEnd) {
+            if (minecraft.screen instanceof GuiTurnBattle) {
+                return;
+            }
+            waitingForBattleEnd = false;
+            ticksLeft = activeDuration;
+        } else if (ticksLeft > 0 && !minecraft.isPaused()) {
             ticksLeft--;
         }
     }
@@ -46,20 +73,31 @@ public final class TextBannerRenderer {
             return;
         }
         GuiGraphics graphics = event.getGuiGraphics();
-        int bannerHeight = 90;
-        int bottom = graphics.guiHeight();
-        int top = bottom - bannerHeight;
-        float opacity = Math.min(1.0F, Math.min((DURATION - ticksLeft + 1) / 6.0F, ticksLeft / 6.0F));
+        int bannerHeight = centered
+                ? Math.max(1, (int) (graphics.guiHeight() * 0.15F))
+                : 90;
+        int top = centered
+                ? (int) (graphics.guiHeight() * 0.33F)
+                : graphics.guiHeight() - bannerHeight;
+        int bottom = top + bannerHeight;
+        float opacity = Math.min(1.0F,
+                Math.min((activeDuration - ticksLeft + 1) / 6.0F, ticksLeft / 6.0F));
         FadedBannerRenderer.draw(graphics, 0, top, graphics.guiWidth(), bottom, opacity);
-        int textColor = Math.round(255.0F * opacity) << 24 | 0xFFFFFF;
-        graphics.drawString(
-                minecraft.font,
-                message,
-                16,
-                top + 16,
-                textColor,
-                true
-        );
+        int textColor = Math.round(255.0F * opacity) << 24 | rgb;
+        if (centered) {
+            float scale = 3.5F;
+            graphics.pose().pushPose();
+            graphics.pose().translate(0.0F, 0.0F, 100.0F);
+            graphics.pose().scale(scale, scale, 1.0F);
+            int textX = (int) (graphics.guiWidth() / 2.0F / scale)
+                    - minecraft.font.width(message) / 2;
+            int textY = (int) ((top
+                    + (bannerHeight - minecraft.font.lineHeight * scale) / 2.0F) / scale);
+            graphics.drawString(minecraft.font, message, textX, textY, textColor, false);
+            graphics.pose().popPose();
+        } else {
+            graphics.drawString(minecraft.font, message, 16, top + 16, textColor, true);
+        }
     }
 
     private TextBannerRenderer() {

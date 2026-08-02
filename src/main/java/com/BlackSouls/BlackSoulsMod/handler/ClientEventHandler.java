@@ -2,6 +2,8 @@ package com.BlackSouls.BlackSoulsMod.handler;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.client.gui.GuiBSMainMenu;
+import com.BlackSouls.BlackSoulsMod.client.ClientSceneMusic;
+import com.BlackSouls.BlackSoulsMod.client.TurnBattleAudioGate;
 import com.BlackSouls.BlackSoulsMod.client.render.GuiShaderTextRenderer;
 import com.BlackSouls.BlackSoulsMod.mixin.AbstractContainerScreenAccessor;
 import net.minecraft.client.Minecraft;
@@ -43,6 +45,7 @@ public class ClientEventHandler {
         }
 
         if (event.getScreen() instanceof net.minecraft.client.gui.screens.DeathScreen) {
+            stopWorldMusicForDeath();
             event.setNewScreen(new com.BlackSouls.BlackSoulsMod.client.gui.GuiYouDied());
         }
     }
@@ -83,7 +86,9 @@ public class ClientEventHandler {
         ClientLevel level = mc.level;
         if (level != null && level.dimension().location().equals(LIBRARY_DIM_ID) && event.getSound() != null) {
             ResourceLocation soundId = event.getSound().getLocation();
-            if (!LIBRARY_BGM_ID.equals(soundId) && soundId.getPath().contains("music")) {
+            if (!LIBRARY_BGM_ID.equals(soundId)
+                    && !ClientSceneMusic.isSceneSound(soundId)
+                    && soundId.getPath().contains("music")) {
                 event.setSound(null);
             }
         }
@@ -101,12 +106,26 @@ public class ClientEventHandler {
 
         boolean inLibrary = level != null && level.dimension().location().equals(LIBRARY_DIM_ID);
         if (inLibrary) {
+            mc.getMusicManager().stopPlaying();
             if (currentTitleBGM != null) {
                 mc.getSoundManager().stop(currentTitleBGM);
                 currentTitleBGM = null;
             }
 
-            if (currentLibraryBGM == null || !mc.getSoundManager().isActive(currentLibraryBGM)) {
+            if (mc.player == null || !mc.player.isAlive()) {
+                stopWorldMusicForDeath();
+                return;
+            }
+
+            if (ClientSceneMusic.hasAssignedMusic()) {
+                if (currentLibraryBGM != null) {
+                    mc.getSoundManager().stop(currentLibraryBGM);
+                    currentLibraryBGM = null;
+                }
+                return;
+            }
+            if (!TurnBattleAudioGate.isActive()
+                    && (currentLibraryBGM == null || !mc.getSoundManager().isActive(currentLibraryBGM))) {
                 currentLibraryBGM = SimpleSoundInstance.forMusic(BlackSouls.LIBRARY_BGM_EVENT.get());
                 mc.getSoundManager().play(currentLibraryBGM);
             }
@@ -136,6 +155,16 @@ public class ClientEventHandler {
             if (mc.player != null && BlackSouls.BUFF_MADNESS.isPresent() && mc.player.hasEffect(BlackSouls.BUFF_MADNESS.get())) {
                 mc.player.hurtTime = 0;
             }
+        }
+    }
+
+    private static void stopWorldMusicForDeath() {
+        Minecraft mc = Minecraft.getInstance();
+        ClientSceneMusic.stopForDeath();
+        mc.getMusicManager().stopPlaying();
+        if (currentLibraryBGM != null) {
+            mc.getSoundManager().stop(currentLibraryBGM);
+            currentLibraryBGM = null;
         }
     }
 }

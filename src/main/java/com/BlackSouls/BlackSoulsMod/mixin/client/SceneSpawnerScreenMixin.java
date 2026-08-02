@@ -1,9 +1,12 @@
 package com.BlackSouls.BlackSoulsMod.mixin.client;
 
 import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBounds;
+import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBossState;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundSetSceneSpawnerBoundsPacket;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -37,16 +40,19 @@ public abstract class SceneSpawnerScreenMixin extends AbstractContainerScreen<Ab
     private EditBox blacksouls$rangeXBox;
     @Unique
     private EditBox blacksouls$rangeZBox;
+    @Unique
+    private CycleButton<Boolean> blacksouls$bossModeButton;
 
     private SceneSpawnerScreenMixin(AbstractContainerMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
     }
 
-    @Inject(method = "m_7856_", at = @At("TAIL"), remap = false)
+    @Inject(method = {"init", "m_7856_"}, at = @At("TAIL"), remap = false)
     private void blacksouls$addBoundsFields(CallbackInfo callback) {
         sceneIdBox.setWidth(126);
         int rangeX = SceneSpawnerBounds.DEFAULT_RANGE;
         int rangeZ = SceneSpawnerBounds.DEFAULT_RANGE;
+        boolean bossMode = false;
         BlockPos pos = blacksouls$getSpawnerPos();
         Minecraft minecraft = Minecraft.getInstance();
         if (pos != null && minecraft.level != null) {
@@ -54,6 +60,9 @@ public abstract class SceneSpawnerScreenMixin extends AbstractContainerScreen<Ab
             if (blockEntity instanceof SceneSpawnerBounds bounds) {
                 rangeX = bounds.blacksouls$getRangeX();
                 rangeZ = bounds.blacksouls$getRangeZ();
+            }
+            if (blockEntity instanceof SceneSpawnerBossState bossState) {
+                bossMode = bossState.blacksouls$isBossMode();
             }
         }
 
@@ -63,6 +72,29 @@ public abstract class SceneSpawnerScreenMixin extends AbstractContainerScreen<Ab
                 "gui.blacksouls.scene_spawner.range_z", rangeZ);
         addRenderableWidget(blacksouls$rangeXBox);
         addRenderableWidget(blacksouls$rangeZBox);
+        blacksouls$compactActionButtons();
+        blacksouls$bossModeButton = CycleButton.onOffBuilder(bossMode).create(
+                leftPos + 20, topPos + 98, 58, 20,
+                Component.translatable("gui.blacksouls.scene_spawner.boss"),
+                (button, value) -> {
+                });
+        addRenderableWidget(blacksouls$bossModeButton);
+    }
+
+    @Unique
+    private void blacksouls$compactActionButtons() {
+        for (var renderable : renderables) {
+            if (!(renderable instanceof Button button) || button.getY() != topPos + 98) {
+                continue;
+            }
+            if (button.getX() == leftPos + 20) {
+                button.setX(leftPos + 84);
+                button.setWidth(62);
+            } else if (button.getX() == leftPos + 118) {
+                button.setX(leftPos + 150);
+                button.setWidth(60);
+            }
+        }
     }
 
     @Unique
@@ -74,7 +106,7 @@ public abstract class SceneSpawnerScreenMixin extends AbstractContainerScreen<Ab
         return box;
     }
 
-    @Inject(method = "m_181908_", at = @At("TAIL"), remap = false)
+    @Inject(method = {"containerTick", "m_181908_"}, at = @At("TAIL"), remap = false)
     private void blacksouls$tickBoundsFields(CallbackInfo callback) {
         if (blacksouls$rangeXBox != null) {
             blacksouls$rangeXBox.tick();
@@ -84,7 +116,7 @@ public abstract class SceneSpawnerScreenMixin extends AbstractContainerScreen<Ab
         }
     }
 
-    @Inject(method = "m_280003_", at = @At("TAIL"), remap = false)
+    @Inject(method = {"renderLabels", "m_280003_"}, at = @At("TAIL"), remap = false)
     private void blacksouls$renderBoundsLabels(GuiGraphics graphics, int mouseX, int mouseY,
                                                 CallbackInfo callback) {
         graphics.drawString(font, Component.translatable("gui.blacksouls.scene_spawner.range"),
@@ -107,7 +139,9 @@ public abstract class SceneSpawnerScreenMixin extends AbstractContainerScreen<Ab
         Integer rangeX = blacksouls$parseRange(blacksouls$rangeXBox);
         Integer rangeZ = blacksouls$parseRange(blacksouls$rangeZBox);
         if (pos != null && rangeX != null && rangeZ != null) {
-            NetworkHandler.sendToServer(new ServerboundSetSceneSpawnerBoundsPacket(pos, rangeX, rangeZ));
+            NetworkHandler.sendToServer(new ServerboundSetSceneSpawnerBoundsPacket(
+                    pos, rangeX, rangeZ,
+                    blacksouls$bossModeButton != null && blacksouls$bossModeButton.getValue()));
         }
     }
 

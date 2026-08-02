@@ -6,8 +6,11 @@ import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.capability.BSWorldData;
 import com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager;
 import com.BlackSouls.BlackSoulsMod.entity.EntityTurnBattleMonster;
+import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
+import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundAdviceVisibilityPacket;
 import com.BlackSouls.BlackSoulsMod.util.DifficultyManager;
 import com.BlackSouls.BlackSoulsMod.util.SkillUtils;
+import com.BlackSouls.BlackSoulsMod.util.skill.SkillSeekAdvice;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -97,6 +100,10 @@ public class SkillEventHandler {
                     StatEventHandler.syncToClient(serverPlayer);
                 }
             });
+            var data = SkillUtils.getPersistedData(player);
+            boolean controlled = data.getBoolean(SkillSeekAdvice.CONTROLLED_TAG);
+            NetworkHandler.sendToPlayer(new ClientboundAdviceVisibilityPacket(
+                    controlled, data.getBoolean(SkillSeekAdvice.VISIBLE_TAG)), serverPlayer);
         }
     }
     @SubscribeEvent

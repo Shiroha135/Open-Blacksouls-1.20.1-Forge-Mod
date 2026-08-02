@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.client.gui;
 
 import com.BlackSouls.BlackSoulsMod.BSConfig;
+import com.BlackSouls.BlackSoulsMod.client.WindowBranding;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
@@ -12,7 +13,7 @@ import java.util.List;
 public class GuiBSConfig extends Screen {
 
     private static final int GUI_WIDTH = 250;
-    private static final int GUI_HEIGHT = 296;
+    private static final int GUI_HEIGHT = 342;
 
     private final Screen parent;
     private int guiLeft;
@@ -20,6 +21,7 @@ public class GuiBSConfig extends Screen {
     private boolean allowPlayerExtraModes;
     private boolean enableLowSenJumpscare;
     private boolean showCombatDamageChat;
+    private boolean enableOriginalWindowBranding;
     private BSConfig.CombatMode combatMode;
 
     public GuiBSConfig(Screen parent) {
@@ -28,6 +30,7 @@ public class GuiBSConfig extends Screen {
         this.allowPlayerExtraModes = BSConfig.ALLOW_PLAYER_EXTRA_MODES.get();
         this.enableLowSenJumpscare = BSConfig.ENABLE_LOW_SEN_JUMPSCARE.get();
         this.showCombatDamageChat = BSConfig.SHOW_COMBAT_DAMAGE_CHAT.get();
+        this.enableOriginalWindowBranding = BSConfig.ENABLE_ORIGINAL_WINDOW_BRANDING.get();
         this.combatMode = BSConfig.COMBAT_MODE.get();
     }
 
@@ -68,19 +71,29 @@ public class GuiBSConfig extends Screen {
         combatModeButton.setTooltip(Tooltip.create(Component.translatable("gui.blacksouls.config.combat_mode.desc")));
         this.addRenderableWidget(combatModeButton);
 
-        this.addRenderableWidget(new BSGhostButton(guiLeft + 42, guiTop + 258, 64, 20,
+        BSGhostButton windowBrandingButton = new BSGhostButton(guiLeft + 20, guiTop + 242, 210, 20, getWindowBrandingText(), button -> {
+            this.enableOriginalWindowBranding = !this.enableOriginalWindowBranding;
+            button.setMessage(getWindowBrandingText());
+        });
+        windowBrandingButton.setTooltip(Tooltip.create(Component.translatable("gui.blacksouls.config.window_branding.desc")));
+        this.addRenderableWidget(windowBrandingButton);
+
+        this.addRenderableWidget(new BSGhostButton(guiLeft + 42, guiTop + 304, 64, 20,
                 Component.translatable("gui.blacksouls.config.save"), button -> {
             BSConfig.ALLOW_PLAYER_EXTRA_MODES.set(this.allowPlayerExtraModes);
             BSConfig.ENABLE_LOW_SEN_JUMPSCARE.set(this.enableLowSenJumpscare);
             BSConfig.SHOW_COMBAT_DAMAGE_CHAT.set(this.showCombatDamageChat);
             BSConfig.COMBAT_MODE.set(this.combatMode);
+            BSConfig.ENABLE_ORIGINAL_WINDOW_BRANDING.set(this.enableOriginalWindowBranding);
             BSConfig.COMMON_SPEC.save();
+            BSConfig.CLIENT_SPEC.save();
+            WindowBranding.apply(this.enableOriginalWindowBranding);
             if (this.minecraft != null) {
                 this.minecraft.setScreen(this.parent);
             }
         }));
 
-        this.addRenderableWidget(new BSGhostButton(guiLeft + 144, guiTop + 258, 64, 20,
+        this.addRenderableWidget(new BSGhostButton(guiLeft + 144, guiTop + 304, 64, 20,
                 Component.translatable("gui.blacksouls.config.cancel"), button -> {
             if (this.minecraft != null) {
                 this.minecraft.setScreen(this.parent);
@@ -99,6 +112,7 @@ public class GuiBSConfig extends Screen {
         drawWrappedText(guiGraphics, Component.translatable("gui.blacksouls.config.low_sen_jumpscare.desc"), guiLeft + 20, guiTop + 128, GUI_WIDTH - 40, 0xFFB8B8FF);
         drawWrappedText(guiGraphics, Component.translatable("gui.blacksouls.config.combat_damage_chat.desc"), guiLeft + 20, guiTop + 174, GUI_WIDTH - 40, 0xFFB8B8FF);
         drawWrappedText(guiGraphics, Component.translatable("gui.blacksouls.config.combat_mode.desc"), guiLeft + 20, guiTop + 220, GUI_WIDTH - 40, 0xFFB8B8FF);
+        drawWrappedText(guiGraphics, Component.translatable("gui.blacksouls.config.window_branding.desc"), guiLeft + 20, guiTop + 266, GUI_WIDTH - 40, 0xFFB8B8FF);
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
@@ -130,6 +144,12 @@ public class GuiBSConfig extends Screen {
         return Component.translatable(this.combatMode == BSConfig.CombatMode.BLACK_SOULS_TURN_BASED
                 ? "gui.blacksouls.config.combat_mode.turn_based"
                 : "gui.blacksouls.config.combat_mode.realtime");
+    }
+
+    private Component getWindowBrandingText() {
+        return Component.translatable(this.enableOriginalWindowBranding
+                ? "gui.blacksouls.config.window_branding.on"
+                : "gui.blacksouls.config.window_branding.off");
     }
 
     private void drawWrappedText(GuiGraphics guiGraphics, Component text, int x, int y, int maxWidth, int color) {

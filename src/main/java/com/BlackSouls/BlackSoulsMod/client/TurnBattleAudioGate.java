@@ -50,6 +50,10 @@ public final class TurnBattleAudioGate {
         }
     }
 
+    public static boolean isActive() {
+        return battleScreen != null;
+    }
+
     @SubscribeEvent
     public static void onPlaySound(PlaySoundEvent event) {
         if (battleScreen != null && BATTLE_SOUND_DEPTH.get() <= 0) {

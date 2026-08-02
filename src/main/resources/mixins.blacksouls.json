@@ -20,6 +20,7 @@
     "CampfireBlockMixin",
     "FogGateBlockMixin",
     "compat.MapTriggerBlockEntityMixin",
+    "compat.SceneSpawnerBlockMixin",
     "compat.SceneSpawnerBlockEntityMixin",
     "compat.SceneSpawnManagerMixin"
   ],
@@ -29,11 +30,14 @@
     "client.ItemInHandRendererAccessor",
     "client.MapTriggerBlockEntityAccessor",
     "client.MapTriggerRendererMixin",
+    "client.SceneSpawnerBlockEntityAccessor",
+    "client.SceneSpawnerRendererMixin",
     "client.SceneSpawnerScreenMixin",
     "client.FogGateRendererMixin",
     "client.FontManagerResourceMixin",
     "client.FontSetGlobalMixin",
-    "client.MobEffectInstanceClientMixin"
+    "client.MobEffectInstanceClientMixin",
+    "client.MinecraftWindowTitleMixin"
   ],
   "injectors": {
     "defaultRequire": 1

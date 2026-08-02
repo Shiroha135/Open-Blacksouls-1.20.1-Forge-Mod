@@ -242,9 +242,25 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
                 double manaRate = getTurnBattleMana() / Math.max(1.0D, getTurnBattleMaxMana());
                 yield manaRate >= action.conditionParam1() && manaRate <= action.conditionParam2();
             }
-            case 4 -> activeStates.contains((int) action.conditionParam1());
+            case 4, 6 -> {
+                int stateId = resolveTurnBattleActionConditionState(action);
+                yield stateId > 0 && activeStates.contains(stateId);
+            }
             default -> false;
         };
+    }
+
+    public int resolveTurnBattleActionConditionState(BSOriginalEnemyData.Action action) {
+        if (action.conditionType() == 4) {
+            return (int) action.conditionParam1();
+        }
+        if (getProfileId() == 184
+                && action.skillId() == 53
+                && action.conditionType() == 6
+                && (int) action.conditionParam1() == 24) {
+            return 32;
+        }
+        return 0;
     }
 
     @Override

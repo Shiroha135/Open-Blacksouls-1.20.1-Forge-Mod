@@ -23,6 +23,18 @@ public final class PlayerStatService {
         });
     }
 
+    public static void recoverAll(ServerPlayer player) {
+        player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
+            StatEventHandler.applyStats(player);
+            stats.mp = stats.maxMp;
+            stats.currentActionPoints = stats.getMaxActionPoints();
+            player.setHealth(player.getMaxHealth());
+            player.getFoodData().setFoodLevel(20);
+            player.getFoodData().setSaturation(20.0F);
+            NetworkHandler.sendToPlayer(new PacketSyncStats(stats.serializeNBT()), player);
+        });
+    }
+
     private PlayerStatService() {
     }
 }

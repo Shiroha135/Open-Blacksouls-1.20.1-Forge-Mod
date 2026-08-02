@@ -54,6 +54,7 @@ public class NetworkHandler {
         register(ServerboundNodenRewardPacket.class, ServerboundNodenRewardPacket::toBytes, ServerboundNodenRewardPacket::new, ServerboundNodenRewardPacket::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ClientboundBannerPacket.class, ClientboundBannerPacket::toBytes, ClientboundBannerPacket::new, ClientboundBannerPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(ClientboundTextBannerPacket.class, ClientboundTextBannerPacket::toBytes, ClientboundTextBannerPacket::new, ClientboundTextBannerPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ClientboundBossVictoryPacket.class, ClientboundBossVictoryPacket::toBytes, ClientboundBossVictoryPacket::new, ClientboundBossVictoryPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(PacketClaimPurgeTaskReward.class, PacketClaimPurgeTaskReward::toBytes, PacketClaimPurgeTaskReward::new, PacketClaimPurgeTaskReward::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ServerboundSimpleActionPacket.class, ServerboundSimpleActionPacket::toBytes, ServerboundSimpleActionPacket::new, ServerboundSimpleActionPacket::handle, NetworkDirection.PLAY_TO_SERVER);
         register(PacketDevSetStats.class, PacketDevSetStats::toBytes, PacketDevSetStats::new, PacketDevSetStats::handle, NetworkDirection.PLAY_TO_SERVER);
@@ -84,6 +85,7 @@ public class NetworkHandler {
         register(ServerboundSetSceneSpawnerBoundsPacket.class, ServerboundSetSceneSpawnerBoundsPacket::toBytes, ServerboundSetSceneSpawnerBoundsPacket::new, ServerboundSetSceneSpawnerBoundsPacket::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ClientboundCurrentScenePacket.class, ClientboundCurrentScenePacket::toBytes, ClientboundCurrentScenePacket::new, ClientboundCurrentScenePacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(ServerboundRequestCurrentScenePacket.class, ServerboundRequestCurrentScenePacket::toBytes, ServerboundRequestCurrentScenePacket::new, ServerboundRequestCurrentScenePacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ClientboundAdviceVisibilityPacket.class, ClientboundAdviceVisibilityPacket::toBytes, ClientboundAdviceVisibilityPacket::new, ClientboundAdviceVisibilityPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
 
     }
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {

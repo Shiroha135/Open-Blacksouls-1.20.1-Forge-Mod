@@ -2,6 +2,7 @@ package com.BlackSouls.BlackSoulsMod.client.render;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.client.render.heldoutline.HeldItemOutlineCompat;
+import com.BlackSouls.BlackSoulsMod.entity.EntityRabbitHoleNpc;
 import com.mojang.blaze3d.shaders.AbstractUniform;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
@@ -43,7 +44,9 @@ public class ClientStatusRenderer {
         LivingEntity entity = event.getEntity();
         Minecraft mc = Minecraft.getInstance();
 
-        if (mc.player == null || entity instanceof Player || entity instanceof ArmorStand || entity.distanceToSqr(mc.player) > 400 || !hasClearStatusLine(mc, entity)) return;
+        if (mc.player == null || entity instanceof Player || entity instanceof ArmorStand
+                || entity instanceof EntityRabbitHoleNpc || entity.distanceToSqr(mc.player) > 400
+                || !hasClearStatusLine(mc, entity)) return;
 
         PoseStack poseStack = event.getPoseStack();
         MultiBufferSource buffer = event.getMultiBufferSource();

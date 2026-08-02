@@ -4,6 +4,7 @@ import com.BlackSouls.BlackSoulsMod.BSConfig;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalDatabaseEnemy;
+import com.BlackSouls.BlackSoulsMod.handler.SceneSpawnerBossHandler;
 import com.BlackSouls.BlackSoulsMod.entity.EntityCorpseEatingRabbit;
 import com.BlackSouls.BlackSoulsMod.entity.EntityTurnBattleMonster;
 import com.BlackSouls.BlackSoulsMod.handler.BSEntityRegistry;
@@ -343,6 +344,7 @@ public final class TurnBattleManager {
                 damage *= 3.0D;
                 critical = true;
             }
+            damage *= turnBattleDamageMultiplier(enemy);
             int dealt = Math.max(1, (int) Math.round(damage));
             enemy.setTurnBattleHealth(enemy.getTurnBattleHealth() - dealt);
             totalDamage += dealt;
@@ -374,12 +376,19 @@ public final class TurnBattleManager {
     }
 
     public static boolean skillRequiresTarget(AbstractSkill skill) {
-        return skill != null && !NON_DAMAGE_SKILLS.contains(skill.getSkillId())
-                && !ALL_TARGET_SKILLS.contains(skill.getSkillId());
+        return skill != null && skill.isUsableInTurnBattle()
+                && (skill.requiresTurnBattleTarget()
+                || (!isNonDamageSkill(skill)
+                && !ALL_TARGET_SKILLS.contains(skill.getSkillId())));
     }
 
     public static boolean skillTargetsAll(AbstractSkill skill) {
         return skill != null && ALL_TARGET_SKILLS.contains(skill.getSkillId());
+    }
+
+    private static boolean isNonDamageSkill(AbstractSkill skill) {
+        return skill != null && (skill.isTurnBattleNonDamage()
+                || NON_DAMAGE_SKILLS.contains(skill.getSkillId()));
     }
 
     private static ActionResult performSkill(ServerPlayer player, BSPlayerStats stats,
@@ -391,7 +400,7 @@ public final class TurnBattleManager {
             return new ActionResult(Component.literal("这个技能当前不可用。"), false);
         }
         AbstractSkill skill = SkillRegistry.SKILLS.values().stream().skip(selection).findFirst().orElse(null);
-        if (skill == null || !skill.isUnlockedForGUI(player)) {
+        if (skill == null || !skill.isUsableInTurnBattle() || !skill.isUnlockedForGUI(player)) {
             return new ActionResult(Component.literal("这个技能当前不可用。"), false);
         }
         TurnBattleDomainData.Domain domain = TurnBattleDomainData.get(session.battleProfileId);
@@ -399,7 +408,7 @@ public final class TurnBattleManager {
             return new ActionResult(Component.literal("领域封锁了技·魔法。"), false);
         }
         if (domain != null && domain.buffDisabled()
-                && NON_DAMAGE_SKILLS.contains(skill.getSkillId())) {
+                && isNonDamageSkill(skill)) {
             return new ActionResult(Component.literal("领域封锁了强化。"), false);
         }
         boolean infiniteCooldown = SkillUtils.hasInfiniteCooldownAccessory(player);
@@ -424,12 +433,12 @@ public final class TurnBattleManager {
         }
         String skillName = Component.translatable(skill.getTranslationKey()).getString();
         String actor = player.getDisplayName().getString();
-        if (NON_DAMAGE_SKILLS.contains(skill.getSkillId())) {
+        if (isNonDamageSkill(skill)) {
             Map<UUID, Double> healthBeforeEffect = new HashMap<>();
             for (EntityTurnBattleMonster enemy : getEnemies(player, session)) {
                 healthBeforeEffect.put(enemy.getUUID(), enemy.getTurnBattleHealth());
             }
-            skill.execute(player, stats);
+            skill.executeInTurnBattle(player, stats, selectedTarget);
             for (EntityTurnBattleMonster enemy : getEnemies(player, session)) {
                 Double health = healthBeforeEffect.get(enemy.getUUID());
                 if (health != null) {
@@ -463,6 +472,7 @@ public final class TurnBattleManager {
                         ? stats.attack * domainAttackRate(session) * 4.0D - enemyDefense * 2.0D
                         : stats.magicAttack * domainMagicRate(session) * 5.0D - enemyDefense * 2.0D;
                 double damage = varied(player, Math.max(1.0D, baseDamage));
+                damage *= turnBattleDamageMultiplier(enemy);
                 int dealt = Math.max(1, (int) Math.round(damage));
                 enemy.setTurnBattleHealth(enemy.getTurnBattleHealth() - dealt);
                 hits.add(new ClientboundTurnBattlePacket.DamageHit(
@@ -972,7 +982,9 @@ public final class TurnBattleManager {
                 ? 0.0D : stats.evasion;
         int turn = session.enemyTurns.getOrDefault(battleEnemy.getUUID(), 1);
         BSOriginalEnemyData.Action action = null;
-        if (battleEnemy instanceof EntityOriginalDatabaseEnemy originalEnemy) {
+        EntityOriginalDatabaseEnemy originalEnemy = battleEnemy instanceof EntityOriginalDatabaseEnemy original
+                ? original : null;
+        if (originalEnemy != null) {
             action = forcedSkillId > 0
                     ? originalEnemy.getProfile().findAction(forcedSkillId)
                     : originalEnemy.selectTurnBattleAction(player.getRandom(), turn, activeStates);
@@ -1023,8 +1035,10 @@ public final class TurnBattleManager {
         session.lastEnemyAnimationId = action.animationId();
         String actionHeader = enemy + action.text() + "！";
         applyEnemySelfStateEffects(action, activeStates, player);
-        if (action.conditionType() == 4) {
-            activeStates.remove((int) action.conditionParam1());
+        int conditionState = originalEnemy == null
+                ? 0 : originalEnemy.resolveTurnBattleActionConditionState(action);
+        if (conditionState > 0) {
+            activeStates.remove(conditionState);
         }
 
         double difficulty = DifficultyManager.getCurrentTotalMultiplierForLevel(battleEnemy.level());
@@ -1206,11 +1220,17 @@ public final class TurnBattleManager {
         if (critical) {
             damage *= 3.0D;
         }
+        damage *= turnBattleDamageMultiplier(enemy);
         int dealt = Math.max(1, safeDamageInt(damage));
         enemy.setTurnBattleHealth(enemy.getTurnBattleHealth() - dealt);
         session.playerHits.add(new ClientboundTurnBattlePacket.DamageHit(
                 enemy.getId(), dealt, critical, wave));
         return new CounterHit(dealt, critical);
+    }
+
+    private static double turnBattleDamageMultiplier(LivingEntity target) {
+        MobEffectInstance defenseless = target.getEffect(BlackSouls.BUFF_DEFENSELESS.get());
+        return defenseless == null ? 1.0D : defenseless.getAmplifier() > 0 ? 3.0D : 2.0D;
     }
 
     private static String counterText(ServerPlayer player, EntityTurnBattleMonster enemy,
@@ -1457,6 +1477,9 @@ public final class TurnBattleManager {
                                boolean removeEnemy, long soulReward) {
         sendState(player, false, message, false, outcome, soulReward);
         EntityTurnBattleMonster rootEnemy = getRootEnemy(player, session);
+        if (outcome == ClientboundTurnBattlePacket.Outcome.VICTORY && rootEnemy != null) {
+            SceneSpawnerBossHandler.markDefeated(rootEnemy, player);
+        }
         for (EntityTurnBattleMonster enemy : getEnemies(player, session)) {
             enemy.setInvulnerable(false);
             enemy.setDeltaMovement(Vec3.ZERO);

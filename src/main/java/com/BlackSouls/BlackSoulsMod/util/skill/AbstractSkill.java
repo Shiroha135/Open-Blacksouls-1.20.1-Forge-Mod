@@ -7,7 +7,9 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class AbstractSkill {
 
@@ -34,6 +36,22 @@ public abstract class AbstractSkill {
     }
 
     public abstract boolean isUnlockedForGUI(Player player);
+
+    public boolean isUsableInTurnBattle() {
+        return true;
+    }
+
+    public boolean isTurnBattleNonDamage() {
+        return false;
+    }
+
+    public boolean requiresTurnBattleTarget() {
+        return false;
+    }
+
+    public void executeInTurnBattle(ServerPlayer player, BSPlayerStats stats, @Nullable LivingEntity target) {
+        execute(player, stats);
+    }
 
     protected float getEffectiveManaCost(BSPlayerStats stats) {
         double rate = stats == null ? 1.0D : stats.mpCostRate;

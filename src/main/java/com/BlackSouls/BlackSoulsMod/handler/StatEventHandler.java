@@ -398,7 +398,9 @@ public class StatEventHandler {
                 * Math.pow(2.0D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_1))
                 * Math.pow(2.5D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_2))
                 * Math.pow(3.0D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_3));
-        if (entity instanceof Player player && hasPorcupineShield(player)) {
+        if (entity instanceof Player player && hasKnightShield(player)) {
+            multiplier *= 2.5D;
+        } else if (entity instanceof Player player && hasPorcupineShield(player)) {
             multiplier *= 2.0D;
         }
         return multiplier;
@@ -407,6 +409,11 @@ public class StatEventHandler {
     private static boolean hasPorcupineShield(Player player) {
         return player.getMainHandItem().is(BlackSouls.PORCUPINE_SHIELD.get())
                 || player.getOffhandItem().is(BlackSouls.PORCUPINE_SHIELD.get());
+    }
+
+    private static boolean hasKnightShield(Player player) {
+        return player.getMainHandItem().is(BlackSouls.KNIGHT_SHIELD.get())
+                || player.getOffhandItem().is(BlackSouls.KNIGHT_SHIELD.get());
     }
 
     private static boolean hasRegisteredEffect(LivingEntity entity, RegistryObject<net.minecraft.world.effect.MobEffect> effect) {
@@ -2681,6 +2688,7 @@ public class StatEventHandler {
                 stats.attack += 50.0; stats.speed *= 0.95;
             }
             if (hasPorcupineShield(player)) stats.speed *= 0.97D;
+            if (hasKnightShield(player)) stats.speed *= 0.98D;
 
             stats.weaponEnchantments.clear();
 
@@ -3162,7 +3170,8 @@ public class StatEventHandler {
             }
             int fighterCount = getBaubleCount(player, BlackSouls.RING_FIGHTER.get());
             int clubKnightCount = getBaubleCount(player, BlackSouls.RING_CLUB_KNIGHT.get());
-            double stunResistance = 1.0D - Math.pow(0.50D, fighterCount + clubKnightCount);
+            int knightShieldCount = hasKnightShield(player) ? 1 : 0;
+            double stunResistance = 1.0D - Math.pow(0.50D, fighterCount + clubKnightCount + knightShieldCount);
             if (stunResistance > 0.0D
                     && BlackSouls.BUFF_STUN.isPresent()
                     && incomingEffect == BlackSouls.BUFF_STUN.get()

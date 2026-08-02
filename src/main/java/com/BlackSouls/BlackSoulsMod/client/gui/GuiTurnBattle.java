@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod.client.gui;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.client.TurnBattleAudioGate;
+import com.BlackSouls.BlackSoulsMod.client.ClientSceneState;
 import com.BlackSouls.BlackSoulsMod.client.render.AnimationRegistry;
 import com.BlackSouls.BlackSoulsMod.client.render.BSAvatarRenderer;
 import com.BlackSouls.BlackSoulsMod.client.render.BattleScreenVFXRenderer;
@@ -146,6 +147,7 @@ public class GuiTurnBattle extends Screen {
     private boolean enemyDamageCritical;
     private boolean playerUsedNormalAttack;
     private boolean enemyWasDamaged;
+    private boolean enemyActed;
     private boolean enemyAttacked;
     private boolean playerWasDamaged;
     private int holdEnemyGaugeTicks;
@@ -292,6 +294,13 @@ public class GuiTurnBattle extends Screen {
         this.battleback1Height = battle.battleback1Height();
         this.battleback2Width = battle.battleback2Width();
         this.battleback2Height = battle.battleback2Height();
+        ResourceLocation sceneBackground = ClientSceneState.getBattleBackground();
+        if (sceneBackground != null) {
+            this.battleback1 = sceneBackground;
+            this.battleback1Width = 640;
+            this.battleback1Height = 480;
+            this.battleback2 = null;
+        }
         if (restartMusic && musicChanged && this.battleMusic != null) {
             stopBattleMusic();
             startBattleMusic();
@@ -425,8 +434,10 @@ public class GuiTurnBattle extends Screen {
                 .anyMatch(enemy -> report.contains("对" + enemy.name.getString() + "造成了"));
         this.playerWasDamaged = !incomingHits.isEmpty()
                 || !playerName.isEmpty() && report.contains(playerName + "受到了");
-        this.enemyAttacked = this.enemies.stream()
-                .anyMatch(enemy -> report.contains(enemy.name.getString()))
+        this.enemyActed = awaitingPresentation && !phaseChanged && report.lines()
+                .anyMatch(line -> this.enemies.stream()
+                        .anyMatch(enemy -> line.startsWith(enemy.name.getString())));
+        this.enemyAttacked = this.enemyActed
                 && (this.playerWasDamaged || report.contains("但是攻击落空了"));
         this.pendingEnemyEvasionSound = report.contains("但是攻击落空了")
                 ? resolveEnemyEvasionSound(report) : 0;
@@ -454,7 +465,7 @@ public class GuiTurnBattle extends Screen {
                     this.enemyDamageCritical, this.enemyImpactAge, true, 0));
         }
         int presentationEnd = Math.max(62, this.enemyImpactAge + 22);
-        if (this.enemyAttacked) {
+        if (this.enemyActed) {
             presentationEnd = Math.max(presentationEnd,
                     Math.max(this.enemyAttackAge + 30, incomingEndAge + 20));
         }
@@ -545,17 +556,19 @@ public class GuiTurnBattle extends Screen {
                 this.pendingPlayerTargetsAll = false;
             }
             triggerScheduledDamageHits();
-            if (this.effectAge == this.enemyAttackAge && this.enemyAttacked) {
+            if (this.effectAge == this.enemyAttackAge && this.enemyActed) {
                 VFXAnimation animation = AnimationRegistry.ANIMATIONS.get(this.enemyAnimationId);
                 if (animation == null || animation.soundTimings.isEmpty()) {
                     playUiSound(BlackSouls.TURN_ENEMY_ATTACK_EVENT.get(), 1.0F);
                 }
                 queueBattleVfx(new TurnBattleVfxResolver.Cue(
-                        this.enemyAnimationId, TurnBattleVfxResolver.Target.PLAYER), true);
+                        this.enemyAnimationId,
+                        resolveEnemyAnimationTarget(this.message.getString())), true,
+                        this.actingEnemyIndex);
             }
             triggerIncomingHits();
             triggerScheduledRevivals();
-            if (this.effectAge == this.enemyAttackAge + 6 && this.enemyAttacked
+            if (this.effectAge == this.enemyAttackAge + 6 && this.enemyActed
                     && !this.incomingSequenceActive) {
                 this.enemyActionPoints = 0.0F;
                 this.enemyActionWaitTicks = 0;
@@ -2144,7 +2157,7 @@ public class GuiTurnBattle extends Screen {
         }
         int registryIndex = 0;
         for (AbstractSkill skill : SkillRegistry.SKILLS.values()) {
-            if (skill.isUnlockedForGUI(this.minecraft.player)) {
+            if (skill.isUsableInTurnBattle() && skill.isUnlockedForGUI(this.minecraft.player)) {
                 int manaCost = Math.round(skill.getManaCost());
                 int cooldown = this.skillCooldowns.getOrDefault(skill.getSkillId(), 0);
                 MenuEntry entry = new MenuEntry(
@@ -2859,6 +2872,24 @@ public class GuiTurnBattle extends Screen {
             }
         }
         return fallback != null && fallback.hitType() == 2 ? 2 : 1;
+    }
+
+    private TurnBattleVfxResolver.Target resolveEnemyAnimationTarget(String report) {
+        if (this.enemies.isEmpty()) {
+            return TurnBattleVfxResolver.Target.PLAYER;
+        }
+        int index = Math.max(0, Math.min(this.enemies.size() - 1, this.actingEnemyIndex));
+        BSOriginalEnemyData.Entry profile = BSOriginalEnemyData.get(this.enemies.get(index).profileId);
+        for (BSOriginalEnemyData.Action action : profile.actions()) {
+            if (action.animationId() == this.enemyAnimationId
+                    && ((!action.name().isBlank() && report.contains(action.name()))
+                    || (!action.text().isBlank() && report.contains(action.text())))) {
+                return action.scope() == 11
+                        ? TurnBattleVfxResolver.Target.ENEMY
+                        : TurnBattleVfxResolver.Target.PLAYER;
+            }
+        }
+        return TurnBattleVfxResolver.Target.PLAYER;
     }
 
     private boolean isBossCollapse(EnemyVisual enemy) {

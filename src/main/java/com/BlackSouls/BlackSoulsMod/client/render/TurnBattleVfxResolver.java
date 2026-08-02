@@ -64,6 +64,7 @@ public final class TurnBattleVfxResolver {
             case "bs2_skill_corpse_dragon_awe" -> new Cue(320, Target.ENEMY);
             case "bs2_skill_counter" -> new Cue(0, Target.PLAYER);
             case "bs2_skill_cross_slash" -> new Cue(518, Target.ENEMY);
+            case "bs2_skill_crush" -> new Cue(117, Target.ENEMY);
             case "bs2_skill_crushing_water" -> new Cue(356, Target.ENEMY);
             case "bs2_skill_cure" -> new Cue(40, Target.PLAYER);
             case "bs2_skill_dark_dance" -> new Cue(296, Target.ENEMY);
@@ -77,6 +78,7 @@ public final class TurnBattleVfxResolver {
             case "bs2_skill_dense_spirochete" -> new Cue(499, Target.ENEMY);
             case "bs2_skill_destruction_storm" -> new Cue(103, Target.ENEMY);
             case "bs2_skill_dispel" -> new Cue(46, Target.ENEMY);
+            case "bs2_skill_dodge" -> new Cue(0, Target.PLAYER);
             case "bs2_skill_divine_beast_thunder" -> new Cue(100, Target.ENEMY);
             case "bs2_skill_divine_thunder" -> new Cue(65, Target.ENEMY);
             case "bs2_skill_double_collision" -> new Cue(129, Target.ENEMY);
