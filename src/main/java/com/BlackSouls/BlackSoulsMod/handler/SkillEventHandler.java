@@ -272,6 +272,11 @@ public class SkillEventHandler {
     }
 
     public static TurnBattleDamageResult applyTurnBattleDamageDetailed(ServerPlayer player, int damage) {
+        return applyTurnBattleDamageDetailed(player, damage, false);
+    }
+
+    public static TurnBattleDamageResult applyTurnBattleDamageDetailed(ServerPlayer player, int damage,
+                                                                        boolean keepDownedAlive) {
         if (player == null || damage <= 0 || !player.isAlive()) {
             return new TurnBattleDamageResult(0, false, false, 0);
         }
@@ -294,8 +299,12 @@ public class SkillEventHandler {
                 int revivedHealth = reviveTurnBattlePlayer(player);
                 return new TurnBattleDamageResult(damage, true, true, revivedHealth);
             }
-            DimensionRuleHandler.captureDeathInventory(player);
-            player.setHealth(0.0F);
+            if (keepDownedAlive) {
+                player.setHealth(1.0F);
+            } else {
+                DimensionRuleHandler.captureDeathInventory(player);
+                player.setHealth(0.0F);
+            }
             player.hurtMarked = true;
             return new TurnBattleDamageResult(damage, true, false, 0);
         }

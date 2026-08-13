@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod.party;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundPartyStatePacket;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
+import com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager;
 import com.BlackSouls.BlackSoulsMod.util.StoryNameData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.ClickEvent;
@@ -55,6 +56,24 @@ public final class PartyManager {
         return party != null && party == PARTIES.get(second.getUUID());
     }
 
+    public static List<ServerPlayer> onlineMembers(ServerPlayer player) {
+        restore(player.server);
+        Party party = PARTIES.get(player.getUUID());
+        if (party == null) return List.of(player);
+        List<ServerPlayer> members = new ArrayList<>();
+        for (UUID id : party.members()) {
+            ServerPlayer member = player.server.getPlayerList().getPlayer(id);
+            if (member != null && member.isAlive() && !member.isSpectator()) members.add(member);
+        }
+        return members;
+    }
+
+    public static boolean isLeader(ServerPlayer player) {
+        restore(player.server);
+        Party party = PARTIES.get(player.getUUID());
+        return party == null || party.leader().equals(player.getUUID());
+    }
+
     public static void updateAvatar(ServerPlayer player, String avatar) {
         restore(player.server);
         AVATARS.put(player.getUUID(), sanitizeAvatar(avatar));
@@ -66,6 +85,13 @@ public final class PartyManager {
     public static void syncFor(ServerPlayer player, String avatar) {
         restore(player.server);
         AVATARS.put(player.getUUID(), sanitizeAvatar(avatar));
+        Party party = PARTIES.get(player.getUUID());
+        if (party == null) syncSolo(player);
+        else sync(party, player.server);
+    }
+
+    public static void refresh(ServerPlayer player) {
+        restore(player.server);
         Party party = PARTIES.get(player.getUUID());
         if (party == null) syncSolo(player);
         else sync(party, player.server);
@@ -271,10 +297,13 @@ public final class PartyManager {
         BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).resolve().orElse(null);
         double mp = stats == null ? 0.0D : stats.mp;
         double maxMp = stats == null ? 0.0D : stats.maxMp;
+        double ap = stats == null ? 0.0D : stats.getCurrentActionPoints();
+        double maxAp = stats == null ? 1.0D : stats.getMaxActionPoints();
         int level = stats == null ? 1 : stats.level;
+        boolean downed = TurnBattleManager.isDowned(player);
         return new ClientboundPartyStatePacket.Member(player.getUUID(), name,
-                AVATARS.getOrDefault(player.getUUID(), "knight_face"), player.getHealth(), player.getMaxHealth(),
-                mp, maxMp, level, leader);
+                AVATARS.getOrDefault(player.getUUID(), "knight_face"), downed ? 0.0F : player.getHealth(), player.getMaxHealth(),
+                mp, maxMp, ap, maxAp, level, leader, downed);
     }
 
     private static String sanitizeAvatar(String avatar) {

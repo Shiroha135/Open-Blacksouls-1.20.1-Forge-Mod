@@ -32,10 +32,12 @@ public final class ClientboundPartyStatePacket {
     }
 
     public record Member(UUID id, String name, String avatar, float health, float maxHealth,
-                         double mp, double maxMp, int level, boolean leader) {
+                         double mp, double maxMp, double ap, double maxAp, int level,
+                         boolean leader, boolean downed) {
         private static Member read(FriendlyByteBuf buf) {
             return new Member(buf.readUUID(), buf.readUtf(64), buf.readUtf(64), buf.readFloat(), buf.readFloat(),
-                    buf.readDouble(), buf.readDouble(), buf.readVarInt(), buf.readBoolean());
+                    buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
+                    buf.readVarInt(), buf.readBoolean(), buf.readBoolean());
         }
         private void write(FriendlyByteBuf buf) {
             buf.writeUUID(id);
@@ -45,8 +47,11 @@ public final class ClientboundPartyStatePacket {
             buf.writeFloat(maxHealth);
             buf.writeDouble(mp);
             buf.writeDouble(maxMp);
+            buf.writeDouble(ap);
+            buf.writeDouble(maxAp);
             buf.writeVarInt(level);
             buf.writeBoolean(leader);
+            buf.writeBoolean(downed);
         }
     }
 }

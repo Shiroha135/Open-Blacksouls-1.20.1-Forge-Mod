@@ -16,9 +16,11 @@ import com.BlackSouls.BlackSoulsMod.client.render.VFXSoundTiming;
 import com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager;
 import com.BlackSouls.BlackSoulsMod.combat.TurnBattleDomainData;
 import com.BlackSouls.BlackSoulsMod.client.ClientSkillInfo;
+import com.BlackSouls.BlackSoulsMod.client.ClientPartyState;
 import com.BlackSouls.BlackSoulsMod.entity.EntityTurnBattleMonster;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundTurnBattlePacket;
+import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundPartyStatePacket;
 import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundTurnBattleActionPacket;
 import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundTurnBattlePresentationPacket;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalBattleProfileData;
@@ -1138,6 +1140,13 @@ public class GuiTurnBattle extends Screen {
         if (this.minecraft == null || this.minecraft.player == null) {
             return;
         }
+        List<ClientboundPartyStatePacket.Member> party = ClientPartyState.getMembers();
+        if (party.size() > 1) {
+            for (int i = 0; i < Math.min(4, party.size()); i++) {
+                drawPartyBattleStatus(graphics, party.get(i), y + 9 + i * 30);
+            }
+            return;
+        }
         String name = this.minecraft.player.getDisplayName().getString();
         int hp = Math.max(0, Math.round(this.displayPlayerHealth));
         int maxHp = Math.max(1, Math.round(this.displayPlayerMaxHealth));
@@ -1181,6 +1190,43 @@ public class GuiTurnBattle extends Screen {
                 this.displayMp / Math.max(1.0D, this.displayMaxMp), 0xFF287FD8);
         drawThinGauge(graphics, apX, apEnd, rowY, "AP", apPercent + "%",
                 this.displayAp / Math.max(0.0001D, this.displayMaxAp), 0xFF36C84A);
+    }
+
+    private void drawPartyBattleStatus(GuiGraphics graphics, ClientboundPartyStatePacket.Member member, int rowY) {
+        boolean local = this.minecraft != null && this.minecraft.player != null
+                && member.id().equals(this.minecraft.player.getUUID());
+        int portraitX = 10;
+        int portraitW = 28;
+        graphics.enableScissor(portraitX, rowY, portraitX + portraitW, rowY + 22);
+        RenderSystem.enableBlend();
+        String avatar = local ? ClientSkillInfo.getAvatar() : member.avatar();
+        BSAvatarRenderer.draw(graphics, BSAvatarRenderer.getTexture(avatar), avatar, portraitX, rowY - 9, 34);
+        RenderSystem.disableBlend();
+        graphics.disableScissor();
+        int nameX = 43;
+        graphics.drawString(this.font, member.name(), nameX, rowY + 6,
+                member.downed() ? 0xFFFF4444 : 0xFFFFFFFF, false);
+        int hpX = Math.max(130, Math.round(this.width * 0.36F));
+        int usable = Math.max(160, this.width - hpX - 16);
+        int hpEnd = hpX + Math.round(usable * 0.45F);
+        int mpX = hpEnd + 6;
+        int mpEnd = mpX + Math.round(usable * 0.27F);
+        int apX = mpEnd + 6;
+        int apEnd = this.width - 10;
+        float health = member.downed() ? 0.0F : local ? this.displayPlayerHealth : member.health();
+        float maxHealth = local ? this.displayPlayerMaxHealth : member.maxHealth();
+        double mp = local ? this.displayMp : member.mp();
+        double maxMp = local ? this.displayMaxMp : member.maxMp();
+        double ap = local ? this.displayAp : member.ap();
+        double maxAp = local ? this.displayMaxAp : member.maxAp();
+        drawThinGauge(graphics, hpX, hpEnd, rowY + 6, "HP",
+                Math.max(0, Math.round(health)) + " / " + Math.max(1, Math.round(maxHealth)),
+                health / Math.max(1.0F, maxHealth), 0xFFE02A2A);
+        drawThinGauge(graphics, mpX, mpEnd, rowY + 6, "MP", String.valueOf(Math.max(0, (int)Math.round(mp))),
+                mp / Math.max(1.0D, maxMp), 0xFF287FD8);
+        drawThinGauge(graphics, apX, apEnd, rowY + 6, "AP",
+                (int)Math.round(100.0D * ap / Math.max(0.0001D, maxAp)) + "%",
+                ap / Math.max(0.0001D, maxAp), 0xFF36C84A);
     }
 
     private void drawBattlePortrait(GuiGraphics graphics, int x, int top,
@@ -1821,7 +1867,8 @@ public class GuiTurnBattle extends Screen {
     }
 
     private int statusHeight() {
-        return Math.min(120, Math.max(84, this.height / 4));
+        int members = Math.max(1, Math.min(4, ClientPartyState.getMembers().size()));
+        return members > 1 ? 18 + members * 30 : Math.min(120, Math.max(84, this.height / 4));
     }
 
     private void drawCommandWindow(GuiGraphics graphics, int mouseX, int mouseY) {
@@ -2864,10 +2911,15 @@ public class GuiTurnBattle extends Screen {
             }
             syncPrimaryEnemy();
         }
+        ClientPartyState.getMembers().stream()
+                .filter(member -> member.id().equals(this.minecraft.player.getUUID()))
+                .findFirst()
+                .ifPresent(member -> this.playerDown = member.downed());
         if (this.holdPlayerGaugeTicks > 0) {
             this.holdPlayerGaugeTicks--;
         } else {
-            this.displayPlayerHealth = approach(this.displayPlayerHealth, this.minecraft.player.getHealth(), 0.30F);
+            this.displayPlayerHealth = approach(this.displayPlayerHealth,
+                    this.playerDown ? 0.0F : this.minecraft.player.getHealth(), 0.30F);
         }
         this.displayPlayerMaxHealth = approach(this.displayPlayerMaxHealth, this.minecraft.player.getMaxHealth(), 0.18F);
         this.displayMp = approach(this.displayMp, stats == null ? 0.0D : stats.mp, 0.14D);

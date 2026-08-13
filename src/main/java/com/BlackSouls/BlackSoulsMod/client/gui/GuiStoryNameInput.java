@@ -1,6 +1,8 @@
 package com.BlackSouls.BlackSoulsMod.client.gui;
 
 import com.BlackSouls.BlackSoulsMod.client.ClientStoryName;
+import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
+import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundConfirmStoryNamePacket;
 import com.BlackSouls.BlackSoulsMod.util.StoryNameData;
 import java.util.List;
 import net.minecraft.SharedConstants;
@@ -41,6 +43,7 @@ public final class GuiStoryNameInput extends Screen {
     private String name;
     private int page;
     private int selectedCharacter;
+    private int escapePresses;
 
     public GuiStoryNameInput(String initialName) {
         super(Component.translatable("gui.blacksouls.story_name.input"));
@@ -134,6 +137,7 @@ public final class GuiStoryNameInput extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        escapePresses = 0;
         if (button != GLFW.GLFW_MOUSE_BUTTON_LEFT) {
             return false;
         }
@@ -177,6 +181,7 @@ public final class GuiStoryNameInput extends Screen {
 
     @Override
     public boolean charTyped(char codePoint, int modifiers) {
+        escapePresses = 0;
         if (SharedConstants.isAllowedChatCharacter(codePoint)) {
             append(String.valueOf(codePoint));
         }
@@ -185,6 +190,15 @@ public final class GuiStoryNameInput extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
+            escapePresses++;
+            ClientStoryName.playCursor();
+            if (escapePresses >= 3) {
+                finishWithGameName();
+            }
+            return true;
+        }
+        escapePresses = 0;
         if (keyCode == GLFW.GLFW_KEY_BACKSPACE) {
             backspace();
             return true;
@@ -246,6 +260,19 @@ public final class GuiStoryNameInput extends Screen {
         name = normalized;
         ClientStoryName.playCursor();
         minecraft.setScreen(new GuiStoryNameConfirm(name));
+    }
+
+    private void finishWithGameName() {
+        if (minecraft == null || minecraft.player == null) {
+            return;
+        }
+        String gameName = StoryNameData.normalizeGameName(minecraft.player.getGameProfile().getName());
+        if (gameName.isEmpty()) {
+            return;
+        }
+        NetworkHandler.sendToServer(ServerboundConfirmStoryNamePacket.useGameName());
+        ClientStoryName.finishLocally(gameName);
+        minecraft.setScreen(null);
     }
 
     private int modeAt(double mouseX, double mouseY, Layout layout, int rowHeight) {

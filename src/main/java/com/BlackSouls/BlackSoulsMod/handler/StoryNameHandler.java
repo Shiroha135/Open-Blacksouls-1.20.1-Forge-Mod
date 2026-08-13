@@ -11,8 +11,6 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID)
 public final class StoryNameHandler {
-    private static final long NEW_WORLD_TICK_LIMIT = 1200L;
-
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player)) {
@@ -20,12 +18,13 @@ public final class StoryNameHandler {
         }
 
         if (!StoryNameData.hasStarted(player)) {
-            long gameTime = player.getServer().overworld().getGameTime();
-            if (gameTime <= NEW_WORLD_TICK_LIMIT) {
-                StoryNameData.start(player);
-            } else {
-                StoryNameData.confirm(player, player.getGameProfile().getName());
-            }
+            StoryNameData.start(player);
+        }
+
+        if (StoryNameData.isConfirmed(player)
+                && "part".equalsIgnoreCase(StoryNameData.get(player))
+                && player.getGameProfile().getName().length() > StoryNameData.MAX_LENGTH) {
+            StoryNameData.confirmGameName(player);
         }
 
         boolean needsChoice = !StoryNameData.isConfirmed(player);

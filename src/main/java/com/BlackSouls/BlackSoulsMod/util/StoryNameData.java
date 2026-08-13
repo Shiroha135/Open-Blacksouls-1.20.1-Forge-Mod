@@ -5,6 +5,7 @@ import net.minecraft.world.entity.player.Player;
 
 public final class StoryNameData {
     public static final int MAX_LENGTH = 4;
+    public static final int GAME_NAME_MAX_LENGTH = 16;
     private static final String TAG_STARTED = "bs2_story_name_started";
     private static final String TAG_CONFIRMED = "bs2_story_name_confirmed";
     private static final String TAG_NAME = "bs2_story_name";
@@ -25,6 +26,14 @@ public final class StoryNameData {
 
     public static void confirm(Player player, String name) {
         String normalized = normalize(name);
+        store(player, normalized);
+    }
+
+    public static void confirmGameName(Player player) {
+        store(player, normalizeGameName(player.getGameProfile().getName()));
+    }
+
+    private static void store(Player player, String normalized) {
         if (normalized.isEmpty()) {
             return;
         }
@@ -40,6 +49,14 @@ public final class StoryNameData {
     }
 
     public static String normalize(String value) {
+        return normalize(value, MAX_LENGTH);
+    }
+
+    public static String normalizeGameName(String value) {
+        return normalize(value, GAME_NAME_MAX_LENGTH);
+    }
+
+    private static String normalize(String value, int maxLength) {
         if (value == null) {
             return "";
         }
@@ -47,7 +64,7 @@ public final class StoryNameData {
         StringBuilder result = new StringBuilder();
         stripped.codePoints()
             .filter(codePoint -> !Character.isISOControl(codePoint) && codePoint != 0xA7)
-            .limit(MAX_LENGTH)
+            .limit(maxLength)
             .forEach(result::appendCodePoint);
         return result.toString();
     }

@@ -17,16 +17,29 @@ import java.util.function.Supplier;
 public final class ServerboundConfirmStoryNamePacket {
     private static final int MAX_NAME_BYTES = 64;
     private final String storyName;
+    private final boolean useGameName;
 
     public ServerboundConfirmStoryNamePacket(String storyName) {
         this.storyName = storyName;
+        this.useGameName = false;
+    }
+
+    public static ServerboundConfirmStoryNamePacket useGameName() {
+        return new ServerboundConfirmStoryNamePacket("", true);
+    }
+
+    private ServerboundConfirmStoryNamePacket(String storyName, boolean useGameName) {
+        this.storyName = storyName;
+        this.useGameName = useGameName;
     }
 
     public ServerboundConfirmStoryNamePacket(FriendlyByteBuf buffer) {
+        this.useGameName = buffer.readBoolean();
         this.storyName = buffer.readUtf(MAX_NAME_BYTES);
     }
 
     public void toBytes(FriendlyByteBuf buffer) {
+        buffer.writeBoolean(useGameName);
         buffer.writeUtf(storyName, MAX_NAME_BYTES);
     }
 
@@ -36,12 +49,18 @@ public final class ServerboundConfirmStoryNamePacket {
             if (player == null || !StoryNameData.hasStarted(player) || StoryNameData.isConfirmed(player)) {
                 return;
             }
-            String normalized = StoryNameData.normalize(storyName);
+            String normalized = useGameName
+                    ? StoryNameData.normalizeGameName(player.getGameProfile().getName())
+                    : StoryNameData.normalize(storyName);
             if (normalized.isEmpty()) {
                 NetworkHandler.sendToPlayer(new ClientboundStoryNamePacket(true, ""), player);
                 return;
             }
-            StoryNameData.confirm(player, normalized);
+            if (useGameName) {
+                StoryNameData.confirmGameName(player);
+            } else {
+                StoryNameData.confirm(player, normalized);
+            }
             KnightStartingKit.grant(player);
             SkillSeekAdvice.resetVisibility(player);
             player.setHealth(player.getMaxHealth());

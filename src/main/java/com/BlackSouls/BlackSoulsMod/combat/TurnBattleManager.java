@@ -17,6 +17,7 @@ import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundTurnBattlePacket;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketSyncStats;
 import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundTurnBattleActionPacket;
+import com.BlackSouls.BlackSoulsMod.party.PartyManager;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalItemData;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalBattleProfileData;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalEnemyData;
@@ -134,14 +135,24 @@ public final class TurnBattleManager {
         int profileId = enemy instanceof EntityOriginalDatabaseEnemy originalEnemy
                 ? originalEnemy.getProfileId() : -1;
         Session session = new Session(enemy.getUUID(), player.position(), enemy.position(), profileId);
-        PLAYER_SESSIONS.put(player.getUUID(), session);
-        player.fallDistance = 0.0F;
+        List<ServerPlayer> members = PartyManager.onlineMembers(player).stream()
+                .filter(member -> member.serverLevel() == player.serverLevel())
+                .filter(member -> !PLAYER_SESSIONS.containsKey(member.getUUID()))
+                .toList();
+        if (members.isEmpty()) members = List.of(player);
+        for (ServerPlayer member : members) {
+            PLAYER_SESSIONS.put(member.getUUID(), session);
+            session.partyMembers.add(member.getUUID());
+            session.playerAnchors.put(member.getUUID(), member.position());
+            member.fallDistance = 0.0F;
+        }
         configureInitialEnemies(player, enemy, session);
         player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats ->
                 session.remainingPlayerActions = rollPlayerActionCount(player, stats));
         session.openingPending = BSOriginalBattleProfileData.get(profileId).preemptiveSkillId() > 0;
         session.resolving = session.openingPending;
-        sendState(player, true, battleIntro(session.battleProfileId, enemy),
+        session.presentationDriver = player.getUUID();
+        broadcastState(session, true, battleIntro(session.battleProfileId, enemy),
                 !session.openingPending, ClientboundTurnBattlePacket.Outcome.NONE, 0L);
     }
 
@@ -156,6 +167,11 @@ public final class TurnBattleManager {
         return PLAYER_SESSIONS.containsKey(entity.getUUID()) || ENEMY_SESSIONS.containsKey(entity.getUUID());
     }
 
+    public static boolean isDowned(ServerPlayer player) {
+        Session session = PLAYER_SESSIONS.get(player.getUUID());
+        return session != null && session.downedMembers.contains(player.getUUID());
+    }
+
     public static boolean shouldFreezeEffectTick(LivingEntity entity) {
         return !entity.level().isClientSide()
                 && !ADVANCING_BATTLE_EFFECTS.get() && isInBattle(entity);
@@ -168,6 +184,30 @@ public final class TurnBattleManager {
             BlackSouls.LOGGER.warn("Turn battle action {} from {} has no active session",
                     action, player.getGameProfile().getName());
             sendBrokenBattleEnd(player, Component.literal("战斗会话已经失效。"));
+            return;
+        }
+        if (session.downedMembers.contains(player.getUUID())) {
+            sendState(player, true, Component.literal("你已倒下，正在观战并等待队友复活……"), false,
+                    ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+            return;
+        }
+        if (session.partyMembers.size() > 1 && !session.executingPartyBatch
+                && action != ServerboundTurnBattleActionPacket.Action.WEAPON_CHANGE) {
+            if (session.pendingPartyActions.containsKey(player.getUUID())) {
+                sendState(player, true, Component.literal("你已经选择了本回合行动，正在等待其他队员……"), false,
+                        ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+                return;
+            }
+            session.pendingPartyActions.put(player.getUUID(), new PendingPartyAction(player.getUUID(), action, selection, targetIndex));
+            sendState(player, true, Component.literal("行动已选择，正在等待其他队员……"), false,
+                    ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+            if (!allPartyActionsReady(player, session)) return;
+            session.executingPartyBatch = true;
+            session.remainingPlayerActions = session.pendingPartyActions.size();
+            session.partyActionQueue.clear();
+            session.partyActionQueue.addAll(session.pendingPartyActions.values());
+            session.pendingPartyActions.clear();
+            executeNextPartyAction(player.server, session);
             return;
         }
         EntityTurnBattleMonster rootEnemy = getRootEnemy(player, session);
@@ -216,11 +256,19 @@ public final class TurnBattleManager {
             session.remainingPlayerActions = rollPlayerActionCount(player, stats);
         }
         if (player.hasEffect(BlackSouls.BUFF_STUN.get())) {
-            session.remainingPlayerActions = 0;
-            advanceSkillCooldowns(session);
+            session.remainingPlayerActions = Math.max(0, session.remainingPlayerActions - 1);
+            advanceSkillCooldowns(player, session);
             StatEventHandler.syncToClient(player);
-            beginEnemySequence(player, stats, session,
-                    Component.literal(player.getDisplayName().getString() + "因眩晕无法行动！"));
+            Component stunned = Component.literal(player.getDisplayName().getString() + "因眩晕无法行动！");
+            if (session.executingPartyBatch && session.remainingPlayerActions > 0) {
+                broadcastState(session, true, stunned, false,
+                        ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+                session.resolving = false;
+                executeNextPartyAction(player.server, session);
+            } else {
+                session.executingPartyBatch = false;
+                beginEnemySequence(player, stats, session, stunned);
+            }
             return;
         }
 
@@ -269,8 +317,20 @@ public final class TurnBattleManager {
             case ESCAPE -> {
                 double chance = Mth.clamp(0.50D + (stats.speed - 40.0D) / 200.0D, 0.10D, 0.95D);
                 if (player.getRandom().nextDouble() < chance) {
-                    finish(player, session, ClientboundTurnBattlePacket.Outcome.ESCAPED,
-                            Component.literal(player.getDisplayName().getString() + "成功逃走了！"), false, 0L);
+                    if (session.partyMembers.size() > 1 && !PartyManager.isLeader(player)) {
+                        session.remainingPlayerActions = Math.max(0, session.remainingPlayerActions - 1);
+                        removePartyCombatant(player, session,
+                                Component.literal(player.getDisplayName().getString() + "成功逃走了！"));
+                        if (session.remainingPlayerActions > 0) {
+                            executeNextPartyAction(player.server, session);
+                        } else {
+                            beginEnemySequenceForParty(player.server, session,
+                                    Component.literal(player.getDisplayName().getString() + "成功逃走了！"));
+                        }
+                    } else {
+                        finish(player, session, ClientboundTurnBattlePacket.Outcome.ESCAPED,
+                                Component.literal(player.getDisplayName().getString() + "成功逃走了！"), false, 0L);
+                    }
                     return;
                 }
                 playerMessage = Component.literal(player.getDisplayName().getString() + "没能逃走！");
@@ -293,17 +353,28 @@ public final class TurnBattleManager {
             session.resolving = false;
             sendState(player, true, playerMessage, true,
                     ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+            if (session.executingPartyBatch) {
+                session.executingPartyBatch = false;
+                session.partyActionQueue.clear();
+                session.pendingPartyActions.clear();
+                broadcastStateExcept(session, player.getUUID(), true,
+                        Component.literal(player.getDisplayName().getString() + "需要重新选择行动。"),
+                        true, ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+            }
             return;
         }
         session.remainingPlayerActions = Math.max(0, session.remainingPlayerActions - 1);
         session.guardQueued |= guard;
         updateGranStage(player, session);
         if (canAdvanceEnemyPhase(player, rootEnemy, session)) {
-            advanceSkillCooldowns(session);
+            advanceSkillCooldowns(player, session);
             StatEventHandler.syncToClient(player);
             session.awaitingPhasePresentation = true;
             session.presentationDeadline = player.serverLevel().getGameTime() + 200L;
+            session.presentationDriver = player.getUUID();
             sendState(player, true, playerMessage, false,
+                    ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+            broadcastStateExcept(session, player.getUUID(), true, playerMessage, false,
                     ClientboundTurnBattlePacket.Outcome.NONE, 0L);
             return;
         }
@@ -319,23 +390,93 @@ public final class TurnBattleManager {
         if (session.remainingPlayerActions > 0) {
             session.resolving = false;
             StatEventHandler.syncToClient(player);
-            sendState(player, true, playerMessage, true,
-                    ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+            if (session.executingPartyBatch) {
+                broadcastState(session, true, playerMessage, false,
+                        ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+                executeNextPartyAction(player.server, session);
+            } else {
+                sendState(player, true, playerMessage, true,
+                        ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+            }
             return;
         }
 
-        advanceSkillCooldowns(session);
+        advanceSkillCooldowns(player, session);
         StatEventHandler.syncToClient(player);
         if (action == ServerboundTurnBattleActionPacket.Action.ITEM) {
             session.pendingEnemySequenceAfterPlayerAction = true;
             session.pendingEnemySequencePrefix = playerMessage.getString();
             session.awaitingPhasePresentation = true;
             session.presentationDeadline = player.serverLevel().getGameTime() + 200L;
+            session.presentationDriver = player.getUUID();
             sendState(player, true, playerMessage, false,
+                    ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+            broadcastStateExcept(session, player.getUUID(), true, playerMessage, false,
                     ClientboundTurnBattlePacket.Outcome.NONE, 0L);
             return;
         }
+        session.executingPartyBatch = false;
         beginEnemySequence(player, stats, session, playerMessage);
+    }
+
+    private static boolean allPartyActionsReady(ServerPlayer player, Session session) {
+        for (UUID id : List.copyOf(session.partyMembers)) {
+            ServerPlayer member = player.server.getPlayerList().getPlayer(id);
+            if (member == null) {
+                session.partyMembers.remove(id);
+                PLAYER_SESSIONS.remove(id);
+                continue;
+            }
+            if (session.downedMembers.contains(id)) continue;
+            if (!session.pendingPartyActions.containsKey(id)) return false;
+        }
+        return !session.pendingPartyActions.isEmpty();
+    }
+
+    private static void executeNextPartyAction(net.minecraft.server.MinecraftServer server, Session session) {
+        PendingPartyAction pending = session.partyActionQueue.pollFirst();
+        if (pending == null) {
+            session.executingPartyBatch = false;
+            return;
+        }
+        ServerPlayer actor = server.getPlayerList().getPlayer(pending.playerId());
+        if (actor == null || !session.partyMembers.contains(pending.playerId())
+                || session.downedMembers.contains(pending.playerId())) {
+            session.remainingPlayerActions = Math.max(0, session.remainingPlayerActions - 1);
+            executeNextPartyAction(server, session);
+            return;
+        }
+        session.resolving = false;
+        session.presentationDriver = actor.getUUID();
+        handleAction(actor, pending.action(), pending.selection(), pending.targetIndex());
+    }
+
+    private static void removePartyCombatant(ServerPlayer player, Session session, Component message) {
+        session.partyMembers.remove(player.getUUID());
+        session.downedMembers.remove(player.getUUID());
+        session.playerAnchors.remove(player.getUUID());
+        PLAYER_SESSIONS.remove(player.getUUID());
+        player.fallDistance = 0.0F;
+        player.setDeltaMovement(Vec3.ZERO);
+        NetworkHandler.sendToPlayer(new ClientboundTurnBattlePacket(
+                false, -1, -1, List.of(), 0, 1, false, false,
+                List.of(), List.of(), message, false, ClientboundTurnBattlePacket.Outcome.ESCAPED,
+                0L, List.of(), Map.of()), player);
+        broadcastState(session, true, message, false, ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+    }
+
+    private static void beginEnemySequenceForParty(net.minecraft.server.MinecraftServer server,
+                                                   Session session, Component prefix) {
+        session.executingPartyBatch = false;
+        for (UUID id : session.partyMembers) {
+            ServerPlayer member = server.getPlayerList().getPlayer(id);
+            if (member == null) continue;
+            BSPlayerStats stats = member.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+            if (stats != null) {
+                beginEnemySequence(member, stats, session, prefix);
+                return;
+            }
+        }
     }
 
     private static ActionResult performAttack(ServerPlayer player, EntityTurnBattleMonster enemy,
@@ -443,7 +584,8 @@ public final class TurnBattleManager {
             return new ActionResult(Component.literal("领域封锁了强化。"), false);
         }
         boolean infiniteCooldown = SkillUtils.hasInfiniteCooldownAccessory(player);
-        int remainingCooldown = infiniteCooldown ? 0 : session.skillCooldowns.getOrDefault(skill.getSkillId(), 0);
+        Map<String, Integer> skillCooldowns = skillCooldowns(player, session);
+        int remainingCooldown = infiniteCooldown ? 0 : skillCooldowns.getOrDefault(skill.getSkillId(), 0);
         if (remainingCooldown > 0) {
             return new ActionResult(Component.literal("技能正在冷却（CD" + remainingCooldown + "）。"), false);
         }
@@ -460,10 +602,25 @@ public final class TurnBattleManager {
         skill.consumeForTurnBattle(player, stats);
         int cooldownRounds = skill.getTurnCooldownRounds();
         if (!infiniteCooldown && cooldownRounds > 0) {
-            session.skillCooldowns.put(skill.getSkillId(), cooldownRounds);
+            skillCooldowns.put(skill.getSkillId(), cooldownRounds);
         }
         String skillName = Component.translatable(skill.getTranslationKey()).getString();
         String actor = player.getDisplayName().getString();
+        if ("bs2_skill_resurrection".equals(skill.getSkillId())) {
+            ServerPlayer revived = firstDownedMember(player, session);
+            if (revived != null) {
+                int revivedHealth = Math.max(1, Math.round(revived.getMaxHealth() * 0.5F));
+                revived.setHealth(revivedHealth);
+                revived.invulnerableTime = 0;
+                revived.hurtMarked = true;
+                revived.addEffect(new MobEffectInstance(BlackSouls.BUFF_REQUIEM.get(), 200, 0));
+                session.downedMembers.remove(revived.getUUID());
+                StatEventHandler.syncToClient(revived);
+                PartyManager.refresh(revived);
+                return new ActionResult(Component.literal(actor + "使用了" + skillName + "！\n"
+                        + revived.getDisplayName().getString() + "复活了！"), true);
+            }
+        }
         if (isNonDamageSkill(skill)) {
             Map<UUID, Double> healthBeforeEffect = new HashMap<>();
             for (EntityTurnBattleMonster enemy : getEnemies(player, session)) {
@@ -645,6 +802,9 @@ public final class TurnBattleManager {
         if (session == null || rootEnemy == null || !session.resolving) {
             return;
         }
+        if (session.presentationDriver != null && !session.presentationDriver.equals(player.getUUID())) {
+            return;
+        }
         BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
         if (stats == null) {
             finish(player, session, ClientboundTurnBattlePacket.Outcome.ESCAPED,
@@ -688,14 +848,23 @@ public final class TurnBattleManager {
         PhaseAdvance phaseAdvance = advanceEnemyPhase(player, rootEnemy, session);
         if (phaseAdvance == null) {
             session.resolving = false;
-            sendState(player, true, Component.empty(), true,
-                    ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+            if (session.executingPartyBatch && !session.partyActionQueue.isEmpty()) {
+                executeNextPartyAction(player.server, session);
+            } else {
+                broadcastState(session, true, Component.empty(), true,
+                        ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+            }
             return;
         }
         session.phaseChanged = true;
         session.remainingPlayerActions = rollPlayerActionCount(player, stats);
         session.guardQueued = false;
         StatEventHandler.syncToClient(player);
+        if (session.executingPartyBatch && !session.partyActionQueue.isEmpty()) {
+            session.resolving = false;
+            executeNextPartyAction(player.server, session);
+            return;
+        }
         if (phaseAdvance.fromProfileId() == 185 && phaseAdvance.toProfileId() == 184) {
             EntityTurnBattleMonster skullBeast = getEnemies(player, session).stream()
                     .filter(enemy -> enemy instanceof EntityOriginalDatabaseEnemy original
@@ -851,9 +1020,14 @@ public final class TurnBattleManager {
         enemy.setSilent(virtual);
     }
 
-    private static void advanceSkillCooldowns(Session session) {
-        session.skillCooldowns.replaceAll((skillId, rounds) -> Math.max(0, rounds - 1));
-        session.skillCooldowns.values().removeIf(rounds -> rounds <= 0);
+    private static Map<String, Integer> skillCooldowns(ServerPlayer player, Session session) {
+        return session.playerSkillCooldowns.computeIfAbsent(player.getUUID(), ignored -> new HashMap<>());
+    }
+
+    private static void advanceSkillCooldowns(ServerPlayer player, Session session) {
+        Map<String, Integer> cooldowns = skillCooldowns(player, session);
+        cooldowns.replaceAll((skillId, rounds) -> Math.max(0, rounds - 1));
+        cooldowns.values().removeIf(rounds -> rounds <= 0);
     }
 
     private static ActionResult performItem(ServerPlayer player, EntityTurnBattleMonster enemy,
@@ -1053,6 +1227,19 @@ public final class TurnBattleManager {
 
     private static void presentNextEnemyAction(ServerPlayer player, BSPlayerStats stats,
                                                Session session) {
+        ServerPlayer targetPlayer = chooseEnemyTarget(player, session);
+        if (targetPlayer == null) {
+            defeatParty(player, session, Component.literal("队伍已经无法继续战斗。"));
+            return;
+        }
+        player = targetPlayer;
+        stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+        if (stats == null) {
+            removeDefeatedCombatant(player, session);
+            executeNextEnemyActionForParty(session);
+            return;
+        }
+        session.presentationDriver = player.getUUID();
         while (!session.enemyActionQueue.isEmpty()) {
             PendingEnemyAction pending = session.enemyActionQueue.removeFirst();
             Entity entity = player.serverLevel().getEntity(pending.enemyId());
@@ -1092,13 +1279,18 @@ public final class TurnBattleManager {
             }
             StatEventHandler.syncToClient(player);
             if (player.getHealth() <= 0.0F || !player.isAlive()) {
-                finish(player, session, ClientboundTurnBattlePacket.Outcome.DEFEAT,
-                        Component.literal(text), false, 0L);
-                return;
+                if (session.partyMembers.size() <= 1) {
+                    finish(player, session, ClientboundTurnBattlePacket.Outcome.DEFEAT,
+                            Component.literal(text), false, 0L);
+                    return;
+                }
+                stabilizeDownedPlayer(player, session);
             }
             session.awaitingPhasePresentation = true;
             session.presentationDeadline = player.serverLevel().getGameTime() + 200L;
             sendState(player, true, Component.literal(text), false,
+                    ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+            broadcastStateExcept(session, player.getUUID(), true, Component.literal(text), false,
                     ClientboundTurnBattlePacket.Outcome.NONE, 0L);
             return;
         }
@@ -1114,16 +1306,52 @@ public final class TurnBattleManager {
         session.enemySequenceCountsAsRound = false;
         session.roundEffectSnapshots.clear();
         if (player.getHealth() <= 0.0F || !player.isAlive()) {
-            finish(player, session, ClientboundTurnBattlePacket.Outcome.DEFEAT,
-                    Component.literal("状态效果使" + player.getDisplayName().getString()
-                            + "倒下了！"), false, 0L);
-            return;
+            Component down = Component.literal("状态效果使" + player.getDisplayName().getString() + "倒下了！");
+            if (session.partyMembers.size() <= 1) {
+                finish(player, session, ClientboundTurnBattlePacket.Outcome.DEFEAT, down, false, 0L);
+                return;
+            }
+            stabilizeDownedPlayer(player, session);
+            if (chooseEnemyTarget(player, session) == null) {
+                defeatParty(player, session, Component.literal("队伍已经无法继续战斗。"));
+                return;
+            }
         }
         session.remainingPlayerActions = rollPlayerActionCount(player, stats);
+        session.pendingPartyActions.clear();
+        session.partyActionQueue.clear();
+        session.presentationDriver = null;
         StatEventHandler.syncToClient(player);
         session.resolving = false;
-        sendState(player, true, Component.empty(), true,
+        broadcastState(session, true, Component.empty(), true,
                 ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+    }
+
+    private static ServerPlayer chooseEnemyTarget(ServerPlayer fallback, Session session) {
+        List<ServerPlayer> alive = new ArrayList<>();
+        for (UUID id : session.partyMembers) {
+            ServerPlayer member = fallback.server.getPlayerList().getPlayer(id);
+            if (member != null && member.isAlive() && member.getHealth() > 0.0F
+                    && !session.downedMembers.contains(id)) alive.add(member);
+        }
+        if (alive.isEmpty()) return null;
+        return alive.get(fallback.getRandom().nextInt(alive.size()));
+    }
+
+    private static void removeDefeatedCombatant(ServerPlayer player, Session session) {
+        session.partyMembers.remove(player.getUUID());
+        session.downedMembers.remove(player.getUUID());
+        session.playerAnchors.remove(player.getUUID());
+        PLAYER_SESSIONS.remove(player.getUUID());
+    }
+
+    private static void executeNextEnemyActionForParty(Session session) {
+        net.minecraft.server.MinecraftServer server = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer();
+        if (server == null || session.partyMembers.isEmpty()) return;
+        ServerPlayer member = server.getPlayerList().getPlayer(session.partyMembers.iterator().next());
+        if (member == null) return;
+        BSPlayerStats stats = member.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+        if (stats != null) presentNextEnemyAction(member, stats, session);
     }
 
     private static EnemyActionResult performEnemyAction(ServerPlayer player,
@@ -1439,10 +1667,43 @@ public final class TurnBattleManager {
     private static void applyIncomingHit(Session session, ServerPlayer player,
                                          int damage, boolean critical) {
         SkillEventHandler.TurnBattleDamageResult result =
-                SkillEventHandler.applyTurnBattleDamageDetailed(player, damage);
+                SkillEventHandler.applyTurnBattleDamageDetailed(
+                        player, damage, session.partyMembers.size() > 1);
         session.incomingHits.add(new ClientboundTurnBattlePacket.IncomingHit(
                 result.damage(), critical, result.knockedDown(),
                 result.revived(), result.reviveHealth()));
+        if (result.knockedDown() && !result.revived() && session.partyMembers.size() > 1) {
+            stabilizeDownedPlayer(player, session);
+        }
+    }
+
+    private static void stabilizeDownedPlayer(ServerPlayer player, Session session) {
+        boolean newlyDowned = session.downedMembers.add(player.getUUID());
+        player.setHealth(1.0F);
+        player.invulnerableTime = 0;
+        player.hurtMarked = true;
+        if (newlyDowned) PartyManager.refresh(player);
+    }
+
+    private static ServerPlayer firstDownedMember(ServerPlayer player, Session session) {
+        for (UUID id : session.partyMembers) {
+            if (!session.downedMembers.contains(id)) continue;
+            ServerPlayer member = player.server.getPlayerList().getPlayer(id);
+            if (member != null) return member;
+        }
+        return null;
+    }
+
+    private static void defeatParty(ServerPlayer player, Session session, Component message) {
+        List<ServerPlayer> members = session.partyMembers.stream()
+                .map(id -> player.server.getPlayerList().getPlayer(id))
+                .filter(java.util.Objects::nonNull)
+                .toList();
+        finish(player, session, ClientboundTurnBattlePacket.Outcome.DEFEAT, message, false, 0L);
+        for (ServerPlayer member : members) {
+            member.setHealth(0.0F);
+            member.hurtMarked = true;
+        }
     }
 
     private static double varied(ServerPlayer player, double value) {
@@ -1713,12 +1974,30 @@ public final class TurnBattleManager {
             rabbitKnight.finishKnightBattle(player,
                     outcome == ClientboundTurnBattlePacket.Outcome.VICTORY);
         }
-        PLAYER_SESSIONS.remove(player.getUUID());
+        for (UUID memberId : List.copyOf(session.partyMembers)) {
+            ServerPlayer member = player.server.getPlayerList().getPlayer(memberId);
+            if (member != null && member != player) {
+                member.fallDistance = 0.0F;
+                member.setDeltaMovement(Vec3.ZERO);
+                sendState(member, false, message, false, outcome, 0L);
+            }
+            PLAYER_SESSIONS.remove(memberId);
+        }
+        session.downedMembers.clear();
+        session.partyMembers.clear();
     }
 
     private static void sendState(ServerPlayer player, boolean active,
                                   Component message, boolean canAct,
                                   ClientboundTurnBattlePacket.Outcome outcome, long soulReward) {
+        sendState(player, active, message, canAct, outcome, soulReward, true, true, true);
+    }
+
+    private static void sendState(ServerPlayer player, boolean active,
+                                  Component message, boolean canAct,
+                                  ClientboundTurnBattlePacket.Outcome outcome, long soulReward,
+                                  boolean includePlayerHits, boolean includeIncomingHits,
+                                  boolean clearTransientHits) {
         Session session = PLAYER_SESSIONS.get(player.getUUID());
         if (session == null) {
             return;
@@ -1752,8 +2031,14 @@ public final class TurnBattleManager {
                 active, rootEntityId, session.battleProfileId, snapshots,
                 session.actingEnemyIndex, session.lastEnemyAnimationId,
                 session.phaseChanged, session.awaitingPhasePresentation,
-                session.playerHits, session.incomingHits, message, canAct, outcome, soulReward,
-                session.rewardItems, session.skillCooldowns), player);
+                includePlayerHits ? session.playerHits : List.of(),
+                includeIncomingHits ? session.incomingHits : List.of(),
+                message, canAct && !session.downedMembers.contains(player.getUUID()), outcome, soulReward,
+                session.rewardItems, skillCooldowns(player, session)), player);
+        if (clearTransientHits) clearTransientState(session);
+    }
+
+    private static void clearTransientState(Session session) {
         session.phaseChanged = false;
         session.playerHits.clear();
         session.incomingHits.clear();
@@ -1765,6 +2050,34 @@ public final class TurnBattleManager {
                 false, false, List.of(), List.of(), message, false,
                 ClientboundTurnBattlePacket.Outcome.ESCAPED, 0L,
                 List.of(), Map.of()), player);
+    }
+
+    private static void broadcastState(Session session, boolean active, Component message,
+                                       boolean canAct, ClientboundTurnBattlePacket.Outcome outcome,
+                                       long soulReward) {
+        net.minecraft.server.MinecraftServer server = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer();
+        if (server == null) return;
+        for (UUID id : List.copyOf(session.partyMembers)) {
+            ServerPlayer member = server.getPlayerList().getPlayer(id);
+            if (member != null) sendState(member, active, message,
+                    canAct && !session.downedMembers.contains(id), outcome, soulReward,
+                    true, id.equals(session.presentationDriver), false);
+        }
+        clearTransientState(session);
+    }
+
+    private static void broadcastStateExcept(Session session, UUID excluded, boolean active,
+                                             Component message, boolean canAct,
+                                             ClientboundTurnBattlePacket.Outcome outcome, long soulReward) {
+        net.minecraft.server.MinecraftServer server = net.minecraftforge.server.ServerLifecycleHooks.getCurrentServer();
+        if (server == null) return;
+        for (UUID id : List.copyOf(session.partyMembers)) {
+            if (id.equals(excluded)) continue;
+            ServerPlayer member = server.getPlayerList().getPlayer(id);
+            if (member != null) sendState(member, active, message,
+                    canAct && !session.downedMembers.contains(id), outcome, soulReward,
+                    true, false, false);
+        }
     }
 
     private static EntityTurnBattleMonster getRootEnemy(ServerPlayer player, Session session) {
@@ -1901,8 +2214,15 @@ public final class TurnBattleManager {
         EntityTurnBattleMonster rootEnemy = getRootEnemy(player, session);
         if (rootEnemy == null || !player.isAlive()) {
             if (rootEnemy != null) {
-                finish(player, session, ClientboundTurnBattlePacket.Outcome.DEFEAT,
-                        Component.literal(player.getDisplayName().getString() + "倒下了……"), false, 0L);
+                if (session.partyMembers.size() > 1) {
+                    stabilizeDownedPlayer(player, session);
+                    if (chooseEnemyTarget(player, session) == null) {
+                        defeatParty(player, session, Component.literal("队伍已经无法继续战斗。"));
+                    }
+                } else {
+                    finish(player, session, ClientboundTurnBattlePacket.Outcome.DEFEAT,
+                            Component.literal(player.getDisplayName().getString() + "倒下了……"), false, 0L);
+                }
             } else {
                 PLAYER_SESSIONS.remove(player.getUUID());
                 session.enemyIds.forEach(ENEMY_SESSIONS::remove);
@@ -1911,8 +2231,9 @@ public final class TurnBattleManager {
         }
         player.setDeltaMovement(Vec3.ZERO);
         player.fallDistance = 0.0F;
-        if (player.position().distanceToSqr(session.playerAnchor) > 0.01D) {
-            player.teleportTo(session.playerAnchor.x, session.playerAnchor.y, session.playerAnchor.z);
+        Vec3 playerAnchor = session.playerAnchors.getOrDefault(player.getUUID(), session.playerAnchor);
+        if (player.position().distanceToSqr(playerAnchor) > 0.01D) {
+            player.teleportTo(playerAnchor.x, playerAnchor.y, playerAnchor.z);
             player.fallDistance = 0.0F;
         }
         for (EntityTurnBattleMonster enemy : getEnemies(player, session)) {
@@ -1964,6 +2285,17 @@ public final class TurnBattleManager {
     public static void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         Session session = PLAYER_SESSIONS.remove(event.getEntity().getUUID());
         if (session != null) {
+            session.partyMembers.remove(event.getEntity().getUUID());
+            session.downedMembers.remove(event.getEntity().getUUID());
+            session.playerAnchors.remove(event.getEntity().getUUID());
+            session.pendingPartyActions.remove(event.getEntity().getUUID());
+            session.partyActionQueue.removeIf(action -> action.playerId().equals(event.getEntity().getUUID()));
+            if (!session.partyMembers.isEmpty()) {
+                if (event.getEntity().getUUID().equals(session.presentationDriver)) {
+                    session.presentationDriver = session.partyMembers.iterator().next();
+                }
+                return;
+            }
             for (UUID enemyId : session.enemyIds) {
                 ENEMY_SESSIONS.remove(enemyId);
                 if (!enemyId.equals(session.rootEnemyId)
@@ -2048,6 +2380,10 @@ public final class TurnBattleManager {
     private record PendingEnemyAction(UUID enemyId, int skillId, boolean advanceTurnAfter) {
     }
 
+    private record PendingPartyAction(UUID playerId, ServerboundTurnBattleActionPacket.Action action,
+                                      int selection, int targetIndex) {
+    }
+
     private record EnemyActionResult(Component message, int followUpSkillId) {
     }
 
@@ -2060,10 +2396,15 @@ public final class TurnBattleManager {
     private static final class Session {
         private final UUID rootEnemyId;
         private final Vec3 playerAnchor;
+        private final Set<UUID> partyMembers = new java.util.LinkedHashSet<>();
+        private final Set<UUID> downedMembers = new HashSet<>();
+        private final Map<UUID, Vec3> playerAnchors = new HashMap<>();
+        private final Map<UUID, PendingPartyAction> pendingPartyActions = new java.util.LinkedHashMap<>();
+        private final Deque<PendingPartyAction> partyActionQueue = new ArrayDeque<>();
         private final Vec3 enemyAnchor;
         private final List<UUID> enemyIds = new ArrayList<>();
         private final Map<UUID, Vec3> enemyAnchors = new HashMap<>();
-        private final Map<String, Integer> skillCooldowns = new HashMap<>();
+        private final Map<UUID, Map<String, Integer>> playerSkillCooldowns = new HashMap<>();
         private final Map<UUID, Set<Integer>> enemyStates = new HashMap<>();
         private final Map<UUID, Integer> enemyTurns = new HashMap<>();
         private final Map<UUID, EnemyActionSkip> enemyActionSkips = new HashMap<>();
@@ -2086,8 +2427,10 @@ public final class TurnBattleManager {
         private String enemySequencePrefix = "";
         private boolean guardQueued;
         private boolean pendingEnemySequenceAfterPlayerAction;
+        private boolean executingPartyBatch;
         private String pendingEnemySequencePrefix = "";
         private UUID pendingEnemyStunClear;
+        private UUID presentationDriver;
         private int remainingPlayerActions;
         private long presentationDeadline;
         private final List<ClientboundTurnBattlePacket.DamageHit> playerHits = new ArrayList<>();
