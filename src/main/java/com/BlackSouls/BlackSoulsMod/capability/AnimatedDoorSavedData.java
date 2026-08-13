@@ -15,6 +15,17 @@ public final class AnimatedDoorSavedData extends SavedData {
     private static final String DATA_NAME = BlackSouls.MODID + "_animated_doors";
     private final Set<Long> doors = new HashSet<>();
 
+    public boolean contains(BlockPos pos) {
+        return doors.contains(pos.asLong());
+    }
+
+    public void set(BlockPos pos, boolean enabled) {
+        boolean changed = enabled ? doors.add(pos.asLong()) : doors.remove(pos.asLong());
+        if (changed) {
+            setDirty();
+        }
+    }
+
     public boolean toggle(BlockPos pos) {
         long key = pos.asLong();
         boolean added;

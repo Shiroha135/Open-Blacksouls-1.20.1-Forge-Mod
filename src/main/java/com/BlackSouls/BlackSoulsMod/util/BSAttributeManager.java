@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.util;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalDatabaseEnemy;
 import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -88,6 +89,10 @@ public class BSAttributeManager {
             }
             return Math.max(0.0f, res);
         } else {
+            if (victim instanceof EntityOriginalDatabaseEnemy originalEnemy) {
+                res *= originalEnemy.getProfile().elementRates()
+                        .getOrDefault(attribute, 1.0D).floatValue();
+            }
             if (attribute.equals(ICE) && BlackSouls.BUFF_FROSTBITE.isPresent() && victim.hasEffect(BlackSouls.BUFF_FROSTBITE.get())) {
                 res *= 1.5F;
             }

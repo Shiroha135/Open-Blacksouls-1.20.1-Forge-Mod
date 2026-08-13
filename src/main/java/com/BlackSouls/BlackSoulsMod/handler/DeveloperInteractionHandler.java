@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod.handler;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BonfireEntry;
 import com.BlackSouls.BlackSoulsMod.entity.DialogueResettable;
+import com.BlackSouls.BlackSoulsMod.entity.EntityRabbitKnight;
 import com.BlackSouls.BlackSoulsMod.entity.EntityRedHood;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.WhiteBearShopService;
@@ -93,7 +94,10 @@ public final class DeveloperInteractionHandler {
                 && event.getEntity().getMainHandItem().is(BlackSouls.DEV_STAT_TOOL.get())) {
             return;
         }
-        if (!isDeveloperReset(event.getEntity().getMainHandItem(), event.getEntity().isShiftKeyDown())
+        boolean rabbitKnightReset = target instanceof EntityRabbitKnight
+                && event.getEntity().getMainHandItem().is(BlackSouls.DEV_STAT_TOOL.get());
+        if ((!rabbitKnightReset
+                && !isDeveloperReset(event.getEntity().getMainHandItem(), event.getEntity().isShiftKeyDown()))
                 || !(target instanceof DialogueResettable resettable)) {
             return;
         }

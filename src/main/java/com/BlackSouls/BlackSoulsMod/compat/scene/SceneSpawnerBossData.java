@@ -16,6 +16,7 @@ import java.util.Set;
 public final class SceneSpawnerBossData extends SavedData {
     private static final String DATA_NAME = "blacksouls_scene_spawner_bosses";
     private final Set<String> defeatedSpawners = new HashSet<>();
+    private int storyProgress;
 
     public static SceneSpawnerBossData get(MinecraftServer server) {
         return server.overworld().getDataStorage().computeIfAbsent(
@@ -30,6 +31,7 @@ public final class SceneSpawnerBossData extends SavedData {
         for (int index = 0; index < defeated.size(); index++) {
             data.defeatedSpawners.add(defeated.getString(index));
         }
+        data.storyProgress = Math.max(0, tag.getInt("StoryProgress"));
         return data;
     }
 
@@ -43,6 +45,18 @@ public final class SceneSpawnerBossData extends SavedData {
         }
         setDirty();
         return true;
+    }
+
+    public int getStoryProgress() {
+        return storyProgress;
+    }
+
+    public int addStoryProgress(int amount) {
+        if (amount > 0) {
+            storyProgress += amount;
+            setDirty();
+        }
+        return storyProgress;
     }
 
     public void clear(String spawnerKey) {
@@ -60,6 +74,7 @@ public final class SceneSpawnerBossData extends SavedData {
         ListTag defeated = new ListTag();
         defeatedSpawners.stream().sorted().map(StringTag::valueOf).forEach(defeated::add);
         tag.put("Defeated", defeated);
+        tag.putInt("StoryProgress", storyProgress);
         return tag;
     }
 }

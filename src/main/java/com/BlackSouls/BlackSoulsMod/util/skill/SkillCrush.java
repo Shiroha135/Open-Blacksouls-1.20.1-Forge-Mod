@@ -8,7 +8,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
@@ -73,7 +72,6 @@ public final class SkillCrush extends AbstractSkill {
         if (target == null || !target.isAlive()) {
             return;
         }
-        target.addEffect(new MobEffectInstance(BlackSouls.BUFF_DEFENSELESS.get(), 400, 0));
         target.level().playSound(null, target.blockPosition(), BlackSouls.CRASH_EVENT.get(),
                 SoundSource.PLAYERS, 1.0F, 1.0F);
         player.sendSystemMessage(Component.translatable(

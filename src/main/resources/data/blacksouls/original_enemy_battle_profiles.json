@@ -240,6 +240,25 @@
     "battleback2Height": 416
   },
   {
+    "profileId": 217,
+    "troopId": 223,
+    "members": [
+      {
+        "profileId": 217,
+        "states": []
+      }
+    ],
+    "bgm": "blacksouls:rabbit_knight_bgm",
+    "bgmVolume": 1.0,
+    "bgmPitch": 1.0,
+    "battleback1": "",
+    "battleback1Width": 544,
+    "battleback1Height": 416,
+    "battleback2": "",
+    "battleback2Width": 544,
+    "battleback2Height": 416
+  },
+  {
     "profileId": 223,
     "troopId": 210,
     "members": [

@@ -6,6 +6,8 @@ import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalDatabaseEnemy;
 import com.BlackSouls.BlackSoulsMod.handler.SceneSpawnerBossHandler;
 import com.BlackSouls.BlackSoulsMod.entity.EntityCorpseEatingRabbit;
+import com.BlackSouls.BlackSoulsMod.entity.EntityRabbitKnight;
+import com.BlackSouls.BlackSoulsMod.entity.RabbitKnightDialogue;
 import com.BlackSouls.BlackSoulsMod.entity.EntityTurnBattleMonster;
 import com.BlackSouls.BlackSoulsMod.handler.BSEntityRegistry;
 import com.BlackSouls.BlackSoulsMod.handler.SkillEventHandler;
@@ -19,6 +21,7 @@ import com.BlackSouls.BlackSoulsMod.util.BSOriginalItemData;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalBattleProfileData;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalEnemyData;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalEnemyPhaseData;
+import com.BlackSouls.BlackSoulsMod.util.BSAttributeManager;
 import com.BlackSouls.BlackSoulsMod.util.DifficultyManager;
 import com.BlackSouls.BlackSoulsMod.util.SkillUtils;
 import com.BlackSouls.BlackSoulsMod.util.skill.AbstractSkill;
@@ -63,6 +66,17 @@ public final class TurnBattleManager {
     private static final int GRAN_FINAL_STAGE_PROFILE = 577;
     private static final int GRAN_FRAGMENT_FIRST_PROFILE = 580;
     private static final int GRAN_FRAGMENT_LAST_PROFILE = 586;
+    private static final Set<String> BREAK_SKILLS = Set.of(
+            "bs2_skill_crush", "bs2_skill_weapon_break", "bs2_skill_armor_break"
+    );
+    private static final Set<Integer> BREAK_IMMUNITY_STATES = Set.of(33, 135, 161);
+    private static final Set<Integer> INTERRUPTIBLE_CHARGE_STATES = Set.of(32, 35, 50, 51);
+    private static final int STUN_SKIP_ACTION = -1;
+    private static final int BREAK_SKIP_ACTION = -2;
+    private static final int ATK_DOWN_STATE = 1001;
+    private static final int ATK_DOWN_2_STATE = 1002;
+    private static final int DEF_DOWN_STATE = 1003;
+    private static final int DEF_DOWN_2_STATE = 1004;
     private static final Set<String> NON_DAMAGE_SKILLS = Set.of(
             "bs2_skill_absolute_hit", "bs2_skill_aim", "bs2_skill_awakening",
             "bs2_skill_berserker_roar", "bs2_skill_blood_trail",
@@ -113,7 +127,7 @@ public final class TurnBattleManager {
     public static void tryStart(ServerPlayer player, EntityTurnBattleMonster enemy) {
         if (BSConfig.COMBAT_MODE.get() != BSConfig.CombatMode.BLACK_SOULS_TURN_BASED
                 || player.isCreative() || player.isSpectator() || !player.isAlive()
-                || enemy.isTurnBattleDefeated()
+                || enemy.isTurnBattleDefeated() || !enemy.canStartTurnBattle()
                 || PLAYER_SESSIONS.containsKey(player.getUUID()) || ENEMY_SESSIONS.containsKey(enemy.getUUID())) {
             return;
         }
@@ -121,6 +135,7 @@ public final class TurnBattleManager {
                 ? originalEnemy.getProfileId() : -1;
         Session session = new Session(enemy.getUUID(), player.position(), enemy.position(), profileId);
         PLAYER_SESSIONS.put(player.getUUID(), session);
+        player.fallDistance = 0.0F;
         configureInitialEnemies(player, enemy, session);
         player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats ->
                 session.remainingPlayerActions = rollPlayerActionCount(player, stats));
@@ -311,6 +326,15 @@ public final class TurnBattleManager {
 
         advanceSkillCooldowns(session);
         StatEventHandler.syncToClient(player);
+        if (action == ServerboundTurnBattleActionPacket.Action.ITEM) {
+            session.pendingEnemySequenceAfterPlayerAction = true;
+            session.pendingEnemySequencePrefix = playerMessage.getString();
+            session.awaitingPhasePresentation = true;
+            session.presentationDeadline = player.serverLevel().getGameTime() + 200L;
+            sendState(player, true, playerMessage, false,
+                    ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+            return;
+        }
         beginEnemySequence(player, stats, session, playerMessage);
     }
 
@@ -326,7 +350,8 @@ public final class TurnBattleManager {
             return new ActionResult(Component.literal(actor + "的攻击！\n但是没有命中" + target + "！"), true);
         }
         double enemyDefense = DifficultyManager.scaleManagedStat(
-                enemy.level(), enemy.getTurnBattleDefense());
+                enemy.level(), enemy.getTurnBattleDefense()
+                        * StatEventHandler.getDefenseShiftMultiplier(enemy));
         int dualSwordAura = getDualSwordAura(player);
         int hitCount = player.getMainHandItem().is(BlackSouls.DIVINE_ANGEL_DUAL_SWORDS.get())
                 ? dualSwordAura + 1 : 1;
@@ -344,6 +369,7 @@ public final class TurnBattleManager {
                 damage *= 3.0D;
                 critical = true;
             }
+            damage *= turnBattlePhysicalAttributeMultiplier(player, enemy, stats);
             damage *= turnBattleDamageMultiplier(enemy);
             int dealt = Math.max(1, (int) Math.round(damage));
             enemy.setTurnBattleHealth(enemy.getTurnBattleHealth() - dealt);
@@ -359,11 +385,16 @@ public final class TurnBattleManager {
             StatEventHandler.applyStats(player);
             StatEventHandler.syncToClient(player);
         }
+        boolean stunned = !enemy.isTurnBattleDefeated()
+                && applyTurnBattleWeaponStun(player, enemy, session);
         StringBuilder message = new StringBuilder(actor).append("的攻击！\n");
         if (critical) {
             message.append("会心一击！\n");
         }
         message.append("对").append(target).append("造成了 ").append(totalDamage).append(" 点伤害！");
+        if (stunned) {
+            message.append("\n").append(target).append("陷入了眩晕！");
+        }
         return new ActionResult(Component.literal(message.toString()), true, hits);
     }
 
@@ -439,6 +470,7 @@ public final class TurnBattleManager {
                 healthBeforeEffect.put(enemy.getUUID(), enemy.getTurnBattleHealth());
             }
             skill.executeInTurnBattle(player, stats, selectedTarget);
+            boolean interrupted = applyTurnBattleSkillEffects(skill, selectedTarget, session);
             for (EntityTurnBattleMonster enemy : getEnemies(player, session)) {
                 Double health = healthBeforeEffect.get(enemy.getUUID());
                 if (health != null) {
@@ -446,7 +478,8 @@ public final class TurnBattleManager {
                 }
             }
             StatEventHandler.syncToClient(player);
-            return new ActionResult(Component.literal(actor + "使用了" + skillName + "！"), true);
+            return new ActionResult(Component.literal(actor + "使用了" + skillName + "！"
+                    + interruptedText(selectedTarget, interrupted)), true);
         }
         List<EntityTurnBattleMonster> targets;
         if (skillTargetsAll(skill)) {
@@ -467,11 +500,15 @@ public final class TurnBattleManager {
                 double enemyDefense = DifficultyManager.scaleManagedStat(
                         enemy.level(), skill instanceof WeaponSkill
                                 ? enemy.getTurnBattleDefense()
+                                * StatEventHandler.getDefenseShiftMultiplier(enemy)
                                 : enemy.getTurnBattleMagicDefense());
                 double baseDamage = skill instanceof WeaponSkill
                         ? stats.attack * domainAttackRate(session) * 4.0D - enemyDefense * 2.0D
                         : stats.magicAttack * domainMagicRate(session) * 5.0D - enemyDefense * 2.0D;
                 double damage = varied(player, Math.max(1.0D, baseDamage));
+                if (skill instanceof WeaponSkill) {
+                    damage *= turnBattlePhysicalAttributeMultiplier(player, enemy, stats);
+                }
                 damage *= turnBattleDamageMultiplier(enemy);
                 int dealt = Math.max(1, (int) Math.round(damage));
                 enemy.setTurnBattleHealth(enemy.getTurnBattleHealth() - dealt);
@@ -484,9 +521,64 @@ public final class TurnBattleManager {
             message.append("\n对").append(enemy.getDisplayName().getString())
                     .append("造成了 ").append(totalDamage.getOrDefault(enemy.getUUID(), 0))
                     .append(" 点伤害！");
+            boolean interrupted = applyTurnBattleSkillEffects(skill, enemy, session);
+            message.append(interruptedText(enemy, interrupted));
         }
         StatEventHandler.syncToClient(player);
         return new ActionResult(Component.literal(message.toString()), true, hits);
+    }
+
+    private static boolean applyTurnBattleSkillEffects(AbstractSkill skill,
+                                                       EntityTurnBattleMonster target,
+                                                       Session session) {
+        if (skill == null || target == null || !BREAK_SKILLS.contains(skill.getSkillId())) {
+            return false;
+        }
+        Set<Integer> states = session.enemyStates.computeIfAbsent(
+                target.getUUID(), ignored -> new HashSet<>());
+        if ("bs2_skill_weapon_break".equals(skill.getSkillId())) {
+            StatEventHandler.applyAttackDown(target, 1000);
+        } else if ("bs2_skill_armor_break".equals(skill.getSkillId())) {
+            StatEventHandler.applyDefenseDown(target, 1000);
+        }
+        if (states.stream().anyMatch(BREAK_IMMUNITY_STATES::contains)) {
+            return false;
+        }
+        boolean interrupted = states.removeIf(INTERRUPTIBLE_CHARGE_STATES::contains);
+        if (interrupted) {
+            target.addEffect(new MobEffectInstance(BlackSouls.BUFF_DEFENSELESS.get(), 400, 0));
+            states.add(8);
+            session.enemyBreakRounds.put(target.getUUID(), 2);
+            session.enemyActionSkips.put(target.getUUID(),
+                    new EnemyActionSkip(BREAK_SKIP_ACTION, 2));
+        }
+        return interrupted;
+    }
+
+    private static boolean applyTurnBattleWeaponStun(ServerPlayer player,
+                                                     EntityTurnBattleMonster target,
+                                                     Session session) {
+        boolean wasStunned = target.hasEffect(BlackSouls.BUFF_STUN.get());
+        StatEventHandler.applyPlayerOnHitStatusEffects(player, target);
+        if (!target.hasEffect(BlackSouls.BUFF_STUN.get())) {
+            return false;
+        }
+        Set<Integer> states = session.enemyStates.computeIfAbsent(
+                target.getUUID(), ignored -> new HashSet<>());
+        if (states.contains(25)) {
+            target.removeEffect(BlackSouls.BUFF_STUN.get());
+            return false;
+        }
+        states.add(13);
+        session.enemyActionSkips.put(target.getUUID(),
+                new EnemyActionSkip(STUN_SKIP_ACTION, 1));
+        return !wasStunned;
+    }
+
+    private static String interruptedText(EntityTurnBattleMonster target, boolean interrupted) {
+        return interrupted && target != null
+                ? "\n" + target.getDisplayName().getString() + "的蓄力被打断了！"
+                : "";
     }
 
     private static int turnHitCount(ServerPlayer player, AbstractSkill skill) {
@@ -572,7 +664,17 @@ public final class TurnBattleManager {
                     Component.literal("敌群被打倒了！"), true, reward);
             return;
         }
+        if (session.pendingEnemySequenceAfterPlayerAction && session.awaitingPhasePresentation) {
+            String prefix = session.pendingEnemySequencePrefix;
+            session.pendingEnemySequenceAfterPlayerAction = false;
+            session.pendingEnemySequencePrefix = "";
+            session.awaitingPhasePresentation = false;
+            session.presentationDeadline = 0L;
+            beginEnemySequence(player, stats, session, Component.literal(prefix));
+            return;
+        }
         if (session.enemySequenceActive && session.awaitingPhasePresentation) {
+            clearPendingEnemyStun(player, session);
             session.awaitingPhasePresentation = false;
             session.presentationDeadline = 0L;
             presentNextEnemyAction(player, stats, session);
@@ -584,8 +686,8 @@ public final class TurnBattleManager {
         session.awaitingPhasePresentation = false;
         session.presentationDeadline = 0L;
         PhaseAdvance phaseAdvance = advanceEnemyPhase(player, rootEnemy, session);
-        session.resolving = false;
         if (phaseAdvance == null) {
+            session.resolving = false;
             sendState(player, true, Component.empty(), true,
                     ClientboundTurnBattlePacket.Outcome.NONE, 0L);
             return;
@@ -594,6 +696,18 @@ public final class TurnBattleManager {
         session.remainingPlayerActions = rollPlayerActionCount(player, stats);
         session.guardQueued = false;
         StatEventHandler.syncToClient(player);
+        if (phaseAdvance.fromProfileId() == 185 && phaseAdvance.toProfileId() == 184) {
+            EntityTurnBattleMonster skullBeast = getEnemies(player, session).stream()
+                    .filter(enemy -> enemy instanceof EntityOriginalDatabaseEnemy original
+                            && original.getProfileId() == 184)
+                    .findFirst().orElse(null);
+            if (skullBeast != null) {
+                beginForcedEnemyAction(player, stats, session, skullBeast, 52,
+                        phaseAdvance.message());
+                return;
+            }
+        }
+        session.resolving = false;
         sendState(player, true, Component.empty(), true,
                 ClientboundTurnBattlePacket.Outcome.NONE, 0L);
     }
@@ -645,7 +759,7 @@ public final class TurnBattleManager {
         String message = initialName.equals(finalName)
                 ? finalName + "的形态发生了变化！"
                 : initialName + "变为了" + finalName + "！";
-        return new PhaseAdvance(message);
+        return new PhaseAdvance(message, transition.from(), transition.to());
     }
 
     private static boolean usesControllerPhaseTransition(int profileId) {
@@ -681,6 +795,8 @@ public final class TurnBattleManager {
         session.enemyAnchors.clear();
         session.enemyStates.clear();
         session.enemyTurns.clear();
+        session.enemyActionSkips.clear();
+        session.enemyBreakRounds.clear();
         session.battleProfileId = profileId;
         BSOriginalBattleProfileData.Entry battle = BSOriginalBattleProfileData.get(profileId);
         List<BSOriginalBattleProfileData.Member> members = battle.members().isEmpty()
@@ -854,6 +970,19 @@ public final class TurnBattleManager {
             if (enemy.isTurnBattleDefeated() || isDormantGranStage(enemy)) {
                 continue;
             }
+            EnemyActionSkip skip = session.enemyActionSkips.get(enemy.getUUID());
+            if (skip != null) {
+                if (skip.remainingRounds() <= 1) {
+                    session.enemyActionSkips.remove(enemy.getUUID());
+                } else {
+                    session.enemyActionSkips.put(enemy.getUUID(),
+                            new EnemyActionSkip(skip.actionId(), skip.remainingRounds() - 1));
+                }
+                session.enemyActionQueue.addLast(new PendingEnemyAction(
+                        enemy.getUUID(), skip.actionId(), true));
+                advanceEnemyBreakRound(enemy, session);
+                continue;
+            }
             int actionCount = enemy instanceof EntityOriginalDatabaseEnemy originalEnemy
                     ? originalEnemy.getProfile().actionCount() : 1;
             if (session.battleProfileId == 567) {
@@ -863,12 +992,40 @@ public final class TurnBattleManager {
                 session.enemyActionQueue.addLast(new PendingEnemyAction(
                         enemy.getUUID(), 0, actionIndex == actionCount - 1));
             }
+            advanceEnemyBreakRound(enemy, session);
         }
         session.enemySequencePrefix = prefix.getString();
         session.enemySequenceGuard = session.guardQueued;
         session.guardQueued = false;
         session.enemySequenceActive = true;
         presentNextEnemyAction(player, stats, session);
+    }
+
+    private static void beginForcedEnemyAction(ServerPlayer player, BSPlayerStats stats,
+                                               Session session, EntityTurnBattleMonster enemy,
+                                               int skillId, String prefix) {
+        session.enemyActionQueue.clear();
+        session.roundEffectSnapshots.clear();
+        session.enemySequenceCountsAsRound = false;
+        session.enemyActionQueue.addLast(new PendingEnemyAction(enemy.getUUID(), skillId, false));
+        session.enemySequencePrefix = prefix == null ? "" : prefix;
+        session.enemySequenceGuard = false;
+        session.enemySequenceActive = true;
+        presentNextEnemyAction(player, stats, session);
+    }
+
+    private static void advanceEnemyBreakRound(EntityTurnBattleMonster enemy, Session session) {
+        Integer rounds = session.enemyBreakRounds.get(enemy.getUUID());
+        if (rounds == null) {
+            return;
+        }
+        if (rounds > 1) {
+            session.enemyBreakRounds.put(enemy.getUUID(), rounds - 1);
+            return;
+        }
+        session.enemyBreakRounds.remove(enemy.getUUID());
+        session.enemyStates.computeIfAbsent(enemy.getUUID(), ignored -> new HashSet<>()).remove(8);
+        enemy.removeEffect(BlackSouls.BUFF_DEFENSELESS.get());
     }
 
     private static void beginOpeningSequence(ServerPlayer player, BSPlayerStats stats,
@@ -950,8 +1107,9 @@ public final class TurnBattleManager {
         session.presentationDeadline = 0L;
         if (session.enemySequenceCountsAsRound) {
             session.enemyTurn++;
-            advanceBattleEffects(player, session.roundEffectSnapshots);
+            restoreTurnBattleHealth(player, stats);
             restoreTurnBattleMana(stats);
+            advanceBattleEffects(player, session.roundEffectSnapshots);
         }
         session.enemySequenceCountsAsRound = false;
         session.roundEffectSnapshots.clear();
@@ -975,6 +1133,17 @@ public final class TurnBattleManager {
         String enemy = battleEnemy.getDisplayName().getString();
         Set<Integer> activeStates = session.enemyStates.computeIfAbsent(
                 battleEnemy.getUUID(), ignored -> new HashSet<>());
+        if (forcedSkillId == STUN_SKIP_ACTION) {
+            session.pendingEnemyStunClear = battleEnemy.getUUID();
+            session.lastEnemyAnimationId = 0;
+            return new EnemyActionResult(Component.literal(
+                    battleEnemy.getDisplayName().getString() + "因眩晕无法行动！"), 0);
+        }
+        if (forcedSkillId == BREAK_SKIP_ACTION) {
+            session.lastEnemyAnimationId = 0;
+            return new EnemyActionResult(Component.literal(
+                    battleEnemy.getDisplayName().getString() + "因被击溃而无法行动！"), 0);
+        }
         TurnBattleDomainData.Domain domain = TurnBattleDomainData.get(session.battleProfileId);
         double defenseRate = domainDefenseRate(session);
         double magicDefenseRate = domainMagicDefenseRate(session);
@@ -998,7 +1167,8 @@ public final class TurnBattleManager {
                         Component.literal(enemy + attackText + "！\n但是攻击落空了！"), 0);
             }
             double enemyAttack = DifficultyManager.scaleManagedStat(
-                    battleEnemy.level(), battleEnemy.getTurnBattleAttack());
+                    battleEnemy.level(), battleEnemy.getTurnBattleAttack()
+                            * StatEventHandler.getAttackShiftMultiplier(battleEnemy));
             boolean anyCritical = false;
             boolean counterCritical = false;
             int counterDamage = 0;
@@ -1045,8 +1215,10 @@ public final class TurnBattleManager {
         boolean roldEffect = activeStates.contains(164);
         double roldMultiplier = roldEffect ? 2.0D : 1.0D;
         TurnBattleFormulaEvaluator.Context context = new TurnBattleFormulaEvaluator.Context(
-                battleEnemy.getTurnBattleAttack() * difficulty * roldMultiplier,
-                battleEnemy.getTurnBattleDefense() * difficulty,
+                battleEnemy.getTurnBattleAttack() * difficulty * roldMultiplier
+                        * StatEventHandler.getAttackShiftMultiplier(battleEnemy),
+                battleEnemy.getTurnBattleDefense() * difficulty
+                        * StatEventHandler.getDefenseShiftMultiplier(battleEnemy),
                 battleEnemy.getTurnBattleMagicAttack() * difficulty * roldMultiplier,
                 battleEnemy.getTurnBattleMagicDefense() * difficulty,
                 battleEnemy.getTurnBattleAgility() * difficulty,
@@ -1212,7 +1384,8 @@ public final class TurnBattleManager {
             return null;
         }
         double enemyDefense = DifficultyManager.scaleManagedStat(
-                enemy.level(), enemy.getTurnBattleDefense());
+                enemy.level(), enemy.getTurnBattleDefense()
+                        * StatEventHandler.getDefenseShiftMultiplier(enemy));
         double damage = varied(player, Math.max(1.0D,
                 stats.attack * domainAttackRate(session) * 4.0D - enemyDefense * 2.0D));
         boolean critical = player.getRandom().nextDouble()
@@ -1220,6 +1393,7 @@ public final class TurnBattleManager {
         if (critical) {
             damage *= 3.0D;
         }
+        damage *= turnBattlePhysicalAttributeMultiplier(player, enemy, stats);
         damage *= turnBattleDamageMultiplier(enemy);
         int dealt = Math.max(1, safeDamageInt(damage));
         enemy.setTurnBattleHealth(enemy.getTurnBattleHealth() - dealt);
@@ -1231,6 +1405,25 @@ public final class TurnBattleManager {
     private static double turnBattleDamageMultiplier(LivingEntity target) {
         MobEffectInstance defenseless = target.getEffect(BlackSouls.BUFF_DEFENSELESS.get());
         return defenseless == null ? 1.0D : defenseless.getAmplifier() > 0 ? 3.0D : 2.0D;
+    }
+
+    private static double turnBattlePhysicalAttributeMultiplier(
+            ServerPlayer player, LivingEntity target, BSPlayerStats stats) {
+        return BSAttributeManager.getBestMultiplier(
+                target, StatEventHandler.buildPlayerAttackAttributes(player, stats));
+    }
+
+    private static void clearPendingEnemyStun(ServerPlayer player, Session session) {
+        UUID enemyId = session.pendingEnemyStunClear;
+        if (enemyId == null) {
+            return;
+        }
+        session.pendingEnemyStunClear = null;
+        session.enemyStates.computeIfAbsent(enemyId, ignored -> new HashSet<>()).remove(13);
+        Entity entity = player.serverLevel().getEntity(enemyId);
+        if (entity instanceof LivingEntity living) {
+            living.removeEffect(BlackSouls.BUFF_STUN.get());
+        }
     }
 
     private static String counterText(ServerPlayer player, EntityTurnBattleMonster enemy,
@@ -1280,6 +1473,18 @@ public final class TurnBattleManager {
         double restored = Math.floor(stats.maxMp * stats.mpRegenRate);
         if (restored > 0.0D) {
             stats.mp = Math.min(stats.maxMp, stats.mp + restored);
+        }
+    }
+
+    private static void restoreTurnBattleHealth(ServerPlayer player, BSPlayerStats stats) {
+        if (stats == null || stats.hpRegenRate == 0.0D || !player.isAlive()) {
+            return;
+        }
+        long amount = (long) (player.getMaxHealth() * stats.hpRegenRate);
+        if (amount > 0L && player.getHealth() < player.getMaxHealth()) {
+            player.heal((float) amount);
+        } else if (amount < 0L && player.getHealth() > 1.0F) {
+            player.setHealth(Math.max(1.0F, player.getHealth() + amount));
         }
     }
 
@@ -1475,8 +1680,14 @@ public final class TurnBattleManager {
     private static void finish(ServerPlayer player, Session session,
                                ClientboundTurnBattlePacket.Outcome outcome, Component message,
                                boolean removeEnemy, long soulReward) {
-        sendState(player, false, message, false, outcome, soulReward);
         EntityTurnBattleMonster rootEnemy = getRootEnemy(player, session);
+        if (outcome == ClientboundTurnBattlePacket.Outcome.VICTORY
+                && rootEnemy instanceof EntityRabbitKnight) {
+            message = Component.literal(message.getString() + "\n" + RabbitKnightDialogue.deathLine());
+        }
+        player.fallDistance = 0.0F;
+        player.setDeltaMovement(Vec3.ZERO);
+        sendState(player, false, message, false, outcome, soulReward);
         if (outcome == ClientboundTurnBattlePacket.Outcome.VICTORY && rootEnemy != null) {
             SceneSpawnerBossHandler.markDefeated(rootEnemy, player);
         }
@@ -1498,6 +1709,10 @@ public final class TurnBattleManager {
             rabbit.finishDialogueRabbitBattle(player,
                     outcome == ClientboundTurnBattlePacket.Outcome.VICTORY);
         }
+        if (rootEnemy instanceof EntityRabbitKnight rabbitKnight) {
+            rabbitKnight.finishKnightBattle(player,
+                    outcome == ClientboundTurnBattlePacket.Outcome.VICTORY);
+        }
         PLAYER_SESSIONS.remove(player.getUUID());
     }
 
@@ -1512,9 +1727,19 @@ public final class TurnBattleManager {
         for (EntityTurnBattleMonster enemy : getEnemies(player, session)) {
             int profileId = enemy instanceof EntityOriginalDatabaseEnemy originalEnemy
                     ? originalEnemy.getProfileId() : -1;
-            List<Integer> states = session.enemyStates.containsKey(enemy.getUUID())
-                    ? session.enemyStates.get(enemy.getUUID()).stream().sorted().toList()
-                    : List.of();
+            Set<Integer> visibleStates = new HashSet<>(
+                    session.enemyStates.getOrDefault(enemy.getUUID(), Set.of()));
+            if (enemy.hasEffect(BlackSouls.BUFF_ATK_DOWN_2.get())) {
+                visibleStates.add(ATK_DOWN_2_STATE);
+            } else if (enemy.hasEffect(BlackSouls.BUFF_ATK_DOWN.get())) {
+                visibleStates.add(ATK_DOWN_STATE);
+            }
+            if (enemy.hasEffect(BlackSouls.BUFF_DEF_DOWN_2.get())) {
+                visibleStates.add(DEF_DOWN_2_STATE);
+            } else if (enemy.hasEffect(BlackSouls.BUFF_DEF_DOWN.get())) {
+                visibleStates.add(DEF_DOWN_STATE);
+            }
+            List<Integer> states = visibleStates.stream().sorted().toList();
             snapshots.add(new ClientboundTurnBattlePacket.EnemySnapshot(
                     enemy.getId(), enemy.getDisplayName(),
                     (float) enemy.getTurnBattleHealth(),
@@ -1685,8 +1910,10 @@ public final class TurnBattleManager {
             return;
         }
         player.setDeltaMovement(Vec3.ZERO);
+        player.fallDistance = 0.0F;
         if (player.position().distanceToSqr(session.playerAnchor) > 0.01D) {
             player.teleportTo(session.playerAnchor.x, session.playerAnchor.y, session.playerAnchor.z);
+            player.fallDistance = 0.0F;
         }
         for (EntityTurnBattleMonster enemy : getEnemies(player, session)) {
             enemy.setDeltaMovement(Vec3.ZERO);
@@ -1809,10 +2036,13 @@ public final class TurnBattleManager {
         }
     }
 
-    private record PhaseAdvance(String message) {
+    private record PhaseAdvance(String message, int fromProfileId, int toProfileId) {
     }
 
     private record EffectSnapshot(MobEffectInstance instance, int duration, int amplifier) {
+    }
+
+    private record EnemyActionSkip(int actionId, int remainingRounds) {
     }
 
     private record PendingEnemyAction(UUID enemyId, int skillId, boolean advanceTurnAfter) {
@@ -1836,6 +2066,8 @@ public final class TurnBattleManager {
         private final Map<String, Integer> skillCooldowns = new HashMap<>();
         private final Map<UUID, Set<Integer>> enemyStates = new HashMap<>();
         private final Map<UUID, Integer> enemyTurns = new HashMap<>();
+        private final Map<UUID, EnemyActionSkip> enemyActionSkips = new HashMap<>();
+        private final Map<UUID, Integer> enemyBreakRounds = new HashMap<>();
         private final Map<MobEffect, EffectSnapshot> roundEffectSnapshots = new HashMap<>();
         private final Deque<PendingEnemyAction> enemyActionQueue = new ArrayDeque<>();
         private final List<ItemStack> rewardItems = new ArrayList<>();
@@ -1853,6 +2085,9 @@ public final class TurnBattleManager {
         private boolean enemySequenceGuard;
         private String enemySequencePrefix = "";
         private boolean guardQueued;
+        private boolean pendingEnemySequenceAfterPlayerAction;
+        private String pendingEnemySequencePrefix = "";
+        private UUID pendingEnemyStunClear;
         private int remainingPlayerActions;
         private long presentationDeadline;
         private final List<ClientboundTurnBattlePacket.DamageHit> playerHits = new ArrayList<>();

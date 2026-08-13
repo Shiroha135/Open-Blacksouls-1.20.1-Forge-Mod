@@ -14,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 public final class SkillSeekAdvice extends AbstractSkill {
     public static final String CONTROLLED_TAG = "bs2_advice_controlled";
     public static final String VISIBLE_TAG = "bs2_advice_visible";
+    public static final String VISIBILITY_MIGRATION_TAG = "bs2_advice_visibility_v2";
 
     @Override
     public String getSkillId() {
@@ -70,5 +71,13 @@ public final class SkillSeekAdvice extends AbstractSkill {
         player.sendSystemMessage(Component.translatable(visible
                 ? "message.blacksouls.skill.seek_advice.visible"
                 : "message.blacksouls.skill.seek_advice.hidden").withStyle(ChatFormatting.YELLOW));
+    }
+
+    public static void resetVisibility(ServerPlayer player) {
+        var data = SkillUtils.getPersistedData(player);
+        data.putBoolean(VISIBILITY_MIGRATION_TAG, true);
+        data.remove(CONTROLLED_TAG);
+        data.remove(VISIBLE_TAG);
+        NetworkHandler.sendToPlayer(new ClientboundAdviceVisibilityPacket(false, true), player);
     }
 }

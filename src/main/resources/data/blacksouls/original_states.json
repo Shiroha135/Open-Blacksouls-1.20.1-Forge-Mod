@@ -908,5 +908,25 @@
     "id": 252,
     "name": "八相",
     "iconIndex": 27
+  },
+  {
+    "id": 1001,
+    "name": "ATK DOWN",
+    "iconIndex": 82
+  },
+  {
+    "id": 1002,
+    "name": "ATK DOWN 2",
+    "iconIndex": 90
+  },
+  {
+    "id": 1003,
+    "name": "DEF DOWN",
+    "iconIndex": 83
+  },
+  {
+    "id": 1004,
+    "name": "DEF DOWN 2",
+    "iconIndex": 91
   }
 ]

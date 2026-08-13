@@ -8,6 +8,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
 import net.minecraft.world.level.Level;
 
 import java.util.Collections;
@@ -97,7 +98,9 @@ public class DifficultyManager {
 
     public static void applyModifierToSingleMonster(LivingEntity monster) {
         BSMobStatManager.MobStats baseStats = BSMobStatManager.getStats(monster);
-        if (!hasManagedStats(baseStats)) {
+        boolean managed = hasManagedStats(baseStats);
+        boolean external = BSMobStatManager.isExternalEnemy(monster);
+        if (!managed && !external) {
             return;
         }
 
@@ -105,7 +108,51 @@ public class DifficultyManager {
             TRACKED_MONSTERS.computeIfAbsent(serverLevel, ignored ->
                     Collections.newSetFromMap(new WeakHashMap<>())).add(monster);
         }
-        applyModifier(monster, baseStats, getCurrentTotalMultiplier(monster.level()));
+        double multiplier = getCurrentTotalMultiplier(monster.level());
+        if (managed) {
+            applyModifier(monster, baseStats, multiplier);
+        } else {
+            applyExternalHealthModifier(monster, multiplier);
+        }
+    }
+
+    private static void applyExternalHealthModifier(LivingEntity monster, double multiplier) {
+        AttributeInstance health = monster.getAttribute(Attributes.MAX_HEALTH);
+        if (health == null) {
+            return;
+        }
+
+        AttributeModifier previous = health.getModifier(DIFFICULTY_MODIFIER_ID);
+        float oldMaxHp = monster.getMaxHealth();
+        float oldHp = monster.getHealth();
+        double hpPercent = oldMaxHp > 0.0F ? oldHp / oldMaxHp : 1.0D;
+
+        if (previous != null) {
+            restoreExternalBaseHealth(monster, health);
+        }
+
+        health.removeModifier(DIFFICULTY_MODIFIER_ID);
+        if (multiplier > 1.0D) {
+            health.addPermanentModifier(new AttributeModifier(
+                    DIFFICULTY_MODIFIER_ID,
+                    "BlackSouls_Difficulty",
+                    multiplier - 1.0D,
+                    AttributeModifier.Operation.MULTIPLY_BASE
+            ));
+        }
+        monster.setHealth((float) (monster.getMaxHealth() * hpPercent));
+    }
+
+    private static void restoreExternalBaseHealth(LivingEntity monster, AttributeInstance health) {
+        if (DefaultAttributes.hasSupplier(monster.getType())) {
+            @SuppressWarnings("unchecked")
+            var type = (net.minecraft.world.entity.EntityType<? extends LivingEntity>) monster.getType();
+            var supplier = DefaultAttributes.getSupplier(type);
+            if (supplier.hasAttribute(Attributes.MAX_HEALTH)) {
+                health.setBaseValue(supplier.getBaseValue(Attributes.MAX_HEALTH));
+            }
+        }
+        health.removeModifier(DIFFICULTY_MODIFIER_ID);
     }
 
     private static void applyModifier(LivingEntity monster, BSMobStatManager.MobStats baseStats, double multiplier) {
@@ -168,11 +215,17 @@ public class DifficultyManager {
             }
 
             BSMobStatManager.MobStats baseStats = BSMobStatManager.getStats(livingEntity);
-            if (!hasManagedStats(baseStats)) {
+            boolean managed = hasManagedStats(baseStats);
+            boolean external = BSMobStatManager.isExternalEnemy(livingEntity);
+            if (!managed && !external) {
                 iterator.remove();
                 continue;
             }
-            applyModifier(livingEntity, baseStats, multiplier);
+            if (managed) {
+                applyModifier(livingEntity, baseStats, multiplier);
+            } else {
+                applyExternalHealthModifier(livingEntity, multiplier);
+            }
         }
     }
 

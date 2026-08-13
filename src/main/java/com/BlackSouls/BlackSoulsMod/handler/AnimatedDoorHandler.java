@@ -3,7 +3,6 @@ package com.BlackSouls.BlackSoulsMod.handler;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.AnimatedDoorSavedData;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -37,21 +36,11 @@ public final class AnimatedDoorHandler {
         }
         event.setCanceled(true);
         event.setCancellationResult(InteractionResult.SUCCESS);
-        if (!(event.getLevel() instanceof ServerLevel level)) {
+        if (!(event.getLevel() instanceof ServerLevel level)
+                || !(event.getEntity() instanceof net.minecraft.server.level.ServerPlayer player)) {
             return;
         }
-        BlockPos pos = normalizeDoorPos(level, event.getPos(), state);
-        boolean enabled = AnimatedDoorSavedData.get(level).toggle(pos);
-        if (enabled) {
-            boolean open = currentPhase(level);
-            applyState(level, pos, open);
-        }
-        event.getEntity().displayClientMessage(
-                Component.translatable(enabled
-                        ? "message.blacksouls.dev.animated_door.enabled"
-                        : "message.blacksouls.dev.animated_door.disabled"),
-                true
-        );
+        DoorEditorService.open(player, level, event.getPos());
     }
 
     @SubscribeEvent

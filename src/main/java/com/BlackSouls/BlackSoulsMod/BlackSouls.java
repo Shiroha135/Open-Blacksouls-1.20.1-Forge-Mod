@@ -207,6 +207,10 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> FOG1_EVENT = registerSound("fog1");
     public static final RegistryObject<SoundEvent> FOG2_EVENT = registerSound("fog2");
     public static final RegistryObject<SoundEvent> GUCHA004A_EVENT = registerSound("gucha004a");
+    public static final RegistryObject<SoundEvent> CHESHIRE_CAT2_EVENT = registerSound("cheshire_cat2");
+    public static final RegistryObject<SoundEvent> CHESHIRE_CAT3_EVENT = registerSound("cheshire_cat3");
+    public static final RegistryObject<SoundEvent> CHESHIRE_THEME_EVENT = registerSound("cheshire_theme");
+    public static final RegistryObject<SoundEvent> RABBIT_KNIGHT_BGM_EVENT = registerSound("rabbit_knight_bgm");
     public static final RegistryObject<SoundEvent> GUN1_EVENT = registerSound("gun1");
     public static final RegistryObject<SoundEvent> GUN2_EVENT = registerSound("gun2");
     public static final RegistryObject<SoundEvent> ICE1_EVENT = registerSound("ice1");
@@ -218,6 +222,8 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> ITEM1_EVENT = registerSound("item1");
     public static final RegistryObject<SoundEvent> KEY_EVENT = registerSound("key");
     public static final RegistryObject<SoundEvent> LOCK_RATTLE_EVENT = registerSound("lock_rattle");
+    public static final RegistryObject<SoundEvent> SHORTCUT_OPEN_EVENT = registerSound("shortcut_open");
+    public static final RegistryObject<SoundEvent> SHORTCUT_LAUGHTER_EVENT = registerSound("shortcut_laughter");
     public static final RegistryObject<SoundEvent> TURN_BATTLE_BGM_EVENT = registerSound("turn_battle_bgm");
     public static final RegistryObject<SoundEvent> TURN_BATTLE_VICTORY_EVENT = registerSound("turn_battle_victory");
     public static final RegistryObject<SoundEvent> TURN_BATTLE_START_EVENT = registerSound("turn_battle_start");
@@ -317,9 +323,11 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> HELL_PRINCE_BGM_EVENT = registerSound("hell_prince_bgm");
 
     //图书馆维度专用BGM
+    @SuppressWarnings("removal")
     public static final RegistryObject<SoundEvent> LIBRARY_BGM_EVENT = SOUND_EVENTS.register("music.library",
             () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(MODID, "music.library")));
 
+    @SuppressWarnings("removal")
     private static RegistryObject<SoundEvent> registerSound(String name) {
         return SOUND_EVENTS.register(name, () ->
                 SoundEvent.createVariableRangeEvent(new net.minecraft.resources.ResourceLocation(MODID, name))
@@ -1049,6 +1057,13 @@ public class BlackSouls {
     public static final RegistryObject<Item> RED_HOOD_SPAWN_EGG = ITEMS.register("red_hood_spawn_egg",
             () -> new ForgeSpawnEggItem(BSEntityRegistry.RED_HOOD, 0x7C1218, 0xD8C8B7,
                     new Item.Properties()));
+    public static final RegistryObject<Item> CHESHIRE_CAT_SPAWN_EGG = ITEMS.register("cheshire_cat_spawn_egg",
+            () -> new ForgeSpawnEggItem(BSEntityRegistry.CHESHIRE_CAT, 0x8460A4, 0xE5C7E7,
+                    new Item.Properties()));
+    public static final RegistryObject<Item> RABBIT_HOLE_EV009_SPAWN_EGG =
+            ITEMS.register("rabbit_hole_ev009_spawn_egg",
+                    () -> new ItemRabbitHoleNpcSpawn(new Item.Properties().stacksTo(16),
+                            EntityRabbitHoleNpc.Role.EV009));
     public static final RegistryObject<Item> RABBIT_HOLE_EV052_SPAWN_EGG =
             ITEMS.register("rabbit_hole_ev052_spawn_egg",
                     () -> new ItemRabbitHoleNpcSpawn(new Item.Properties().stacksTo(16),
@@ -1061,6 +1076,14 @@ public class BlackSouls {
             ITEMS.register("rabbit_hole_ev012_spawn_egg",
                     () -> new ItemRabbitHoleNpcSpawn(new Item.Properties().stacksTo(16),
                             EntityRabbitHoleNpc.Role.EV012));
+    public static final RegistryObject<Item> RABBIT_HOLE_EV030_SPAWN_EGG =
+            ITEMS.register("rabbit_hole_ev030_spawn_egg",
+                    () -> new ItemRabbitHoleNpcSpawn(new Item.Properties().stacksTo(16),
+                            EntityRabbitHoleNpc.Role.EV030));
+    public static final RegistryObject<Item> RABBIT_KNIGHT_EV011_SPAWN_EGG =
+            ITEMS.register("rabbit_knight_ev011_spawn_egg",
+                    () -> new ForgeSpawnEggItem(BSEntityRegistry.RABBIT_KNIGHT,
+                            0x4A4D50, 0xD6CFB6, new Item.Properties()));
     public static final RegistryObject<Item> CORPSE_EATING_RABBIT_SPAWN_EGG = ITEMS.register("corpse_eating_rabbit_spawn_egg",
             () -> new ItemCorpseEatingRabbitSpawn(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> HEADLESS_UNDEAD_SPAWN_EGG = ITEMS.register("headless_undead_spawn_egg",
@@ -1085,9 +1108,13 @@ public class BlackSouls {
                     .displayItems((parameters, output) -> {
                         output.accept(NODEN_SPAWN_EGG.get());              // 诺登召唤
                         output.accept(RED_HOOD_SPAWN_EGG.get());
+                        output.accept(CHESHIRE_CAT_SPAWN_EGG.get());
+                        output.accept(RABBIT_HOLE_EV009_SPAWN_EGG.get());
                         output.accept(RABBIT_HOLE_EV052_SPAWN_EGG.get());
                         output.accept(RABBIT_HOLE_EV011_SPAWN_EGG.get());
                         output.accept(RABBIT_HOLE_EV012_SPAWN_EGG.get());
+                        output.accept(RABBIT_HOLE_EV030_SPAWN_EGG.get());
+                        output.accept(RABBIT_KNIGHT_EV011_SPAWN_EGG.get());
                         ORIGINAL_ENEMY_SPAWN_EGGS.values().forEach(egg -> output.accept(egg.get()));
                     })
                     .build());
@@ -1445,6 +1472,7 @@ public class BlackSouls {
     // ==========================================
     //                 生命周期事件
     // ==========================================
+    @SuppressWarnings("removal")
     public BlackSouls() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         // 注册核心组件

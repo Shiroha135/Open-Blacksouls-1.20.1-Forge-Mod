@@ -33,6 +33,22 @@ public class BSEntityRegistry {
                             .updateInterval(3)
                             .build("rabbit_hole_npc"));
 
+    public static final RegistryObject<EntityType<EntityRabbitKnight>> RABBIT_KNIGHT =
+            ENTITY_TYPES.register("rabbit_knight", () ->
+                    EntityType.Builder.of(EntityRabbitKnight::new, MobCategory.CREATURE)
+                            .sized(0.6F, 1.4F)
+                            .clientTrackingRange(10)
+                            .updateInterval(3)
+                            .build("rabbit_knight"));
+
+    public static final RegistryObject<EntityType<EntityCheshireCat>> CHESHIRE_CAT =
+            ENTITY_TYPES.register("cheshire_cat", () ->
+                    EntityType.Builder.<EntityCheshireCat>of(EntityCheshireCat::new, MobCategory.CREATURE)
+                            .sized(0.7F, 1.2F)
+                            .clientTrackingRange(10)
+                            .updateInterval(3)
+                            .build("cheshire_cat"));
+
     public static final RegistryObject<EntityType<EntityHailCaesar>> HAIL_CAESAR = ENTITY_TYPES.register("hail_caesar",
             () -> EntityType.Builder.of(EntityHailCaesar::new, MobCategory.MONSTER)
                     .sized(1.6F, 2.8F)

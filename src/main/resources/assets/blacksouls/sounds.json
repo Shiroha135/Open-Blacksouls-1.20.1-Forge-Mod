@@ -869,6 +869,18 @@
       "blacksouls:lock_rattle"
     ]
   },
+  "shortcut_open": {
+    "category": "block",
+    "sounds": [
+      "blacksouls:shortcut_open"
+    ]
+  },
+  "shortcut_laughter": {
+    "category": "block",
+    "sounds": [
+      "blacksouls:shortcut_laughter"
+    ]
+  },
   "hell_prince_bgm": {
     "category": "hostile",
     "sounds": [
@@ -1369,6 +1381,36 @@
     "sounds": [
       {
         "name": "blacksouls:story_name_sea",
+        "stream": true
+      }
+    ]
+  },
+  "cheshire_cat2": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:cheshire_cat2"
+    ]
+  },
+  "cheshire_cat3": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:cheshire_cat3"
+    ]
+  },
+  "cheshire_theme": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:cheshire_theme",
+        "stream": true
+      }
+    ]
+  },
+  "rabbit_knight_bgm": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "blacksouls:rabbit_knight_bgm",
         "stream": true
       }
     ]

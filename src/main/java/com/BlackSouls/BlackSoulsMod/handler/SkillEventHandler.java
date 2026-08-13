@@ -101,9 +101,13 @@ public class SkillEventHandler {
                 }
             });
             var data = SkillUtils.getPersistedData(player);
-            boolean controlled = data.getBoolean(SkillSeekAdvice.CONTROLLED_TAG);
-            NetworkHandler.sendToPlayer(new ClientboundAdviceVisibilityPacket(
-                    controlled, data.getBoolean(SkillSeekAdvice.VISIBLE_TAG)), serverPlayer);
+            if (!data.getBoolean(SkillSeekAdvice.VISIBILITY_MIGRATION_TAG)) {
+                SkillSeekAdvice.resetVisibility(serverPlayer);
+            } else {
+                boolean controlled = data.getBoolean(SkillSeekAdvice.CONTROLLED_TAG);
+                NetworkHandler.sendToPlayer(new ClientboundAdviceVisibilityPacket(
+                        controlled, data.getBoolean(SkillSeekAdvice.VISIBLE_TAG)), serverPlayer);
+            }
         }
     }
     @SubscribeEvent
@@ -290,6 +294,7 @@ public class SkillEventHandler {
                 int revivedHealth = reviveTurnBattlePlayer(player);
                 return new TurnBattleDamageResult(damage, true, true, revivedHealth);
             }
+            DimensionRuleHandler.captureDeathInventory(player);
             player.setHealth(0.0F);
             player.hurtMarked = true;
             return new TurnBattleDamageResult(damage, true, false, 0);
@@ -427,7 +432,8 @@ public class SkillEventHandler {
     public static void onMonsterSpawn(EntityJoinLevelEvent event) {
         if (!event.getLevel().isClientSide()
                 && event.getEntity() instanceof LivingEntity monster
-                && com.BlackSouls.BlackSoulsMod.util.BSMobStatManager.hasManagedStats(monster)) {
+                && (com.BlackSouls.BlackSoulsMod.util.BSMobStatManager.hasManagedStats(monster)
+                || com.BlackSouls.BlackSoulsMod.util.BSMobStatManager.isExternalEnemy(monster))) {
             DifficultyManager.applyModifierToSingleMonster(monster);
         }
     }

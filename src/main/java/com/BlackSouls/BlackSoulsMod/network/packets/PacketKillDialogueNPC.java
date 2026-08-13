@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod.network.packets;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.entity.EntityNoden;
 import com.BlackSouls.BlackSoulsMod.entity.EntityRabbitHoleNpc;
+import com.BlackSouls.BlackSoulsMod.entity.EntityRabbitKnight;
 import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import net.minecraft.network.FriendlyByteBuf;
@@ -42,6 +43,13 @@ public class PacketKillDialogueNPC {
             if (targetEntity instanceof EntityRabbitHoleNpc rabbit && rabbit.isAlive() && !rabbit.isRemoved()
                     && rabbit.distanceToSqr(player) <= 64.0D) {
                 rabbit.startKillBattle(player);
+                return;
+            }
+
+            if (targetEntity instanceof EntityRabbitKnight rabbitKnight
+                    && rabbitKnight.isAlive() && !rabbitKnight.isRemoved()
+                    && rabbitKnight.distanceToSqr(player) <= 64.0D) {
+                rabbitKnight.startKillBattle(player);
                 return;
             }
 

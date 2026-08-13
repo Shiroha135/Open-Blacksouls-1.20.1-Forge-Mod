@@ -21,6 +21,9 @@ bin/
 .apt_generated/
 .externalToolBuilders/
 
+.codex-*/
+/tools/
+
 *.log
 hs_err_pid*
 replay_pid*
@@ -39,3 +42,11 @@ desktop.ini
 .env.*
 !.env.example
 *.local
+*.rb
+*.py
+*.ps1
+*.pyc
+*.7z
+*.ri
+*.html
+*.gemspec

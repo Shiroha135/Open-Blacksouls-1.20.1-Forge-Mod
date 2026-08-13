@@ -21,6 +21,7 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 public abstract class EntityTurnBattleMonster extends Monster {
+    private static final double CHASE_SPEED = 1.25D;
     private int battleCooldown;
 
     protected EntityTurnBattleMonster(EntityType<? extends Monster> type, Level level) {
@@ -31,7 +32,7 @@ public abstract class EntityTurnBattleMonster extends Monster {
     @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, CHASE_SPEED, false));
         this.goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 0.8D));
         this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
         this.goalSelector.addGoal(9, new RandomLookAroundGoal(this));
@@ -60,9 +61,10 @@ public abstract class EntityTurnBattleMonster extends Monster {
             }
         }
         if (this.battleCooldown == 0
+                && canStartTurnBattle()
                 && BSConfig.COMBAT_MODE.get() == BSConfig.CombatMode.BLACK_SOULS_TURN_BASED
                 && !TurnBattleManager.isInBattle(this)) {
-            this.level().getEntitiesOfClass(ServerPlayer.class, this.getBoundingBox().inflate(0.35D),
+            this.level().getEntitiesOfClass(ServerPlayer.class, this.getBoundingBox().inflate(0.12D),
                             player -> player.isAlive() && !player.isSpectator())
                     .stream().findFirst().ifPresent(player -> TurnBattleManager.tryStart(player, this));
         }
@@ -71,7 +73,8 @@ public abstract class EntityTurnBattleMonster extends Monster {
     @Override
     public void playerTouch(Player player) {
         super.playerTouch(player);
-        if (!this.level().isClientSide() && this.battleCooldown == 0 && player instanceof ServerPlayer serverPlayer) {
+        if (!this.level().isClientSide() && this.battleCooldown == 0 && canStartTurnBattle()
+                && player instanceof ServerPlayer serverPlayer) {
             TurnBattleManager.tryStart(serverPlayer, this);
         }
     }
@@ -82,7 +85,7 @@ public abstract class EntityTurnBattleMonster extends Monster {
             this.setTarget(null);
             return false;
         }
-        if (target instanceof ServerPlayer player
+        if (canStartTurnBattle() && target instanceof ServerPlayer player
                 && BSConfig.COMBAT_MODE.get() == BSConfig.CombatMode.BLACK_SOULS_TURN_BASED) {
             TurnBattleManager.tryStart(player, this);
             return false;
@@ -97,6 +100,10 @@ public abstract class EntityTurnBattleMonster extends Monster {
             this.getNavigation().stop();
             this.setNoAi(true);
         }
+    }
+
+    public boolean canStartTurnBattle() {
+        return true;
     }
 
     public abstract ResourceLocation getTurnBattleTexture();

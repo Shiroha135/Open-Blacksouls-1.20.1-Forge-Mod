@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod.handler;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.util.LibraryDestination;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
+import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBounds;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundBannerPacket;
 import com.BlackSouls.BlackSoulsMod.util.DifficultyManager;
@@ -204,6 +205,7 @@ public class ServerEventHandler {
         if (!(event.getEntity() instanceof Mob mob)
                 || mob.level().isClientSide()
                 || !(mob instanceof Enemy)
+                || mob.getPersistentData().contains(SceneSpawnerBounds.ORIGIN_X_TAG)
                 || !(mob.getTarget() instanceof Player currentTarget)) {
             return;
         }

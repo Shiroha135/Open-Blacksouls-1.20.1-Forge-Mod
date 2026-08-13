@@ -64,6 +64,8 @@ public class NetworkHandler {
         register(PacketConvertSouls.class, PacketConvertSouls::toBytes, PacketConvertSouls::new, PacketConvertSouls::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ServerboundTradePacket.class, ServerboundTradePacket::toBytes, ServerboundTradePacket::new, ServerboundTradePacket::handle, NetworkDirection.PLAY_TO_SERVER);
         register(PacketKillDialogueNPC.class, PacketKillDialogueNPC::toBytes, PacketKillDialogueNPC::new, PacketKillDialogueNPC::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ServerboundCheshireActionPacket.class, ServerboundCheshireActionPacket::toBytes, ServerboundCheshireActionPacket::new, ServerboundCheshireActionPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ServerboundCheshireGiftPacket.class, ServerboundCheshireGiftPacket::toBytes, ServerboundCheshireGiftPacket::new, ServerboundCheshireGiftPacket::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ClientboundSimpleActionPacket.class, ClientboundSimpleActionPacket::toBytes, ClientboundSimpleActionPacket::new, ClientboundSimpleActionPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(PacketUpdateBonfireName.class, PacketUpdateBonfireName::toBytes, PacketUpdateBonfireName::new, PacketUpdateBonfireName::handle, NetworkDirection.PLAY_TO_SERVER);
         register(PacketPlayAnim.class, PacketPlayAnim::toBytes, PacketPlayAnim::new, PacketPlayAnim::handle, NetworkDirection.PLAY_TO_CLIENT);
@@ -86,6 +88,8 @@ public class NetworkHandler {
         register(ClientboundCurrentScenePacket.class, ClientboundCurrentScenePacket::toBytes, ClientboundCurrentScenePacket::new, ClientboundCurrentScenePacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(ServerboundRequestCurrentScenePacket.class, ServerboundRequestCurrentScenePacket::toBytes, ServerboundRequestCurrentScenePacket::new, ServerboundRequestCurrentScenePacket::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ClientboundAdviceVisibilityPacket.class, ClientboundAdviceVisibilityPacket::toBytes, ClientboundAdviceVisibilityPacket::new, ClientboundAdviceVisibilityPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ClientboundDoorEditorPacket.class, ClientboundDoorEditorPacket::encode, ClientboundDoorEditorPacket::decode, ClientboundDoorEditorPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ServerboundSaveDoorConfigPacket.class, ServerboundSaveDoorConfigPacket::encode, ServerboundSaveDoorConfigPacket::decode, ServerboundSaveDoorConfigPacket::handle, NetworkDirection.PLAY_TO_SERVER);
 
     }
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {

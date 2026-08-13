@@ -5,6 +5,7 @@ import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.util.LibraryDestination;
 import com.BlackSouls.BlackSoulsMod.util.KnightStartingKit;
 import com.BlackSouls.BlackSoulsMod.util.StoryNameData;
+import com.BlackSouls.BlackSoulsMod.util.skill.SkillSeekAdvice;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -42,6 +43,8 @@ public final class ServerboundConfirmStoryNamePacket {
             }
             StoryNameData.confirm(player, normalized);
             KnightStartingKit.grant(player);
+            SkillSeekAdvice.resetVisibility(player);
+            player.setHealth(player.getMaxHealth());
             NetworkHandler.sendToPlayer(new ClientboundStoryNamePacket(false, normalized), player);
             teleportToStoryStart(player);
         });

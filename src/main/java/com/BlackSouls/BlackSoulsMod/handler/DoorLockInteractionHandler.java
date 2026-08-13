@@ -1,6 +1,11 @@
 package com.BlackSouls.BlackSoulsMod.handler;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.capability.AnimatedDoorSavedData;
+import com.BlackSouls.BlackSoulsMod.capability.DoorEventProgressSavedData;
+import com.BlackSouls.BlackSoulsMod.capability.DoorEventSavedData;
+import com.BlackSouls.BlackSoulsMod.capability.DoorEventSavedData.DoorEvent;
+import com.BlackSouls.BlackSoulsMod.capability.DoorEventSavedData.EventRole;
 import com.BlackSouls.BlackSoulsMod.capability.DoorLockSavedData;
 import com.BlackSouls.BlackSoulsMod.capability.DoorLockSavedData.DoorLock;
 import com.BlackSouls.BlackSoulsMod.capability.DoorLockSavedData.LockType;
@@ -10,7 +15,9 @@ import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundTextBannerPacket;
 import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundLostItemPacket;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -38,6 +45,9 @@ import net.minecraftforge.fml.common.Mod;
 public final class DoorLockInteractionHandler {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        if (event.getHand() != InteractionHand.MAIN_HAND) {
+            return;
+        }
         BlockState clickedState = event.getLevel().getBlockState(event.getPos());
         if (!isLockable(clickedState)) {
             return;
@@ -46,12 +56,11 @@ public final class DoorLockInteractionHandler {
                 ? serverLevel
                 : null, event.getPos(), clickedState);
 
-        if (event.getEntity().isShiftKeyDown()
-                && event.getEntity().getMainHandItem().is(BlackSouls.DEV_STAT_TOOL.get())) {
+        if (event.getEntity().getMainHandItem().is(BlackSouls.DEV_STAT_TOOL.get())) {
             event.setCanceled(true);
             event.setCancellationResult(InteractionResult.SUCCESS);
             if (event.getEntity() instanceof ServerPlayer player && player.level() instanceof ServerLevel level) {
-                configureLock(player, level, lockPos);
+                DoorEditorService.open(player, level, lockPos);
             }
             return;
         }
@@ -59,6 +68,14 @@ public final class DoorLockInteractionHandler {
         if (!(event.getEntity() instanceof ServerPlayer player) || !(player.level() instanceof ServerLevel level)) {
             return;
         }
+        DoorEvent doorEvent = DoorEventSavedData.get(level).getEvent(lockPos);
+        if (doorEvent != null) {
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.SUCCESS);
+            handleDoorEvent(player, level, lockPos, doorEvent);
+            return;
+        }
+
         DoorLockSavedData data = DoorLockSavedData.get(level);
         DoorLock lock = data.getLock(lockPos);
         if (lock == null) {
@@ -104,33 +121,69 @@ public final class DoorLockInteractionHandler {
         if (!isLockable(state)) {
             return;
         }
-        DoorLockSavedData.get(level).removeLock(normalizeDoorPos(level, event.getPos(), state));
+        BlockPos pos = normalizeDoorPos(level, event.getPos(), state);
+        DoorLockSavedData.get(level).removeLock(pos);
+        AnimatedDoorSavedData.get(level).set(pos, false);
+        DoorEventSavedData.get(level).removeEvent(pos);
     }
 
-    private static void configureLock(ServerPlayer player, ServerLevel level, BlockPos pos) {
-        DoorLockSavedData data = DoorLockSavedData.get(level);
-        ItemStack requiredStack = player.getOffhandItem();
-        ResourceLocation requiredItem = requiredStack.isEmpty()
-                ? null
-                : BuiltInRegistries.ITEM.getKey(requiredStack.getItem());
-        DoorLock desired = requiredItem == null
-                ? new DoorLock(LockType.NORMAL, null, true)
-                : new DoorLock(LockType.STORY, requiredItem, true);
-        DoorLock existing = data.getLock(pos);
-        if (desired.equals(existing)) {
-            data.removeLock(pos);
-            player.displayClientMessage(Component.translatable("message.blacksouls.lock.dev.removed"), true);
+    private static void handleDoorEvent(ServerPlayer player, ServerLevel level, BlockPos pos, DoorEvent doorEvent) {
+        syncDoorState(level, pos);
+        DoorEventProgressSavedData globalData = DoorEventProgressSavedData.get(level.getServer());
+        if (doorEvent.role() == EventRole.SHORTCUT_GATE
+                && !globalData.isTriggered(doorEvent.conditionId())) {
+            close(level, pos, player);
+            level.playSound(null, pos, BlackSouls.SHORTCUT_OPEN_EVENT.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+            level.playSound(null, pos, BlackSouls.SHORTCUT_LAUGHTER_EVENT.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
             return;
         }
-        data.setLock(pos, desired);
-        close(level, pos, player);
-        if (desired.type() == LockType.NORMAL) {
-            player.displayClientMessage(Component.translatable("message.blacksouls.lock.dev.normal"), true);
-        } else {
+        if (doorEvent.role() == EventRole.SHORTCUT_UNLOCK) {
+            globalData.setTriggered(doorEvent.conditionId(), true);
+        }
+        ServerLevel targetLevel = player.getServer().getLevel(ResourceKey.create(
+                Registries.DIMENSION,
+                doorEvent.targetDimension()
+        ));
+        if (targetLevel == null) {
             player.displayClientMessage(
-                    Component.translatable("message.blacksouls.lock.dev.story", requiredStack.getHoverName()),
+                    Component.translatable("message.blacksouls.door.shortcut.unavailable"),
                     true
             );
+            return;
+        }
+        level.playSound(null, pos, BlackSouls.SHORTCUT_OPEN_EVENT.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+        float yaw = player.getYRot();
+        float pitch = player.getXRot();
+        player.stopRiding();
+        if (targetLevel == level) {
+            player.connection.teleport(
+                    doorEvent.targetX(),
+                    doorEvent.targetY(),
+                    doorEvent.targetZ(),
+                    yaw,
+                    pitch
+            );
+        } else {
+            player.teleportTo(
+                    targetLevel,
+                    doorEvent.targetX(),
+                    doorEvent.targetY(),
+                    doorEvent.targetZ(),
+                    yaw,
+                    pitch
+            );
+        }
+        player.setDeltaMovement(player.getDeltaMovement().multiply(1.0D, 0.0D, 1.0D));
+        player.setOnGround(true);
+        player.fallDistance = 0.0F;
+    }
+
+    private static void syncDoorState(ServerLevel level, BlockPos pos) {
+        BlockState state = level.getBlockState(pos);
+        level.sendBlockUpdated(pos, state, state, 3);
+        if (state.getBlock() instanceof DoorBlock) {
+            BlockState upperState = level.getBlockState(pos.above());
+            level.sendBlockUpdated(pos.above(), upperState, upperState, 3);
         }
     }
 

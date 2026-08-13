@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod.mixin.compat;
 import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBounds;
 import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBossData;
 import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBossState;
+import com.BlackSouls.BlackSoulsMod.entity.EntityTurnBattleMonster;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundCurrentScenePacket;
 import net.minecraft.core.BlockPos;
@@ -43,7 +44,8 @@ public abstract class SceneSpawnManagerMixin {
         data.putInt(SceneSpawnerBounds.RANGE_X_TAG, bounds.blacksouls$getRangeX());
         data.putInt(SceneSpawnerBounds.RANGE_Z_TAG, bounds.blacksouls$getRangeZ());
         if (entity instanceof Mob mob) {
-            data.putBoolean(SceneSpawnerBounds.ORIGINAL_NO_AI_TAG, mob.isNoAi());
+            data.putBoolean(SceneSpawnerBounds.ORIGINAL_NO_AI_TAG,
+                    !(mob instanceof EntityTurnBattleMonster) && mob.isNoAi());
         }
         if (blockEntity instanceof SceneSpawnerBossState bossState && bossState.blacksouls$isBossMode()) {
             data.putBoolean(SceneSpawnerBossState.ENTITY_BOSS_TAG, true);

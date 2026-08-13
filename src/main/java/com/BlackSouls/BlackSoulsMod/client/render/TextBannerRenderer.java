@@ -4,7 +4,9 @@ import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.client.gui.GuiTurnBattle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
@@ -21,6 +23,7 @@ public final class TextBannerRenderer {
     private static int rgb = 0xFFFFFF;
     private static boolean centered;
     private static boolean waitingForBattleEnd;
+    private static SoundEvent activationSound;
 
     public static void show(Component text) {
         message = text.copy();
@@ -29,21 +32,28 @@ public final class TextBannerRenderer {
         rgb = 0xFFFFFF;
         centered = false;
         waitingForBattleEnd = false;
+        activationSound = null;
     }
 
-    public static void showCentered(Component text, int color, int duration) {
+    public static void showCentered(Component text, int color, int duration, SoundEvent sound) {
         message = text.copy();
         activeDuration = Math.max(20, duration);
         ticksLeft = 0;
         rgb = color & 0xFFFFFF;
         centered = true;
         waitingForBattleEnd = true;
+        activationSound = sound;
+    }
+
+    public static boolean isWaitingForCenteredBanner() {
+        return centered && waitingForBattleEnd && !message.getString().isEmpty();
     }
 
     public static void hide() {
         ticksLeft = 0;
         message = Component.empty();
         waitingForBattleEnd = false;
+        activationSound = null;
     }
 
     @SubscribeEvent
@@ -58,6 +68,11 @@ public final class TextBannerRenderer {
             }
             waitingForBattleEnd = false;
             ticksLeft = activeDuration;
+            if (activationSound != null) {
+                minecraft.getSoundManager().play(
+                        SimpleSoundInstance.forUI(activationSound, 1.0F, 1.0F));
+                activationSound = null;
+            }
         } else if (ticksLeft > 0 && !minecraft.isPaused()) {
             ticksLeft--;
         }

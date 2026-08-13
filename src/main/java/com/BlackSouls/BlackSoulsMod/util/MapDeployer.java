@@ -19,12 +19,14 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public final class MapDeployer {
-    public static final String MAP_VERSION = "hakoniwa-v2";
+    public static final String MAP_VERSION = "hakoniwa-v4";
     private static final String MAP_ARCHIVE = "/assets/" + BlackSouls.MODID + "/prebuilt_maps/hakoniwa-v2.zip";
     private static final String LOCK_DATA_RESOURCE = "/assets/" + BlackSouls.MODID + "/prebuilt_maps/blacksouls_door_locks.dat";
     private static final String LOCK_DATA_NAME = "blacksouls_door_locks.dat";
     private static final String ANIMATED_DOOR_DATA_RESOURCE = "/assets/" + BlackSouls.MODID + "/prebuilt_maps/blacksouls_animated_doors.dat";
     private static final String ANIMATED_DOOR_DATA_NAME = "blacksouls_animated_doors.dat";
+    private static final String DOOR_EVENT_DATA_RESOURCE = "/assets/" + BlackSouls.MODID + "/prebuilt_maps/blacksouls_door_events.dat";
+    private static final String DOOR_EVENT_DATA_NAME = "blacksouls_door_events.dat";
     private static final String MARKER_NAME = "blacksouls_" + MAP_VERSION + ".flag";
     private static final Map<String, Long> EXPECTED_FILES = Map.of(
             "region", 64L,
@@ -38,6 +40,7 @@ public final class MapDeployer {
         Path marker = dimensionPath.resolve(MARKER_NAME);
         deploySavedDataIfMissing(dimensionPath, LOCK_DATA_RESOURCE, LOCK_DATA_NAME);
         deploySavedDataIfMissing(dimensionPath, ANIMATED_DOOR_DATA_RESOURCE, ANIMATED_DOOR_DATA_NAME);
+        deploySavedDataIfMissing(dimensionPath, DOOR_EVENT_DATA_RESOURCE, DOOR_EVENT_DATA_NAME);
         if (Files.exists(marker) && isMapPresent(dimensionPath)) {
             return;
         }

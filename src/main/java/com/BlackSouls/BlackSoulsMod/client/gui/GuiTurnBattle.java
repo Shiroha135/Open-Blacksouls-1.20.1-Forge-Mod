@@ -9,6 +9,7 @@ import com.BlackSouls.BlackSoulsMod.client.render.BSAvatarRenderer;
 import com.BlackSouls.BlackSoulsMod.client.render.BattleScreenVFXRenderer;
 import com.BlackSouls.BlackSoulsMod.client.render.BattleTransitionRenderer;
 import com.BlackSouls.BlackSoulsMod.client.render.FadedBannerRenderer;
+import com.BlackSouls.BlackSoulsMod.client.render.TextBannerRenderer;
 import com.BlackSouls.BlackSoulsMod.client.render.TurnBattleVfxResolver;
 import com.BlackSouls.BlackSoulsMod.client.render.VFXAnimation;
 import com.BlackSouls.BlackSoulsMod.client.render.VFXSoundTiming;
@@ -322,6 +323,9 @@ public class GuiTurnBattle extends Screen {
                 && previousBattleProfileId == 579 && battleProfileId == 570;
         boolean granCurtainTransition = phaseChanged
                 && isGranCurtainTransition(this.battleProfileId, battleProfileId);
+        if (phaseChanged && previousBattleProfileId == 185 && battleProfileId == 184) {
+            playUiSound(BlackSouls.MONSTER4_EVENT.get(), 0.5F, 1.0F);
+        }
         Map<Integer, Float> previousHealth = new HashMap<>();
         for (EnemyVisual enemy : this.enemies) {
             previousHealth.put(enemy.entityId, enemy.health);
@@ -434,7 +438,8 @@ public class GuiTurnBattle extends Screen {
                 .anyMatch(enemy -> report.contains("对" + enemy.name.getString() + "造成了"));
         this.playerWasDamaged = !incomingHits.isEmpty()
                 || !playerName.isEmpty() && report.contains(playerName + "受到了");
-        this.enemyActed = awaitingPresentation && !phaseChanged && report.lines()
+        this.enemyActed = awaitingPresentation && !phaseChanged
+                && !report.contains("无法行动") && report.lines()
                 .anyMatch(line -> this.enemies.stream()
                         .anyMatch(enemy -> line.startsWith(enemy.name.getString())));
         this.enemyAttacked = this.enemyActed
@@ -608,7 +613,8 @@ public class GuiTurnBattle extends Screen {
         } else {
             this.view = View.RESULT;
             stopBattleMusic();
-            if (this.outcome == ClientboundTurnBattlePacket.Outcome.VICTORY) {
+            if (this.outcome == ClientboundTurnBattlePacket.Outcome.VICTORY
+                    && !TextBannerRenderer.isWaitingForCenteredBanner()) {
                 playUiSound(BlackSouls.TURN_BATTLE_VICTORY_EVENT.get(), 1.0F);
             }
         }
@@ -929,6 +935,9 @@ public class GuiTurnBattle extends Screen {
             if (alpha <= 0.01F) {
                 continue;
             }
+            if (isSkullHunterCharged(enemy)) {
+                drawSkullHunterChargeAfterimages(graphics, geometry, alpha);
+            }
             boolean bossCollapse = isBossCollapse(enemy) && enemy.health <= 0.0F;
             int collapseOffsetY = bossCollapse
                     ? Math.round(geometry.height * 0.48F * bossCollapseProgress(enemy)) : 0;
@@ -966,6 +975,37 @@ public class GuiTurnBattle extends Screen {
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
             RenderSystem.disableBlend();
         }
+    }
+
+    private boolean isSkullHunterCharged(EnemyVisual enemy) {
+        return enemy.states.contains(32)
+                && (enemy.profileId == 184 || enemy.profileId == 328 || enemy.profileId == 357);
+    }
+
+    private void drawSkullHunterChargeAfterimages(GuiGraphics graphics,
+                                                    EnemyGeometry geometry, float enemyOpacity) {
+        float cycle = Math.floorMod(System.currentTimeMillis(), 1050L) / 1050.0F;
+        int centerX = geometry.x + geometry.width / 2;
+        int bottomY = geometry.y + geometry.height;
+        RenderSystem.enableBlend();
+        RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA,
+                GlStateManager.DestFactor.ONE);
+        for (int layer = 0; layer < 3; layer++) {
+            float progress = (cycle + layer / 3.0F) % 1.0F;
+            float scale = 1.03F + progress * 0.24F;
+            float alpha = enemyOpacity * (1.0F - progress) * 0.28F;
+            int width = Math.max(1, Math.round(geometry.width * scale));
+            int height = Math.max(1, Math.round(geometry.height * scale));
+            int x = centerX - width / 2;
+            int y = bottomY - height - Math.round(progress * geometry.height * 0.04F);
+            RenderSystem.setShaderColor(0.88F, 0.94F, 1.0F, alpha);
+            graphics.blit(geometry.texture, x, y, width, height,
+                    0.0F, 0.0F, geometry.textureWidth, geometry.textureHeight,
+                    geometry.textureWidth, geometry.textureHeight);
+        }
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.disableBlend();
     }
 
     private void drawEnemyHealth(GuiGraphics graphics) {

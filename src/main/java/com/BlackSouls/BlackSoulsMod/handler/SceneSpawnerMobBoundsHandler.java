@@ -3,12 +3,12 @@ package com.BlackSouls.BlackSoulsMod.handler;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager;
 import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBounds;
+import com.BlackSouls.BlackSoulsMod.entity.EntityTurnBattleMonster;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -30,13 +30,20 @@ public final class SceneSpawnerMobBoundsHandler {
                 || !data.contains(SceneSpawnerBounds.RANGE_Z_TAG)) {
             return;
         }
+        if (mob instanceof EntityTurnBattleMonster battleEnemy
+                && battleEnemy.isTurnBattleDefeated()
+                && !TurnBattleManager.isInBattle(battleEnemy)) {
+            battleEnemy.discard();
+            return;
+        }
         if (TurnBattleManager.isInBattle(mob)) {
             return;
         }
         if (!data.contains(SceneSpawnerBounds.ORIGINAL_NO_AI_TAG)) {
             data.putBoolean(SceneSpawnerBounds.ORIGINAL_NO_AI_TAG, mob.isNoAi());
         }
-        boolean originalNoAi = data.getBoolean(SceneSpawnerBounds.ORIGINAL_NO_AI_TAG);
+        boolean originalNoAi = data.getBoolean(SceneSpawnerBounds.ORIGINAL_NO_AI_TAG)
+                && !(mob instanceof EntityTurnBattleMonster);
 
         int originX = data.getInt(SceneSpawnerBounds.ORIGIN_X_TAG);
         int originY = data.getInt(SceneSpawnerBounds.ORIGIN_Y_TAG);
@@ -70,7 +77,7 @@ public final class SceneSpawnerMobBoundsHandler {
             data.remove(SceneSpawnerBounds.IDLE_LOCK_TAG);
             if (!originalNoAi) {
                 mob.setNoAi(false);
-                mob.getNavigation().moveTo(returnX, originY, returnZ, 1.0D);
+                mob.getNavigation().moveTo(returnX, originY, returnZ, 1.25D);
             } else {
                 mob.setPos(returnX, mob.getY(), returnZ);
             }
@@ -88,14 +95,10 @@ public final class SceneSpawnerMobBoundsHandler {
             );
             Player nearest = null;
             double nearestDistance = Double.MAX_VALUE;
-            double followRange = Math.max(1.0D, mob.getAttributeValue(Attributes.FOLLOW_RANGE));
-            double followRangeSqr = followRange * followRange;
             for (Player player : mob.level().getEntitiesOfClass(Player.class, searchArea,
                     player -> player.isAlive() && !player.isSpectator()
                             && !player.getAbilities().instabuild
-                            && mob.canAttack(player)
-                            && mob.distanceToSqr(player) <= followRangeSqr
-                            && mob.hasLineOfSight(player))) {
+                            && mob.canAttack(player))) {
                 double distance = mob.distanceToSqr(player);
                 if (distance < nearestDistance) {
                     nearest = player;
@@ -110,7 +113,7 @@ public final class SceneSpawnerMobBoundsHandler {
                 mob.setTarget(nearest);
                 mob.setAggressive(true);
                 mob.getLookControl().setLookAt(nearest, 30.0F, 30.0F);
-                mob.getNavigation().moveTo(nearest, 1.0D);
+                mob.getNavigation().moveTo(nearest, 1.25D);
                 target = nearest;
             }
         }
@@ -134,10 +137,10 @@ public final class SceneSpawnerMobBoundsHandler {
         if (!originalNoAi && mob.isNoAi()) {
             mob.setNoAi(false);
         }
-        if (target != null && mob.tickCount % 10 == 0 && mob.getNavigation().isDone()) {
+        if (target != null && mob.tickCount % 5 == 0) {
             mob.setAggressive(true);
             mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
-            mob.getNavigation().moveTo(target, 1.0D);
+            mob.getNavigation().moveTo(target, 1.25D);
         }
 
         BlockPos navigationTarget = mob.getNavigation().getTargetPos();

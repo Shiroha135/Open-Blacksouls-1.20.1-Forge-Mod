@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod.handler;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBossData;
 import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBossState;
+import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalDatabaseEnemy;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundBossVictoryPacket;
 import net.minecraft.nbt.CompoundTag;
@@ -35,10 +36,15 @@ public final class SceneSpawnerBossHandler {
         }
         CompoundTag data = entity.getPersistentData();
         String spawnerKey = data.getString(SceneSpawnerBossState.ENTITY_SPAWNER_KEY_TAG);
+        SceneSpawnerBossData bossData = SceneSpawnerBossData.get(level.getServer());
         if (!data.getBoolean(SceneSpawnerBossState.ENTITY_BOSS_TAG)
                 || spawnerKey.isEmpty()
-                || !SceneSpawnerBossData.get(level.getServer()).markDefeated(spawnerKey)) {
+                || !bossData.markDefeated(spawnerKey)) {
             return;
+        }
+        if (entity instanceof EntityOriginalDatabaseEnemy originalEnemy
+                && originalEnemy.getProfileId() == 184) {
+            bossData.addStoryProgress(1);
         }
 
         String sceneId = data.getString(SceneSpawnerBossState.ENTITY_SCENE_ID_TAG);

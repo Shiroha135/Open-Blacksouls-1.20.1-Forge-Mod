@@ -41,7 +41,6 @@ public class BSMobStatManager {
     }
 
     private static final MobStats EMPTY_STATS = new MobStats(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0L);
-    private static final MobStats DEFAULT_HOSTILE_STATS = new MobStats(220.0, 0.0, 110.0, 18.0, 40.0, 16.0, 36.0, 10.0, 70L);
     private static final Map<ResourceLocation, MobStats> MOB_STATS_DB = new HashMap<>();
 
     static {
@@ -117,11 +116,25 @@ public class BSMobStatManager {
             return stats;
         }
 
-        if (entity instanceof Enemy) {
-            return DEFAULT_HOSTILE_STATS;
-        }
-
         return EMPTY_STATS;
+    }
+
+    public static boolean isManagedEntity(LivingEntity entity) {
+        if (entity == null) {
+            return false;
+        }
+        ResourceLocation key = ForgeRegistries.ENTITY_TYPES.getKey(entity.getType());
+        return key != null && MOB_STATS_DB.containsKey(key);
+    }
+
+    public static boolean isExternalEnemy(LivingEntity entity) {
+        if (!(entity instanceof Enemy)) {
+            return false;
+        }
+        ResourceLocation key = ForgeRegistries.ENTITY_TYPES.getKey(entity.getType());
+        return key != null
+                && !BlackSouls.MODID.equals(key.getNamespace())
+                && !MOB_STATS_DB.containsKey(key);
     }
 
     public static long getSoulReward(LivingEntity entity) {

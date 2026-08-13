@@ -16786,6 +16786,9 @@
     "shadowRadius": 1.125,
     "primaryColor": 6969433,
     "secondaryColor": 10657948,
+    "elementRates": {
+      "fire": 1.5
+    },
     "attackText": "瞄准对手的头部跳了过去",
     "attackAnimationId": 125,
     "attackRepeats": 1,
@@ -16918,6 +16921,9 @@
     "shadowRadius": 0.32,
     "primaryColor": 11906218,
     "secondaryColor": 13354179,
+    "elementRates": {
+      "fire": 1.5
+    },
     "attackText": "的攻击！",
     "attackAnimationId": -1,
     "attackRepeats": 1,

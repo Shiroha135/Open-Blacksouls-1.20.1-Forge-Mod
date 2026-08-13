@@ -6,6 +6,7 @@ import com.BlackSouls.BlackSoulsMod.handler.BSEntityRegistry;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketOpenDialogue;
 import com.BlackSouls.BlackSoulsMod.util.PlayerStatService;
+import com.BlackSouls.BlackSoulsMod.util.StoryProgressService;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -85,7 +86,10 @@ public class EntityRabbitHoleNpc extends Rabbit implements DialogueResettable {
     public void finishKillBattle(ServerPlayer player, boolean victory) {
         this.battleEnemy = null;
         if (victory) {
-            PlayerStatService.addSen(player, -5);
+            int senChange = this.role == Role.EV009
+                    && this.level() instanceof ServerLevel level
+                    && StoryProgressService.get(level) >= 1 ? -1 : -5;
+            PlayerStatService.addSen(player, senChange);
             this.discard();
             return;
         }
@@ -127,6 +131,8 @@ public class EntityRabbitHoleNpc extends Rabbit implements DialogueResettable {
         if (!this.level().isClientSide && player instanceof ServerPlayer serverPlayer) {
             int sen = player.getCapability(BSPlayerStats.CAPABILITY).map(stats -> stats.sen).orElse(100);
             boolean lowSen = sen <= 30;
+            boolean postBoss = this.level() instanceof ServerLevel level
+                    && StoryProgressService.get(level) >= 1;
             NetworkHandler.sendToPlayer(
                     new PacketOpenDialogue(
                             lowSen
@@ -136,7 +142,8 @@ public class EntityRabbitHoleNpc extends Rabbit implements DialogueResettable {
                             RabbitHoleDialogue.keys(
                                     this.role,
                                     lowSen,
-                                    this.foodEaten || serverPlayer.getPersistentData().getBoolean(RABBIT_FOOD_FLAG)
+                                    this.foodEaten || serverPlayer.getPersistentData().getBoolean(RABBIT_FOOD_FLAG),
+                                    postBoss
                             ),
                             true,
                             this.getId(),
@@ -198,9 +205,11 @@ public class EntityRabbitHoleNpc extends Rabbit implements DialogueResettable {
     }
 
     public enum Role {
+        EV009,
         EV052,
         EV011,
-        EV012;
+        EV012,
+        EV030;
 
         public String id() {
             return this.name();

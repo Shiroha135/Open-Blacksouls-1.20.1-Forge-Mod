@@ -5,6 +5,7 @@ import com.BlackSouls.BlackSoulsMod.api.event.BSStatsRecalcEvent;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager;
+import com.BlackSouls.BlackSoulsMod.command.RecordingAssistCommand;
 import com.google.common.collect.HashMultimap;
 import com.BlackSouls.BlackSoulsMod.entity.EntityThrownBlade;
 import com.BlackSouls.BlackSoulsMod.entity.EntityMeatWall;
@@ -12,6 +13,7 @@ import com.BlackSouls.BlackSoulsMod.entity.InstantDeathImmuneEntity;
 import com.BlackSouls.BlackSoulsMod.item.rings.ItemOriginalRing;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.*;
+import com.BlackSouls.BlackSoulsMod.util.PlayerStatService;
 import com.BlackSouls.BlackSoulsMod.util.SkillUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
@@ -547,11 +549,11 @@ public class StatEventHandler {
         applyTieredEffect(entity, BlackSouls.BUFF_SPEED_UP, BlackSouls.BUFF_SPEED_UP_2, BlackSouls.BUFF_SPEED_DOWN, BlackSouls.BUFF_SPEED_DOWN_2, false, duration);
     }
 
-    private static double getAttackShiftMultiplier(LivingEntity entity) {
+    public static double getAttackShiftMultiplier(LivingEntity entity) {
         return resolveTieredMultiplier(entity, BlackSouls.BUFF_ATK_UP, BlackSouls.BUFF_ATK_UP_2, BlackSouls.BUFF_ATK_DOWN, BlackSouls.BUFF_ATK_DOWN_2);
     }
 
-    private static double getDefenseShiftMultiplier(LivingEntity entity) {
+    public static double getDefenseShiftMultiplier(LivingEntity entity) {
         return resolveTieredMultiplier(entity, BlackSouls.BUFF_DEF_UP, BlackSouls.BUFF_DEF_UP_2, BlackSouls.BUFF_DEF_DOWN, BlackSouls.BUFF_DEF_DOWN_2);
     }
 
@@ -1087,16 +1089,8 @@ public class StatEventHandler {
                         )));
                     }
 
-                    serverPlayer.setHealth(serverPlayer.getMaxHealth());
-                    serverPlayer.getFoodData().setFoodLevel(20);
-                    serverPlayer.getFoodData().setSaturation(5.0f);
+                    PlayerStatService.recoverAll(serverPlayer);
                     serverPlayer.setRespawnPosition(level.dimension(), pos.above(), player.getYRot(), true, false);
-                    com.BlackSouls.BlackSoulsMod.util.SkillUtils.setMana(serverPlayer, com.BlackSouls.BlackSoulsMod.util.SkillUtils.getMaxMana(serverPlayer));
-                    serverPlayer.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
-                        double maxActionPoints = SkillUtils.getMaxActionPoints(serverPlayer, stats);
-                        stats.restoreActionPoints(maxActionPoints, maxActionPoints);
-                        syncToClient(serverPlayer, stats);
-                    });
                 }
             }
             else {
@@ -1380,7 +1374,7 @@ public class StatEventHandler {
         return victim.getArmorValue() + getRpgPhysicalDefense(victim);
     }
 
-    private static List<String> buildPlayerAttackAttributes(Player attacker, BSPlayerStats stats) {
+    public static List<String> buildPlayerAttackAttributes(Player attacker, BSPlayerStats stats) {
         List<String> attackAttrs = new java.util.ArrayList<>();
         attackAttrs.add(com.BlackSouls.BlackSoulsMod.util.BSAttributeManager.PHYSICAL);
         attackAttrs.addAll(stats.weaponEnchantments);
@@ -1401,7 +1395,7 @@ public class StatEventHandler {
         return attackAttrs;
     }
 
-    private static void applyPlayerOnHitStatusEffects(Player attacker, LivingEntity victim) {
+    public static void applyPlayerOnHitStatusEffects(Player attacker, LivingEntity victim) {
         BSPlayerStats stats = attacker.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
         if (stats == null) {
             return;
@@ -2709,7 +2703,11 @@ public class StatEventHandler {
                 stats.attack *= 1.05;
             }
             if (BlackSouls.BUFF_DAGGER_EVASION.isPresent() && player.hasEffect(BlackSouls.BUFF_DAGGER_EVASION.get())) {
-                stats.evasion += 70.0D;
+                if (RecordingAssistCommand.isDodgeGuaranteed(player)) {
+                    stats.evasion = 100.0D;
+                } else {
+                    stats.evasion += 70.0D;
+                }
             }
             if (BlackSouls.BUFF_FEAR.isPresent() && player.hasEffect(BlackSouls.BUFF_FEAR.get())) {
                 stats.evasion -= 100.0;
@@ -2918,9 +2916,6 @@ public class StatEventHandler {
 
         float actualMaxHp = player.getMaxHealth();
         if (player.getHealth() > actualMaxHp) {
-            player.setHealth(actualMaxHp);
-        }
-        if (!player.level().isClientSide() && player.tickCount < 100 && player.getHealth() < actualMaxHp) {
             player.setHealth(actualMaxHp);
         }
     }
@@ -3292,6 +3287,7 @@ public class StatEventHandler {
     public static void onPlayerRespawn(net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent event) {
         if (event.getEntity() instanceof net.minecraft.server.level.ServerPlayer player) {
             safeSyncPlayerAndWorld(player);
+            player.setHealth(player.getMaxHealth());
             if (com.BlackSouls.BlackSoulsMod.BlackSouls.BUFF_HOLLOWED.isPresent()) {
                 player.addEffect(new net.minecraft.world.effect.MobEffectInstance(
                         com.BlackSouls.BlackSoulsMod.BlackSouls.BUFF_HOLLOWED.get(),
@@ -3421,13 +3417,6 @@ public class StatEventHandler {
         }
         if (syncNeeded) {
             syncToClient(serverPlayer, stats);
-        }
-        if (serverPlayer.tickCount % 200 == 0 && stats.hpRegenRate > 0.0 && serverPlayer.getHealth() < serverPlayer.getMaxHealth()) {
-            serverPlayer.heal((float) (serverPlayer.getMaxHealth() * stats.hpRegenRate));
-        }
-        if (serverPlayer.tickCount % 200 == 0 && stats.hpRegenRate < 0.0 && serverPlayer.getHealth() > 1.0F) {
-            float regenLoss = (float) (serverPlayer.getMaxHealth() * Math.abs(stats.hpRegenRate));
-            serverPlayer.setHealth(Math.max(1.0F, serverPlayer.getHealth() - regenLoss));
         }
         if (stats.lostSouls > 0 && player.isAlive()) {
             tryRecoverLostSouls(serverPlayer, stats);

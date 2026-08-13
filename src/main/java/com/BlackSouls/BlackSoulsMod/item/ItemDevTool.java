@@ -30,10 +30,11 @@ public class ItemDevTool extends Item {
 
     @Override
     public boolean doesSneakBypassUse(ItemStack stack, LevelReader level, BlockPos pos, Player player) {
-        if (level.getBlockState(pos).is(BlockTags.CAMPFIRES)) {
+        net.minecraft.world.level.block.state.BlockState state = level.getBlockState(pos);
+        if (state.is(BlockTags.CAMPFIRES) || isDoor(state)) {
             return true;
         }
-        ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(level.getBlockState(pos).getBlock());
+        ResourceLocation blockId = ForgeRegistries.BLOCKS.getKey(state.getBlock());
         return blockId != null
                 && blockId.getNamespace().equals("blacksouls2")
                 && (blockId.getPath().equals("acquisition_light")
@@ -118,7 +119,9 @@ public class ItemDevTool extends Item {
             net.minecraft.resources.ResourceLocation blockId = net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(
                     minecraft.level.getBlockState(hit.getBlockPos()).getBlock()
             );
-            return minecraft.level.getBlockState(hit.getBlockPos()).is(net.minecraft.tags.BlockTags.CAMPFIRES)
+            net.minecraft.world.level.block.state.BlockState state = minecraft.level.getBlockState(hit.getBlockPos());
+            return state.is(net.minecraft.tags.BlockTags.CAMPFIRES)
+                    || isDoor(state)
                     || blockId != null
                     && blockId.getNamespace().equals("blacksouls2")
                     && (blockId.getPath().equals("acquisition_light")
@@ -140,5 +143,12 @@ public class ItemDevTool extends Item {
                     )
             );
         }
+    }
+
+    private static boolean isDoor(net.minecraft.world.level.block.state.BlockState state) {
+        return state.hasProperty(net.minecraft.world.level.block.state.properties.BlockStateProperties.OPEN)
+                && (state.getBlock() instanceof net.minecraft.world.level.block.DoorBlock
+                || state.getBlock() instanceof net.minecraft.world.level.block.TrapDoorBlock
+                || state.getBlock() instanceof net.minecraft.world.level.block.FenceGateBlock);
     }
 }

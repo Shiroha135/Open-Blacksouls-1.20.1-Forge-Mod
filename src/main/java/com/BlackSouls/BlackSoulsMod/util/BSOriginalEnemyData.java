@@ -92,6 +92,13 @@ public final class BSOriginalEnemyData {
                         initialStates.add(state.getAsInt());
                     }
                 }
+                Map<String, Double> elementRates = new LinkedHashMap<>();
+                if (json.has("elementRates")) {
+                    for (Map.Entry<String, JsonElement> rate
+                            : json.getAsJsonObject("elementRates").entrySet()) {
+                        elementRates.put(rate.getKey(), rate.getValue().getAsDouble());
+                    }
+                }
                 Entry entry = new Entry(
                         json.get("id").getAsInt(),
                         json.get("name").getAsString(),
@@ -120,7 +127,8 @@ public final class BSOriginalEnemyData {
                         List.copyOf(initialStates),
                         json.get("spawnable").getAsBoolean(),
                         json.has("actionCount") ? Math.max(1, json.get("actionCount").getAsInt()) : 1,
-                        json.has("collapseType") ? Math.max(0, json.get("collapseType").getAsInt()) : 0
+                        json.has("collapseType") ? Math.max(0, json.get("collapseType").getAsInt()) : 0,
+                        Map.copyOf(elementRates)
                 );
                 entries.put(entry.id(), entry);
             }
@@ -159,7 +167,7 @@ public final class BSOriginalEnemyData {
                         float worldRenderHeight, float shadowRadius, int primaryColor, int secondaryColor,
                          String attackText, int attackAnimationId, int attackRepeats, List<Action> actions,
                          List<Drop> drops, List<Integer> initialStates, boolean spawnable,
-                         int actionCount, int collapseType) {
+                         int actionCount, int collapseType, Map<String, Double> elementRates) {
         public float aspectRatio() {
             return (float) textureWidth / Math.max(1, textureHeight);
         }

@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.mixin;
 
 import com.BlackSouls.BlackSoulsMod.util.VanillaHealthScaling;
+import com.BlackSouls.BlackSoulsMod.util.LibraryDestination;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,6 +15,8 @@ public abstract class FoodDataMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;heal(F)V")
     )
     private void blacksouls$scaleNaturalRegeneration(Player player, float amount) {
-        player.heal(VanillaHealthScaling.scaleVanillaHealing(player, amount));
+        if (!player.level().dimension().equals(LibraryDestination.DIMENSION)) {
+            player.heal(VanillaHealthScaling.scaleVanillaHealing(player, amount));
+        }
     }
 }

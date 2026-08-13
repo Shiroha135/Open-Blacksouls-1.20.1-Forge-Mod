@@ -1,5 +1,6 @@
 package com.BlackSouls.BlackSoulsMod.network.packets;
 
+import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.client.render.TextBannerRenderer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -19,6 +20,7 @@ public final class ClientboundBossVictoryPacket {
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
         PacketHandlers.handleClient(supplier, () -> TextBannerRenderer.showCentered(
-                Component.literal("VICTORY  ACHIEVED"), 0xFFFFA0, 80));
+                Component.literal("VICTORY  ACHIEVED"), 0xFFFFA0, 80,
+                BlackSouls.TURN_BATTLE_VICTORY_EVENT.get()));
     }
 }
