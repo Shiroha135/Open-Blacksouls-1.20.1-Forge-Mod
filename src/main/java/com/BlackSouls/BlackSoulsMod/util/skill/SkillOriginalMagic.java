@@ -184,6 +184,15 @@ public class SkillOriginalMagic extends AbstractSkill {
 
     @Override
     public void execute(ServerPlayer player, BSPlayerStats stats) {
+        executeWithTarget(player, stats, null);
+    }
+
+    @Override
+    public void executeInTurnBattle(ServerPlayer player, BSPlayerStats stats, LivingEntity target) {
+        executeWithTarget(player, stats, target);
+    }
+
+    private void executeWithTarget(ServerPlayer player, BSPlayerStats stats, LivingEntity turnTarget) {
         player.sendSystemMessage(Component.translatable(
                 "message.blacksouls.skill.original_magic.use",
                 player.getName().getString(),
@@ -195,13 +204,19 @@ public class SkillOriginalMagic extends AbstractSkill {
             case POISON -> castStatusOnEnemies(player, BlackSouls.BUFF_POISON.get(), 1200, 0.50D);
             case POISON_II -> castStatusOnEnemies(player, BlackSouls.BUFF_SEVERE_POISON.get(), 1200, 0.50D);
             case HYPNOSIS -> castStatusOnEnemies(player, BlackSouls.BUFF_SLEEP.get(), 300, 0.50D);
-            case CURE -> castCure(player, false);
+            case CURE -> castCure(player, false, turnTarget);
             case MAGIC_BLESSING -> castMagicBlessing(player);
-            case FULL_BLESSING -> castFullBlessing(player);
-            case RESURRECTION -> castResurrection(player);
+            case FULL_BLESSING -> {
+                if (turnTarget == null) castFullBlessing(player);
+                else castFullBlessing(player, turnTarget);
+            }
+            case RESURRECTION -> castResurrection(player, turnTarget);
             case MANA_ABSORPTION -> castManaAbsorption(player, stats);
-            case ERASE -> castCure(player, true);
-            case KINGS_COMMAND -> castKingsCommand(player);
+            case ERASE -> castCure(player, turnTarget == null, turnTarget);
+            case KINGS_COMMAND -> {
+                if (turnTarget == null) castKingsCommand(player);
+                else castKingsCommand(player, turnTarget);
+            }
             case INNER_POTENTIAL -> castSimpleBuff(player, BlackSouls.BUFF_INNER_POTENTIAL.get(), 600);
             case VERDANT_POWER -> castVerdantPower(player);
             case ROCK_BODY -> castRockBody(player);
@@ -211,9 +226,15 @@ public class SkillOriginalMagic extends AbstractSkill {
             case SOUL_SHIELD -> castSoulShield(player);
             case SUMMON_MEAT_WALL -> castMeatWall(player);
             case FULL_CURSE -> castFullCurse(player);
-            case ROYAL_TEA -> castRoyalTea(player);
-            case GODSPEED_DANCE -> castAlliedBuff(player, BlackSouls.BUFF_DAGGER_EVASION.get(), 600);
-            case PALADIN_BANNER -> castPaladinBanner(player);
+            case ROYAL_TEA -> castRoyalTea(player, turnTarget);
+            case GODSPEED_DANCE -> {
+                if (turnTarget == null) castAlliedBuff(player, BlackSouls.BUFF_DAGGER_EVASION.get(), 600);
+                else castAlliedBuff(player, turnTarget, BlackSouls.BUFF_DAGGER_EVASION.get(), 600);
+            }
+            case PALADIN_BANNER -> {
+                if (turnTarget == null) castPaladinBanner(player);
+                else castPaladinBanner(player, turnTarget);
+            }
             case AWAKENING -> castSimpleBuff(player, BlackSouls.BUFF_AWAKENING.get(), 600);
             default -> castAttack(player, stats);
         }
@@ -433,8 +454,9 @@ public class SkillOriginalMagic extends AbstractSkill {
         playCastSound(player);
     }
 
-    private void castCure(ServerPlayer player, boolean all) {
-        List<LivingEntity> targets = all ? getAllies(player, 12.0D) : List.of(selectAlly(player));
+    private void castCure(ServerPlayer player, boolean all, LivingEntity turnTarget) {
+        List<LivingEntity> targets = all ? getAllies(player, 12.0D)
+                : List.of(turnTarget == null ? selectAlly(player) : turnTarget);
         for (LivingEntity target : targets) {
             clearHarmfulEffects(target);
             playAnimation(target);
@@ -457,8 +479,14 @@ public class SkillOriginalMagic extends AbstractSkill {
         playCastSound(player);
     }
 
-    private void castResurrection(ServerPlayer player) {
-        LivingEntity ally = selectAlly(player);
+    private void castFullBlessing(ServerPlayer player, LivingEntity ally) {
+        applyAllStatsUp(ally, 600);
+        playAnimation(ally);
+        playCastSound(player);
+    }
+
+    private void castResurrection(ServerPlayer player, LivingEntity turnTarget) {
+        LivingEntity ally = turnTarget == null ? selectAlly(player) : turnTarget;
         ally.heal(ally.getMaxHealth() * 0.50F);
         ally.addEffect(new MobEffectInstance(BlackSouls.BUFF_REQUIEM.get(), 200, 0));
         playAnimation(ally);
@@ -490,6 +518,17 @@ public class SkillOriginalMagic extends AbstractSkill {
             ally.addEffect(new MobEffectInstance(BlackSouls.BUFF_AIM.get(), 600, 0));
             playAnimation(ally);
         }
+        playCastSound(player);
+    }
+
+    private void castKingsCommand(ServerPlayer player, LivingEntity ally) {
+        StatEventHandler.applyAttackUp(ally, 600);
+        StatEventHandler.applyAttackUp(ally, 600);
+        StatEventHandler.applyDefenseUp(ally, 600);
+        StatEventHandler.applyDefenseUp(ally, 600);
+        ally.addEffect(new MobEffectInstance(BlackSouls.BUFF_STRUGGLE.get(), 600, 0));
+        ally.addEffect(new MobEffectInstance(BlackSouls.BUFF_AIM.get(), 600, 0));
+        playAnimation(ally);
         playCastSound(player);
     }
 
@@ -531,6 +570,13 @@ public class SkillOriginalMagic extends AbstractSkill {
         playCastSound(player);
     }
 
+    private void castAlliedBuff(ServerPlayer player, LivingEntity ally,
+                                net.minecraft.world.effect.MobEffect effect, int duration) {
+        ally.addEffect(new MobEffectInstance(effect, duration, 0));
+        playAnimation(ally);
+        playCastSound(player);
+    }
+
     private void castPhalanx(ServerPlayer player) {
         StatEventHandler.applyAttackUp(player, 600);
         StatEventHandler.applyAttackUp(player, 600);
@@ -567,8 +613,8 @@ public class SkillOriginalMagic extends AbstractSkill {
         playCastSound(player);
     }
 
-    private void castRoyalTea(ServerPlayer player) {
-        LivingEntity ally = selectAlly(player);
+    private void castRoyalTea(ServerPlayer player, LivingEntity turnTarget) {
+        LivingEntity ally = turnTarget == null ? selectAlly(player) : turnTarget;
         ally.addEffect(new MobEffectInstance(BlackSouls.BUFF_HAKI.get(), 500, 0));
         ally.addEffect(new MobEffectInstance(BlackSouls.BUFF_FIRE_POWER.get(), 500, 0));
         ally.addEffect(new MobEffectInstance(BlackSouls.BUFF_ICE_POWER.get(), 500, 0));
@@ -584,6 +630,13 @@ public class SkillOriginalMagic extends AbstractSkill {
             ally.addEffect(new MobEffectInstance(BlackSouls.BUFF_NATURAL_RECOVERY.get(), 600, 0));
             playAnimation(ally);
         }
+        playCastSound(player);
+    }
+
+    private void castPaladinBanner(ServerPlayer player, LivingEntity ally) {
+        ally.addEffect(new MobEffectInstance(BlackSouls.BUFF_ECLIPSE.get(), 600, 0));
+        ally.addEffect(new MobEffectInstance(BlackSouls.BUFF_NATURAL_RECOVERY.get(), 600, 0));
+        playAnimation(ally);
         playCastSound(player);
     }
 

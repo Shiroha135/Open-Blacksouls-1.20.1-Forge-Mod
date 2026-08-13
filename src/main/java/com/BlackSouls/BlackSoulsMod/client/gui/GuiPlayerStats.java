@@ -119,7 +119,8 @@ public class GuiPlayerStats extends Screen {
         if (party.isEmpty()) party = java.util.List.of(new ClientboundPartyStatePacket.Member(
                 player.getUUID(), ClientStoryName.get(player), ClientSkillInfo.getAvatar(),
                 player.getHealth(), player.getMaxHealth(), stats.mp, stats.maxMp,
-                stats.getCurrentActionPoints(), stats.getMaxActionPoints(), stats.level, true, false));
+                stats.getCurrentActionPoints(), stats.getMaxActionPoints(), stats.level, true, false,
+                java.util.List.of()));
         for (int i = 0; i < Math.min(4, party.size()); i++) {
             ClientboundPartyStatePacket.Member member = party.get(i);
             int rowY = guiTop + 12 + i * 70;

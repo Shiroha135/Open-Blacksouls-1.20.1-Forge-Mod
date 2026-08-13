@@ -33,11 +33,25 @@ public final class ClientboundPartyStatePacket {
 
     public record Member(UUID id, String name, String avatar, float health, float maxHealth,
                          double mp, double maxMp, double ap, double maxAp, int level,
-                         boolean leader, boolean downed) {
+                         boolean leader, boolean downed, List<Effect> effects) {
         private static Member read(FriendlyByteBuf buf) {
-            return new Member(buf.readUUID(), buf.readUtf(64), buf.readUtf(64), buf.readFloat(), buf.readFloat(),
-                    buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
-                    buf.readVarInt(), buf.readBoolean(), buf.readBoolean());
+            UUID id = buf.readUUID();
+            String name = buf.readUtf(64);
+            String avatar = buf.readUtf(64);
+            float health = buf.readFloat();
+            float maxHealth = buf.readFloat();
+            double mp = buf.readDouble();
+            double maxMp = buf.readDouble();
+            double ap = buf.readDouble();
+            double maxAp = buf.readDouble();
+            int level = buf.readVarInt();
+            boolean leader = buf.readBoolean();
+            boolean downed = buf.readBoolean();
+            int effectCount = Math.min(32, buf.readVarInt());
+            List<Effect> effects = new ArrayList<>(effectCount);
+            for (int index = 0; index < effectCount; index++) effects.add(Effect.read(buf));
+            return new Member(id, name, avatar, health, maxHealth,
+                    mp, maxMp, ap, maxAp, level, leader, downed, effects);
         }
         private void write(FriendlyByteBuf buf) {
             buf.writeUUID(id);
@@ -52,6 +66,20 @@ public final class ClientboundPartyStatePacket {
             buf.writeVarInt(level);
             buf.writeBoolean(leader);
             buf.writeBoolean(downed);
+            buf.writeVarInt(effects.size());
+            effects.forEach(effect -> effect.write(buf));
+        }
+    }
+
+    public record Effect(String id, int duration, int amplifier) {
+        private static Effect read(FriendlyByteBuf buf) {
+            return new Effect(buf.readUtf(128), buf.readVarInt(), buf.readVarInt());
+        }
+
+        private void write(FriendlyByteBuf buf) {
+            buf.writeUtf(id, 128);
+            buf.writeVarInt(duration);
+            buf.writeVarInt(amplifier);
         }
     }
 }

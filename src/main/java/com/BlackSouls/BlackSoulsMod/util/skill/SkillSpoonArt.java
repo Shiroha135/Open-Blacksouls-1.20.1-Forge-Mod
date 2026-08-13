@@ -8,6 +8,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
 
 public class SkillSpoonArt extends AbstractOriginalWeaponSkill {
     public SkillSpoonArt() {
@@ -30,5 +31,21 @@ public class SkillSpoonArt extends AbstractOriginalWeaponSkill {
         player.heal(player.getMaxHealth() * 0.5F);
         stats.mp = Math.min(stats.maxMp, stats.mp + stats.maxMp * 0.5D);
         StatEventHandler.syncToClient(player);
+    }
+
+    @Override
+    public void executeInTurnBattle(ServerPlayer player, BSPlayerStats stats, LivingEntity target) {
+        if (!(target instanceof ServerPlayer ally)) {
+            execute(player, stats);
+            return;
+        }
+        player.swing(InteractionHand.MAIN_HAND, true);
+        playAnimation(ally, 37);
+        playSound(ally, BlackSouls.ICE1_EVENT.get(), 0.5F);
+        ally.heal(ally.getMaxHealth() * 0.5F);
+        ally.getCapability(BSPlayerStats.CAPABILITY).ifPresent(allyStats -> {
+            allyStats.mp = Math.min(allyStats.maxMp, allyStats.mp + allyStats.maxMp * 0.5D);
+            StatEventHandler.syncToClient(ally);
+        });
     }
 }

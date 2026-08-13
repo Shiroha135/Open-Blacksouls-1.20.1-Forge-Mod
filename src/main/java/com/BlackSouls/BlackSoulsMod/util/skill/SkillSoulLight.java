@@ -68,6 +68,15 @@ public class SkillSoulLight extends AbstractSkill {
         }));
     }
 
+    @Override
+    public void executeInTurnBattle(ServerPlayer player, BSPlayerStats stats, LivingEntity target) {
+        LivingEntity ally = target == null ? player : target;
+        player.swing(InteractionHand.MAIN_HAND, true);
+        playAnim(ally, 37);
+        playSkillSound(player, BlackSouls.ICE1_EVENT.get(), 1.0f, 1.0f);
+        applyHealing(player, ally, stats);
+    }
+
     private void playSkillSound(LivingEntity source, SoundEvent sound, float volume, float pitch) {
         source.level().playSound(null, source.getX(), source.getY() + source.getBbHeight() / 2.0, source.getZ(), sound, SoundSource.PLAYERS, volume, pitch);
     }

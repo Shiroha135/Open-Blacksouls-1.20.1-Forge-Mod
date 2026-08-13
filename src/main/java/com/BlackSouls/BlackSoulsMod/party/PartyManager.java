@@ -10,6 +10,7 @@ import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,6 +73,18 @@ public final class PartyManager {
         restore(player.server);
         Party party = PARTIES.get(player.getUUID());
         return party == null || party.leader().equals(player.getUUID());
+    }
+
+    public static UUID onlineMemberIdAt(ServerPlayer player, int index) {
+        restore(player.server);
+        Party party = PARTIES.get(player.getUUID());
+        if (party == null) return index == 0 ? player.getUUID() : null;
+        int onlineIndex = 0;
+        for (UUID id : party.members()) {
+            if (player.server.getPlayerList().getPlayer(id) == null) continue;
+            if (onlineIndex++ == index) return id;
+        }
+        return null;
     }
 
     public static void updateAvatar(ServerPlayer player, String avatar) {
@@ -301,9 +314,18 @@ public final class PartyManager {
         double maxAp = stats == null ? 1.0D : stats.getMaxActionPoints();
         int level = stats == null ? 1 : stats.level;
         boolean downed = TurnBattleManager.isDowned(player);
+        List<ClientboundPartyStatePacket.Effect> effects = player.getActiveEffects().stream()
+                .map(instance -> {
+                    var id = ForgeRegistries.MOB_EFFECTS.getKey(instance.getEffect());
+                    return id == null || !"blacksouls".equals(id.getNamespace()) ? null
+                            : new ClientboundPartyStatePacket.Effect(id.toString(),
+                            instance.getDuration(), instance.getAmplifier());
+                })
+                .filter(java.util.Objects::nonNull)
+                .toList();
         return new ClientboundPartyStatePacket.Member(player.getUUID(), name,
                 AVATARS.getOrDefault(player.getUUID(), "knight_face"), downed ? 0.0F : player.getHealth(), player.getMaxHealth(),
-                mp, maxMp, ap, maxAp, level, leader, downed);
+                mp, maxMp, ap, maxAp, level, leader, downed, effects);
     }
 
     private static String sanitizeAvatar(String avatar) {

@@ -99,6 +99,7 @@ public class GuiTurnBattle extends Screen {
     private ServerboundTurnBattleActionPacket.Action pendingTargetAction;
     private int pendingTargetValue;
     private View targetReturnView = View.COMMAND;
+    private boolean pendingAllyDownedTarget;
     private ResourceLocation battleBgm;
     private float battleBgmVolume = 1.0F;
     private float battleBgmPitch = 1.0F;
@@ -1143,7 +1144,7 @@ public class GuiTurnBattle extends Screen {
         List<ClientboundPartyStatePacket.Member> party = ClientPartyState.getMembers();
         if (party.size() > 1) {
             for (int i = 0; i < Math.min(4, party.size()); i++) {
-                drawPartyBattleStatus(graphics, party.get(i), y + 9 + i * 30);
+                drawPartyBattleStatus(graphics, party.get(i), i, y + 9 + i * 30);
             }
             return;
         }
@@ -1192,7 +1193,8 @@ public class GuiTurnBattle extends Screen {
                 this.displayAp / Math.max(0.0001D, this.displayMaxAp), 0xFF36C84A);
     }
 
-    private void drawPartyBattleStatus(GuiGraphics graphics, ClientboundPartyStatePacket.Member member, int rowY) {
+    private void drawPartyBattleStatus(GuiGraphics graphics, ClientboundPartyStatePacket.Member member,
+                                       int memberIndex, int rowY) {
         boolean local = this.minecraft != null && this.minecraft.player != null
                 && member.id().equals(this.minecraft.player.getUUID());
         int portraitX = 10;
@@ -1204,6 +1206,9 @@ public class GuiTurnBattle extends Screen {
         RenderSystem.disableBlend();
         graphics.disableScissor();
         int nameX = 43;
+        if (this.view == View.ALLY_TARGETS && memberIndex == this.targetSelection) {
+            graphics.fill(40, rowY + 1, this.width - 8, rowY + 25, 0x88705563);
+        }
         graphics.drawString(this.font, member.name(), nameX, rowY + 6,
                 member.downed() ? 0xFFFF4444 : 0xFFFFFFFF, false);
         int hpX = Math.max(130, Math.round(this.width * 0.36F));
@@ -1219,6 +1224,11 @@ public class GuiTurnBattle extends Screen {
         double maxMp = local ? this.displayMaxMp : member.maxMp();
         double ap = local ? this.displayAp : member.ap();
         double maxAp = local ? this.displayMaxAp : member.maxAp();
+        int effectX = nameX + this.font.width(member.name()) + 5;
+        if (effectX < hpX - 5) {
+            drawPartyEffectIcons(graphics, member.effects(), effectX, rowY + 1,
+                    hpX - effectX - 5);
+        }
         drawThinGauge(graphics, hpX, hpEnd, rowY + 6, "HP",
                 Math.max(0, Math.round(health)) + " / " + Math.max(1, Math.round(maxHealth)),
                 health / Math.max(1.0F, maxHealth), 0xFFE02A2A);
@@ -1227,6 +1237,36 @@ public class GuiTurnBattle extends Screen {
         drawThinGauge(graphics, apX, apEnd, rowY + 6, "AP",
                 (int)Math.round(100.0D * ap / Math.max(0.0001D, maxAp)) + "%",
                 ap / Math.max(0.0001D, maxAp), 0xFF36C84A);
+    }
+
+    private void drawPartyEffectIcons(GuiGraphics graphics,
+                                      List<ClientboundPartyStatePacket.Effect> effects,
+                                      int x, int y, int availableWidth) {
+        if (effects.isEmpty() || availableWidth < 12 || this.minecraft == null) return;
+        int iconSize = 16;
+        int gap = 1;
+        int count = Math.min(effects.size(), Math.max(1, (availableWidth + gap) / (iconSize + gap)));
+        for (int index = 0; index < count; index++) {
+            ClientboundPartyStatePacket.Effect synced = effects.get(index);
+            net.minecraft.world.effect.MobEffect effect = ForgeRegistries.MOB_EFFECTS.getValue(
+                    new ResourceLocation(synced.id()));
+            if (effect == null) continue;
+            int iconX = x + index * (iconSize + gap);
+            TextureAtlasSprite sprite = this.minecraft.getMobEffectTextures().get(effect);
+            graphics.fill(iconX - 1, y - 1, iconX + iconSize + 1, y + iconSize + 1, 0xA0000000);
+            graphics.blit(iconX, y, 0, iconSize, iconSize, sprite);
+            int turns = (synced.duration() + 199) / 200;
+            if (turns > 0 && turns <= 99) {
+                String text = String.valueOf(turns);
+                graphics.drawString(this.font, text, iconX + iconSize - this.font.width(text),
+                        y - 2, 0xFFFFFF55, false);
+            }
+            if (synced.amplifier() > 0) {
+                String text = String.valueOf(synced.amplifier() + 1);
+                graphics.drawString(this.font, text, iconX + iconSize - this.font.width(text),
+                        y + iconSize - this.font.lineHeight, 0xFFFFFF55, false);
+            }
+        }
     }
 
     private void drawBattlePortrait(GuiGraphics graphics, int x, int top,
@@ -2385,6 +2425,15 @@ public class GuiTurnBattle extends Screen {
         if (!isMenuView() || !this.canAct) {
             return true;
         }
+        if (this.view == View.ALLY_TARGETS) {
+            List<Integer> targets = allyTargetIndices();
+            int row = (int) ((mouseY - (this.height - statusHeight() + 9)) / 30);
+            if (mouseX >= 0 && mouseX < this.width && targets.contains(row)) {
+                this.targetSelection = row;
+                activateSelection();
+            }
+            return true;
+        }
         if (this.view == View.TARGETS) {
             TargetListGeometry geometry = targetListGeometry(
                     this.height - statusHeight(),
@@ -2469,6 +2518,14 @@ public class GuiTurnBattle extends Screen {
             return;
         }
         if (!isMenuView() || !this.canAct) {
+            return;
+        }
+        if (this.view == View.ALLY_TARGETS) {
+            List<Integer> targets = allyTargetIndices();
+            int row = (int) ((mouseY - (this.height - statusHeight() + 9)) / 30);
+            if (mouseX >= 0 && mouseX < this.width && targets.contains(row)) {
+                this.targetSelection = row;
+            }
             return;
         }
         if (this.view == View.TARGETS) {
@@ -2562,6 +2619,23 @@ public class GuiTurnBattle extends Screen {
             }
             return true;
         }
+        if (this.view == View.ALLY_TARGETS) {
+            if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
+                playUiSound(BlackSouls.SWORD3_EVENT.get(), 1.0F);
+                this.view = this.targetReturnView;
+                this.selection = this.rememberedSkillSelection;
+                this.menuScrollRow = this.rememberedSkillScrollRow;
+            } else if (keyCode == GLFW.GLFW_KEY_UP || keyCode == GLFW.GLFW_KEY_W
+                    || keyCode == GLFW.GLFW_KEY_LEFT || keyCode == GLFW.GLFW_KEY_A) {
+                moveAllyTargetSelection(-1);
+            } else if (keyCode == GLFW.GLFW_KEY_DOWN || keyCode == GLFW.GLFW_KEY_S
+                    || keyCode == GLFW.GLFW_KEY_RIGHT || keyCode == GLFW.GLFW_KEY_D) {
+                moveAllyTargetSelection(1);
+            } else if (isConfirm(keyCode)) {
+                activateSelection();
+            }
+            return true;
+        }
         if (this.view == View.TARGETS) {
             if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
                 playUiSound(BlackSouls.SWORD3_EVENT.get(), 1.0F);
@@ -2640,6 +2714,10 @@ public class GuiTurnBattle extends Screen {
         if (!encounterTransitionComplete() || !this.canAct || delta == 0.0D) {
             return super.mouseScrolled(mouseX, mouseY, delta);
         }
+        if (this.view == View.ALLY_TARGETS) {
+            moveAllyTargetSelection(delta > 0.0D ? -1 : 1);
+            return true;
+        }
         if (this.view == View.TARGETS) {
             moveTargetSelection(delta > 0.0D ? -1 : 1);
             return true;
@@ -2668,7 +2746,7 @@ public class GuiTurnBattle extends Screen {
     private boolean isMenuView() {
         return this.view == View.COMMAND || this.view == View.SKILLS
                 || this.view == View.ITEMS || this.view == View.WEAPONS
-                || this.view == View.TARGETS;
+                || this.view == View.TARGETS || this.view == View.ALLY_TARGETS;
     }
 
     private boolean isGridMenu() {
@@ -2676,6 +2754,13 @@ public class GuiTurnBattle extends Screen {
     }
 
     private void activateSelection() {
+        if (this.view == View.ALLY_TARGETS) {
+            if (this.pendingTargetAction != null && allyTargetIndices().contains(this.targetSelection)) {
+                playUiSound(BlackSouls.SWORD1_EVENT.get(), 1.0F);
+                send(this.pendingTargetAction, this.pendingTargetValue, this.targetSelection);
+            }
+            return;
+        }
         if (this.view == View.TARGETS) {
             if (this.pendingTargetAction != null
                     && this.targetSelection >= 0
@@ -2699,7 +2784,12 @@ public class GuiTurnBattle extends Screen {
             this.rememberedSkillValue = skillIndex;
             AbstractSkill skill = SkillRegistry.SKILLS.values().stream()
                     .skip(Math.max(0, skillIndex)).findFirst().orElse(null);
-            if (TurnBattleManager.skillRequiresTarget(skill)) {
+            if (TurnBattleManager.skillTargetsSingleAlly(skill)) {
+                List<Integer> targets = allyTargetIndices(skill);
+                if (targets.size() == 1) send(ServerboundTurnBattleActionPacket.Action.SKILL,
+                        skillIndex, targets.get(0));
+                else openAllyTargetSelection(skill, skillIndex, View.SKILLS);
+            } else if (TurnBattleManager.skillRequiresTarget(skill)) {
                 openTargetSelection(ServerboundTurnBattleActionPacket.Action.SKILL,
                         skillIndex, View.SKILLS);
             } else {
@@ -2763,6 +2853,43 @@ public class GuiTurnBattle extends Screen {
         }
         this.view = View.TARGETS;
         this.menuScrollRow = 0;
+    }
+
+    private void openAllyTargetSelection(AbstractSkill skill, int value, View returnView) {
+        this.pendingTargetAction = ServerboundTurnBattleActionPacket.Action.SKILL;
+        this.pendingTargetValue = value;
+        this.targetReturnView = returnView;
+        this.pendingAllyDownedTarget = TurnBattleManager.skillTargetsDownedAlly(skill);
+        List<Integer> targets = allyTargetIndices();
+        if (targets.isEmpty()) return;
+        this.targetSelection = targets.get(0);
+        this.view = View.ALLY_TARGETS;
+        this.menuScrollRow = 0;
+    }
+
+    private List<Integer> allyTargetIndices(AbstractSkill skill) {
+        boolean previous = this.pendingAllyDownedTarget;
+        this.pendingAllyDownedTarget = TurnBattleManager.skillTargetsDownedAlly(skill);
+        List<Integer> targets = allyTargetIndices();
+        this.pendingAllyDownedTarget = previous;
+        return targets;
+    }
+
+    private List<Integer> allyTargetIndices() {
+        List<ClientboundPartyStatePacket.Member> members = ClientPartyState.getMembers();
+        List<Integer> targets = new ArrayList<>();
+        for (int index = 0; index < members.size(); index++) {
+            if (members.get(index).downed() == this.pendingAllyDownedTarget) targets.add(index);
+        }
+        return targets;
+    }
+
+    private void moveAllyTargetSelection(int offset) {
+        List<Integer> targets = allyTargetIndices();
+        if (targets.isEmpty()) return;
+        int row = targets.indexOf(this.targetSelection);
+        this.targetSelection = targets.get(row < 0 ? 0 : Math.floorMod(row + offset, targets.size()));
+        playUiSound(BlackSouls.CURSOR1_EVENT.get(), 1.0F);
     }
 
     private void send(ServerboundTurnBattleActionPacket.Action action, int value) {
@@ -3077,6 +3204,7 @@ public class GuiTurnBattle extends Screen {
         ITEMS,
         WEAPONS,
         TARGETS,
+        ALLY_TARGETS,
         MESSAGE,
         RESULT
     }

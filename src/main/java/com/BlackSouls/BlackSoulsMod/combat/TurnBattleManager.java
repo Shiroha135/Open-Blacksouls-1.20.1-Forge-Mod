@@ -115,6 +115,14 @@ public final class TurnBattleManager {
             "bs2_skill_tempest_rend", "bs2_skill_true_soul_harvest",
             "bs2_skill_tsubame_gaeshi"
     );
+    private static final Set<String> SINGLE_ALLY_SKILLS = Set.of(
+            "bs2_skill_cure", "bs2_skill_resurrection", "bs2_skill_royal_tea",
+            "bs2_skill_delicious_turtle_soup"
+    );
+    private static final Set<String> ALL_ALLY_SKILLS = Set.of(
+            "bs2_skill_soul_light", "bs2_skill_full_blessing", "bs2_skill_erase",
+            "bs2_skill_kings_command", "bs2_skill_godspeed_dance", "bs2_skill_paladin_banner"
+    );
     private static final Map<UUID, Session> PLAYER_SESSIONS = new HashMap<>();
     private static final Map<UUID, UUID> ENEMY_SESSIONS = new HashMap<>();
     private static final ThreadLocal<Boolean> INTERNAL_BATTLE_ITEM_DAMAGE =
@@ -549,9 +557,21 @@ public final class TurnBattleManager {
 
     public static boolean skillRequiresTarget(AbstractSkill skill) {
         return skill != null && skill.isUsableInTurnBattle()
-                && (skill.requiresTurnBattleTarget()
+                && (skillTargetsSingleAlly(skill) || skill.requiresTurnBattleTarget()
                 || (!isNonDamageSkill(skill)
                 && !ALL_TARGET_SKILLS.contains(skill.getSkillId())));
+    }
+
+    public static boolean skillTargetsSingleAlly(AbstractSkill skill) {
+        return skill != null && SINGLE_ALLY_SKILLS.contains(skill.getSkillId());
+    }
+
+    public static boolean skillTargetsAllAllies(AbstractSkill skill) {
+        return skill != null && ALL_ALLY_SKILLS.contains(skill.getSkillId());
+    }
+
+    public static boolean skillTargetsDownedAlly(AbstractSkill skill) {
+        return skill != null && "bs2_skill_resurrection".equals(skill.getSkillId());
     }
 
     public static boolean skillTargetsAll(AbstractSkill skill) {
@@ -593,7 +613,15 @@ public final class TurnBattleManager {
             return new ActionResult(Component.literal("这个技能当前不可用。"), false);
         }
         EntityTurnBattleMonster selectedTarget = null;
-        if (skillRequiresTarget(skill)) {
+        ServerPlayer selectedAlly = null;
+        if (skillTargetsSingleAlly(skill)) {
+            selectedAlly = getTargetAlly(player, session, targetIndex,
+                    skillTargetsDownedAlly(skill));
+            if (selectedAlly == null) {
+                return new ActionResult(Component.literal(skillTargetsDownedAlly(skill)
+                        ? "请选择倒下的友方目标。" : "请选择友方目标。"), false);
+            }
+        } else if (skillRequiresTarget(skill)) {
             selectedTarget = getTargetEnemy(player, session, targetIndex);
             if (selectedTarget == null) {
                 return new ActionResult(Component.literal("请选择技能目标。"), false);
@@ -607,7 +635,7 @@ public final class TurnBattleManager {
         String skillName = Component.translatable(skill.getTranslationKey()).getString();
         String actor = player.getDisplayName().getString();
         if ("bs2_skill_resurrection".equals(skill.getSkillId())) {
-            ServerPlayer revived = firstDownedMember(player, session);
+            ServerPlayer revived = selectedAlly;
             if (revived != null) {
                 int revivedHealth = Math.max(1, Math.round(revived.getMaxHealth() * 0.5F));
                 revived.setHealth(revivedHealth);
@@ -626,7 +654,14 @@ public final class TurnBattleManager {
             for (EntityTurnBattleMonster enemy : getEnemies(player, session)) {
                 healthBeforeEffect.put(enemy.getUUID(), enemy.getTurnBattleHealth());
             }
-            skill.executeInTurnBattle(player, stats, selectedTarget);
+            if (skillTargetsAllAllies(skill)) {
+                for (ServerPlayer ally : activePartyMembers(player, session)) {
+                    skill.executeInTurnBattle(player, stats, ally);
+                }
+            } else {
+                skill.executeInTurnBattle(player, stats,
+                        selectedAlly == null ? selectedTarget : selectedAlly);
+            }
             boolean interrupted = applyTurnBattleSkillEffects(skill, selectedTarget, session);
             for (EntityTurnBattleMonster enemy : getEnemies(player, session)) {
                 Double health = healthBeforeEffect.get(enemy.getUUID());
@@ -1692,6 +1727,24 @@ public final class TurnBattleManager {
             if (member != null) return member;
         }
         return null;
+    }
+
+    private static ServerPlayer getTargetAlly(ServerPlayer player, Session session,
+                                               int index, boolean downed) {
+        UUID id = PartyManager.onlineMemberIdAt(player, index);
+        if (id == null || !session.partyMembers.contains(id)) return null;
+        if (session.downedMembers.contains(id) != downed) return null;
+        return player.server.getPlayerList().getPlayer(id);
+    }
+
+    private static List<ServerPlayer> activePartyMembers(ServerPlayer player, Session session) {
+        List<ServerPlayer> members = new ArrayList<>();
+        for (UUID id : session.partyMembers) {
+            if (session.downedMembers.contains(id)) continue;
+            ServerPlayer member = player.server.getPlayerList().getPlayer(id);
+            if (member != null) members.add(member);
+        }
+        return members;
     }
 
     private static void defeatParty(ServerPlayer player, Session session, Component message) {
