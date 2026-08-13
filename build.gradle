@@ -53,6 +53,21 @@ minecraft {
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
         }
 
+        ['A', 'B', 'C', 'D'].eachWithIndex { suffix, index ->
+            create("client${suffix}") {
+                client true
+                parent runs.client
+                workingDirectory project.file("run/client-${suffix.toLowerCase()}")
+                args '--username', "PartyTester${index + 1}"
+                args '-mixin.config=mixins.blacksouls.json'
+                args '-mixin.config=mmdskin-forge.mixins.json'
+                jvmArgs '-Xms2G', '-Xmx8G'
+                property 'forge.enabledGameTestNamespaces', mod_id
+                property 'mixin.env.remapRefMap', 'true'
+                property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            }
+        }
+
         server {
             property 'forge.enabledGameTestNamespaces', mod_id
             args '--nogui'

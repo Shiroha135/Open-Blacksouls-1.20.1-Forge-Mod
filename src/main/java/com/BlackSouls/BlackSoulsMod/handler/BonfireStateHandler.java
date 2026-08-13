@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,8 +23,11 @@ public final class BonfireStateHandler {
         if (!(event.getLevel() instanceof ServerLevel level)) {
             return;
         }
-        Set<BlockPos> positions = Set.copyOf(event.getChunk().getBlockEntitiesPos());
-        level.getServer().execute(() -> synchronize(level, positions));
+        if (!(event.getChunk() instanceof LevelChunk chunk)) {
+            return;
+        }
+        Set<BlockPos> positions = Set.copyOf(chunk.getBlockEntitiesPos());
+        level.getServer().execute(() -> synchronize(level, chunk, positions));
     }
 
     public static void light(Level level, BlockPos pos) {
@@ -37,13 +41,13 @@ public final class BonfireStateHandler {
         }
     }
 
-    private static void synchronize(ServerLevel level, Set<BlockPos> positions) {
+    private static void synchronize(ServerLevel level, LevelChunk chunk, Set<BlockPos> positions) {
         BSWorldData data = BSWorldData.get(level.getServer().overworld());
         for (BlockPos pos : positions) {
-            if (!level.hasChunkAt(pos)) {
+            if (pos.getX() >> 4 != chunk.getPos().x || pos.getZ() >> 4 != chunk.getPos().z) {
                 continue;
             }
-            BlockState state = level.getBlockState(pos);
+            BlockState state = chunk.getBlockState(pos);
             if (!state.is(BlockTags.CAMPFIRES)
                     || !state.hasProperty(CampfireBlock.LIT)
                     || !state.hasProperty(CampfireBlock.WATERLOGGED)) {

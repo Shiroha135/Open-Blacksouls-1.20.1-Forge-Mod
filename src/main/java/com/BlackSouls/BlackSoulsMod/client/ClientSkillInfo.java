@@ -1,6 +1,8 @@
 package com.BlackSouls.BlackSoulsMod.client;
 
 import com.mojang.logging.LogUtils;
+import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
+import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundPartySyncPacket;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
 import org.slf4j.Logger;
@@ -39,6 +41,9 @@ public class ClientSkillInfo {
         currentAvatar = sanitizeAvatar(avatar);
         isLoaded = true;
         saveAvatar();
+        if (Minecraft.getInstance().getConnection() != null) {
+            NetworkHandler.sendToServer(new ServerboundPartySyncPacket(currentAvatar));
+        }
     }
 
     public static void setUnlockedDlcAvatars(Collection<String> avatars) {

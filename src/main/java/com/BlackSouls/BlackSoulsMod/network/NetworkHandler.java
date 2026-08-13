@@ -90,6 +90,8 @@ public class NetworkHandler {
         register(ClientboundAdviceVisibilityPacket.class, ClientboundAdviceVisibilityPacket::toBytes, ClientboundAdviceVisibilityPacket::new, ClientboundAdviceVisibilityPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(ClientboundDoorEditorPacket.class, ClientboundDoorEditorPacket::encode, ClientboundDoorEditorPacket::decode, ClientboundDoorEditorPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(ServerboundSaveDoorConfigPacket.class, ServerboundSaveDoorConfigPacket::encode, ServerboundSaveDoorConfigPacket::decode, ServerboundSaveDoorConfigPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ClientboundPartyStatePacket.class, ClientboundPartyStatePacket::toBytes, ClientboundPartyStatePacket::new, ClientboundPartyStatePacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ServerboundPartySyncPacket.class, ServerboundPartySyncPacket::toBytes, ServerboundPartySyncPacket::new, ServerboundPartySyncPacket::handle, NetworkDirection.PLAY_TO_SERVER);
 
     }
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {

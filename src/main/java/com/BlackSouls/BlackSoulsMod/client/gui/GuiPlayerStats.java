@@ -3,11 +3,14 @@ package com.BlackSouls.BlackSoulsMod.client.gui;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.client.ClientSkillInfo;
+import com.BlackSouls.BlackSoulsMod.client.ClientPartyState;
 import com.BlackSouls.BlackSoulsMod.client.ClientSceneState;
 import com.BlackSouls.BlackSoulsMod.client.ClientStoryName;
 import com.BlackSouls.BlackSoulsMod.client.render.BSAvatarRenderer;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundRequestCurrentScenePacket;
+import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundPartySyncPacket;
+import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundPartyStatePacket;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -21,8 +24,8 @@ import com.mojang.blaze3d.platform.InputConstants;
 
 public class GuiPlayerStats extends Screen {
 
-    private static final int GUI_WIDTH = 370;
-    private static final int GUI_HEIGHT = 250;
+    private static final int GUI_WIDTH = 430;
+    private static final int GUI_HEIGHT = 320;
     private static final Component[] MENU_LABELS = {
             Component.translatable("gui.blacksouls.menu.skills"),
             Component.translatable("gui.blacksouls.menu.covenants"),
@@ -44,6 +47,7 @@ public class GuiPlayerStats extends Screen {
         this.guiTop = (this.height - GUI_HEIGHT) / 2;
         this.clearWidgets();
         NetworkHandler.sendToServer(new ServerboundRequestCurrentScenePacket());
+        NetworkHandler.sendToServer(new ServerboundPartySyncPacket(ClientSkillInfo.getAvatar()));
     }
 
     @Override
@@ -59,7 +63,7 @@ public class GuiPlayerStats extends Screen {
         int menuW = 90, menuH = 125;
         int senW = 90, senH = 40;
         int soulW = 90, soulH = 45;
-        int mainW = 280, mainH = 250;
+        int mainW = 340, mainH = 320;
         int locW = 120, locH = 50;
 
         BSGuiUtils.drawRMWindow(guiGraphics, guiLeft, guiTop, menuW, menuH);
@@ -111,47 +115,15 @@ public class GuiPlayerStats extends Screen {
         }
         guiGraphics.drawString(font, sceneName, locX + 12, locY + 28, 0xFFFFFF, false);
 
-        int mainY = guiTop;
-        int avatarX = mainX + 12, avatarY = mainY + 12, avatarSize = 60;
-        String avatarName = ClientSkillInfo.getAvatar();
-        if (avatarName == null) avatarName = "default";
-        ResourceLocation currentAvatarTex = BSAvatarRenderer.getTexture(avatarName);
-
-        RenderSystem.enableBlend();
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        BSAvatarRenderer.draw(guiGraphics, currentAvatarTex, avatarName, avatarX, avatarY, avatarSize);
-        RenderSystem.disableBlend();
-
-        int textX = mainX + 80;
-        int textY = mainY + 12;
-        String playerName = ClientStoryName.get(player);
-        guiGraphics.drawString(font, playerName, textX, textY, 0xFFFFFF, false);
-        guiGraphics.drawString(font, I18n.get("gui.blacksouls.title.undead"), textX + font.width(playerName) + 25, textY, 0xFFFFFF, false);
-
-        guiGraphics.drawString(font, I18n.get("gui.blacksouls.stat.lv"), textX, textY + 20, tagColor, false);
-        guiGraphics.drawString(font, String.valueOf(stats.level), textX + 20, textY + 20, 0xFFFFFF, false);
-
-        int barStartX = textX + 45;
-        int barW = 105;
-        int barH = 5;
-        int yOffset = 4;
-
-        int hpY = textY + 35;
-        float effectiveMaxHp = player.getMaxHealth();
-        double hpP = Math.max(0.0, Math.min(1.0, player.getHealth() / Math.max(1.0f, effectiveMaxHp)));
-        guiGraphics.fill(barStartX, hpY + yOffset, barStartX + barW, hpY + yOffset + barH, 0xFF440000);
-        guiGraphics.fill(barStartX, hpY + yOffset, barStartX + (int)(barW * hpP), hpY + yOffset + barH, 0xFFFF3333);
-        guiGraphics.drawString(font, I18n.get("gui.blacksouls.stat.hp"), barStartX + 2, hpY, tagColor, true);
-        String hpTxt = (int)player.getHealth() + " / " + (int)effectiveMaxHp;
-        guiGraphics.drawString(font, hpTxt, barStartX + barW - font.width(hpTxt) - 2, hpY, 0xFFFFFF, true);
-
-        int mpY = textY + 50;
-        double mpP = Math.max(0.0, Math.min(1.0, stats.mp / Math.max(1.0, stats.maxMp)));
-        guiGraphics.fill(barStartX, mpY + yOffset, barStartX + barW, mpY + yOffset + barH, 0xFF000044);
-        guiGraphics.fill(barStartX, mpY + yOffset, barStartX + (int)(barW * mpP), mpY + yOffset + barH, 0xFF3333FF);
-        guiGraphics.drawString(font, I18n.get("gui.blacksouls.stat.mp"), barStartX + 2, mpY, tagColor, true);
-        String mpTxt = (int)stats.mp + " / " + (int)stats.maxMp;
-        guiGraphics.drawString(font, mpTxt, barStartX + barW - font.width(mpTxt) - 2, mpY, 0xFFFFFF, true);
+        var party = ClientPartyState.getMembers();
+        if (party.isEmpty()) party = java.util.List.of(new ClientboundPartyStatePacket.Member(
+                player.getUUID(), ClientStoryName.get(player), ClientSkillInfo.getAvatar(),
+                player.getHealth(), player.getMaxHealth(), stats.mp, stats.maxMp, stats.level, true));
+        for (int i = 0; i < Math.min(4, party.size()); i++) {
+            ClientboundPartyStatePacket.Member member = party.get(i);
+            int rowY = guiTop + 12 + i * 70;
+            drawPartyMember(guiGraphics, member, mainX + 12, rowY, tagColor);
+        }
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
@@ -159,7 +131,15 @@ public class GuiPlayerStats extends Screen {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (button == 0 && this.minecraft != null) {
-            int mainX = guiLeft + 90, avatarX = mainX + 12, avatarY = guiTop + 12, avatarSize = 60;
+            int mainX = guiLeft + 90, avatarX = mainX + 12, avatarSize = 60;
+            int localIndex = 0;
+            for (int i = 0; i < ClientPartyState.getMembers().size(); i++) {
+                if (ClientPartyState.getMembers().get(i).id().equals(this.minecraft.player.getUUID())) {
+                    localIndex = i;
+                    break;
+                }
+            }
+            int avatarY = guiTop + 12 + localIndex * 70;
             if (mouseX >= avatarX && mouseX <= avatarX + avatarSize && mouseY >= avatarY && mouseY <= avatarY + avatarSize) {
                 if (BlackSouls.CURSOR1_EVENT != null) this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(BlackSouls.CURSOR1_EVENT.get(), 1.0F, 1.0F));
                 this.minecraft.setScreen(new GuiAvatarSelect(this));
@@ -203,4 +183,38 @@ public class GuiPlayerStats extends Screen {
 
     @Override
     public boolean isPauseScreen() { return false; }
+
+    private void drawPartyMember(GuiGraphics graphics, ClientboundPartyStatePacket.Member member, int x, int y, int tagColor) {
+        int avatarSize = 60;
+        RenderSystem.enableBlend();
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        BSAvatarRenderer.draw(graphics, BSAvatarRenderer.getTexture(member.avatar()), member.avatar(), x, y, avatarSize);
+        RenderSystem.disableBlend();
+        int textX = x + 68;
+        graphics.drawString(font, member.name(), textX, y, 0xFFFFFF, false);
+        graphics.drawString(font, I18n.get("gui.blacksouls.title.undead"),
+                textX + font.width(member.name()) + 25, y, 0xFFFFFF, false);
+        graphics.drawString(font, I18n.get("gui.blacksouls.stat.lv"), textX, y + 20, tagColor, false);
+        graphics.drawString(font, String.valueOf(member.level()), textX + 20, y + 20, 0xFFFFFF, false);
+
+        int barStartX = textX + 45;
+        int barW = 105;
+        int barH = 5;
+        int yOffset = 4;
+        int hpY = y + 35;
+        double hpP = Math.max(0.0D, Math.min(1.0D, member.health() / Math.max(1.0F, member.maxHealth())));
+        graphics.fill(barStartX, hpY + yOffset, barStartX + barW, hpY + yOffset + barH, 0xFF440000);
+        graphics.fill(barStartX, hpY + yOffset, barStartX + (int)(barW * hpP), hpY + yOffset + barH, 0xFFFF3333);
+        graphics.drawString(font, I18n.get("gui.blacksouls.stat.hp"), barStartX + 2, hpY, tagColor, true);
+        String hpTxt = (int)member.health() + " / " + (int)member.maxHealth();
+        graphics.drawString(font, hpTxt, barStartX + barW - font.width(hpTxt) - 2, hpY, 0xFFFFFF, true);
+
+        int mpY = y + 50;
+        double mpP = Math.max(0.0D, Math.min(1.0D, member.mp() / Math.max(1.0D, member.maxMp())));
+        graphics.fill(barStartX, mpY + yOffset, barStartX + barW, mpY + yOffset + barH, 0xFF000044);
+        graphics.fill(barStartX, mpY + yOffset, barStartX + (int)(barW * mpP), mpY + yOffset + barH, 0xFF3333FF);
+        graphics.drawString(font, I18n.get("gui.blacksouls.stat.mp"), barStartX + 2, mpY, tagColor, true);
+        String mpTxt = (int)member.mp() + " / " + (int)member.maxMp();
+        graphics.drawString(font, mpTxt, barStartX + barW - font.width(mpTxt) - 2, mpY, 0xFFFFFF, true);
+    }
 }
