@@ -1,5 +1,6 @@
 package com.BlackSouls.BlackSoulsMod.client.render;
 
+import com.BlackSouls.BlackSoulsMod.BSConfig;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.client.render.heldoutline.HeldItemOutlineCompat;
 import com.BlackSouls.BlackSoulsMod.entity.EntityRabbitHoleNpc;
@@ -43,6 +44,10 @@ public class ClientStatusRenderer {
 
     @SubscribeEvent
     public static void onRenderEntityStatus(RenderLivingEvent.Post<?, ?> event) {
+        if (!BSConfig.ENABLE_ENTITY_STATUS_BAR.get()) {
+            return;
+        }
+
         LivingEntity entity = event.getEntity();
         Minecraft mc = Minecraft.getInstance();
 

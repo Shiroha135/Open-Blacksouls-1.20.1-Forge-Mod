@@ -47,6 +47,7 @@ public class GuiBSConfig extends Screen {
     private boolean enableOriginalWindowBranding;
     private boolean enableMmdModels;
     private boolean enableCustomHealthBar;
+    private boolean enableEntityStatusBar;
     private BSConfig.CombatMode combatMode;
 
     public GuiBSConfig(Screen parent) {
@@ -58,6 +59,7 @@ public class GuiBSConfig extends Screen {
         this.enableOriginalWindowBranding = BSConfig.ENABLE_ORIGINAL_WINDOW_BRANDING.get();
         this.enableMmdModels = BSConfig.ENABLE_MMD_MODELS.get();
         this.enableCustomHealthBar = BSConfig.ENABLE_CUSTOM_HEALTH_BAR.get();
+        this.enableEntityStatusBar = BSConfig.ENABLE_ENTITY_STATUS_BAR.get();
         this.combatMode = BSConfig.COMBAT_MODE.get();
     }
 
@@ -148,6 +150,15 @@ public class GuiBSConfig extends Screen {
                 });
         y += ENTRY_STRIDE;
 
+        addOptionRow(y, "gui.blacksouls.config.option.entity_status_bar",
+                "gui.blacksouls.config.entity_status_bar.desc",
+                stateText(this.enableEntityStatusBar), () -> this.enableEntityStatusBar,
+                button -> {
+                    this.enableEntityStatusBar = !this.enableEntityStatusBar;
+                    button.setMessage(stateText(this.enableEntityStatusBar));
+                });
+        y += ENTRY_STRIDE;
+
         this.contentHeight = y + 6;
         this.scrollOffset = clampScroll(this.scrollOffset);
 
@@ -207,17 +218,8 @@ public class GuiBSConfig extends Screen {
         graphics.fill(accentX, this.panelY + 14, accentX + 3, this.panelY + 38, 0xFFD3A84F);
         graphics.drawString(this.font, this.title,
                 accentX + 10, this.panelY + 14, 0xFFF2E7D5, false);
-        graphics.drawString(this.font, Component.translatable("gui.blacksouls.config.subtitle"),
-                accentX + 10, this.panelY + 30, 0xFF9E9297, false);
         graphics.fill(this.panelX + 14, this.contentTop - 3,
                 this.panelX + this.panelWidth - 14, this.contentTop - 2, 0x555C3E36);
-
-        if (maxScroll() > 0) {
-            Component hint = Component.translatable("gui.blacksouls.config.scroll_hint");
-            graphics.drawString(this.font, hint,
-                    this.panelX + this.panelWidth - 18 - this.font.width(hint),
-                    this.panelY + 30, 0xFF766D72, false);
-        }
     }
 
     private void drawScrollableContent(GuiGraphics graphics, int mouseX, int mouseY) {
@@ -385,6 +387,7 @@ public class GuiBSConfig extends Screen {
         BSConfig.ENABLE_ORIGINAL_WINDOW_BRANDING.set(this.enableOriginalWindowBranding);
         BSConfig.ENABLE_MMD_MODELS.set(this.enableMmdModels);
         BSConfig.ENABLE_CUSTOM_HEALTH_BAR.set(this.enableCustomHealthBar);
+        BSConfig.ENABLE_ENTITY_STATUS_BAR.set(this.enableEntityStatusBar);
         BSConfig.COMMON_SPEC.save();
         BSConfig.CLIENT_SPEC.save();
         WindowBranding.apply(this.enableOriginalWindowBranding);
