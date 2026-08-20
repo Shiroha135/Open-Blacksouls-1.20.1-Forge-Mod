@@ -21,6 +21,8 @@ mixin {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
+jarJar.enable()
+
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
     mappings channel: mapping_channel, version: mapping_version
@@ -135,6 +137,22 @@ dependencies {
     implementation 'javazoom:jlayer:1.0.1'
     mmdEmbedded 'javazoom:jlayer:1.0.1'
 
+    implementation "io.github.humbleui:skija-shared:0.143.17"
+    implementation "io.github.humbleui:skija-windows-x64:0.143.17"
+    implementation "io.github.humbleui:types:0.2.0"
+    minecraftLibrary "io.github.humbleui:skija-shared:0.143.17"
+    minecraftLibrary "io.github.humbleui:skija-windows-x64:0.143.17"
+    minecraftLibrary "io.github.humbleui:types:0.2.0"
+    jarJar(group: "io.github.humbleui", name: "skija-shared", version: "[0.143.17,0.143.18)") {
+        jarJar.pin(it, "0.143.17")
+    }
+    jarJar(group: "io.github.humbleui", name: "skija-windows-x64", version: "[0.143.17,0.143.18)") {
+        jarJar.pin(it, "0.143.17")
+    }
+    jarJar(group: "io.github.humbleui", name: "types", version: "[0.2.0,0.3.0)") {
+        jarJar.pin(it, "0.2.0")
+    }
+
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -193,6 +211,14 @@ tasks.named('jar', Jar).configure {
         ])
     }
     finalizedBy 'reobfJar'
+}
+
+reobf {
+    jarJar {}
+}
+
+tasks.named('jarJar').configure {
+    dependsOn 'copyMaps'
 }
 
 publishing {

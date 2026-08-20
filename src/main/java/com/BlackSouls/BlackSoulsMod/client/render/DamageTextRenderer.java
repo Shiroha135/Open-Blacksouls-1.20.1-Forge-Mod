@@ -7,7 +7,6 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
@@ -24,12 +23,8 @@ import java.util.Iterator;
 public class DamageTextRenderer {
 
     private static final int MAX_TEXTS = 160;
-    private static final int NORMAL_TEXT_RGB = 0xF4E7D0;
-    private static final int NORMAL_OUTLINE_RGB = 0x241315;
-    private static final int CRIT_TEXT_RGB = 0xFF554D;
-    private static final int CRIT_FLASH_RGB = 0xFFE09A;
-    private static final int CRIT_OUTLINE_RGB = 0x3B0708;
-    private static final int CRIT_GLOW_RGB = 0xE99A36;
+    private static final int NORMAL_TEXT_RGB = 0xFFFFFF;
+    private static final int CRIT_TEXT_RGB = 0xFF3B30;
 
     public static class DamageText {
         public double x, y, z;
@@ -161,19 +156,8 @@ public class DamageTextRenderer {
                 continue;
             }
 
-            if (t.isCrit && impact > 0.0F) {
-                drawTextLayer(mc, poseStack, bufferSource, t.text,
-                        scale * (1.13F + impact * 0.04F),
-                        withAlpha(CRIT_GLOW_RGB, alpha * impact * 0.58F));
-            }
-
-            int outlineRgb = t.isCrit ? CRIT_OUTLINE_RGB : NORMAL_OUTLINE_RGB;
-            int mainRgb = t.isCrit
-                    ? lerpRgb(CRIT_FLASH_RGB, CRIT_TEXT_RGB,
-                    smoothstep(0.0F, 7.0F, renderAge))
-                    : NORMAL_TEXT_RGB;
-            drawOutlinedTextLayer(mc, poseStack, bufferSource, t.text, scale,
-                    withAlpha(mainRgb, alpha), withAlpha(outlineRgb, alpha * 0.92F));
+            int textRgb = t.isCrit ? CRIT_TEXT_RGB : NORMAL_TEXT_RGB;
+            drawTextLayer(mc, poseStack, bufferSource, t.text, scale, withAlpha(textRgb, alpha));
 
             poseStack.popPose();
         }
@@ -206,32 +190,6 @@ public class DamageTextRenderer {
         poseStack.popPose();
     }
 
-    private static void drawOutlinedTextLayer(Minecraft mc, PoseStack poseStack,
-                                               MultiBufferSource bufferSource, String text,
-                                               float scale, int color, int outlineColor) {
-        if ((color >>> 24) <= 3 || scale <= 0.0F) {
-            return;
-        }
-        if ((outlineColor >>> 24) <= 3) {
-            drawTextLayer(mc, poseStack, bufferSource, text, scale, color);
-            return;
-        }
-        poseStack.pushPose();
-        poseStack.scale(-scale, -scale, scale);
-        int textWidth = mc.font.width(text);
-        mc.font.drawInBatch8xOutline(
-                Component.literal(text).getVisualOrderText(),
-                -textWidth / 2.0F,
-                -mc.font.lineHeight / 2.0F,
-                color,
-                outlineColor,
-                poseStack.last().pose(),
-                bufferSource,
-                15728880
-        );
-        poseStack.popPose();
-    }
-
     private static float entranceScale(boolean crit, float age) {
         float peakAge = crit ? 2.3F : 2.0F;
         float settleAge = crit ? 8.0F : 6.0F;
@@ -249,14 +207,6 @@ public class DamageTextRenderer {
     private static int withAlpha(int rgb, float alpha) {
         int a = Math.max(0, Math.min(255, Math.round(clamp01(alpha) * 255.0F)));
         return a << 24 | rgb & 0x00FFFFFF;
-    }
-
-    private static int lerpRgb(int from, int to, float progress) {
-        float t = clamp01(progress);
-        int r = Math.round(lerp((from >> 16) & 0xFF, (to >> 16) & 0xFF, t));
-        int g = Math.round(lerp((from >> 8) & 0xFF, (to >> 8) & 0xFF, t));
-        int b = Math.round(lerp(from & 0xFF, to & 0xFF, t));
-        return r << 16 | g << 8 | b;
     }
 
     private static float smoothstep(float edge0, float edge1, float value) {

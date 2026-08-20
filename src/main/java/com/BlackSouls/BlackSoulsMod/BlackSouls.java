@@ -464,7 +464,7 @@ public class BlackSouls {
     public static final RegistryObject<Item> MAD_GEAR = ITEMS.register("mad_gear", () -> new ItemMadGear(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> NIGHTMARE_LANTERN = ITEMS.register("nightmare_lantern", () -> new ItemThrownConsumable(new Item.Properties(), EntityThrownBlade.MODE_NIGHTMARE_LANTERN, false, 204, EVASION1_EVENT));
     public static final RegistryObject<Item> SATYRS_THING = ITEMS.register("satyrs_thing", () -> new ItemGrantWhiteStickyThing(new Item.Properties()));
-    public static final RegistryObject<Item> ANCIENT_KINGS_BONE_DUST = ITEMS.register("ancient_kings_bone_dust", () -> new ItemReturnToBonfire(new Item.Properties()));
+    public static final RegistryObject<Item> ANCIENT_KINGS_BONE_DUST = ITEMS.register("ancient_kings_bone_dust", () -> new ItemReturnToBonfire(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> SQUIRREL_FUR = ITEMS.register("squirrel_fur", () -> new ItemUnavailableStoryConsumable(new Item.Properties(), "message.blacksouls.chaos_dungeon_only"));
     public static final RegistryObject<Item> FILTHY_LIQUID = ITEMS.register("filthy_liquid", () -> new ItemFilthyLiquid(new Item.Properties()));
     public static final RegistryObject<Item> BLUEBIRD_FEATHER = ITEMS.register("bluebird_feather", () -> new ItemParameterBoost(new Item.Properties(), ItemParameterBoost.Mode.LUCK));
