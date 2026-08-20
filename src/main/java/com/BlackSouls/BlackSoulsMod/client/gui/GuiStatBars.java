@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.client.gui;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.BSConfig;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.client.render.ShaderHelper;
 import com.BlackSouls.BlackSoulsMod.util.SkillUtils;
@@ -41,6 +42,9 @@ public class GuiStatBars {
 
     @SubscribeEvent
     public static void onRenderGuiPre(RenderGuiOverlayEvent.Pre event) {
+        if (!BSConfig.ENABLE_CUSTOM_HEALTH_BAR.get()) {
+            return;
+        }
         if (event.getOverlay() == VanillaGuiOverlay.PLAYER_HEALTH.type()
                 || event.getOverlay() == VanillaGuiOverlay.ARMOR_LEVEL.type()
                 || event.getOverlay() == VanillaGuiOverlay.FOOD_LEVEL.type()) {
@@ -50,6 +54,9 @@ public class GuiStatBars {
 
     @SubscribeEvent
     public static void renderOverlay(RenderGuiOverlayEvent.Post event) {
+        if (!BSConfig.ENABLE_CUSTOM_HEALTH_BAR.get()) {
+            return;
+        }
         if (event.getOverlay() != VanillaGuiOverlay.HOTBAR.type()) {
             return;
         }

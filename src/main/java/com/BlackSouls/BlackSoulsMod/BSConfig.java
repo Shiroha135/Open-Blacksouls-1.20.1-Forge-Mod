@@ -12,6 +12,7 @@ public class BSConfig {
     public static final ForgeConfigSpec CLIENT_SPEC;
     public static ForgeConfigSpec.BooleanValue ENABLE_ORIGINAL_WINDOW_BRANDING;
     public static ForgeConfigSpec.BooleanValue ENABLE_MMD_MODELS;
+    public static ForgeConfigSpec.BooleanValue ENABLE_CUSTOM_HEALTH_BAR;
     public static ForgeConfigSpec.BooleanValue ENABLE_CUSTOM_MAIN_MENU;
     public static ForgeConfigSpec.BooleanValue ALLOW_PLAYER_EXTRA_MODES;
     public static ForgeConfigSpec.BooleanValue ENABLE_LOW_SEN_JUMPSCARE;
@@ -63,6 +64,10 @@ public class BSConfig {
         ENABLE_MMD_MODELS = clientBuilder
                 .translation("config.blacksouls.enable_mmd_models")
                 .define("enableMMDModels", true);
+
+        ENABLE_CUSTOM_HEALTH_BAR = clientBuilder
+                .translation("config.blacksouls.enable_custom_health_bar")
+                .define("enableCustomHealthBar", true);
 
         clientBuilder.pop();
 
