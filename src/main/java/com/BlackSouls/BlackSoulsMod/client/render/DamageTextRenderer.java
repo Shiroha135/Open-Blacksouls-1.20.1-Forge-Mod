@@ -7,6 +7,7 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
@@ -167,15 +168,12 @@ public class DamageTextRenderer {
             }
 
             int outlineRgb = t.isCrit ? CRIT_OUTLINE_RGB : NORMAL_OUTLINE_RGB;
-            drawTextLayer(mc, poseStack, bufferSource, t.text,
-                    scale * 1.075F, withAlpha(outlineRgb, alpha * 0.92F));
-
             int mainRgb = t.isCrit
                     ? lerpRgb(CRIT_FLASH_RGB, CRIT_TEXT_RGB,
                     smoothstep(0.0F, 7.0F, renderAge))
                     : NORMAL_TEXT_RGB;
-            drawTextLayer(mc, poseStack, bufferSource, t.text,
-                    scale, withAlpha(mainRgb, alpha));
+            drawOutlinedTextLayer(mc, poseStack, bufferSource, t.text, scale,
+                    withAlpha(mainRgb, alpha), withAlpha(outlineRgb, alpha * 0.92F));
 
             poseStack.popPose();
         }
@@ -203,6 +201,32 @@ public class DamageTextRenderer {
                 bufferSource,
                 Font.DisplayMode.SEE_THROUGH,
                 0,
+                15728880
+        );
+        poseStack.popPose();
+    }
+
+    private static void drawOutlinedTextLayer(Minecraft mc, PoseStack poseStack,
+                                               MultiBufferSource bufferSource, String text,
+                                               float scale, int color, int outlineColor) {
+        if ((color >>> 24) <= 3 || scale <= 0.0F) {
+            return;
+        }
+        if ((outlineColor >>> 24) <= 3) {
+            drawTextLayer(mc, poseStack, bufferSource, text, scale, color);
+            return;
+        }
+        poseStack.pushPose();
+        poseStack.scale(-scale, -scale, scale);
+        int textWidth = mc.font.width(text);
+        mc.font.drawInBatch8xOutline(
+                Component.literal(text).getVisualOrderText(),
+                -textWidth / 2.0F,
+                -mc.font.lineHeight / 2.0F,
+                color,
+                outlineColor,
+                poseStack.last().pose(),
+                bufferSource,
                 15728880
         );
         poseStack.popPose();
