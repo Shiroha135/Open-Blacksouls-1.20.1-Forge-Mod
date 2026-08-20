@@ -5,8 +5,6 @@ import com.BlackSouls.BlackSoulsMod.BSConfig;
 import com.BlackSouls.BlackSoulsMod.client.WindowBranding;
 import com.BlackSouls.BlackSoulsMod.client.gui.GuiBSConfig;
 import com.BlackSouls.BlackSoulsMod.client.render.*;
-import com.BlackSouls.BlackSoulsMod.client.tooltip.ClientSpongeNameTooltipComponent;
-import com.BlackSouls.BlackSoulsMod.client.tooltip.SpongeNameTooltipComponent;
 import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalTurnBattleEnemy;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
@@ -20,7 +18,6 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterClientTooltipComponentFactoriesEvent;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -84,11 +81,6 @@ public class ClientModEvents {
     public static void onRegisterReloadListeners(RegisterClientReloadListenersEvent event) {
         event.registerReloadListener((net.minecraft.server.packs.resources.ResourceManagerReloadListener) resourceManager ->
                 AnimationRegistry.loadAnimations());
-    }
-
-    @SubscribeEvent
-    public static void onRegisterTooltipFactories(RegisterClientTooltipComponentFactoriesEvent event) {
-        event.register(SpongeNameTooltipComponent.class, ClientSpongeNameTooltipComponent::new);
     }
 
     public static class NoOpParticleProvider implements ParticleProvider<SimpleParticleType> {

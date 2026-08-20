@@ -6,17 +6,8 @@ import net.minecraft.client.gui.GuiGraphics;
 public class GuiTextEffects {
 
     public static void drawJumpingText(GuiGraphics graphics, Font font, String text, int x, int y, long time) {
-        int cursor = x;
-
-        for (int i = 0; i < text.length(); i++) {
-            String s = String.valueOf(text.charAt(i));
-
-            int offsetY = (int) Math.round(Math.sin(time / 130.0D + i * 0.75D) * 2.0D);
-            int color = titleColor(i, time);
-
-            graphics.drawString(font, s, cursor, y + offsetY, color, false);
-            cursor += font.width(s);
-        }
+        int offsetY = (int) Math.round(Math.sin(time / 180.0D));
+        graphics.drawString(font, text, x, y + offsetY, titleColor(0, time), false);
     }
 
     private static int titleColor(int index, long time) {

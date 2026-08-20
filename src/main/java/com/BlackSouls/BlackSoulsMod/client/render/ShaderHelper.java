@@ -28,7 +28,6 @@ public class ShaderHelper {
 
     public static ShaderInstance flowBarShader;
     public static ShaderInstance rainbowTextShader;
-    public static ShaderInstance spongeNameShader;
     public static ShaderInstance cosmicGuiShader;
     public static ShaderInstance goldOutlineShader;
     public static ShaderInstance heldItemOutlineShader;
@@ -62,15 +61,6 @@ public class ShaderHelper {
                             DefaultVertexFormat.POSITION_TEX
                     ),
                     shader -> rainbowTextShader = shader
-            );
-
-            event.registerShader(
-                    new ShaderInstance(
-                            event.getResourceProvider(),
-                            new ResourceLocation(BlackSouls.MODID, "sponge_name_text"),
-                            DefaultVertexFormat.POSITION_TEX
-                    ),
-                    shader -> spongeNameShader = shader
             );
 
             event.registerShader(

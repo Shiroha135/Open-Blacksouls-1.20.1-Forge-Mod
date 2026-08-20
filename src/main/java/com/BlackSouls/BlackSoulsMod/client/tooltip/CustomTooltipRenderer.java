@@ -1,5 +1,6 @@
 package com.BlackSouls.BlackSoulsMod.client.tooltip;
 
+import com.BlackSouls.BlackSoulsMod.mixin.client.ClientTextTooltipAccessor;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
@@ -76,7 +77,12 @@ public final class CustomTooltipRenderer {
 
         for (int i = 1; i < components.size(); i++) {
             ClientTooltipComponent component = components.get(i);
-            component.renderText(font, textX, textY, matrix, buffer);
+            if (component instanceof ClientTextTooltipAccessor textComponent) {
+                font.drawInBatch(textComponent.blacksouls$getText(), textX, textY,
+                        -1, false, matrix, buffer, Font.DisplayMode.NORMAL, 0, 15728880);
+            } else {
+                component.renderText(font, textX, textY, matrix, buffer);
+            }
             component.renderImage(font, textX, textY, graphics);
             textY += component.getHeight();
         }
@@ -86,18 +92,8 @@ public final class CustomTooltipRenderer {
     }
 
     private static void drawJumpingTitle(GuiGraphics graphics, Font font, String text, int x, int y, long time) {
-        int cursor = x;
-
-        for (int i = 0; i < text.length(); i++) {
-            String s = String.valueOf(text.charAt(i));
-            int offsetY = (int) Math.round(Math.sin(time / 130.0D + i * 0.75D) * 1.7D);
-            int color = titleColor(i, time);
-
-            graphics.drawString(font, s, cursor + 1, y + offsetY + 1, 0xAA000000, false);
-            graphics.drawString(font, s, cursor, y + offsetY, color, false);
-
-            cursor += font.width(s);
-        }
+        int offsetY = (int) Math.round(Math.sin(time / 180.0D));
+        graphics.drawString(font, text, x, y + offsetY, titleColor(0, time), false);
     }
 
     private static void drawSeparator(GuiGraphics graphics, int x, int y, int width, long time) {

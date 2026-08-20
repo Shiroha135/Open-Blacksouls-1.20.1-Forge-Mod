@@ -1,17 +1,17 @@
 package com.BlackSouls.BlackSoulsMod.handler;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.client.render.GuiGradientTextRenderer;
 import com.BlackSouls.BlackSoulsMod.client.render.KawaseBlurRenderer;
 import com.BlackSouls.BlackSoulsMod.client.render.SkijaGlassRenderer;
-import com.BlackSouls.BlackSoulsMod.client.tooltip.SpongeNameTooltipComponent;
-import com.mojang.datafixers.util.Either;
+import com.BlackSouls.BlackSoulsMod.mixin.client.ClientTextTooltipAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGuiEvent;
@@ -30,22 +30,11 @@ public class ClientTooltipHandler {
 
     private static final float TOOLTIP_RADIUS = 18.0F;
     private static final float TOOLTIP_STROKE = 1.25F;
+    private static final int[] LIEF_TITLE_COLORS = {0x7CFF72, 0xE7FFFF, 0x67C8FF, 0xB680FF, 0xFF78F0};
 
     @SubscribeEvent(priority = EventPriority.HIGHEST, receiveCanceled = true)
     public static void onRenderGuiPre(RenderGuiEvent.Pre event) {
         KawaseBlurRenderer.beginFrame();
-    }
-
-    @SubscribeEvent
-    public static void onTooltipGather(RenderTooltipEvent.GatherComponents event) {
-        if (!isFlowNameItem(event.getItemStack())) {
-            return;
-        }
-
-        if (!event.getTooltipElements().isEmpty() && event.getTooltipElements().get(0).left().isPresent()) {
-            TooltipComponent customTitle = new SpongeNameTooltipComponent(event.getItemStack().getHoverName(), getFlowStyle(event.getItemStack()));
-            event.getTooltipElements().set(0, Either.right(customTitle));
-        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -104,40 +93,26 @@ public class ClientTooltipHandler {
                 TOOLTIP_RADIUS, TOOLTIP_STROKE, new Vector4i(124, 255, 114, 255));
 
         int textY = y + padding;
+        String titleText = event.getItemStack().getHoverName().getString().replaceAll("§[0-9a-fk-or]", "");
+        GuiGradientTextRenderer.draw(graphics, font, titleText, x + padding, textY, LIEF_TITLE_COLORS);
+        textY += components.get(0).getHeight();
+        if (components.size() > 1) {
+            textY += 2;
+        }
         Matrix4f matrix = graphics.pose().last().pose();
         MultiBufferSource.BufferSource buffer = graphics.bufferSource();
-        for (int i = 0; i < components.size(); i++) {
+        for (int i = 1; i < components.size(); i++) {
             ClientTooltipComponent component = components.get(i);
-            component.renderText(font, x + padding, textY, matrix, buffer);
-            textY += component.getHeight();
-            if (i == 0 && components.size() > 1) {
-                textY += 2;
+            if (component instanceof ClientTextTooltipAccessor textComponent) {
+                font.drawInBatch(textComponent.blacksouls$getText(), x + padding, textY,
+                        -1, false, matrix, buffer, Font.DisplayMode.NORMAL, 0, 15728880);
+            } else {
+                component.renderText(font, x + padding, textY, matrix, buffer);
             }
+            textY += component.getHeight();
         }
         buffer.endBatch();
         graphics.pose().popPose();
     }
 
-    private static String getFlowStyle(ItemStack stack) {
-        ResourceLocation regName = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem());
-        if (regName == null) {
-            return "sponge";
-        }
-        String path = regName.getPath();
-        if (path.equals("cosmilite_bar") || path.equals("ascendant_spirit_essence")) {
-            return "cosmic";
-        }
-        return "sponge";
-    }
-
-    private static boolean isFlowNameItem(ItemStack stack) {
-        if (stack.isEmpty()) return false;
-        ResourceLocation regName = net.minecraftforge.registries.ForgeRegistries.ITEMS.getKey(stack.getItem());
-        if (regName == null) {
-            return false;
-        }
-        String path = regName.getPath();
-        return path.equals("cosmilite_bar")
-                || path.equals("ascendant_spirit_essence");
-    }
 }

@@ -134,7 +134,7 @@
   "item.blacksouls.homeward_bone_dust.lore.2": "回想起那曾经与少女一同取暖的篝火吧。",
 
   "item.blacksouls.black_ash": "黑之灰",
-  "item.blacksouls.black_ash.lore.1": "消耗全部的魂，回归箱庭。",
+  "item.blacksouls.black_ash.lore.1": "消耗全部的魂，回归图书馆之梦。",
   "item.blacksouls.black_ash.lore.2": "无论多少次你都能重获新生，继续去体验这份故事。",
 
   "item.blacksouls.hemostatic_cloth": "止血布",
@@ -1738,9 +1738,9 @@
   //======================================================================================
   "dimension.blacksouls.hokoniwa": "箱庭",
   "dimension.blacksouls.library": "箱庭（旧入口）",
-  "gui.blacksouls.bonfire.library_name": "箱庭",
-  "gui.blacksouls.bonfire.library_desc": "封闭而完整的小世界，汇集了不思议之国的各处区域与故事。\n所有道路最终都会在这里彼此相连。",
-  "message.blacksouls.library_awaken": "你在虚无中苏醒……这里是，箱庭。",
+  "gui.blacksouls.bonfire.library_name": "图书馆之梦",
+  "gui.blacksouls.bonfire.library_desc": "仿照记忆中的那间图书室形成的梦之世界。\n虽然连接着世界的每一处，却没人知道它的位置在哪里。",
+  "message.blacksouls.library_awaken": "你在虚无中苏醒……这里是，图书馆之梦。",
   //===================================================================
   // 成就
   //===================================================================

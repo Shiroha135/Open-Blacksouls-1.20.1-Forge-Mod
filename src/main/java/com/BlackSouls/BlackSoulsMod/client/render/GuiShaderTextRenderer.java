@@ -20,14 +20,11 @@ import org.joml.Matrix4f;
 
 public class GuiShaderTextRenderer {
 
+    private static final int MASK_PADDING = 4;
     private static TextureTarget textMaskTarget;
 
     public static void renderRainbowText(GuiGraphics guiGraphics, Font font, Component text, int x, int y) {
         renderTextWithShader(guiGraphics, font, text, x, y, ShaderHelper.rainbowTextShader);
-    }
-
-    public static void renderSpongeNameText(GuiGraphics guiGraphics, Font font, Component text, int x, int y) {
-        renderTextWithShader(guiGraphics, font, text, x, y, ShaderHelper.spongeNameShader);
     }
 
     private static void renderTextWithShader(GuiGraphics guiGraphics, Font font, Component text, int x, int y, ShaderInstance shader) {
@@ -40,8 +37,8 @@ public class GuiShaderTextRenderer {
         String renderedText = text.getString();
         int textWidth = Math.max(1, font.width(renderedText));
         int textHeight = Math.max(1, font.lineHeight);
-        int targetWidth = textWidth + 4;
-        int targetHeight = textHeight + 4;
+        int targetWidth = textWidth + MASK_PADDING * 2;
+        int targetHeight = textHeight + MASK_PADDING * 2;
 
         renderTextMask(mc, font, text, targetWidth, targetHeight);
         if (textMaskTarget == null) {
@@ -63,17 +60,17 @@ public class GuiShaderTextRenderer {
         RenderSystem.setShaderTexture(0, textMaskTarget.getColorTextureId());
 
         Matrix4f matrix = guiGraphics.pose().last().pose();
-        float minX = x - 2.0F;
-        float minY = y - 2.0F;
+        float minX = x - MASK_PADDING;
+        float minY = y - MASK_PADDING;
         float maxX = minX + targetWidth;
         float maxY = minY + targetHeight;
 
         BufferBuilder buffer = Tesselator.getInstance().getBuilder();
         buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        buffer.vertex(matrix, minX, maxY, 0.0F).uv(0.0F, 1.0F).endVertex();
-        buffer.vertex(matrix, maxX, maxY, 0.0F).uv(1.0F, 1.0F).endVertex();
-        buffer.vertex(matrix, maxX, minY, 0.0F).uv(1.0F, 0.0F).endVertex();
-        buffer.vertex(matrix, minX, minY, 0.0F).uv(0.0F, 0.0F).endVertex();
+        buffer.vertex(matrix, minX, maxY, 0.0F).uv(0.0F, 0.0F).endVertex();
+        buffer.vertex(matrix, maxX, maxY, 0.0F).uv(1.0F, 0.0F).endVertex();
+        buffer.vertex(matrix, maxX, minY, 0.0F).uv(1.0F, 1.0F).endVertex();
+        buffer.vertex(matrix, minX, minY, 0.0F).uv(0.0F, 1.0F).endVertex();
         Tesselator.getInstance().end();
 
         RenderSystem.disableBlend();
@@ -109,7 +106,7 @@ public class GuiShaderTextRenderer {
         RenderSystem.applyModelViewMatrix();
 
         GuiGraphics offscreenGraphics = new GuiGraphics(mc, MultiBufferSource.immediate(Tesselator.getInstance().getBuilder()));
-        offscreenGraphics.drawString(font, text, 2, 2, 0xFFFFFFFF, false);
+        offscreenGraphics.drawString(font, text, MASK_PADDING, MASK_PADDING, 0xFFFFFFFF, false);
         offscreenGraphics.flush();
 
         modelViewStack.popPose();
