@@ -30,7 +30,7 @@ public final class ClientTooltipEvents {
         if (!BlackSouls.MODID.equals(itemId.getNamespace())) return;
 
         
-        if (!itemId.getPath().contains("avatar_pack") && !itemId.getPath().equals("chrono_clock")) return;
+        if (!itemId.getPath().contains("avatar_pack")) return;
 
         
         event.setCanceled(true);

@@ -3,9 +3,9 @@ package com.BlackSouls.BlackSoulsMod.handler;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.client.gui.GuiBSMainMenu;
 import com.BlackSouls.BlackSoulsMod.client.ClientSceneMusic;
-import com.BlackSouls.BlackSoulsMod.client.TurnBattleAudioGate;
 import com.BlackSouls.BlackSoulsMod.client.render.GuiShaderTextRenderer;
 import com.BlackSouls.BlackSoulsMod.mixin.AbstractContainerScreenAccessor;
+import com.BlackSouls.BlackSoulsMod.util.HokoniwaDestination;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -30,10 +30,6 @@ import net.minecraftforge.fml.ModList;
 public class ClientEventHandler {
 
     private static SoundInstance currentTitleBGM = null;
-    private static SoundInstance currentLibraryBGM = null;
-    private static final ResourceLocation LIBRARY_DIM_ID = new ResourceLocation(BlackSouls.MODID, "library");
-    private static final ResourceLocation LIBRARY_BGM_ID = new ResourceLocation(BlackSouls.MODID, "music.library");
-
     private static final String HATSUYUKI_CLIENT_LITE_MODID = "hatsuyukiclientlite";
 
     @SubscribeEvent
@@ -85,10 +81,9 @@ public class ClientEventHandler {
 
         Minecraft mc = Minecraft.getInstance();
         ClientLevel level = mc.level;
-        if (level != null && level.dimension().location().equals(LIBRARY_DIM_ID) && event.getSound() != null) {
+        if (isHokoniwa(level) && event.getSound() != null) {
             ResourceLocation soundId = event.getSound().getLocation();
-            if (!LIBRARY_BGM_ID.equals(soundId)
-                    && !ClientSceneMusic.isSceneSound(soundId)
+            if (!ClientSceneMusic.isSceneSound(soundId)
                     && soundId.getPath().contains("music")) {
                 event.setSound(null);
             }
@@ -105,8 +100,8 @@ public class ClientEventHandler {
         Screen screen = mc.screen;
         ClientLevel level = mc.level;
 
-        boolean inLibrary = level != null && level.dimension().location().equals(LIBRARY_DIM_ID);
-        if (inLibrary) {
+        boolean inHokoniwa = isHokoniwa(level);
+        if (inHokoniwa) {
             mc.getMusicManager().stopPlaying();
             if (currentTitleBGM != null) {
                 mc.getSoundManager().stop(currentTitleBGM);
@@ -117,25 +112,7 @@ public class ClientEventHandler {
                 stopWorldMusicForDeath();
                 return;
             }
-
-            if (ClientSceneMusic.hasAssignedMusic()) {
-                if (currentLibraryBGM != null) {
-                    mc.getSoundManager().stop(currentLibraryBGM);
-                    currentLibraryBGM = null;
-                }
-                return;
-            }
-            if (!TurnBattleAudioGate.isActive()
-                    && (currentLibraryBGM == null || !mc.getSoundManager().isActive(currentLibraryBGM))) {
-                currentLibraryBGM = SimpleSoundInstance.forMusic(BlackSouls.LIBRARY_BGM_EVENT.get());
-                mc.getSoundManager().play(currentLibraryBGM);
-            }
             return;
-        }
-
-        if (currentLibraryBGM != null) {
-            mc.getSoundManager().stop(currentLibraryBGM);
-            currentLibraryBGM = null;
         }
 
         if (screen instanceof TitleScreen || screen instanceof GuiBSMainMenu) {
@@ -163,9 +140,13 @@ public class ClientEventHandler {
         Minecraft mc = Minecraft.getInstance();
         ClientSceneMusic.stopForDeath();
         mc.getMusicManager().stopPlaying();
-        if (currentLibraryBGM != null) {
-            mc.getSoundManager().stop(currentLibraryBGM);
-            currentLibraryBGM = null;
+    }
+
+    private static boolean isHokoniwa(ClientLevel level) {
+        if (level == null) {
+            return false;
         }
+        ResourceLocation dimension = level.dimension().location();
+        return HokoniwaDestination.ID.equals(dimension) || HokoniwaDestination.LEGACY_ID.equals(dimension);
     }
 }

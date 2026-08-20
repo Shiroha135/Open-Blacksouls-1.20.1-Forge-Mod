@@ -58,7 +58,7 @@ public class PacketDevAction {
                 case SET_NO_COOLDOWN -> {
                     stats.developerNoCooldown = this.enabled;
                     if (this.enabled) {
-                        SkillUtils.clearAllCooldownsExceptChrono(player);
+                        SkillUtils.clearAllCooldowns(player);
                     }
                     player.displayClientMessage(Component.translatable(
                             this.enabled ? "message.blacksouls.dev.no_cooldown.enabled" : "message.blacksouls.dev.no_cooldown.disabled"

@@ -58,7 +58,7 @@ public class EntityNoden extends PathfinderMob implements DialogueResettable, Cu
 
     @Override
     public String getMmdAnimation() {
-        return this.isSitting() ? "sneak" : "";
+        return this.isSitting() ? "ride" : "";
     }
 
     @Override

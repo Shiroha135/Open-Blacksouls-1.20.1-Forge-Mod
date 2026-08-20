@@ -142,10 +142,8 @@ public class KeyHandler {
                         || mainHand.getItem() == BlackSouls.VORPAL_SWORD.get())) {
                     canCast = true;
                 }
-            } else if (skillToCast.equals("bs2_skill_chrono_clock")) {
-                canCast = SkillUtils.hasChronoClockEquipped(player);
             } else {
-                
+
                 AbstractSkill skill = SkillRegistry.SKILLS.get(skillToCast);
                 canCast = skill != null && skill.isUnlockedForGUI(player);
             }

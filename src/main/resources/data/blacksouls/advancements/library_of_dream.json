@@ -19,7 +19,7 @@
     "entered_library": {
       "trigger": "minecraft:changed_dimension",
       "conditions": {
-        "to": "blacksouls:library"
+        "to": "blacksouls:hokoniwa"
       }
     }
   }

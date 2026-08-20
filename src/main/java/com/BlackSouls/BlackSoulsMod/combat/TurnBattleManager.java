@@ -81,7 +81,7 @@ public final class TurnBattleManager {
     private static final Set<String> NON_DAMAGE_SKILLS = Set.of(
             "bs2_skill_absolute_hit", "bs2_skill_aim", "bs2_skill_awakening",
             "bs2_skill_berserker_roar", "bs2_skill_blood_trail",
-            "bs2_skill_bullet_load", "bs2_skill_chakra", "bs2_skill_chrono_clock",
+            "bs2_skill_bullet_load", "bs2_skill_chakra",
             "bs2_skill_counter", "bs2_skill_cure",
             "bs2_skill_delicious_turtle_soup", "bs2_skill_dispel",
             "bs2_skill_dodo_run", "bs2_skill_eclipse", "bs2_skill_erase",

@@ -61,15 +61,6 @@ public class ClientSpongeNameTooltipComponent implements ClientTooltipComponent 
             if (offset < 0.8335f) return lerpColor(0x67C8FF, 0x9B74FF, (offset - 0.6668f) / 0.1667f);
             return lerpColor(0x9B74FF, 0xFF6CCF, (offset - 0.8335f) / 0.1665f);
         }
-        if ("chrono".equals(style)) {
-            if (offset < 0.3333f) {
-                return lerpColor(0xFFB3E8, 0xFF89CC, offset / 0.3333f);
-            }
-            if (offset < 0.6666f) {
-                return lerpColor(0xFF89CC, 0xFF63B3, (offset - 0.3333f) / 0.3333f);
-            }
-            return lerpColor(0xFF63B3, 0xFFC0F2, (offset - 0.6666f) / 0.3334f);
-        }
         if (offset < 0.5f) {
             return lerpColor(0xC86DFF, 0xF0B8FF, offset / 0.5f);
         }

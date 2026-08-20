@@ -78,7 +78,6 @@ public class StatEventHandler {
     private static final String TAG_SKILL_INSTANT_DEATH_RATE = "bs2_skill_instant_death_rate";
     private static final String TAG_SPEAR_COUNTER = "bs2_spear_counter";
     private static final String TAG_PUPPET_RANGED_COOLDOWN = "bs2_puppet_ranged_cooldown";
-    private static final UUID CHRONO_WATCH_SLOT_UUID = UUID.fromString("a7eecdcf-c4a0-4d4d-8831-fc8f7c80adf1");
 
     private static final double CAP_HP = BSPlayerStats.HARD_CAP_HP;
     private static final double CAP_MP = BSPlayerStats.HARD_CAP_MP;
@@ -117,7 +116,6 @@ public class StatEventHandler {
 
     private static final class BaubleCounter {
         private final Map<Item, Integer> cache = new IdentityHashMap<>();
-        private boolean chronoClockEquipped;
 
         private BaubleCounter(LivingEntity entity) {
             CuriosApi.getCuriosInventory(entity).ifPresent(handler -> {
@@ -125,9 +123,6 @@ public class StatEventHandler {
                     ItemStack stack = result.stack();
                     Item item = stack.getItem();
                     cache.put(item, cache.getOrDefault(item, 0) + 1);
-                    if (SkillUtils.isChronoClockItem(stack)) {
-                        chronoClockEquipped = true;
-                    }
                 }
             });
         }
@@ -149,10 +144,6 @@ public class StatEventHandler {
 
         private boolean has(Item item) {
             return count(item) > 0;
-        }
-
-        private boolean hasChronoClock() {
-            return chronoClockEquipped;
         }
     }
 
@@ -2081,9 +2072,6 @@ public class StatEventHandler {
                 stats.magicDefense *= Math.pow(1.50D, miracleGarbCount);
                 stats.maxMp *= Math.pow(0.01D, miracleGarbCount);
             }
-            if (counts.hasChronoClock()) {
-                stats.extraActionRate += 1.0;
-            }
 
             if (counts.count(BlackSouls.ARMOR_OF_THE_SUN.get()) > 0) {
                 stats.attack *= 1.15; stats.defense *= 1.15; stats.speed *= 0.90;
@@ -3333,7 +3321,6 @@ public class StatEventHandler {
         }
         BaubleCounter counts = new BaubleCounter(player);
         applyPassiveSnakeDressPoison(player, counts);
-        updateChronoClockState(player, counts.hasChronoClock());
         BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).resolve().orElse(null);
         if (stats != null) {
             applyStats(player, counts, stats);
@@ -3353,40 +3340,9 @@ public class StatEventHandler {
         }
     }
 
-    private static void updateChronoClockState(Player player, boolean chronoClockEquipped) {
-        if (player.level().isClientSide()) {
-            return;
-        }
-
-        CuriosApi.getCuriosInventory(player).ifPresent(handler -> {
-            boolean shouldHaveWatchSlot = SkillUtils.hasChronoClockAvailable(player, chronoClockEquipped);
-            boolean hasWatchSlotModifier = false;
-            for (Map.Entry<String, AttributeModifier> entry : handler.getModifiers().entries()) {
-                if (entry.getKey().equals("watch") && CHRONO_WATCH_SLOT_UUID.equals(entry.getValue().getId())) {
-                    hasWatchSlotModifier = true;
-                    break;
-                }
-            }
-
-            if (shouldHaveWatchSlot && !hasWatchSlotModifier) {
-                HashMultimap<String, AttributeModifier> modifiers = createChronoWatchSlotModifier();
-                handler.addTransientSlotModifiers(modifiers);
-            } else if (!shouldHaveWatchSlot && hasWatchSlotModifier) {
-                HashMultimap<String, AttributeModifier> modifiers = createChronoWatchSlotModifier();
-                handler.removeSlotModifiers(modifiers);
-            }
-        });
-    }
-
-    private static HashMultimap<String, AttributeModifier> createChronoWatchSlotModifier() {
-        HashMultimap<String, AttributeModifier> modifiers = HashMultimap.create();
-        modifiers.put("watch", new AttributeModifier(CHRONO_WATCH_SLOT_UUID, "chrono_clock_watch_slot", 1.0D, AttributeModifier.Operation.ADDITION));
-        return modifiers;
-    }
-
     private static void tickServerPlayerResources(ServerPlayer serverPlayer, Player player, BSPlayerStats stats, BaubleCounter counts) {
         tickPuppetRing(serverPlayer, stats, counts);
-        boolean syncNeeded = clearChronoClockBindingsIfNeeded(stats, counts.hasChronoClock());
+        boolean syncNeeded = false;
         double previousActionPoints = stats.getCurrentActionPoints();
         double maxActionPoints = SkillUtils.getActionCount(
                 serverPlayer,
@@ -3496,30 +3452,6 @@ public class StatEventHandler {
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0F, 1.0F);
         data.putLong(TAG_PUPPET_RANGED_COOLDOWN, gameTime + 20L);
-    }
-
-    private static boolean clearChronoClockBindingsIfNeeded(BSPlayerStats stats, boolean chronoClockEquipped) {
-        if (chronoClockEquipped) {
-            return false;
-        }
-        boolean changed = false;
-        if ("bs2_skill_chrono_clock".equals(stats.skillZ)) {
-            stats.skillZ = "";
-            changed = true;
-        }
-        if ("bs2_skill_chrono_clock".equals(stats.skillX)) {
-            stats.skillX = "";
-            changed = true;
-        }
-        if ("bs2_skill_chrono_clock".equals(stats.skillC)) {
-            stats.skillC = "";
-            changed = true;
-        }
-        if ("bs2_skill_chrono_clock".equals(stats.skillV)) {
-            stats.skillV = "";
-            changed = true;
-        }
-        return changed;
     }
 
     private static void tryRecoverLostSouls(ServerPlayer serverPlayer, BSPlayerStats stats) {

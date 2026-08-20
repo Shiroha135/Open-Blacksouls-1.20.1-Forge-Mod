@@ -46,7 +46,6 @@ public class GuiAdvancedSkill extends Screen {
     private static final ResourceLocation ICON_SOUL_LIGHT = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/original/soul_light.png");
     private static final ResourceLocation ICON_SOUL_RADIATION = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/original/soul_radiation.png");
     private static final ResourceLocation ICON_CARTHUS_BLOOD_CURSE = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/original/carthus_blood_curse.png");
-    private static final ResourceLocation ICON_CHRONO_CLOCK = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/chrono_clock.png");
     private static final ResourceLocation ICON_DECAPITATION = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/decapitation.png");
     private static final ResourceLocation ICON_HIDE_AND_SEEK = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/hide_and_seek.png");
     private static final ResourceLocation ICON_SHADOWLESS = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/shadowless.png");
@@ -193,8 +192,6 @@ public class GuiAdvancedSkill extends Screen {
                 || mainHand.getItem() == BlackSouls.VORPAL_SWORD.get())) {
             addSkill("bs2_skill_reinforce", ICON_REINFORCE);
         }
-        if (SkillUtils.hasChronoClockEquipped(player)) addSkill("bs2_skill_chrono_clock", ICON_CHRONO_CLOCK);
-
         // 开放 API：遍历 SkillRegistry 中所有 isUnlockedForGUI=true 的技能，自动加入 GUI。
         // 附属 mod（如 Yuki）只需注册 AbstractSkill 并 override isUnlockedForGUI/getIcon/getManaCost 即可。
         for (AbstractSkill skill : SkillRegistry.getAvailableSkills(player)) {
@@ -376,7 +373,6 @@ public class GuiAdvancedSkill extends Screen {
             case "bs2_skill_soul_light" -> 12.0F;// 魂之光蓝耗
             case "bs2_skill_soul_radiation" -> 12.0F;// 魂之放射蓝耗
             case "bs2_skill_carthus_blood_curse" -> 0.0F;// 卡萨斯血咒蓝耗
-            case "bs2_skill_chrono_clock" -> 0.0F;
             default -> {
                 // 开放 API：从 SkillRegistry 查技能的 MP 蓝耗
                 AbstractSkill skill = SkillRegistry.SKILLS.get(skillId);

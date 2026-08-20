@@ -36,7 +36,9 @@ public final class MapDeployer {
 
     public static void deploy(MinecraftServer server) {
         Path worldPath = server.getWorldPath(LevelResource.ROOT);
-        Path dimensionPath = worldPath.resolve("dimensions").resolve(BlackSouls.MODID).resolve("library");
+        Path dimensionRoot = worldPath.resolve("dimensions").resolve(BlackSouls.MODID);
+        Path dimensionPath = dimensionRoot.resolve("hokoniwa");
+        migrateLegacyDimension(dimensionRoot.resolve("library"), dimensionPath);
         Path marker = dimensionPath.resolve(MARKER_NAME);
         deploySavedDataIfMissing(dimensionPath, LOCK_DATA_RESOURCE, LOCK_DATA_NAME);
         deploySavedDataIfMissing(dimensionPath, ANIMATED_DOOR_DATA_RESOURCE, ANIMATED_DOOR_DATA_NAME);
@@ -72,6 +74,23 @@ public final class MapDeployer {
             } catch (IOException exception) {
                 BlackSouls.LOGGER.warn("Failed to clean map staging directory {}", staging, exception);
             }
+        }
+    }
+
+    private static void migrateLegacyDimension(Path legacyPath, Path targetPath) {
+        if (!Files.isDirectory(legacyPath) || Files.exists(targetPath)) {
+            return;
+        }
+        try {
+            Files.createDirectories(targetPath.getParent());
+            try {
+                Files.move(legacyPath, targetPath, StandardCopyOption.ATOMIC_MOVE);
+            } catch (IOException atomicMoveError) {
+                Files.move(legacyPath, targetPath);
+            }
+            BlackSouls.LOGGER.info("Migrated legacy dimension data from {} to {}", legacyPath, targetPath);
+        } catch (IOException exception) {
+            BlackSouls.LOGGER.error("Failed to migrate legacy dimension data from {} to {}", legacyPath, targetPath, exception);
         }
     }
 

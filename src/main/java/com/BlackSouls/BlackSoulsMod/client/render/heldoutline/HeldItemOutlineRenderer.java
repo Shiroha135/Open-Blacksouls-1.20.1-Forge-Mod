@@ -72,30 +72,6 @@ public final class HeldItemOutlineRenderer {
     private static RenderBuffers embeddiumCaptureRenderBuffers;
     @Nullable
     private static Matrix4f activeHandProjectionMatrix;
-    private static final HeldItemOutlineEffectProfile CHRONO_CLOCK_PROFILE = new HeldItemOutlineEffectProfile(
-            HeldItemOutlineSettings.ColorMode.DUAL_SCROLL,
-            1,
-            1,
-            HeldItemOutlineSettings.SampleColorSortMode.WEIGHT,
-            HeldItemOutlineSettings.BloomResolution.HALF,
-            true,
-            4,
-            2.10F,
-            2.45F,
-            2.65F,
-            1.45F,
-            0.10F,
-            0.92F,
-            1.00F,
-            0.92F,
-            0.34F,
-            1.0F,
-            0.58F,
-            0.16F,
-            1.75F,
-            0.85F,
-            0.92F
-    );
 
     private HeldItemOutlineRenderer() {
     }
@@ -545,12 +521,8 @@ public final class HeldItemOutlineRenderer {
 
         state.cachedObservedHandEnabled = handEnabled;
         state.cachedObservedResolvedStack = observedStack.copy();
-        state.cachedBaseProfile = CHRONO_CLOCK_PROFILE;
         state.cachedRuleRevision = 0L;
-        HeldItemOutlineEffectProfile profile = handEnabled && SkillUtils.isChronoClockItem(liveStack)
-                ? CHRONO_CLOCK_PROFILE
-                : null;
-        state.cachedResolvedState = createResolvedRenderState(liveStack, profile);
+        state.cachedResolvedState = createResolvedRenderState(liveStack, null);
         return state.cachedResolvedState;
     }
 
@@ -1191,8 +1163,6 @@ public final class HeldItemOutlineRenderer {
         private ScissorRect scissorRect;
         private boolean cachedObservedHandEnabled = true;
         private ItemStack cachedObservedResolvedStack = ItemStack.EMPTY;
-        @Nullable
-        private HeldItemOutlineEffectProfile cachedBaseProfile;
         private long cachedRuleRevision = Long.MIN_VALUE;
         @Nullable
         private ResolvedRenderState cachedResolvedState;
@@ -1238,7 +1208,6 @@ public final class HeldItemOutlineRenderer {
             this.pendingState = null;
             this.cachedObservedHandEnabled = true;
             this.cachedObservedResolvedStack = ItemStack.EMPTY;
-            this.cachedBaseProfile = null;
             this.cachedRuleRevision = Long.MIN_VALUE;
             this.cachedResolvedState = null;
             this.transitionEndMillis = 0L;

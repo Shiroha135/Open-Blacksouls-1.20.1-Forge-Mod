@@ -2,6 +2,7 @@ package com.BlackSouls.BlackSoulsMod.client;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.util.OriginalMapSceneRegistry;
+import com.BlackSouls.BlackSoulsMod.util.HokoniwaDestination;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
@@ -19,7 +20,6 @@ import net.minecraftforge.fml.common.Mod;
 public final class ClientSceneMusic {
     private static final String MUSIC_MOD_ID = "blacksouls2music";
     private static final float SCENE_VOLUME_MULTIPLIER = 1.2F;
-    private static final ResourceLocation LIBRARY_DIM_ID = ResourceLocation.fromNamespaceAndPath(BlackSouls.MODID, "library");
     private static String activeSceneId = "";
     private static OriginalMapSceneRegistry.Entry activeEntry;
     private static SimpleSoundInstance activeMusic;
@@ -37,7 +37,8 @@ public final class ClientSceneMusic {
             reset();
             return;
         }
-        if (!minecraft.level.dimension().location().equals(LIBRARY_DIM_ID)) {
+        ResourceLocation dimension = minecraft.level.dimension().location();
+        if (!HokoniwaDestination.ID.equals(dimension) && !HokoniwaDestination.LEGACY_ID.equals(dimension)) {
             ClientSceneState.clear();
             reset();
             return;

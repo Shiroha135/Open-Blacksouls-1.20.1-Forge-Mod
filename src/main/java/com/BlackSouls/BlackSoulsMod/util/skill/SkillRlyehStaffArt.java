@@ -31,7 +31,7 @@ public class SkillRlyehStaffArt extends AbstractOriginalWeaponSkill {
         schedule(player, 9, () -> playSound(player, BlackSouls.SAINT7_EVENT.get(), 1.0F));
         schedule(player, 11, () -> {
             playSound(player, BlackSouls.ITEM3_EVENT.get(), 1.5F);
-            SkillUtils.clearAllCooldownsExceptChrono(player);
+            SkillUtils.clearAllCooldowns(player);
         });
     }
 

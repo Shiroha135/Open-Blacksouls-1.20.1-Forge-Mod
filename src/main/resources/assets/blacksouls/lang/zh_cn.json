@@ -134,7 +134,7 @@
   "item.blacksouls.homeward_bone_dust.lore.2": "回想起那曾经与少女一同取暖的篝火吧。",
 
   "item.blacksouls.black_ash": "黑之灰",
-  "item.blacksouls.black_ash.lore.1": "消耗全部的魂，回归图书馆之梦。",
+  "item.blacksouls.black_ash.lore.1": "消耗全部的魂，回归箱庭。",
   "item.blacksouls.black_ash.lore.2": "无论多少次你都能重获新生，继续去体验这份故事。",
 
   "item.blacksouls.hemostatic_cloth": "止血布",
@@ -511,7 +511,6 @@
   "tooltip.blacksouls.guardian_angel.defense": "防御力 -30%%",
   "tooltip.blacksouls.guardian_angel.magic_defense": "魔法防御 -30%%",
   "message.blacksouls.guardian_angel.trigger": "守护天使特效发动了！",
-  "message.blacksouls.chrono_clock.guardian_trigger": "克洛的怀表扭回了死亡的指针。",
 
   "item.blacksouls.butetsu_armor": "武铁之铠",
   "item.blacksouls.butetsu_armor.lore.2": "武力帝国隆盖亚所打造的",
@@ -1254,7 +1253,6 @@
   "effect.blacksouls.ice_power": "冰之力",
   "effect.blacksouls.thunder_power": "闪电之力",
   "effect.blacksouls.dark_power": "暗之力",
-  "effect.blacksouls.rewind": "克洛诺斯的回溯",
   "message.blacksouls.status.hollowed": "死亡的阴影笼罩了你，你变成了亡者……",
   //===================================================================
   // 系统菜单与基础UI
@@ -1738,10 +1736,11 @@
   //======================================================================================
   // 维度
   //======================================================================================
-  "dimension.blacksouls.library": "箱庭",
-  "gui.blacksouls.bonfire.library_name": "图书馆之梦",
-  "gui.blacksouls.bonfire.library_desc": "仿照记忆中的那间图书室形成的梦之世界。\n虽然连接着世界的每一处，却没人知道它的位置在哪里。",
-  "message.blacksouls.library_awaken": "你在虚无中苏醒……这里是，图书馆之梦。",
+  "dimension.blacksouls.hokoniwa": "箱庭",
+  "dimension.blacksouls.library": "箱庭（旧入口）",
+  "gui.blacksouls.bonfire.library_name": "箱庭",
+  "gui.blacksouls.bonfire.library_desc": "封闭而完整的小世界，汇集了不思议之国的各处区域与故事。\n所有道路最终都会在这里彼此相连。",
+  "message.blacksouls.library_awaken": "你在虚无中苏醒……这里是，箱庭。",
   //===================================================================
   // 成就
   //===================================================================
@@ -1867,7 +1866,6 @@
   "gui.blacksouls.seek_service.banner.current_value": "当前值：%s（%s）",
   "gui.blacksouls.difficulty.active_modes_prefix": "已启用: ",
   "gui.blacksouls.difficulty.none": "无",
-  "tooltip.blacksouls.ysm_incompatible": "检测到 YSM：第三人称格挡显示可能异常",
   "entity.blacksouls.hail_caesar": "飞龙海尔凯撒",
   "entity.blacksouls.hell_prince": "地狱王子",
   "chat.blacksouls.hell_prince.intro1": "§l剧作家洛德：你啊，齿轮没有在运转吗？你的脑袋里应该有齿轮才对吧",
@@ -1880,39 +1878,6 @@
   "message.blacksouls.hell_prince.damage": "%s受到了%s点伤害！",
   "message.blacksouls.hell_prince.jabara_sword.start": "地狱王子用蛇腹剑进行横扫！",
   "message.blacksouls.skill.instant_death_immune": "即死无效！",
-  "gui.blacksouls.chrono_dialogue.name": "克洛",
-  "gui.blacksouls.chrono_dialogue.line.1": "……终于注意到吾辈了么，%s。",
-  "gui.blacksouls.chrono_dialogue.line.2": "吾辈乃时间之神，寄宿在那个怀表之中的精灵及管理者，名为克洛诺斯。",
-  "gui.blacksouls.chrono_dialogue.line.3": "那么，吾辈的新主人啊。你向吾辈期待着何物？又想成为何物？",
-  "gui.blacksouls.chrono_dialogue.line.4.branches1": "哦，很有出息呢。",
-  "gui.blacksouls.chrono_dialogue.line.4.branches2": "哈啊……吾辈到底是造了什么孽，才会跟一个毫无野心的无趣凡人绑定在一起。你最好别在种地的时候被苦力怕炸死，吾辈可不想浪费力量倒流时间去救你。",
-  "gui.blacksouls.chrono_dialogue.choice.branches1": "我想掌控一切，甚至超越这方块世界的法则。",
-  "gui.blacksouls.chrono_dialogue.choice.branches2": "其实也没什么，只想每天种种地、挖挖矿，摸鱼苟活。",
-  "gui.blacksouls.chrono_dialogue.idle.1": "又来了么。吾辈正在观察这个世界，顺便观察你有没有一点长进。",
-  "gui.blacksouls.chrono_dialogue.idle.2": "怀表还在走，时间也还在走。只有你站在原地发呆，真是稳定得令人安心。",
-  "gui.blacksouls.chrono_dialogue.idle.3": "如果没有要紧事，吾辈建议你去看看远方。比盯着吾辈傻笑更有意义。",
-  "gui.blacksouls.chrono_dialogue.idle.4": "你是闲的没事干嘛，老是盯着吾辈干什么？",
-  "gui.blacksouls.chrono_dialogue.idle.5": "人类的日常真奇妙。明明总在浪费时间，却又总说时间不够。",
-  "gui.blacksouls.chrono_dialogue.idle.6": "吾辈不是你的备忘录。不过如果你又忘了目标，倒也不是第一次了。",
-  "gui.blacksouls.chrono_dialogue.interaction.iron_ingot": "铁锭。文明的第一块齿轮终于转起来了。挺能干的嘛。",
-  "gui.blacksouls.chrono_dialogue.interaction.gold_ingot": "金锭么。闪闪发亮，柔软，又容易让人类露出傻笑。",
-  "gui.blacksouls.chrono_dialogue.interaction.diamond": "钻石么？两百年前吾辈的主人好像还挺喜欢这种东西。",
-  "gui.blacksouls.chrono_dialogue.ai": "AI对话",
-  "gui.blacksouls.chrono_dialogue.config": "API设置",
-  "gui.blacksouls.chrono_dialogue.save": "保存",
-  "gui.blacksouls.chrono_dialogue.send": "发送",
-  "gui.blacksouls.chrono_dialogue.api_key": "APIKey",
-  "gui.blacksouls.chrono_dialogue.base_url": "BaseURL，例如 https://api.openai.com",
-  "gui.blacksouls.chrono_dialogue.model": "模型名，例如gpt-4o-mini",
-  "gui.blacksouls.chrono_dialogue.prompt": "输入想对克洛说的话",
-  "gui.blacksouls.chrono_dialogue.ai_hint": "想问什么就说。吾辈会听，但不保证会纵容你。",
-  "gui.blacksouls.chrono_dialogue.config_hint": "输入OpenAI-compatible的APIKey、BaseURL和模型名。它们只会保存到本地客户端配置。",
-  "gui.blacksouls.chrono_dialogue.config_saved": "配置保存了。好，接下来别把时间浪费在输错地址这种事上。",
-  "gui.blacksouls.chrono_dialogue.waiting": "少女祈祷中……请耐心等待。PS：等待时长取决于模型上下文长度/模型供应商延迟喵……",
-  "gui.blacksouls.chrono_dialogue.empty": "吾辈什么也没听见。你不会连提问都被时间吃掉了吧？",
-  "gui.blacksouls.chrono_dialogue.error": "请求失败了。不是吾辈的问题，大概率是你的Apikey、地址，或者运气。",
-  "skill.blacksouls.chrono_clock.name": "克洛的怀表",
-  "skill.blacksouls.bs2_skill_chrono_clock.name": "克洛的怀表-回溯",
   //dlc头像
   "avatar.blacksouls.guine_sheet": "古伊奈",
   "avatar.blacksouls.guine_crest_sheet": "古伊奈",
@@ -3013,7 +2978,6 @@
   "skill.blacksouls.bs2_skill_carthus_blood_curse.description": "减少自身HP，恢复自身MP。",
   "skill.blacksouls.bs2_skill_chakra.description": "治疗使用者的所有异常状态。",
   "skill.blacksouls.bs2_skill_chaos_explosion.description": "对敌全体造成炎属性伤害以及当前血量1/4的伤害\n并附加燃烧状态。CD:8",
-  "skill.blacksouls.bs2_skill_chrono_clock.description": "倒转克洛的怀表，清除除本技能外所有技能的冷却时间。",
   "skill.blacksouls.bs2_skill_cleave_in_two.description": "对单个敌人进行无视防御攻击并造成5%HP的伤害。\nCD:5",
   "skill.blacksouls.bs2_skill_corpse_dragon_awe.description": "对单个敌人进行5次暗属性攻击，每次造成最大生命值1%的伤害。\n并降低其速度。CD:8",
   "skill.blacksouls.bs2_skill_counter.description": "短时间内，受到的物理伤害降低50%。\n受到敌方的物理攻击时进行反击。",

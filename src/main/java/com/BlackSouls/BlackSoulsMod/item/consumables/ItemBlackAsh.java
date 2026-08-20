@@ -3,7 +3,7 @@ package com.BlackSouls.BlackSoulsMod.item.consumables;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
-import com.BlackSouls.BlackSoulsMod.util.LibraryDestination;
+import com.BlackSouls.BlackSoulsMod.util.HokoniwaDestination;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -25,7 +25,7 @@ import java.util.List;
 
 public class ItemBlackAsh extends Item {
 
-    private static final ResourceKey<Level> LIBRARY_KEY = LibraryDestination.DIMENSION;
+    private static final ResourceKey<Level> HOKONIWA_KEY = HokoniwaDestination.DIMENSION;
 
     public ItemBlackAsh(Properties properties) {
         super(properties.stacksTo(1));
@@ -36,11 +36,11 @@ public class ItemBlackAsh extends Item {
         ItemStack stack = player.getItemInHand(hand);
 
         if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
-            if (serverPlayer.level().dimension().equals(LIBRARY_KEY)) {
+            if (HokoniwaDestination.isHokoniwa(serverPlayer.level().dimension())) {
                 teleportToOverworldSpawn(serverPlayer);
                 return InteractionResultHolder.consume(stack);
             }
-            boolean success = teleportToLibrary(serverPlayer);
+            boolean success = teleportToHokoniwa(serverPlayer);
             if (!success) {
                 return InteractionResultHolder.fail(stack);
             }
@@ -49,16 +49,16 @@ public class ItemBlackAsh extends Item {
         return InteractionResultHolder.consume(stack);
     }
 
-    private boolean teleportToLibrary(ServerPlayer serverPlayer) {
+    private boolean teleportToHokoniwa(ServerPlayer serverPlayer) {
         BSPlayerStats stats = serverPlayer.getCapability(BSPlayerStats.CAPABILITY).resolve().orElse(null);
 
-        ServerLevel targetLevel = serverPlayer.server.getLevel(LIBRARY_KEY);
+        ServerLevel targetLevel = serverPlayer.server.getLevel(HOKONIWA_KEY);
 
         if (targetLevel == null || stats == null) {
             serverPlayer.sendSystemMessage(Component.translatable("message.blacksouls.no_bonfire").withStyle(ChatFormatting.RED));
             return false;
         }
-        if (!LibraryDestination.isLandingSafe(targetLevel)) {
+        if (!HokoniwaDestination.isLandingSafe(targetLevel)) {
             serverPlayer.sendSystemMessage(Component.translatable("message.blacksouls.library_unavailable").withStyle(ChatFormatting.RED));
             return false;
         }
@@ -80,10 +80,10 @@ public class ItemBlackAsh extends Item {
         
         serverPlayer.teleportTo(
                 targetLevel,
-                LibraryDestination.X,
-                LibraryDestination.Y,
-                LibraryDestination.Z,
-                LibraryDestination.YAW,
+                HokoniwaDestination.X,
+                HokoniwaDestination.Y,
+                HokoniwaDestination.Z,
+                HokoniwaDestination.YAW,
                 0.0F
         );
 

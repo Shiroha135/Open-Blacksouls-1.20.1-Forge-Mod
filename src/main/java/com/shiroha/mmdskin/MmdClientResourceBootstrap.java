@@ -29,6 +29,7 @@ public final class MmdClientResourceBootstrap {
     private static final int BUFFER_SIZE = 8192;
     private static final long MAX_EXTRACTED_BYTES = 100L * 1024L * 1024L;
     private static final int MAX_ENTRIES = 1024;
+    private static final String MODEL_PROPERTIES = "model.properties";
     private static final List<BundledModelSpec> BUNDLED_MODELS = List.of(
             new BundledModelSpec("小红帽", "/assets/mmdskin/bundled_models/red_hood.zip", ".blacksouls-red-hood-v1"),
             new BundledModelSpec("诺登", "/assets/mmdskin/bundled_models/noden.zip", ".blacksouls-noden-v1")
@@ -137,21 +138,114 @@ public final class MmdClientResourceBootstrap {
             Path parent = targetDirectory.getParent();
             Files.createDirectories(parent);
             Path staging = Files.createTempDirectory(parent, ".mmdskin-bundle-");
+            Path backup = null;
             try {
                 extractZip(resource, staging);
                 if (!Files.isRegularFile(staging.resolve("model.pmx"))) {
                     throw new IOException("内置模型缺少 model.pmx: " + spec.name());
                 }
-                deleteRecursively(targetDirectory);
-                Files.move(staging, targetDirectory);
-                Files.writeString(marker, "v1", StandardCharsets.UTF_8,
+
+                preserveUserModelFiles(targetDirectory, staging);
+                Files.writeString(staging.resolve(spec.marker()), "v1", StandardCharsets.UTF_8,
                         StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
+                if (Files.exists(targetDirectory)) {
+                    backup = parent.resolve(".mmdskin-backup-" + UUID.randomUUID());
+                    moveDirectory(targetDirectory, backup);
+                }
+
+                try {
+                    moveDirectory(staging, targetDirectory);
+                } catch (IOException installError) {
+                    if (backup != null && Files.exists(backup) && !Files.exists(targetDirectory)) {
+                        try {
+                            moveDirectory(backup, targetDirectory);
+                        } catch (IOException rollbackError) {
+                            installError.addSuppressed(rollbackError);
+                        }
+                    }
+                    throw installError;
+                }
+
+                if (backup != null) {
+                    deleteRecursively(backup);
+                }
                 MmdSkinClient.logger.info("内置 MMD 模型已准备: {}", spec.name());
             } finally {
                 deleteRecursively(staging);
             }
         } catch (IOException | RuntimeException e) {
             MmdSkinClient.logger.error("释放内置 MMD 模型失败", e);
+        }
+    }
+
+    private static void preserveUserModelFiles(Path sourceDirectory, Path stagingDirectory) throws IOException {
+        if (!Files.isDirectory(sourceDirectory)) {
+            return;
+        }
+
+        copyMissingFiles(sourceDirectory, stagingDirectory);
+        copyRecursively(sourceDirectory.resolve(PathConstants.MODEL_ANIMS_DIR),
+                stagingDirectory.resolve(PathConstants.MODEL_ANIMS_DIR));
+        copyUserFile(sourceDirectory, stagingDirectory, PathConstants.MODEL_ANIM_CONFIG);
+        copyUserFile(sourceDirectory, stagingDirectory, MODEL_PROPERTIES);
+    }
+
+    private static void copyUserFile(Path sourceDirectory, Path stagingDirectory, String fileName) throws IOException {
+        Path source = sourceDirectory.resolve(fileName);
+        if (Files.isRegularFile(source)) {
+            Files.copy(source, stagingDirectory.resolve(fileName),
+                    StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);
+        }
+    }
+
+    private static void copyMissingFiles(Path source, Path target) throws IOException {
+        try (Stream<Path> walk = Files.walk(source)) {
+            for (Path path : walk.toList()) {
+                Path relative = source.relativize(path);
+                if (relative.getNameCount() == 0 || isBundledMarker(relative.getFileName().toString())) {
+                    continue;
+                }
+
+                Path output = target.resolve(relative);
+                if (Files.isDirectory(path)) {
+                    Files.createDirectories(output);
+                } else if (!Files.exists(output)) {
+                    Files.createDirectories(output.getParent());
+                    Files.copy(path, output, StandardCopyOption.COPY_ATTRIBUTES);
+                }
+            }
+        }
+    }
+
+    private static boolean isBundledMarker(String fileName) {
+        return fileName.startsWith(".blacksouls-");
+    }
+
+    private static void copyRecursively(Path source, Path target) throws IOException {
+        if (!Files.exists(source)) {
+            return;
+        }
+
+        try (Stream<Path> walk = Files.walk(source)) {
+            for (Path path : walk.toList()) {
+                Path output = target.resolve(source.relativize(path));
+                if (Files.isDirectory(path)) {
+                    Files.createDirectories(output);
+                } else {
+                    Files.createDirectories(output.getParent());
+                    Files.copy(path, output, StandardCopyOption.REPLACE_EXISTING,
+                            StandardCopyOption.COPY_ATTRIBUTES);
+                }
+            }
+        }
+    }
+
+    private static void moveDirectory(Path source, Path target) throws IOException {
+        try {
+            Files.move(source, target, StandardCopyOption.ATOMIC_MOVE);
+        } catch (IOException atomicMoveError) {
+            Files.move(source, target);
         }
     }
 

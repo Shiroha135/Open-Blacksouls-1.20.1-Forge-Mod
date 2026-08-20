@@ -34,7 +34,6 @@ public class ShaderHelper {
     public static ShaderInstance heldItemOutlineShader;
     public static ShaderInstance heldItemBloomShader;
     public static ShaderInstance heldItemBloomBlurShader;
-    public static ShaderInstance chronoStarShader;
     public static ShaderInstance fadedBannerShader;
     public static ShaderInstance battleTransitionShader;
     public static ShaderInstance noraKawaseDownShader;
@@ -126,15 +125,6 @@ public class ShaderHelper {
                         heldItemBloomBlurShader = shader;
                         HeldItemBloomBlurShaderRegistry.setShader(shader);
                     }
-            );
-
-            event.registerShader(
-                    new ShaderInstance(
-                            event.getResourceProvider(),
-                            new ResourceLocation(BlackSouls.MODID, "chrono_star"),
-                            DefaultVertexFormat.POSITION_TEX_COLOR
-                    ),
-                    shader -> chronoStarShader = shader
             );
 
             event.registerShader(

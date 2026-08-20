@@ -12,8 +12,8 @@ public final class BonfireMetadata {
     private static final String DESCRIPTION_KEY = "BlackSoulsBonfireDescription";
 
     public static Data read(Level level, BlockPos pos) {
-        if (level.dimension().equals(LibraryDestination.DIMENSION)
-                && pos.equals(LibraryDestination.FIRST_BONFIRE_POS)) {
+        if (HokoniwaDestination.isHokoniwa(level.dimension())
+                && pos.equals(HokoniwaDestination.FIRST_BONFIRE_POS)) {
             return new Data(
                     "gui.blacksouls.bonfire.library_name",
                     "gui.blacksouls.bonfire.library_desc"

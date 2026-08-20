@@ -2,11 +2,10 @@ package com.BlackSouls.BlackSoulsMod.handler;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.entity.EntityCheshireCat;
-import com.BlackSouls.BlackSoulsMod.util.LibraryDestination;
+import com.BlackSouls.BlackSoulsMod.util.HokoniwaDestination;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -31,7 +30,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class DimensionRuleHandler {
 
-    private static final ResourceKey<Level> LIBRARY_DIM = LibraryDestination.DIMENSION;
     private static final String PREVIOUS_GAME_MODE_KEY = "BlacksoulsLibraryPreviousGameMode";
     private static final String DEATH_INVENTORY_KEY = "BlacksoulsLibraryDeathInventory";
     private static final String DEATH_CURIOS_KEY = "BlacksoulsLibraryDeathCurios";
@@ -40,7 +38,7 @@ public class DimensionRuleHandler {
     @SubscribeEvent
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
-        if (player.level().dimension().equals(LIBRARY_DIM)
+        if (HokoniwaDestination.isHokoniwa(player.level().dimension())
                 && isAdventure(player)) {
             event.setCanceled(true);
         }
@@ -49,7 +47,7 @@ public class DimensionRuleHandler {
     @SubscribeEvent
     public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
         if (event.getEntity() instanceof Player player) {
-            if (player.level().dimension().equals(LIBRARY_DIM)
+            if (HokoniwaDestination.isHokoniwa(player.level().dimension())
                     && isAdventure(player)) {
                 event.setCanceled(true);
             }
@@ -59,6 +57,7 @@ public class DimensionRuleHandler {
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END && event.player instanceof ServerPlayer player) {
+            HokoniwaDestination.migrateLegacyPlayer(player);
             applyPlayerRules(player);
             EntityCheshireCat.recoverLegacyRabbitHoleEntity(player);
         }
@@ -67,6 +66,7 @@ public class DimensionRuleHandler {
     @SubscribeEvent
     public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
+            HokoniwaDestination.migrateLegacyPlayer(player);
             applyPlayerRules(player);
         }
     }
@@ -74,6 +74,7 @@ public class DimensionRuleHandler {
     @SubscribeEvent
     public static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
+            HokoniwaDestination.migrateLegacyPlayer(player);
             applyPlayerRules(player);
         }
     }
@@ -97,7 +98,7 @@ public class DimensionRuleHandler {
     }
 
     public static void captureDeathInventory(ServerPlayer player) {
-        if (!player.level().dimension().equals(LIBRARY_DIM)) {
+        if (!HokoniwaDestination.isHokoniwa(player.level().dimension())) {
             return;
         }
         CompoundTag data = player.getPersistentData();
@@ -110,7 +111,7 @@ public class DimensionRuleHandler {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onPlayerDrops(LivingDropsEvent event) {
         if (event.getEntity() instanceof ServerPlayer player
-                && player.level().dimension().equals(LIBRARY_DIM)) {
+                && HokoniwaDestination.isHokoniwa(player.level().dimension())) {
             event.getDrops().clear();
             event.setCanceled(true);
         }
@@ -173,7 +174,7 @@ public class DimensionRuleHandler {
     @SubscribeEvent
     public static void onMobSpawn(MobSpawnEvent.FinalizeSpawn event) {
         MobSpawnType spawnType = event.getSpawnType();
-        if (event.getLevel().getLevel().dimension().equals(LIBRARY_DIM)
+        if (HokoniwaDestination.isHokoniwa(event.getLevel().getLevel().dimension())
                 && (spawnType == MobSpawnType.NATURAL
                 || spawnType == MobSpawnType.CHUNK_GENERATION
                 || spawnType == MobSpawnType.PATROL
@@ -185,7 +186,7 @@ public class DimensionRuleHandler {
     @SubscribeEvent
     public static void onForbiddenEntityJoin(EntityJoinLevelEvent event) {
         if (!event.getLevel().isClientSide()
-                && event.getLevel().dimension().equals(LIBRARY_DIM)
+                && HokoniwaDestination.isHokoniwa(event.getLevel().dimension())
                 && (event.getEntity().getType() == EntityType.BAT
                 || event.getEntity().getType() == EntityType.GLOW_SQUID)) {
             event.setCanceled(true);
@@ -194,7 +195,7 @@ public class DimensionRuleHandler {
 
     private static void applyPlayerRules(ServerPlayer player) {
         CompoundTag data = player.getPersistentData();
-        if (player.level().dimension().equals(LIBRARY_DIM)) {
+        if (HokoniwaDestination.isHokoniwa(player.level().dimension())) {
             if (!data.contains(PREVIOUS_GAME_MODE_KEY, Tag.TAG_STRING)) {
                 data.putString(PREVIOUS_GAME_MODE_KEY, player.gameMode.getGameModeForPlayer().getName());
                 if (player.gameMode.getGameModeForPlayer() != GameType.ADVENTURE) {

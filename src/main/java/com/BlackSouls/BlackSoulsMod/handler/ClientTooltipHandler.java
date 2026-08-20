@@ -32,9 +32,6 @@ public class ClientTooltipHandler {
             return "sponge";
         }
         String path = regName.getPath();
-        if (path.equals("chrono_clock")) {
-            return "chrono";
-        }
         if (path.equals("cosmilite_bar") || path.equals("ascendant_spirit_essence")) {
             return "cosmic";
         }
@@ -49,7 +46,6 @@ public class ClientTooltipHandler {
         }
         String path = regName.getPath();
         return path.equals("cosmilite_bar")
-                || path.equals("ascendant_spirit_essence")
-                || path.equals("chrono_clock");
+                || path.equals("ascendant_spirit_essence");
     }
 }

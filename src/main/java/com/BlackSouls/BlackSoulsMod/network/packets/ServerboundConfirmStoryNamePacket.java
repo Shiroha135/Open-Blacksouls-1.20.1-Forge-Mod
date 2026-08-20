@@ -2,7 +2,7 @@ package com.BlackSouls.BlackSoulsMod.network.packets;
 
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
-import com.BlackSouls.BlackSoulsMod.util.LibraryDestination;
+import com.BlackSouls.BlackSoulsMod.util.HokoniwaDestination;
 import com.BlackSouls.BlackSoulsMod.util.KnightStartingKit;
 import com.BlackSouls.BlackSoulsMod.util.StoryNameData;
 import com.BlackSouls.BlackSoulsMod.util.skill.SkillSeekAdvice;
@@ -73,7 +73,7 @@ public final class ServerboundConfirmStoryNamePacket {
         if (player.getServer() == null) {
             return;
         }
-        ServerLevel targetLevel = player.getServer().getLevel(LibraryDestination.DIMENSION);
+        ServerLevel targetLevel = player.getServer().getLevel(HokoniwaDestination.DIMENSION);
         if (targetLevel == null) {
             return;
         }
@@ -81,9 +81,9 @@ public final class ServerboundConfirmStoryNamePacket {
         player.stopRiding();
         player.teleportTo(
                 targetLevel,
-                LibraryDestination.STORY_START_X,
-                LibraryDestination.STORY_START_Y,
-                LibraryDestination.STORY_START_Z,
+                HokoniwaDestination.STORY_START_X,
+                HokoniwaDestination.STORY_START_Y,
+                HokoniwaDestination.STORY_START_Z,
                 player.getYRot(),
                 player.getXRot()
         );

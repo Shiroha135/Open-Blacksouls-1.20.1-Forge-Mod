@@ -67,9 +67,6 @@ public abstract class AbstractSkill {
         if (SkillUtils.hasInfiniteCooldownAccessory(player)) {
             return true;
         }
-        if (SkillUtils.isChronoRewindActive(player) && !"bs2_skill_chrono_clock".equals(getSkillId())) {
-            return true;
-        }
 
         long currentTime = player.level().getGameTime();
         long lastTime = SkillUtils.getPersistedData(player).getLong(SkillUtils.getCooldownTag(getSkillId()));
@@ -112,8 +109,7 @@ public abstract class AbstractSkill {
         if (!SkillUtils.hasEnoughActionPoints(player, getActionCost())) {
             return false;
         }
-        if (SkillUtils.hasInfiniteCooldownAccessory(player)
-                || (SkillUtils.isChronoRewindActive(player) && !"bs2_skill_chrono_clock".equals(getSkillId()))) {
+        if (SkillUtils.hasInfiniteCooldownAccessory(player)) {
             return true;
         }
         long currentTime = player.level().getGameTime();
@@ -124,8 +120,7 @@ public abstract class AbstractSkill {
     public void consumeAndSetCooldown(ServerPlayer player, BSPlayerStats stats) {
         SkillUtils.consumeMana(player, getEffectiveManaCost(stats));
         SkillUtils.consumeActionPoints(player, getActionCost());
-        if (!SkillUtils.hasInfiniteCooldownAccessory(player)
-                && !(SkillUtils.isChronoRewindActive(player) && !"bs2_skill_chrono_clock".equals(getSkillId()))) {
+        if (!SkillUtils.hasInfiniteCooldownAccessory(player)) {
             SkillUtils.getPersistedData(player).putLong(SkillUtils.getCooldownTag(getSkillId()), player.level().getGameTime());
         }
         StatEventHandler.syncToClient(player);

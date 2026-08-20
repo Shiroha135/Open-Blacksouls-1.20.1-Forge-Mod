@@ -322,9 +322,9 @@ public class BlackSouls {
     //boss战洛德
     public static final RegistryObject<SoundEvent> HELL_PRINCE_BGM_EVENT = registerSound("hell_prince_bgm");
 
-    //图书馆维度专用BGM
+    //保留的图书馆之梦曲目
     @SuppressWarnings("removal")
-    public static final RegistryObject<SoundEvent> LIBRARY_BGM_EVENT = SOUND_EVENTS.register("music.library",
+    public static final RegistryObject<SoundEvent> LIBRARY_DREAM_BGM_EVENT = SOUND_EVENTS.register("music.library",
             () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(MODID, "music.library")));
 
     @SuppressWarnings("removal")

@@ -6,13 +6,7 @@
     "sky_color": 0,
     "fog_color": 0,
     "water_color": 4159204,
-    "water_fog_color": 329011,
-    "music": {
-      "sound": "blacksouls:music.library",
-      "min_delay": 0,
-      "max_delay": 0,
-      "replace_current_music": true
-    }
+    "water_fog_color": 329011
   },
   "spawners": {},
   "spawn_costs": {},

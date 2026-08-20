@@ -221,9 +221,6 @@ public class SkillUtils {
         CompoundTag persisted = getPersistedData(player);
 
         for (String skillId : SkillRegistry.SKILLS.keySet()) {
-            if ("bs2_skill_chrono_clock".equals(skillId)) {
-                continue;
-            }
             String cooldownTag = getCooldownTag(skillId);
             if (persisted.contains(cooldownTag)) {
                 persisted.putLong(cooldownTag, persisted.getLong(cooldownTag) - reductionTicks);
@@ -231,56 +228,9 @@ public class SkillUtils {
         }
     }
 
-    public static boolean hasChronoClockEquipped(Player player) {
-        return CuriosApi.getCuriosInventory(player)
-                .map(handler -> handler.findCurios(SkillUtils::isChronoClockItem).size() > 0)
-                .orElse(false);
-    }
-
-    public static boolean hasChronoClockAvailable(Player player) {
-        return hasChronoClockAvailable(player, hasChronoClockEquipped(player));
-    }
-
-    public static boolean hasChronoClockAvailable(Player player, boolean chronoClockEquipped) {
-        if (chronoClockEquipped) {
-            return true;
-        }
-        for (var stack : player.getInventory().items) {
-            if (isChronoClockItem(stack)) {
-                return true;
-            }
-        }
-        for (var stack : player.getInventory().offhand) {
-            if (isChronoClockItem(stack)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static boolean isChronoClockItem(ItemStack stack) {
-        if (stack == null || stack.isEmpty()) {
-            return false;
-        }
-        ResourceLocation key = ForgeRegistries.ITEMS.getKey(stack.getItem());
-        if (key == null || !"chrono_clock".equals(key.getPath())) {
-            return false;
-        }
-        String namespace = key.getNamespace();
-        return "blacksouls".equals(namespace) || "yuki".equals(namespace);
-    }
-
-    public static boolean isChronoRewindActive(Player player) {
-        MobEffect rewindEffect = ForgeRegistries.MOB_EFFECTS.getValue(new ResourceLocation("yuki", "rewind"));
-        return rewindEffect != null && player.hasEffect(rewindEffect);
-    }
-
-    public static void clearAllCooldownsExceptChrono(Player player) {
+    public static void clearAllCooldowns(Player player) {
         CompoundTag persisted = getPersistedData(player);
         for (String skillId : SkillRegistry.SKILLS.keySet()) {
-            if ("bs2_skill_chrono_clock".equals(skillId)) {
-                continue;
-            }
             String cooldownTag = getCooldownTag(skillId);
             if (persisted.contains(cooldownTag)) {
                 persisted.putLong(cooldownTag, 0L);

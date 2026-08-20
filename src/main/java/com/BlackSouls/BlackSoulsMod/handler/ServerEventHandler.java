@@ -1,7 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.handler;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
-import com.BlackSouls.BlackSoulsMod.util.LibraryDestination;
+import com.BlackSouls.BlackSoulsMod.util.HokoniwaDestination;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBounds;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
@@ -132,7 +132,7 @@ public class ServerEventHandler {
         if (state.is(Blocks.CAMPFIRE) || state.is(Blocks.SOUL_CAMPFIRE)) {
             ResourceLocation currentDim = event.getLevel().dimension().location();
 
-            if (currentDim.getNamespace().equals("blacksouls") && currentDim.getPath().equals("library")) {
+            if (currentDim.equals(HokoniwaDestination.ID) || currentDim.equals(HokoniwaDestination.LEGACY_ID)) {
                 event.setCanceled(true);
                 event.setCancellationResult(InteractionResult.SUCCESS);
 
@@ -289,16 +289,16 @@ public class ServerEventHandler {
                         return;
                     }
 
-                    ServerLevel libLevel = server.getLevel(LibraryDestination.DIMENSION);
+                    ServerLevel hokoniwaLevel = server.getLevel(HokoniwaDestination.DIMENSION);
 
-                    if (libLevel != null && LibraryDestination.isLandingSafe(libLevel)) {
+                    if (hokoniwaLevel != null && HokoniwaDestination.isLandingSafe(hokoniwaLevel)) {
                         stats.hasVisitedLibrary = true;
                         serverPlayer.teleportTo(
-                                libLevel,
-                                LibraryDestination.X,
-                                LibraryDestination.Y,
-                                LibraryDestination.Z,
-                                LibraryDestination.YAW,
+                                hokoniwaLevel,
+                                HokoniwaDestination.X,
+                                HokoniwaDestination.Y,
+                                HokoniwaDestination.Z,
+                                HokoniwaDestination.YAW,
                                 0.0F
                         );
                         serverPlayer.sendSystemMessage(Component.translatable("message.blacksouls.library_awaken").withStyle(ChatFormatting.GRAY));
