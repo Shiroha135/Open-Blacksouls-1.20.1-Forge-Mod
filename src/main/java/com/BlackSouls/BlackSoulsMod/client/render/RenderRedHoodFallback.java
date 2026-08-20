@@ -7,12 +7,13 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
+@SuppressWarnings("removal")
 public class RenderRedHoodFallback extends MobRenderer<EntityRedHood, PlayerModel<EntityRedHood>> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation("blacksouls", "textures/entity/noden.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation("blacksouls", "textures/entity/redhood.png");
 
     public RenderRedHoodFallback(EntityRendererProvider.Context context) {
-        super(context, new PlayerModel<>(context.bakeLayer(ModelLayers.PLAYER), true), 0.5F);
+        super(context, new PlayerModel<>(context.bakeLayer(ModelLayers.PLAYER_SLIM), true), 0.5F);
     }
 
     @Override

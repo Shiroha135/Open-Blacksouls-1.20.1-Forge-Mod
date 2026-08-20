@@ -13,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillWarhammerArt extends AbstractOriginalWeaponSkill {
     public enum Art { AIM, OVERHEAD_BARRAGE }
     private final Art art;

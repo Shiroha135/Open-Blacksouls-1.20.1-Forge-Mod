@@ -14,6 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Supplier;
 
+@SuppressWarnings("removal")
 public final class ServerboundSetSceneSpawnerBoundsPacket {
     private static final ResourceLocation DEVELOPER_SCEPTER =
             new ResourceLocation("blacksouls", "dev_stat_tool");

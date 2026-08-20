@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 
+@SuppressWarnings("removal")
 public class BonfireEntry {
     public GlobalPos pos;
     public String name;

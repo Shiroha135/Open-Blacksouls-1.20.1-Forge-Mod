@@ -8,6 +8,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 
+@SuppressWarnings("removal")
 public class EntityOriginalTurnBattleEnemy extends EntityTurnBattleMonster {
     private final Profile profile;
 

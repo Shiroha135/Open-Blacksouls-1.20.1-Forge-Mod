@@ -12,6 +12,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 
+@SuppressWarnings("removal")
 public class SkillRingArt extends AbstractWeaponCombatSkill {
     public enum Art {
         STRONG_CRUSH,

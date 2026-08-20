@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class EntityHellPrince extends Monster implements InstantDeathImmuneEntity {
 
     private boolean hasSpokenIntro = false;

@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 
+@SuppressWarnings("removal")
 public class SkillStruggle extends AbstractClubSkill {
 
     @Override

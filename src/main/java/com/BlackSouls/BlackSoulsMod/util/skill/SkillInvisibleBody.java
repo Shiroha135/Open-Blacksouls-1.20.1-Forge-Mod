@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 
+@SuppressWarnings("removal")
 public class SkillInvisibleBody extends AbstractSkill {
 
     private static final int DURATION_TICKS = 800;

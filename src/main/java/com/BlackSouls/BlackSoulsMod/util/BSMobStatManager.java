@@ -9,6 +9,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("removal")
 public class BSMobStatManager {
 
     public static class MobStats {

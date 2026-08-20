@@ -23,7 +23,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 import java.util.Optional;
 
-@SuppressWarnings("resource")
+@SuppressWarnings({"resource", "removal"})
 public class SkillSoulArrow extends AbstractSkill {
 
     @Override

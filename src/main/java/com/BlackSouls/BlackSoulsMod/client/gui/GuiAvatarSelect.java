@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class GuiAvatarSelect extends Screen {
 
     private static final List<String> DEFAULT_AVATARS = List.of(

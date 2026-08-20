@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+@SuppressWarnings("removal")
 public class AnimationRegistry {
     public static final Map<Integer, VFXAnimation> ANIMATIONS = new HashMap<>();
 

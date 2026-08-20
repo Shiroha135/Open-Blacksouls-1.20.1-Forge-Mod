@@ -16,6 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID, value = Dist.CLIENT)
+@SuppressWarnings("removal")
 public class SeekServiceBannerRenderer {
     private static final ResourceLocation ICON = new ResourceLocation(BlackSouls.MODID, "textures/gui/sendam.png");
     private static int ticksLeft = 0;

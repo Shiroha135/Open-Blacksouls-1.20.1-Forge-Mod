@@ -16,8 +16,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -132,15 +134,41 @@ public final class MmdClientResourceBootstrap {
                 return;
             }
 
-            Files.createDirectories(targetDirectory);
-            extractZip(resource, targetDirectory);
-            if (isBundledModelInstalled(spec.name())) {
+            Path parent = targetDirectory.getParent();
+            Files.createDirectories(parent);
+            Path staging = Files.createTempDirectory(parent, ".mmdskin-bundle-");
+            try {
+                extractZip(resource, staging);
+                if (!Files.isRegularFile(staging.resolve("model.pmx"))) {
+                    throw new IOException("内置模型缺少 model.pmx: " + spec.name());
+                }
+                deleteRecursively(targetDirectory);
+                Files.move(staging, targetDirectory);
                 Files.writeString(marker, "v1", StandardCharsets.UTF_8,
                         StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
                 MmdSkinClient.logger.info("内置 MMD 模型已准备: {}", spec.name());
+            } finally {
+                deleteRecursively(staging);
             }
         } catch (IOException | RuntimeException e) {
             MmdSkinClient.logger.error("释放内置 MMD 模型失败", e);
+        }
+    }
+
+    private static void deleteRecursively(Path path) {
+        if (path == null || !Files.exists(path)) {
+            return;
+        }
+        try (Stream<Path> walk = Files.walk(path)) {
+            walk.sorted(Comparator.reverseOrder()).forEach(p -> {
+                try {
+                    Files.deleteIfExists(p);
+                } catch (IOException e) {
+                    MmdSkinClient.logger.warn("删除内置模型残留文件失败: {}", p, e);
+                }
+            });
+        } catch (IOException e) {
+            MmdSkinClient.logger.warn("遍历内置模型目录失败: {}", path, e);
         }
     }
 
@@ -172,12 +200,8 @@ public final class MmdClientResourceBootstrap {
                 }
 
                 Files.createDirectories(output.getParent());
-                Path temporary = null;
-                OutputStream destination = OutputStream.nullOutputStream();
-                if (!Files.exists(output)) {
-                    temporary = Files.createTempFile(output.getParent(), ".mmdskin-", ".tmp");
-                    destination = new BufferedOutputStream(Files.newOutputStream(temporary));
-                }
+                Path temporary = Files.createTempFile(output.getParent(), ".mmdskin-", ".tmp");
+                OutputStream destination = new BufferedOutputStream(Files.newOutputStream(temporary));
 
                 try (OutputStream out = destination) {
                     int read;
@@ -189,22 +213,14 @@ public final class MmdClientResourceBootstrap {
                         out.write(buffer, 0, read);
                     }
                 } catch (IOException e) {
-                    if (temporary != null) {
-                        Files.deleteIfExists(temporary);
-                    }
+                    Files.deleteIfExists(temporary);
                     throw e;
                 }
 
-                if (temporary != null) {
-                    try {
-                        Files.move(temporary, output, StandardCopyOption.ATOMIC_MOVE);
-                    } catch (IOException atomicMoveError) {
-                        try {
-                            Files.move(temporary, output);
-                        } catch (FileAlreadyExistsException ignored) {
-                            Files.deleteIfExists(temporary);
-                        }
-                    }
+                try {
+                    Files.move(temporary, output, StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+                } catch (IOException atomicMoveError) {
+                    Files.move(temporary, output, StandardCopyOption.REPLACE_EXISTING);
                 }
                 zip.closeEntry();
             }

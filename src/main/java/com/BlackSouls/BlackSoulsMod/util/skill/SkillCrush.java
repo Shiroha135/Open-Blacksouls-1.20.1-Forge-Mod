@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("removal")
 public final class SkillCrush extends AbstractSkill {
     @Override
     public String getSkillId() {

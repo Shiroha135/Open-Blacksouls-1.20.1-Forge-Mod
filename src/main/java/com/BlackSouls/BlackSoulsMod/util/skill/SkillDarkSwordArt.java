@@ -14,6 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillDarkSwordArt extends AbstractOriginalWeaponSkill {
     public enum Art { DARKNESS, SIN_CRUSH, SIN_BURST }
     private final Art art;

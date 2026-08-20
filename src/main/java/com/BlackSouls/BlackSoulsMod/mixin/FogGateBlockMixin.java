@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Pseudo
 @Mixin(targets = "cn.zhenhongliya.blacksouls2compat.block.FogGateBlock", remap = false)
+@SuppressWarnings("removal")
 public abstract class FogGateBlockMixin {
     private static final ResourceLocation BLACKSOULS$DEVELOPER_SCEPTER =
             new ResourceLocation("blacksouls", "dev_stat_tool");

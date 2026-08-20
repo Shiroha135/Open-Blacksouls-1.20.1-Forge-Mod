@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 
+@SuppressWarnings("removal")
 public class SkillMadBowArt extends AbstractOriginalWeaponSkill {
     public SkillMadBowArt() {
         super(Family.MAD_BOW, 0);

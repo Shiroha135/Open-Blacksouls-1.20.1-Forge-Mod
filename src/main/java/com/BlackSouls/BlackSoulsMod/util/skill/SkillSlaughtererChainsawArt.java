@@ -11,6 +11,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 
+@SuppressWarnings("removal")
 public class SkillSlaughtererChainsawArt extends AbstractOriginalWeaponSkill {
     public enum Art { BLOOD_TRIAL, BLESSING_OF_PAIN, SLAUGHTER_BEGINS }
     private final Art art;

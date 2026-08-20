@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillHalberdArt extends AbstractOriginalWeaponSkill {
     public enum Art { COUNTER, MENTAL_BREAK, SILVER_MOON_THUNDER_AXE }
     private final Art art;

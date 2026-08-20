@@ -65,7 +65,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-@SuppressWarnings({"resource", "DataFlowIssue", "ConstantConditions", "UnnecessaryReturnStatement"})
+@SuppressWarnings({"resource", "DataFlowIssue", "ConstantConditions", "UnnecessaryReturnStatement", "removal"})
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID)
 public class StatEventHandler {
     private static final String TAG_FIRST_JOIN_BLACK_ASH = "bs2_first_join_black_ash";

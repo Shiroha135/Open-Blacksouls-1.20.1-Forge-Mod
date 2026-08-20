@@ -14,6 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillBeastSawArt extends AbstractOriginalWeaponSkill {
     public enum Art { FLESH_CARVE, BLOOD_TRAIL, BLOOD_EDGE }
     private final Art art;

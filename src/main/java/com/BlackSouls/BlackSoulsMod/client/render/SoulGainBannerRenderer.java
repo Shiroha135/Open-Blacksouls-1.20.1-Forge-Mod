@@ -15,6 +15,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID, value = Dist.CLIENT)
+@SuppressWarnings("removal")
 public class SoulGainBannerRenderer {
     private static final ResourceLocation ICON = new ResourceLocation(BlackSouls.MODID, "textures/item/consumable/soul_standard.png");
 

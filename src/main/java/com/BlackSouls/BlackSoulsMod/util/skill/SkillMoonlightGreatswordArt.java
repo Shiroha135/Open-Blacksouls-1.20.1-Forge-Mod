@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillMoonlightGreatswordArt extends AbstractOriginalWeaponSkill {
     public enum Art { MOONLIGHT_BLADE, MOONLIGHT_BREAK }
     private final Art art;

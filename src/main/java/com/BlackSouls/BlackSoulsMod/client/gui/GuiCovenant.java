@@ -18,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class GuiCovenant extends Screen {
 
     private static final ResourceLocation TEX_NODEN_FACE = new ResourceLocation(BlackSouls.MODID, "textures/gui/covenant/noden_face.png");

@@ -218,6 +218,7 @@ public class BSPlayerStats {
         return nbt;
     }
 
+    @SuppressWarnings("removal")
     public void deserializeNBT(CompoundTag nbt) {
         this.level = Math.max(1, nbt.getInt("Level"));
         this.developerNoCooldown = nbt.getBoolean("DeveloperNoCooldown");

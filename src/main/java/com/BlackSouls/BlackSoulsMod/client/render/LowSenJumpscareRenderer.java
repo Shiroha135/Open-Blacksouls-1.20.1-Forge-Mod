@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID, value = Dist.CLIENT)
+@SuppressWarnings("removal")
 public class LowSenJumpscareRenderer {
     private static final ResourceLocation JUMPSCARE_TEXTURE =
             new ResourceLocation(BlackSouls.MODID, "textures/gui/low_sen_jumpscare.png");

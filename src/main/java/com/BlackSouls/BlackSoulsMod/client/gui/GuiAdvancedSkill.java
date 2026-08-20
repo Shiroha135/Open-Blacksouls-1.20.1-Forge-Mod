@@ -25,6 +25,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class GuiAdvancedSkill extends Screen {
 
     private static final ResourceLocation ICON_INVISIBLE = new ResourceLocation(BlackSouls.MODID, "textures/gui/skills/original/invisible_body.png");

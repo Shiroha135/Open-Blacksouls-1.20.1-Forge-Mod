@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillStormRulerArt extends AbstractOriginalWeaponSkill {
     public enum Art { STORM_KING, STORM_OVERLORD }
     private final Art art;

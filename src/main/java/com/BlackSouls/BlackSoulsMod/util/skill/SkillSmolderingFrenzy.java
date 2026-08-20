@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillSmolderingFrenzy extends AbstractBandersnatchSkill {
     private static final String TAG_CHARGE = "bs2_bandersnatch_charge";
 

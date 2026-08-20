@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillBrokenSwordArt extends AbstractOriginalWeaponSkill {
     public enum Art { SELF_HARM, DEAD_STRIKE }
     private final Art art;

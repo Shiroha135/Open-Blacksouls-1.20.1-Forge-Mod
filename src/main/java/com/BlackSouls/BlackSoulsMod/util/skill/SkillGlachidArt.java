@@ -11,6 +11,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillGlachidArt extends AbstractOriginalWeaponSkill {
     public enum Art { LAKE_GOD_APOCALYPSE, GREEN_COLLAPSE }
     private final Art art;

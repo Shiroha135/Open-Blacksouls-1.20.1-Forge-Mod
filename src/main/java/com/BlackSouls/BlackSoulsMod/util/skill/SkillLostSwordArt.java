@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillLostSwordArt extends AbstractOriginalWeaponSkill {
     public enum Art { ECLIPSE, ZENITH_BLADE, SOLAR_FLARE }
     private final Art art;

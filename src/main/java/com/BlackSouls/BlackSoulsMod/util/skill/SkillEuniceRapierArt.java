@@ -11,6 +11,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 
+@SuppressWarnings("removal")
 public class SkillEuniceRapierArt extends AbstractOriginalWeaponSkill {
     public enum Art { SKY_CLEAVING_SLASH, MIND_EYE, PEERLESS_CHALLENGE }
     private final Art art;

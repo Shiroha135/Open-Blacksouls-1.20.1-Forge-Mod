@@ -5,6 +5,7 @@ import com.BlackSouls.BlackSoulsMod.entity.EntityHailCaesar;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
+@SuppressWarnings("removal")
 public class RenderHailCaesar extends RenderRMSpriteMonster<EntityHailCaesar> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(BlackSouls.MODID, "textures/entity/hail_caesar.png");

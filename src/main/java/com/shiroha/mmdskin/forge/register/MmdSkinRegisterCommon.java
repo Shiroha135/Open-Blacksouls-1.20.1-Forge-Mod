@@ -14,6 +14,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 /**
  * Forge 服务端网络注册
  */
+@SuppressWarnings("removal")
 public class MmdSkinRegisterCommon {
     public static SimpleChannel channel;
     static String networkVersion = "1";

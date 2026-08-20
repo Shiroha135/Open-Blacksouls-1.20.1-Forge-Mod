@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import net.minecraft.resources.ResourceLocation;
 
+@SuppressWarnings("removal")
 public final class BSOriginalStateData {
     private static final Map<Integer, Entry> ENTRIES = loadEntries();
 

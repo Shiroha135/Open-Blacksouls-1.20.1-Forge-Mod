@@ -20,6 +20,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class GuiBonfireMenu extends Screen {
 
     private static final int GUI_WIDTH = 380;

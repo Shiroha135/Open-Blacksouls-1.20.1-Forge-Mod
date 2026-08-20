@@ -8,12 +8,13 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
+@SuppressWarnings("removal")
 public class RenderNoden extends MobRenderer<EntityNoden, RenderNoden.NodenModel> {
 
     private static final ResourceLocation NODEN_TEXTURE = new ResourceLocation("blacksouls", "textures/entity/noden.png");
 
     public RenderNoden(EntityRendererProvider.Context context) {
-        super(context, new NodenModel(context.bakeLayer(ModelLayers.PLAYER), true), 0.5F);
+        super(context, new NodenModel(context.bakeLayer(ModelLayers.PLAYER_SLIM), true), 0.5F);
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.List;
 public class GuiBSConfig extends Screen {
 
     private static final int GUI_WIDTH = 250;
-    private static final int GUI_HEIGHT = 342;
+    private static final int GUI_HEIGHT = 388;
 
     private final Screen parent;
     private int guiLeft;
@@ -22,6 +22,7 @@ public class GuiBSConfig extends Screen {
     private boolean enableLowSenJumpscare;
     private boolean showCombatDamageChat;
     private boolean enableOriginalWindowBranding;
+    private boolean enableMmdModels;
     private BSConfig.CombatMode combatMode;
 
     public GuiBSConfig(Screen parent) {
@@ -31,6 +32,7 @@ public class GuiBSConfig extends Screen {
         this.enableLowSenJumpscare = BSConfig.ENABLE_LOW_SEN_JUMPSCARE.get();
         this.showCombatDamageChat = BSConfig.SHOW_COMBAT_DAMAGE_CHAT.get();
         this.enableOriginalWindowBranding = BSConfig.ENABLE_ORIGINAL_WINDOW_BRANDING.get();
+        this.enableMmdModels = BSConfig.ENABLE_MMD_MODELS.get();
         this.combatMode = BSConfig.COMBAT_MODE.get();
     }
 
@@ -78,13 +80,21 @@ public class GuiBSConfig extends Screen {
         windowBrandingButton.setTooltip(Tooltip.create(Component.translatable("gui.blacksouls.config.window_branding.desc")));
         this.addRenderableWidget(windowBrandingButton);
 
-        this.addRenderableWidget(new BSGhostButton(guiLeft + 42, guiTop + 304, 64, 20,
+        BSGhostButton mmdModelsButton = new BSGhostButton(guiLeft + 20, guiTop + 288, 210, 20, getMmdModelsText(), button -> {
+            this.enableMmdModels = !this.enableMmdModels;
+            button.setMessage(getMmdModelsText());
+        });
+        mmdModelsButton.setTooltip(Tooltip.create(Component.translatable("gui.blacksouls.config.mmd_models.desc")));
+        this.addRenderableWidget(mmdModelsButton);
+
+        this.addRenderableWidget(new BSGhostButton(guiLeft + 42, guiTop + 350, 64, 20,
                 Component.translatable("gui.blacksouls.config.save"), button -> {
             BSConfig.ALLOW_PLAYER_EXTRA_MODES.set(this.allowPlayerExtraModes);
             BSConfig.ENABLE_LOW_SEN_JUMPSCARE.set(this.enableLowSenJumpscare);
             BSConfig.SHOW_COMBAT_DAMAGE_CHAT.set(this.showCombatDamageChat);
             BSConfig.COMBAT_MODE.set(this.combatMode);
             BSConfig.ENABLE_ORIGINAL_WINDOW_BRANDING.set(this.enableOriginalWindowBranding);
+            BSConfig.ENABLE_MMD_MODELS.set(this.enableMmdModels);
             BSConfig.COMMON_SPEC.save();
             BSConfig.CLIENT_SPEC.save();
             WindowBranding.apply(this.enableOriginalWindowBranding);
@@ -93,7 +103,7 @@ public class GuiBSConfig extends Screen {
             }
         }));
 
-        this.addRenderableWidget(new BSGhostButton(guiLeft + 144, guiTop + 304, 64, 20,
+        this.addRenderableWidget(new BSGhostButton(guiLeft + 144, guiTop + 350, 64, 20,
                 Component.translatable("gui.blacksouls.config.cancel"), button -> {
             if (this.minecraft != null) {
                 this.minecraft.setScreen(this.parent);
@@ -113,6 +123,7 @@ public class GuiBSConfig extends Screen {
         drawWrappedText(guiGraphics, Component.translatable("gui.blacksouls.config.combat_damage_chat.desc"), guiLeft + 20, guiTop + 174, GUI_WIDTH - 40, 0xFFB8B8FF);
         drawWrappedText(guiGraphics, Component.translatable("gui.blacksouls.config.combat_mode.desc"), guiLeft + 20, guiTop + 220, GUI_WIDTH - 40, 0xFFB8B8FF);
         drawWrappedText(guiGraphics, Component.translatable("gui.blacksouls.config.window_branding.desc"), guiLeft + 20, guiTop + 266, GUI_WIDTH - 40, 0xFFB8B8FF);
+        drawWrappedText(guiGraphics, Component.translatable("gui.blacksouls.config.mmd_models.desc"), guiLeft + 20, guiTop + 312, GUI_WIDTH - 40, 0xFFB8B8FF);
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);
     }
@@ -150,6 +161,12 @@ public class GuiBSConfig extends Screen {
         return Component.translatable(this.enableOriginalWindowBranding
                 ? "gui.blacksouls.config.window_branding.on"
                 : "gui.blacksouls.config.window_branding.off");
+    }
+
+    private Component getMmdModelsText() {
+        return Component.translatable(this.enableMmdModels
+                ? "gui.blacksouls.config.mmd_models.on"
+                : "gui.blacksouls.config.mmd_models.off");
     }
 
     private void drawWrappedText(GuiGraphics guiGraphics, Component text, int x, int y, int maxWidth, int color) {

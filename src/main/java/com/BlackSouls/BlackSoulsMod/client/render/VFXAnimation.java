@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class VFXAnimation {
     public ResourceLocation texture1;
     public ResourceLocation texture2;

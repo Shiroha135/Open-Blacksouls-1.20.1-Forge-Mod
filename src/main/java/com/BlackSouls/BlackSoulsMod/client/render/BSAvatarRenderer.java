@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import com.BlackSouls.BlackSoulsMod.client.ClientSkillInfo;
 
+@SuppressWarnings("removal")
 public class BSAvatarRenderer {
 
     private static final int FACE_SHEET_WIDTH = 384;

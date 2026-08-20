@@ -14,6 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillMaceArt extends AbstractOriginalWeaponSkill {
     public enum Art { MANA_RECOVERY, MANA_BURN }
     private final Art art;

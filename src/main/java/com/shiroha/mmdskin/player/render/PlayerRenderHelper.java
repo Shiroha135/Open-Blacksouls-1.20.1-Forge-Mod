@@ -9,6 +9,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 
 /** 文件职责：集中计算玩家模型渲染姿态与模型属性读取。 */
+@SuppressWarnings("removal")
 public final class PlayerRenderHelper {
 
     private static final ResourceLocation DECOCRAFT_SEAT = new ResourceLocation("decocraft", "seat");

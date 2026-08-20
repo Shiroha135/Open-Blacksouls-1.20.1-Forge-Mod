@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID)
+@SuppressWarnings("removal")
 public final class FogGateTraversalHandler {
     private static final ResourceLocation FOG_GATE = new ResourceLocation("blacksouls2", "fog_gate");
     private static final double SPEED = 0.115D;

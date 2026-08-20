@@ -15,6 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillIronBallArt extends AbstractOriginalWeaponSkill {
     public enum Art { CHAKRA, RECKLESS_STRIKE, DOUBLE_COLLISION }
     private final Art art;

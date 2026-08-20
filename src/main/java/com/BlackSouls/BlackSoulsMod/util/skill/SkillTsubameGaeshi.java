@@ -11,6 +11,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillTsubameGaeshi extends AbstractOriginalWeaponSkill {
     public SkillTsubameGaeshi() {
         super(Family.MAGIC_BLADE, false);

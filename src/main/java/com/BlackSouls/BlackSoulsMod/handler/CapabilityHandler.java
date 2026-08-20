@@ -11,6 +11,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID)
+@SuppressWarnings("removal")
 public class CapabilityHandler {
 
     public static final ResourceLocation BS_STATS_CAP = new ResourceLocation(BlackSouls.MODID, "bs_stats");

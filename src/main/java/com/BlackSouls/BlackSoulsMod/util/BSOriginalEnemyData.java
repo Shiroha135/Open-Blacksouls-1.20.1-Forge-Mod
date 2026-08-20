@@ -15,6 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("removal")
 public final class BSOriginalEnemyData {
     private static final Map<Integer, Entry> ENTRIES = loadEntries();
 

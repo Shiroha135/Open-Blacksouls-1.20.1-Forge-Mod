@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.gui.ModListScreen;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("removal")
 public class GuiBSMainMenu extends Screen {
 
     private static final ResourceLocation BG_TEXTURE = new ResourceLocation(BlackSouls.MODID, "textures/gui/main_menu_bg.png");

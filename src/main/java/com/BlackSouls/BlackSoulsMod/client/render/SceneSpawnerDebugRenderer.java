@@ -26,6 +26,7 @@ import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@SuppressWarnings("removal")
 public final class SceneSpawnerDebugRenderer {
     private static final ResourceLocation SCENE_SPAWNER =
             new ResourceLocation("blacksouls2", "scene_spawner");

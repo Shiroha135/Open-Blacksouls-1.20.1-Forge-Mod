@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import net.minecraft.resources.ResourceLocation;
 
+@SuppressWarnings("removal")
 public final class BSOriginalBattleProfileData {
     private static final Map<Integer, Entry> ENTRIES = loadEntries();
 

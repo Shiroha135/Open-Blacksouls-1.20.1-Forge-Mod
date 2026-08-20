@@ -11,6 +11,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillJudgmentScytheArt extends AbstractOriginalWeaponSkill {
     public enum Art { SOUL_HARVEST, TRUE_SOUL_HARVEST }
     private final Art art;

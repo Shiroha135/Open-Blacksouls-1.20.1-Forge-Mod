@@ -63,6 +63,7 @@ import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 import top.theillusivec4.curios.api.CuriosApi;
 
+@SuppressWarnings("removal")
 public class GuiTurnBattle extends Screen {
     private static final ResourceLocation RABBIT_TEXTURE =
             new ResourceLocation(BlackSouls.MODID, "textures/entity/corpse_eating_rabbit.png");

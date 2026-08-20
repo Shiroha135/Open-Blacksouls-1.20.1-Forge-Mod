@@ -11,6 +11,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 
+@SuppressWarnings("removal")
 public class SkillHideAndSeek extends AbstractDaggerSkill {
 
     @Override

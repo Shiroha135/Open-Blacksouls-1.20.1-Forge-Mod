@@ -4,6 +4,7 @@ import com.BlackSouls.BlackSoulsMod.util.OriginalMapNameRegistry;
 import java.util.Locale;
 import net.minecraft.resources.ResourceLocation;
 
+@SuppressWarnings("removal")
 public final class ClientSceneState {
     private static String sceneId = "";
 

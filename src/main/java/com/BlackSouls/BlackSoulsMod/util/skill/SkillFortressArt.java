@@ -11,6 +11,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillFortressArt extends AbstractOriginalWeaponSkill {
     public SkillFortressArt() {
         super(Family.FORTRESS, true);

@@ -28,6 +28,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class GuiDialogueEnhanced extends Screen {
     private final String npcNameKey;
     private final String npcAvatarId;

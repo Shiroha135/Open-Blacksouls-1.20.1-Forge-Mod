@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 
+@SuppressWarnings("removal")
 public class SkillIssen extends AbstractOriginalWeaponSkill {
     public SkillIssen() {
         super(Family.MAGIC_BLADE, true);

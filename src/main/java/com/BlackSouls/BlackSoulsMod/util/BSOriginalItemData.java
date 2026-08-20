@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+@SuppressWarnings("removal")
 public final class BSOriginalItemData {
     public enum Category {
         NORMAL,

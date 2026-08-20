@@ -5,6 +5,7 @@ import com.BlackSouls.BlackSoulsMod.entity.EntityHellPrince;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
+@SuppressWarnings("removal")
 public class RenderHellPrince extends RenderRMSpriteMonster<EntityHellPrince> {
 
     private static final ResourceLocation TEXTURE =

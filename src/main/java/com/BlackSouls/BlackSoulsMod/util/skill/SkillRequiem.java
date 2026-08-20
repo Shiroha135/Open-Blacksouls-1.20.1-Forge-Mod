@@ -11,6 +11,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 
+@SuppressWarnings("removal")
 public class SkillRequiem extends AbstractSkill {
 
     private static final int DURATION_TICKS = 600;

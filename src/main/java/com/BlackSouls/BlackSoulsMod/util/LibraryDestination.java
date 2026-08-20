@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 
+@SuppressWarnings("removal")
 public final class LibraryDestination {
     public static final ResourceLocation ID = new ResourceLocation("blacksouls", "library");
     public static final ResourceKey<Level> DIMENSION = ResourceKey.create(Registries.DIMENSION, ID);

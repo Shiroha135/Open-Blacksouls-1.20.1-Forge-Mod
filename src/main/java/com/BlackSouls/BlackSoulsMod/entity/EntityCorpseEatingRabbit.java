@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
+@SuppressWarnings("removal")
 public class EntityCorpseEatingRabbit extends EntityTurnBattleMonster {
     private static final ResourceLocation BATTLE_TEXTURE =
             new ResourceLocation(BlackSouls.MODID, "textures/entity/corpse_eating_rabbit.png");

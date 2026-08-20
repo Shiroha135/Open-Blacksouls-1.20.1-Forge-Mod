@@ -10,6 +10,7 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("removal")
 public final class BSGlobalFont {
     private static final ResourceLocation FONT_FILE = new ResourceLocation(BlackSouls.MODID, "lolita.ttf");
     private static volatile ResourceManager resourceManager;

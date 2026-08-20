@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@SuppressWarnings("removal")
 public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
     private static final EntityDataAccessor<Integer> PROFILE_ID =
             SynchedEntityData.defineId(EntityOriginalDatabaseEnemy.class, EntityDataSerializers.INT);

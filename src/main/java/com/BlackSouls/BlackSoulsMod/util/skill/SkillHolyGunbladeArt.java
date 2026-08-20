@@ -11,6 +11,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 
+@SuppressWarnings("removal")
 public class SkillHolyGunbladeArt extends AbstractOriginalWeaponSkill {
     public enum Art { CROSS_SLASH, BULLET_LOAD, VISCERAL_ATTACK }
     private final Art art;

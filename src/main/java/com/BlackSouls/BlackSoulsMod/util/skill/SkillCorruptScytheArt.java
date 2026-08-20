@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillCorruptScytheArt extends AbstractOriginalWeaponSkill {
     public enum Art { TWILIGHT_OF_GRUDGE, CORPSE_DRAGON_AWE, SOUL_COLLAPSE }
     private final Art art;

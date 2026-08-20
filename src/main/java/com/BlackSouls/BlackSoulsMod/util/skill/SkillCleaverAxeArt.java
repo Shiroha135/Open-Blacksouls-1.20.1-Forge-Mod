@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillCleaverAxeArt extends AbstractOriginalWeaponSkill {
     public enum Art { SLASH_DOWN, MASSACRE_AXE, GIANT_GUILLOTINE }
     private final Art art;

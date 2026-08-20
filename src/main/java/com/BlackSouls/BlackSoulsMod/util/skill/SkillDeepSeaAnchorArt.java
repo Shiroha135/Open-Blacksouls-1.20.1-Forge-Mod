@@ -15,6 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillDeepSeaAnchorArt extends AbstractOriginalWeaponSkill {
     public enum Art { CRUSHING_WATER, RAGE }
     private final Art art;

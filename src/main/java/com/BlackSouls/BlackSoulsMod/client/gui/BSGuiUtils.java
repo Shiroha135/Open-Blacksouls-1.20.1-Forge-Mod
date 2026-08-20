@@ -8,6 +8,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 
+@SuppressWarnings("removal")
 public class BSGuiUtils {
 
     public static final ResourceLocation RM_WINDOW_SKIN = new ResourceLocation(BlackSouls.MODID, "textures/gui/window.png");

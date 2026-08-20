@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 
+@SuppressWarnings("removal")
 public class SkillHansGunArt extends AbstractOriginalWeaponSkill {
     public enum Art { GUNPOWDER_REPLENISH, QUICK_RELOAD }
     private final Art art;

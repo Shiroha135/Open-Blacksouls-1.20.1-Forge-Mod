@@ -32,6 +32,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+@SuppressWarnings("removal")
 public class SkillOriginalMagic extends AbstractSkill {
     public enum Profile {
         SOUL_VOLLEY("soul_volley", 28, 400, 295, 2, true, "soul_arrow.png"),

@@ -26,6 +26,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.ModList;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = BlackSouls.MODID)
+@SuppressWarnings("removal")
 public class ClientEventHandler {
 
     private static SoundInstance currentTitleBGM = null;

@@ -2,6 +2,7 @@ package com.BlackSouls.BlackSoulsMod.entity;
 
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketOpenDialogue;
+import com.shiroha.mmdskin.render.entity.CustomEntityAnimationProvider;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -21,7 +22,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class EntityNoden extends PathfinderMob implements DialogueResettable {
+@SuppressWarnings("removal")
+public class EntityNoden extends PathfinderMob implements DialogueResettable, CustomEntityAnimationProvider {
 
     private static final double NODEN_MAX_HEALTH = Integer.MAX_VALUE;
 
@@ -52,6 +54,11 @@ public class EntityNoden extends PathfinderMob implements DialogueResettable {
 
     public void setSitting(boolean sitting) {
         this.entityData.set(DATA_SITTING, sitting);
+    }
+
+    @Override
+    public String getMmdAnimation() {
+        return this.isSitting() ? "sneak" : "";
     }
 
     @Override

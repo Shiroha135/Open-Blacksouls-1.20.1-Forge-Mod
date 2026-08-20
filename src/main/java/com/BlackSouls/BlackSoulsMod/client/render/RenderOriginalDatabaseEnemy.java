@@ -4,6 +4,7 @@ import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalDatabaseEnemy;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
+@SuppressWarnings("removal")
 public class RenderOriginalDatabaseEnemy extends RenderRMSpriteMonster<EntityOriginalDatabaseEnemy> {
     public RenderOriginalDatabaseEnemy(EntityRendererProvider.Context context) {
         super(context, new ResourceLocation("blacksouls", "textures/entity/headless_undead.png"),

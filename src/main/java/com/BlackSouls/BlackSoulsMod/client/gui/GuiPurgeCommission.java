@@ -16,6 +16,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("removal")
 public class GuiPurgeCommission extends Screen {
     private static final int PANEL_WIDTH = 404;
     private static final int PANEL_MAX_HEIGHT = 348;

@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
+@SuppressWarnings("removal")
 public final class SkillSeekAdvice extends AbstractSkill {
     public static final String CONTROLLED_TAG = "bs2_advice_controlled";
     public static final String VISIBLE_TAG = "bs2_advice_visible";

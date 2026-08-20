@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+@SuppressWarnings("removal")
 public final class BSOriginalEnemyPhaseData {
     private static final Map<Integer, Transition> TRANSITIONS = loadTransitions();
     private static final Set<Integer> HIDDEN_SPAWN_VARIANTS = Set.of(

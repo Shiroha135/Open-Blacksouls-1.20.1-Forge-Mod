@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillRagnarokArt extends AbstractOriginalWeaponSkill {
     public enum Art { POMMEL_STUN, CLEAVE_IN_TWO, WRATH_OF_TWILIGHT }
     private final Art art;

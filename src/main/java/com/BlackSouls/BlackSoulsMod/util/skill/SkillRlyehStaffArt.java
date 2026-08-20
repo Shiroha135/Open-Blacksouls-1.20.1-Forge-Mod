@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 
+@SuppressWarnings("removal")
 public class SkillRlyehStaffArt extends AbstractOriginalWeaponSkill {
     public SkillRlyehStaffArt() {
         super(Family.RLYEH_STAFF, 5);

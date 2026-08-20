@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 
+@SuppressWarnings("removal")
 public class SkillSpoonArt extends AbstractOriginalWeaponSkill {
     public SkillSpoonArt() {
         super(Family.SPOON, 5);

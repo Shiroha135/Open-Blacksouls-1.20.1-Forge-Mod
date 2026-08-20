@@ -21,6 +21,7 @@ import java.io.IOException;
         bus = Mod.EventBusSubscriber.Bus.MOD,
         value = Dist.CLIENT
 )
+@SuppressWarnings("removal")
 public class ShaderHelper {
 
     private static final Logger LOGGER = LogUtils.getLogger();

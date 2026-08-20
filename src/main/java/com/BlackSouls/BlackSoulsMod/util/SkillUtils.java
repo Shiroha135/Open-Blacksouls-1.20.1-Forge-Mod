@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.CuriosApi;
 
+@SuppressWarnings("removal")
 public class SkillUtils {
 
     public static final String TAG_CURRENT_MANA = "bs2_mana_current";

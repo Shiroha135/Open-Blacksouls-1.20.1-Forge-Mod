@@ -18,6 +18,7 @@ import com.mojang.blaze3d.platform.InputConstants;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class GuiLevelUp extends Screen {
 
     private int dialogueState = 0;

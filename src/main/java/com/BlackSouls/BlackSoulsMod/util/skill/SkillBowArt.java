@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillBowArt extends AbstractOriginalWeaponSkill {
     public enum Art { FOOT_SHOT, TRIPLE_SHOT, ARROW_RAIN }
     private final Art art;

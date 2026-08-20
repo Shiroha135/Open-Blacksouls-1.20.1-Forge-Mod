@@ -19,6 +19,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("removal")
 public class RenderMeatWall extends MobRenderer<EntityMeatWall, RenderMeatWall.MeatWallModel> {
     public static final ModelLayerLocation LAYER_LOCATION =
             new ModelLayerLocation(new ResourceLocation(BlackSouls.MODID, "meat_wall"), "main");

@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillKatanaArt extends AbstractOriginalWeaponSkill {
     public enum Art { IAI, FORWARD_SLASH, TEMPEST_REND }
     private final Art art;

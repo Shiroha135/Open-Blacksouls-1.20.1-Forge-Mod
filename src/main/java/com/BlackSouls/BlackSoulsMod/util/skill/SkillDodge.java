@@ -12,6 +12,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 
+@SuppressWarnings("removal")
 public final class SkillDodge extends AbstractSkill {
     @Override
     public String getSkillId() {

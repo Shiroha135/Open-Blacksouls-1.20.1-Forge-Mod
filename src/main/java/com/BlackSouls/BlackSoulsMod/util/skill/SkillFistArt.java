@@ -12,6 +12,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillFistArt extends AbstractOriginalWeaponSkill {
     public enum Art { HAKI, HUNDRED_FISTS }
     private final Art art;

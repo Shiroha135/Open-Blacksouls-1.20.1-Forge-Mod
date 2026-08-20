@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillRaidenAxesArt extends AbstractOriginalWeaponSkill {
     public enum Art { HEAVEN_SHATTERING_THUNDER, LION_WHIRLWIND }
     private final Art art;

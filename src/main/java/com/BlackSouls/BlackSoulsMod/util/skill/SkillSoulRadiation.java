@@ -23,6 +23,7 @@ import net.minecraft.world.phys.AABB;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class SkillSoulRadiation extends AbstractSkill {
 
     @Override

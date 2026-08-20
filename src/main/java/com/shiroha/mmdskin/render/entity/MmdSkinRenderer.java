@@ -25,6 +25,7 @@ import org.joml.Vector3f;
 /**
  * MMD 自定义实体渲染器。
  */
+@SuppressWarnings("removal")
 public class MmdSkinRenderer<T extends Entity> extends EntityRenderer<T> {
 
     private static final ResourceLocation PLACEHOLDER_TEXTURE =

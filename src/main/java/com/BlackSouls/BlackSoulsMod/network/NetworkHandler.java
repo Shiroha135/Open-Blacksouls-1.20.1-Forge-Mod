@@ -17,6 +17,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.Optional;
 
+@SuppressWarnings("removal")
 public class NetworkHandler {
 
     private static final String PROTOCOL_VERSION = "1";
