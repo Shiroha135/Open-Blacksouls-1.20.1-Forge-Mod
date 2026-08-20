@@ -32,6 +32,7 @@ import java.util.Set;
 
 @SuppressWarnings("removal")
 public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
+    private static final double MAX_SUPPORTED_HEALTH = Integer.MAX_VALUE;
     private static final EntityDataAccessor<Integer> PROFILE_ID =
             SynchedEntityData.defineId(EntityOriginalDatabaseEnemy.class, EntityDataSerializers.INT);
     private double turnBattleHealth;
@@ -73,21 +74,30 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
 
     private void applyProfile(boolean resetHealth) {
         BSOriginalEnemyData.Entry profile = getProfile();
-        setAttributeBase(Attributes.MAX_HEALTH, Math.max(1.0D, Math.min(1024.0D, profile.health())));
+        double scaledMaxHealth = getScaledMaxHealth(profile);
+        setAttributeBase(Attributes.MAX_HEALTH, scaledMaxHealth);
         setAttributeBase(Attributes.ATTACK_DAMAGE, Math.max(1.0D, Math.min(2048.0D, profile.attack())));
         setAttributeBase(Attributes.ARMOR, Math.max(0.0D, Math.min(30.0D, profile.defense())));
         setAttributeBase(Attributes.MOVEMENT_SPEED, profile.movementSpeed());
         setAttributeBase(Attributes.LUCK, Math.max(-1024.0D, Math.min(1024.0D, profile.luck())));
-        double scaledMaxHealth = profile.health() * this.turnBattleDifficultyMultiplier;
         if (resetHealth) {
             this.turnBattleHealth = scaledMaxHealth;
         } else {
             this.turnBattleHealth = Math.max(0.0D,
                     Math.min(scaledMaxHealth, this.turnBattleHealth));
         }
-        super.setHealth((float) Math.max(1.0D,
-                Math.min(getMaxHealth(), this.turnBattleHealth)));
+        syncVanillaHealth(false);
         refreshDimensions();
+    }
+
+    private double getScaledMaxHealth(BSOriginalEnemyData.Entry profile) {
+        return Math.max(1.0D, Math.min(MAX_SUPPORTED_HEALTH,
+                profile.health() * this.turnBattleDifficultyMultiplier));
+    }
+
+    private void syncVanillaHealth(boolean keepAlive) {
+        super.setHealth(this.turnBattleHealth <= 0.0D && !keepAlive ? 0.0F
+                : (float) Math.max(1.0D, Math.min(getMaxHealth(), this.turnBattleHealth)));
     }
 
     private void setAttributeBase(net.minecraft.world.entity.ai.attributes.Attribute attribute, double value) {
@@ -271,7 +281,7 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
 
     @Override
     public double getTurnBattleMaxHealth() {
-        return getProfile().health() * this.turnBattleDifficultyMultiplier;
+        return getScaledMaxHealth(getProfile());
     }
 
     public void setTurnBattleDifficultyMultiplier(double multiplier) {
@@ -279,18 +289,17 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
         double healthRatio = oldMaxHealth <= 0.0D ? 1.0D
                 : this.turnBattleHealth / oldMaxHealth;
         this.turnBattleDifficultyMultiplier = Math.max(1.0D, multiplier);
-        this.turnBattleHealth = getTurnBattleMaxHealth()
+        double scaledMaxHealth = getTurnBattleMaxHealth();
+        setAttributeBase(Attributes.MAX_HEALTH, scaledMaxHealth);
+        this.turnBattleHealth = scaledMaxHealth
                 * Math.max(0.0D, Math.min(1.0D, healthRatio));
-        super.setHealth((float) Math.max(1.0D,
-                Math.min(getMaxHealth(), this.turnBattleHealth)));
+        syncVanillaHealth(TurnBattleManager.isInBattle(this));
     }
 
     @Override
     public void setTurnBattleHealth(double health) {
         this.turnBattleHealth = Math.max(0.0D, Math.min(getTurnBattleMaxHealth(), health));
-        boolean keepVirtualEnemyAlive = TurnBattleManager.isInBattle(this);
-        super.setHealth(this.turnBattleHealth <= 0.0D && !keepVirtualEnemyAlive ? 0.0F
-                : (float) Math.max(1.0D, Math.min(getMaxHealth(), this.turnBattleHealth)));
+        syncVanillaHealth(TurnBattleManager.isInBattle(this));
     }
 
     public BSOriginalEnemyPhaseData.Transition tryAdvanceTurnBattlePhase() {
@@ -356,12 +365,16 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
         super.addAdditionalSaveData(tag);
         tag.putInt("OriginalEnemyId", getProfileId());
         tag.putDouble("OriginalBattleHealth", this.turnBattleHealth);
+        tag.putDouble("OriginalBattleDifficultyMultiplier", this.turnBattleDifficultyMultiplier);
     }
 
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         setProfileId(tag.contains("OriginalEnemyId") ? tag.getInt("OriginalEnemyId") : 1);
+        if (tag.contains("OriginalBattleDifficultyMultiplier")) {
+            setTurnBattleDifficultyMultiplier(tag.getDouble("OriginalBattleDifficultyMultiplier"));
+        }
         if (tag.contains("OriginalBattleHealth")) {
             setTurnBattleHealth(tag.getDouble("OriginalBattleHealth"));
         }
