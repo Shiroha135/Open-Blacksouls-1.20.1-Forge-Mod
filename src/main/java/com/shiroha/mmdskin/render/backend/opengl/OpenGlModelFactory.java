@@ -19,8 +19,25 @@ import org.lwjgl.system.MemoryUtil;
 /** 文件职责：创建 CPU/OpenGL 蒙皮模型实例。 */
 final class OpenGlModelFactory {
     private static final Logger logger = LogManager.getLogger();
+    private static int sharedWhiteTexture = 0;
 
     private OpenGlModelFactory() {
+    }
+
+    private static int whiteTexture() {
+        if (sharedWhiteTexture == 0) {
+            sharedWhiteTexture = GL46C.glGenTextures();
+            GL46C.glBindTexture(GL46C.GL_TEXTURE_2D, sharedWhiteTexture);
+            ByteBuffer texBuffer = ByteBuffer.allocateDirect(4);
+            texBuffer.order(ByteOrder.LITTLE_ENDIAN);
+            texBuffer.put((byte) 255).put((byte) 255).put((byte) 255).put((byte) 255).flip();
+            GL46C.glTexImage2D(GL46C.GL_TEXTURE_2D, 0, GL46C.GL_RGBA, 1, 1, 0, GL46C.GL_RGBA, GL46C.GL_UNSIGNED_BYTE, texBuffer);
+            GL46C.glTexParameteri(GL46C.GL_TEXTURE_2D, GL46C.GL_TEXTURE_MAX_LEVEL, 0);
+            GL46C.glTexParameteri(GL46C.GL_TEXTURE_2D, GL46C.GL_TEXTURE_MIN_FILTER, GL46C.GL_LINEAR);
+            GL46C.glTexParameteri(GL46C.GL_TEXTURE_2D, GL46C.GL_TEXTURE_MAG_FILTER, GL46C.GL_LINEAR);
+            GL46C.glBindTexture(GL46C.GL_TEXTURE_2D, 0);
+        }
+        return sharedWhiteTexture;
     }
 
     static OpenGlModelInstance create(NativeRenderBackendPort nativeBackend,
@@ -133,6 +150,12 @@ final class OpenGlModelFactory {
                 }
             }
             PmxMaterialLoader.enrich(mats, modelFilename, modelDir, texKeys);
+            for (ModelMaterial mat : mats) {
+                if (mat.tex == 0 && mat.texturePath.isEmpty()) {
+                    mat.tex = whiteTexture();
+                    mat.hasAlpha = true;
+                }
+            }
 
             lightMapMaterial = new ModelMaterial();
             String lightMapPath = modelDir + "/lightMap.png";

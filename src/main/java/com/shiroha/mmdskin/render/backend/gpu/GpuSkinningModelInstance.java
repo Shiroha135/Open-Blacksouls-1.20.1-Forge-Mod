@@ -30,6 +30,23 @@ public class GpuSkinningModelInstance extends BaseModelInstance {
     static volatile SkinningComputeShader computeShader;
     static volatile ToonShaderCpu toonShaderCpu;
     static final ToonConfig toonConfig = ToonConfig.getInstance();
+    static int sharedWhiteTexture = 0;
+
+    private static int whiteTexture() {
+        if (sharedWhiteTexture == 0) {
+            sharedWhiteTexture = GL46C.glGenTextures();
+            GL46C.glBindTexture(GL46C.GL_TEXTURE_2D, sharedWhiteTexture);
+            ByteBuffer texBuffer = ByteBuffer.allocateDirect(4);
+            texBuffer.order(ByteOrder.LITTLE_ENDIAN);
+            texBuffer.put((byte) 255).put((byte) 255).put((byte) 255).put((byte) 255).flip();
+            GL46C.glTexImage2D(GL46C.GL_TEXTURE_2D, 0, GL46C.GL_RGBA, 1, 1, 0, GL46C.GL_RGBA, GL46C.GL_UNSIGNED_BYTE, texBuffer);
+            GL46C.glTexParameteri(GL46C.GL_TEXTURE_2D, GL46C.GL_TEXTURE_MAX_LEVEL, 0);
+            GL46C.glTexParameteri(GL46C.GL_TEXTURE_2D, GL46C.GL_TEXTURE_MIN_FILTER, GL46C.GL_LINEAR);
+            GL46C.glTexParameteri(GL46C.GL_TEXTURE_2D, GL46C.GL_TEXTURE_MAG_FILTER, GL46C.GL_LINEAR);
+            GL46C.glBindTexture(GL46C.GL_TEXTURE_2D, 0);
+        }
+        return sharedWhiteTexture;
+    }
 
     int vertexCount;
 
@@ -311,6 +328,12 @@ public class GpuSkinningModelInstance extends BaseModelInstance {
                 }
             }
             PmxMaterialLoader.enrich(mats, modelFilename, modelDir, textureKeys);
+            for (ModelMaterial mat : mats) {
+                if (mat.tex == 0 && mat.texturePath.isEmpty()) {
+                    mat.tex = whiteTexture();
+                    mat.hasAlpha = true;
+                }
+            }
 
             lightMapMaterial = new ModelMaterial();
             String lightMapPath = modelDir + "/lightMap.png";

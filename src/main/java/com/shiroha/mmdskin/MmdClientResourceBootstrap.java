@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -26,8 +27,10 @@ public final class MmdClientResourceBootstrap {
     private static final int BUFFER_SIZE = 8192;
     private static final long MAX_EXTRACTED_BYTES = 100L * 1024L * 1024L;
     private static final int MAX_ENTRIES = 1024;
-    private static final String BUNDLED_MODEL_RESOURCE = "/assets/mmdskin/bundled_models/red_hood.zip";
-    private static final String BUNDLED_MODEL_MARKER = ".blacksouls-red-hood-v1";
+    private static final List<BundledModelSpec> BUNDLED_MODELS = List.of(
+            new BundledModelSpec("小红帽", "/assets/mmdskin/bundled_models/red_hood.zip", ".blacksouls-red-hood-v1"),
+            new BundledModelSpec("诺登", "/assets/mmdskin/bundled_models/noden.zip", ".blacksouls-noden-v1")
+    );
     private static final String[] DEFAULT_ANIM_FILES = {
             "Drink.vmd", "crawl.vmd", "die.vmd", "elytraFly.vmd", "idle.vmd",
             "itemActive_minecraft.bow_Left_using.vmd", "itemActive_minecraft.iron_sword_Right_swinging.vmd",
@@ -47,7 +50,7 @@ public final class MmdClientResourceBootstrap {
     }
 
     public static boolean selectBundledModelForPlayer(UUID playerId, String playerName) {
-        if (playerId == null || playerName == null || playerName.isBlank() || !isBundledModelInstalled()) {
+        if (playerId == null || playerName == null || playerName.isBlank() || !isBundledModelInstalled(BUNDLED_MODEL_NAME)) {
             return false;
         }
 
@@ -111,32 +114,38 @@ public final class MmdClientResourceBootstrap {
     }
 
     private static void installBundledModelIfNeeded() {
-        Path targetDirectory = PathConstants.getModelDir(BUNDLED_MODEL_NAME).toPath().toAbsolutePath().normalize();
-        Path marker = targetDirectory.resolve(BUNDLED_MODEL_MARKER);
-        if (Files.isRegularFile(marker) && isBundledModelInstalled()) {
+        for (BundledModelSpec spec : BUNDLED_MODELS) {
+            installBundledModel(spec);
+        }
+    }
+
+    private static void installBundledModel(BundledModelSpec spec) {
+        Path targetDirectory = PathConstants.getModelDir(spec.name()).toPath().toAbsolutePath().normalize();
+        Path marker = targetDirectory.resolve(spec.marker());
+        if (Files.isRegularFile(marker) && isBundledModelInstalled(spec.name())) {
             return;
         }
 
-        try (InputStream resource = MmdClientResourceBootstrap.class.getResourceAsStream(BUNDLED_MODEL_RESOURCE)) {
+        try (InputStream resource = MmdClientResourceBootstrap.class.getResourceAsStream(spec.resourcePath())) {
             if (resource == null) {
-                MmdSkinClient.logger.error("内置模型资源缺失: {}", BUNDLED_MODEL_RESOURCE);
+                MmdSkinClient.logger.error("内置模型资源缺失: {}", spec.resourcePath());
                 return;
             }
 
             Files.createDirectories(targetDirectory);
             extractZip(resource, targetDirectory);
-            if (isBundledModelInstalled()) {
-                Files.writeString(marker, "red_hood_v1", StandardCharsets.UTF_8,
+            if (isBundledModelInstalled(spec.name())) {
+                Files.writeString(marker, "v1", StandardCharsets.UTF_8,
                         StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-                MmdSkinClient.logger.info("内置 MMD 模型已准备: {}", BUNDLED_MODEL_NAME);
+                MmdSkinClient.logger.info("内置 MMD 模型已准备: {}", spec.name());
             }
         } catch (IOException | RuntimeException e) {
             MmdSkinClient.logger.error("释放内置 MMD 模型失败", e);
         }
     }
 
-    private static boolean isBundledModelInstalled() {
-        return Files.isRegularFile(PathConstants.getModelDir(BUNDLED_MODEL_NAME).toPath().resolve("model.pmx"));
+    private static boolean isBundledModelInstalled(String modelName) {
+        return Files.isRegularFile(PathConstants.getModelDir(modelName).toPath().resolve("model.pmx"));
     }
 
     private static void extractZip(InputStream resource, Path targetDirectory) throws IOException {
@@ -200,5 +209,8 @@ public final class MmdClientResourceBootstrap {
                 zip.closeEntry();
             }
         }
+    }
+
+    private record BundledModelSpec(String name, String resourcePath, String marker) {
     }
 }

@@ -1823,6 +1823,7 @@
   "config.blacksouls.show_combat_damage_chat": "是否在聊天栏显示玩家造成伤害的战斗提示",
   "config.blacksouls.client": "BLACKSOULS II 客户端配置",
   "config.blacksouls.enable_original_window_branding": "是否使用 BLACK SOULS II 原作窗口标题和图标",
+  "config.blacksouls.enable_mmd_models": "是否使用 MMD 模型渲染 NPC（关闭后回退到原版皮肤，性能更好）",
   "gui.blacksouls.config.title": "BlackSouls II 配置",
   "gui.blacksouls.config.section_general": "通用设置",
   "gui.blacksouls.config.allow_extra_modes.on": "允许玩家切换额外模式：开",

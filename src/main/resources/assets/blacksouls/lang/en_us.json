@@ -1535,6 +1535,7 @@
   "config.blacksouls.show_combat_damage_chat": "Show combat messages in chat when players deal damage",
   "config.blacksouls.client": "BLACKSOULS II Client Configuration",
   "config.blacksouls.enable_original_window_branding": "Use the original BLACK SOULS II window title and icon",
+  "config.blacksouls.enable_mmd_models": "Render NPCs with MMD models (falls back to slim-arm vanilla skins when disabled for better performance)",
   "gui.blacksouls.config.title": "BlackSouls II Configuration",
   "gui.blacksouls.config.section_general": "General Settings",
   "gui.blacksouls.config.allow_extra_modes.on": "Allow players to switch extra modes: ON",

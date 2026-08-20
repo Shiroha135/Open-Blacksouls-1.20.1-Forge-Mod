@@ -8,7 +8,6 @@ import com.BlackSouls.BlackSoulsMod.client.render.*;
 import com.BlackSouls.BlackSoulsMod.client.tooltip.ClientSpongeNameTooltipComponent;
 import com.BlackSouls.BlackSoulsMod.client.tooltip.SpongeNameTooltipComponent;
 import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalTurnBattleEnemy;
-import com.shiroha.mmdskin.render.entity.MmdSkinRenderFactory;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
@@ -45,8 +44,10 @@ public class ClientModEvents {
 
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-        event.registerEntityRenderer(BSEntityRegistry.NODEN.get(), RenderNoden::new);
-        event.registerEntityRenderer(BSEntityRegistry.RED_HOOD.get(), new MmdSkinRenderFactory<>("小红帽"));
+        event.registerEntityRenderer(BSEntityRegistry.NODEN.get(),
+                context -> new SwitchableMmdRenderer<>(context, "诺登", RenderNoden::new));
+        event.registerEntityRenderer(BSEntityRegistry.RED_HOOD.get(),
+                context -> new SwitchableMmdRenderer<>(context, "小红帽", RenderRedHoodFallback::new));
         event.registerEntityRenderer(BSEntityRegistry.RABBIT_HOLE_NPC.get(), RabbitRenderer::new);
         event.registerEntityRenderer(BSEntityRegistry.RABBIT_KNIGHT.get(), RenderRabbitKnight::new);
         event.registerEntityRenderer(BSEntityRegistry.CHESHIRE_CAT.get(), RenderCheshireCat::new);
