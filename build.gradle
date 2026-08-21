@@ -23,6 +23,33 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 jarJar.enable()
 
+def mapCompatProjectDir = file('F:/BaiduNetdiskDownload/MC/Blacksouls2MapCompat')
+def musicPackProjectDir = file('F:/BaiduNetdiskDownload/MC/Blacksouls2MusicPack')
+def mapDependencyDir = new File(mapCompatProjectDir, 'run/mods')
+def mapDependencyJars = [
+        mapCompat           : new File(mapCompatProjectDir, 'build/libs/blacksouls2-1.20.1-1.0.0.jar'),
+        musicPack           : new File(musicPackProjectDir, 'build/libs/Blacksouls-II-Music-Pack-1.0.0.jar'),
+        adorn               : new File(mapDependencyDir, 'Adorn-5.0.1+1.20.1-forge.jar'),
+        kotlinForForge      : new File(mapDependencyDir, 'kotlinforforge-4.12.0-all.jar'),
+        macawsBridges       : new File(mapDependencyDir, 'mcw-bridges-3.0.0-mc1.20.1forge.jar'),
+        macawsFurniture     : new File(mapDependencyDir, 'mcw-furniture-3.3.0-mc1.20.1forge.jar'),
+        macawsHolidays      : new File(mapDependencyDir, 'mcw-holidays-1.1.2-mc1.20.1forge.jar'),
+        macawsLights        : new File(mapDependencyDir, 'mcw-lights-1.1.5-mc1.20.1forge.jar'),
+        macawsFences        : new File(mapDependencyDir, 'mcw-mcwfences-1.2.1-mc1.20.1forge.jar'),
+        macawsWindows       : new File(mapDependencyDir, 'mcw-mcwwindows-2.4.2-mc1.20.1forge.jar'),
+        macawsRoofs         : new File(mapDependencyDir, 'mcw-roofs-2.3.2-mc1.20.1forge.jar'),
+        macawsTrapdoors     : new File(mapDependencyDir, 'mcw-trapdoors-1.1.5-mc1.20.1forge.jar'),
+        cucumber            : new File(mapDependencyDir, 'Cucumber-1.20.1-7.0.16.jar'),
+        mysticalAgriculture: new File(mapDependencyDir, 'MysticalAgriculture-1.20.1-7.0.24.jar'),
+        mysticalAgradditions: new File(mapDependencyDir, 'MysticalAgradditions-1.20.1-7.0.12.jar'),
+        decocraft           : file('F:/BaiduNetdiskDownload/MC/Blacksouls2_1.20.1_server_test/mods/decocraft-3.0.0.8-beta-1.20.1.jar')
+]
+def platformDependencyJars = [
+        modernUi: file('F:/MC/Hatsuyuki 3.0Pro++/.minecraft/versions/秒杀/mods/[现代化 UI] ModernUI-Forge-1.20.1-3.12.0.1-universal.jar'),
+        curios  : file('F:/MC/Hatsuyuki 3.0Pro++/.minecraft/versions/秒杀/mods/curios-forge-5.14.1+1.20.1.jar')
+]
+def completeDependencyJars = mapDependencyJars + platformDependencyJars
+
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
 minecraft {
     mappings channel: mapping_channel, version: mapping_version
@@ -101,6 +128,13 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 repositories {
     mavenCentral()
 
+    flatDir {
+        dirs new File(mapCompatProjectDir, 'build/libs'),
+                new File(musicPackProjectDir, 'build/libs'),
+                mapDependencyDir,
+                file('F:/BaiduNetdiskDownload/MC/Blacksouls2_1.20.1_server_test/mods')
+    }
+
     maven {
         name = 'IzzelAliz'
         url = 'https://maven.izzel.io/releases/'
@@ -178,6 +212,11 @@ dependencies {
         jarJar.pin(it, "0.2.0")
     }
 
+    mapDependencyJars.values().findAll { it.isFile() }.each { dependencyJar ->
+        def artifactName = dependencyJar.name.substring(0, dependencyJar.name.length() - '.jar'.length())
+        runtimeOnly fg.deobf("hakoniwa.local:${artifactName}:1")
+    }
+
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -251,6 +290,70 @@ reobf {
 
 tasks.named('jarJar').configure {
     dependsOn 'copyMaps'
+}
+
+def completeDistributionName = "BlackSouls-II-${mod_version}-complete"
+def completeDistributionDir = layout.buildDirectory.dir("distributions/${completeDistributionName}")
+def completeDistributionModsDir = completeDistributionDir.map { it.dir('mods') }
+
+tasks.register('verifyMapDependencies') {
+    group = 'verification'
+    description = 'Verifies every Hakoniwa map and music dependency JAR used by the complete distribution.'
+
+    inputs.files(completeDependencyJars.values())
+
+    doLast {
+        def missing = completeDependencyJars.findAll { !it.value.isFile() }
+        if (!missing.isEmpty()) {
+            throw new GradleException('Missing Hakoniwa dependency JARs:\n' + missing.collect { "- ${it.key}: ${it.value}" }.join('\n'))
+        }
+
+        def duplicateNames = completeDependencyJars.values().groupBy { it.name }.findAll { it.value.size() > 1 }
+        if (!duplicateNames.isEmpty()) {
+            throw new GradleException('Duplicate Hakoniwa dependency filenames: ' + duplicateNames.keySet().join(', '))
+        }
+    }
+}
+
+tasks.register('prepareCompleteDistribution', Sync) {
+    group = 'distribution'
+    description = 'Builds a ready-to-install mods folder with all Hakoniwa map and music dependencies.'
+    dependsOn 'reobfJarJar', 'verifyMapDependencies'
+
+    into completeDistributionDir
+    into('mods') {
+        from(layout.buildDirectory.file("libs/${mod_id}-${mod_version}-all.jar"))
+        from(completeDependencyJars.values())
+    }
+
+    doLast {
+        File modsDir = completeDistributionModsDir.get().asFile
+        File readme = new File(completeDistributionDir.get().asFile, '安装说明.txt')
+        File checksums = new File(completeDistributionDir.get().asFile, 'SHA256SUMS.txt')
+        def jars = modsDir.listFiles({ file -> file.isFile() && file.name.endsWith('.jar') } as FileFilter).sort { it.name }
+
+        readme.setText("""BLACKSOULS II ${mod_version} 完整发行包
+
+适用版本：Minecraft 1.20.1 / Forge ${forge_version}
+安装方法：将 mods 文件夹内的全部 JAR 一起放入游戏的 mods 文件夹，不要只复制主 Mod。
+本包包含箱庭地图兼容方块、地图仍使用的外部方块 Mod、Curios、Modern UI，以及 BLACKSOULS II 音乐包。
+Natural Decor 等已由地图兼容包接管的命名空间没有重复打包，以避免方块重复注册。
+""", 'UTF-8')
+
+        checksums.setText(jars.collect { jarFile ->
+            def digest = java.security.MessageDigest.getInstance('SHA-256').digest(jarFile.bytes).encodeHex().toString()
+            "${digest}  ${jarFile.name}"
+        }.join(System.lineSeparator()) + System.lineSeparator(), 'UTF-8')
+    }
+}
+
+tasks.register('completeDistributionZip', Zip) {
+    group = 'distribution'
+    description = 'Creates the complete BLACKSOULS II distribution ZIP.'
+    dependsOn 'prepareCompleteDistribution'
+    from completeDistributionDir
+    destinationDirectory = layout.buildDirectory.dir('distributions')
+    archiveFileName = "${completeDistributionName}.zip"
 }
 
 publishing {

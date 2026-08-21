@@ -1,6 +1,5 @@
 package com.BlackSouls.BlackSoulsMod.network.packets;
 
-import com.BlackSouls.BlackSoulsMod.client.ClientSceneState;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -22,6 +21,12 @@ public final class ClientboundCurrentScenePacket {
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
-        PacketHandlers.handleClient(supplier, () -> ClientSceneState.set(sceneId));
+        PacketHandlers.handleClient(supplier, () -> ClientHandler.apply(this));
+    }
+
+    private static final class ClientHandler {
+        private static void apply(ClientboundCurrentScenePacket packet) {
+            com.BlackSouls.BlackSoulsMod.client.ClientSceneState.set(packet.sceneId);
+        }
     }
 }

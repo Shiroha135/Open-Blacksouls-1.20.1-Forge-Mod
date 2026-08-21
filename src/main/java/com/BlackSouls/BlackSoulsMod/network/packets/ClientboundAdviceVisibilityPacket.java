@@ -1,6 +1,5 @@
 package com.BlackSouls.BlackSoulsMod.network.packets;
 
-import com.BlackSouls.BlackSoulsMod.client.ClientAdviceState;
 import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
@@ -25,6 +24,12 @@ public final class ClientboundAdviceVisibilityPacket {
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
-        PacketHandlers.handleClient(supplier, () -> ClientAdviceState.set(controlled, visible));
+        PacketHandlers.handleClient(supplier, () -> ClientHandler.apply(this));
+    }
+
+    private static final class ClientHandler {
+        private static void apply(ClientboundAdviceVisibilityPacket packet) {
+            com.BlackSouls.BlackSoulsMod.client.ClientAdviceState.set(packet.controlled, packet.visible);
+        }
     }
 }

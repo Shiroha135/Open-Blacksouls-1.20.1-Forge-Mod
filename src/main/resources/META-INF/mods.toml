@@ -48,6 +48,13 @@ versionRange="[3.12.0.1,4.0.0)"
 ordering="BEFORE"
 side="CLIENT"
 
+[[dependencies.blacksouls]]
+modId="curios"
+mandatory=true
+versionRange="[5.14.1,6.0.0)"
+ordering="BEFORE"
+side="BOTH"
+
 [[dependencies.mmdskin]]
 modId="forge"
 mandatory=true
@@ -63,37 +70,124 @@ ordering="NONE"
 side="BOTH"
 
 # ====================================================
-# 地图专属维度依赖（可选）
+# 箱庭地图与音乐依赖（完整发行包必选）
 # ====================================================
 
-# 1.装饰工艺
+[[dependencies.blacksouls]]
+modId="blacksouls2"
+mandatory=true
+versionRange="[1.20.1-1.0.0,)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.blacksouls]]
+modId="decoration_mod"
+mandatory=true
+versionRange="[1.20.1-1.10.1-compat,)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.blacksouls]]
+modId="blacksouls2music"
+mandatory=true
+versionRange="[1.0.0,)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.blacksouls]]
+modId="adorn"
+mandatory=true
+versionRange="[5.0.1,6.0.0)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.blacksouls]]
+modId="kotlinforforge"
+mandatory=true
+versionRange="[4.12.0,5.0.0)"
+ordering="AFTER"
+side="BOTH"
+
 [[dependencies.blacksouls]]
 modId="decocraft"
-mandatory=false
-versionRange="*"
-ordering="NONE"
+mandatory=true
+versionRange="[3.0.0.8-beta-1.20.1,)"
+ordering="AFTER"
 side="BOTH"
 
-# 2.金刚鹦鹉的窗户
+[[dependencies.blacksouls]]
+modId="mcwbridges"
+mandatory=true
+versionRange="[3.0.0,4.0.0)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.blacksouls]]
+modId="mcwfences"
+mandatory=true
+versionRange="[1.2.1,2.0.0)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.blacksouls]]
+modId="mcwfurnitures"
+mandatory=true
+versionRange="[3.3.0,4.0.0)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.blacksouls]]
+modId="mcwholidays"
+mandatory=true
+versionRange="[1.1.2,2.0.0)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.blacksouls]]
+modId="mcwlights"
+mandatory=true
+versionRange="[1.1.5,2.0.0)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.blacksouls]]
+modId="mcwroofs"
+mandatory=true
+versionRange="[2.3.2,3.0.0)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.blacksouls]]
+modId="mcwtrpdoors"
+mandatory=true
+versionRange="[1.1.5,2.0.0)"
+ordering="AFTER"
+side="BOTH"
+
 [[dependencies.blacksouls]]
 modId="mcwwindows"
-mandatory=false
-versionRange="*"
-ordering="NONE"
+mandatory=true
+versionRange="[2.4.2,3.0.0)"
+ordering="AFTER"
 side="BOTH"
 
-# 3.金刚鹦鹉的楼梯
 [[dependencies.blacksouls]]
-modId="mcwstairs"
-mandatory=false
-versionRange="*"
-ordering="NONE"
+modId="cucumber"
+mandatory=true
+versionRange="[7.0.16,8.0.0)"
+ordering="AFTER"
 side="BOTH"
 
-# 4.LandK门窗
 [[dependencies.blacksouls]]
-modId="landk_doors_and_windows"
-mandatory=false
-versionRange="*"
-ordering="NONE"
+modId="mysticalagriculture"
+mandatory=true
+versionRange="[7.0.24,8.0.0)"
+ordering="AFTER"
+side="BOTH"
+
+[[dependencies.blacksouls]]
+modId="mysticalagradditions"
+mandatory=true
+versionRange="[7.0.12,8.0.0)"
+ordering="AFTER"
 side="BOTH"

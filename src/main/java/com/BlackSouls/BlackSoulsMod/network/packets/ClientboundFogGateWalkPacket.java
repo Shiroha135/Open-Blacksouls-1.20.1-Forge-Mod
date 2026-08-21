@@ -1,6 +1,5 @@
 package com.BlackSouls.BlackSoulsMod.network.packets;
 
-import com.BlackSouls.BlackSoulsMod.client.ClientFogGateTraversal;
 import net.minecraft.core.Direction;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
@@ -44,12 +43,18 @@ public final class ClientboundFogGateWalkPacket {
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
-        PacketHandlers.handleClient(supplier, () -> {
-            if (walking) {
-                ClientFogGateTraversal.start(direction, targetX, targetZ);
+        PacketHandlers.handleClient(supplier, () -> ClientHandler.apply(this));
+    }
+
+    private static final class ClientHandler {
+        private static void apply(ClientboundFogGateWalkPacket packet) {
+            if (packet.walking) {
+                com.BlackSouls.BlackSoulsMod.client.ClientFogGateTraversal.start(
+                        packet.direction, packet.targetX, packet.targetZ
+                );
             } else {
-                ClientFogGateTraversal.stop();
+                com.BlackSouls.BlackSoulsMod.client.ClientFogGateTraversal.stop();
             }
-        });
+        }
     }
 }

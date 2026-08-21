@@ -1,6 +1,5 @@
 package com.BlackSouls.BlackSoulsMod.network.packets;
 
-import com.BlackSouls.BlackSoulsMod.client.render.LostItemBannerRenderer;
 import java.util.function.Supplier;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.item.ItemStack;
@@ -22,6 +21,12 @@ public class ClientboundLostItemPacket {
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
-        PacketHandlers.handleClient(supplier, () -> LostItemBannerRenderer.show(this.stack));
+        PacketHandlers.handleClient(supplier, () -> ClientHandler.show(this));
+    }
+
+    private static final class ClientHandler {
+        private static void show(ClientboundLostItemPacket packet) {
+            com.BlackSouls.BlackSoulsMod.client.render.LostItemBannerRenderer.show(packet.stack);
+        }
     }
 }

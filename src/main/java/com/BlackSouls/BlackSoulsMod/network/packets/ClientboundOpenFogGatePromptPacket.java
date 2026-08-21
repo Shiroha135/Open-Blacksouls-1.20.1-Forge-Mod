@@ -1,7 +1,5 @@
 package com.BlackSouls.BlackSoulsMod.network.packets;
 
-import com.BlackSouls.BlackSoulsMod.client.gui.GuiFogGatePrompt;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
@@ -24,8 +22,14 @@ public final class ClientboundOpenFogGatePromptPacket {
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
-        PacketHandlers.handleClient(supplier, () ->
-                Minecraft.getInstance().setScreen(new GuiFogGatePrompt(gatePos))
-        );
+        PacketHandlers.handleClient(supplier, () -> ClientHandler.open(this));
+    }
+
+    private static final class ClientHandler {
+        private static void open(ClientboundOpenFogGatePromptPacket packet) {
+            net.minecraft.client.Minecraft.getInstance().setScreen(
+                    new com.BlackSouls.BlackSoulsMod.client.gui.GuiFogGatePrompt(packet.gatePos)
+            );
+        }
     }
 }

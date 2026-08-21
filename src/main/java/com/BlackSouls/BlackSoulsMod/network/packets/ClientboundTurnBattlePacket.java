@@ -1,12 +1,10 @@
 package com.BlackSouls.BlackSoulsMod.network.packets;
 
-import com.BlackSouls.BlackSoulsMod.client.gui.GuiTurnBattle;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -128,21 +126,25 @@ public class ClientboundTurnBattlePacket {
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
-        PacketHandlers.handleClient(supplier, () -> {
-            Minecraft minecraft = Minecraft.getInstance();
-            if (minecraft.screen instanceof GuiTurnBattle battle
-                    && (battle.matches(this.rootEntityId) || !this.active)) {
-                battle.applyState(this.active, this.battleProfileId, this.enemies,
-                        this.actingEnemyIndex, this.phaseChanged,
-                        this.awaitingPresentation, this.playerHits, this.incomingHits, this.message,
-                        this.canAct, this.outcome, this.soulReward,
-                        this.rewardItems, this.skillCooldowns, this.enemyAnimationId);
-            } else if (this.active) {
-                minecraft.setScreen(new GuiTurnBattle(this.rootEntityId,
-                        this.battleProfileId, this.enemies, this.message,
-                        this.canAct, this.skillCooldowns, this.enemyAnimationId));
+        PacketHandlers.handleClient(supplier, () -> ClientHandler.apply(this));
+    }
+
+    private static final class ClientHandler {
+        private static void apply(ClientboundTurnBattlePacket packet) {
+            net.minecraft.client.Minecraft minecraft = net.minecraft.client.Minecraft.getInstance();
+            if (minecraft.screen instanceof com.BlackSouls.BlackSoulsMod.client.gui.GuiTurnBattle battle
+                    && (battle.matches(packet.rootEntityId) || !packet.active)) {
+                battle.applyState(packet.active, packet.battleProfileId, packet.enemies,
+                        packet.actingEnemyIndex, packet.phaseChanged,
+                        packet.awaitingPresentation, packet.playerHits, packet.incomingHits, packet.message,
+                        packet.canAct, packet.outcome, packet.soulReward,
+                        packet.rewardItems, packet.skillCooldowns, packet.enemyAnimationId);
+            } else if (packet.active) {
+                minecraft.setScreen(new com.BlackSouls.BlackSoulsMod.client.gui.GuiTurnBattle(
+                        packet.rootEntityId, packet.battleProfileId, packet.enemies, packet.message,
+                        packet.canAct, packet.skillCooldowns, packet.enemyAnimationId));
             }
-        });
+        }
     }
 
     public record DamageHit(int targetEntityId, int damage, boolean critical, int wave) {

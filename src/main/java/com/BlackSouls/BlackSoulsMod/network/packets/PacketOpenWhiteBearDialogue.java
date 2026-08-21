@@ -1,6 +1,5 @@
 package com.BlackSouls.BlackSoulsMod.network.packets;
 
-import com.BlackSouls.BlackSoulsMod.client.gui.GuiWhiteBearDialogue;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
@@ -35,10 +34,20 @@ public class PacketOpenWhiteBearDialogue {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(
                 Dist.CLIENT,
-                () -> () -> net.minecraft.client.Minecraft.getInstance().setScreen(
-                        new GuiWhiteBearDialogue(this.firstVisit, this.freeSouls, this.progress)
-                )
+                () -> () -> ClientHandler.open(this)
         ));
         context.setPacketHandled(true);
+    }
+
+    private static final class ClientHandler {
+        private static void open(PacketOpenWhiteBearDialogue packet) {
+            net.minecraft.client.Minecraft.getInstance().setScreen(
+                    new com.BlackSouls.BlackSoulsMod.client.gui.GuiWhiteBearDialogue(
+                            packet.firstVisit,
+                            packet.freeSouls,
+                            packet.progress
+                    )
+            );
+        }
     }
 }

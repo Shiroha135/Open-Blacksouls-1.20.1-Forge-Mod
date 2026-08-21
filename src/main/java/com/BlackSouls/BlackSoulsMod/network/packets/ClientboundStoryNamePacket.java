@@ -1,6 +1,5 @@
 package com.BlackSouls.BlackSoulsMod.network.packets;
 
-import com.BlackSouls.BlackSoulsMod.client.ClientStoryName;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -27,12 +26,16 @@ public final class ClientboundStoryNamePacket {
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
-        PacketHandlers.handleClient(supplier, () -> {
-            if (needsChoice) {
-                ClientStoryName.requestOpening(storyName);
+        PacketHandlers.handleClient(supplier, () -> ClientHandler.apply(this));
+    }
+
+    private static final class ClientHandler {
+        private static void apply(ClientboundStoryNamePacket packet) {
+            if (packet.needsChoice) {
+                com.BlackSouls.BlackSoulsMod.client.ClientStoryName.requestOpening(packet.storyName);
             } else {
-                ClientStoryName.accept(storyName);
+                com.BlackSouls.BlackSoulsMod.client.ClientStoryName.accept(packet.storyName);
             }
-        });
+        }
     }
 }

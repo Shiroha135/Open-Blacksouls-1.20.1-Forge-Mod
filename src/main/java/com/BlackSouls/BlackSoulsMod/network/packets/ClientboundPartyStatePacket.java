@@ -1,6 +1,5 @@
 package com.BlackSouls.BlackSoulsMod.network.packets;
 
-import com.BlackSouls.BlackSoulsMod.client.ClientPartyState;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
@@ -27,8 +26,17 @@ public final class ClientboundPartyStatePacket {
     }
     public void handle(Supplier<NetworkEvent.Context> supplier) {
         NetworkEvent.Context context = supplier.get();
-        context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientPartyState.setMembers(this.members)));
+        context.enqueueWork(() -> DistExecutor.unsafeRunWhenOn(
+                Dist.CLIENT,
+                () -> () -> ClientHandler.apply(this)
+        ));
         context.setPacketHandled(true);
+    }
+
+    private static final class ClientHandler {
+        private static void apply(ClientboundPartyStatePacket packet) {
+            com.BlackSouls.BlackSoulsMod.client.ClientPartyState.setMembers(packet.members);
+        }
     }
 
     public record Member(UUID id, String name, String avatar, float health, float maxHealth,

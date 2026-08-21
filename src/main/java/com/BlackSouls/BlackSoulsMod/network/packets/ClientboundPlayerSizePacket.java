@@ -2,7 +2,6 @@ package com.BlackSouls.BlackSoulsMod.network.packets;
 
 import com.BlackSouls.BlackSoulsMod.util.EatMeSizeManager;
 import java.util.function.Supplier;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -28,15 +27,19 @@ public class ClientboundPlayerSizePacket {
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
-        PacketHandlers.handleClient(supplier, () -> {
-            Minecraft minecraft = Minecraft.getInstance();
+        PacketHandlers.handleClient(supplier, () -> ClientHandler.apply(this));
+    }
+
+    private static final class ClientHandler {
+        private static void apply(ClientboundPlayerSizePacket packet) {
+            net.minecraft.client.Minecraft minecraft = net.minecraft.client.Minecraft.getInstance();
             if (minecraft.level == null) {
                 return;
             }
-            Entity entity = minecraft.level.getEntity(this.entityId);
+            Entity entity = minecraft.level.getEntity(packet.entityId);
             if (entity instanceof Player player) {
-                EatMeSizeManager.setSmall(player, this.small);
+                EatMeSizeManager.setSmall(player, packet.small);
             }
-        });
+        }
     }
 }
