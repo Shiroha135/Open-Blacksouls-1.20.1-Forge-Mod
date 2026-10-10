@@ -169,11 +169,64 @@ repositories {
 
 configurations {
     mmdEmbedded
+    adornDev
     library {
         exclude group: "com.google.code.findbugs"
         exclude group: "org.jetbrains"
     }
 }
+
+def patchedAdornDevJar = layout.buildDirectory.file('dev-mods/Adorn-5.0.1+1.20.1-forge-mapped-patched.jar')
+def prepareAdornDevJar = tasks.register('prepareAdornDevJar') {
+    group = 'forgegradle runs'
+    description = 'Removes Mojmap-colliding Kotlin inventory accessors from the development Adorn JAR.'
+    inputs.files(configurations.adornDev)
+    outputs.file(patchedAdornDevJar)
+
+    doLast {
+        File inputJar = configurations.adornDev.singleFile
+        File outputJar = patchedAdornDevJar.get().asFile
+        outputJar.parentFile.mkdirs()
+
+        new java.util.jar.JarFile(inputJar).withCloseable { sourceJar ->
+            new java.util.jar.JarOutputStream(new FileOutputStream(outputJar)).withCloseable { output ->
+                sourceJar.entries().each { entry ->
+                    if (entry.directory || entry.name ==~ /META-INF\/.*\.(SF|RSA|DSA)/) {
+                        return
+                    }
+
+                    byte[] bytes = sourceJar.getInputStream(entry).withCloseable { it.bytes }
+                    if (entry.name == 'juuxel/adorn/block/entity/BaseContainerBlockEntity.class') {
+                        def reader = new org.objectweb.asm.ClassReader(bytes)
+                        def writer = new org.objectweb.asm.ClassWriter(0)
+                        def visitor = new org.objectweb.asm.ClassVisitor(org.objectweb.asm.Opcodes.ASM9, writer) {
+                            @Override
+                            org.objectweb.asm.MethodVisitor visitMethod(int access, String name, String descriptor,
+                                                                        String signature, String[] exceptions) {
+                                boolean duplicateAccessor = (access & org.objectweb.asm.Opcodes.ACC_FINAL) != 0 && (
+                                        (name == 'getItems' && descriptor == '()Lnet/minecraft/core/NonNullList;') ||
+                                        (name == 'setItems' && descriptor == '(Lnet/minecraft/core/NonNullList;)V')
+                                )
+                                return duplicateAccessor ? null : super.visitMethod(access, name, descriptor, signature, exceptions)
+                            }
+                        }
+                        reader.accept(visitor, 0)
+                        bytes = writer.toByteArray()
+                    }
+
+                    def outputEntry = new java.util.jar.JarEntry(entry.name)
+                    outputEntry.time = 0L
+                    output.putNextEntry(outputEntry)
+                    output.write(bytes)
+                    output.closeEntry()
+                }
+            }
+        }
+    }
+}
+
+def patchedAdornDevFiles = files(patchedAdornDevJar)
+patchedAdornDevFiles.builtBy(prepareAdornDevJar)
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
@@ -212,10 +265,12 @@ dependencies {
         jarJar.pin(it, "0.2.0")
     }
 
-    mapDependencyJars.values().findAll { it.isFile() }.each { dependencyJar ->
+    mapDependencyJars.findAll { key, dependencyJar -> key != 'adorn' && dependencyJar.isFile() }.each { key, dependencyJar ->
         def artifactName = dependencyJar.name.substring(0, dependencyJar.name.length() - '.jar'.length())
         runtimeOnly fg.deobf("hakoniwa.local:${artifactName}:1")
     }
+    adornDev fg.deobf('hakoniwa.local:Adorn-5.0.1+1.20.1-forge:1')
+    runtimeOnly patchedAdornDevFiles
 
 }
 
@@ -246,6 +301,7 @@ tasks.named('processResources').configure {
 }
 tasks.withType(JavaExec).configureEach {
     dependsOn 'copyMaps'
+    dependsOn prepareAdornDevJar
     doFirst {
         File minecraftClasspath = file("$buildDir/classpath/${name}_minecraftClasspath.txt")
         if (minecraftClasspath.isFile()) {
