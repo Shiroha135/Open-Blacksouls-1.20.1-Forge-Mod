@@ -3,23 +3,31 @@ package com.BlackSouls.BlackSoulsMod.mixin.compat;
 import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBounds;
 import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBossData;
 import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBossState;
+import com.BlackSouls.BlackSoulsMod.compat.scene.Map052BossSpawnerRepair;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Coerce;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Pseudo
 @Mixin(targets = "cn.zhenhongliya.blacksouls2compat.blockentity.SceneSpawnerBlockEntity", remap = false)
-public abstract class SceneSpawnerBlockEntityMixin implements SceneSpawnerBounds, SceneSpawnerBossState {
+public abstract class SceneSpawnerBlockEntityMixin implements SceneSpawnerBounds, SceneSpawnerBossState,
+        Map052BossSpawnerRepair.Access {
     @Unique
     private static final String BLACKSOULS_RANGE_X_NBT = "BlackSoulsRangeX";
     @Unique
@@ -29,6 +37,9 @@ public abstract class SceneSpawnerBlockEntityMixin implements SceneSpawnerBounds
 
     @Shadow(remap = false)
     private String sceneId;
+
+    @Shadow(remap = false)
+    private long handledRevision;
 
     @Shadow(remap = false)
     public abstract void resetForCurrentScene(ServerLevel level);
@@ -106,6 +117,35 @@ public abstract class SceneSpawnerBlockEntityMixin implements SceneSpawnerBounds
                 ? Math.max(1, Math.min(MAX_RANGE, tag.getInt(BLACKSOULS_RANGE_Z_NBT)))
                 : DEFAULT_RANGE;
         blacksouls$bossMode = tag.getBoolean(BLACKSOULS_BOSS_MODE_NBT);
+        blacksouls$repairOriginalBossScene();
+    }
+
+    @Inject(method = "serverTick", at = @At("HEAD"), remap = false)
+    private static void blacksouls$repairBeforeTick(Level level, BlockPos pos, BlockState state,
+                                                   @Coerce Object spawner, CallbackInfo callback) {
+        if (spawner instanceof Map052BossSpawnerRepair.Access access) {
+            access.blacksouls$repairOriginalBossScene();
+        }
+    }
+
+    @Unique
+    @Override
+    public void blacksouls$repairOriginalBossScene() {
+        BlockEntity blockEntity = (BlockEntity) (Object) this;
+        if (!(blockEntity.getLevel() instanceof ServerLevel level)) {
+            return;
+        }
+        BlockPos pos = blockEntity.getBlockPos();
+        ItemStack template = ((Container) (Object) this).getItem(0);
+        var itemId = ForgeRegistries.ITEMS.getKey(template.getItem());
+        if (Map052BossSpawnerRepair.shouldRepair(level.dimension().location().toString(),
+                pos.getX(), pos.getY(), pos.getZ(), sceneId, itemId == null ? "" : itemId.toString(),
+                blacksouls$bossMode && template.getCount() == 1
+                        && (!template.hasTag() || template.getTag().isEmpty()))) {
+            sceneId = Map052BossSpawnerRepair.TARGET_SCENE;
+            handledRevision = 0L;
+            blockEntity.setChanged();
+        }
     }
 
     @Inject(method = {"saveAdditional", "m_183515_"}, at = @At("TAIL"), remap = false)
