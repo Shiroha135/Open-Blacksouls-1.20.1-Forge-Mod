@@ -1,0 +1,1124 @@
+{
+  "skills": [
+    {
+      "id": 1,
+      "name": "攻击",
+      "text": "的攻击！",
+      "animationId": -1,
+      "repeats": 1,
+      "damageType": 1,
+      "formula": "a.atk * 4 - b.def * 2",
+      "variance": 20,
+      "critical": true,
+      "hitType": 1,
+      "successRate": 100,
+      "elementId": -1,
+      "scope": 1,
+      "mpCost": 0,
+      "tpCost": 0,
+      "speed": 0,
+      "note": "スキル１番は［攻撃］コマンドを選択したときに使用されます。",
+      "effects": [
+        {
+          "code": 21,
+          "dataId": 0,
+          "value1": 1.0,
+          "value2": 0.0
+        }
+      ]
+    },
+    {
+      "id": 174,
+      "name": "吸收反击",
+      "text": "使用了吸收反击！",
+      "animationId": 580,
+      "repeats": 1,
+      "damageType": 1,
+      "formula": "a.atk * 4 - b.def * 2",
+      "variance": 20,
+      "critical": true,
+      "hitType": 0,
+      "successRate": 100,
+      "elementId": 1,
+      "scope": 1,
+      "mpCost": 0,
+      "tpCost": 0,
+      "speed": 0,
+      "note": "<変換攻撃判定:100>\r\n<HP変換攻撃:100,100>\r\n",
+      "effects": [
+        {
+          "code": 21,
+          "dataId": 0,
+          "value1": 1.0,
+          "value2": 0.0
+        }
+      ]
+    },
+    {
+      "id": 305,
+      "name": "让我来杀掉你吧２",
+      "text": "",
+      "animationId": 1,
+      "repeats": 1,
+      "damageType": 1,
+      "formula": "a.atk * 10000000 - b.def * 1",
+      "variance": 50,
+      "critical": true,
+      "hitType": 0,
+      "successRate": 100,
+      "elementId": 0,
+      "scope": 1,
+      "mpCost": 0,
+      "tpCost": 0,
+      "speed": 0,
+      "note": "",
+      "effects": []
+    },
+    {
+      "id": 512,
+      "name": "鬼牌",
+      "text": "抽到了鬼牌！",
+      "animationId": 56,
+      "repeats": 1,
+      "damageType": 1,
+      "formula": "0",
+      "variance": 20,
+      "critical": true,
+      "hitType": 0,
+      "successRate": 100,
+      "elementId": 0,
+      "scope": 1,
+      "mpCost": 80,
+      "tpCost": 0,
+      "speed": 0,
+      "note": "",
+      "effects": [
+        {
+          "code": 11,
+          "dataId": 0,
+          "value1": -1.0,
+          "value2": 0.0
+        }
+      ]
+    },
+    {
+      "id": 762,
+      "name": "赛黄晶",
+      "text": "咏唱了赛黄晶！",
+      "animationId": 462,
+      "repeats": 1,
+      "damageType": 1,
+      "formula": "a.mat * 20 - b.mdf * 2",
+      "variance": 20,
+      "critical": true,
+      "hitType": 0,
+      "successRate": 100,
+      "elementId": 9,
+      "scope": 1,
+      "mpCost": 23,
+      "tpCost": 0,
+      "speed": 0,
+      "note": "",
+      "effects": []
+    },
+    {
+      "id": 820,
+      "name": "酸史莱姆",
+      "text": "将身体摊开碾压了上来！",
+      "animationId": 292,
+      "repeats": 1,
+      "damageType": 1,
+      "formula": "a.atk * 3",
+      "variance": 20,
+      "critical": false,
+      "hitType": 0,
+      "successRate": 100,
+      "elementId": 0,
+      "scope": 1,
+      "mpCost": 0,
+      "tpCost": 0,
+      "speed": 0,
+      "note": "<防御状態無視率:100>\r\n<ダメージ率貫通:1,100>\r\n<運無視弱体付与>",
+      "effects": [
+        {
+          "code": 11,
+          "dataId": 0,
+          "value1": -0.3,
+          "value2": 0.0
+        },
+        {
+          "code": 32,
+          "dataId": 0,
+          "value1": 5.0,
+          "value2": 0.0
+        }
+      ]
+    },
+    {
+      "id": 939,
+      "name": "贯铁枪",
+      "text": "使用了贯铁枪！",
+      "animationId": 137,
+      "repeats": 1,
+      "damageType": 1,
+      "formula": "a.atk * 8",
+      "variance": 20,
+      "critical": true,
+      "hitType": 0,
+      "successRate": 100,
+      "elementId": -1,
+      "scope": 1,
+      "mpCost": 0,
+      "tpCost": 0,
+      "speed": 0,
+      "note": "<防御状態無視率:100>\r\n<ダメージ率貫通:1,100>\r\n<運無視弱体付与>\r\n<運無視ステート付与>\r\n<使用後追加行動:939,-2,30>",
+      "effects": [
+        {
+          "code": 32,
+          "dataId": 3,
+          "value1": 5.0,
+          "value2": 0.0
+        },
+        {
+          "code": 32,
+          "dataId": 3,
+          "value1": 5.0,
+          "value2": 0.0
+        },
+        {
+          "code": 21,
+          "dataId": 56,
+          "value1": 1.0,
+          "value2": 0.0
+        }
+      ]
+    }
+  ],
+  "playerSkillSources": {
+    "bs2_skill_aura_blade": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        95
+      ]
+    },
+    "bs2_skill_decapitation": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        151
+      ]
+    },
+    "bs2_skill_hide_and_seek": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        624
+      ]
+    },
+    "bs2_skill_shadowless": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        107
+      ]
+    },
+    "bs2_skill_sweep": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        81
+      ]
+    },
+    "bs2_skill_berserker_roar": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        82
+      ]
+    },
+    "bs2_skill_iron_hammer": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        152
+      ]
+    },
+    "bs2_skill_armor_pierce": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        100
+      ]
+    },
+    "bs2_skill_gale_sixfold_thrust": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        94
+      ]
+    },
+    "bs2_skill_hasso": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        102
+      ]
+    },
+    "bs2_skill_tsubame_gaeshi": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        103
+      ]
+    },
+    "bs2_skill_issen": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        104
+      ]
+    },
+    "bs2_skill_slash_down": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        167
+      ]
+    },
+    "bs2_skill_massacre_axe": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        83
+      ]
+    },
+    "bs2_skill_giant_guillotine": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        84
+      ]
+    },
+    "bs2_skill_pommel_stun": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        895
+      ]
+    },
+    "bs2_skill_cleave_in_two": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        896
+      ]
+    },
+    "bs2_skill_wrath_of_twilight": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        897
+      ]
+    },
+    "bs2_skill_struggle": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        110
+      ]
+    },
+    "bs2_skill_heavy_strike": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        455
+      ]
+    },
+    "bs2_skill_smoldering_frenzy": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        469
+      ]
+    },
+    "bs2_skill_requiem": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        138
+      ]
+    },
+    "bs2_skill_grit": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        75
+      ]
+    },
+    "bs2_skill_dodo_run": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        340
+      ]
+    },
+    "bs2_skill_vorpal_slash": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        350
+      ]
+    },
+    "bs2_skill_weapon_break": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        105
+      ]
+    },
+    "bs2_skill_armor_break": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        106
+      ]
+    },
+    "bs2_skill_dragon_shockwave": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        297
+      ]
+    },
+    "bs2_skill_shotgun_break": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        19
+      ]
+    },
+    "bs2_skill_radiant_blade": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        99
+      ]
+    },
+    "bs2_skill_knights_glory": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        93
+      ]
+    },
+    "bs2_skill_hellfire_blade": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        298
+      ]
+    },
+    "bs2_skill_ultimate_triple_slash": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        357
+      ]
+    },
+    "bs2_skill_soul_arrow": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        14
+      ]
+    },
+    "bs2_skill_reinforce": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        356
+      ]
+    },
+    "bs2_skill_soul_light": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        15
+      ]
+    },
+    "bs2_skill_soul_radiation": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        25
+      ]
+    },
+    "bs2_skill_carthus_blood_curse": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        145
+      ]
+    },
+    "bs2_skill_foot_shot": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        101
+      ]
+    },
+    "bs2_skill_triple_shot": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        108
+      ]
+    },
+    "bs2_skill_arrow_rain": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        109
+      ]
+    },
+    "bs2_skill_mana_recovery": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        26
+      ]
+    },
+    "bs2_skill_mana_burn": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        27,
+        390
+      ]
+    },
+    "bs2_skill_counter": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        21
+      ]
+    },
+    "bs2_skill_mental_break": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        111
+      ]
+    },
+    "bs2_skill_silver_moon_thunder_axe": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        112
+      ]
+    },
+    "bs2_skill_flesh_carve": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        117
+      ]
+    },
+    "bs2_skill_blood_trail": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        118
+      ]
+    },
+    "bs2_skill_blood_edge": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        119
+      ]
+    },
+    "bs2_skill_shield_slam": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        287
+      ]
+    },
+    "bs2_skill_darkness": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        38
+      ]
+    },
+    "bs2_skill_sin_crush": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        288
+      ]
+    },
+    "bs2_skill_sin_burst": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        289
+      ]
+    },
+    "bs2_skill_self_harm": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        308
+      ]
+    },
+    "bs2_skill_dead_strike": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        309
+      ]
+    },
+    "bs2_skill_aim": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        122
+      ]
+    },
+    "bs2_skill_overhead_barrage": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        123
+      ]
+    },
+    "bs2_skill_haki": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        124
+      ]
+    },
+    "bs2_skill_hundred_fists": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        125
+      ]
+    },
+    "bs2_skill_iai": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        170
+      ]
+    },
+    "bs2_skill_forward_slash": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        171
+      ]
+    },
+    "bs2_skill_tempest_rend": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        172
+      ]
+    },
+    "bs2_skill_chakra": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        86
+      ]
+    },
+    "bs2_skill_reckless_strike": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        114
+      ]
+    },
+    "bs2_skill_double_collision": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        89,
+        522
+      ]
+    },
+    "bs2_skill_gunpowder_replenish": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        155,
+        783
+      ]
+    },
+    "bs2_skill_quick_reload": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        159
+      ]
+    },
+    "bs2_skill_soul_harvest": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        343,
+        344,
+        345
+      ]
+    },
+    "bs2_skill_true_soul_harvest": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        346
+      ]
+    },
+    "bs2_skill_storm_king": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        191
+      ]
+    },
+    "bs2_skill_storm_overlord": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        193,
+        907
+      ]
+    },
+    "bs2_skill_moonlight_blade": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        115
+      ]
+    },
+    "bs2_skill_moonlight_break": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        116
+      ]
+    },
+    "bs2_skill_twilight_of_grudge": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        464,
+        491
+      ]
+    },
+    "bs2_skill_soul_collapse": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        466,
+        493
+      ]
+    },
+    "bs2_skill_mad_bird_call": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        497
+      ]
+    },
+    "bs2_skill_mental_focus": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        32
+      ]
+    },
+    "bs2_skill_crushing_water": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        552
+      ]
+    },
+    "bs2_skill_rage": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        576,
+        577
+      ]
+    },
+    "bs2_skill_eclipse": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        588
+      ]
+    },
+    "bs2_skill_zenith_blade": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        589
+      ]
+    },
+    "bs2_skill_solar_flare": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        590
+      ]
+    },
+    "bs2_skill_lake_god_apocalypse": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        592
+      ]
+    },
+    "bs2_skill_green_collapse": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        593
+      ]
+    },
+    "bs2_skill_blood_trial": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        596
+      ]
+    },
+    "bs2_skill_blessing_of_pain": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        597
+      ]
+    },
+    "bs2_skill_slaughter_begins": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        600
+      ]
+    },
+    "bs2_skill_delicious_turtle_soup": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        604
+      ]
+    },
+    "bs2_skill_cross_slash": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        874
+      ]
+    },
+    "bs2_skill_bullet_load": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        878
+      ]
+    },
+    "bs2_skill_visceral_attack": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        701,
+        879
+      ]
+    },
+    "bs2_skill_sky_cleaving_slash": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        969
+      ]
+    },
+    "bs2_skill_mind_eye": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        970
+      ]
+    },
+    "bs2_skill_peerless_challenge": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        971
+      ]
+    },
+    "bs2_skill_heaven_shattering_thunder": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        985
+      ]
+    },
+    "bs2_skill_lion_whirlwind": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        986,
+        987
+      ]
+    },
+    "bs2_skill_soul_volley": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        24
+      ]
+    },
+    "bs2_skill_dispel": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        96
+      ]
+    },
+    "bs2_skill_see_through_attack": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        212
+      ]
+    },
+    "bs2_skill_poison": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        35
+      ]
+    },
+    "bs2_skill_poison_ii": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        36
+      ]
+    },
+    "bs2_skill_hypnosis": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        39
+      ]
+    },
+    "bs2_skill_cure": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        31
+      ]
+    },
+    "bs2_skill_magic_blessing": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        127
+      ]
+    },
+    "bs2_skill_rampage": {
+      "hitType": 1,
+      "sourceSkillIds": [
+        173
+      ]
+    },
+    "bs2_skill_full_blessing": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        51
+      ]
+    },
+    "bs2_skill_resurrection": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        33
+      ]
+    },
+    "bs2_skill_mana_absorption": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        50
+      ]
+    },
+    "bs2_skill_erase": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        113
+      ]
+    },
+    "bs2_skill_kings_command": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        140
+      ]
+    },
+    "bs2_skill_fire": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        132
+      ]
+    },
+    "bs2_skill_drowning_bubble": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        136
+      ]
+    },
+    "bs2_skill_dark_side_of_moon": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        141
+      ]
+    },
+    "bs2_skill_hellfire": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        143
+      ]
+    },
+    "bs2_skill_destruction_storm": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        144
+      ]
+    },
+    "bs2_skill_inner_potential": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        195,
+        766
+      ]
+    },
+    "bs2_skill_great_soul_arrow": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        79
+      ]
+    },
+    "bs2_skill_verdant_power": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        139
+      ]
+    },
+    "bs2_skill_rock_body": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        22
+      ]
+    },
+    "bs2_skill_dark_orb": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        28
+      ]
+    },
+    "bs2_skill_dark_swarm": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        30
+      ]
+    },
+    "bs2_skill_divine_thunder": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        128
+      ]
+    },
+    "bs2_skill_divine_beast_thunder": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        129
+      ]
+    },
+    "bs2_skill_meteor_swarm": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        150
+      ]
+    },
+    "bs2_skill_full_curse": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        240
+      ]
+    },
+    "bs2_skill_great_soul_arrow_volley": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        88
+      ]
+    },
+    "bs2_skill_fatal_guard": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        271
+      ]
+    },
+    "bs2_skill_ghost_fire": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        244
+      ]
+    },
+    "bs2_skill_phalanx": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        584
+      ]
+    },
+    "bs2_skill_absolute_hit": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        603
+      ]
+    },
+    "bs2_skill_chaos_explosion": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        153
+      ]
+    },
+    "bs2_skill_soul_shield": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        625
+      ]
+    },
+    "bs2_skill_dense_spirochete": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        814
+      ]
+    },
+    "bs2_skill_summon_meat_wall": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        836
+      ]
+    },
+    "bs2_skill_torn_grudge": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        838
+      ]
+    },
+    "bs2_skill_piercing_icicle": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        839
+      ]
+    },
+    "bs2_skill_rain_of_ruin": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        840
+      ]
+    },
+    "bs2_skill_gloomy_swamp": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        841
+      ]
+    },
+    "bs2_skill_acid_rain": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        842
+      ]
+    },
+    "bs2_skill_royal_tea": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        844
+      ]
+    },
+    "bs2_skill_godspeed_dance": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        573,
+        845
+      ]
+    },
+    "bs2_skill_katarina_wheel": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        846
+      ]
+    },
+    "bs2_skill_paladin_banner": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        847
+      ]
+    },
+    "bs2_skill_black_slash": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        849
+      ]
+    },
+    "bs2_skill_awakening": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        850
+      ]
+    },
+    "bs2_skill_serpent_embrace": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        918
+      ]
+    },
+    "bs2_skill_soul_stream": {
+      "hitType": 2,
+      "sourceSkillIds": [
+        80
+      ]
+    },
+    "bs2_skill_strong_crush": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        16
+      ]
+    },
+    "bs2_skill_juggling_evasion": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        87
+      ]
+    },
+    "bs2_skill_dodge": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        12
+      ]
+    },
+    "bs2_skill_crush": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        13
+      ]
+    },
+    "bs2_skill_seek_advice": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        341
+      ]
+    }
+  }
+}

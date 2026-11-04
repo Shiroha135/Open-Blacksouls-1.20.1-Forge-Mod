@@ -1,0 +1,21 @@
+{
+  "skillId": 57,
+  "commonEventId": 44,
+  "stateId": 44,
+  "minActions": 2,
+  "maxActions": 3,
+  "actionMessage": "在找自己的头…",
+  "removedMessage": "好像找到了头。",
+  "transformations": [
+    {
+      "troopId": 4,
+      "normalProfileId": 5,
+      "searchingProfileId": 7
+    },
+    {
+      "troopId": 378,
+      "normalProfileId": 348,
+      "searchingProfileId": 349
+    }
+  ]
+}

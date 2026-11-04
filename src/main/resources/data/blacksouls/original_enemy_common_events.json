@@ -1,0 +1,1066 @@
+[
+  {
+    "id": 13,
+    "name": "仲間を呼ぶ",
+    "trigger": 0,
+    "switchId": 1,
+    "commands": [
+      {
+        "code": 121,
+        "indent": 0,
+        "parameters": [
+          30,
+          30,
+          0
+        ]
+      },
+      {
+        "code": 0,
+        "indent": 0,
+        "parameters": []
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "name": "詠唱チャージ",
+    "trigger": 0,
+    "switchId": 1,
+    "commands": [
+      {
+        "code": 121,
+        "indent": 0,
+        "parameters": [
+          24,
+          24,
+          0
+        ]
+      },
+      {
+        "code": 121,
+        "indent": 0,
+        "parameters": [
+          80,
+          80,
+          0
+        ]
+      },
+      {
+        "code": 0,
+        "indent": 0,
+        "parameters": []
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "name": "詠唱",
+    "trigger": 0,
+    "switchId": 1,
+    "commands": [
+      {
+        "code": 121,
+        "indent": 0,
+        "parameters": [
+          24,
+          24,
+          1
+        ]
+      },
+      {
+        "code": 0,
+        "indent": 0,
+        "parameters": []
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "name": "ワーウルフ：頭投げる",
+    "trigger": 0,
+    "switchId": 1,
+    "commands": [
+      {
+        "code": 333,
+        "indent": 0,
+        "parameters": [
+          -1,
+          0,
+          44
+        ]
+      },
+      {
+        "code": 0,
+        "indent": 0,
+        "parameters": []
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "name": "擬態",
+    "trigger": 0,
+    "switchId": 1,
+    "commands": [
+      {
+        "code": 121,
+        "indent": 0,
+        "parameters": [
+          73,
+          73,
+          0
+        ]
+      },
+      {
+        "code": 0,
+        "indent": 0,
+        "parameters": []
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "name": "擬態とく",
+    "trigger": 0,
+    "switchId": 1,
+    "commands": [
+      {
+        "code": 121,
+        "indent": 0,
+        "parameters": [
+          74,
+          74,
+          0
+        ]
+      },
+      {
+        "code": 0,
+        "indent": 0,
+        "parameters": []
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "name": "自爆ボン",
+    "trigger": 0,
+    "switchId": 1,
+    "commands": [
+      {
+        "code": 333,
+        "indent": 0,
+        "parameters": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "code": 0,
+        "indent": 0,
+        "parameters": []
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "name": "自爆ビリ",
+    "trigger": 0,
+    "switchId": 1,
+    "commands": [
+      {
+        "code": 333,
+        "indent": 0,
+        "parameters": [
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "code": 0,
+        "indent": 0,
+        "parameters": []
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "name": "自爆ブ",
+    "trigger": 0,
+    "switchId": 1,
+    "commands": [
+      {
+        "code": 333,
+        "indent": 0,
+        "parameters": [
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "code": 0,
+        "indent": 0,
+        "parameters": []
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "name": "ソニビン捕食",
+    "trigger": 0,
+    "switchId": 1,
+    "commands": [
+      {
+        "code": 121,
+        "indent": 0,
+        "parameters": [
+          24,
+          24,
+          1
+        ]
+      },
+      {
+        "code": 108,
+        "indent": 0,
+        "parameters": [
+          "NW名前指定 食人族索尼·宾"
+        ]
+      },
+      {
+        "code": 101,
+        "indent": 0,
+        "parameters": [
+          "",
+          0,
+          0,
+          2
+        ]
+      },
+      {
+        "code": 401,
+        "indent": 0,
+        "parameters": [
+          "「"
+        ]
+      },
+      {
+        "code": 401,
+        "indent": 0,
+        "parameters": [
+          ""
+        ]
+      },
+      {
+        "code": 401,
+        "indent": 0,
+        "parameters": [
+          "　　　　　　　　　　　　　美味　」"
+        ]
+      },
+      {
+        "code": 333,
+        "indent": 0,
+        "parameters": [
+          -1,
+          0,
+          37
+        ]
+      },
+      {
+        "code": 334,
+        "indent": 0,
+        "parameters": [
+          0
+        ]
+      },
+      {
+        "code": 0,
+        "indent": 0,
+        "parameters": []
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "name": "自爆ラース",
+    "trigger": 0,
+    "switchId": 1,
+    "commands": [
+      {
+        "code": 333,
+        "indent": 0,
+        "parameters": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "code": 0,
+        "indent": 0,
+        "parameters": []
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "name": "自爆ハンプティ",
+    "trigger": 0,
+    "switchId": 1,
+    "commands": [
+      {
+        "code": 331,
+        "indent": 0,
+        "parameters": [
+          -1,
+          1,
+          0,
+          10000,
+          true
+        ]
+      },
+      {
+        "code": 0,
+        "indent": 0,
+        "parameters": []
+      }
+    ]
+  },
+  {
+    "id": 210,
+    "name": "自爆発火",
+    "trigger": 0,
+    "switchId": 1,
+    "commands": [
+      {
+        "code": 333,
+        "indent": 0,
+        "parameters": [
+          0,
+          0,
+          29
+        ]
+      },
+      {
+        "code": 0,
+        "indent": 0,
+        "parameters": []
+      }
+    ]
+  },
+  {
+    "id": 218,
+    "name": "精神統一",
+    "trigger": 0,
+    "switchId": 1,
+    "commands": [
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_temp.actor_loss_cool_time(99)"
+        ]
+      },
+      {
+        "code": 0,
+        "indent": 0,
+        "parameters": []
+      }
+    ]
+  },
+  {
+    "id": 292,
+    "name": "武装解除",
+    "trigger": 0,
+    "switchId": 1,
+    "commands": [
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[1].change_equip_by_id(1, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[1].change_equip_by_id(2, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[1].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[1].change_equip_by_id(4, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[1].change_equip_by_id(5, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[1].change_equip_by_id(6, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[1].change_equip_by_id(7, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[2].change_equip_by_id(1, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[2].change_equip_by_id(2, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[2].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[2].change_equip_by_id(4, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[2].change_equip_by_id(5, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[2].change_equip_by_id(6, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[2].change_equip_by_id(7, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[3].change_equip_by_id(1, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[3].change_equip_by_id(2, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[3].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[3].change_equip_by_id(4, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[3].change_equip_by_id(5, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[3].change_equip_by_id(6, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[3].change_equip_by_id(7, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[4].change_equip_by_id(1, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[4].change_equip_by_id(2, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[4].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[4].change_equip_by_id(4, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[4].change_equip_by_id(5, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[4].change_equip_by_id(6, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[4].change_equip_by_id(7, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[5].change_equip_by_id(1, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[5].change_equip_by_id(2, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[5].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[5].change_equip_by_id(4, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[5].change_equip_by_id(5, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[5].change_equip_by_id(6, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[5].change_equip_by_id(7, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[6].change_equip_by_id(1, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[6].change_equip_by_id(2, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[6].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[6].change_equip_by_id(4, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[6].change_equip_by_id(5, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[6].change_equip_by_id(6, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[6].change_equip_by_id(7, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[7].change_equip_by_id(1, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[7].change_equip_by_id(2, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[7].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[7].change_equip_by_id(4, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[7].change_equip_by_id(5, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[7].change_equip_by_id(6, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[7].change_equip_by_id(7, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[8].change_equip_by_id(1, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[8].change_equip_by_id(2, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[8].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[8].change_equip_by_id(4, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[8].change_equip_by_id(5, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[8].change_equip_by_id(6, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[8].change_equip_by_id(7, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[9].change_equip_by_id(1, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[9].change_equip_by_id(2, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[9].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[9].change_equip_by_id(4, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[9].change_equip_by_id(5, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[9].change_equip_by_id(6, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[9].change_equip_by_id(7, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[10].change_equip_by_id(1, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[10].change_equip_by_id(2, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[10].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[10].change_equip_by_id(4, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[10].change_equip_by_id(5, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[10].change_equip_by_id(6, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[10].change_equip_by_id(7, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[11].change_equip_by_id(1, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[11].change_equip_by_id(2, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[11].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[11].change_equip_by_id(4, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[11].change_equip_by_id(5, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[11].change_equip_by_id(6, 0)"
+        ]
+      },
+      {
+        "code": 655,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[11].change_equip_by_id(7, 0)"
+        ]
+      },
+      {
+        "code": 0,
+        "indent": 0,
+        "parameters": []
+      }
+    ]
+  },
+  {
+    "id": 344,
+    "name": "sen上げるペンギン",
+    "trigger": 0,
+    "switchId": 1,
+    "commands": [
+      {
+        "code": 121,
+        "indent": 0,
+        "parameters": [
+          22,
+          22,
+          1
+        ]
+      },
+      {
+        "code": 122,
+        "indent": 0,
+        "parameters": [
+          38,
+          38,
+          0,
+          0,
+          100
+        ]
+      },
+      {
+        "code": 121,
+        "indent": 0,
+        "parameters": [
+          22,
+          22,
+          0
+        ]
+      },
+      {
+        "code": 0,
+        "indent": 0,
+        "parameters": []
+      }
+    ]
+  },
+  {
+    "id": 350,
+    "name": "鎧外れる",
+    "trigger": 0,
+    "switchId": 1,
+    "commands": [
+      {
+        "code": 121,
+        "indent": 0,
+        "parameters": [
+          73,
+          73,
+          0
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[1].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[2].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[3].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[4].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[5].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[6].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[7].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[8].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[9].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[10].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 355,
+        "indent": 0,
+        "parameters": [
+          "$game_actors[11].change_equip_by_id(3, 0)"
+        ]
+      },
+      {
+        "code": 0,
+        "indent": 0,
+        "parameters": []
+      }
+    ]
+  }
+]
