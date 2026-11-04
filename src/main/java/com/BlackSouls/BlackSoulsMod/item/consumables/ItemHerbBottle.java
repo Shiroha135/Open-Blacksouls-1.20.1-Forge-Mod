@@ -44,6 +44,7 @@ public class ItemHerbBottle extends ItemLoreBase {
             
             float healAmount = (float) (player.getMaxHealth() * 0.50F * StatEventHandler.getItemRecoveryMultiplier(player));
             player.heal(healAmount);
+            player.removeEffect(BlackSouls.BUFF_FRAGILE.get());
 
             level.playSound(null, player.getX(), player.getY(), player.getZ(),
                     BlackSouls.ICE1_EVENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);

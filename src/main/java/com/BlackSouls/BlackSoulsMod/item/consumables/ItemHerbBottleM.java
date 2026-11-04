@@ -46,6 +46,7 @@ public class ItemHerbBottleM extends ItemLoreBase {
                 StatEventHandler.syncToClient(player);
             }
 
+            player.removeEffect(BlackSouls.BUFF_FRAGILE.get());
             stack.setDamageValue(stack.getDamageValue() + 1);
             level.playSound(null, player.getX(), player.getY(), player.getZ(),
                     BlackSouls.ICE1_EVENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);

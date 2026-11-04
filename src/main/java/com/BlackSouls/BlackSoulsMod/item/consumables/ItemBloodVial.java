@@ -27,16 +27,19 @@ public class ItemBloodVial extends Item {
     public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, @NotNull InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
 
-        level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                BlackSouls.SAND_EVENT.get(), SoundSource.PLAYERS, 0.8F, 1.0F);
+        if (!level.isClientSide()) {
+            level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                    BlackSouls.SAND_EVENT.get(), SoundSource.PLAYERS, 0.8F, 1.0F);
 
-        level.playSound(null, player.getX(), player.getY(), player.getZ(),
-                BlackSouls.SAINT7_EVENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
+            level.playSound(null, player.getX(), player.getY(), player.getZ(),
+                    BlackSouls.SAINT7_EVENT.get(), SoundSource.PLAYERS, 1.0F, 1.0F);
 
-        player.heal((float) (player.getMaxHealth() * 0.30F * StatEventHandler.getItemRecoveryMultiplier(player)));
+            player.heal((float) (player.getMaxHealth() * 0.30F * StatEventHandler.getItemRecoveryMultiplier(player)));
+            player.removeEffect(BlackSouls.BUFF_FRAGILE.get());
 
-        if (!player.getAbilities().instabuild) {
-            itemstack.shrink(1);
+            if (!player.getAbilities().instabuild) {
+                itemstack.shrink(1);
+            }
         }
 
         return InteractionResultHolder.consume(itemstack);
