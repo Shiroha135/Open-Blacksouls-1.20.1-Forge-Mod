@@ -39,7 +39,8 @@ public final class ServerboundCheshireGiftPacket {
             }
             Entity target = player.level().getEntity(entityId);
             if (target instanceof EntityCheshireCat cheshire && cheshire.isAlive()
-                    && !cheshire.isRemoved() && player.distanceToSqr(cheshire) <= 64.0D) {
+                    && !cheshire.isRemoved() && !cheshire.isOriginalSourceManaged()
+                    && player.distanceToSqr(cheshire) <= 64.0D) {
                 cheshire.giveRabbitHoleGift(player, primaryGift, secondaryGift);
             }
         });

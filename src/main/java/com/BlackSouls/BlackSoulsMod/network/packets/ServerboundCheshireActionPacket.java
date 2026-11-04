@@ -35,7 +35,8 @@ public final class ServerboundCheshireActionPacket {
             }
             Entity target = player.level().getEntity(entityId);
             if (!(target instanceof EntityCheshireCat cheshire) || !cheshire.isAlive()
-                    || cheshire.isRemoved() || player.distanceToSqr(cheshire) > 64.0D) {
+                    || cheshire.isRemoved() || cheshire.isOriginalSourceManaged()
+                    || player.distanceToSqr(cheshire) > 64.0D) {
                 return;
             }
             if (action == Action.ASK_ALICE) {

@@ -90,8 +90,19 @@ public class BSAttributeManager {
             return Math.max(0.0f, res);
         } else {
             if (victim instanceof EntityOriginalDatabaseEnemy originalEnemy) {
-                res *= originalEnemy.getProfile().elementRates()
-                        .getOrDefault(attribute, 1.0D).floatValue();
+                int elementId = switch (attribute) {
+                    case PHYSICAL -> 1;
+                    case FIRE -> 3;
+                    case ICE -> 4;
+                    case THUNDER -> 5;
+                    case LIGHT -> 9;
+                    case DARK -> 10;
+                    case BEAST_KILLER -> 13;
+                    case JABBERWOCK_KILLER -> 14;
+                    default -> 0;
+                };
+                res *= (float) com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager.originalElementRate(
+                        originalEnemy, elementId);
             }
             if (attribute.equals(ICE) && BlackSouls.BUFF_FROSTBITE.isPresent() && victim.hasEffect(BlackSouls.BUFF_FROSTBITE.get())) {
                 res *= 1.5F;

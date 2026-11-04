@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.network.packets;
 
 import com.BlackSouls.BlackSoulsMod.entity.CheshireDialogue;
+import com.BlackSouls.BlackSoulsMod.entity.HolmesDialogue;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
@@ -21,6 +22,7 @@ public class PacketOpenDialogue {
     private final int redHoodStoryStage;
     private final boolean killOnlyOptions;
     private final CheshireDialogue.Mode cheshireMode;
+    private final HolmesDialogue.Mode holmesMode;
     private final boolean valid;
 
     
@@ -61,6 +63,15 @@ public class PacketOpenDialogue {
                               int entityId, int covLevel, boolean completeRedHoodDialogue,
                               int redHoodStoryStage, boolean killOnlyOptions,
                               CheshireDialogue.Mode cheshireMode) {
+        this(nameKey, avatarId, dialogues, isLaterDialogue, entityId, covLevel,
+                completeRedHoodDialogue, redHoodStoryStage, killOnlyOptions, cheshireMode,
+                HolmesDialogue.Mode.NONE);
+    }
+
+    public PacketOpenDialogue(String nameKey, String avatarId, String[] dialogues, boolean isLaterDialogue,
+                              int entityId, int covLevel, boolean completeRedHoodDialogue,
+                              int redHoodStoryStage, boolean killOnlyOptions,
+                              CheshireDialogue.Mode cheshireMode, HolmesDialogue.Mode holmesMode) {
         this.nameKey = nameKey;
         this.avatarId = avatarId;
         this.dialogues = dialogues;
@@ -71,6 +82,7 @@ public class PacketOpenDialogue {
         this.redHoodStoryStage = redHoodStoryStage;
         this.killOnlyOptions = killOnlyOptions;
         this.cheshireMode = cheshireMode == null ? CheshireDialogue.Mode.NONE : cheshireMode;
+        this.holmesMode = holmesMode == null ? HolmesDialogue.Mode.NONE : holmesMode;
         this.valid = true;
     }
 
@@ -88,6 +100,7 @@ public class PacketOpenDialogue {
             this.redHoodStoryStage = -1;
             this.killOnlyOptions = false;
             this.cheshireMode = CheshireDialogue.Mode.NONE;
+            this.holmesMode = HolmesDialogue.Mode.NONE;
             this.valid = false;
             return;
         }
@@ -102,6 +115,7 @@ public class PacketOpenDialogue {
         this.redHoodStoryStage = buf.readVarInt();
         this.killOnlyOptions = buf.readBoolean();
         this.cheshireMode = CheshireDialogue.Mode.fromNetwork(buf.readVarInt());
+        this.holmesMode = HolmesDialogue.Mode.fromNetwork(buf.readVarInt());
         this.valid = true;
     }
 
@@ -121,6 +135,7 @@ public class PacketOpenDialogue {
         buf.writeVarInt(this.redHoodStoryStage);
         buf.writeBoolean(this.killOnlyOptions);
         buf.writeVarInt(this.cheshireMode.ordinal());
+        buf.writeVarInt(this.holmesMode.ordinal());
     }
 
     
@@ -139,7 +154,7 @@ public class PacketOpenDialogue {
                     msg.nameKey, msg.avatarId, msg.dialogues,
                     msg.isLaterDialogue, msg.entityId, msg.covLevel,
                     msg.completeRedHoodDialogue, msg.redHoodStoryStage,
-                    msg.killOnlyOptions, msg.cheshireMode
+                    msg.killOnlyOptions, msg.cheshireMode, msg.holmesMode
             ));
         }
     }

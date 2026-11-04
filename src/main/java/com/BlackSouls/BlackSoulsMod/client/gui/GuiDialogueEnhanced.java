@@ -5,10 +5,12 @@ import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.client.ClientSceneMusic;
 import com.BlackSouls.BlackSoulsMod.client.ClientStoryName;
 import com.BlackSouls.BlackSoulsMod.entity.CheshireDialogue;
+import com.BlackSouls.BlackSoulsMod.entity.HolmesDialogue;
 import com.BlackSouls.BlackSoulsMod.entity.RabbitKnightDialogue;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketKillDialogueNPC;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketSetCovenant;
+import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundHolmesActionPacket;
 import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundNodenRewardPacket;
 import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundCheshireActionPacket;
 import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundCheshireGiftPacket;
@@ -40,6 +42,7 @@ public class GuiDialogueEnhanced extends Screen {
     private final int redHoodStoryStage;
     private final boolean killOnlyOptions;
     private final CheshireDialogue.Mode cheshireMode;
+    private final HolmesDialogue.Mode holmesMode;
     private String[] currentDialogueKeys;
     private int currentLineIndex = 0;
     private int charDisplayIndex = 0;
@@ -55,6 +58,7 @@ public class GuiDialogueEnhanced extends Screen {
     private boolean isSeekServiceMode = false;
     private boolean isKissMode = false;
     private boolean isCheshireAskMode = false;
+    private boolean isHolmesAskMode = false;
     private enum DialogueOption {
         ASK_ALICE("gui.blacksouls.dialogue.option.ask_alice", 0xFFFFFF),
         UPGRADE("gui.blacksouls.dialogue.option.upgrade", 0xFFFFFF),
@@ -85,6 +89,7 @@ public class GuiDialogueEnhanced extends Screen {
     private final DialogueOption[] killOptions = {DialogueOption.KILL, DialogueOption.EXIT};
     private final DialogueOption[] cheshireOptions = {DialogueOption.ASK_ALICE, DialogueOption.KILL, DialogueOption.VIOLATE};
     private final DialogueOption[] rabbitKnightOptions = {DialogueOption.ASK_ALICE, DialogueOption.KILL, DialogueOption.EXIT};
+    private final DialogueOption[] holmesOptions = {DialogueOption.ASK_ALICE, DialogueOption.KILL, DialogueOption.EXIT};
     private final DialogueOption[] cheshireGiftPrimaryOptions = {DialogueOption.LIFE_RING, DialogueOption.MASTER_KEY,
             DialogueOption.HOMEWARD_BONE_DUST, DialogueOption.MAIDENS_FRAGRANCE};
     private final DialogueOption[] cheshireGiftSecondaryOptions = {DialogueOption.INVISIBLE_PEPPER, DialogueOption.CANDY};
@@ -142,6 +147,15 @@ public class GuiDialogueEnhanced extends Screen {
                                boolean showOptionsAfterDialogue, int entityId, int covenantLevel,
                                boolean completeRedHoodDialogue, int redHoodStoryStage,
                                boolean killOnlyOptions, CheshireDialogue.Mode cheshireMode) {
+        this(npcNameKey, npcAvatarId, dialogueKeys, showOptionsAfterDialogue, entityId, covenantLevel,
+                completeRedHoodDialogue, redHoodStoryStage, killOnlyOptions, cheshireMode, HolmesDialogue.Mode.NONE);
+    }
+
+    public GuiDialogueEnhanced(String npcNameKey, String npcAvatarId, String[] dialogueKeys,
+                               boolean showOptionsAfterDialogue, int entityId, int covenantLevel,
+                               boolean completeRedHoodDialogue, int redHoodStoryStage,
+                               boolean killOnlyOptions, CheshireDialogue.Mode cheshireMode,
+                               HolmesDialogue.Mode holmesMode) {
         super(Component.translatable(npcNameKey));
         this.npcNameKey = npcNameKey;
         this.npcAvatarId = npcAvatarId;
@@ -156,6 +170,7 @@ public class GuiDialogueEnhanced extends Screen {
         this.redHoodStoryStage = redHoodStoryStage;
         this.killOnlyOptions = killOnlyOptions;
         this.cheshireMode = cheshireMode == null ? CheshireDialogue.Mode.NONE : cheshireMode;
+        this.holmesMode = holmesMode == null ? HolmesDialogue.Mode.NONE : holmesMode;
         this.activeOptions = switch (this.cheshireMode) {
             case INTRO -> cheshireOptions;
             case GIFT -> cheshireGiftPrimaryOptions;
@@ -316,10 +331,15 @@ public class GuiDialogueEnhanced extends Screen {
         switch (option) {
             case ASK_ALICE:
                 this.showOptionsMode = false;
-                this.isCheshireAskMode = true;
-                this.currentDialogueKeys = this.cheshireMode == CheshireDialogue.Mode.RABBIT_KNIGHT
-                        ? RabbitKnightDialogue.aliceAnswerKeys()
-                        : CheshireDialogue.rabbitHoleAnswerKeys();
+                if (this.holmesMode == HolmesDialogue.Mode.MAIN) {
+                    this.isHolmesAskMode = true;
+                    this.currentDialogueKeys = HolmesDialogue.aliceAndRipperKeys();
+                } else {
+                    this.isCheshireAskMode = true;
+                    this.currentDialogueKeys = this.cheshireMode == CheshireDialogue.Mode.RABBIT_KNIGHT
+                            ? RabbitKnightDialogue.aliceAnswerKeys()
+                            : CheshireDialogue.rabbitHoleAnswerKeys();
+                }
                 this.charDisplayIndex = 0;
                 this.currentLineIndex = 0;
                 this.tickCounter = 0;
@@ -423,6 +443,12 @@ public class GuiDialogueEnhanced extends Screen {
                     this.onClose();
                     break;
                 }
+                if (this.holmesMode == HolmesDialogue.Mode.MAIN) {
+                    NetworkHandler.sendToServer(new ServerboundHolmesActionPacket(
+                            this.entityId, ServerboundHolmesActionPacket.Action.KILL));
+                    this.onClose();
+                    break;
+                }
                 if (this.cheshireMode == CheshireDialogue.Mode.INTRO
                         || this.cheshireMode == CheshireDialogue.Mode.AFTER_GIFT) {
                     NetworkHandler.sendToServer(new ServerboundCheshireActionPacket(
@@ -509,7 +535,9 @@ public class GuiDialogueEnhanced extends Screen {
             boolean isLastLine = (currentLineIndex == currentDialogueKeys.length - 1);
 
             if (isLastLine) {
-                if (isCheshireAskMode) {
+                if (isHolmesAskMode) {
+                    this.onClose();
+                } else if (isCheshireAskMode) {
                     if (this.cheshireMode != CheshireDialogue.Mode.RABBIT_KNIGHT) {
                         NetworkHandler.sendToServer(new ServerboundCheshireActionPacket(
                                 this.entityId, ServerboundCheshireActionPacket.Action.ASK_ALICE));
@@ -544,13 +572,17 @@ public class GuiDialogueEnhanced extends Screen {
                     this.activeOptions = covenantFifthOptions;
                     this.showOptionsMode = true;
                 } else if (showOptionsAfterDialogue) {
-                    this.activeOptions = switch (this.cheshireMode) {
-                        case INTRO -> cheshireOptions;
-                        case GIFT -> cheshireGiftPrimaryOptions;
-                        case AFTER_GIFT -> cheshireAfterGiftOptions;
-                        case RABBIT_KNIGHT -> rabbitKnightOptions;
-                        default -> this.killOnlyOptions ? killOptions : mainOptions;
-                    };
+                    if (this.holmesMode == HolmesDialogue.Mode.MAIN) {
+                        this.activeOptions = holmesOptions;
+                    } else {
+                        this.activeOptions = switch (this.cheshireMode) {
+                            case INTRO -> cheshireOptions;
+                            case GIFT -> cheshireGiftPrimaryOptions;
+                            case AFTER_GIFT -> cheshireAfterGiftOptions;
+                            case RABBIT_KNIGHT -> rabbitKnightOptions;
+                            default -> this.killOnlyOptions ? killOptions : mainOptions;
+                        };
+                    }
                     this.showOptionsMode = true;
                 } else {
                     if (this.completeRedHoodDialogue) {
@@ -558,6 +590,13 @@ public class GuiDialogueEnhanced extends Screen {
                                 this.entityId,
                                 this.redHoodStoryStage
                         ));
+                    }
+                    if (this.holmesMode == HolmesDialogue.Mode.INTRO) {
+                        NetworkHandler.sendToServer(new ServerboundHolmesActionPacket(
+                                this.entityId, ServerboundHolmesActionPacket.Action.COMPLETE_INTRO));
+                    } else if (this.holmesMode == HolmesDialogue.Mode.WOUNDED) {
+                        NetworkHandler.sendToServer(new ServerboundHolmesActionPacket(
+                                this.entityId, ServerboundHolmesActionPacket.Action.COMPLETE_WOUNDED));
                     }
                     this.onClose();
                 }

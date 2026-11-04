@@ -1,5 +1,6 @@
 package com.BlackSouls.BlackSoulsMod.potion;
 
+import com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -15,6 +16,9 @@ public class BlackSoulsPercentageDamageEffect extends BlackSoulsMobEffect {
 
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
+        if (TurnBattleManager.isAdvancingBattleEffects()) {
+            return;
+        }
         float damage = Math.max(1.0F, (float) (entity.getMaxHealth() * this.maxHealthDamage
                 * com.BlackSouls.BlackSoulsMod.handler.StatEventHandler.getPercentageDamageMultiplier(entity)));
         entity.hurt(entity.damageSources().magic(), damage * (amplifier + 1));

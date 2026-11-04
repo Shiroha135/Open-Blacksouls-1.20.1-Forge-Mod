@@ -5,6 +5,8 @@ import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.client.TurnBattleAudioGate;
 import com.BlackSouls.BlackSoulsMod.client.ClientSceneState;
 import com.BlackSouls.BlackSoulsMod.client.render.AnimationRegistry;
+import com.BlackSouls.BlackSoulsMod.combat.OriginalTroopPresentation;
+import com.BlackSouls.BlackSoulsMod.story.OriginalBattleMusic;
 import com.BlackSouls.BlackSoulsMod.client.render.BSAvatarRenderer;
 import com.BlackSouls.BlackSoulsMod.client.render.BattleScreenVFXRenderer;
 import com.BlackSouls.BlackSoulsMod.client.render.BattleTransitionRenderer;
@@ -93,6 +95,9 @@ public class GuiTurnBattle extends Screen {
 
     private final int entityId;
     private int battleProfileId;
+    private int originalTroopId;
+    private List<Integer> originalMemberIndices = List.of();
+    private boolean canEscape = true;
     private final List<EnemyVisual> enemies = new ArrayList<>();
     private int actingEnemyIndex;
     private int targetSelection;
@@ -101,6 +106,7 @@ public class GuiTurnBattle extends Screen {
     private int pendingTargetValue;
     private View targetReturnView = View.COMMAND;
     private boolean pendingAllyDownedTarget;
+    private OriginalBattleMusic originalBattleMusic = OriginalBattleMusic.UNSET;
     private ResourceLocation battleBgm;
     private float battleBgmVolume = 1.0F;
     private float battleBgmPitch = 1.0F;
@@ -179,6 +185,9 @@ public class GuiTurnBattle extends Screen {
     private final List<PlayerDamagePopup> playerDamagePopups = new ArrayList<>();
     private final List<ScheduledIncomingHit> scheduledIncomingHits = new ArrayList<>();
     private final List<ScheduledRevival> scheduledRevivals = new ArrayList<>();
+    private OriginalTroopPresentation troopPresentation;
+    private int troopTextTicks;
+    private boolean troopAcknowledged;
     private boolean awaitingPresentation;
     private int enemyAttackAge = 27;
     private boolean incomingSequenceActive;
@@ -198,7 +207,17 @@ public class GuiTurnBattle extends Screen {
                          List<ClientboundTurnBattlePacket.EnemySnapshot> enemies,
                          Component message, boolean canAct,
                          Map<String, Integer> skillCooldowns, int enemyAnimationId) {
+        this(entityId, battleProfileId, enemies, message, canAct, skillCooldowns,
+                enemyAnimationId, OriginalBattleMusic.UNSET);
+    }
+
+    public GuiTurnBattle(int entityId, int battleProfileId,
+                         List<ClientboundTurnBattlePacket.EnemySnapshot> enemies,
+                         Component message, boolean canAct,
+                         Map<String, Integer> skillCooldowns, int enemyAnimationId,
+                         OriginalBattleMusic originalBattleMusic) {
         super(Component.translatable("gui.blacksouls.turn_battle.title"));
+        this.originalBattleMusic = java.util.Objects.requireNonNull(originalBattleMusic);
         this.entityId = entityId;
         this.battleProfileId = battleProfileId;
         replaceEnemies(enemies, true);
@@ -288,11 +307,19 @@ public class GuiTurnBattle extends Screen {
     private void updateBattleEnvironment(boolean restartMusic) {
         BSOriginalBattleProfileData.Entry battle =
                 BSOriginalBattleProfileData.get(this.battleProfileId);
-        ResourceLocation nextBgm = battle.bgm();
-        boolean musicChanged = !java.util.Objects.equals(this.battleBgm, nextBgm);
+        ResourceLocation nextBgm = this.originalBattleMusic.configured()
+                ? this.originalBattleMusic.silent() ? null : ResourceLocation.tryParse(this.originalBattleMusic.sound())
+                : battle.bgm();
+        float nextVolume = this.originalBattleMusic.configured()
+                ? (float) (this.originalBattleMusic.volume() / 100.0D) : battle.bgmVolume();
+        float nextPitch = this.originalBattleMusic.configured()
+                ? (float) (this.originalBattleMusic.pitch() / 100.0D) : battle.bgmPitch();
+        boolean musicChanged = !java.util.Objects.equals(this.battleBgm, nextBgm)
+                || Float.compare(this.battleBgmVolume, nextVolume) != 0
+                || Float.compare(this.battleBgmPitch, nextPitch) != 0;
         this.battleBgm = nextBgm;
-        this.battleBgmVolume = battle.bgmVolume();
-        this.battleBgmPitch = battle.bgmPitch();
+        this.battleBgmVolume = nextVolume;
+        this.battleBgmPitch = nextPitch;
         this.battleback1 = battle.battleback1();
         this.battleback2 = battle.battleback2();
         this.battleback1Width = battle.battleback1Width();
@@ -306,10 +333,60 @@ public class GuiTurnBattle extends Screen {
             this.battleback1Height = 480;
             this.battleback2 = null;
         }
-        if (restartMusic && musicChanged && this.battleMusic != null) {
+        if (restartMusic && musicChanged && (this.battleMusic != null || this.battleMusicDelay <= 0)) {
             stopBattleMusic();
             startBattleMusic();
         }
+    }
+
+    public void setOriginalBattleMusic(OriginalBattleMusic music) {
+        if (!this.originalBattleMusic.equals(music)) {
+            this.originalBattleMusic = java.util.Objects.requireNonNull(music);
+            updateBattleEnvironment(true);
+        }
+    }
+
+    public void applyTroopPresentation(OriginalTroopPresentation presentation, Component text) {
+        if (presentation != null && presentation.animationsOnly()) {
+            queueTroopAnimations(presentation);
+            return;
+        }
+        this.troopPresentation = presentation;
+        if (presentation == null) return;
+        this.troopAcknowledged = false;
+        this.troopTextTicks = Math.max(0, presentation.minimumTextTicks());
+        this.awaitingPresentation = false;
+        this.canAct = false;
+        this.pendingCanAct = false;
+        this.sequenceTicks = 0;
+        this.effectAge = 0;
+        this.enemyActed = false;
+        this.enemyAttacked = false;
+        this.pendingPlayerVfx = TurnBattleVfxResolver.Cue.NONE;
+        this.selection = 0;
+        String speaker = presentation.speaker().isEmpty() ? "" : presentation.speaker() + "\n";
+        setIntroPages(Component.literal(speaker + text.getString()));
+        this.view = presentation.kind() == 3 ? View.MESSAGE : View.INTRO;
+        queueTroopAnimations(presentation);
+    }
+
+    private void queueTroopAnimations(OriginalTroopPresentation presentation) {
+        for (OriginalTroopPresentation.Animation animation : presentation.animations()) {
+            int target = this.originalMemberIndices.indexOf(animation.originalSlot());
+            if (target >= 0) {
+                queueBattleVfx(new TurnBattleVfxResolver.Cue(animation.animationId(),
+                        TurnBattleVfxResolver.Target.ENEMY), true, target);
+            }
+        }
+    }
+
+    private void acknowledgeTroopPresentation() {
+        if (this.troopPresentation == null || this.troopAcknowledged
+                || this.troopPresentation.kind() > 2 || this.troopTextTicks > 0) return;
+        this.troopAcknowledged = true;
+        NetworkHandler.sendToServer(new ServerboundTurnBattlePresentationPacket(
+                this.troopPresentation.token(), this.troopPresentation.revision(),
+                this.troopPresentation.kind() == 2 ? this.selection : -1));
     }
 
     public void applyState(boolean active, int battleProfileId,
@@ -322,6 +399,11 @@ public class GuiTurnBattle extends Screen {
                            ClientboundTurnBattlePacket.Outcome outcome, long soulReward,
                            List<ItemStack> rewardItems,
                            Map<String, Integer> skillCooldowns, int enemyAnimationId) {
+        if (!active && outcome == ClientboundTurnBattlePacket.Outcome.NONE) {
+            this.outcome = ClientboundTurnBattlePacket.Outcome.NONE;
+            closeBattleScreen();
+            return;
+        }
         int previousBattleProfileId = this.battleProfileId;
         boolean granFinalEntrance = phaseChanged
                 && previousBattleProfileId == 579 && battleProfileId == 570;
@@ -537,6 +619,15 @@ public class GuiTurnBattle extends Screen {
                 && this.outcome == ClientboundTurnBattlePacket.Outcome.NONE) {
             startBattleMusic();
         }
+        if (this.troopPresentation != null) {
+            tickBattleVfxSounds();
+            if (encounterTransitionComplete() && this.troopTextTicks > 0) this.troopTextTicks--;
+            if (encounterTransitionComplete() && this.troopPresentation.kind() == 1
+                    && this.troopPresentation.automaticTicks() >= 0 && this.troopTextTicks == 0) {
+                acknowledgeTroopPresentation();
+            }
+            return;
+        }
         if (this.enemyHitTicks > 0) {
             this.enemyHitTicks--;
         }
@@ -565,7 +656,7 @@ public class GuiTurnBattle extends Screen {
                 this.pendingPlayerTargetsAll = false;
             }
             triggerScheduledDamageHits();
-            if (this.effectAge == this.enemyAttackAge && this.enemyActed) {
+            if (this.effectAge == this.enemyAttackAge && this.enemyActed && this.enemyAnimationId != 0) {
                 VFXAnimation animation = AnimationRegistry.ANIMATIONS.get(this.enemyAnimationId);
                 if (animation == null || animation.soundTimings.isEmpty()) {
                     playUiSound(BlackSouls.TURN_ENEMY_ATTACK_EVENT.get(), 1.0F);
@@ -595,6 +686,7 @@ public class GuiTurnBattle extends Screen {
             }
             tickBattleVfxSounds();
         }
+        if (this.view != View.MESSAGE) tickBattleVfxSounds();
         if (this.view != View.MESSAGE || this.sequenceTicks <= 0) {
             return;
         }
@@ -1063,7 +1155,16 @@ public class GuiTurnBattle extends Screen {
                 lineY += this.font.lineHeight + 3;
             }
         }
-        drawContinueArrow(graphics, this.width / 2, this.height - 13);
+        if (this.troopPresentation != null && this.troopPresentation.kind() == 2) {
+            for (int index = 0; index < this.troopPresentation.choices().size(); index++) {
+                graphics.drawString(this.font, (index == this.selection ? "▶ " : "  ")
+                        + this.troopPresentation.choices().get(index), 14, lineY, 0xFFFFFFFF, false);
+                lineY += this.font.lineHeight + 3;
+            }
+        }
+        if (this.troopPresentation == null || this.troopPresentation.kind() <= 2) {
+            drawContinueArrow(graphics, this.width / 2, this.height - 13);
+        }
     }
 
     private void setIntroPages(Component intro) {
@@ -1077,6 +1178,10 @@ public class GuiTurnBattle extends Screen {
     }
 
     private void advanceIntro() {
+        if (this.troopPresentation != null) {
+            acknowledgeTroopPresentation();
+            return;
+        }
         if (this.introPageIndex + 1 < this.introPages.size()) {
             this.introPageIndex++;
             return;
@@ -1498,6 +1603,17 @@ public class GuiTurnBattle extends Screen {
             int cellX = margin + index * cellWidth;
             int spriteX = cellX + (cellWidth - spriteWidth) / 2;
             int spriteY = spriteBottom - spriteHeight;
+            com.BlackSouls.BlackSoulsMod.util.BSOriginalTroopData.Entry troop =
+                    com.BlackSouls.BlackSoulsMod.util.BSOriginalTroopData.get(this.originalTroopId);
+            if (troop != null && BSOriginalBattleProfileData.get(this.battleProfileId).troopId() <= 0
+                    && index < this.originalMemberIndices.size()) {
+                int sourceIndex = this.originalMemberIndices.get(index);
+                if (sourceIndex >= 0 && sourceIndex < troop.members().size()) {
+                    var member = troop.members().get(sourceIndex);
+                    spriteX = margin + Math.round(availableWidth * member.x() / 544.0F) - spriteWidth / 2;
+                    spriteY += Math.round((member.y() - 296) * availableWidth / 544.0F);
+                }
+            }
             result.add(new EnemyGeometry(cellX, cellWidth, spriteX, spriteY,
                     spriteWidth, spriteHeight, texture, textureWidth, textureHeight));
         }
@@ -2265,8 +2381,8 @@ public class GuiTurnBattle extends Screen {
         return switch (this.view) {
             case COMMAND, TARGETS -> {
                 List<MenuEntry> entries = new ArrayList<>();
-                for (Component option : MAIN_OPTIONS) {
-                    entries.add(MenuEntry.simple(option, -1, true));
+                for (int index = 0; index < MAIN_OPTIONS.length; index++) {
+                    entries.add(MenuEntry.simple(MAIN_OPTIONS[index], -1, index != 4 || this.canEscape));
                 }
                 yield entries;
             }
@@ -2606,6 +2722,15 @@ public class GuiTurnBattle extends Screen {
             return true;
         }
         if (this.view == View.INTRO) {
+            if (this.troopPresentation != null && this.troopPresentation.kind() == 2
+                    && !this.troopPresentation.choices().isEmpty()) {
+                int size = this.troopPresentation.choices().size();
+                if (keyCode == GLFW.GLFW_KEY_UP || keyCode == GLFW.GLFW_KEY_W) {
+                    this.selection = (this.selection + size - 1) % size;
+                } else if (keyCode == GLFW.GLFW_KEY_DOWN || keyCode == GLFW.GLFW_KEY_S) {
+                    this.selection = (this.selection + 1) % size;
+                }
+            }
             if (isConfirm(keyCode)) {
                 playUiSound(BlackSouls.SWORD1_EVENT.get(), 1.0F);
                 advanceIntro();
@@ -3137,7 +3262,7 @@ public class GuiTurnBattle extends Screen {
     }
 
     private void startBattleMusic() {
-        if (this.battleMusic == null && this.minecraft != null
+        if (this.battleMusic == null && this.minecraft != null && !this.originalBattleMusic.silent()
                 && this.outcome == ClientboundTurnBattlePacket.Outcome.NONE) {
             ResourceLocation event = this.battleBgm;
             if (event == null) {
@@ -3167,10 +3292,19 @@ public class GuiTurnBattle extends Screen {
         }
     }
 
+    public void setOriginalTroop(int troopId, List<Integer> memberIndices, boolean canEscape) {
+        this.originalTroopId = troopId;
+        this.originalMemberIndices = List.copyOf(memberIndices);
+        this.canEscape = canEscape;
+    }
+
     private void closeBattleScreen() {
         stopBattleMusic();
         if (this.minecraft != null) {
             this.minecraft.setScreen(null);
+            if (this.outcome != ClientboundTurnBattlePacket.Outcome.NONE) {
+                com.BlackSouls.BlackSoulsMod.client.OriginalNpcBattleContinuation.finished();
+            }
         }
     }
 

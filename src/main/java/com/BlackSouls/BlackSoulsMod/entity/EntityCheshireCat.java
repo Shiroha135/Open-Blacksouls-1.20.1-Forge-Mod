@@ -4,9 +4,18 @@ import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.handler.BSEntityRegistry;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketOpenDialogue;
+import com.BlackSouls.BlackSoulsMod.story.OriginalNpcCharacterBindings;
+import com.BlackSouls.BlackSoulsMod.story.OriginalNpcInterpreter;
+import com.BlackSouls.BlackSoulsMod.story.OriginalNpcService;
+import com.BlackSouls.BlackSoulsMod.util.BSOriginalNpcData;
+import com.BlackSouls.BlackSoulsMod.util.OriginalNpcLogicData;
+import com.google.gson.JsonElement;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,6 +25,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -26,9 +36,16 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.UUID;
 
 public final class EntityCheshireCat extends PathfinderMob implements DialogueResettable {
+    private static final EntityDataAccessor<Boolean> ORIGINAL_SOURCE_MANAGED = SynchedEntityData.defineId(
+            EntityCheshireCat.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> ORIGINAL_ROUTE_PAGE = SynchedEntityData.defineId(
+            EntityCheshireCat.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<CompoundTag> ORIGINAL_ROUTE_STATE = SynchedEntityData.defineId(
+            EntityCheshireCat.class, EntityDataSerializers.COMPOUND_TAG);
     private static final String CURRENT_SCENE_TAG = "Blacksouls2CurrentScene";
     private static final String LEGACY_ASKED_ALICE_TAG = "BlacksoulsCheshireAskedAlice";
     private static final String STORY_STAGE_TAG = "BlacksoulsCheshireRabbitHoleStage";
@@ -43,6 +60,7 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
     private UUID waitingPlayer;
     private double waitingStartX;
     private double waitingStartZ;
+    private String forcedRouteTicket = "";
 
     public EntityCheshireCat(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -58,6 +76,108 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D);
     }
 
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(ORIGINAL_SOURCE_MANAGED, false);
+        entityData.define(ORIGINAL_ROUTE_PAGE, -2);
+        entityData.define(ORIGINAL_ROUTE_STATE, initialOriginalRouteState());
+    }
+
+    public boolean isOriginalSourceManaged() {
+        return entityData.get(ORIGINAL_SOURCE_MANAGED);
+    }
+
+    public int getSpriteOpacity() {
+        return entityData.get(ORIGINAL_ROUTE_STATE).getInt("Opacity");
+    }
+
+    public CompoundTag originalRouteState() {
+        return entityData.get(ORIGINAL_ROUTE_STATE).copy();
+    }
+
+    public String forcedRouteTicket() {
+        return forcedRouteTicket;
+    }
+
+    public void beginForcedRoute(String ticket) {
+        forcedRouteTicket = ticket;
+    }
+
+    public void endForcedRoute(String ticket) {
+        if (forcedRouteTicket.equals(ticket)) forcedRouteTicket = "";
+    }
+
+    public void refreshOriginalRoutePage() {
+        if (level().isClientSide()) return;
+        if (!isOriginalSourceManaged()) {
+            if (!OriginalNpcCharacterBindings.matches(this, OriginalNpcCharacterBindings.CHESHIRE_RABBIT_HOLE)) return;
+            entityData.set(ORIGINAL_SOURCE_MANAGED, true);
+            awaitingGiftReturn = false;
+            vanishTicks = 0;
+            waitingPlayer = null;
+            waitingStartX = 0.0D;
+            waitingStartZ = 0.0D;
+        }
+        BSOriginalNpcData.Entry definition = OriginalNpcLogicData.get(OriginalNpcCharacterBindings.CHESHIRE_RABBIT_HOLE);
+        BSOriginalNpcData.Page page = OriginalNpcInterpreter.selectPage(definition,
+                new OriginalNpcService.EventContext(null, this, OriginalNpcCharacterBindings.CHESHIRE_RABBIT_HOLE));
+        int index = page == null ? -1 : definition.pages().indexOf(page);
+        if (entityData.get(ORIGINAL_ROUTE_PAGE) != index) {
+            CompoundTag state = originalRouteState();
+            state.putString("CharacterName", page == null ? "" : page.graphic().get("character_name").getAsString());
+            state.putInt("PriorityType", page == null ? 0 : page.movement().get("priority_type").getAsInt());
+            if (page == null) {
+                state.putBoolean("Through", true);
+            } else {
+                forcedRouteTicket = "";
+                state.putBoolean("Through", page.movement().get("through").getAsBoolean());
+            }
+            entityData.set(ORIGINAL_ROUTE_PAGE, index);
+            entityData.set(ORIGINAL_ROUTE_STATE, state);
+        }
+        updateOriginalRouteVisibility();
+    }
+
+    public void applyOriginalMoveCommand(int code, List<JsonElement> parameters) {
+        int opacity = 0;
+        if (code == 42) {
+            if (parameters.size() != 1 || !parameters.get(0).isJsonPrimitive()
+                    || !parameters.get(0).getAsJsonPrimitive().isNumber()) {
+                throw new UnsupportedOperationException("bound_character_route_opacity");
+            }
+            opacity = parameters.get(0).getAsBigDecimal().intValueExact();
+            if (opacity < 0 || opacity > 255) throw new UnsupportedOperationException("bound_character_route_opacity");
+        } else if ((code != 37 && code != 39 && code != 40) || !parameters.isEmpty()) {
+            throw new UnsupportedOperationException("bound_character_route_command:" + code);
+        }
+        refreshOriginalRoutePage();
+        if (!isOriginalSourceManaged()) throw new UnsupportedOperationException("bound_character_unmanaged");
+        CompoundTag state = originalRouteState();
+        if (code == 37) state.putBoolean("Through", true);
+        else if (code == 39 || code == 40) state.putBoolean("Transparent", code == 39);
+        else state.putInt("Opacity", opacity);
+        entityData.set(ORIGINAL_ROUTE_STATE, state);
+        updateOriginalRouteVisibility();
+    }
+
+    private static CompoundTag initialOriginalRouteState() {
+        CompoundTag state = new CompoundTag();
+        state.putInt("Opacity", 255);
+        state.putBoolean("Transparent", false);
+        state.putBoolean("Through", false);
+        state.putString("CharacterName", "$チェシャ");
+        state.putInt("PriorityType", 1);
+        return state;
+    }
+
+    private void updateOriginalRouteVisibility() {
+        CompoundTag state = entityData.get(ORIGINAL_ROUTE_STATE);
+        boolean hidden = state.getBoolean("Transparent") || state.getString("CharacterName").isBlank();
+        setInvisible(hidden);
+        setSilent(hidden);
+    }
+
     public static void recoverLegacyRabbitHoleEntity(ServerPlayer player) {
         CompoundTag data = player.getPersistentData();
         if (!data.getBoolean(LEGACY_ASKED_ALICE_TAG) || player.tickCount % 20 != 0
@@ -69,8 +189,13 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
         if (!level.hasChunkAt(target)) {
             return;
         }
-        boolean present = !level.getEntitiesOfClass(EntityCheshireCat.class,
-                AABB.ofSize(LEGACY_RABBIT_HOLE_POSITION, 4.0D, 4.0D, 4.0D)).isEmpty();
+        List<EntityCheshireCat> presentCats = level.getEntitiesOfClass(EntityCheshireCat.class,
+                AABB.ofSize(LEGACY_RABBIT_HOLE_POSITION, 4.0D, 4.0D, 4.0D));
+        for (EntityCheshireCat cat : presentCats) {
+            cat.refreshOriginalRoutePage();
+            if (cat.isOriginalSourceManaged()) return;
+        }
+        boolean present = !presentCats.isEmpty();
         if (!present) {
             EntityCheshireCat cheshire = BSEntityRegistry.CHESHIRE_CAT.get().create(level);
             if (cheshire == null) {
@@ -82,9 +207,11 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
             if (!level.addFreshEntity(cheshire)) {
                 return;
             }
+            cheshire.refreshOriginalRoutePage();
+            if (cheshire.isOriginalSourceManaged()) return;
         }
         data.remove(LEGACY_ASKED_ALICE_TAG);
-        data.putInt(STORY_STAGE_TAG, STAGE_GIFT);
+        data.putInt(STORY_STAGE_TAG, Math.max(data.getInt(STORY_STAGE_TAG), STAGE_GIFT));
     }
 
     @Override
@@ -92,18 +219,45 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
         super.tick();
         setDeltaMovement(0.0D, onGround() ? 0.0D : getDeltaMovement().y, 0.0D);
         if (!level().isClientSide) {
-            if (awaitingGiftReturn) {
-                checkGiftReturn();
-            } else if (vanishTicks > 0 && --vanishTicks == 0) {
-                setInvisible(false);
-                setSilent(false);
+            refreshOriginalRoutePage();
+            if (!isOriginalSourceManaged()) {
+                if (awaitingGiftReturn) {
+                    checkGiftReturn();
+                } else if (vanishTicks > 0) {
+                    vanishTicks--;
+                }
+                refreshVisibility();
             }
         }
     }
 
+    public String getSceneId() {
+        return sceneId;
+    }
+
+    public void refreshVisibility() {
+        refreshOriginalRoutePage();
+        if (isOriginalSourceManaged()) {
+            updateOriginalRouteVisibility();
+            return;
+        }
+        boolean hidden = awaitingGiftReturn || vanishTicks > 0 || !OriginalNpcCharacterBindings.cheshireSourceVisible(this);
+        setInvisible(hidden);
+        setSilent(hidden);
+    }
+
     @Override
     protected @NotNull InteractionResult mobInteract(@NotNull Player player, @NotNull InteractionHand hand) {
-        if (hand != InteractionHand.MAIN_HAND || vanishTicks > 0) {
+        if (hand != InteractionHand.MAIN_HAND) return super.mobInteract(player, hand);
+        refreshOriginalRoutePage();
+        if (isOriginalSourceManaged()) {
+            if (!level().isClientSide() && player instanceof ServerPlayer serverPlayer && !isInvisible()) {
+                OriginalNpcService.interactCheshire(serverPlayer, this);
+            }
+            return InteractionResult.sidedSuccess(level().isClientSide());
+        }
+        if (vanishTicks > 0 || awaitingGiftReturn
+                || !OriginalNpcCharacterBindings.cheshireSourceVisible(this)) {
             return super.mobInteract(player, hand);
         }
         if (!level().isClientSide && player instanceof ServerPlayer serverPlayer) {
@@ -145,6 +299,13 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
     }
 
     public void finishAliceQuestion(ServerPlayer player) {
+        if (isOriginalSourceManaged()) return;
+        refreshOriginalRoutePage();
+        if (isOriginalSourceManaged()) return;
+        if (!CheshireDialogue.isRabbitHole(sceneId) || storyStage(player) != STAGE_INTRO
+                || awaitingGiftReturn || vanishTicks > 0 || !OriginalNpcCharacterBindings.cheshireSourceVisible(this)) {
+            return;
+        }
         CompoundTag data = player.getPersistentData();
         data.remove(LEGACY_ASKED_ALICE_TAG);
         data.putInt(STORY_STAGE_TAG, STAGE_WAITING);
@@ -155,11 +316,13 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
         waitingStartZ = player.getZ();
         awaitingGiftReturn = true;
         vanishTicks = 0;
-        setInvisible(true);
-        setSilent(true);
+        refreshVisibility();
     }
 
     public boolean giveRabbitHoleGift(ServerPlayer player, int primaryGift, int secondaryGift) {
+        if (isOriginalSourceManaged()) return false;
+        refreshOriginalRoutePage();
+        if (isOriginalSourceManaged()) return false;
         if (!CheshireDialogue.isRabbitHole(sceneId) || storyStage(player) != STAGE_GIFT
                 || primaryGift < 0 || primaryGift > 3 || secondaryGift < 0 || secondaryGift > 1) {
             return false;
@@ -182,6 +345,9 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
     }
 
     public void vanishFromThreat(ServerPlayer player) {
+        if (isOriginalSourceManaged()) return;
+        refreshOriginalRoutePage();
+        if (isOriginalSourceManaged()) return;
         level().playSound(null, blockPosition(), BlackSouls.CHESHIRE_CAT2_EVENT.get(),
                 SoundSource.NEUTRAL, 1.0F, 1.0F);
         Vec3 away = player.position().subtract(position());
@@ -191,8 +357,7 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
             player.hurtMarked = true;
         }
         vanishTicks = 60;
-        setInvisible(true);
-        setSilent(true);
+        refreshVisibility();
     }
 
     private void bindScene(ServerPlayer player) {
@@ -219,8 +384,7 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
         player.getPersistentData().putInt(STORY_STAGE_TAG, STAGE_GIFT);
         awaitingGiftReturn = false;
         waitingPlayer = null;
-        setInvisible(false);
-        setSilent(false);
+        refreshVisibility();
     }
 
     private int storyStage(ServerPlayer player) {
@@ -244,19 +408,25 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
 
     @Override
     public void resetDialogue(ServerPlayer player) {
+        if (isOriginalSourceManaged()) return;
+        refreshOriginalRoutePage();
+        if (isOriginalSourceManaged()) return;
         player.getPersistentData().remove(LEGACY_ASKED_ALICE_TAG);
         player.getPersistentData().remove(STORY_STAGE_TAG);
         vanishTicks = 0;
         awaitingGiftReturn = false;
         waitingPlayer = null;
-        setInvisible(false);
-        setSilent(false);
+        refreshVisibility();
     }
 
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putString("CheshireSceneId", sceneId);
+        tag.putBoolean("CheshireOriginalSourceManaged", isOriginalSourceManaged());
+        tag.putInt("CheshireOriginalRoutePage", entityData.get(ORIGINAL_ROUTE_PAGE));
+        tag.put("CheshireOriginalRouteState", originalRouteState());
+        tag.putString("CheshireOriginalRouteTicket", forcedRouteTicket);
         tag.putBoolean("CheshireAwaitingGiftReturn", awaitingGiftReturn);
         if (waitingPlayer != null) {
             tag.putUUID("CheshireWaitingPlayer", waitingPlayer);
@@ -269,13 +439,24 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         sceneId = CheshireDialogue.normalizeSceneId(tag.getString("CheshireSceneId"));
+        entityData.set(ORIGINAL_SOURCE_MANAGED, tag.getBoolean("CheshireOriginalSourceManaged"));
+        entityData.set(ORIGINAL_ROUTE_PAGE, tag.contains("CheshireOriginalRoutePage", Tag.TAG_INT)
+                ? tag.getInt("CheshireOriginalRoutePage") : -2);
+        entityData.set(ORIGINAL_ROUTE_STATE, tag.contains("CheshireOriginalRouteState", Tag.TAG_COMPOUND)
+                ? tag.getCompound("CheshireOriginalRouteState").copy() : initialOriginalRouteState());
+        forcedRouteTicket = tag.getString("CheshireOriginalRouteTicket");
         vanishTicks = 0;
         awaitingGiftReturn = tag.getBoolean("CheshireAwaitingGiftReturn");
         waitingPlayer = tag.hasUUID("CheshireWaitingPlayer") ? tag.getUUID("CheshireWaitingPlayer") : null;
         waitingStartX = tag.getDouble("CheshireWaitingStartX");
         waitingStartZ = tag.getDouble("CheshireWaitingStartZ");
-        setInvisible(awaitingGiftReturn);
-        setSilent(awaitingGiftReturn);
+        if (isOriginalSourceManaged()) {
+            awaitingGiftReturn = false;
+            waitingPlayer = null;
+            updateOriginalRouteVisibility();
+        } else {
+            refreshVisibility();
+        }
     }
 
     @Override
@@ -286,6 +467,19 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
     @Override
     public boolean isPushable() {
         return false;
+    }
+
+    @Override
+    public boolean canBeCollidedWith() {
+        if (!isOriginalSourceManaged()) return super.canBeCollidedWith();
+        CompoundTag state = entityData.get(ORIGINAL_ROUTE_STATE);
+        return isAlive() && state.getInt("PriorityType") == 1 && !state.getBoolean("Through");
+    }
+
+    @Override
+    public boolean canCollideWith(Entity entity) {
+        return isOriginalSourceManaged() ? canBeCollidedWith() && !isPassengerOfSameVehicle(entity)
+                : super.canCollideWith(entity);
     }
 
     @Override

@@ -25,6 +25,7 @@ public final class ClientSceneMusic {
     private static SimpleSoundInstance activeMusic;
     private static SimpleSoundInstance dialogueMusic;
     private static boolean dialogueMusicActive;
+    private static boolean presentationMusicActive;
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
@@ -51,7 +52,7 @@ public final class ClientSceneMusic {
         if (!activeSceneId.equals(sceneId)) {
             changeScene(sceneId);
         }
-        if (dialogueMusicActive) {
+        if (dialogueMusicActive || presentationMusicActive) {
             return;
         }
         if (activeEntry == null || TurnBattleAudioGate.isActive() || !isAvailable()) {
@@ -71,6 +72,7 @@ public final class ClientSceneMusic {
     }
 
     public static void reset() {
+        presentationMusicActive = false;
         stopDialogueMusic();
         stopMusic();
         activeSceneId = "";
@@ -80,6 +82,15 @@ public final class ClientSceneMusic {
     public static void stopForDeath() {
         ClientSceneState.clear();
         reset();
+    }
+
+    public static void suspendForPresentation() {
+        stopMusic();
+        presentationMusicActive = true;
+    }
+
+    public static void resumeAfterPresentation() {
+        presentationMusicActive = false;
     }
 
     public static void startCheshireDialogue() {

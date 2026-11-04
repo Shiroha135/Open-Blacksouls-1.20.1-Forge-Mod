@@ -26,7 +26,9 @@ public final class RenderCheshireCat extends EntityRenderer<EntityCheshireCat> {
     @Override
     public void render(EntityCheshireCat entity, float entityYaw, float partialTicks,
                        PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
-        if (entity.isInvisible()) {
+        int opacity = Math.max(0, Math.min(255, entity.getSpriteOpacity()));
+        shadowStrength = opacity / 255.0F;
+        if (entity.isInvisible() || opacity == 0) {
             return;
         }
         poseStack.pushPose();
@@ -44,19 +46,19 @@ public final class RenderCheshireCat extends EntityRenderer<EntityCheshireCat> {
 
         VertexConsumer consumer = buffer.getBuffer(RenderType.entityTranslucent(TEXTURE));
         PoseStack.Pose pose = poseStack.last();
-        vertex(consumer, pose.pose(), pose.normal(), packedLight, -halfWidth, 0.0F, u0, v1);
-        vertex(consumer, pose.pose(), pose.normal(), packedLight, halfWidth, 0.0F, u1, v1);
-        vertex(consumer, pose.pose(), pose.normal(), packedLight, halfWidth, height, u1, v0);
-        vertex(consumer, pose.pose(), pose.normal(), packedLight, -halfWidth, height, u0, v0);
+        vertex(consumer, pose.pose(), pose.normal(), packedLight, opacity, -halfWidth, 0.0F, u0, v1);
+        vertex(consumer, pose.pose(), pose.normal(), packedLight, opacity, halfWidth, 0.0F, u1, v1);
+        vertex(consumer, pose.pose(), pose.normal(), packedLight, opacity, halfWidth, height, u1, v0);
+        vertex(consumer, pose.pose(), pose.normal(), packedLight, opacity, -halfWidth, height, u0, v0);
 
         poseStack.popPose();
         super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
 
     private static void vertex(VertexConsumer consumer, Matrix4f pose, Matrix3f normal,
-                               int light, float x, float y, float u, float v) {
+                               int light, int opacity, float x, float y, float u, float v) {
         consumer.vertex(pose, x, y, 0.0F)
-                .color(255, 255, 255, 255)
+                .color(255, 255, 255, opacity)
                 .uv(u, v)
                 .overlayCoords(OverlayTexture.NO_OVERLAY)
                 .uv2(light)

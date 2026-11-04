@@ -1,11 +1,15 @@
 package com.BlackSouls.BlackSoulsMod.entity;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.combat.EnemyActionResources;
 import com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager;
+import com.BlackSouls.BlackSoulsMod.util.BSOriginalCombatData;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalEnemyData;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalEnemyPhaseData;
+import com.BlackSouls.BlackSoulsMod.util.BSOriginalSkillData;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -37,6 +41,9 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
             SynchedEntityData.defineId(EntityOriginalDatabaseEnemy.class, EntityDataSerializers.INT);
     private double turnBattleHealth;
     private double turnBattleDifficultyMultiplier = 1.0D;
+    private double turnBattleHealthRate = 1.0D;
+    private double turnBattleManaRate = 1.0D;
+    private final EnemyActionResources actionResources = new EnemyActionResources();
 
     public EntityOriginalDatabaseEnemy(EntityType<? extends Monster> type, Level level) {
         super(type, level);
@@ -72,6 +79,12 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
         return BSOriginalEnemyData.get(getProfileId());
     }
 
+    public void transformTurnBattleProfile(int profileId) {
+        if (getProfileId() != profileId) {
+            this.entityData.set(PROFILE_ID, BSOriginalEnemyData.get(profileId).id());
+        }
+    }
+
     private void applyProfile(boolean resetHealth) {
         BSOriginalEnemyData.Entry profile = getProfile();
         double scaledMaxHealth = getScaledMaxHealth(profile);
@@ -82,9 +95,11 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
         setAttributeBase(Attributes.LUCK, Math.max(-1024.0D, Math.min(1024.0D, profile.luck())));
         if (resetHealth) {
             this.turnBattleHealth = scaledMaxHealth;
+            this.actionResources.reset(getTurnBattleMaxMana());
         } else {
             this.turnBattleHealth = Math.max(0.0D,
                     Math.min(scaledMaxHealth, this.turnBattleHealth));
+            this.actionResources.setMana(this.actionResources.mana(), getTurnBattleMaxMana());
         }
         syncVanillaHealth(false);
         refreshDimensions();
@@ -92,7 +107,15 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
 
     private double getScaledMaxHealth(BSOriginalEnemyData.Entry profile) {
         return Math.max(1.0D, Math.min(MAX_SUPPORTED_HEALTH,
-                profile.health() * this.turnBattleDifficultyMultiplier));
+                profile.health() * this.turnBattleDifficultyMultiplier * this.turnBattleHealthRate));
+    }
+
+    public void setTurnBattleParameterRates(double healthRate, double manaRate) {
+        this.turnBattleHealthRate = Math.max(0.000001D, healthRate);
+        this.turnBattleManaRate = Math.max(0.0D, manaRate);
+        setAttributeBase(Attributes.MAX_HEALTH, getTurnBattleMaxHealth());
+        setTurnBattleHealth(getTurnBattleHealth());
+        setTurnBattleMana(getTurnBattleMana());
     }
 
     private void syncVanillaHealth(boolean keepAlive) {
@@ -176,12 +199,85 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
 
     @Override
     public double getTurnBattleMana() {
-        return getProfile().mp();
+        return this.actionResources.mana();
     }
 
     @Override
     public double getTurnBattleMaxMana() {
-        return getProfile().mp();
+        return getProfile().mp() * this.turnBattleManaRate;
+    }
+
+    @Override
+    public void setTurnBattleMana(double mana) {
+        this.actionResources.setMana(mana, getTurnBattleMaxMana());
+    }
+
+    public double getTurnBattleTp() {
+        return this.actionResources.tp();
+    }
+
+    public void setTurnBattleTp(double tp) {
+        this.actionResources.setTp(tp);
+    }
+
+    public boolean canUseTurnBattleAction(BSOriginalEnemyData.Action action) {
+        return canUseTurnBattleAction(action, getTurnBattleManaCostRate());
+    }
+
+    public boolean canUseTurnBattleAction(BSOriginalEnemyData.Action action, double manaCostRate) {
+        return action != null && this.actionResources.canUse(BSOriginalSkillData.get(action.skillId()),
+                manaCostRate, getTurnBattleHealth(), getTurnBattleMaxHealth());
+    }
+
+    public void useTurnBattleAction(BSOriginalEnemyData.Action action) {
+        useTurnBattleAction(action, getTurnBattleManaCostRate());
+    }
+
+    public void useTurnBattleAction(BSOriginalEnemyData.Action action, double manaCostRate) {
+        if (action == null) {
+            return;
+        }
+        BSOriginalSkillData.Entry skill = BSOriginalSkillData.get(action.skillId());
+        if (skill != null) {
+            double healthCost = EnemyActionResources.healthCost(skill, getTurnBattleHealth(), getTurnBattleMaxHealth());
+            this.actionResources.use(skill, manaCostRate);
+            if (healthCost > 0.0D) {
+                setTurnBattleHealth(getTurnBattleHealth() - healthCost);
+            }
+        }
+    }
+
+    public void advanceTurnBattleActionResources() {
+        this.actionResources.advanceRound();
+    }
+
+    public void resetTurnBattleActionResources() {
+        this.actionResources.clearCooldowns();
+        this.actionResources.setTp(0.0D);
+    }
+
+    public void recoverTurnBattleResources() {
+        setTurnBattleMana(getTurnBattleMaxMana());
+    }
+
+    public int getTurnBattleSkillCooldown(int skillId) {
+        return this.actionResources.cooldown(skillId);
+    }
+
+    @Override
+    public int rollTurnBattleActionCount(RandomSource random) {
+        return EnemyActionResources.rollActionCount(random,
+                BSOriginalCombatData.enemy(getProfileId()).features(), getProfile().actionCount());
+    }
+
+    private double getTurnBattleManaCostRate() {
+        double rate = 1.0D;
+        for (BSOriginalCombatData.Feature feature : BSOriginalCombatData.enemy(getProfileId()).features()) {
+            if (feature.code() == 23 && feature.dataId() == 4) {
+                rate *= feature.value();
+            }
+        }
+        return rate;
     }
 
     @Override
@@ -206,16 +302,27 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
 
     public BSOriginalEnemyData.Action selectTurnBattleAction(RandomSource random, int turn,
                                                               Set<Integer> activeStates) {
+        return selectTurnBattleAction(random, turn, activeStates, getTurnBattleManaCostRate());
+    }
+
+    public BSOriginalEnemyData.Action selectTurnBattleAction(RandomSource random, int turn,
+                                                              Set<Integer> activeStates,
+                                                              double manaCostRate) {
+        return selectTurnBattleAction(random, turn, activeStates, manaCostRate, ignored -> false, ignored -> true);
+    }
+
+    public BSOriginalEnemyData.Action selectTurnBattleAction(RandomSource random, int turn,
+                                                              Set<Integer> activeStates, double manaCostRate,
+                                                              java.util.function.IntPredicate switches,
+                                                              java.util.function.Predicate<BSOriginalEnemyData.Action> available) {
         List<BSOriginalEnemyData.Action> valid = getProfile().actions().stream()
                 .filter(BSOriginalEnemyData.Action::selectable)
-                .filter(action -> isActionConditionMet(action, turn, activeStates))
+                .filter(action -> action.conditionType() == 6
+                        ? switches.test((int) action.conditionParam1()) || isActionConditionMet(action, turn, activeStates)
+                        : isActionConditionMet(action, turn, activeStates))
+                .filter(available)
+                .filter(action -> canUseTurnBattleAction(action, manaCostRate))
                 .toList();
-        if (valid.isEmpty()) {
-            valid = getProfile().actions().stream()
-                    .filter(BSOriginalEnemyData.Action::selectable)
-                    .filter(action -> action.conditionType() == 0)
-                    .toList();
-        }
         if (valid.isEmpty()) {
             return null;
         }
@@ -319,6 +426,7 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
         double nextHealth;
         if (transition.recoverAll()) {
             nextHealth = getTurnBattleMaxHealth();
+            recoverTurnBattleResources();
         } else if (previousHealth > 0.0D) {
             nextHealth = Math.min(previousHealth, getTurnBattleMaxHealth());
         } else {
@@ -366,6 +474,7 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
         tag.putInt("OriginalEnemyId", getProfileId());
         tag.putDouble("OriginalBattleHealth", this.turnBattleHealth);
         tag.putDouble("OriginalBattleDifficultyMultiplier", this.turnBattleDifficultyMultiplier);
+        tag.put("OriginalBattleResources", this.actionResources.save());
     }
 
     @Override
@@ -377,6 +486,9 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
         }
         if (tag.contains("OriginalBattleHealth")) {
             setTurnBattleHealth(tag.getDouble("OriginalBattleHealth"));
+        }
+        if (tag.contains("OriginalBattleResources", Tag.TAG_COMPOUND)) {
+            this.actionResources.load(tag.getCompound("OriginalBattleResources"), getTurnBattleMaxMana());
         }
     }
 }

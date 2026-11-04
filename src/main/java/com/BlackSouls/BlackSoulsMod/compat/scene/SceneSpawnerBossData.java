@@ -51,6 +51,14 @@ public final class SceneSpawnerBossData extends SavedData {
         return storyProgress;
     }
 
+    public void setStoryProgress(int value) {
+        int next = Math.max(0, value);
+        if (next != storyProgress) {
+            storyProgress = next;
+            setDirty();
+        }
+    }
+
     public int addStoryProgress(int amount) {
         if (amount > 0) {
             storyProgress += amount;

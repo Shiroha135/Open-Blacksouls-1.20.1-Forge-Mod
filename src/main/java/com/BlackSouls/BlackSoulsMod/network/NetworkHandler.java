@@ -20,7 +20,7 @@ import java.util.Optional;
 @SuppressWarnings("removal")
 public class NetworkHandler {
 
-    private static final String PROTOCOL_VERSION = "1";
+    private static final String PROTOCOL_VERSION = "6";
 
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(BlackSouls.MODID, "main"),
@@ -67,6 +67,7 @@ public class NetworkHandler {
         register(PacketKillDialogueNPC.class, PacketKillDialogueNPC::toBytes, PacketKillDialogueNPC::new, PacketKillDialogueNPC::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ServerboundCheshireActionPacket.class, ServerboundCheshireActionPacket::toBytes, ServerboundCheshireActionPacket::new, ServerboundCheshireActionPacket::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ServerboundCheshireGiftPacket.class, ServerboundCheshireGiftPacket::toBytes, ServerboundCheshireGiftPacket::new, ServerboundCheshireGiftPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ServerboundHolmesActionPacket.class, ServerboundHolmesActionPacket::toBytes, ServerboundHolmesActionPacket::new, ServerboundHolmesActionPacket::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ClientboundSimpleActionPacket.class, ClientboundSimpleActionPacket::toBytes, ClientboundSimpleActionPacket::new, ClientboundSimpleActionPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(PacketUpdateBonfireName.class, PacketUpdateBonfireName::toBytes, PacketUpdateBonfireName::new, PacketUpdateBonfireName::handle, NetworkDirection.PLAY_TO_SERVER);
         register(PacketPlayAnim.class, PacketPlayAnim::toBytes, PacketPlayAnim::new, PacketPlayAnim::handle, NetworkDirection.PLAY_TO_CLIENT);
@@ -93,6 +94,11 @@ public class NetworkHandler {
         register(ServerboundSaveDoorConfigPacket.class, ServerboundSaveDoorConfigPacket::encode, ServerboundSaveDoorConfigPacket::decode, ServerboundSaveDoorConfigPacket::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ClientboundPartyStatePacket.class, ClientboundPartyStatePacket::toBytes, ClientboundPartyStatePacket::new, ClientboundPartyStatePacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(ServerboundPartySyncPacket.class, ServerboundPartySyncPacket::toBytes, ServerboundPartySyncPacket::new, ServerboundPartySyncPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ClientboundOriginalNpcPacket.class, ClientboundOriginalNpcPacket::toBytes, ClientboundOriginalNpcPacket::new, ClientboundOriginalNpcPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ServerboundOriginalNpcPacket.class, ServerboundOriginalNpcPacket::toBytes, ServerboundOriginalNpcPacket::new, ServerboundOriginalNpcPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ClientboundOriginalNpcPresentationPacket.class, ClientboundOriginalNpcPresentationPacket::toBytes, ClientboundOriginalNpcPresentationPacket::new, ClientboundOriginalNpcPresentationPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ClientboundOriginalNpcAnimationPacket.class, ClientboundOriginalNpcAnimationPacket::toBytes, ClientboundOriginalNpcAnimationPacket::new, ClientboundOriginalNpcAnimationPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ClientboundOriginalNpcPicturesPacket.class, ClientboundOriginalNpcPicturesPacket::toBytes, ClientboundOriginalNpcPicturesPacket::new, ClientboundOriginalNpcPicturesPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
 
     }
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {

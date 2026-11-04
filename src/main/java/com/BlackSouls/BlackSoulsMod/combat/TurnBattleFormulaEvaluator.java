@@ -2,8 +2,12 @@ package com.BlackSouls.BlackSoulsMod.combat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.IntPredicate;
+import java.util.regex.Pattern;
 
 public final class TurnBattleFormulaEvaluator {
+    private static final Pattern TARGET_STATE_CONDITION = Pattern.compile(
+            "b\\.state\\?\\((\\d+)\\)\\s*\\?\\s*([-+]?\\d+(?:\\.\\d+)?)\\s*:\\s*([-+]?\\d+(?:\\.\\d+)?)");
     private TurnBattleFormulaEvaluator() {
     }
 
@@ -11,9 +15,10 @@ public final class TurnBattleFormulaEvaluator {
         if (formula == null || formula.isBlank()) {
             return 0.0D;
         }
-        String normalized = formula
-                .replaceAll("\\[([^,\\]]+),([^\\]]+)\\]\\.min", "min($1,$2)")
-                .replaceAll("b\\.state\\?\\([^)]*\\)\\?\\s*[-+0-9.]+\\s*:\\s*[-+0-9.]+", "1");
+        String normalized = TARGET_STATE_CONDITION.matcher(formula).replaceAll(match ->
+                context.targetHasState().test(Integer.parseInt(match.group(1)))
+                        ? match.group(2) : match.group(3));
+        normalized = normalized.replaceAll("\\[([^,\\]]+),([^\\]]+)\\]\\.min", "min($1,$2)");
         try {
             double value = new Parser(normalized, context).parse();
             return Double.isFinite(value) ? value : 0.0D;
@@ -28,7 +33,45 @@ public final class TurnBattleFormulaEvaluator {
                           double attackerMaxMana, double targetAttack, double targetDefense,
                           double targetMagicAttack, double targetMagicDefense, double targetAgility,
                           double targetLuck, double targetHealth, double targetMaxHealth,
-                          double targetMana, double targetMaxMana) {
+                          double targetMana, double targetMaxMana, IntPredicate targetHasState) {
+    }
+
+    private record Value(double number, boolean integer) {
+        private static Value attribute(double number) {
+            return new Value(number, Double.isFinite(number) && number == Math.rint(number));
+        }
+
+        private Value add(Value other) {
+            return new Value(number + other.number, integer && other.integer);
+        }
+
+        private Value subtract(Value other) {
+            return new Value(number - other.number, integer && other.integer);
+        }
+
+        private Value multiply(Value other) {
+            return new Value(number * other.number, integer && other.integer);
+        }
+
+        private Value divide(Value other) {
+            boolean integerResult = integer && other.integer;
+            if (integerResult && other.number == 0.0D) {
+                throw new ArithmeticException("divided by 0");
+            }
+            double result = number / other.number;
+            return new Value(integerResult ? Math.floor(result) : result, integerResult);
+        }
+
+        private Value modulo(Value other) {
+            if (other.number == 0.0D) {
+                throw new ArithmeticException("divided by 0");
+            }
+            double result = number % other.number;
+            if (result != 0.0D && (result < 0.0D) != (other.number < 0.0D)) {
+                result += other.number;
+            }
+            return new Value(result, integer && other.integer);
+        }
     }
 
     private static final class Parser {
@@ -42,61 +85,60 @@ public final class TurnBattleFormulaEvaluator {
         }
 
         private double parse() {
-            double value = expression();
+            Value value = expression();
             skipSpaces();
             if (position != input.length()) {
                 throw new IllegalArgumentException(input.substring(position));
             }
-            return value;
+            return value.number;
         }
 
-        private double expression() {
-            double value = term();
+        private Value expression() {
+            Value value = term();
             while (true) {
                 skipSpaces();
                 if (take('+')) {
-                    value += term();
+                    value = value.add(term());
                 } else if (take('-')) {
-                    value -= term();
+                    value = value.subtract(term());
                 } else {
                     return value;
                 }
             }
         }
 
-        private double term() {
-            double value = unary();
+        private Value term() {
+            Value value = unary();
             while (true) {
                 skipSpaces();
                 if (take('*')) {
-                    value *= unary();
+                    value = value.multiply(unary());
                 } else if (take('/')) {
-                    double divisor = unary();
-                    value = Math.abs(divisor) < 1.0E-9D ? 0.0D : value / divisor;
+                    value = value.divide(unary());
                 } else if (take('%')) {
-                    double divisor = unary();
-                    value = Math.abs(divisor) < 1.0E-9D ? 0.0D : value % divisor;
+                    value = value.modulo(unary());
                 } else {
                     return value;
                 }
             }
         }
 
-        private double unary() {
+        private Value unary() {
             skipSpaces();
             if (take('+')) {
                 return unary();
             }
             if (take('-')) {
-                return -unary();
+                Value value = unary();
+                return new Value(-value.number, value.integer);
             }
             return primary();
         }
 
-        private double primary() {
+        private Value primary() {
             skipSpaces();
             if (take('(')) {
-                double value = expression();
+                Value value = expression();
                 expect(')');
                 return value;
             }
@@ -107,7 +149,7 @@ public final class TurnBattleFormulaEvaluator {
             String identifier = identifier();
             skipSpaces();
             if (take('(')) {
-                List<Double> arguments = new ArrayList<>();
+                List<Value> arguments = new ArrayList<>();
                 skipSpaces();
                 if (!take(')')) {
                     do {
@@ -121,7 +163,7 @@ public final class TurnBattleFormulaEvaluator {
             return variable(identifier);
         }
 
-        private double number() {
+        private Value number() {
             int start = position;
             while (position < input.length()) {
                 char character = input.charAt(position);
@@ -130,7 +172,8 @@ public final class TurnBattleFormulaEvaluator {
                 }
                 position++;
             }
-            return Double.parseDouble(input.substring(start, position));
+            String literal = input.substring(start, position);
+            return new Value(Double.parseDouble(literal), literal.indexOf('.') < 0);
         }
 
         private String identifier() {
@@ -148,8 +191,8 @@ public final class TurnBattleFormulaEvaluator {
             return input.substring(start, position);
         }
 
-        private double variable(String name) {
-            return switch (name) {
+        private Value variable(String name) {
+            return Value.attribute(switch (name) {
                 case "a.atk" -> context.attackerAttack;
                 case "a.def" -> context.attackerDefense;
                 case "a.mat" -> context.attackerMagicAttack;
@@ -171,20 +214,23 @@ public final class TurnBattleFormulaEvaluator {
                 case "b.mp" -> context.targetMana;
                 case "b.mmp" -> context.targetMaxMana;
                 default -> 0.0D;
-            };
+            });
         }
 
-        private double function(String name, List<Double> arguments) {
+        private Value function(String name, List<Value> arguments) {
             if ("min".equals(name) && arguments.size() == 2) {
-                return Math.min(arguments.get(0), arguments.get(1));
+                return arguments.get(0).number <= arguments.get(1).number
+                        ? arguments.get(0) : arguments.get(1);
             }
             if ("max".equals(name) && arguments.size() == 2) {
-                return Math.max(arguments.get(0), arguments.get(1));
+                return arguments.get(0).number >= arguments.get(1).number
+                        ? arguments.get(0) : arguments.get(1);
             }
             if ("abs".equals(name) && arguments.size() == 1) {
-                return Math.abs(arguments.get(0));
+                Value value = arguments.get(0);
+                return new Value(Math.abs(value.number), value.integer);
             }
-            return 0.0D;
+            return new Value(0.0D, true);
         }
 
         private void skipSpaces() {

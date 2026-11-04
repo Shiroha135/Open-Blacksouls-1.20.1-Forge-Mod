@@ -16,6 +16,8 @@ public class ModEntityEvents {
         event.put(BSEntityRegistry.RABBIT_HOLE_NPC.get(), EntityRabbitHoleNpc.createAttributes().build());
         event.put(BSEntityRegistry.RABBIT_KNIGHT.get(), EntityOriginalDatabaseEnemy.createAttributes().build());
         event.put(BSEntityRegistry.CHESHIRE_CAT.get(), EntityCheshireCat.createAttributes().build());
+        event.put(BSEntityRegistry.HOLMES.get(), EntityHolmes.createAttributes().build());
+        event.put(BSEntityRegistry.ORIGINAL_NPC.get(), EntityOriginalNpc.createAttributes().build());
         event.put(BSEntityRegistry.HAIL_CAESAR.get(), EntityHailCaesar.createAttributes().build());
         event.put(BSEntityRegistry.HELL_PRINCE.get(), EntityHellPrince.createAttributes().build());
         event.put(BSEntityRegistry.TEST_DUMMY.get(), EntityTestDummy.createAttributes().build());

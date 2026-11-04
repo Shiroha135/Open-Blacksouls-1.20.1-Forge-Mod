@@ -1,6 +1,10 @@
 package com.BlackSouls.BlackSoulsMod.entity;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.util.BSOriginalEnemyData;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -10,6 +14,8 @@ import net.minecraft.world.level.Level;
 
 @SuppressWarnings("removal")
 public class EntityOriginalTurnBattleEnemy extends EntityTurnBattleMonster {
+    private static final EntityDataAccessor<Boolean> HEAD_SEARCHING = SynchedEntityData.defineId(
+            EntityOriginalTurnBattleEnemy.class, EntityDataSerializers.BOOLEAN);
     private final Profile profile;
 
     public EntityOriginalTurnBattleEnemy(EntityType<? extends Monster> type, Level level, Profile profile) {
@@ -32,17 +38,44 @@ public class EntityOriginalTurnBattleEnemy extends EntityTurnBattleMonster {
     }
 
     @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(HEAD_SEARCHING, false);
+    }
+
+    public void setHeadSearching(boolean searching) {
+        this.entityData.set(HEAD_SEARCHING, searching);
+    }
+
+    public boolean isHeadSearching() {
+        return this.entityData.get(HEAD_SEARCHING);
+    }
+
+    public int getOriginalBattleProfileId() {
+        return this.profile == Profile.WEREWOLF ? isHeadSearching() ? 7 : 5 : 0;
+    }
+
+    @Override
     public ResourceLocation getTurnBattleTexture() {
+        if (this.profile == Profile.WEREWOLF) {
+            return BSOriginalEnemyData.get(getOriginalBattleProfileId()).texture();
+        }
         return this.profile.texture;
     }
 
     @Override
     public int getTurnBattleTextureWidth() {
+        if (this.profile == Profile.WEREWOLF) {
+            return BSOriginalEnemyData.get(getOriginalBattleProfileId()).textureWidth();
+        }
         return this.profile.textureWidth;
     }
 
     @Override
     public int getTurnBattleTextureHeight() {
+        if (this.profile == Profile.WEREWOLF) {
+            return BSOriginalEnemyData.get(getOriginalBattleProfileId()).textureHeight();
+        }
         return this.profile.textureHeight;
     }
 

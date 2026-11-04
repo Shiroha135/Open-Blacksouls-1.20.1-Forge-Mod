@@ -10,6 +10,9 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class BSEntityRegistry {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, BlackSouls.MODID);
+    public static final RegistryObject<EntityType<EntityOriginalNpc>> ORIGINAL_NPC = ENTITY_TYPES.register("original_npc",
+            () -> EntityType.Builder.of(EntityOriginalNpc::new, MobCategory.CREATURE)
+                    .sized(0.6F, 1.9F).clientTrackingRange(10).updateInterval(3).build("original_npc"));
 
     public static final RegistryObject<EntityType<EntityNoden>> NODEN = ENTITY_TYPES.register("noden",
             () -> EntityType.Builder.<EntityNoden>of(EntityNoden::new, MobCategory.CREATURE)
@@ -48,6 +51,14 @@ public class BSEntityRegistry {
                             .clientTrackingRange(10)
                             .updateInterval(3)
                             .build("cheshire_cat"));
+
+    public static final RegistryObject<EntityType<EntityHolmes>> HOLMES =
+            ENTITY_TYPES.register("holmes", () ->
+                    EntityType.Builder.<EntityHolmes>of(EntityHolmes::new, MobCategory.CREATURE)
+                            .sized(0.6F, 1.9F)
+                            .clientTrackingRange(10)
+                            .updateInterval(3)
+                            .build("holmes"));
 
     public static final RegistryObject<EntityType<EntityHailCaesar>> HAIL_CAESAR = ENTITY_TYPES.register("hail_caesar",
             () -> EntityType.Builder.of(EntityHailCaesar::new, MobCategory.MONSTER)

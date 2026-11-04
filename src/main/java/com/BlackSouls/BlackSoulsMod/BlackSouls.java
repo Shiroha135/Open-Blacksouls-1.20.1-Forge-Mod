@@ -174,6 +174,7 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> CRASH_EVENT = registerSound("crash");
     public static final RegistryObject<SoundEvent> CURSOR1_EVENT = registerSound("cursor1");
     public static final RegistryObject<SoundEvent> STORY_NAME_SEA_EVENT = registerSound("story_name_sea");
+    public static final RegistryObject<SoundEvent> ORIGINAL_LAUGHTER_BOY4_EVENT = registerSound("mbjh_se_laughter_boy4");
     public static final RegistryObject<SoundEvent> DAO_EVENT = registerSound("dao");
     public static final RegistryObject<SoundEvent> BLOOD_SPLATTER_EVENT = registerSound("blood_splatter");
     public static final RegistryObject<SoundEvent> DARKNESS3_EVENT = registerSound("darkness3");
@@ -209,6 +210,13 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> GUCHA004A_EVENT = registerSound("gucha004a");
     public static final RegistryObject<SoundEvent> CHESHIRE_CAT2_EVENT = registerSound("cheshire_cat2");
     public static final RegistryObject<SoundEvent> CHESHIRE_CAT3_EVENT = registerSound("cheshire_cat3");
+    public static final RegistryObject<SoundEvent> ORIGINAL_CHESHIRE_CAT_2_EVENT = registerSound("original_cheshire_cat_2");
+    public static final RegistryObject<SoundEvent> ORIGINAL_CHESHIRE_CAT_3_EVENT = registerSound("original_cheshire_cat_3");
+    public static final RegistryObject<SoundEvent> ORIGINAL_CHESHIRE_CAT_4_EVENT = registerSound("original_cheshire_cat_4");
+    public static final RegistryObject<SoundEvent> ORIGINAL_CHESHIRE_CAT_6_EVENT = registerSound("original_cheshire_cat_6");
+    public static final RegistryObject<SoundEvent> ORIGINAL_CHESHIRE_CAT_8_EVENT = registerSound("original_cheshire_cat_8");
+    public static final RegistryObject<SoundEvent> BOOK2_EVENT = registerSound("book2");
+    public static final RegistryObject<SoundEvent> EXPLOSION1_EVENT = registerSound("explosion1");
     public static final RegistryObject<SoundEvent> CHESHIRE_THEME_EVENT = registerSound("cheshire_theme");
     public static final RegistryObject<SoundEvent> RABBIT_KNIGHT_BGM_EVENT = registerSound("rabbit_knight_bgm");
     public static final RegistryObject<SoundEvent> GUN1_EVENT = registerSound("gun1");
@@ -249,6 +257,7 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> RABBIT_WATCH_WIND_EVENT = registerSound("rabbit_watch_wind");
     public static final RegistryObject<SoundEvent> RAISE3_EVENT = registerSound("raise3");
     public static final RegistryObject<SoundEvent> RAISE1_EVENT = registerSound("raise1");
+    public static final RegistryObject<SoundEvent> SAINT4_EVENT = registerSound("saint4");
     public static final RegistryObject<SoundEvent> SAINT6_EVENT = registerSound("saint6");
     public static final RegistryObject<SoundEvent> SAINT7_EVENT = registerSound("saint7");
     public static final RegistryObject<SoundEvent> SAINT8_EVENT = registerSound("saint8");
@@ -287,6 +296,7 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> THUNDER7_EVENT = registerSound("thunder7");
     public static final RegistryObject<SoundEvent> THUNDER5_EVENT = registerSound("thunder5");
     public static final RegistryObject<SoundEvent> THUNDER8_EVENT = registerSound("thunder8");
+    public static final RegistryObject<SoundEvent> THUNDER9_EVENT = registerSound("thunder9");
     public static final RegistryObject<SoundEvent> THUNDER10_EVENT = registerSound("thunder10");
     public static final RegistryObject<SoundEvent> TITLE_BGM_EVENT = registerSound("title_bgm");
     public static final RegistryObject<SoundEvent> TWINE_EVENT = registerSound("twine");
@@ -1060,6 +1070,9 @@ public class BlackSouls {
     public static final RegistryObject<Item> CHESHIRE_CAT_SPAWN_EGG = ITEMS.register("cheshire_cat_spawn_egg",
             () -> new ForgeSpawnEggItem(BSEntityRegistry.CHESHIRE_CAT, 0x8460A4, 0xE5C7E7,
                     new Item.Properties()));
+    public static final RegistryObject<Item> HOLMES_SPAWN_EGG = ITEMS.register("holmes_spawn_egg",
+            () -> new ForgeSpawnEggItem(BSEntityRegistry.HOLMES, 0x2E2A24, 0xC9A227,
+                    new Item.Properties()));
     public static final RegistryObject<Item> RABBIT_HOLE_EV009_SPAWN_EGG =
             ITEMS.register("rabbit_hole_ev009_spawn_egg",
                     () -> new ItemRabbitHoleNpcSpawn(new Item.Properties().stacksTo(16),
@@ -1097,6 +1110,8 @@ public class BlackSouls {
                     new Item.Properties()));
     public static final Map<Integer, RegistryObject<Item>> ORIGINAL_ENEMY_SPAWN_EGGS =
             registerOriginalEnemySpawnEggs();
+    public static final Map<String, RegistryObject<Item>> ORIGINAL_NPC_SPAWN_EGGS = registerOriginalNpcSpawnEggs();
+
     //创造模式专属物品栏
 
     @SuppressWarnings("unused")
@@ -1109,6 +1124,7 @@ public class BlackSouls {
                         output.accept(NODEN_SPAWN_EGG.get());              // 诺登召唤
                         output.accept(RED_HOOD_SPAWN_EGG.get());
                         output.accept(CHESHIRE_CAT_SPAWN_EGG.get());
+                        output.accept(HOLMES_SPAWN_EGG.get());
                         output.accept(RABBIT_HOLE_EV009_SPAWN_EGG.get());
                         output.accept(RABBIT_HOLE_EV052_SPAWN_EGG.get());
                         output.accept(RABBIT_HOLE_EV011_SPAWN_EGG.get());
@@ -1116,6 +1132,7 @@ public class BlackSouls {
                         output.accept(RABBIT_HOLE_EV030_SPAWN_EGG.get());
                         output.accept(RABBIT_KNIGHT_EV011_SPAWN_EGG.get());
                         ORIGINAL_ENEMY_SPAWN_EGGS.values().forEach(egg -> output.accept(egg.get()));
+                        ORIGINAL_NPC_SPAWN_EGGS.values().forEach(egg -> output.accept(egg.get()));
                     })
                     .build());
 
@@ -1461,6 +1478,19 @@ public class BlackSouls {
             String registryName = String.format("original_enemy_%03d_spawn_egg", profile.id());
             result.put(profile.id(), ITEMS.register(registryName,
                     () -> new ItemOriginalEnemySpawnEgg(profile, new Item.Properties().stacksTo(16))));
+        }
+        return Collections.unmodifiableMap(result);
+    }
+
+    private static Map<String, RegistryObject<Item>> registerOriginalNpcSpawnEggs() {
+        Map<String, RegistryObject<Item>> result = new LinkedHashMap<>();
+        for (com.BlackSouls.BlackSoulsMod.util.BSOriginalNpcData.Entry npc
+                : com.BlackSouls.BlackSoulsMod.util.BSOriginalNpcData.values()) {
+            if (npc.pages().stream().noneMatch(page -> !page.graphic().get("character_name").getAsString().isBlank())) {
+                continue;
+            }
+            result.put(npc.id(), ITEMS.register(npc.id() + "_spawn_egg", () ->
+                    new com.BlackSouls.BlackSoulsMod.item.ItemOriginalNpcSpawnEgg(npc.id(), new Item.Properties().stacksTo(16))));
         }
         return Collections.unmodifiableMap(result);
     }

@@ -138,6 +138,13 @@ public abstract class EntityTurnBattleMonster extends Monster {
         return getTurnBattleMana();
     }
 
+    public void setTurnBattleMana(double mana) {
+    }
+
+    public int rollTurnBattleActionCount(RandomSource random) {
+        return 1;
+    }
+
     public abstract long getTurnBattleSoulReward();
 
     public abstract String getTurnBattleAttackText();

@@ -1,5 +1,8 @@
 package com.BlackSouls.BlackSoulsMod.network.packets;
 
+import com.BlackSouls.BlackSoulsMod.combat.OriginalTroopPresentation;
+import com.BlackSouls.BlackSoulsMod.story.OriginalBattleMusic;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +14,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 
 public class ClientboundTurnBattlePacket {
+    private OriginalTroopPresentation troopPresentation;
+    private OriginalBattleMusic battleMusic = OriginalBattleMusic.UNSET;
     private final boolean active;
+    private final boolean canEscape;
+    private final int originalTroopId;
+    private final List<Integer> originalMemberIndices;
     private final int rootEntityId;
     private final int battleProfileId;
     private final List<EnemySnapshot> enemies;
@@ -36,7 +44,24 @@ public class ClientboundTurnBattlePacket {
                                        Component message, boolean canAct, Outcome outcome,
                                        long soulReward, List<ItemStack> rewardItems,
                                        Map<String, Integer> skillCooldowns) {
+        this(active, rootEntityId, battleProfileId, enemies, actingEnemyIndex, enemyAnimationId,
+                phaseChanged, awaitingPresentation, playerHits, incomingHits, message, canAct, outcome,
+                soulReward, rewardItems, skillCooldowns, true, 0, List.of());
+    }
+
+    public ClientboundTurnBattlePacket(boolean active, int rootEntityId, int battleProfileId,
+                                       List<EnemySnapshot> enemies, int actingEnemyIndex,
+                                       int enemyAnimationId, boolean phaseChanged,
+                                       boolean awaitingPresentation, List<DamageHit> playerHits,
+                                       List<IncomingHit> incomingHits,
+                                       Component message, boolean canAct, Outcome outcome,
+                                       long soulReward, List<ItemStack> rewardItems,
+                                       Map<String, Integer> skillCooldowns, boolean canEscape,
+                                       int originalTroopId, List<Integer> originalMemberIndices) {
         this.active = active;
+        this.canEscape = canEscape;
+        this.originalTroopId = originalTroopId;
+        this.originalMemberIndices = List.copyOf(originalMemberIndices);
         this.rootEntityId = rootEntityId;
         this.battleProfileId = battleProfileId;
         this.enemies = List.copyOf(enemies);
@@ -52,6 +77,16 @@ public class ClientboundTurnBattlePacket {
         this.soulReward = soulReward;
         this.rewardItems = rewardItems.stream().map(ItemStack::copy).toList();
         this.skillCooldowns = Map.copyOf(skillCooldowns);
+    }
+
+    public ClientboundTurnBattlePacket withTroopPresentation(OriginalTroopPresentation presentation) {
+        this.troopPresentation = presentation;
+        return this;
+    }
+
+    public ClientboundTurnBattlePacket withBattleMusic(OriginalBattleMusic music) {
+        this.battleMusic = java.util.Objects.requireNonNull(music);
+        return this;
     }
 
     public ClientboundTurnBattlePacket(FriendlyByteBuf buffer) {
@@ -96,6 +131,19 @@ public class ClientboundTurnBattlePacket {
             cooldowns.put(buffer.readUtf(), buffer.readVarInt());
         }
         this.skillCooldowns = Map.copyOf(cooldowns);
+        this.canEscape = buffer.readableBytes() <= 0 || buffer.readBoolean();
+        this.originalTroopId = buffer.readableBytes() > 0 ? buffer.readVarInt() : 0;
+        List<Integer> memberIndices = new ArrayList<>();
+        if (buffer.readableBytes() > 0) {
+            int count = buffer.readVarInt();
+            for (int index = 0; index < count; index++) {
+                memberIndices.add(buffer.readVarInt());
+            }
+        }
+        this.originalMemberIndices = List.copyOf(memberIndices);
+        this.troopPresentation = buffer.readableBytes() > 0 && buffer.readBoolean()
+                ? OriginalTroopPresentation.read(buffer) : null;
+        this.battleMusic = buffer.readableBytes() > 0 ? OriginalBattleMusic.read(buffer) : OriginalBattleMusic.UNSET;
     }
 
     public void toBytes(FriendlyByteBuf buffer) {
@@ -123,6 +171,13 @@ public class ClientboundTurnBattlePacket {
             buffer.writeUtf(skillId);
             buffer.writeVarInt(rounds);
         });
+        buffer.writeBoolean(this.canEscape);
+        buffer.writeVarInt(this.originalTroopId);
+        buffer.writeVarInt(this.originalMemberIndices.size());
+        this.originalMemberIndices.forEach(buffer::writeVarInt);
+        buffer.writeBoolean(this.troopPresentation != null);
+        if (this.troopPresentation != null) this.troopPresentation.write(buffer);
+        this.battleMusic.write(buffer);
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
@@ -134,15 +189,25 @@ public class ClientboundTurnBattlePacket {
             net.minecraft.client.Minecraft minecraft = net.minecraft.client.Minecraft.getInstance();
             if (minecraft.screen instanceof com.BlackSouls.BlackSoulsMod.client.gui.GuiTurnBattle battle
                     && (battle.matches(packet.rootEntityId) || !packet.active)) {
+                battle.setOriginalTroop(packet.originalTroopId, packet.originalMemberIndices, packet.canEscape);
+                if (packet.active) battle.setOriginalBattleMusic(packet.battleMusic);
+                if (packet.troopPresentation != null && packet.troopPresentation.animationsOnly()) {
+                    battle.applyTroopPresentation(packet.troopPresentation, packet.message);
+                    return;
+                }
                 battle.applyState(packet.active, packet.battleProfileId, packet.enemies,
                         packet.actingEnemyIndex, packet.phaseChanged,
                         packet.awaitingPresentation, packet.playerHits, packet.incomingHits, packet.message,
                         packet.canAct, packet.outcome, packet.soulReward,
                         packet.rewardItems, packet.skillCooldowns, packet.enemyAnimationId);
+                battle.applyTroopPresentation(packet.troopPresentation, packet.message);
             } else if (packet.active) {
-                minecraft.setScreen(new com.BlackSouls.BlackSoulsMod.client.gui.GuiTurnBattle(
+                com.BlackSouls.BlackSoulsMod.client.gui.GuiTurnBattle battle = new com.BlackSouls.BlackSoulsMod.client.gui.GuiTurnBattle(
                         packet.rootEntityId, packet.battleProfileId, packet.enemies, packet.message,
-                        packet.canAct, packet.skillCooldowns, packet.enemyAnimationId));
+                        packet.canAct, packet.skillCooldowns, packet.enemyAnimationId, packet.battleMusic);
+                battle.setOriginalTroop(packet.originalTroopId, packet.originalMemberIndices, packet.canEscape);
+                minecraft.setScreen(battle);
+                battle.applyTroopPresentation(packet.troopPresentation, packet.message);
             }
         }
     }

@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod.util.skill;
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.entity.EntityMeatWall;
+import com.BlackSouls.BlackSoulsMod.entity.EntityTurnBattleMonster;
 import com.BlackSouls.BlackSoulsMod.handler.BSEntityRegistry;
 import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
@@ -193,6 +194,143 @@ public class SkillOriginalMagic extends AbstractSkill {
         executeWithTarget(player, stats, target);
     }
 
+    public int getTurnBattleHitCount() {
+        return switch (profile) {
+            case SOUL_VOLLEY, PIERCING_ICICLE, BLACK_SLASH, SOUL_STREAM,
+                    DARK_DANCE, GREAT_SOUL_ARROW_VOLLEY -> 4;
+            case DENSE_SPIROCHETE, DIVINE_BEAST_THUNDER -> 3;
+            case RAIN_OF_RUIN -> 2;
+            case DESTRUCTION_STORM -> 6;
+            case KATARINA_WHEEL -> 8;
+            default -> 1;
+        };
+    }
+
+    public boolean selectsRandomTurnBattleTargets() {
+        return switch (profile) {
+            case DARK_DANCE, GREAT_SOUL_ARROW_VOLLEY, DESTRUCTION_STORM, KATARINA_WHEEL -> true;
+            default -> false;
+        };
+    }
+
+    public int getTurnBattleTargetLimit() {
+        return switch (profile) {
+            case RAMPAGE, FREEZING_MAGIC_BULLET -> 3;
+            default -> Integer.MAX_VALUE;
+        };
+    }
+
+    public boolean isPhysicalTurnBattleAttack() {
+        return switch (profile) {
+            case SEE_THROUGH_ATTACK, RAMPAGE, CRITICAL_STRIKE, BLACK_SLASH -> true;
+            default -> false;
+        };
+    }
+
+    public int getTurnBattleHitType() {
+        return switch (profile) {
+            case RAMPAGE -> 1;
+            case SEE_THROUGH_ATTACK, METEOR_SWARM, CRITICAL_STRIKE, DENSE_SPIROCHETE,
+                    PIERCING_ICICLE, RAIN_OF_RUIN, GLOOMY_SWAMP, ACID_RAIN, KATARINA_WHEEL,
+                    BLACK_SLASH, SERPENT_EMBRACE -> 0;
+            default -> profile.offensive ? 2 : 0;
+        };
+    }
+
+    public int getTurnBattleSourceSkillId() {
+        return switch (profile) {
+            case SOUL_VOLLEY -> 24;
+            case DISPEL -> 96;
+            case SEE_THROUGH_ATTACK -> 212;
+            case POISON -> 35;
+            case POISON_II -> 36;
+            case HYPNOSIS -> 39;
+            case CURE -> 31;
+            case MAGIC_BLESSING -> 127;
+            case RAMPAGE -> 173;
+            case FULL_BLESSING -> 51;
+            case RESURRECTION -> 33;
+            case MANA_ABSORPTION -> 50;
+            case ERASE -> 113;
+            case KINGS_COMMAND -> 140;
+            case FIRE -> 132;
+            case DROWNING_BUBBLE -> 136;
+            case DARK_SIDE_OF_MOON -> 141;
+            case FREEZING_MAGIC_BULLET -> 142;
+            case HELLFIRE -> 143;
+            case DESTRUCTION_STORM -> 144;
+            case INNER_POTENTIAL -> 195;
+            case GREAT_SOUL_ARROW -> 79;
+            case VERDANT_POWER -> 139;
+            case ROCK_BODY -> 22;
+            case DARK_ORB -> 28;
+            case DARK_DANCE -> 29;
+            case DARK_SWARM -> 30;
+            case DIVINE_THUNDER -> 128;
+            case DIVINE_BEAST_THUNDER -> 129;
+            case METEOR_SWARM -> 150;
+            case FULL_CURSE -> 240;
+            case GREAT_SOUL_ARROW_VOLLEY -> 88;
+            case FATAL_GUARD -> 271;
+            case GHOST_FIRE -> 244;
+            case PHALANX -> 584;
+            case ABSOLUTE_HIT -> 603;
+            case CHAOS_EXPLOSION -> 153;
+            case CRITICAL_STRIKE -> 621;
+            case SOUL_SHIELD -> 625;
+            case DENSE_SPIROCHETE -> 814;
+            case SUMMON_MEAT_WALL -> 836;
+            case TORN_GRUDGE -> 838;
+            case PIERCING_ICICLE -> 839;
+            case RAIN_OF_RUIN -> 840;
+            case GLOOMY_SWAMP -> 841;
+            case ACID_RAIN -> 842;
+            case ROYAL_TEA -> 844;
+            case GODSPEED_DANCE -> 845;
+            case KATARINA_WHEEL -> 846;
+            case PALADIN_BANNER -> 847;
+            case BLACK_WAVE -> 848;
+            case BLACK_SLASH -> 849;
+            case AWAKENING -> 850;
+            case SERPENT_EMBRACE -> 918;
+            case SOUL_STREAM -> 80;
+        };
+    }
+
+    public TurnBattleHit rollTurnBattleHit(ServerPlayer player, BSPlayerStats stats,
+                                           LivingEntity target,
+                                           double attack, double magicAttack,
+                                           double defense, double magicDefense) {
+        double damage = calculateRawDamage(stats, target, attack, magicAttack,
+                defense, magicDefense,
+                target instanceof EntityTurnBattleMonster enemy ? enemy.getTurnBattleHealth() : target.getHealth(),
+                target instanceof EntityTurnBattleMonster enemy ? enemy.getTurnBattleMaxHealth() : target.getMaxHealth());
+        Element element = getElement();
+        if (element != Element.NONE) {
+            damage *= BSAttributeManager.getBestMultiplier(target, List.of(getAttribute(element)));
+        }
+        double variance = getDamageVariance();
+        if (variance > 0.0D) {
+            damage *= 1.0D - variance + player.getRandom().nextDouble() * variance * 2.0D;
+        }
+        boolean critical = profile == Profile.CRITICAL_STRIKE
+                || canCritical() && player.getRandom().nextDouble() < stats.critRate / 100.0D;
+        return new TurnBattleHit(Math.max(1.0D, damage) * (critical ? 3.0D : 1.0D), critical);
+    }
+
+    public void applyTurnBattleHitEffects(ServerPlayer player, LivingEntity target,
+                                          double healthDamage) {
+        if (isDrainSkill() && healthDamage > 0.0D) {
+            player.heal((float) healthDamage);
+        }
+        if (target instanceof EntityTurnBattleMonster enemy ? !enemy.isTurnBattleDefeated() : target.isAlive()) {
+            applyOnHitEffects(target);
+        }
+    }
+
+    public record TurnBattleHit(double damage, boolean critical) {
+    }
+
     private void executeWithTarget(ServerPlayer player, BSPlayerStats stats, LivingEntity turnTarget) {
         player.sendSystemMessage(Component.translatable(
                 "message.blacksouls.skill.original_magic.use",
@@ -247,15 +385,14 @@ public class SkillOriginalMagic extends AbstractSkill {
             return;
         }
         switch (profile) {
-            case SOUL_VOLLEY, PIERCING_ICICLE, BLACK_SLASH -> scheduleSingle(player, stats, selectSingle(player, enemies), 4);
-            case DENSE_SPIROCHETE -> scheduleSingle(player, stats, selectSingle(player, enemies), 3);
-            case DIVINE_BEAST_THUNDER, SOUL_STREAM -> scheduleAll(player, stats, enemies, profile == Profile.DIVINE_BEAST_THUNDER ? 3 : 4);
-            case RAIN_OF_RUIN -> scheduleAll(player, stats, enemies, 2);
-            case DARK_DANCE, GREAT_SOUL_ARROW_VOLLEY -> scheduleRandom(player, stats, enemies, 4);
-            case DESTRUCTION_STORM -> scheduleRandom(player, stats, enemies, 6);
-            case KATARINA_WHEEL -> scheduleRandom(player, stats, enemies, 8);
+            case SOUL_VOLLEY, PIERCING_ICICLE, BLACK_SLASH, DENSE_SPIROCHETE ->
+                    scheduleSingle(player, stats, selectSingle(player, enemies), getTurnBattleHitCount());
+            case DIVINE_BEAST_THUNDER, SOUL_STREAM, RAIN_OF_RUIN ->
+                    scheduleAll(player, stats, enemies, getTurnBattleHitCount());
+            case DARK_DANCE, GREAT_SOUL_ARROW_VOLLEY, DESTRUCTION_STORM, KATARINA_WHEEL ->
+                    scheduleRandom(player, stats, enemies, getTurnBattleHitCount());
             case RAMPAGE, FREEZING_MAGIC_BULLET -> {
-                List<LivingEntity> limited = enemies.subList(0, Math.min(3, enemies.size()));
+                List<LivingEntity> limited = enemies.subList(0, Math.min(getTurnBattleTargetLimit(), enemies.size()));
                 scheduleAll(player, stats, limited, 1);
             }
             case HELLFIRE, DARK_SWARM, METEOR_SWARM, GHOST_FIRE, CHAOS_EXPLOSION,
@@ -303,11 +440,7 @@ public class SkillOriginalMagic extends AbstractSkill {
         if (element != Element.NONE) {
             raw *= BSAttributeManager.getBestMultiplier(target, List.of(getAttribute(element)));
         }
-        double variance = switch (profile) {
-            case DESTRUCTION_STORM, METEOR_SWARM -> 0.40D;
-            case DENSE_SPIROCHETE, GLOOMY_SWAMP, ACID_RAIN, BLACK_WAVE -> 0.0D;
-            default -> 0.20D;
-        };
+        double variance = getDamageVariance();
         if (variance > 0.0D) {
             raw *= 1.0D - variance + player.getRandom().nextDouble() * variance * 2.0D;
         }
@@ -331,10 +464,14 @@ public class SkillOriginalMagic extends AbstractSkill {
     }
 
     private double calculateRawDamage(BSPlayerStats stats, LivingEntity target) {
-        double matk = stats.magicAttack;
-        double atk = stats.attack;
-        double mdef = StatEventHandler.getRpgMagicDefense(target);
-        double def = StatEventHandler.getRpgPhysicalDefense(target);
+        return calculateRawDamage(stats, target, stats.attack, stats.magicAttack,
+                StatEventHandler.getRpgPhysicalDefense(target), StatEventHandler.getRpgMagicDefense(target),
+                target.getHealth(), target.getMaxHealth());
+    }
+
+    private double calculateRawDamage(BSPlayerStats stats, LivingEntity target,
+                                       double atk, double matk, double def, double mdef,
+                                       double health, double maxHealth) {
         return switch (profile) {
             case SOUL_VOLLEY, DARK_ORB, DARK_DANCE, SOUL_STREAM -> matk * 5.0D - mdef * 2.0D;
             case SEE_THROUGH_ATTACK, RAMPAGE, CRITICAL_STRIKE -> atk * 4.0D - def * 2.0D;
@@ -345,16 +482,16 @@ public class SkillOriginalMagic extends AbstractSkill {
             case GREAT_SOUL_ARROW, GREAT_SOUL_ARROW_VOLLEY -> matk * 8.0D - mdef * 2.0D;
             case DARK_SWARM -> matk * 6.0D - mdef * 2.0D;
             case METEOR_SWARM -> 3000.0D + matk * 10.0D;
-            case GHOST_FIRE -> matk * 4.0D - mdef * 2.0D + target.getMaxHealth() * 0.05D;
-            case CHAOS_EXPLOSION -> 1000.0D + target.getHealth() * 0.25D + matk * 4.0D - mdef * 2.0D;
+            case GHOST_FIRE -> matk * 4.0D - mdef * 2.0D + maxHealth * 0.05D;
+            case CHAOS_EXPLOSION -> 1000.0D + health * 0.25D + matk * 4.0D - mdef * 2.0D;
             case DENSE_SPIROCHETE -> 1000.0D;
             case TORN_GRUDGE -> (matk * 4.0D - mdef * 2.0D) * Math.min(stats.maxMp / Math.max(1.0D, stats.mp), 10.0D);
             case PIERCING_ICICLE -> matk * 3.0D;
-            case RAIN_OF_RUIN -> (matk * 4.0D - mdef * 2.0D) * Math.min(target.getMaxHealth() / Math.max(1.0F, target.getHealth()), 3.0D);
-            case GLOOMY_SWAMP -> target.getMaxHealth() * 0.03D;
-            case ACID_RAIN -> target.getMaxHealth() * 0.02D;
+            case RAIN_OF_RUIN -> (matk * 4.0D - mdef * 2.0D) * Math.min(maxHealth / Math.max(1.0D, health), 3.0D);
+            case GLOOMY_SWAMP -> maxHealth * 0.03D;
+            case ACID_RAIN -> maxHealth * 0.02D;
             case KATARINA_WHEEL -> matk * 5.0D - mdef * 2.0D;
-            case BLACK_WAVE -> target.getMaxHealth() * 0.15D;
+            case BLACK_WAVE -> maxHealth * 0.15D;
             case BLACK_SLASH -> 1000.0D + atk * 6.0D - def * 2.0D;
             case SERPENT_EMBRACE -> {
                 double value = matk * 4.0D - mdef * 2.0D;
@@ -364,6 +501,14 @@ public class SkillOriginalMagic extends AbstractSkill {
                 yield value;
             }
             default -> 1.0D;
+        };
+    }
+
+    private double getDamageVariance() {
+        return switch (profile) {
+            case DESTRUCTION_STORM, METEOR_SWARM -> 0.40D;
+            case DENSE_SPIROCHETE, GLOOMY_SWAMP, ACID_RAIN, BLACK_WAVE -> 0.0D;
+            default -> 0.20D;
         };
     }
 
