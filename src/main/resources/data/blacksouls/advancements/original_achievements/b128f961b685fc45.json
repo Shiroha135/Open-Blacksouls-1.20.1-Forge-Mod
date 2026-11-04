@@ -1,0 +1,23 @@
+{
+  "parent": "blacksouls:library_of_dream",
+  "display": {
+    "icon": {
+      "item": "blacksouls:book_blank"
+    },
+    "title": {
+      "text": "Serpent God"
+    },
+    "description": {
+      "text": ""
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "triggered": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

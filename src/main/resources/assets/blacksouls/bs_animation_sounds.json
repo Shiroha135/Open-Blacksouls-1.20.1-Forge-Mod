@@ -959,6 +959,12 @@
       "sound": "thunder10",
       "volume": 1.0,
       "pitch": 1.2
+    },
+    {
+      "frame": 1,
+      "sound": "thunder9",
+      "volume": 1.0,
+      "pitch": 1.0
     }
   ],
   "69": [
@@ -1698,6 +1704,12 @@
     }
   ],
   "109": [
+    {
+      "frame": 0,
+      "sound": "saint4",
+      "volume": 0.8,
+      "pitch": 0.95
+    },
     {
       "frame": 11,
       "sound": "ice1",

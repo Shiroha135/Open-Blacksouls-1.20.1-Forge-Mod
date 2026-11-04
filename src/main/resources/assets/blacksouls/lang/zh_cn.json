@@ -3237,5 +3237,19 @@
   "message.blacksouls.party.new_leader": "%s 成为了新队长。",
   "message.blacksouls.party.offline": "%s 已离线，队伍席位将为其保留。",
   "message.blacksouls.party.rejoined": "%s 已上线并自动重新加入队伍。",
-  "message.blacksouls.party.rejoined_self": "你已自动重新加入之前的队伍。"
+  "message.blacksouls.party.rejoined_self": "你已自动重新加入之前的队伍。",
+  "entity.blacksouls.holmes": "福尔摩斯",
+  "entity.blacksouls.holmes.name": "福尔摩斯",
+  "item.blacksouls.holmes_spawn_egg": "福尔摩斯 召唤",
+  "avatar.blacksouls.holmes": "福尔摩斯",
+  "dialogue.blacksouls.holmes.intro_1": "「真是个危险的地方呢。\n　不过在这里住了这么久，\n　我也还是第一次看到那种魔兽……」",
+  "dialogue.blacksouls.holmes.intro_2": "「这片街道已然成为魔兽以及狂人们的狂宴场了。\n　比起先思再行的正常人，先行再思的家伙压倒性的多呢」",
+  "dialogue.blacksouls.holmes.intro_3": "「我这么说是为你好。\n　你还是赶快离开这片街区比较好」",
+  "dialogue.blacksouls.holmes.wounded_1": "「你，受伤了么？\n　没办法……把这个拿走吧」",
+  "dialogue.blacksouls.holmes.main_1": "「§c要是看到有迷雾的话请小心了§f。\n　那是柴郡猫所刻下的，警戒的标识。\n　在雾气前方说不定有什么可怕的东西在等着你」",
+  "dialogue.blacksouls.holmes.alice_1": "「爱丽丝……？\n　不知道的孩子呢……」",
+  "dialogue.blacksouls.holmes.alice_2": "「要想找人的话就去§c西南边的酒场§f吧。\n　虽说那里只会提供一些难喝的啤酒和猛烈的杜松子酒，\n　但那里姑且也算是个交流情报的好地方吧」",
+  "dialogue.blacksouls.holmes.ripper_1": "「……话说回来，\n　你听说过一个叫做§c开膛手杰克§f的杀人鬼么？」",
+  "dialogue.blacksouls.holmes.ripper_2": "「…不……没什么。\n　就当我没说过这句话吧」",
+  "dialogue.blacksouls.holmes.ripper_3": "「我必须亲自去捉住他……」"
 }

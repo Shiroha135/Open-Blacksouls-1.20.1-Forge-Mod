@@ -1,0 +1,1812 @@
+{
+  "bgm": {
+    "Airship": {
+      "sound": "blacksouls2music:music_track_001",
+      "durationSeconds": 63.993,
+      "sourceFile": "Airship.ogg"
+    },
+    "Battle1": {
+      "sound": "blacksouls2music:music_track_002",
+      "durationSeconds": 74.107,
+      "sourceFile": "Battle1.ogg"
+    },
+    "Battle2": {
+      "sound": "blacksouls2music:music_track_003",
+      "durationSeconds": 84.343,
+      "sourceFile": "Battle2.ogg"
+    },
+    "Battle3": {
+      "sound": "blacksouls2music:music_track_004",
+      "durationSeconds": 85.323,
+      "sourceFile": "Battle3.ogg"
+    },
+    "Battle4": {
+      "sound": "blacksouls2music:music_track_005",
+      "durationSeconds": 92.49,
+      "sourceFile": "Battle4.ogg"
+    },
+    "Battle5": {
+      "sound": "blacksouls2music:music_track_006",
+      "durationSeconds": 69.975,
+      "sourceFile": "Battle5.ogg"
+    },
+    "Battle6": {
+      "sound": "blacksouls2music:music_track_007",
+      "durationSeconds": 72.141,
+      "sourceFile": "Battle6.ogg"
+    },
+    "Battle7": {
+      "sound": "blacksouls2music:music_track_008",
+      "durationSeconds": 65.994,
+      "sourceFile": "Battle7.ogg"
+    },
+    "Battle8": {
+      "sound": "blacksouls2music:music_track_009",
+      "durationSeconds": 68.918,
+      "sourceFile": "Battle8.ogg"
+    },
+    "Battle9": {
+      "sound": "blacksouls2music:music_track_010",
+      "durationSeconds": 90.001,
+      "sourceFile": "Battle9.ogg"
+    },
+    "Dungeon1": {
+      "sound": "blacksouls2music:music_track_012",
+      "durationSeconds": 85.704,
+      "sourceFile": "Dungeon1.ogg"
+    },
+    "Dungeon2": {
+      "sound": "blacksouls2music:music_track_013",
+      "durationSeconds": 102.386,
+      "sourceFile": "Dungeon2.ogg"
+    },
+    "Dungeon3": {
+      "sound": "blacksouls2music:music_track_014",
+      "durationSeconds": 104.105,
+      "sourceFile": "Dungeon3.ogg"
+    },
+    "Dungeon4": {
+      "sound": "blacksouls2music:music_track_015",
+      "durationSeconds": 81.517,
+      "sourceFile": "Dungeon4.ogg"
+    },
+    "Dungeon5": {
+      "sound": "blacksouls2music:music_track_016",
+      "durationSeconds": 76.551,
+      "sourceFile": "Dungeon5.ogg"
+    },
+    "Dungeon6": {
+      "sound": "blacksouls2music:music_track_017",
+      "durationSeconds": 69.181,
+      "sourceFile": "Dungeon6.ogg"
+    },
+    "Dungeon7": {
+      "sound": "blacksouls2music:music_track_018",
+      "durationSeconds": 73.647,
+      "sourceFile": "Dungeon7.ogg"
+    },
+    "Dungeon8": {
+      "sound": "blacksouls2music:music_track_019",
+      "durationSeconds": 71.05,
+      "sourceFile": "Dungeon8.ogg"
+    },
+    "Dungeon9": {
+      "sound": "blacksouls2music:music_track_020",
+      "durationSeconds": 95.208,
+      "sourceFile": "Dungeon9.ogg"
+    },
+    "ED": {
+      "sound": "blacksouls2music:music_track_021",
+      "durationSeconds": 222.224,
+      "sourceFile": "ED.ogg"
+    },
+    "ED2": {
+      "sound": "blacksouls2music:music_track_022",
+      "durationSeconds": 463.778,
+      "sourceFile": "ED2.ogg"
+    },
+    "ED3": {
+      "sound": "blacksouls2music:music_track_023",
+      "durationSeconds": 134.609,
+      "sourceFile": "ED3.ogg"
+    },
+    "ED4": {
+      "sound": "blacksouls2music:music_track_024",
+      "durationSeconds": 74.064,
+      "sourceFile": "ED4.ogg"
+    },
+    "ED5": {
+      "sound": "blacksouls2music:music_track_025",
+      "durationSeconds": 109.69,
+      "sourceFile": "ED5.ogg"
+    },
+    "ED6": {
+      "sound": "blacksouls2music:music_track_026",
+      "durationSeconds": 123.481,
+      "sourceFile": "ED6.ogg"
+    },
+    "ED7": {
+      "sound": "blacksouls2music:music_track_027",
+      "durationSeconds": 181.29,
+      "sourceFile": "ED7.ogg"
+    },
+    "Field1": {
+      "sound": "blacksouls2music:music_track_028",
+      "durationSeconds": 82.873,
+      "sourceFile": "Field1.ogg"
+    },
+    "Field2": {
+      "sound": "blacksouls2music:music_track_029",
+      "durationSeconds": 83.803,
+      "sourceFile": "Field2.ogg"
+    },
+    "Field3": {
+      "sound": "blacksouls2music:music_track_030",
+      "durationSeconds": 63.392,
+      "sourceFile": "Field3.ogg"
+    },
+    "Field4": {
+      "sound": "blacksouls2music:music_track_031",
+      "durationSeconds": 79.734,
+      "sourceFile": "Field4.ogg"
+    },
+    "Hシーン": {
+      "sound": "blacksouls2music:music_track_032",
+      "durationSeconds": 96.55,
+      "sourceFile": "Hシーン.ogg"
+    },
+    "Hシーン２": {
+      "sound": "blacksouls2music:music_track_033",
+      "durationSeconds": 68.284,
+      "sourceFile": "Hシーン２.ogg"
+    },
+    "Hシーン３": {
+      "sound": "blacksouls2music:music_track_034",
+      "durationSeconds": 145.503,
+      "sourceFile": "Hシーン３.ogg"
+    },
+    "OP": {
+      "sound": "blacksouls2music:music_track_035",
+      "durationSeconds": 114.704,
+      "sourceFile": "OP.ogg"
+    },
+    "Scene1": {
+      "sound": "blacksouls2music:music_track_036",
+      "durationSeconds": 74.582,
+      "sourceFile": "Scene1.ogg"
+    },
+    "Scene2": {
+      "sound": "blacksouls2music:music_track_037",
+      "durationSeconds": 85.342,
+      "sourceFile": "Scene2.ogg"
+    },
+    "Scene3": {
+      "sound": "blacksouls2music:music_track_038",
+      "durationSeconds": 85.498,
+      "sourceFile": "Scene3.ogg"
+    },
+    "Scene4": {
+      "sound": "blacksouls2music:music_track_039",
+      "durationSeconds": 69.512,
+      "sourceFile": "Scene4.ogg"
+    },
+    "Scene5": {
+      "sound": "blacksouls2music:music_track_040",
+      "durationSeconds": 89.988,
+      "sourceFile": "Scene5.ogg"
+    },
+    "Scene6": {
+      "sound": "blacksouls2music:music_track_041",
+      "durationSeconds": 110.348,
+      "sourceFile": "Scene6.ogg"
+    },
+    "Ship": {
+      "sound": "blacksouls2music:music_track_042",
+      "durationSeconds": 75.978,
+      "sourceFile": "Ship.ogg"
+    },
+    "Theme1": {
+      "sound": "blacksouls2music:music_track_043",
+      "durationSeconds": 97.719,
+      "sourceFile": "Theme1.ogg"
+    },
+    "Theme2": {
+      "sound": "blacksouls2music:music_track_044",
+      "durationSeconds": 92.325,
+      "sourceFile": "Theme2.ogg"
+    },
+    "Theme3": {
+      "sound": "blacksouls2music:music_track_045",
+      "durationSeconds": 102.529,
+      "sourceFile": "Theme3.ogg"
+    },
+    "Theme4": {
+      "sound": "blacksouls2music:music_track_046",
+      "durationSeconds": 83.329,
+      "sourceFile": "Theme4.ogg"
+    },
+    "Theme5": {
+      "sound": "blacksouls2music:music_track_047",
+      "durationSeconds": 75.79,
+      "sourceFile": "Theme5.ogg"
+    },
+    "Town1": {
+      "sound": "blacksouls2music:music_track_048",
+      "durationSeconds": 76.196,
+      "sourceFile": "Town1.ogg"
+    },
+    "Town2": {
+      "sound": "blacksouls2music:music_track_049",
+      "durationSeconds": 91.429,
+      "sourceFile": "Town2.ogg"
+    },
+    "Town3": {
+      "sound": "blacksouls2music:music_track_050",
+      "durationSeconds": 82.041,
+      "sourceFile": "Town3.ogg"
+    },
+    "Town4": {
+      "sound": "blacksouls2music:music_track_051",
+      "durationSeconds": 86.14,
+      "sourceFile": "Town4.ogg"
+    },
+    "Town5": {
+      "sound": "blacksouls2music:music_track_052",
+      "durationSeconds": 81.64,
+      "sourceFile": "Town5.ogg"
+    },
+    "Town6": {
+      "sound": "blacksouls2music:music_track_053",
+      "durationSeconds": 72.097,
+      "sourceFile": "Town6.ogg"
+    },
+    "Town7": {
+      "sound": "blacksouls2music:music_track_054",
+      "durationSeconds": 66.17,
+      "sourceFile": "Town7.ogg"
+    },
+    "corps choir01": {
+      "sound": "blacksouls2music:music_track_011",
+      "durationSeconds": 48.0,
+      "sourceFile": "corps choir01.ogg"
+    },
+    "お茶会": {
+      "sound": "blacksouls2music:music_track_055",
+      "durationSeconds": 56.889,
+      "sourceFile": "お茶会.ogg"
+    },
+    "アリス": {
+      "sound": "blacksouls2music:music_track_056",
+      "durationSeconds": 179.618,
+      "sourceFile": "アリス.ogg"
+    },
+    "イーディス": {
+      "sound": "blacksouls2music:music_track_057",
+      "durationSeconds": 146.422,
+      "sourceFile": "イーディス.ogg"
+    },
+    "ウィリアム": {
+      "sound": "blacksouls2music:music_track_058",
+      "durationSeconds": 167.784,
+      "sourceFile": "ウィリアム.ogg"
+    },
+    "ウサギ穴": {
+      "sound": "blacksouls2music:music_track_059",
+      "durationSeconds": 56.458,
+      "sourceFile": "ウサギ穴.ogg"
+    },
+    "ウミガメレストラン": {
+      "sound": "blacksouls2music:music_track_060",
+      "durationSeconds": 75.0,
+      "sourceFile": "ウミガメレストラン.ogg"
+    },
+    "オイスター": {
+      "sound": "blacksouls2music:music_track_061",
+      "durationSeconds": 148.689,
+      "sourceFile": "オイスター.ogg"
+    },
+    "オックス・ウォード": {
+      "sound": "blacksouls2music:music_track_062",
+      "durationSeconds": 101.381,
+      "sourceFile": "オックス・ウォード.ogg"
+    },
+    "カーナッキ": {
+      "sound": "blacksouls2music:music_track_063",
+      "durationSeconds": 356.571,
+      "sourceFile": "カーナッキ.ogg"
+    },
+    "キャロル": {
+      "sound": "blacksouls2music:music_track_064",
+      "durationSeconds": 118.256,
+      "sourceFile": "キャロル.ogg"
+    },
+    "クイーン・ランド": {
+      "sound": "blacksouls2music:music_track_065",
+      "durationSeconds": 56.821,
+      "sourceFile": "クイーン・ランド.ogg"
+    },
+    "クイーン・ランド2": {
+      "sound": "blacksouls2music:music_track_066",
+      "durationSeconds": 113.659,
+      "sourceFile": "クイーン・ランド2.ogg"
+    },
+    "クリミア": {
+      "sound": "blacksouls2music:music_track_067",
+      "durationSeconds": 184.809,
+      "sourceFile": "クリミア.wav"
+    },
+    "クリミア２": {
+      "sound": "blacksouls2music:music_track_068",
+      "durationSeconds": 233.247,
+      "sourceFile": "クリミア２.ogg"
+    },
+    "シヨ": {
+      "sound": "blacksouls2music:music_track_069",
+      "durationSeconds": 124.578,
+      "sourceFile": "シヨ.ogg"
+    },
+    "シヴーチ": {
+      "sound": "blacksouls2music:music_track_070",
+      "durationSeconds": 187.899,
+      "sourceFile": "シヴーチ.ogg"
+    },
+    "ジャック": {
+      "sound": "blacksouls2music:music_track_071",
+      "durationSeconds": 111.257,
+      "sourceFile": "ジャック.ogg"
+    },
+    "ジャック２": {
+      "sound": "blacksouls2music:music_track_072",
+      "durationSeconds": 177.842,
+      "sourceFile": "ジャック２.ogg"
+    },
+    "ジャバ": {
+      "sound": "blacksouls2music:music_track_073",
+      "durationSeconds": 82.286,
+      "sourceFile": "ジャバ.ogg"
+    },
+    "ジャブ": {
+      "sound": "blacksouls2music:music_track_074",
+      "durationSeconds": 109.714,
+      "sourceFile": "ジャブ.ogg"
+    },
+    "タイトル": {
+      "sound": "blacksouls2music:music_track_075",
+      "durationSeconds": 147.006,
+      "sourceFile": "タイトル.ogg"
+    },
+    "チェシャ猫": {
+      "sound": "blacksouls2music:music_track_076",
+      "durationSeconds": 100.056,
+      "sourceFile": "チェシャ猫.ogg"
+    },
+    "トカゲ": {
+      "sound": "blacksouls2music:music_track_077",
+      "durationSeconds": 177.659,
+      "sourceFile": "トカゲ.ogg"
+    },
+    "ドドが来た！": {
+      "sound": "blacksouls2music:music_track_078",
+      "durationSeconds": 131.82,
+      "sourceFile": "ドドが来た！.ogg"
+    },
+    "ナース": {
+      "sound": "blacksouls2music:music_track_079",
+      "durationSeconds": 70.689,
+      "sourceFile": "ナース.ogg"
+    },
+    "バンスナ": {
+      "sound": "blacksouls2music:music_track_080",
+      "durationSeconds": 96.759,
+      "sourceFile": "バンスナ.ogg"
+    },
+    "パンチ＆ジュディ": {
+      "sound": "blacksouls2music:music_track_081",
+      "durationSeconds": 144.96,
+      "sourceFile": "パンチ＆ジュディ.ogg"
+    },
+    "パンプキン": {
+      "sound": "blacksouls2music:music_track_082",
+      "durationSeconds": 112.666,
+      "sourceFile": "パンプキン.ogg"
+    },
+    "ビク": {
+      "sound": "blacksouls2music:music_track_083",
+      "durationSeconds": 209.556,
+      "sourceFile": "ビク.ogg"
+    },
+    "ビク2": {
+      "sound": "blacksouls2music:music_track_084",
+      "durationSeconds": 173.82,
+      "sourceFile": "ビク2.ogg"
+    },
+    "ビク３": {
+      "sound": "blacksouls2music:music_track_085",
+      "durationSeconds": 209.345,
+      "sourceFile": "ビク３.ogg"
+    },
+    "ビースト": {
+      "sound": "blacksouls2music:music_track_086",
+      "durationSeconds": 128.235,
+      "sourceFile": "ビースト.ogg"
+    },
+    "ベル": {
+      "sound": "blacksouls2music:music_track_087",
+      "durationSeconds": 119.928,
+      "sourceFile": "ベル.ogg"
+    },
+    "ホテル": {
+      "sound": "blacksouls2music:music_track_088",
+      "durationSeconds": 125.361,
+      "sourceFile": "ホテル.wav"
+    },
+    "メイベル": {
+      "sound": "blacksouls2music:music_track_089",
+      "durationSeconds": 98.087,
+      "sourceFile": "メイベル.ogg"
+    },
+    "ラスボス": {
+      "sound": "blacksouls2music:music_track_090",
+      "durationSeconds": 121.417,
+      "sourceFile": "ラスボス.ogg"
+    },
+    "ラスボス２": {
+      "sound": "blacksouls2music:music_track_091",
+      "durationSeconds": 68.115,
+      "sourceFile": "ラスボス２.ogg"
+    },
+    "ラスボス３": {
+      "sound": "blacksouls2music:music_track_092",
+      "durationSeconds": 100.101,
+      "sourceFile": "ラスボス３.ogg"
+    },
+    "ラスボス４": {
+      "sound": "blacksouls2music:music_track_093",
+      "durationSeconds": 64.0,
+      "sourceFile": "ラスボス４.ogg"
+    },
+    "ラスボス５": {
+      "sound": "blacksouls2music:music_track_094",
+      "durationSeconds": 169.808,
+      "sourceFile": "ラスボス５.ogg"
+    },
+    "ラスボス６": {
+      "sound": "blacksouls2music:music_track_095",
+      "durationSeconds": 156.516,
+      "sourceFile": "ラスボス６.ogg"
+    },
+    "ラスボス７": {
+      "sound": "blacksouls2music:music_track_096",
+      "durationSeconds": 138.998,
+      "sourceFile": "ラスボス７.ogg"
+    },
+    "ラスボス８": {
+      "sound": "blacksouls2music:music_track_097",
+      "durationSeconds": 181.37,
+      "sourceFile": "ラスボス８.ogg"
+    },
+    "ラドウィッジ市街": {
+      "sound": "blacksouls2music:music_track_098",
+      "durationSeconds": 135.551,
+      "sourceFile": "ラドウィッジ市街.ogg"
+    },
+    "リデル家": {
+      "sound": "blacksouls2music:music_track_099",
+      "durationSeconds": 252.166,
+      "sourceFile": "リデル家.ogg"
+    },
+    "ルルイエ": {
+      "sound": "blacksouls2music:music_track_100",
+      "durationSeconds": 113.215,
+      "sourceFile": "ルルイエ.ogg"
+    },
+    "ロルド": {
+      "sound": "blacksouls2music:music_track_101",
+      "durationSeconds": 163.262,
+      "sourceFile": "ロルド.ogg"
+    },
+    "ヴォーパル": {
+      "sound": "blacksouls2music:music_track_102",
+      "durationSeconds": 161.438,
+      "sourceFile": "ヴォーパル.ogg"
+    },
+    "ヴォーパル２": {
+      "sound": "blacksouls2music:music_track_103",
+      "durationSeconds": 130.431,
+      "sourceFile": "ヴォーパル２.ogg"
+    },
+    "三騎士": {
+      "sound": "blacksouls2music:music_track_104",
+      "durationSeconds": 124.787,
+      "sourceFile": "三騎士.ogg"
+    },
+    "上層": {
+      "sound": "blacksouls2music:music_track_105",
+      "durationSeconds": 235.249,
+      "sourceFile": "上層.ogg"
+    },
+    "不思議の国": {
+      "sound": "blacksouls2music:music_track_106",
+      "durationSeconds": 69.042,
+      "sourceFile": "不思議の国.ogg"
+    },
+    "不思議の国の戦い": {
+      "sound": "blacksouls2music:music_track_107",
+      "durationSeconds": 122.044,
+      "sourceFile": "不思議の国の戦い.ogg"
+    },
+    "人形": {
+      "sound": "blacksouls2music:music_track_108",
+      "durationSeconds": 93.115,
+      "sourceFile": "人形.ogg"
+    },
+    "兎騎士": {
+      "sound": "blacksouls2music:music_track_109",
+      "durationSeconds": 186.038,
+      "sourceFile": "兎騎士.ogg"
+    },
+    "公爵夫人": {
+      "sound": "blacksouls2music:music_track_110",
+      "durationSeconds": 167.081,
+      "sourceFile": "公爵夫人.ogg"
+    },
+    "剣　突き刺す": {
+      "sound": "blacksouls2music:music_track_111",
+      "durationSeconds": 1.071,
+      "sourceFile": "剣　突き刺す.wav"
+    },
+    "医院長": {
+      "sound": "blacksouls2music:music_track_112",
+      "durationSeconds": 257.592,
+      "sourceFile": "医院長.ogg"
+    },
+    "医院長２": {
+      "sound": "blacksouls2music:music_track_113",
+      "durationSeconds": 136.909,
+      "sourceFile": "医院長２.ogg"
+    },
+    "卵": {
+      "sound": "blacksouls2music:music_track_114",
+      "durationSeconds": 170.58,
+      "sourceFile": "卵.ogg"
+    },
+    "双子": {
+      "sound": "blacksouls2music:music_track_115",
+      "durationSeconds": 270.025,
+      "sourceFile": "双子.ogg"
+    },
+    "名無しの森": {
+      "sound": "blacksouls2music:music_track_116",
+      "durationSeconds": 64.687,
+      "sourceFile": "名無しの森.ogg"
+    },
+    "回想": {
+      "sound": "blacksouls2music:music_track_117",
+      "durationSeconds": 144.049,
+      "sourceFile": "回想.ogg"
+    },
+    "回想部屋": {
+      "sound": "blacksouls2music:music_track_118",
+      "durationSeconds": 113.371,
+      "sourceFile": "回想部屋.ogg"
+    },
+    "図書室の夢": {
+      "sound": "blacksouls2music:music_track_119",
+      "durationSeconds": 160.0,
+      "sourceFile": "図書室の夢.ogg"
+    },
+    "地獄の歯車": {
+      "sound": "blacksouls2music:music_track_120",
+      "durationSeconds": 7.848,
+      "sourceFile": "地獄の歯車.ogg"
+    },
+    "墓地": {
+      "sound": "blacksouls2music:music_track_121",
+      "durationSeconds": 39.865,
+      "sourceFile": "墓地.ogg"
+    },
+    "大聖堂": {
+      "sound": "blacksouls2music:music_track_122",
+      "durationSeconds": 257.648,
+      "sourceFile": "大聖堂.ogg"
+    },
+    "天使": {
+      "sound": "blacksouls2music:music_track_123",
+      "durationSeconds": 156.711,
+      "sourceFile": "天使.ogg"
+    },
+    "妊婦": {
+      "sound": "blacksouls2music:music_track_124",
+      "durationSeconds": 89.966,
+      "sourceFile": "妊婦.ogg"
+    },
+    "子供部屋": {
+      "sound": "blacksouls2music:music_track_125",
+      "durationSeconds": 196.362,
+      "sourceFile": "子供部屋.ogg"
+    },
+    "子供部屋２": {
+      "sound": "blacksouls2music:music_track_126",
+      "durationSeconds": 128.209,
+      "sourceFile": "子供部屋２.ogg"
+    },
+    "学長": {
+      "sound": "blacksouls2music:music_track_127",
+      "durationSeconds": 73.166,
+      "sourceFile": "学長.ogg"
+    },
+    "宇宙": {
+      "sound": "blacksouls2music:music_track_128",
+      "durationSeconds": 109.346,
+      "sourceFile": "宇宙.ogg"
+    },
+    "屠": {
+      "sound": "blacksouls2music:music_track_129",
+      "durationSeconds": 77.785,
+      "sourceFile": "屠.ogg"
+    },
+    "巨人の家": {
+      "sound": "blacksouls2music:music_track_130",
+      "durationSeconds": 154.459,
+      "sourceFile": "巨人の家.ogg"
+    },
+    "廃駅": {
+      "sound": "blacksouls2music:music_track_131",
+      "durationSeconds": 135.288,
+      "sourceFile": "廃駅.ogg"
+    },
+    "心臓": {
+      "sound": "blacksouls2music:music_track_132",
+      "durationSeconds": 203.468,
+      "sourceFile": "心臓.ogg"
+    },
+    "心臓の庭園": {
+      "sound": "blacksouls2music:music_track_133",
+      "durationSeconds": 192.287,
+      "sourceFile": "心臓の庭園.ogg"
+    },
+    "心音": {
+      "sound": "blacksouls2music:music_track_134",
+      "durationSeconds": 2.0,
+      "sourceFile": "心音.ogg"
+    },
+    "心音２": {
+      "sound": "blacksouls2music:music_track_135",
+      "durationSeconds": 0.536,
+      "sourceFile": "心音２.ogg"
+    },
+    "悪夢": {
+      "sound": "blacksouls2music:music_track_136",
+      "durationSeconds": 114.339,
+      "sourceFile": "悪夢.ogg"
+    },
+    "悪夢霊": {
+      "sound": "blacksouls2music:music_track_137",
+      "durationSeconds": 124.709,
+      "sourceFile": "悪夢霊.ogg"
+    },
+    "戦闘": {
+      "sound": "blacksouls2music:music_track_138",
+      "durationSeconds": 121.765,
+      "sourceFile": "戦闘.ogg"
+    },
+    "戦闘２": {
+      "sound": "blacksouls2music:music_track_139",
+      "durationSeconds": 117.656,
+      "sourceFile": "戦闘２.ogg"
+    },
+    "戦闘３": {
+      "sound": "blacksouls2music:music_track_140",
+      "durationSeconds": 148.036,
+      "sourceFile": "戦闘３.ogg"
+    },
+    "扉": {
+      "sound": "blacksouls2music:music_track_141",
+      "durationSeconds": 72.777,
+      "sourceFile": "扉.ogg"
+    },
+    "拷問具の女王": {
+      "sound": "blacksouls2music:music_track_142",
+      "durationSeconds": 175.047,
+      "sourceFile": "拷問具の女王.ogg"
+    },
+    "拷問具の女王２": {
+      "sound": "blacksouls2music:music_track_143",
+      "durationSeconds": 116.924,
+      "sourceFile": "拷問具の女王２.ogg"
+    },
+    "拷問具の女王３": {
+      "sound": "blacksouls2music:music_track_144",
+      "durationSeconds": 113.347,
+      "sourceFile": "拷問具の女王３.ogg"
+    },
+    "星夢ゲイザー": {
+      "sound": "blacksouls2music:music_track_145",
+      "durationSeconds": 130.456,
+      "sourceFile": "星夢ゲイザー.ogg"
+    },
+    "時計仕掛けの歪なワルツ": {
+      "sound": "blacksouls2music:music_track_146",
+      "durationSeconds": 92.891,
+      "sourceFile": "時計仕掛けの歪なワルツ.ogg"
+    },
+    "時計兎": {
+      "sound": "blacksouls2music:music_track_147",
+      "durationSeconds": 160.0,
+      "sourceFile": "時計兎.ogg"
+    },
+    "時計兎２": {
+      "sound": "blacksouls2music:music_track_148",
+      "durationSeconds": 194.676,
+      "sourceFile": "時計兎２.ogg"
+    },
+    "時計塔": {
+      "sound": "blacksouls2music:music_track_149",
+      "durationSeconds": 128.052,
+      "sourceFile": "時計塔.ogg"
+    },
+    "時計音": {
+      "sound": "blacksouls2music:music_track_150",
+      "durationSeconds": 7.461,
+      "sourceFile": "時計音.ogg"
+    },
+    "月": {
+      "sound": "blacksouls2music:music_track_151",
+      "durationSeconds": 75.938,
+      "sourceFile": "月.ogg"
+    },
+    "村": {
+      "sound": "blacksouls2music:music_track_152",
+      "durationSeconds": 198.269,
+      "sourceFile": "村.ogg"
+    },
+    "海": {
+      "sound": "blacksouls2music:music_track_153",
+      "durationSeconds": 210.338,
+      "sourceFile": "海.ogg"
+    },
+    "海国": {
+      "sound": "blacksouls2music:music_track_154",
+      "durationSeconds": 227.549,
+      "sourceFile": "海国.ogg"
+    },
+    "深海": {
+      "sound": "blacksouls2music:music_track_155",
+      "durationSeconds": 170.427,
+      "sourceFile": "深海.ogg"
+    },
+    "深海、星の下で": {
+      "sound": "blacksouls2music:music_track_156",
+      "durationSeconds": 201.064,
+      "sourceFile": "深海、星の下で.ogg"
+    },
+    "深海の海賊船": {
+      "sound": "blacksouls2music:music_track_157",
+      "durationSeconds": 127.713,
+      "sourceFile": "深海の海賊船.ogg"
+    },
+    "深海の異魚": {
+      "sound": "blacksouls2music:music_track_158",
+      "durationSeconds": 422.243,
+      "sourceFile": "深海の異魚.ogg"
+    },
+    "深海騎士": {
+      "sound": "blacksouls2music:music_track_159",
+      "durationSeconds": 191.425,
+      "sourceFile": "深海騎士.ogg"
+    },
+    "深海騎士２": {
+      "sound": "blacksouls2music:music_track_160",
+      "durationSeconds": 132.702,
+      "sourceFile": "深海騎士２.ogg"
+    },
+    "混沌": {
+      "sound": "blacksouls2music:music_track_161",
+      "durationSeconds": 63.004,
+      "sourceFile": "混沌.ogg"
+    },
+    "混沌１０": {
+      "sound": "blacksouls2music:music_track_162",
+      "durationSeconds": 99.084,
+      "sourceFile": "混沌１０.ogg"
+    },
+    "混沌１１": {
+      "sound": "blacksouls2music:music_track_163",
+      "durationSeconds": 50.939,
+      "sourceFile": "混沌１１.ogg"
+    },
+    "混沌１２": {
+      "sound": "blacksouls2music:music_track_164",
+      "durationSeconds": 125.259,
+      "sourceFile": "混沌１２.ogg"
+    },
+    "混沌１３": {
+      "sound": "blacksouls2music:music_track_165",
+      "durationSeconds": 117.29,
+      "sourceFile": "混沌１３.ogg"
+    },
+    "混沌１４": {
+      "sound": "blacksouls2music:music_track_166",
+      "durationSeconds": 137.221,
+      "sourceFile": "混沌１４.ogg"
+    },
+    "混沌１５": {
+      "sound": "blacksouls2music:music_track_167",
+      "durationSeconds": 150.024,
+      "sourceFile": "混沌１５.ogg"
+    },
+    "混沌１６": {
+      "sound": "blacksouls2music:music_track_168",
+      "durationSeconds": 136.02,
+      "sourceFile": "混沌１６.ogg"
+    },
+    "混沌１７": {
+      "sound": "blacksouls2music:music_track_169",
+      "durationSeconds": 145.868,
+      "sourceFile": "混沌１７.ogg"
+    },
+    "混沌１８": {
+      "sound": "blacksouls2music:music_track_170",
+      "durationSeconds": 89.328,
+      "sourceFile": "混沌１８.ogg"
+    },
+    "混沌１９": {
+      "sound": "blacksouls2music:music_track_171",
+      "durationSeconds": 234.945,
+      "sourceFile": "混沌１９.ogg"
+    },
+    "混沌２": {
+      "sound": "blacksouls2music:music_track_172",
+      "durationSeconds": 130.463,
+      "sourceFile": "混沌２.ogg"
+    },
+    "混沌２０": {
+      "sound": "blacksouls2music:music_track_173",
+      "durationSeconds": 86.753,
+      "sourceFile": "混沌２０.ogg"
+    },
+    "混沌２１": {
+      "sound": "blacksouls2music:music_track_174",
+      "durationSeconds": 97.128,
+      "sourceFile": "混沌２１.ogg"
+    },
+    "混沌２２": {
+      "sound": "blacksouls2music:music_track_175",
+      "durationSeconds": 83.306,
+      "sourceFile": "混沌２２.ogg"
+    },
+    "混沌２３": {
+      "sound": "blacksouls2music:music_track_176",
+      "durationSeconds": 134.976,
+      "sourceFile": "混沌２３.ogg"
+    },
+    "混沌２４": {
+      "sound": "blacksouls2music:music_track_177",
+      "durationSeconds": 161.02,
+      "sourceFile": "混沌２４.ogg"
+    },
+    "混沌２５": {
+      "sound": "blacksouls2music:music_track_178",
+      "durationSeconds": 102.846,
+      "sourceFile": "混沌２５.ogg"
+    },
+    "混沌２６": {
+      "sound": "blacksouls2music:music_track_179",
+      "durationSeconds": 58.699,
+      "sourceFile": "混沌２６.ogg"
+    },
+    "混沌２７": {
+      "sound": "blacksouls2music:music_track_180",
+      "durationSeconds": 147.905,
+      "sourceFile": "混沌２７.ogg"
+    },
+    "混沌２８": {
+      "sound": "blacksouls2music:music_track_181",
+      "durationSeconds": 123.561,
+      "sourceFile": "混沌２８.ogg"
+    },
+    "混沌２９": {
+      "sound": "blacksouls2music:music_track_182",
+      "durationSeconds": 89.798,
+      "sourceFile": "混沌２９.ogg"
+    },
+    "混沌３": {
+      "sound": "blacksouls2music:music_track_183",
+      "durationSeconds": 92.579,
+      "sourceFile": "混沌３.ogg"
+    },
+    "混沌３０": {
+      "sound": "blacksouls2music:music_track_184",
+      "durationSeconds": 107.6,
+      "sourceFile": "混沌３０.ogg"
+    },
+    "混沌３１": {
+      "sound": "blacksouls2music:music_track_185",
+      "durationSeconds": 49.293,
+      "sourceFile": "混沌３１.ogg"
+    },
+    "混沌３２": {
+      "sound": "blacksouls2music:music_track_186",
+      "durationSeconds": 187.455,
+      "sourceFile": "混沌３２.ogg"
+    },
+    "混沌３３": {
+      "sound": "blacksouls2music:music_track_187",
+      "durationSeconds": 87.327,
+      "sourceFile": "混沌３３.ogg"
+    },
+    "混沌３４": {
+      "sound": "blacksouls2music:music_track_188",
+      "durationSeconds": 138.867,
+      "sourceFile": "混沌３４.ogg"
+    },
+    "混沌３５": {
+      "sound": "blacksouls2music:music_track_189",
+      "durationSeconds": 115.069,
+      "sourceFile": "混沌３５.ogg"
+    },
+    "混沌３６": {
+      "sound": "blacksouls2music:music_track_190",
+      "durationSeconds": 67.729,
+      "sourceFile": "混沌３６.ogg"
+    },
+    "混沌３７": {
+      "sound": "blacksouls2music:music_track_191",
+      "durationSeconds": 104.4,
+      "sourceFile": "混沌３７.ogg"
+    },
+    "混沌３８": {
+      "sound": "blacksouls2music:music_track_192",
+      "durationSeconds": 151.8,
+      "sourceFile": "混沌３８.ogg"
+    },
+    "混沌３９": {
+      "sound": "blacksouls2music:music_track_193",
+      "durationSeconds": 80.562,
+      "sourceFile": "混沌３９.ogg"
+    },
+    "混沌４": {
+      "sound": "blacksouls2music:music_track_194",
+      "durationSeconds": 46.08,
+      "sourceFile": "混沌４.ogg"
+    },
+    "混沌４０": {
+      "sound": "blacksouls2music:music_track_195",
+      "durationSeconds": 115.931,
+      "sourceFile": "混沌４０.ogg"
+    },
+    "混沌４１": {
+      "sound": "blacksouls2music:music_track_196",
+      "durationSeconds": 78.054,
+      "sourceFile": "混沌４１.ogg"
+    },
+    "混沌４２": {
+      "sound": "blacksouls2music:music_track_197",
+      "durationSeconds": 77.375,
+      "sourceFile": "混沌４２.ogg"
+    },
+    "混沌４３": {
+      "sound": "blacksouls2music:music_track_198",
+      "durationSeconds": 87.72,
+      "sourceFile": "混沌４３.ogg"
+    },
+    "混沌４４": {
+      "sound": "blacksouls2music:music_track_199",
+      "durationSeconds": 137.012,
+      "sourceFile": "混沌４４.ogg"
+    },
+    "混沌４５": {
+      "sound": "blacksouls2music:music_track_200",
+      "durationSeconds": 72.984,
+      "sourceFile": "混沌４５.ogg"
+    },
+    "混沌５": {
+      "sound": "blacksouls2music:music_track_201",
+      "durationSeconds": 271.621,
+      "sourceFile": "混沌５.ogg"
+    },
+    "混沌６": {
+      "sound": "blacksouls2music:music_track_202",
+      "durationSeconds": 118.415,
+      "sourceFile": "混沌６.ogg"
+    },
+    "混沌７": {
+      "sound": "blacksouls2music:music_track_203",
+      "durationSeconds": 114.051,
+      "sourceFile": "混沌７.ogg"
+    },
+    "混沌８": {
+      "sound": "blacksouls2music:music_track_204",
+      "durationSeconds": 66.787,
+      "sourceFile": "混沌８.ogg"
+    },
+    "混沌９": {
+      "sound": "blacksouls2music:music_track_205",
+      "durationSeconds": 66.5,
+      "sourceFile": "混沌９.ogg"
+    },
+    "無限": {
+      "sound": "blacksouls2music:music_track_206",
+      "durationSeconds": 127.295,
+      "sourceFile": "無限.ogg"
+    },
+    "無限食物": {
+      "sound": "blacksouls2music:music_track_207",
+      "durationSeconds": 178.442,
+      "sourceFile": "無限食物.ogg"
+    },
+    "燻り": {
+      "sound": "blacksouls2music:music_track_208",
+      "durationSeconds": 66.357,
+      "sourceFile": "燻り.ogg"
+    },
+    "狂気山脈": {
+      "sound": "blacksouls2music:music_track_209",
+      "durationSeconds": 115.107,
+      "sourceFile": "狂気山脈.ogg"
+    },
+    "狂霊": {
+      "sound": "blacksouls2music:music_track_210",
+      "durationSeconds": 224.537,
+      "sourceFile": "狂霊.ogg"
+    },
+    "王立公園": {
+      "sound": "blacksouls2music:music_track_211",
+      "durationSeconds": 63.984,
+      "sourceFile": "王立公園.ogg"
+    },
+    "異世界": {
+      "sound": "blacksouls2music:music_track_212",
+      "durationSeconds": 24.89,
+      "sourceFile": "異世界.ogg"
+    },
+    "白一角獣": {
+      "sound": "blacksouls2music:music_track_213",
+      "durationSeconds": 103.29,
+      "sourceFile": "白一角獣.ogg"
+    },
+    "白獅子": {
+      "sound": "blacksouls2music:music_track_214",
+      "durationSeconds": 295.68,
+      "sourceFile": "白獅子.ogg"
+    },
+    "秘密": {
+      "sound": "blacksouls2music:music_track_215",
+      "durationSeconds": 103.059,
+      "sourceFile": "秘密.ogg"
+    },
+    "精神病棟": {
+      "sound": "blacksouls2music:music_track_216",
+      "durationSeconds": 118.152,
+      "sourceFile": "精神病棟.ogg"
+    },
+    "紅": {
+      "sound": "blacksouls2music:music_track_217",
+      "durationSeconds": 238.211,
+      "sourceFile": "紅.ogg"
+    },
+    "紅城": {
+      "sound": "blacksouls2music:music_track_218",
+      "durationSeconds": 114.599,
+      "sourceFile": "紅城.ogg"
+    },
+    "紅２": {
+      "sound": "blacksouls2music:music_track_219",
+      "durationSeconds": 124.056,
+      "sourceFile": "紅２.ogg"
+    },
+    "終わらないお茶会": {
+      "sound": "blacksouls2music:music_track_220",
+      "durationSeconds": 43.631,
+      "sourceFile": "終わらないお茶会.ogg"
+    },
+    "緑の妖精": {
+      "sound": "blacksouls2music:music_track_221",
+      "durationSeconds": 215.092,
+      "sourceFile": "緑の妖精.ogg"
+    },
+    "肉屋": {
+      "sound": "blacksouls2music:music_track_222",
+      "durationSeconds": 126.078,
+      "sourceFile": "肉屋.ogg"
+    },
+    "胞子の森": {
+      "sound": "blacksouls2music:music_track_223",
+      "durationSeconds": 132.384,
+      "sourceFile": "胞子の森.ogg"
+    },
+    "脱衣トランプ": {
+      "sound": "blacksouls2music:music_track_224",
+      "durationSeconds": 62.0,
+      "sourceFile": "脱衣トランプ.ogg"
+    },
+    "芋虫": {
+      "sound": "blacksouls2music:music_track_225",
+      "durationSeconds": 250.241,
+      "sourceFile": "芋虫.ogg"
+    },
+    "花のワルツ": {
+      "sound": "blacksouls2music:music_track_226",
+      "durationSeconds": 424.28,
+      "sourceFile": "花のワルツ.wav"
+    },
+    "蛇神": {
+      "sound": "blacksouls2music:music_track_227",
+      "durationSeconds": 105.6,
+      "sourceFile": "蛇神.ogg"
+    },
+    "血涙": {
+      "sound": "blacksouls2music:music_track_228",
+      "durationSeconds": 75.0,
+      "sourceFile": "血涙.ogg"
+    },
+    "裏ボス": {
+      "sound": "blacksouls2music:music_track_229",
+      "durationSeconds": 92.156,
+      "sourceFile": "裏ボス.ogg"
+    },
+    "裏ボス２": {
+      "sound": "blacksouls2music:music_track_230",
+      "durationSeconds": 259.584,
+      "sourceFile": "裏ボス２.ogg"
+    },
+    "裏ボス３": {
+      "sound": "blacksouls2music:music_track_231",
+      "durationSeconds": 91.059,
+      "sourceFile": "裏ボス３.ogg"
+    },
+    "裏ボス４": {
+      "sound": "blacksouls2music:music_track_232",
+      "durationSeconds": 134.428,
+      "sourceFile": "裏ボス４.ogg"
+    },
+    "裏ボス５": {
+      "sound": "blacksouls2music:music_track_233",
+      "durationSeconds": 558.22,
+      "sourceFile": "裏ボス５.ogg"
+    },
+    "裏ボス６": {
+      "sound": "blacksouls2music:music_track_234",
+      "durationSeconds": 452.728,
+      "sourceFile": "裏ボス６.ogg"
+    },
+    "裏ボス７": {
+      "sound": "blacksouls2music:music_track_235",
+      "durationSeconds": 140.932,
+      "sourceFile": "裏ボス７.ogg"
+    },
+    "裏ボス８": {
+      "sound": "blacksouls2music:music_track_236",
+      "durationSeconds": 141.455,
+      "sourceFile": "裏ボス８.ogg"
+    },
+    "裏ルート": {
+      "sound": "blacksouls2music:music_track_237",
+      "durationSeconds": 187.899,
+      "sourceFile": "裏ルート.ogg"
+    },
+    "豆腐": {
+      "sound": "blacksouls2music:music_track_238",
+      "durationSeconds": 53.055,
+      "sourceFile": "豆腐.ogg"
+    },
+    "赤": {
+      "sound": "blacksouls2music:music_track_239",
+      "durationSeconds": 91.2,
+      "sourceFile": "赤.ogg"
+    },
+    "赤い部屋": {
+      "sound": "blacksouls2music:music_track_240",
+      "durationSeconds": 91.298,
+      "sourceFile": "赤い部屋.ogg"
+    },
+    "酒場": {
+      "sound": "blacksouls2music:music_track_241",
+      "durationSeconds": 107.572,
+      "sourceFile": "酒場.ogg"
+    },
+    "門兵": {
+      "sound": "blacksouls2music:music_track_242",
+      "durationSeconds": 67.784,
+      "sourceFile": "門兵.ogg"
+    },
+    "雪の王国": {
+      "sound": "blacksouls2music:music_track_243",
+      "durationSeconds": 115.722,
+      "sourceFile": "雪の王国.ogg"
+    },
+    "静寂の雪": {
+      "sound": "blacksouls2music:music_track_244",
+      "durationSeconds": 92.656,
+      "sourceFile": "静寂の雪.ogg"
+    },
+    "館": {
+      "sound": "blacksouls2music:music_track_245",
+      "durationSeconds": 123.048,
+      "sourceFile": "館.ogg"
+    },
+    "首狩り": {
+      "sound": "blacksouls2music:music_track_246",
+      "durationSeconds": 74.527,
+      "sourceFile": "首狩り.ogg"
+    },
+    "魚市場": {
+      "sound": "blacksouls2music:music_track_247",
+      "durationSeconds": 198.06,
+      "sourceFile": "魚市場.ogg"
+    },
+    "鷲獅子": {
+      "sound": "blacksouls2music:music_track_248",
+      "durationSeconds": 304.414,
+      "sourceFile": "鷲獅子.ogg"
+    },
+    "黒": {
+      "sound": "blacksouls2music:music_track_249",
+      "durationSeconds": 153.578,
+      "sourceFile": "黒.ogg"
+    },
+    "黒の裁判": {
+      "sound": "blacksouls2music:music_track_250",
+      "durationSeconds": 114.887,
+      "sourceFile": "黒の裁判.ogg"
+    }
+  },
+  "se": {
+    "Absorb1": {
+      "sound": "blacksouls:absorb1",
+      "sourceFile": "Absorb1.ogg"
+    },
+    "Attack3": {
+      "sound": "blacksouls:attack3",
+      "sourceFile": "Attack3.ogg"
+    },
+    "Battle3": {
+      "sound": "blacksouls:battle3",
+      "sourceFile": "Battle3.ogg"
+    },
+    "Blind": {
+      "sound": "blacksouls:blind",
+      "sourceFile": "Blind.ogg"
+    },
+    "Blow1": {
+      "sound": "blacksouls:blow1",
+      "sourceFile": "Blow1.ogg"
+    },
+    "Blow2": {
+      "sound": "blacksouls:blow2",
+      "sourceFile": "Blow2.ogg"
+    },
+    "Blow3": {
+      "sound": "blacksouls:blow3",
+      "sourceFile": "Blow3.ogg"
+    },
+    "Blow4": {
+      "sound": "blacksouls:blow4",
+      "sourceFile": "Blow4.ogg"
+    },
+    "Blow5": {
+      "sound": "blacksouls:blow5",
+      "sourceFile": "Blow5.ogg"
+    },
+    "Blow6": {
+      "sound": "blacksouls:blow6",
+      "sourceFile": "Blow6.ogg"
+    },
+    "Blow7": {
+      "sound": "blacksouls:blow7",
+      "sourceFile": "Blow7.ogg"
+    },
+    "Bow1": {
+      "sound": "blacksouls:bow1",
+      "sourceFile": "Bow1.ogg"
+    },
+    "Bow2": {
+      "sound": "blacksouls:bow2",
+      "sourceFile": "Bow2.ogg"
+    },
+    "Bow4": {
+      "sound": "blacksouls:bow4",
+      "sourceFile": "Bow4.ogg"
+    },
+    "Break": {
+      "sound": "blacksouls:break",
+      "sourceFile": "Break.ogg"
+    },
+    "Collapse2": {
+      "sound": "blacksouls:collapse2",
+      "sourceFile": "Collapse2.ogg"
+    },
+    "Collapse4": {
+      "sound": "blacksouls:turn_boss_collapse_loop",
+      "sourceFile": "Collapse4.ogg"
+    },
+    "Crash": {
+      "sound": "blacksouls:crash",
+      "sourceFile": "Crash.ogg"
+    },
+    "Cursor1": {
+      "sound": "blacksouls:cursor1",
+      "sourceFile": "Cursor1.ogg"
+    },
+    "Damage1": {
+      "sound": "blacksouls:turn_enemy_damage",
+      "sourceFile": "Damage1.ogg"
+    },
+    "Damage2": {
+      "sound": "blacksouls:damage2",
+      "sourceFile": "Damage2.ogg"
+    },
+    "Damage4": {
+      "sound": "blacksouls:damage4",
+      "sourceFile": "Damage4.ogg"
+    },
+    "Darkness1": {
+      "sound": "blacksouls:darkness1",
+      "sourceFile": "Darkness1.ogg"
+    },
+    "Darkness3": {
+      "sound": "blacksouls:darkness3",
+      "sourceFile": "Darkness3.ogg"
+    },
+    "Darkness4": {
+      "sound": "blacksouls:darkness4",
+      "sourceFile": "Darkness4.ogg"
+    },
+    "Darkness5": {
+      "sound": "blacksouls:darkness5",
+      "sourceFile": "Darkness5.ogg"
+    },
+    "Darkness6": {
+      "sound": "blacksouls:darkness6",
+      "sourceFile": "Darkness6.ogg"
+    },
+    "Darkness7": {
+      "sound": "blacksouls:darkness7",
+      "sourceFile": "Darkness7.ogg"
+    },
+    "Darkness8": {
+      "sound": "blacksouls:darkness8",
+      "sourceFile": "Darkness8.ogg"
+    },
+    "Dive": {
+      "sound": "blacksouls:dive",
+      "sourceFile": "Dive.ogg"
+    },
+    "Down2": {
+      "sound": "blacksouls:down2",
+      "sourceFile": "Down2.ogg"
+    },
+    "Earth1": {
+      "sound": "blacksouls:earth1",
+      "sourceFile": "Earth1.ogg"
+    },
+    "Earth2": {
+      "sound": "blacksouls:earth2",
+      "sourceFile": "Earth2.ogg"
+    },
+    "Earth5": {
+      "sound": "blacksouls:earth5",
+      "sourceFile": "Earth5.ogg"
+    },
+    "Earth6": {
+      "sound": "blacksouls:earth6",
+      "sourceFile": "Earth6.ogg"
+    },
+    "Equip1": {
+      "sound": "blacksouls:equip1",
+      "sourceFile": "Equip1.ogg"
+    },
+    "Evasion1": {
+      "sound": "blacksouls:evasion1",
+      "sourceFile": "Evasion1.ogg"
+    },
+    "Evasion2": {
+      "sound": "blacksouls:evasion2",
+      "sourceFile": "Evasion2.ogg"
+    },
+    "Explosion2": {
+      "sound": "blacksouls:explosion2",
+      "sourceFile": "Explosion2.ogg"
+    },
+    "Explosion3": {
+      "sound": "blacksouls:explosion3",
+      "sourceFile": "Explosion3.ogg"
+    },
+    "Fire1": {
+      "sound": "blacksouls:fire1",
+      "sourceFile": "Fire1.ogg"
+    },
+    "Fire2": {
+      "sound": "blacksouls:fire2",
+      "sourceFile": "Fire2.ogg"
+    },
+    "Fire3": {
+      "sound": "blacksouls:fire3",
+      "sourceFile": "Fire3.ogg"
+    },
+    "Fire4": {
+      "sound": "blacksouls:fire4",
+      "sourceFile": "Fire4.ogg"
+    },
+    "Fire6": {
+      "sound": "blacksouls:fire6",
+      "sourceFile": "Fire6.ogg"
+    },
+    "Fire7": {
+      "sound": "blacksouls:fire7",
+      "sourceFile": "Fire7.ogg"
+    },
+    "Fire8": {
+      "sound": "blacksouls:fire8",
+      "sourceFile": "Fire8.ogg"
+    },
+    "Flash1": {
+      "sound": "blacksouls:flash1",
+      "sourceFile": "Flash1.ogg"
+    },
+    "Flash3": {
+      "sound": "blacksouls:flash3",
+      "sourceFile": "Flash3.ogg"
+    },
+    "Fog1": {
+      "sound": "blacksouls:fog1",
+      "sourceFile": "Fog1.ogg"
+    },
+    "Fog2": {
+      "sound": "blacksouls:fog2",
+      "sourceFile": "Fog2.ogg"
+    },
+    "Gun1": {
+      "sound": "blacksouls:gun1",
+      "sourceFile": "Gun1.ogg"
+    },
+    "Gun2": {
+      "sound": "blacksouls:gun2",
+      "sourceFile": "Gun2.ogg"
+    },
+    "Heal4": {
+      "sound": "blacksouls:heal4",
+      "sourceFile": "Heal4.ogg"
+    },
+    "Ice1": {
+      "sound": "blacksouls:ice1",
+      "sourceFile": "Ice1.ogg"
+    },
+    "Ice11": {
+      "sound": "blacksouls:ice11",
+      "sourceFile": "Ice11.ogg"
+    },
+    "Ice2": {
+      "sound": "blacksouls:ice2",
+      "sourceFile": "Ice2.ogg"
+    },
+    "Ice4": {
+      "sound": "blacksouls:ice4",
+      "sourceFile": "Ice4.ogg"
+    },
+    "Ice7": {
+      "sound": "blacksouls:ice7",
+      "sourceFile": "Ice7.ogg"
+    },
+    "Ice8": {
+      "sound": "blacksouls:ice8",
+      "sourceFile": "Ice8.ogg"
+    },
+    "Item1": {
+      "sound": "blacksouls:item1",
+      "sourceFile": "Item1.ogg"
+    },
+    "Item3": {
+      "sound": "blacksouls:item3",
+      "sourceFile": "Item3.ogg"
+    },
+    "Key": {
+      "sound": "blacksouls:key",
+      "sourceFile": "Key.ogg"
+    },
+    "MBJH_ME03": {
+      "sound": "blacksouls:mbjh_me03",
+      "sourceFile": "MBJH_ME03.ogg"
+    },
+    "MBJH_SE_Knockitdown": {
+      "sound": "blacksouls:turn_boss_collapse_start",
+      "sourceFile": "MBJH_SE_Knockitdown.ogg"
+    },
+    "MBJH_SE_Laughter_boy2": {
+      "sound": "blacksouls:shortcut_laughter",
+      "sourceFile": "MBJH_SE_Laughter_boy2.ogg"
+    },
+    "Magic1": {
+      "sound": "blacksouls:magic1",
+      "sourceFile": "Magic1.ogg"
+    },
+    "Magic2": {
+      "sound": "blacksouls:magic2",
+      "sourceFile": "Magic2.ogg"
+    },
+    "Magic4": {
+      "sound": "blacksouls:magic4",
+      "sourceFile": "Magic4.ogg"
+    },
+    "Magic5": {
+      "sound": "blacksouls:magic5",
+      "sourceFile": "Magic5.ogg"
+    },
+    "Magic7": {
+      "sound": "blacksouls:magic7",
+      "sourceFile": "Magic7.ogg"
+    },
+    "Monster1": {
+      "sound": "blacksouls:monster1",
+      "sourceFile": "Monster1.ogg"
+    },
+    "Monster4": {
+      "sound": "blacksouls:monster4",
+      "sourceFile": "Monster4.ogg"
+    },
+    "Open1": {
+      "sound": "blacksouls:shortcut_open",
+      "sourceFile": "Open1.ogg"
+    },
+    "Poison": {
+      "sound": "blacksouls:poison",
+      "sourceFile": "Poison.ogg"
+    },
+    "Pollen": {
+      "sound": "blacksouls:pollen",
+      "sourceFile": "Pollen.ogg"
+    },
+    "Push": {
+      "sound": "blacksouls:push",
+      "sourceFile": "Push.ogg"
+    },
+    "Raise1": {
+      "sound": "blacksouls:raise1",
+      "sourceFile": "Raise1.ogg"
+    },
+    "Raise3": {
+      "sound": "blacksouls:raise3",
+      "sourceFile": "Raise3.ogg"
+    },
+    "Saint3": {
+      "sound": "blacksouls:saint3",
+      "sourceFile": "Saint3.ogg"
+    },
+    "Saint4": {
+      "sound": "blacksouls:saint4",
+      "sourceFile": "Saint4.ogg"
+    },
+    "Saint6": {
+      "sound": "blacksouls:saint6",
+      "sourceFile": "Saint6.ogg"
+    },
+    "Saint7": {
+      "sound": "blacksouls:saint7",
+      "sourceFile": "Saint7.ogg"
+    },
+    "Saint8": {
+      "sound": "blacksouls:saint8",
+      "sourceFile": "Saint8.ogg"
+    },
+    "Saint9": {
+      "sound": "blacksouls:saint9",
+      "sourceFile": "Saint9.ogg"
+    },
+    "Sand": {
+      "sound": "blacksouls:sand",
+      "sourceFile": "Sand.ogg"
+    },
+    "Silence": {
+      "sound": "blacksouls:silence",
+      "sourceFile": "Silence.ogg"
+    },
+    "Skill1": {
+      "sound": "blacksouls:skill1",
+      "sourceFile": "Skill1.ogg"
+    },
+    "Skill2": {
+      "sound": "blacksouls:skill2",
+      "sourceFile": "Skill2.ogg"
+    },
+    "Skill3": {
+      "sound": "blacksouls:skill3",
+      "sourceFile": "Skill3.ogg"
+    },
+    "Slash1": {
+      "sound": "blacksouls:slash1",
+      "sourceFile": "Slash1.ogg"
+    },
+    "Slash10": {
+      "sound": "blacksouls:slash10",
+      "sourceFile": "Slash10.ogg"
+    },
+    "Slash11": {
+      "sound": "blacksouls:slash11",
+      "sourceFile": "Slash11.ogg"
+    },
+    "Slash12": {
+      "sound": "blacksouls:slash12",
+      "sourceFile": "Slash12.ogg"
+    },
+    "Slash2": {
+      "sound": "blacksouls:slash2",
+      "sourceFile": "Slash2.ogg"
+    },
+    "Slash3": {
+      "sound": "blacksouls:slash3",
+      "sourceFile": "Slash3.ogg"
+    },
+    "Slash4": {
+      "sound": "blacksouls:slash4",
+      "sourceFile": "Slash4.ogg"
+    },
+    "Slash5": {
+      "sound": "blacksouls:slash5",
+      "sourceFile": "Slash5.ogg"
+    },
+    "Slash6": {
+      "sound": "blacksouls:slash6",
+      "sourceFile": "Slash6.ogg"
+    },
+    "Slash7": {
+      "sound": "blacksouls:slash7",
+      "sourceFile": "Slash7.ogg"
+    },
+    "Slash8": {
+      "sound": "blacksouls:slash8",
+      "sourceFile": "Slash8.ogg"
+    },
+    "Slash9": {
+      "sound": "blacksouls:slash9",
+      "sourceFile": "Slash9.ogg"
+    },
+    "Switch2": {
+      "sound": "blacksouls:switch2",
+      "sourceFile": "Switch2.ogg"
+    },
+    "Sword1": {
+      "sound": "blacksouls:sword1",
+      "sourceFile": "Sword1.ogg"
+    },
+    "Sword2": {
+      "sound": "blacksouls:sword2",
+      "sourceFile": "Sword2.ogg"
+    },
+    "Sword3": {
+      "sound": "blacksouls:sword3",
+      "sourceFile": "Sword3.ogg"
+    },
+    "Sword4": {
+      "sound": "blacksouls:sword4",
+      "sourceFile": "Sword4.ogg"
+    },
+    "Sword5": {
+      "sound": "blacksouls:sword5",
+      "sourceFile": "Sword5.ogg"
+    },
+    "Teleport": {
+      "sound": "blacksouls:teleport",
+      "sourceFile": "Teleport.ogg"
+    },
+    "Thunder1": {
+      "sound": "blacksouls:thunder1",
+      "sourceFile": "Thunder1.ogg"
+    },
+    "Thunder10": {
+      "sound": "blacksouls:thunder10",
+      "sourceFile": "Thunder10.ogg"
+    },
+    "Thunder5": {
+      "sound": "blacksouls:thunder5",
+      "sourceFile": "Thunder5.ogg"
+    },
+    "Thunder6": {
+      "sound": "blacksouls:thunder6",
+      "sourceFile": "Thunder6.ogg"
+    },
+    "Thunder7": {
+      "sound": "blacksouls:thunder7",
+      "sourceFile": "Thunder7.ogg"
+    },
+    "Thunder8": {
+      "sound": "blacksouls:thunder8",
+      "sourceFile": "Thunder8.ogg"
+    },
+    "Thunder9": {
+      "sound": "blacksouls:thunder9",
+      "sourceFile": "Thunder9.ogg"
+    },
+    "Twine": {
+      "sound": "blacksouls:twine",
+      "sourceFile": "Twine.ogg"
+    },
+    "Up1": {
+      "sound": "blacksouls:up1",
+      "sourceFile": "Up1.ogg"
+    },
+    "Up4": {
+      "sound": "blacksouls:up4",
+      "sourceFile": "Up4.ogg"
+    },
+    "Water1": {
+      "sound": "blacksouls:water1",
+      "sourceFile": "Water1.ogg"
+    },
+    "Water6": {
+      "sound": "blacksouls:water6",
+      "sourceFile": "Water6.ogg"
+    },
+    "Wind1": {
+      "sound": "blacksouls:wind1",
+      "sourceFile": "Wind1.ogg"
+    },
+    "Wind10": {
+      "sound": "blacksouls:wind10",
+      "sourceFile": "Wind10.ogg"
+    },
+    "Wind2": {
+      "sound": "blacksouls:wind2",
+      "sourceFile": "Wind2.ogg"
+    },
+    "Wind5": {
+      "sound": "blacksouls:wind5",
+      "sourceFile": "Wind5.ogg"
+    },
+    "Wind6": {
+      "sound": "blacksouls:wind6",
+      "sourceFile": "Wind6.ogg"
+    },
+    "Wind7": {
+      "sound": "blacksouls:wind7",
+      "sourceFile": "Wind7.ogg"
+    },
+    "Wind8": {
+      "sound": "blacksouls:wind8",
+      "sourceFile": "Wind8.ogg"
+    },
+    "ドアノブ（がちゃがちゃ）02": {
+      "sound": "blacksouls:lock_rattle",
+      "sourceFile": "ドアノブ（がちゃがちゃ）02.ogg"
+    },
+    "幻聴６  ": {
+      "sound": "blacksouls:gran_hallucination",
+      "sourceFile": "幻聴６  .ogg"
+    },
+    "心音": {
+      "sound": "blacksouls:heartbeat",
+      "sourceFile": "心音.ogg"
+    },
+    "猫２": {
+      "sound": "blacksouls:original_cheshire_cat_2",
+      "sourceFile": "猫２.mp3"
+    },
+    "猫３": {
+      "sound": "blacksouls:original_cheshire_cat_3",
+      "sourceFile": "猫３.mp3"
+    },
+    "猫４": {
+      "sound": "blacksouls:original_cheshire_cat_4",
+      "sourceFile": "猫４.mp3"
+    },
+    "猫６": {
+      "sound": "blacksouls:original_cheshire_cat_6",
+      "sourceFile": "猫６.mp3"
+    },
+    "猫８": {
+      "sound": "blacksouls:original_cheshire_cat_8",
+      "sourceFile": "猫８.mp3"
+    },
+    "Book2": {
+      "sound": "blacksouls:book2",
+      "sourceFile": "Book2.ogg"
+    },
+    "Explosion1": {
+      "sound": "blacksouls:explosion1",
+      "sourceFile": "Explosion1.ogg"
+    },
+    "MBJH_SE_Laughter_boy4": {
+      "sound": "blacksouls:mbjh_se_laughter_boy4",
+      "sourceFile": "MBJH_SE_Laughter_boy4.ogg"
+    }
+  }
+}

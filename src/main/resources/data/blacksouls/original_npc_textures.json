@@ -1,0 +1,2069 @@
+{
+  "characters": {
+    "!$Shadow-Mirror-Parts1(Ace)": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_376ce7682b500979.png",
+      "width": 96,
+      "height": 256,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 64
+    },
+    "!$_トランプ兵2": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_ac2120fc9dad0de1.png",
+      "width": 96,
+      "height": 160,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 40
+    },
+    "!$_トランプ兵3": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_8967f53af1193606.png",
+      "width": 96,
+      "height": 160,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 40
+    },
+    "!$_蛇神": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_8a1538e07c6be81c.png",
+      "width": 180,
+      "height": 3000,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 60,
+      "frameHeight": 750
+    },
+    "!$_衛兵人形": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_f1825908c43315d7.png",
+      "width": 96,
+      "height": 160,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 40
+    },
+    "!$_衛兵人形２": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_5d1d5399cda6ed42.png",
+      "width": 96,
+      "height": 160,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 40
+    },
+    "!$かぼちゃおばけ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_fa4fea52905777df.png",
+      "width": 96,
+      "height": 180,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 45
+    },
+    "!$かぼちゃオー": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_5b10fdee557c317b.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "!$シヨ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_415bb6436d0de255.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "!$子鹿": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_f169285e09f8fad3.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "!$船乗り": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_e7d531703dda14cf.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "!Flame": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_a016eef422c71f28.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "!Map1_a": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_09c0fcc3020a8ce7.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "!Other3": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_2058cc31f484a3bb.png",
+      "width": 384,
+      "height": 512,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 64
+    },
+    "$7797207": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_e82d59877e66af8b.png",
+      "width": 144,
+      "height": 192,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 48,
+      "frameHeight": 48
+    },
+    "$BigMonster2": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_08d2651bb68aa71d.png",
+      "width": 240,
+      "height": 320,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 80,
+      "frameHeight": 80
+    },
+    "$duck": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_20f37479d6315ba1.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$largeocto_head": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_83d08e7219745078.png",
+      "width": 288,
+      "height": 384,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "$largeocto_tenticles": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_5a374d7a89c840b5.png",
+      "width": 144,
+      "height": 384,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 48,
+      "frameHeight": 96
+    },
+    "$risu": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_25ae46a8ef31cc8b.png",
+      "width": 72,
+      "height": 96,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 24,
+      "frameHeight": 24
+    },
+    "$うさぎ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_573090ae315d54c1.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$うさぎ騎士": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_3d54ef5d2250e14a.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$かに": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_d05eec7798deaa1e.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$ちわわ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_530a8d5a5baf40d5.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$にわとり": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_0702287dd2d2fca0.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$ねずみ魔法使い": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_88af590867fcf55c.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$アライグマ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_3394d6583c3da861.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$アリス": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_0684c08d427edd33.png",
+      "width": 96,
+      "height": 136,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 34
+    },
+    "$アリス2": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_e9ee271d440de834.png",
+      "width": 96,
+      "height": 136,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 34
+    },
+    "$カキ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_03fef602a91f08c0.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$ガンマン": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_115e612f648b522e.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$クティ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_aa63bf15d1cb8477.png",
+      "width": 96,
+      "height": 136,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 34
+    },
+    "$ゲルダ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_54469ac3f6aec1bc.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$ゲルダ2": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_ba99d009a674f767.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$ジャバ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_dece08455e2ec382.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$ジャブジャブ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_d6a6992569218c3d.png",
+      "width": 192,
+      "height": 256,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 64,
+      "frameHeight": 64
+    },
+    "$チェシャ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_2e6acee09e954ba1.png",
+      "width": 132,
+      "height": 192,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 44,
+      "frameHeight": 48
+    },
+    "$ドド": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_3a796fbeeb4c1632.png",
+      "width": 100,
+      "height": 160,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 33,
+      "frameHeight": 40
+    },
+    "$ノーデ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_57de3799778bb311.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$ハイン": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_d8fb478302a55d7c.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$ハインリヒ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_eecb487f6f9a62b0.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$ハンプティ２": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_409e4148d8cc5897.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$バッタ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_e4e28ce7dc0e81cc.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$バニー": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_f38ae9c92bd79c33.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$ビクトリア": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_68debe6b88e78145.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$ビースト": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_ea600acb3c1c5fc4.png",
+      "width": 180,
+      "height": 240,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 60,
+      "frameHeight": 60
+    },
+    "$ピエロ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_13c957b028fef2c7.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$フローレンス": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_376eb03f3c6f68c2.png",
+      "width": 89,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 29,
+      "frameHeight": 32
+    },
+    "$ブラックウェル": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_acb63b791256b55b.png",
+      "width": 96,
+      "height": 192,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 48
+    },
+    "$ホームズ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_373d26f2c71c668f.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$ポロ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_0ecc2d2d4ebf0cac.png",
+      "width": 204,
+      "height": 192,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 68,
+      "frameHeight": 48
+    },
+    "$メアリー": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_c4d1d501455f61a7.png",
+      "width": 150,
+      "height": 168,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 50,
+      "frameHeight": 42
+    },
+    "$メイベル": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_36b4b0bc95e775a4.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$メイベル2": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_4253cd8fa8102bbc.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$メリフィリア": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_112831ec06eadf21.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$ユニス": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_99bb3cd4ebab8298.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$ライデン": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_30a39418eb4d38d7.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$ロリーナ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_4b3a4644a74ceb34.png",
+      "width": 115,
+      "height": 145,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 38,
+      "frameHeight": 36
+    },
+    "$ロルド": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_1fbbbea2436e5800.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$三月ウサギ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_b7ea7718ef57c39f.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$主人公": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_a46f6a858d406047.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$公爵夫人": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_fbc37a5cff5f502f.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$帽子屋": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_0f2a5fd53baa2af2.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$時計２": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_5609f32837f4dad9.png",
+      "width": 96,
+      "height": 256,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 64
+    },
+    "$紅": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_ec2ed9872155d7c5.png",
+      "width": 96,
+      "height": 128,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$雪だる": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_78a2c7ac66577e3f.png",
+      "width": 144,
+      "height": 192,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 48,
+      "frameHeight": 48
+    },
+    "Actor2": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_d83b28151470ab36.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "Animal": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_702969446b27be1c.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "Evil": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_a8888ddcedb08cd6.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "Hexagram": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_c1d0de8f2987f250.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "J_Animal": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_0c57cbf114a57590.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "Monster1": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_d6825347147d4dec.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "Monster1_zorome": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_fdac4b13acd83537.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "People2": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_9a7751b86fbc6907.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "People4": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_80a451ba106e2cfe.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "animals2": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_2b147f46dc261ea6.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "fc_crusader": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_5280e68a538ace3f.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "fc_priestA_mageA_toku": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_f5688f3cc8ce39c2.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "o0732037611771025330": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_f833da1ec158497f.png",
+      "width": 732,
+      "height": 376,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 61,
+      "frameHeight": 47
+    },
+    "sittingowls": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_b12457a576c9d1f1.png",
+      "width": 576,
+      "height": 384,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 48,
+      "frameHeight": 48
+    },
+    "びっくりばこ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_38d219394427c9c6.png",
+      "width": 384,
+      "height": 512,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 64
+    },
+    "ぴえろ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_d03783419515e477.png",
+      "width": 576,
+      "height": 384,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 48,
+      "frameHeight": 48
+    },
+    "ぴえろ2": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_4ef984445043955d.png",
+      "width": 576,
+      "height": 768,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 48,
+      "frameHeight": 96
+    },
+    "もこ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_4d3404057a3f0ba9.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "ウミガメモドキ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_4aac07c4576515fe.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "カイ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_08494a002a1cd8c7.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "カルト2": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_4cdcb3d1cdc243cd.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "グリフィ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_a9fe13761f47beab.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "グール": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_3e4e193cf4e0cbca.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "グール２": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_55a490a5765a148e.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "ゴースト": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_6713d9e2699d4798.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "シーシャ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_6cbc901061b691e0.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "ジキル": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_2ad04eb129bc7d93.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "セイウチ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_6bc04c415241c6cb.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "トゥイードルダム": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_ea3bf27815d59e95.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "トゥイードルディー": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_f76a9d4bc1a9e934.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "バンスナ犠牲者": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_44f1635a83da0333.png",
+      "width": 384,
+      "height": 384,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 48
+    },
+    "バンダースナッチ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_23786e22160d8b02.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "ビル": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_374d6dff8fe939b0.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "ファラ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_52a93188a563b712.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "プリケット": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_6c721adc945264d4.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "ホテル": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_b201468ad27068da.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "モンスター7": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_26a1ee228b81a200.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "ランジェリーナ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_75bbd453c0afa47d.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "亡者": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_22a2d8a14b05ec19.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "人形": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_bb92bdd46c8c9695.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "兎": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_98f1a3bdbee6a445.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "従者": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_cb25defd2c89b67f.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "患者": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_af8ed8fc21399ffe.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "死体・血・サイン": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_7282f2a6d9b2ebb0.png",
+      "width": 384,
+      "height": 384,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 48
+    },
+    "熊": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_471e1952567f31e1.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "狩人": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_84c20fbfe1f4c957.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "獣人_r": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_f665520c74123889.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "目02": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_08539895a07f0225.png",
+      "width": 384,
+      "height": 576,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 72
+    },
+    "眠りネズミ": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_bd819640bbc1a9eb.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "素体": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_a67f2aa58904ba16.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "紳士": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_8f6d1a9ef41239cf.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "蛇神": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_c8cc0a3fa67831ba.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "馬": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_2a3a0e235f9ba2fd.png",
+      "width": 1152,
+      "height": 640,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 96,
+      "frameHeight": 80
+    }
+  },
+  "portraits": {
+    "8e81334d": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_aa02d21033107038.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "DS_Actor20": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_cb96f7507456171a.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "Evil": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_bdba073f39cb0f7a.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "baia": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_6b71c1e14ff01158.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "baia２": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_6b71c1e14ff01158.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "face071a": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_b23bc779cee952fa.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "face073b": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_cab0eb906325e33d.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "face079b": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_b8901ed8a28b3d6d.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "hain": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_1df493be47c9142f.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "hituzi": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_b90b9295d36b9629.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "me": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_ddb495a9c3f2b145.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "poro": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_978f87f974838936.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "うさぎ騎士": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_bba7c39fb71fa50d.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "にわとり": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_bcdc3b4c8b227445.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "にわとり狂": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_bcdc3b4c8b227445.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ねずみ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_8a47b7ccc677741f.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ねずみ狂": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_8a47b7ccc677741f.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ばにー": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_3d5bcbaf79acfe0a.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ばにー狂": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_3d5bcbaf79acfe0a.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ぱんぷ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_280da597a178694d.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "アリス・ドール": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_78e371ec39c4e64d.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "アリス・リデル": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_80dad0a90ffe8c66.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "アリス・リデル２": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_41d0f6d56e30bff5.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ウミガメ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_2d3c7fa9c5b17323.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "カイ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_7e9bcac71c7693e5.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "カキ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_794d621d0ba4ee48.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "カーナッキ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_cb96f7507456171a.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ガンマン": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_51710c4a56fddc3c.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ガンマン狂": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_51710c4a56fddc3c.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "クティ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_348612521aa1fc00.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "グリフィ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_176b30f987f403c1.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ゲルダ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_4b406430b67f0de0.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "シヨ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_4600828d2f19acf7.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "シロクマ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_44269b171fd22b7a.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "シヴーチ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_27716057982a61ae.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "シーシャ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_e92ef5c7a5caa117.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ジャバ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_0ddefdebb343f1c6.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ジャブ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_a804cc013093efac.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "チェシャ猫": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_085a3b1b435d5b69.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "チワワ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_5c5bf94d3283f21c.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "チワワ狂": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_5c5bf94d3283f21c.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "トゥダム": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_b3f3392b8372202f.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "トゥディ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_be3fe964435ea48a.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "トゥ双子": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_e46d57a1999fc219.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ドド": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_3480e9661d41254e.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ノーデ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_55e47080df791595.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ハインリヒ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_ab9cb6c4f88c56ae.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ハン２": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_fa25c6037507b98e.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "バッタ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_bff3a88637cdaba1.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "バン": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_2915671638890db4.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ビク": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_2675951e102afc5c.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ビル": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_7ab4f4a500f3e32d.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "フローレンス": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_8b3ef00ceae67ce8.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ブラ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_e6d0b8994700d713.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ブラ狂": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_aa492a4fc53b06b8.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "プリ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_fdf9d9fbbb7bb296.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ホテルエリザ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_cd296fb73008af5f.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ホテルエルマ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_37d0ed070ab3e410.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ホテルカタリナ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_26a00a0afe48b619.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ホテルグース": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_4606de1f82079d8e.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ホテルジャンヌ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_a89a86d7be181a2d.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ホテルドロシー": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_ec52e2d46c4f4a39.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ホテル人魚": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_71e61c3d62fc4602.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ホームズ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_721715207fc4ab5b.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ホームズ狂": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_721715207fc4ab5b.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "メアリー": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_6c19a3641329d149.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "メイベル": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_607c71d485cb5d3d.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ユニス": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_dbe21ab86c744843.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ライデン": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_6a78498e51c5da35.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ランジェ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_35dddf5b7637098d.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ロリーナ": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_892c71e4f7a372c8.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "ロルド": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_5190c8bf0f59e98f.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "三月兎": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_a4001f5052a3416d.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "公爵夫人": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_3d1759db6cc73361.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "帽子屋": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_1f40d50c557c02d4.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "影": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_fbfb38a5e72dd7ea.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "影2": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_ad49a24848697732.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "影3": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_620b43c2516387e4.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "影4": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_ff34cd5b67bbfeef.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "影5": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_3595f0a197453daa.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "眠り鼠": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_ce49f121b5b2c21c.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "眠り鼠2": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_d92132724b985d02.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "紅ずきん": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_d2af9de6d9abff35.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "蛇神": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_e68cdea8ba1e8f28.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    },
+    "魔獣": {
+      "texture": "blacksouls:textures/gui/avatars/original_npc/face_939355ab47018e17.png",
+      "width": 384,
+      "height": 192,
+      "columns": 4,
+      "rows": 2,
+      "frameWidth": 96,
+      "frameHeight": 96
+    }
+  },
+  "pictures": {},
+  "displayNames": {
+    "ahiru": "丑小鸭",
+    "ねずみ": "老鼠帕托",
+    "ねずみ狂": "鮠?縺ｮ繝代ャ繝",
+    "にわとり": "鸡肉君",
+    "にわとり狂": "繝医Μ繝九け",
+    "バッタ": "无礼者蝗虫",
+    "シロクマ": "白熊",
+    "hituzi": "老羊",
+    "baia": "店长",
+    "baia２": "Byakhee",
+    "チワワ": "基尔巴特军曹",
+    "チワワ狂": "繧ｮ繝ｫ繝舌?繝郁ｻ肴峪",
+    "ガンマン": "保安官沙利文",
+    "ガンマン狂": "菫晏ｮ牙ｮ倥し繝ｪ繝ｴ繧｡繝ｳ",
+    "へんぜる": "被诅咒的哥哥韩塞尔",
+    "ぐれーてる": "被诅咒的妹妹格蕾特",
+    "シンド": "海之王者辛巴达",
+    "ねこ": "魅惑之猫",
+    "いぬ": "虐杀之犬",
+    "にわ": "崇高之鸡",
+    "ろば": "沉默之驴",
+    "ぶれーめん": "不来梅的音乐队",
+    "はんす": "钢铁汉斯",
+    "ぱと": "吞噬生贽的帕托拉休",
+    "kata": "圣母卡塔丽娜",
+    "ほし": "小王子",
+    "娘アリス": "爱丽丝",
+    "妹アリス": "爱丽丝",
+    "母アリス": "爱丽丝",
+    "チェシャ猫": "柴郡猫",
+    "ノーデ": "白之兔诺登",
+    "紅ずきん": "小红帽",
+    "公爵夫人": "公爵夫人玛格丽塔・冯・蒂罗尔",
+    "帽子屋": "帽子屋哈塔",
+    "三月兎": "三月兔赫伊尔",
+    "眠り鼠": "睡鼠山眠",
+    "ロリーナ": "心脏女王罗丽娜",
+    "ウミガメ": "假海龟",
+    "グリフィ": "鹫狮子骑士格里菲",
+    "ドド": "愚鸟渡渡",
+    "ビル": "蜥蜴比尔",
+    "シーシャ": "芋虫希夏",
+    "プリ": "赤之偶像普利凯特",
+    "ハン": "矮胖子",
+    "ハン２": "Actor[63] ",
+    "トゥダム": "崔德尔・达姆",
+    "トゥディ": "崔德尔・蒂",
+    "バン": "熏烟狂躁的班达斯奈奇",
+    "ジャバ": "尸龙贾巴沃克",
+    "ジャブ": "狂鸟贾布加布",
+    "ビク": "女仆维多利雅",
+    "メアリー": "玛丽・安",
+    "ブラ": "医师布莱克威尔",
+    "ブラ狂": "蛹ｻ蟶ｫ繝悶Λ繝?け繧ｦ繧ｧ繝ｫ",
+    "ホームズ": "侦探福尔摩斯",
+    "ホームズ狂": "謗｢蛛ｵ繝帙?繝?繧ｺ",
+    "ばにー": "兔女郎玛丽",
+    "ばにー狂": "繝舌ル繝ｼ繧ｬ繝ｼ繝ｫ縺ｮ繝槭Μ繝ｼ",
+    "魔獣": "繝薙?繧ｹ繝",
+    "よろい": "穿着铠甲的骑士",
+    "ぱんぷ": "骑士南瓜・欧尔",
+    "ぱんぷ狂": "繝代Φ繝励く繝ｳ繝ｻ繧ｪ繝ｼ",
+    "doro": "魔女多萝茜",
+    "eriza": "拷问女王伊丽莎白",
+    "roba": "驴耳朵的国王",
+    "hain": "黑之列车长海因",
+    "あし": "长腿叔叔",
+    "うさぎ騎士": "兔骑士巴纳伊",
+    "ロビン": "罗宾・汉",
+    "アリス・リデル": "爱丽丝・利德尔",
+    "アリス・リデル２": "繧｢繝ｪ繧ｹ繝ｻ繝ｪ繝?Ν",
+    "ピーター": "彼得・潘",
+    "poro": "魄罗",
+    "眠り鼠2": "睡鼠山眠",
+    "シヴーチ": "溟海的捕食者希伏契",
+    "カキ": "嚣张的牡蛎",
+    "クティ": "秘密姬克缇",
+    "ピノッキオ": "傀儡子匹诺曹",
+    "ピノッキオ２": "人偶",
+    "me": "食尸鬼梅丽菲利亚",
+    "メイベル": "虚无的少女梅贝尔",
+    "蛇神": "蛇神",
+    "カーナッキ": "幽灵猎人卡纳奇",
+    "ロルド": "剧作家洛德",
+    "シヨ": "溶解王紫夜",
+    "ゲルダ": "雪之少女格尔达",
+    "ユニス": "白之独角兽尤妮丝",
+    "ライデン": "白狮子莱登",
+    "アリス・ドール": "人偶爱丽丝",
+    "ランジェ": "暴杀天使兰洁莉娜",
+    "フローレンス": "初代医院长弗洛伦斯",
+    "カイ": "雪之少年凯伊",
+    "リンダメア": "黑骑士琳达梅尔",
+    "ハインリヒ": "青蛙海因里希"
+  },
+  "missing": {
+    "characters": [
+      {
+        "name": "20120115101416a62",
+        "events": [
+          "map029_ev003"
+        ]
+      }
+    ],
+    "portraits": []
+  }
+}

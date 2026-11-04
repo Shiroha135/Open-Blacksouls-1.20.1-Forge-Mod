@@ -318,6 +318,12 @@
       }
     ]
   },
+  "saint4": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:saint4"
+    ]
+  },
   "saint6": {
     "category": "player",
     "sounds": [
@@ -466,6 +472,12 @@
     "category": "player",
     "sounds": [
       "blacksouls:thunder8"
+    ]
+  },
+  "thunder9": {
+    "category": "player",
+    "sounds": [
+      "blacksouls:thunder9"
     ]
   },
   "thunder10": {
@@ -1397,6 +1409,48 @@
       "blacksouls:cheshire_cat3"
     ]
   },
+  "original_cheshire_cat_2": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:original_cheshire_cat_2"
+    ]
+  },
+  "original_cheshire_cat_3": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:original_cheshire_cat_3"
+    ]
+  },
+  "original_cheshire_cat_4": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:original_cheshire_cat_4"
+    ]
+  },
+  "original_cheshire_cat_6": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:original_cheshire_cat_6"
+    ]
+  },
+  "original_cheshire_cat_8": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:original_cheshire_cat_8"
+    ]
+  },
+  "book2": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:book2"
+    ]
+  },
+  "explosion1": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:explosion1"
+    ]
+  },
   "cheshire_theme": {
     "category": "music",
     "sounds": [
@@ -1413,6 +1467,11 @@
         "name": "blacksouls:rabbit_knight_bgm",
         "stream": true
       }
+    ]
+  },
+  "mbjh_se_laughter_boy4": {
+    "sounds": [
+      "blacksouls:mbjh_se_laughter_boy4"
     ]
   }
 }

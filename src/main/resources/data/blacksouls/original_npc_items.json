@@ -1,0 +1,9202 @@
+[
+  {
+    "kind": 0,
+    "id": 1,
+    "name": "药草瓶",
+    "price": 0,
+    "registry": "blacksouls:herb_bottle",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 2,
+    "name": "药草瓶M",
+    "price": 0,
+    "registry": "blacksouls:herb_bottle_m",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 3,
+    "name": "输血药",
+    "price": 200,
+    "registry": "blacksouls:blood_vial",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 4,
+    "name": "解毒草",
+    "price": 80,
+    "registry": "blacksouls:antidote_herb",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 5,
+    "name": "止血布",
+    "price": 100,
+    "registry": "blacksouls:hemostatic_cloth",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 6,
+    "name": "镇静剂",
+    "price": 200,
+    "registry": "blacksouls:sedative",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 7,
+    "name": "鸽子蛋",
+    "price": 500,
+    "registry": "blacksouls:pigeon_egg",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 8,
+    "name": "女神之血",
+    "price": 8000,
+    "registry": "blacksouls:goddess_blood",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 9,
+    "name": "绿之魂",
+    "price": 5000,
+    "registry": "blacksouls:soul_green",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 10,
+    "name": "紫之魂",
+    "price": 5000,
+    "registry": "blacksouls:soul_purple",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 11,
+    "name": "赤之魂",
+    "price": 5000,
+    "registry": "blacksouls:soul_red",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 12,
+    "name": "青之魂",
+    "price": 5000,
+    "registry": "blacksouls:soul_blue",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 13,
+    "name": "黄之魂",
+    "price": 5000,
+    "registry": "blacksouls:soul_yellow",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 14,
+    "name": "灰之魂",
+    "price": 5000,
+    "registry": "blacksouls:soul_gray",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 15,
+    "name": "白之魂",
+    "price": 5000,
+    "registry": "blacksouls:soul_white",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 16,
+    "name": "四叶之魂",
+    "price": 5000,
+    "registry": "blacksouls:soul_four_leaf_clover",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 17,
+    "name": "黑之魂",
+    "price": 0,
+    "registry": "blacksouls:soul_black",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 18,
+    "name": "归还骨粉",
+    "price": 500,
+    "registry": "blacksouls:homeward_bone_dust",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 19,
+    "name": "兔子的怀表",
+    "price": 5000,
+    "registry": "blacksouls:rabbit_watch",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 20,
+    "name": "看不见的胡椒",
+    "price": 500,
+    "registry": "blacksouls:invisible_pepper",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 21,
+    "name": "废弃垃圾",
+    "price": 2,
+    "registry": "blacksouls:abandoned_trash",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 22,
+    "name": "魔石",
+    "price": 250,
+    "registry": "blacksouls:magic_stone",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 23,
+    "name": "少女之香",
+    "price": 2500,
+    "registry": "blacksouls:maidens_fragrance",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 24,
+    "name": "妖精的鳞粉",
+    "price": 200,
+    "registry": "blacksouls:fairy_scale_powder",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 25,
+    "name": "神秘的碎片",
+    "price": 5000,
+    "registry": "blacksouls:mysterious_shard",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 26,
+    "name": "强化石的碎片",
+    "price": 800,
+    "registry": "blacksouls:upgrade_shard",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 27,
+    "name": "强化石大碎片",
+    "price": 2000,
+    "registry": "blacksouls:upgrade_large_shard",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 28,
+    "name": "强化石块",
+    "price": 4000,
+    "registry": "blacksouls:upgrade_chunk",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 29,
+    "name": "强化石原盘",
+    "price": 10000,
+    "registry": "blacksouls:upgrade_slab",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 30,
+    "name": "火焰壶",
+    "price": 300,
+    "registry": "blacksouls:fire_bomb",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 31,
+    "name": "屎块",
+    "price": 100,
+    "registry": "blacksouls:dung_pie",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 32,
+    "name": "炭松脂",
+    "price": 800,
+    "registry": "blacksouls:charcoal_pine_resin",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 33,
+    "name": "黄金松脂",
+    "price": 800,
+    "registry": "blacksouls:gold_pine_resin",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 34,
+    "name": "暗松脂",
+    "price": 800,
+    "registry": "blacksouls:dark_pine_resin",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 35,
+    "name": "即将消逝的灵魂",
+    "price": 100,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 36,
+    "name": "被抛弃的遗体的灵魂",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 37,
+    "name": "被抛弃的遗体的大块灵魂",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 38,
+    "name": "来历不明的旅人的灵魂",
+    "price": 1600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 39,
+    "name": "来历不明的旅人的大块灵魂",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 40,
+    "name": "无名士兵的灵魂",
+    "price": 4000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 41,
+    "name": "无名士兵的大块灵魂",
+    "price": 6000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 42,
+    "name": "力竭的战士的灵魂",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 43,
+    "name": "力竭的战士的大块灵魂",
+    "price": 16000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 44,
+    "name": "灰心的骑士的灵魂",
+    "price": 20000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 45,
+    "name": "灰心的骑士的大块灵魂",
+    "price": 40000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 46,
+    "name": "橘子果酱",
+    "price": 800,
+    "registry": "blacksouls:orange_marmalade",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 47,
+    "name": "万能钥匙",
+    "price": 1000,
+    "registry": "blacksouls:master_key",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 48,
+    "name": "布莱克威尔的输血药",
+    "price": 1000,
+    "registry": "blacksouls:blackwell_blood_vial",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 49,
+    "name": "糖果",
+    "price": 5000,
+    "registry": "blacksouls:candy",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 50,
+    "name": "油壶",
+    "price": 600,
+    "registry": "blacksouls:oil_urn",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 51,
+    "name": "投掷小刀",
+    "price": 25,
+    "registry": "blacksouls:throwing_knife",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 52,
+    "name": "不死者杀手菇",
+    "price": 500,
+    "registry": "blacksouls:undead_killer_mushroom",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 53,
+    "name": "水",
+    "price": 50,
+    "registry": "blacksouls:pure_water",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 54,
+    "name": "精力剂",
+    "price": 500,
+    "registry": "blacksouls:stamina_tonic",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 55,
+    "name": "归还的蛇骨",
+    "price": 10000,
+    "registry": "blacksouls:snake_bone_return",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 56,
+    "name": "浑浊之鱼",
+    "price": 4,
+    "registry": "blacksouls:muddy_fish",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 57,
+    "name": "又白又黏的那啥",
+    "price": 300,
+    "registry": "blacksouls:white_sticky_thing",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 58,
+    "name": "铁渣点心",
+    "price": 300,
+    "registry": "blacksouls:iron_scrap_snack",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 59,
+    "name": "妖精之羽",
+    "price": 300,
+    "registry": "blacksouls:fairy_feather",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 60,
+    "name": "黄金的蜂蜜酒",
+    "price": 1500,
+    "registry": "blacksouls:golden_mead",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 61,
+    "name": "大工的钉子",
+    "price": 300,
+    "registry": "blacksouls:carpenter_nail",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 62,
+    "name": "处方药",
+    "price": 1000,
+    "registry": "blacksouls:prescription_medicine",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 63,
+    "name": "少女的写真",
+    "price": 100,
+    "registry": "blacksouls:girls_photo",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 64,
+    "name": "再思的扑克",
+    "price": 10000,
+    "registry": "blacksouls:retrieval_poker",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 65,
+    "name": "山羊的肉",
+    "price": 8000,
+    "registry": "blacksouls:goat_meat",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 66,
+    "name": "孕妇蛋糕之肉",
+    "price": 8000,
+    "registry": "blacksouls:pregnant_cake_meat",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 67,
+    "name": "黑之灰",
+    "price": 0,
+    "registry": "blacksouls:black_ash",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 68,
+    "name": "染血的钥匙",
+    "price": 0,
+    "registry": "blacksouls:bloodstained_key",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 69,
+    "name": "喝了我吧",
+    "price": 0,
+    "registry": "blacksouls:drink_me",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 70,
+    "name": "吃了我吧",
+    "price": 0,
+    "registry": "blacksouls:eat_me",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 71,
+    "name": "兔之键",
+    "price": 50000,
+    "registry": "blacksouls:rabbit_key",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 72,
+    "name": "黄金之卵",
+    "price": 500000,
+    "registry": "blacksouls:golden_egg",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 73,
+    "name": "列车票",
+    "price": 0,
+    "registry": "blacksouls:train_ticket",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 74,
+    "name": "通行证",
+    "price": 0,
+    "registry": "blacksouls:entry_pass",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 75,
+    "name": "女王的蛋挞",
+    "price": 8000,
+    "registry": "blacksouls:queen_egg_tart",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 76,
+    "name": "蜡烛的余烬",
+    "price": 500,
+    "registry": "blacksouls:candle_ember",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 77,
+    "name": "烤起司",
+    "price": 5000,
+    "registry": "blacksouls:roasted_cheese",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 78,
+    "name": "海龟汤",
+    "price": 5000,
+    "registry": "blacksouls:turtle_soup",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 79,
+    "name": "污秽的黑之魂",
+    "price": 0,
+    "registry": "blacksouls:soul_black_defiled",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 80,
+    "name": "梦之魂",
+    "price": 100000,
+    "registry": "blacksouls:dream_soul",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 81,
+    "name": "蛇神的血",
+    "price": 2000,
+    "registry": "blacksouls:snake_god_blood",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 82,
+    "name": "爱丽丝",
+    "price": 0,
+    "registry": "blacksouls:alice",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 83,
+    "name": "比尔的便当",
+    "price": 500,
+    "registry": "blacksouls:bills_bento",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 84,
+    "name": "外来者之魂",
+    "price": 0,
+    "registry": "blacksouls:soul_outsider",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 85,
+    "name": "英雄的灵魂",
+    "price": 50000,
+    "registry": "blacksouls:soul_hero",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 86,
+    "name": "伟大英雄的灵魂",
+    "price": 100000,
+    "registry": "blacksouls:soul_great_hero",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 87,
+    "name": "火柴药",
+    "price": 1000,
+    "registry": "blacksouls:match_medicine",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 88,
+    "name": "疯狂的齿轮",
+    "price": 5000,
+    "registry": "blacksouls:mad_gear",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 89,
+    "name": "噩梦提灯",
+    "price": 1000,
+    "registry": "blacksouls:nightmare_lantern",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 90,
+    "name": "鸡肉",
+    "price": 3000,
+    "registry": "blacksouls:chicken",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 91,
+    "name": "圣诞鸡肉",
+    "price": 3000,
+    "registry": "blacksouls:christmas_chicken",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 92,
+    "name": "来路不明的肉",
+    "price": 2,
+    "registry": "blacksouls:mysterious_meat",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 93,
+    "name": "色情魔的那玩意",
+    "price": 2,
+    "registry": "blacksouls:satyrs_thing",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 94,
+    "name": "人鱼的歌声",
+    "price": 3000,
+    "registry": "blacksouls:mermaid_song",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 95,
+    "name": "古王的骨粉",
+    "price": 0,
+    "registry": "blacksouls:ancient_kings_bone_dust",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 96,
+    "name": "松鼠的毛",
+    "price": 500,
+    "registry": "blacksouls:squirrel_fur",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 97,
+    "name": "冰松脂",
+    "price": 800,
+    "registry": "blacksouls:ice_pine_resin",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 98,
+    "name": "手术刀",
+    "price": 25,
+    "registry": "blacksouls:scalpel",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 99,
+    "name": "星水",
+    "price": 10000,
+    "registry": "blacksouls:star_water",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 100,
+    "name": "脏液",
+    "price": 300,
+    "registry": "blacksouls:filthy_liquid",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 101,
+    "name": "青鸟的羽毛",
+    "price": 300,
+    "registry": "blacksouls:bluebird_feather",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 102,
+    "name": "叮当仙子的鳞粉",
+    "price": 10000,
+    "registry": "blacksouls:tinker_bells_scale_powder",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 103,
+    "name": "威加盘",
+    "price": 10000,
+    "registry": "blacksouls:ouija_board",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 104,
+    "name": "洛德的万年钢笔",
+    "price": 1000,
+    "registry": "blacksouls:rolds_fountain_pen",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 105,
+    "name": "咒骂之花",
+    "price": 500,
+    "registry": "blacksouls:cursing_flower",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 106,
+    "name": "冷谷的气息",
+    "price": 2000,
+    "registry": "blacksouls:cold_valley_breath",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 107,
+    "name": "海兰里斯酒",
+    "price": 900000,
+    "registry": "blacksouls:helanrith_wine",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 108,
+    "name": "死灵之书",
+    "price": 300000,
+    "registry": "blacksouls:necronomicon",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 109,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 110,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 111,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 112,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 113,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 114,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 115,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 116,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 117,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 118,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 119,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 120,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 121,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 122,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 123,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 124,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 125,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 126,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 127,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 128,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 129,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 130,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 131,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 132,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 133,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 134,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 135,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 136,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 137,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 138,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 139,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 140,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 141,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 142,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 143,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 144,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 145,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 146,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 147,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 148,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 149,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 150,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 151,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 152,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 153,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 154,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 155,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 156,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 157,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 158,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 159,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 160,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 161,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 162,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 163,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 164,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 165,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 166,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 167,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 168,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 169,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 170,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 171,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 172,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 173,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 174,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 175,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 176,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 177,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 178,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 179,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 180,
+    "name": "南瓜的手镜",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 181,
+    "name": "侦探的手镜",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 182,
+    "name": "黑兔的手镜",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 183,
+    "name": "少女的手镜",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 184,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 185,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 186,
+    "name": "童话的破片1",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 187,
+    "name": "童话的破片2",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 188,
+    "name": "童话的破片3",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 189,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 190,
+    "name": "提灯的火种",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 191,
+    "name": "布莱克维尔的信件",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 192,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 193,
+    "name": "＝童话・童谣・传说＝＝＝＝",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 194,
+    "name": "童话【我昔日的拉斯卡尔】",
+    "price": 0,
+    "registry": "blacksouls:book_rascal",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 195,
+    "name": "童话【狐狸与酸葡萄】",
+    "price": 0,
+    "registry": "blacksouls:book_fox_and_grapes",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 196,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 197,
+    "name": "童话【丑小鸭】",
+    "price": 0,
+    "registry": "blacksouls:book_ugly_duckling",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 198,
+    "name": "童话【跳高者】",
+    "price": 0,
+    "registry": "blacksouls:book_high_jumper",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 199,
+    "name": "童话【狼和X只小山羊】",
+    "price": 0,
+    "registry": "blacksouls:book_wolf_and_goats",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 200,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 201,
+    "name": "传说【圣女贞德】",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 202,
+    "name": "童话【糖果屋】",
+    "price": 0,
+    "registry": "blacksouls:book_hansel_and_gretel",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 203,
+    "name": "童话【辛巴达航海记】",
+    "price": 0,
+    "registry": "blacksouls:book_sinbad",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 204,
+    "name": "童话【不来梅的乐队】",
+    "price": 0,
+    "registry": "blacksouls:book_bremen_musicians",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 205,
+    "name": "童话【铁汉斯】",
+    "price": 0,
+    "registry": "blacksouls:book_iron_hans",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 206,
+    "name": "童话【弗兰德斯的狗】",
+    "price": 0,
+    "registry": "blacksouls:book_dog_of_flanders",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 207,
+    "name": "传说【山德里亚的圣女】",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 208,
+    "name": "童话【小王子】",
+    "price": 0,
+    "registry": "blacksouls:book_little_prince",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 209,
+    "name": "童话【穿着铠甲的骑士】",
+    "price": 0,
+    "registry": "blacksouls:book_armored_knight",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 210,
+    "name": "童话【驴耳朵的国王】",
+    "price": 0,
+    "registry": "blacksouls:book_donkey_ears_king",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 211,
+    "name": "童话【彼得・潘】",
+    "price": 0,
+    "registry": "blacksouls:book_peter_pan",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 212,
+    "name": "童话【猿蟹合战】",
+    "price": 0,
+    "registry": "blacksouls:book_monkey_and_crab",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 213,
+    "name": "童话【绿野仙踪】",
+    "price": 0,
+    "registry": "blacksouls:book_wizard_of_oz",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 214,
+    "name": "童话【卖火柴的小女孩】",
+    "price": 0,
+    "registry": "blacksouls:book_match_girl",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 215,
+    "name": "童话【下金蛋的鹅】",
+    "price": 0,
+    "registry": "blacksouls:book_golden_goose",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 216,
+    "name": "童话【贪心的狗】",
+    "price": 0,
+    "registry": "blacksouls:book_greedy_dog",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 217,
+    "name": "童话【拔萝卜】",
+    "price": 0,
+    "registry": "blacksouls:book_pull_turnip",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 218,
+    "name": "童话【咔擦咔擦山】",
+    "price": 0,
+    "registry": "blacksouls:book_kachi_kachi_yama",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 219,
+    "name": "童话【因幡的黑兔】",
+    "price": 0,
+    "registry": "blacksouls:book_inaba_black_rabbit",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 220,
+    "name": "童话【罗宾汉】",
+    "price": 0,
+    "registry": "blacksouls:book_robin_hood",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 221,
+    "name": "童话【蓝胡子】",
+    "price": 0,
+    "registry": "blacksouls:book_bluebeard",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 222,
+    "name": "童话【长腿叔叔】",
+    "price": 0,
+    "registry": "blacksouls:book_daddy_long_legs",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 223,
+    "name": "童话【狼来了】",
+    "price": 0,
+    "registry": "blacksouls:book_boy_who_cried_wolf",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 224,
+    "name": "传说【伊丽莎白・巴托里】",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 225,
+    "name": "童话【小熊维尼】",
+    "price": 0,
+    "registry": "blacksouls:book_winnie_the_pooh",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 226,
+    "name": "童话【匹诺曹】",
+    "price": 0,
+    "registry": "blacksouls:book_pinocchio",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 227,
+    "name": "童话【夜莺】",
+    "price": 0,
+    "registry": "blacksouls:book_nightingale",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 228,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 229,
+    "name": "童话【　　　　】",
+    "price": 0,
+    "registry": "blacksouls:book_blank",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 230,
+    "name": "童话【冰雪女王】",
+    "price": 0,
+    "registry": "blacksouls:book_snow_queen",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 231,
+    "name": "童话【雪之少女】",
+    "price": 0,
+    "registry": "blacksouls:book_snow_maiden",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 232,
+    "name": "卡纳奇的笔记",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 233,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 234,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 235,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 236,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 237,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 238,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 239,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 240,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 241,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 242,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 243,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 244,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 245,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 246,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 247,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 248,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 249,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 250,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 251,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 252,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 253,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 254,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 255,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 256,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 257,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 258,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 259,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 260,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 261,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 262,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 263,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 264,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 265,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 266,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 267,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 268,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 269,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 270,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 271,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 272,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 273,
+    "name": "猎颅兽的灵魂",
+    "price": 2000,
+    "registry": "blacksouls:soul_skull_beast",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 274,
+    "name": "解闷的灵魂",
+    "price": 4000,
+    "registry": "blacksouls:soul_boredom",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 275,
+    "name": "孕妇的灵魂",
+    "price": 6000,
+    "registry": "blacksouls:soul_pregnant_woman",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 276,
+    "name": "唤铃的灵魂",
+    "price": 10000,
+    "registry": "blacksouls:soul_bell_caller",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 277,
+    "name": "披兽皮的灵魂",
+    "price": 10000,
+    "registry": "blacksouls:soul_beast_pelt",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 278,
+    "name": "大鹫的灵魂",
+    "price": 10000,
+    "registry": "blacksouls:soul_great_eagle",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 279,
+    "name": "自恋的灵魂",
+    "price": 20000,
+    "registry": "blacksouls:soul_narcissist",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 280,
+    "name": "杰克的灵魂",
+    "price": 16000,
+    "registry": "blacksouls:soul_jack",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 281,
+    "name": "学寮长的灵魂",
+    "price": 16000,
+    "registry": "blacksouls:soul_dorm_head",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 282,
+    "name": "辉星的灵魂",
+    "price": 20000,
+    "registry": "blacksouls:soul_shining_star",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 283,
+    "name": "老骑士的灵魂",
+    "price": 6000,
+    "registry": "blacksouls:soul_old_knight",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 284,
+    "name": "巨人之家的灵魂",
+    "price": 40000,
+    "registry": "blacksouls:soul_giant_house",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 285,
+    "name": "红桃骑士的灵魂",
+    "price": 4000,
+    "registry": "blacksouls:soul_knight_of_hearts",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 286,
+    "name": "黑桃骑士的灵魂",
+    "price": 4000,
+    "registry": "blacksouls:soul_knight_of_spades",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 287,
+    "name": "草花骑士的灵魂",
+    "price": 4000,
+    "registry": "blacksouls:soul_knight_of_clubs",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 288,
+    "name": "奴隶帝的灵魂",
+    "price": 40000,
+    "registry": "blacksouls:soul_slave_emperor",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 289,
+    "name": "奴隶后的灵魂",
+    "price": 40000,
+    "registry": "blacksouls:soul_slave_queen",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 290,
+    "name": "拷问具女王的灵魂",
+    "price": 20000,
+    "registry": "blacksouls:soul_torture_queen",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 291,
+    "name": "班达斯奈奇的灵魂",
+    "price": 40000,
+    "registry": "blacksouls:soul_bandersnatch",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 292,
+    "name": "贾布加布的灵魂",
+    "price": 40000,
+    "registry": "blacksouls:soul_jubjub",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 293,
+    "name": "贾巴沃克的灵魂",
+    "price": 40000,
+    "registry": "blacksouls:soul_jabberwock",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 294,
+    "name": "神之异鱼的灵魂",
+    "price": 100000,
+    "registry": "blacksouls:soul_divine_fish",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 295,
+    "name": "深海骑士的灵魂",
+    "price": 50000,
+    "registry": "blacksouls:soul_deep_sea_knight",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 296,
+    "name": "邪龙狩猎者的灵魂",
+    "price": 50000,
+    "registry": "blacksouls:soul_evil_dragon_hunter",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 297,
+    "name": "被任命的乳娘们的灵魂",
+    "price": 50000,
+    "registry": "blacksouls:soul_appointed_wet_nurse",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 298,
+    "name": "弗洛伦斯的灵魂",
+    "price": 50000,
+    "registry": "blacksouls:soul_florence",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 299,
+    "name": "冬钟之风的灵魂",
+    "price": 50000,
+    "registry": "blacksouls:soul_winter_bell_wind",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 300,
+    "name": "白之独角兽的灵魂",
+    "price": 50000,
+    "registry": "blacksouls:soul_white_unicorn",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 301,
+    "name": "白狮子的灵魂",
+    "price": 50000,
+    "registry": "blacksouls:soul_white_lion",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 302,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 303,
+    "name": "玄关钥匙",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 304,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 305,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 306,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 307,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 308,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 309,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 310,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 311,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 312,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 313,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 314,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 315,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 316,
+    "name": "魔书【魂之矢】",
+    "price": 300,
+    "registry": "blacksouls:skill_book_soul_arrow",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 317,
+    "name": "魔书【魂之连射】",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 318,
+    "name": "魔书【魂之光】",
+    "price": 300,
+    "registry": "blacksouls:skill_book_soul_light",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 319,
+    "name": "魔书【魂之放射】",
+    "price": 500,
+    "registry": "blacksouls:skill_book_soul_radiation",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 320,
+    "name": "魔书【驱散】",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 321,
+    "name": "魔书【识破攻击】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 322,
+    "name": "魔书【卡萨斯血咒】",
+    "price": 5000,
+    "registry": "blacksouls:skill_book_carthus_blood_curse",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 323,
+    "name": "魔书【毒素】",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 324,
+    "name": "魔书【毒素Ⅱ】",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 325,
+    "name": "魔书【催眠】",
+    "price": 3000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 326,
+    "name": "圣书【治愈】",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 327,
+    "name": "魔书【魔力祝福】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 328,
+    "name": "魔书【横冲直撞】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 329,
+    "name": "魔书【全面祝福】",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 330,
+    "name": "圣书【还魂】",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 331,
+    "name": "魔书【魔力吸收】",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 332,
+    "name": "圣书【擦除】",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 333,
+    "name": "魔书【王之号令】",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 334,
+    "name": "魔书【镇魂歌】",
+    "price": 20000,
+    "registry": "blacksouls:skill_book_requiem",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 335,
+    "name": "魔书【咬紧牙关】",
+    "price": 5000,
+    "registry": "blacksouls:skill_book_grit",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 336,
+    "name": "魔书【火炎】",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 337,
+    "name": "魔书【沉溺之泡】",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 338,
+    "name": "魔书【月之暗面】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 339,
+    "name": "魔书【冰结之魔弹】",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 340,
+    "name": "魔书【业火】",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 341,
+    "name": "魔书【破灭风暴】",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 342,
+    "name": "魔书【内在潜力】",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 343,
+    "name": "魔书【魂之巨矢】",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 344,
+    "name": "魔书【新绿之力】",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 345,
+    "name": "魔书【岩之体】",
+    "price": 3000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 346,
+    "name": "魔书【暗之球】",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 347,
+    "name": "魔书【暗之乱舞】",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 348,
+    "name": "魔书【暗之群来】",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 349,
+    "name": "魔书【神雷】",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 350,
+    "name": "魔书【神兽之雷鸣】",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 351,
+    "name": "魔书【流星群】",
+    "price": 20000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 352,
+    "name": "魔书【全面诅咒】",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 353,
+    "name": "魔书【魂之巨矢连射】",
+    "price": 20000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 354,
+    "name": "魔书【看不见的身体】",
+    "price": 1000,
+    "registry": "blacksouls:skill_book_invisible",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 0,
+    "id": 355,
+    "name": "圣书【致命守护】",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 356,
+    "name": "魔书【幽火】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 357,
+    "name": "魔书【法拉克斯】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 358,
+    "name": "魔书【绝对必中】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 359,
+    "name": "魔书【混沌爆炎】",
+    "price": 20000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 360,
+    "name": "魔书【会心一击】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 361,
+    "name": "圣书【灵魂盾】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 362,
+    "name": "魔书【密螺旋体】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 363,
+    "name": "圣书【肉壁召唤】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 364,
+    "name": "魔书【撕裂的遗恨】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 365,
+    "name": "魔书【贯穿冰柱】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 366,
+    "name": "魔书【灭亡的箭雨】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 367,
+    "name": "魔书【阴暗之沼】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 368,
+    "name": "魔书【酸雨】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 369,
+    "name": "魔书【皇家红茶】",
+    "price": 20000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 370,
+    "name": "魔书【神速之舞】",
+    "price": 20000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 371,
+    "name": "圣书【卡塔丽娜的车轮】",
+    "price": 20000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 372,
+    "name": "圣书【圣骑士的御旗】",
+    "price": 20000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 373,
+    "name": "魔书【黑之波动】",
+    "price": 20000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 374,
+    "name": "魔书【黑之斩击】",
+    "price": 20000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 375,
+    "name": "魔书【觉醒】",
+    "price": 20000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 376,
+    "name": "魔书【毒蛇的拥抱】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 377,
+    "name": "魔书【魂之奔流】",
+    "price": 5000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 378,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 379,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 380,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 381,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 382,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 383,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 384,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 385,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 386,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 387,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 388,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 389,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 0,
+    "id": 390,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 1,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 2,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 3,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 4,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 5,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 6,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 7,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 8,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 9,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 10,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 11,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 12,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 13,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 14,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 15,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 16,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 17,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 18,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 19,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 20,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 21,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 22,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 23,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 24,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 25,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 26,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 27,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 28,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 29,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 30,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 31,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 32,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 33,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 34,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 35,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 36,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 37,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 38,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 39,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 40,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 41,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 42,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 43,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 44,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 45,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 46,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 47,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 48,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 49,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 50,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 51,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 52,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 53,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 54,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 55,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 56,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 57,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 58,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 59,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 60,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 61,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 62,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 63,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 64,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 65,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 66,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 67,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 68,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 69,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 70,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 71,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 72,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 73,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 74,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 75,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 76,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 77,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 78,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 79,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 80,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 81,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 82,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 83,
+    "name": "弗洛伦斯铳剑",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 84,
+    "name": "格尔达猎枪",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 85,
+    "name": "卡纳奇",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 86,
+    "name": "罗宾弓",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 87,
+    "name": "巴纳伊之剑",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 88,
+    "name": "格里菲枪",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 89,
+    "name": "狼之爪",
+    "price": 100,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 90,
+    "name": "南瓜剑",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 91,
+    "name": "猫大剑",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 92,
+    "name": "小红帽的包丁",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 93,
+    "name": "丑小鸭棒",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 94,
+    "name": "韩塞尔格蕾特武器",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 95,
+    "name": "辛巴达武器",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 96,
+    "name": "布莱梅武器",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 97,
+    "name": "汉斯武器",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 98,
+    "name": "帕托拉休武器",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 99,
+    "name": "卡塔",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 100,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 101,
+    "name": "骑士之剑",
+    "price": 300,
+    "registry": "blacksouls:knight_sword",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 102,
+    "name": "骑士之剑＋1",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 103,
+    "name": "骑士之剑＋2",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 104,
+    "name": "骑士之剑＋3",
+    "price": 600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 105,
+    "name": "骑士之剑＋4",
+    "price": 700,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 106,
+    "name": "骑士之剑＋5",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 107,
+    "name": "骑士之剑＋6",
+    "price": 900,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 108,
+    "name": "骑士之剑＋7",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 109,
+    "name": "骑士之剑＋8",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 110,
+    "name": "骑士之剑＋9",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 111,
+    "name": "骑士王之剑",
+    "price": 10000,
+    "registry": "blacksouls:knight_king_sword",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 112,
+    "name": "盗贼短刀",
+    "price": 300,
+    "registry": "blacksouls:thiefs_dagger",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 113,
+    "name": "盗贼短刀＋1",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 114,
+    "name": "盗贼短刀＋2",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 115,
+    "name": "盗贼短刀＋3",
+    "price": 600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 116,
+    "name": "盗贼短刀＋4",
+    "price": 700,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 117,
+    "name": "盗贼短刀＋5",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 118,
+    "name": "盗贼短刀＋6",
+    "price": 900,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 119,
+    "name": "盗贼短刀＋7",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 120,
+    "name": "盗贼短刀＋8",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 121,
+    "name": "盗贼短刀＋9",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 122,
+    "name": "大盗贼的短刀",
+    "price": 10000,
+    "registry": "blacksouls:great_thiefs_dagger",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 123,
+    "name": "大剑",
+    "price": 300,
+    "registry": "blacksouls:great_sword",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 124,
+    "name": "大剑＋1",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 125,
+    "name": "大剑＋2",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 126,
+    "name": "大剑＋3",
+    "price": 600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 127,
+    "name": "大剑＋4",
+    "price": 700,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 128,
+    "name": "大剑＋5",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 129,
+    "name": "大剑＋6",
+    "price": 900,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 130,
+    "name": "大剑＋7",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 131,
+    "name": "大剑＋8",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 132,
+    "name": "大剑＋9",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 133,
+    "name": "巨人剑",
+    "price": 10000,
+    "registry": "blacksouls:giant_sword",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 134,
+    "name": "魔刀",
+    "price": 300,
+    "registry": "blacksouls:magic_blade",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 135,
+    "name": "魔刀＋1",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 136,
+    "name": "魔刀＋2",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 137,
+    "name": "魔刀＋3",
+    "price": 600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 138,
+    "name": "魔刀＋4",
+    "price": 700,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 139,
+    "name": "魔刀＋5",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 140,
+    "name": "魔刀＋6",
+    "price": 900,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 141,
+    "name": "魔刀＋7",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 142,
+    "name": "魔刀＋8",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 143,
+    "name": "魔刀＋9",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 144,
+    "name": "魔神刀",
+    "price": 10000,
+    "registry": "blacksouls:demon_god_blade",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 145,
+    "name": "阔头枪",
+    "price": 300,
+    "registry": "blacksouls:broad_spear",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 146,
+    "name": "阔头枪＋1",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 147,
+    "name": "阔头枪＋2",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 148,
+    "name": "阔头枪＋3",
+    "price": 600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 149,
+    "name": "阔头枪＋4",
+    "price": 700,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 150,
+    "name": "阔头枪＋5",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 151,
+    "name": "阔头枪＋6",
+    "price": 900,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 152,
+    "name": "阔头枪＋7",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 153,
+    "name": "阔头枪＋8",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 154,
+    "name": "阔头枪＋9",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 155,
+    "name": "冈格尼尔",
+    "price": 10000,
+    "registry": "blacksouls:gungnir",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 156,
+    "name": "棍棒",
+    "price": 300,
+    "registry": "blacksouls:club",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 157,
+    "name": "棍棒＋1",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 158,
+    "name": "棍棒＋2",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 159,
+    "name": "棍棒＋3",
+    "price": 600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 160,
+    "name": "棍棒＋4",
+    "price": 700,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 161,
+    "name": "棍棒＋5",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 162,
+    "name": "棍棒＋6",
+    "price": 900,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 163,
+    "name": "棍棒＋7",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 164,
+    "name": "棍棒＋8",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 165,
+    "name": "棍棒＋9",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 166,
+    "name": "王棒",
+    "price": 10000,
+    "registry": "blacksouls:king_club",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 167,
+    "name": "魔术师之杖",
+    "price": 300,
+    "registry": "blacksouls:magicians_staff",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 168,
+    "name": "魔术师之杖＋1",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 169,
+    "name": "魔术师之杖＋2",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 170,
+    "name": "魔术师之杖＋3",
+    "price": 600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 171,
+    "name": "魔术师之杖＋4",
+    "price": 700,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 172,
+    "name": "魔术师之杖＋5",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 173,
+    "name": "魔术师之杖＋6",
+    "price": 900,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 174,
+    "name": "魔术师之杖＋7",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 175,
+    "name": "魔术师之杖＋8",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 176,
+    "name": "魔术师之杖＋9",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 177,
+    "name": "万象之杖",
+    "price": 10000,
+    "registry": "blacksouls:all_creation_staff",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 178,
+    "name": "猎弓",
+    "price": 300,
+    "registry": "blacksouls:hunting_bow",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 179,
+    "name": "猎弓＋1",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 180,
+    "name": "猎弓＋2",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 181,
+    "name": "猎弓＋3",
+    "price": 600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 182,
+    "name": "猎弓＋4",
+    "price": 700,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 183,
+    "name": "猎弓＋5",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 184,
+    "name": "猎弓＋6",
+    "price": 900,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 185,
+    "name": "猎弓＋7",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 186,
+    "name": "猎弓＋8",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 187,
+    "name": "猎弓＋9",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 188,
+    "name": "勇者之弓",
+    "price": 10000,
+    "registry": "blacksouls:brave_bow",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 189,
+    "name": "断肉大斧",
+    "price": 300,
+    "registry": "blacksouls:meat_cleaver_greataxe",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 190,
+    "name": "断肉大斧＋1",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 191,
+    "name": "断肉大斧＋2",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 192,
+    "name": "断肉大斧＋3",
+    "price": 600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 193,
+    "name": "断肉大斧＋4",
+    "price": 700,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 194,
+    "name": "断肉大斧＋5",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 195,
+    "name": "断肉大斧＋6",
+    "price": 900,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 196,
+    "name": "断肉大斧＋7",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 197,
+    "name": "断肉大斧＋8",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 198,
+    "name": "断肉大斧＋9",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 199,
+    "name": "虐杀者大斧",
+    "price": 10000,
+    "registry": "blacksouls:slaughterer_greataxe",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 200,
+    "name": "锤矛",
+    "price": 300,
+    "registry": "blacksouls:mace",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 201,
+    "name": "锤矛＋1",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 202,
+    "name": "锤矛＋2",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 203,
+    "name": "锤矛＋3",
+    "price": 600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 204,
+    "name": "锤矛＋4",
+    "price": 700,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 205,
+    "name": "锤矛＋5",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 206,
+    "name": "锤矛＋6",
+    "price": 900,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 207,
+    "name": "锤矛＋7",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 208,
+    "name": "锤矛＋8",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 209,
+    "name": "锤矛＋9",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 210,
+    "name": "神罚的锤矛",
+    "price": 10000,
+    "registry": "blacksouls:divine_punishment_mace",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 211,
+    "name": "斧枪",
+    "price": 300,
+    "registry": "blacksouls:halberd",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 212,
+    "name": "斧枪＋1",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 213,
+    "name": "斧枪＋2",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 214,
+    "name": "斧枪＋3",
+    "price": 600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 215,
+    "name": "斧枪＋4",
+    "price": 700,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 216,
+    "name": "斧枪＋5",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 217,
+    "name": "斧枪＋6",
+    "price": 900,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 218,
+    "name": "斧枪＋7",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 219,
+    "name": "斧枪＋8",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 220,
+    "name": "斧枪＋9",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 221,
+    "name": "巴哈姆特",
+    "price": 10000,
+    "registry": "blacksouls:bahamut",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 222,
+    "name": "猎兽锯",
+    "price": 300,
+    "registry": "blacksouls:beast_hunter_saw",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 223,
+    "name": "猎兽锯＋1",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 224,
+    "name": "猎兽锯＋2",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 225,
+    "name": "猎兽锯＋3",
+    "price": 600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 226,
+    "name": "猎兽锯＋4",
+    "price": 700,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 227,
+    "name": "猎兽锯＋5",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 228,
+    "name": "猎兽锯＋6",
+    "price": 900,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 229,
+    "name": "猎兽锯＋7",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 230,
+    "name": "猎兽锯＋8",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 231,
+    "name": "猎兽锯＋9",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 232,
+    "name": "猎杀魔兽之锯剑",
+    "price": 10000,
+    "registry": "blacksouls:beast_slaying_saw_sword",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 233,
+    "name": "盾卫堡垒",
+    "price": 300,
+    "registry": "blacksouls:shield_guard_fortress",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 234,
+    "name": "盾卫堡垒+1",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 235,
+    "name": "盾卫堡垒+2",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 236,
+    "name": "盾卫堡垒+3",
+    "price": 600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 237,
+    "name": "盾卫堡垒+4",
+    "price": 700,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 238,
+    "name": "盾卫堡垒+5",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 239,
+    "name": "盾卫堡垒+6",
+    "price": 900,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 240,
+    "name": "盾卫堡垒+7",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 241,
+    "name": "盾卫堡垒+8",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 242,
+    "name": "盾卫堡垒+9",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 243,
+    "name": "守护者堡垒",
+    "price": 10000,
+    "registry": "blacksouls:guardian_fortress",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 244,
+    "name": "黑暗剑",
+    "price": 300,
+    "registry": "blacksouls:dark_sword",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 245,
+    "name": "黑暗剑＋1",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 246,
+    "name": "黑暗剑＋2",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 247,
+    "name": "黑暗剑＋3",
+    "price": 600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 248,
+    "name": "黑暗剑＋4",
+    "price": 700,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 249,
+    "name": "黑暗剑＋5",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 250,
+    "name": "黑暗剑＋6",
+    "price": 900,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 251,
+    "name": "黑暗剑＋7",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 252,
+    "name": "黑暗剑＋8",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 253,
+    "name": "黑暗剑＋9",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 254,
+    "name": "黑暗之刃",
+    "price": 10000,
+    "registry": "blacksouls:dark_blade",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 255,
+    "name": "断剑",
+    "price": 100,
+    "registry": "blacksouls:broken_sword",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 256,
+    "name": "断剑+1",
+    "price": 100,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 257,
+    "name": "断剑+2",
+    "price": 100,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 258,
+    "name": "断剑+3",
+    "price": 100,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 259,
+    "name": "断剑+4",
+    "price": 100,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 260,
+    "name": "断剑+5",
+    "price": 100,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 261,
+    "name": "断剑+6",
+    "price": 100,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 262,
+    "name": "断剑+7",
+    "price": 100,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 263,
+    "name": "断剑+8",
+    "price": 100,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 264,
+    "name": "断剑+9",
+    "price": 100,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 265,
+    "name": "怨恨之剑",
+    "price": 10000,
+    "registry": "blacksouls:grudge_sword",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 266,
+    "name": "战锤",
+    "price": 300,
+    "registry": "blacksouls:warhammer",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 267,
+    "name": "战锤＋1",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 268,
+    "name": "战锤＋2",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 269,
+    "name": "战锤＋3",
+    "price": 600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 270,
+    "name": "战锤＋4",
+    "price": 700,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 271,
+    "name": "战锤＋5",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 272,
+    "name": "战锤＋6",
+    "price": 900,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 273,
+    "name": "战锤＋7",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 274,
+    "name": "战锤＋8",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 275,
+    "name": "战锤＋9",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 276,
+    "name": "异形战锤",
+    "price": 10000,
+    "registry": "blacksouls:aberrant_warhammer",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 277,
+    "name": "指虎",
+    "price": 300,
+    "registry": "blacksouls:knuckle_duster",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 278,
+    "name": "指虎＋1",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 279,
+    "name": "指虎＋2",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 280,
+    "name": "指虎＋3",
+    "price": 600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 281,
+    "name": "指虎＋4",
+    "price": 700,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 282,
+    "name": "指虎＋5",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 283,
+    "name": "指虎＋6",
+    "price": 900,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 284,
+    "name": "指虎＋7",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 285,
+    "name": "指虎＋8",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 286,
+    "name": "指虎＋9",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 287,
+    "name": "凯撒拳套",
+    "price": 10000,
+    "registry": "blacksouls:kaiser_gauntlet",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 288,
+    "name": "沃柏尔之刃",
+    "price": 300,
+    "registry": "blacksouls:vorpal_blade",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 289,
+    "name": "沃柏尔之刃＋1",
+    "price": 400,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 290,
+    "name": "沃柏尔之刃＋2",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 291,
+    "name": "沃柏尔之刃＋3",
+    "price": 600,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 292,
+    "name": "沃柏尔之刃＋4",
+    "price": 700,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 293,
+    "name": "沃柏尔之刃＋5",
+    "price": 800,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 294,
+    "name": "沃柏尔之刃＋6",
+    "price": 900,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 295,
+    "name": "沃柏尔之刃＋7",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 296,
+    "name": "沃柏尔之刃＋8",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 297,
+    "name": "沃柏尔之刃＋9",
+    "price": 2000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 298,
+    "name": "沃柏尔之剑",
+    "price": 10000,
+    "registry": "blacksouls:vorpal_sword",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 299,
+    "name": "打刀",
+    "price": 300,
+    "registry": "blacksouls:uchigatana",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 300,
+    "name": "打刀+1",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 301,
+    "name": "打刀+2",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 302,
+    "name": "打刀+3",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 303,
+    "name": "打刀+4",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 304,
+    "name": "打刀+5",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 305,
+    "name": "打刀+6",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 306,
+    "name": "打刀+7",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 307,
+    "name": "打刀+8",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 308,
+    "name": "打刀+9",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 309,
+    "name": "鬼神刀",
+    "price": 10000,
+    "registry": "blacksouls:kishin_blade",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 310,
+    "name": "勇剑沃柏尔",
+    "price": 10000,
+    "registry": "blacksouls:brave_sword_vorpal",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 311,
+    "name": "双刃大剑",
+    "price": 300,
+    "registry": "blacksouls:double_edged_greatsword",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 312,
+    "name": "双刃大剑+1",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 313,
+    "name": "双刃大剑+2",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 314,
+    "name": "双刃大剑+3",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 315,
+    "name": "双刃大剑+4",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 316,
+    "name": "双刃大剑+5",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 317,
+    "name": "双刃大剑+6",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 318,
+    "name": "双刃大剑+7",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 319,
+    "name": "双刃大剑+8",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 320,
+    "name": "双刃大剑+9",
+    "price": 300,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 321,
+    "name": "诸神黄昏",
+    "price": 10000,
+    "registry": "blacksouls:ragnarok",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 322,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 323,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 324,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 325,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 326,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 327,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 328,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 329,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 330,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 331,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 332,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 333,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 334,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 335,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 336,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 337,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 338,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 339,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 340,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 341,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 342,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 343,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 344,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 345,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 346,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 347,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 348,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 349,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 350,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 351,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 352,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 353,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 354,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 355,
+    "name": "大铁球",
+    "price": 10000,
+    "registry": "blacksouls:great_iron_ball",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 356,
+    "name": "大铁球＋1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 357,
+    "name": "大铁球＋2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 358,
+    "name": "大铁球＋3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 359,
+    "name": "大铁球＋4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 360,
+    "name": "大铁球＋5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 361,
+    "name": "汉斯的机关枪",
+    "price": 10000,
+    "registry": "blacksouls:hans_machine_gun",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 362,
+    "name": "汉斯的机关枪+1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 363,
+    "name": "汉斯的机关枪+2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 364,
+    "name": "汉斯的机关枪+3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 365,
+    "name": "汉斯的机关枪+4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 366,
+    "name": "汉斯的机关枪+5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 367,
+    "name": "审判者大镰",
+    "price": 1332,
+    "registry": "blacksouls:judgment_scythe",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 368,
+    "name": "审判者大镰＋1",
+    "price": 1332,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 369,
+    "name": "审判者大镰＋2",
+    "price": 1332,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 370,
+    "name": "审判者大镰＋3",
+    "price": 1332,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 371,
+    "name": "审判者大镰＋4",
+    "price": 1332,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 372,
+    "name": "审判者大镰＋5",
+    "price": 1332,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 373,
+    "name": "暴风之律",
+    "price": 10000,
+    "registry": "blacksouls:storm_ruler",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 374,
+    "name": "暴风之律＋1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 375,
+    "name": "暴风之律＋2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 376,
+    "name": "暴风之律＋3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 377,
+    "name": "暴风之律＋4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 378,
+    "name": "暴风之律＋5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 379,
+    "name": "安多鲁之剑",
+    "price": 10000,
+    "registry": "blacksouls:andor_sword",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 380,
+    "name": "安多鲁之剑＋1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 381,
+    "name": "安多鲁之剑＋2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 382,
+    "name": "安多鲁之剑＋3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 383,
+    "name": "安多鲁之剑＋4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 384,
+    "name": "安多鲁之剑＋5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 385,
+    "name": "飞龙剑",
+    "price": 10000,
+    "registry": "blacksouls:drake_sword",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 386,
+    "name": "飞龙剑＋1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 387,
+    "name": "飞龙剑＋2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 388,
+    "name": "飞龙剑＋3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 389,
+    "name": "飞龙剑＋4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 390,
+    "name": "飞龙剑＋5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 391,
+    "name": "恶魔之杖",
+    "price": 10000,
+    "registry": "blacksouls:demon_staff",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 392,
+    "name": "恶魔之杖＋1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 393,
+    "name": "恶魔之杖＋2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 394,
+    "name": "恶魔之杖＋3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 395,
+    "name": "恶魔之杖＋4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 396,
+    "name": "恶魔之杖＋5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 397,
+    "name": "月光大剑",
+    "price": 10000,
+    "registry": "blacksouls:moonlight_greatsword",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 398,
+    "name": "月光大剑＋1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 399,
+    "name": "月光大剑＋2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 400,
+    "name": "月光大剑＋3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 401,
+    "name": "月光大剑＋4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 402,
+    "name": "月光大剑＋5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 403,
+    "name": "暴剑班达斯奈奇",
+    "price": 10000,
+    "registry": "blacksouls:bandersnatch_sword",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 404,
+    "name": "暴剑班达斯奈奇＋1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 405,
+    "name": "暴剑班达斯奈奇＋2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 406,
+    "name": "暴剑班达斯奈奇＋3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 407,
+    "name": "暴剑班达斯奈奇＋4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 408,
+    "name": "暴剑班达斯奈奇＋5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 409,
+    "name": "腐镰贾巴沃克",
+    "price": 10000,
+    "registry": "blacksouls:corrupt_jabberwock_scythe",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 410,
+    "name": "腐镰贾巴沃克＋1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 411,
+    "name": "腐镰贾巴沃克＋2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 412,
+    "name": "腐镰贾巴沃克＋3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 413,
+    "name": "腐镰贾巴沃克＋4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 414,
+    "name": "腐镰贾巴沃克＋5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 415,
+    "name": "狂弓贾布加布",
+    "price": 10000,
+    "registry": "blacksouls:mad_bow_jubjub",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 416,
+    "name": "狂弓贾布加布＋1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 417,
+    "name": "狂弓贾布加布＋2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 418,
+    "name": "狂弓贾布加布＋3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 419,
+    "name": "狂弓贾布加布＋4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 420,
+    "name": "狂弓贾布加布＋5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 421,
+    "name": "米兰达之斧",
+    "price": 10000,
+    "registry": "blacksouls:miranda_axe",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 422,
+    "name": "米兰达之斧＋1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 423,
+    "name": "米兰达之斧＋2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 424,
+    "name": "米兰达之斧＋3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 425,
+    "name": "米兰达之斧＋4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 426,
+    "name": "米兰达之斧＋5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 427,
+    "name": "拉莱耶之杖",
+    "price": 10000,
+    "registry": "blacksouls:rlyeh_staff",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 428,
+    "name": "拉莱耶之杖＋1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 429,
+    "name": "拉莱耶之杖＋2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 430,
+    "name": "拉莱耶之杖＋3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 431,
+    "name": "拉莱耶之杖＋4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 432,
+    "name": "拉莱耶之杖＋5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 433,
+    "name": "深海骑士的锚",
+    "price": 10000,
+    "registry": "blacksouls:deep_sea_knights_anchor",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 434,
+    "name": "深海骑士的锚＋1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 435,
+    "name": "深海骑士的锚＋2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 436,
+    "name": "深海骑士的锚＋3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 437,
+    "name": "深海骑士的锚＋4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 438,
+    "name": "深海骑士的锚＋5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 439,
+    "name": "失落之剑",
+    "price": 10000,
+    "registry": "blacksouls:lost_sword",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 440,
+    "name": "失落之剑＋1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 441,
+    "name": "失落之剑＋2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 442,
+    "name": "失落之剑＋3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 443,
+    "name": "失落之剑＋4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 444,
+    "name": "失落之剑＋5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 445,
+    "name": "格拉奇德",
+    "price": 10000,
+    "registry": "blacksouls:glachid",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 446,
+    "name": "格拉奇德＋1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 447,
+    "name": "格拉奇德＋2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 448,
+    "name": "格拉奇德＋3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 449,
+    "name": "格拉奇德＋4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 450,
+    "name": "格拉奇德＋5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 451,
+    "name": "屠宰者的电锯",
+    "price": 10000,
+    "registry": "blacksouls:slaughterers_chainsaw",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 452,
+    "name": "屠宰者的电锯＋1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 453,
+    "name": "屠宰者的电锯＋2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 454,
+    "name": "屠宰者的电锯＋3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 455,
+    "name": "屠宰者的电锯＋4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 456,
+    "name": "屠宰者的电锯＋5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 457,
+    "name": "假海龟的大汤勺",
+    "price": 100,
+    "registry": "blacksouls:mock_turtle_soup_ladle",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 458,
+    "name": "假海龟的大汤勺+1",
+    "price": 100,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 459,
+    "name": "假海龟的大汤勺+2",
+    "price": 100,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 460,
+    "name": "假海龟的大汤勺+3",
+    "price": 100,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 461,
+    "name": "假海龟的大汤勺+4",
+    "price": 100,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 462,
+    "name": "假海龟的大汤勺+5",
+    "price": 100,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 463,
+    "name": "神天使双剑",
+    "price": 10000,
+    "registry": "blacksouls:divine_angel_dual_swords",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 464,
+    "name": "神天使双剑+1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 465,
+    "name": "神天使双剑+2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 466,
+    "name": "神天使双剑+3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 467,
+    "name": "神天使双剑+4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 468,
+    "name": "神天使双剑+5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 469,
+    "name": "神圣铳剑",
+    "price": 10000,
+    "registry": "blacksouls:holy_gunblade",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 470,
+    "name": "神圣铳剑+1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 471,
+    "name": "神圣铳剑+2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 472,
+    "name": "神圣铳剑+3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 473,
+    "name": "神圣铳剑+4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 474,
+    "name": "神圣铳剑+5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 475,
+    "name": "玛丽苏的枝杖",
+    "price": 999999,
+    "registry": "blacksouls:mary_sues_branch_staff",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 476,
+    "name": "尤妮丝的刺剑",
+    "price": 10000,
+    "registry": "blacksouls:eunices_rapier",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 477,
+    "name": "尤妮丝的刺剑+1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 478,
+    "name": "尤妮丝的刺剑+2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 479,
+    "name": "尤妮丝的刺剑+3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 480,
+    "name": "尤妮丝的刺剑+4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 481,
+    "name": "尤妮丝的刺剑+5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 482,
+    "name": "莱登的双斧",
+    "price": 10000,
+    "registry": "blacksouls:raidens_dual_axes",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 1,
+    "id": 483,
+    "name": "莱登的双斧+1",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 484,
+    "name": "莱登的双斧+2",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 485,
+    "name": "莱登的双斧+3",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 486,
+    "name": "莱登的双斧+4",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 487,
+    "name": "莱登的双斧+5",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 488,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 489,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 490,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 491,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 492,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 493,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 494,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 495,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 496,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 497,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 498,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 499,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 1,
+    "id": 500,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 1,
+    "name": "贵族之服",
+    "price": 1000,
+    "registry": "blacksouls:noble_clothes",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 2,
+    "name": "暴力的披风",
+    "price": 1000,
+    "registry": "blacksouls:violent_cloak",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 3,
+    "name": "狂乱王的披风",
+    "price": 1000,
+    "registry": "blacksouls:frenzied_king_cloak",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 4,
+    "name": "天使的羽衣",
+    "price": 1000,
+    "registry": "blacksouls:angel_raiment",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 5,
+    "name": "皮甲",
+    "price": 1000,
+    "registry": "blacksouls:leather_armor",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 6,
+    "name": "猎人的装束",
+    "price": 1000,
+    "registry": "blacksouls:hunters_attire",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 7,
+    "name": "卖火柴的衣服",
+    "price": 1000,
+    "registry": "blacksouls:match_girl_clothes",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 8,
+    "name": "作业服",
+    "price": 1000,
+    "registry": "blacksouls:work_clothes",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 9,
+    "name": "绅士外套",
+    "price": 1000,
+    "registry": "blacksouls:gentleman_coat",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 10,
+    "name": "娼妇之服",
+    "price": 1000,
+    "registry": "blacksouls:prostitute_dress",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 11,
+    "name": "板甲",
+    "price": 1000,
+    "registry": "blacksouls:plate_armor",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 12,
+    "name": "深渊之铠",
+    "price": 1000,
+    "registry": "blacksouls:abyss_armor",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 13,
+    "name": "太阳之铠",
+    "price": 1000,
+    "registry": "blacksouls:armor_of_the_sun",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 14,
+    "name": "圣职者的装衣",
+    "price": 1000,
+    "registry": "blacksouls:cleric_vestment",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 15,
+    "name": "魔术师的外套",
+    "price": 1000,
+    "registry": "blacksouls:magician_coat",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 16,
+    "name": "影之装衣",
+    "price": 1000,
+    "registry": "blacksouls:shadow_attire",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 17,
+    "name": "骑士之铠",
+    "price": 1000,
+    "registry": "blacksouls:knight_armor",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 18,
+    "name": "战士之铠",
+    "price": 1000,
+    "registry": "blacksouls:warrior_armor",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 19,
+    "name": "弥尔顿之铠",
+    "price": 1000,
+    "registry": "blacksouls:milton_armor",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 20,
+    "name": "巴别塔之铠",
+    "price": 1000,
+    "registry": "blacksouls:babel_tower_armor",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 21,
+    "name": "怪盗的披风",
+    "price": 1000,
+    "registry": "blacksouls:phantom_thief_cloak",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 22,
+    "name": "圣职者头环",
+    "price": 1000,
+    "registry": "blacksouls:cleric_circlet",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 23,
+    "name": "魔术师的帽子",
+    "price": 1000,
+    "registry": "blacksouls:magician_hat",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 24,
+    "name": "盗贼面具",
+    "price": 1000,
+    "registry": "blacksouls:thief_mask",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 25,
+    "name": "骑士头盔",
+    "price": 1000,
+    "registry": "blacksouls:knight_helmet",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 26,
+    "name": "维京头盔",
+    "price": 1000,
+    "registry": "blacksouls:viking_helmet",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 27,
+    "name": "弥尔顿之盔",
+    "price": 1000,
+    "registry": "blacksouls:milton_helmet",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 28,
+    "name": "兔耳",
+    "price": 1000,
+    "registry": "blacksouls:rabbit_ears",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 29,
+    "name": "白发带",
+    "price": 1000,
+    "registry": "blacksouls:white_hairband",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 30,
+    "name": "巴别塔的头盔",
+    "price": 1000,
+    "registry": "blacksouls:babel_tower_helmet",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 31,
+    "name": "忍者护额",
+    "price": 1000,
+    "registry": "blacksouls:ninja_headband",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 32,
+    "name": "不可思议的帽子",
+    "price": 1000,
+    "registry": "blacksouls:mysterious_hat",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 33,
+    "name": "帽子屋的帽子",
+    "price": 57000,
+    "registry": "blacksouls:hatter_hat",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 34,
+    "name": "空骑士的帽子",
+    "price": 1000,
+    "registry": "blacksouls:sky_knight_hat",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 35,
+    "name": "弁护士的面具",
+    "price": 1000,
+    "registry": "blacksouls:lawyer_mask",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 36,
+    "name": "伊戈尔的面具",
+    "price": 1000,
+    "registry": "blacksouls:igor_mask",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 37,
+    "name": "兔女郎制服",
+    "price": 1000,
+    "registry": "blacksouls:bunny_girl_uniform",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 38,
+    "name": "食人族之盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 39,
+    "name": "神殿骑士的盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 40,
+    "name": "刃之盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 41,
+    "name": "草纹盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 42,
+    "name": "木盾",
+    "price": 50,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 43,
+    "name": "小圆盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 44,
+    "name": "蘑菇盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 45,
+    "name": "圆盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 46,
+    "name": "铁制圆盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 47,
+    "name": "战士的圆盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 48,
+    "name": "标靶盾牌",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 49,
+    "name": "豪猪盾",
+    "price": 1000,
+    "registry": "blacksouls:porcupine_shield",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 50,
+    "name": "鹫狮子之盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 51,
+    "name": "骑士盾",
+    "price": 1000,
+    "registry": "blacksouls:knight_shield",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 52,
+    "name": "鸢形盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 53,
+    "name": "赤之盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 54,
+    "name": "假海龟的龟壳",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 55,
+    "name": "炼瓦之盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 56,
+    "name": "黑尖兵之盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 57,
+    "name": "圣骑士之盾",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 58,
+    "name": "贝类甲壳",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 59,
+    "name": "迪卡的大盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 60,
+    "name": "怠惰的大盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 61,
+    "name": "深渊的大盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 62,
+    "name": "深海的大盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 63,
+    "name": "镜之大盾",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 64,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 65,
+    "name": "银色短铳",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 66,
+    "name": "教会长铳",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 67,
+    "name": "杀人鬼霰弹铳",
+    "price": 1000,
+    "registry": "blacksouls:murderers_shotgun",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 68,
+    "name": "海贼的手枪",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 69,
+    "name": "深海骑士之盔",
+    "price": 1000,
+    "registry": "blacksouls:deep_sea_knight_helmet",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 70,
+    "name": "深海骑士之铠",
+    "price": 1000,
+    "registry": "blacksouls:deep_sea_knight_armor",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 71,
+    "name": "船员的包头巾",
+    "price": 1000,
+    "registry": "blacksouls:crew_headscarf",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 72,
+    "name": "鬼武者之盔",
+    "price": 1000,
+    "registry": "blacksouls:oni_warrior_helmet",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 73,
+    "name": "鬼武者之铠",
+    "price": 1000,
+    "registry": "blacksouls:oni_warrior_armor",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 74,
+    "name": "船员服",
+    "price": 1000,
+    "registry": "blacksouls:sailor_suit",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 75,
+    "name": "大炮",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 76,
+    "name": "毒蛇之服",
+    "price": 1000,
+    "registry": "blacksouls:snake_dress",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 77,
+    "name": "脆弱生命的戒指",
+    "price": 500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 78,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 79,
+    "name": "生命戒指",
+    "price": 1500,
+    "registry": "blacksouls:life_ring",
+    "source": "verified_armor79_life_colored_name_and_hp105"
+  },
+  {
+    "kind": 2,
+    "id": 80,
+    "name": "坚韧者的戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_tenacious",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 81,
+    "name": "邪眼戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_evil_eye",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 82,
+    "name": "铁之加护戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_iron_protection",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 83,
+    "name": "炎方石戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_fire_stone",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 84,
+    "name": "雷方石戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_thunder_stone",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 85,
+    "name": "暗方石戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_dark_stone",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 86,
+    "name": "魔法方石戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_magic_stone",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 87,
+    "name": "贪婪银蛇戒指",
+    "price": 0,
+    "registry": "blacksouls:ring_silver_serpent",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 88,
+    "name": "贪婪金蛇戒指",
+    "price": 0,
+    "registry": "blacksouls:ring_gold_serpent",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 89,
+    "name": "咬毒戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_poison_bite",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 90,
+    "name": "咬血戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_blood_bite",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 91,
+    "name": "刃之戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_blades",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 92,
+    "name": "复活业者戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_resurrector",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 93,
+    "name": "黄蜂戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_wasp",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 94,
+    "name": "守护戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_guard",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 95,
+    "name": "女神的戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_goddess",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 96,
+    "name": "噗哟噗哟",
+    "price": 1500,
+    "registry": "blacksouls:ring_puyo",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 97,
+    "name": "呼扭呼扭",
+    "price": 1500,
+    "registry": "blacksouls:ring_hunya",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 98,
+    "name": "风神戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_wind_god",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 99,
+    "name": "咒术戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_spell",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 100,
+    "name": "受虐戒指",
+    "price": 10,
+    "registry": "blacksouls:ring_masochist",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 101,
+    "name": "柴郡猫戒指",
+    "price": 10000,
+    "registry": "blacksouls:ring_cat",
+    "source": "verified_armor101_cat_colored_name_and_fall_immunity"
+  },
+  {
+    "kind": 2,
+    "id": 102,
+    "name": "叛逆戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_rebellion",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 103,
+    "name": "恐怖戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_terror",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 104,
+    "name": "铁处女戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_iron_maiden",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 105,
+    "name": "骑士戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_knight",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 106,
+    "name": "天使戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_angel",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 107,
+    "name": "叮当仙子的戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_fairy",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 108,
+    "name": "空虚戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_void",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 109,
+    "name": "龙之守护戒指",
+    "price": 10000,
+    "registry": "blacksouls:ring_dragon_guard",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 110,
+    "name": "宵暗的指冠",
+    "price": 1500,
+    "registry": "blacksouls:ring_midnight_crown",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 111,
+    "name": "奇迹戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_miracle",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 112,
+    "name": "杀人小丑戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_murder_clown",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 113,
+    "name": "黑山羊戒指",
+    "price": 100000,
+    "registry": "blacksouls:ring_black_goat",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 114,
+    "name": "死神戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_death",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 115,
+    "name": "理发师戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_barber",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 116,
+    "name": "虚饰戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_vanity",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 117,
+    "name": "苹果戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_apple",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 118,
+    "name": "伦蒂尼恩的戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_lundinian",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 119,
+    "name": "南瓜骑士戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_pumpkin_knight",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 120,
+    "name": "狙击手戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_sniper",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 121,
+    "name": "深者戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_deep_one",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 122,
+    "name": "白鸦戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_white_raven",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 123,
+    "name": "暗沉木纹戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_dull_wood_grain",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 124,
+    "name": "托托的戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_toto",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 125,
+    "name": "四叶草戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_four_leaf_clover",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 126,
+    "name": "傀儡戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_puppet",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 127,
+    "name": "无谋勇者戒指",
+    "price": 5000,
+    "registry": "blacksouls:ring_reckless_hero",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 128,
+    "name": "银行家戒指",
+    "price": 5000,
+    "registry": "blacksouls:ring_banker",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 129,
+    "name": "天之戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_heaven",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 130,
+    "name": "擦靴人的戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_bootblack",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 131,
+    "name": "莉耶芙的戒指",
+    "price": 20000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 132,
+    "name": "屠夫戒指",
+    "price": 5000,
+    "registry": "blacksouls:ring_butcher",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 133,
+    "name": "娼妇戒指",
+    "price": 5000,
+    "registry": "blacksouls:ring_prostitute",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 134,
+    "name": "退魔戒指",
+    "price": 5000,
+    "registry": "blacksouls:ring_exorcism",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 135,
+    "name": "深渊戒指",
+    "price": 5000,
+    "registry": "blacksouls:ring_abyss",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 136,
+    "name": "斗士戒指",
+    "price": 5000,
+    "registry": "blacksouls:ring_fighter",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 137,
+    "name": "黑兔戒指",
+    "price": 10000,
+    "registry": "blacksouls:ring_black_rabbit",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 138,
+    "name": "巨魔戒指",
+    "price": 5000,
+    "registry": "blacksouls:ring_troll",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 139,
+    "name": "蚊之戒指",
+    "price": 5000,
+    "registry": "blacksouls:ring_mosquito",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 140,
+    "name": "红泪石戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_red_tearstone",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 141,
+    "name": "伊迪丝的戒指",
+    "price": 0,
+    "registry": "blacksouls:ring_edith",
+    "source": "verified_armor141_edith_name_and_oxford_gate"
+  },
+  {
+    "kind": 2,
+    "id": 142,
+    "name": "海象的戒指",
+    "price": 10000,
+    "registry": "blacksouls:ring_walrus",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 143,
+    "name": "狱灭戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_hell_destruction",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 144,
+    "name": "红心骑士戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_heart_knight",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 145,
+    "name": "黑桃骑士戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_spade_knight",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 146,
+    "name": "草花骑士戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_club_knight",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 147,
+    "name": "白兔戒指",
+    "price": 10000,
+    "registry": "blacksouls:ring_white_rabbit",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 148,
+    "name": "神鱼戒指",
+    "price": 10000,
+    "registry": "blacksouls:ring_god_fish",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 149,
+    "name": "罪恶戒指",
+    "price": 5000,
+    "registry": "blacksouls:ring_sin",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 150,
+    "name": "星辰戒指",
+    "price": 10000,
+    "registry": "blacksouls:ring_star",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 151,
+    "name": "黑胡子戒指",
+    "price": 5000,
+    "registry": "blacksouls:ring_blackbeard",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 152,
+    "name": "普利凯特的戒指",
+    "price": 20000,
+    "registry": "blacksouls:ring_prickett",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 153,
+    "name": "食人魔戒指",
+    "price": 5000,
+    "registry": "blacksouls:ring_ogre",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 154,
+    "name": "蜜蜂戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_bee",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 155,
+    "name": "狂乱王的戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_frenzied_king",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 156,
+    "name": "韦陀天戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_idaten",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 157,
+    "name": "我的奋斗戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_my_struggle",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 158,
+    "name": "奸淫戒指",
+    "price": 500,
+    "registry": "blacksouls:ring_adultery",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 159,
+    "name": "生命戒指＋1",
+    "price": 1500,
+    "registry": "blacksouls:life_ring_plus_1",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 160,
+    "name": "生命戒指＋2",
+    "price": 1500,
+    "registry": "blacksouls:life_ring_plus_2",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 161,
+    "name": "生命戒指＋3",
+    "price": 1500,
+    "registry": "blacksouls:life_ring_plus_3",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 162,
+    "name": "坚韧者的戒指＋1",
+    "price": 1500,
+    "registry": "blacksouls:ring_tenacious_plus_1",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 163,
+    "name": "坚韧者的戒指＋2",
+    "price": 1500,
+    "registry": "blacksouls:ring_tenacious_plus_2",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 164,
+    "name": "坚韧者的戒指＋3",
+    "price": 1500,
+    "registry": "blacksouls:ring_tenacious_plus_3",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 165,
+    "name": "教戒师的礼袍",
+    "price": 1000,
+    "registry": "blacksouls:disciplinarian_robe",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 166,
+    "name": "深渊之盔",
+    "price": 1000,
+    "registry": "blacksouls:abyss_helmet",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 167,
+    "name": "豌豆木之盾",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 168,
+    "name": "水银盾",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 169,
+    "name": "不吉的上衣",
+    "price": 1000,
+    "registry": "blacksouls:ominous_clothes",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 170,
+    "name": "武铁之铠",
+    "price": 1000,
+    "registry": "blacksouls:butetsu_armor",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 171,
+    "name": "噗哟噗哟＋1",
+    "price": 1500,
+    "registry": "blacksouls:ring_puyo_plus_1",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 172,
+    "name": "噗哟噗哟＋2",
+    "price": 1500,
+    "registry": "blacksouls:ring_puyo_plus_2",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 173,
+    "name": "噗哟噗哟＋3",
+    "price": 1500,
+    "registry": "blacksouls:ring_puyo_plus_3",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 174,
+    "name": "呼扭呼扭＋1",
+    "price": 1500,
+    "registry": "blacksouls:ring_hunya_plus_1",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 175,
+    "name": "呼扭呼扭＋2",
+    "price": 1500,
+    "registry": "blacksouls:ring_hunya_plus_2",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 176,
+    "name": "呼扭呼扭＋3",
+    "price": 1500,
+    "registry": "blacksouls:ring_hunya_plus_3",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 177,
+    "name": "空虚戒指＋1",
+    "price": 1500,
+    "registry": "blacksouls:ring_void_plus_1",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 178,
+    "name": "空虚戒指＋2",
+    "price": 1500,
+    "registry": "blacksouls:ring_void_plus_2",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 179,
+    "name": "空虚戒指＋3",
+    "price": 1500,
+    "registry": "blacksouls:ring_void_plus_3",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 180,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 181,
+    "name": "邪眼戒指＋1",
+    "price": 1500,
+    "registry": "blacksouls:ring_evil_eye_plus_1",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 182,
+    "name": "邪眼戒指＋2",
+    "price": 1500,
+    "registry": "blacksouls:ring_evil_eye_plus_2",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 183,
+    "name": "邪眼戒指＋3",
+    "price": 1500,
+    "registry": "blacksouls:ring_evil_eye_plus_3",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 184,
+    "name": "女神的戒指＋1",
+    "price": 1500,
+    "registry": "blacksouls:ring_goddess_plus_1",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 185,
+    "name": "女神的戒指＋2",
+    "price": 1500,
+    "registry": "blacksouls:ring_goddess_plus_2",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 186,
+    "name": "女神的戒指＋3",
+    "price": 1500,
+    "registry": "blacksouls:ring_goddess_plus_3",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 187,
+    "name": "铁之加护戒指＋1",
+    "price": 1500,
+    "registry": "blacksouls:ring_iron_protection_plus_1",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 188,
+    "name": "铁之加护戒指＋2",
+    "price": 1500,
+    "registry": "blacksouls:ring_iron_protection_plus_2",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 189,
+    "name": "铁之加护戒指＋3",
+    "price": 1500,
+    "registry": "blacksouls:ring_iron_protection_plus_3",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 190,
+    "name": "魔法方石戒指＋1",
+    "price": 1500,
+    "registry": "blacksouls:ring_magic_stone_plus_1",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 191,
+    "name": "魔法方石戒指＋2",
+    "price": 1500,
+    "registry": "blacksouls:ring_magic_stone_plus_2",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 192,
+    "name": "魔法方石戒指＋3",
+    "price": 1500,
+    "registry": "blacksouls:ring_magic_stone_plus_3",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 193,
+    "name": "狙击手戒指＋1。",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 194,
+    "name": "狙击手戒指＋2",
+    "price": 1500,
+    "registry": "blacksouls:ring_sniper_plus_2",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 195,
+    "name": "狙击手戒指＋3",
+    "price": 1500,
+    "registry": "blacksouls:ring_sniper_plus_3",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 196,
+    "name": "黄蜂戒指＋1",
+    "price": 1500,
+    "registry": "blacksouls:ring_wasp_plus_1",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 197,
+    "name": "黄蜂戒指＋2",
+    "price": 1500,
+    "registry": "blacksouls:ring_wasp_plus_2",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 198,
+    "name": "黄蜂戒指＋3",
+    "price": 1500,
+    "registry": "blacksouls:ring_wasp_plus_3",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 199,
+    "name": "刃之戒指＋1",
+    "price": 1500,
+    "registry": "blacksouls:ring_blades_plus_1",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 200,
+    "name": "刃之戒指＋2",
+    "price": 1500,
+    "registry": "blacksouls:ring_blades_plus_2",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 201,
+    "name": "刃之戒指＋3",
+    "price": 1500,
+    "registry": "blacksouls:ring_blades_plus_3",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 202,
+    "name": "守护戒指＋1",
+    "price": 1500,
+    "registry": "blacksouls:ring_guard_plus_1",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 203,
+    "name": "守护戒指＋2",
+    "price": 1500,
+    "registry": "blacksouls:ring_guard_plus_2",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 204,
+    "name": "守护戒指＋3",
+    "price": 1500,
+    "registry": "blacksouls:ring_guard_plus_3",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 205,
+    "name": "风神戒指＋1",
+    "price": 1500,
+    "registry": "blacksouls:ring_wind_god_plus_1",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 206,
+    "name": "风神戒指＋2",
+    "price": 1500,
+    "registry": "blacksouls:ring_wind_god_plus_2",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 207,
+    "name": "风神戒指＋3",
+    "price": 1500,
+    "registry": "blacksouls:ring_wind_god_plus_3",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 208,
+    "name": "咒术戒指＋1",
+    "price": 1500,
+    "registry": "blacksouls:ring_spell_plus_1",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 209,
+    "name": "咒术戒指＋2",
+    "price": 1500,
+    "registry": "blacksouls:ring_spell_plus_2",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 210,
+    "name": "咒术戒指＋3",
+    "price": 1500,
+    "registry": "blacksouls:ring_spell_plus_3",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 211,
+    "name": "伦蒂尼恩的戒指＋1",
+    "price": 1500,
+    "registry": "blacksouls:ring_lundinian_plus_1",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 212,
+    "name": "伦蒂尼恩的戒指＋2",
+    "price": 1500,
+    "registry": "blacksouls:ring_lundinian_plus_2",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 213,
+    "name": "伦蒂尼恩的戒指＋3",
+    "price": 1500,
+    "registry": "blacksouls:ring_lundinian_plus_3",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 214,
+    "name": "削落戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_cut_down",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 215,
+    "name": "黄之布",
+    "price": 1000,
+    "registry": "blacksouls:yellow_cloth",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 216,
+    "name": "守护天使",
+    "price": 1000,
+    "registry": "blacksouls:guardian_angel",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 217,
+    "name": "两面性的小盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 218,
+    "name": "剧作家的头巾",
+    "price": 1000,
+    "registry": "blacksouls:playwright_headscarf",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 219,
+    "name": "伪天使的花冠",
+    "price": 1000,
+    "registry": "blacksouls:false_angel_crown",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 220,
+    "name": "夜空的神秘",
+    "price": 500000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 221,
+    "name": "食尸鬼戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_ghoul",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 222,
+    "name": "全能戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_almighty",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 223,
+    "name": "罪恶戒指+1",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 224,
+    "name": "罪恶戒指+2",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 225,
+    "name": "罪恶戒指+3",
+    "price": 1500,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 226,
+    "name": "独角兽戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_unicorn",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 227,
+    "name": "狮子戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_lion",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 228,
+    "name": "虎狐戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_tiger_fox",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 229,
+    "name": "冰方石戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_ice_stone",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 230,
+    "name": "古王戒指",
+    "price": 10000,
+    "registry": "blacksouls:ring_old_king",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 231,
+    "name": "白熊戒指",
+    "price": 10000,
+    "registry": "blacksouls:ring_polar_bear",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 232,
+    "name": "防王戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_defense_king",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 233,
+    "name": "冬魔导士的外套",
+    "price": 1000,
+    "registry": "blacksouls:winter_mage_coat",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 234,
+    "name": "冬骑士之铠",
+    "price": 1000,
+    "registry": "blacksouls:winter_knight_armor",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 235,
+    "name": "冬骑士之盔",
+    "price": 1000,
+    "registry": "blacksouls:winter_knight_helmet",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 236,
+    "name": "无风之衣",
+    "price": 1000,
+    "registry": "blacksouls:windless_clothes",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 237,
+    "name": "幽灵猎人之盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 238,
+    "name": "破耐戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_break_resistance",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 239,
+    "name": "十字架的大盾",
+    "price": 1000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 240,
+    "name": "黑骑士戒指",
+    "price": 10000,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 241,
+    "name": "逆袭戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_counterattack",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 242,
+    "name": "圣森戒指",
+    "price": 1000,
+    "registry": "blacksouls:ring_holy_forest",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 243,
+    "name": "奇迹的巫女装束",
+    "price": 1000,
+    "registry": "blacksouls:miracle_shrine_maiden_garb",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 244,
+    "name": "糖蜜戒指",
+    "price": 1500,
+    "registry": "blacksouls:ring_molasses",
+    "source": "exact_original_name_to_zh_cn_and_literal_registered_id"
+  },
+  {
+    "kind": 2,
+    "id": 245,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 246,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 247,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 248,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 249,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 250,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 251,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 252,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 253,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 254,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 255,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 256,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 257,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 258,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 259,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  },
+  {
+    "kind": 2,
+    "id": 260,
+    "name": "",
+    "price": 0,
+    "registry": null,
+    "source": "no_exact_registered_name_match"
+  }
+]

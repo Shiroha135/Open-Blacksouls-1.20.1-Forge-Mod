@@ -2794,5 +2794,19 @@
   "message.blacksouls.party.new_leader": "%s is now the party leader.",
   "message.blacksouls.party.offline": "%s went offline. Their party slot is reserved.",
   "message.blacksouls.party.rejoined": "%s came online and automatically rejoined the party.",
-  "message.blacksouls.party.rejoined_self": "You automatically rejoined your previous party."
+  "message.blacksouls.party.rejoined_self": "You automatically rejoined your previous party.",
+  "entity.blacksouls.holmes": "Holmes",
+  "entity.blacksouls.holmes.name": "Holmes",
+  "item.blacksouls.holmes_spawn_egg": "Holmes Spawn Egg",
+  "avatar.blacksouls.holmes": "Holmes",
+  "dialogue.blacksouls.holmes.intro_1": "「This is a dangerous place.\n　Yet even after living here so long,\n　this is the first time I have seen a beast like that……」",
+  "dialogue.blacksouls.holmes.intro_2": "「These streets have become a banquet hall for beasts and madmen.\n　Far more people act first and think later than the other way around.」",
+  "dialogue.blacksouls.holmes.intro_3": "「I say this for your sake.\n　You had best leave this district at once.」",
+  "dialogue.blacksouls.holmes.wounded_1": "「Are you hurt?\n　It can't be helped…… take this.」",
+  "dialogue.blacksouls.holmes.main_1": "「§cBeware if you see mist§f.\n　It is a warning mark carved by the Cheshire Cat.\n　Something terrible may await you beyond the fog.」",
+  "dialogue.blacksouls.holmes.alice_1": "「Alice……?\n　I do not know of such a girl……」",
+  "dialogue.blacksouls.holmes.alice_2": "「If you are looking for someone, go to the §ctavern to the southwest§f.\n　It serves only poor beer and harsh gin,\n　but it is still a decent place to exchange information.」",
+  "dialogue.blacksouls.holmes.ripper_1": "「……By the way,\n　have you heard of a killer called §cJack the Ripper§f?」",
+  "dialogue.blacksouls.holmes.ripper_2": "「…No…… never mind.\n　Forget I said anything.」",
+  "dialogue.blacksouls.holmes.ripper_3": "「I must capture him myself……」"
 }
