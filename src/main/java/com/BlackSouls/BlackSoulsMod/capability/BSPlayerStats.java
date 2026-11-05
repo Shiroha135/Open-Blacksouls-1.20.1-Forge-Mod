@@ -22,7 +22,6 @@ public class BSPlayerStats {
     public static final int NORMAL_MAX_LEVEL = 999;
     public static final int DEVELOPER_MAX_LEVEL = Integer.MAX_VALUE - 2;
     private static final long[] EXP_THRESHOLDS = createExpThresholds();
-    private static final double[] NODEN_HP_RATES = {1.10D, 1.25D, 1.35D, 1.50D};
 
     public static final double HARD_CAP_HP = 1099998;
     public static final double HARD_CAP_MP = 109998;
@@ -422,6 +421,13 @@ public class BSPlayerStats {
     }
 
     public void recalculateStats() {
+        recalculateBaseStats();
+        applyOriginalSpiritParameters();
+        var spirit = getOriginalSpirit();
+        if (spirit != null) critRate = Math.min(100.0D, critRate + spirit.sum(22, 2) * 100.0D);
+    }
+
+    public void recalculateBaseStats() {
         int l = Math.max(1, Math.min(getLevelLimit(), this.level));
 
         double baseHp = getRMStat(l, 638, 6680, 61);
@@ -434,8 +440,6 @@ public class BSPlayerStats {
         double baseSpeed = getRMStat(l, 40, 318, 2);
 
         double finalHp = baseHp + this.bonusHp;
-
-        if (getNodenHpMultiplier() != 1.0D) finalHp = Math.floor(finalHp * getNodenHpMultiplier());
 
         if (this.developerLimitBreak) {
             this.hp = Math.max(1.0D, finalHp);
@@ -476,14 +480,53 @@ public class BSPlayerStats {
     }
 
     public double getNodenHpMultiplier() {
-        if (!"noden".equals(activeCovenant)) return 1.0D;
-        int rank = originalSpiritsInitialized ? originalSpiritPartner - 1 : nodenCovenantLevel;
-        if (rank < 0 || rank > 3) return 1.0D;
-        return NODEN_HP_RATES[rank];
+        return getOriginalSpiritRate(21, 0);
     }
 
     public double getNodenItemRecoveryMultiplier() {
-        return getNodenHpMultiplier() == 1.0D ? 1.0D : 2.0D;
+        return getOriginalSpiritRate(23, 3);
+    }
+
+    public com.BlackSouls.BlackSoulsMod.util.OriginalSpiritData.Entry getOriginalSpirit() {
+        int id = originalSpiritsInitialized ? originalSpirits.contains(originalSpiritPartner) ? originalSpiritPartner : 0
+                : "noden".equals(activeCovenant) && nodenCovenantLevel >= 0 && nodenCovenantLevel <= 3 ? nodenCovenantLevel + 1 : 0;
+        return com.BlackSouls.BlackSoulsMod.util.OriginalSpiritData.get(id);
+    }
+
+    public double getOriginalSpiritRate(int code, int dataId) {
+        var spirit = getOriginalSpirit();
+        return spirit == null ? 1.0D : spirit.rate(code, dataId);
+    }
+
+    public void applyOriginalSpiritParameters() {
+        var spirit = getOriginalSpirit();
+        if (spirit == null) return;
+        hp = applyOriginalSpiritParameter(hp, spirit.rate(21, 0), spirit.parameterAddition(0), 1.0D, HARD_CAP_HP);
+        maxMp = applyOriginalSpiritParameter(maxMp, spirit.rate(21, 1), spirit.parameterAddition(1), 0.0D, HARD_CAP_MP);
+        attack = applyOriginalSpiritParameter(attack, spirit.rate(21, 2), spirit.parameterAddition(2), 1.0D, HARD_CAP_OTHER);
+        defense = applyOriginalSpiritParameter(defense, spirit.rate(21, 3), spirit.parameterAddition(3), 1.0D, HARD_CAP_OTHER);
+        magicAttack = applyOriginalSpiritParameter(magicAttack, spirit.rate(21, 4), spirit.parameterAddition(4), 1.0D, HARD_CAP_OTHER);
+        magicDefense = applyOriginalSpiritParameter(magicDefense, spirit.rate(21, 5), spirit.parameterAddition(5), 1.0D, HARD_CAP_OTHER);
+        speed = applyOriginalSpiritParameter(speed, spirit.rate(21, 6), spirit.parameterAddition(6), 1.0D, HARD_CAP_OTHER);
+        luck = applyOriginalSpiritParameter(luck, spirit.rate(21, 7), spirit.parameterAddition(7), 1.0D, HARD_CAP_OTHER);
+    }
+
+    private double applyOriginalSpiritParameter(double value, double rate, int addition, double minimum, double maximum) {
+        if (rate == 1.0D && addition == 0) return value;
+        double result = Math.max(minimum, Math.floor(value * rate) + addition);
+        return developerLimitBreak ? result : Math.min(maximum, result);
+    }
+
+    public void applyOriginalSpiritDerivedStats() {
+        var spirit = getOriginalSpirit();
+        if (spirit == null) return;
+        evasion += spirit.sum(22, 1) * 100.0D;
+        critRate += spirit.sum(22, 2) * 100.0D;
+        magicEvasion += spirit.sum(22, 4) * 100.0D;
+        hpRegenRate += spirit.sum(22, 7);
+        mpRegenRate += spirit.sum(22, 8);
+        targetingRate *= spirit.rate(23, 0);
+        mpCostRate *= spirit.rate(23, 4);
     }
 
     public static class PurgeCommissionTask {

@@ -372,6 +372,7 @@ public class StatEventHandler {
 
     public static double getItemRecoveryMultiplier(LivingEntity entity) {
         return entity.getCapability(BSPlayerStats.CAPABILITY).map(BSPlayerStats::getNodenItemRecoveryMultiplier).orElse(1.0D)
+                * getOriginalSpiritRate(entity, 23, 2)
                 * Math.pow(2.0D, getBaubleCount(entity, BlackSouls.RING_TOTO.get()))
                 * Math.pow(0.5D, getBaubleCount(entity, BlackSouls.RING_RED_TEARSTONE.get()))
                 * Math.pow(0.8D, getOriginalRingCount(entity, ItemOriginalRing.Profile.CUT_DOWN));
@@ -388,7 +389,8 @@ public class StatEventHandler {
     }
 
     private static double getGuardEffectMultiplier(LivingEntity entity) {
-        double multiplier = Math.pow(1.5D, getBaubleCount(entity, BlackSouls.RING_TENACIOUS.get()))
+        double multiplier = getOriginalSpiritRate(entity, 23, 1)
+                * Math.pow(1.5D, getBaubleCount(entity, BlackSouls.RING_TENACIOUS.get()))
                 * Math.pow(2.0D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_1))
                 * Math.pow(2.5D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_2))
                 * Math.pow(3.0D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_3));
@@ -398,6 +400,10 @@ public class StatEventHandler {
             multiplier *= 2.0D;
         }
         return multiplier;
+    }
+
+    public static double getOriginalSpiritRate(LivingEntity entity, int code, int dataId) {
+        return entity.getCapability(BSPlayerStats.CAPABILITY).map(stats -> stats.getOriginalSpiritRate(code, dataId)).orElse(1.0D);
     }
 
     private static boolean hasPorcupineShield(Player player) {
@@ -1724,8 +1730,7 @@ public class StatEventHandler {
 
     private static void applyStats(Player player, BaubleCounter counts, BSPlayerStats stats) {
         if (stats != null) {
-            stats.recalculateStats();
-            if (stats.getNodenHpMultiplier() != 1.0D) stats.hp = stats.getBaseHpBeforeCovenant();
+            stats.recalculateBaseStats();
             resetDerivedStats(stats);
             applyCovenantBonuses(stats);
 
@@ -2707,9 +2712,10 @@ public class StatEventHandler {
                 stats.evasion = 0.0;
                 stats.defense *= 0.01;
             }
-            if (stats.getNodenHpMultiplier() != 1.0D) stats.hp = Math.floor(stats.hp * stats.getNodenHpMultiplier());
+            stats.applyOriginalSpiritParameters();
             MinecraftForge.EVENT_BUS.post(new BSStatsRecalcEvent(player, stats));
             stats.magicEvasion += stats.evasion;
+            stats.applyOriginalSpiritDerivedStats();
             clampCalculatedStats(player, stats);
             syncVanillaAttributes(player, stats);
         }

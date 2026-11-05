@@ -4,6 +4,7 @@ import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalDatabaseEnemy;
 import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalTurnBattleEnemy;
 import com.BlackSouls.BlackSoulsMod.entity.EntityTurnBattleMonster;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalCombatData;
+import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -170,6 +171,10 @@ public final class OriginalBattleState {
 
     public List<BSOriginalCombatData.Feature> features(LivingEntity entity) {
         List<BSOriginalCombatData.Feature> features = new ArrayList<>();
+        entity.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
+            var spirit = stats.getOriginalSpirit();
+            if (spirit != null) features.addAll(spirit.battleFeatures());
+        });
         int profileId = entity instanceof EntityOriginalDatabaseEnemy original ? original.getProfileId()
                 : entity instanceof EntityOriginalTurnBattleEnemy legacy ? legacy.getOriginalBattleProfileId() : 0;
         if (profileId > 0) {

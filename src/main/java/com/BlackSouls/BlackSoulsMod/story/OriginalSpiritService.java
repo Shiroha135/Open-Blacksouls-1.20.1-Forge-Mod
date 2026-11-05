@@ -56,14 +56,14 @@ public final class OriginalSpiritService {
         if (spiritId != 0 && (!stats.originalSpirits.contains(spiritId) || !OriginalSpiritData.supported(spiritId))) return false;
         if (stats.originalSpiritPartner == spiritId && (spiritId != 0 || stats.activeCovenant.isEmpty())) return false;
         stats.originalSpiritPartner = spiritId;
-        stats.activeCovenant = spiritId == 0 ? "" : "noden";
+        stats.activeCovenant = spiritId == 0 ? "" : spiritId <= 4 ? "noden" : "spirit:" + spiritId;
         synchronizeLegacyNoden(stats);
         update(player);
         return true;
     }
 
     public static void synchronizeLegacyNoden(BSPlayerStats stats) {
-        int highest = stats.originalSpirits.stream().filter(OriginalSpiritData::supported).mapToInt(Integer::intValue).max().orElse(0);
+        int highest = stats.originalSpirits.stream().filter(id -> id >= 1 && id <= 4).mapToInt(Integer::intValue).max().orElse(0);
         if (highest == 0) {
             stats.unlockedCovenants.remove("noden");
             stats.nodenCovenantLevel = 0;
@@ -71,8 +71,9 @@ public final class OriginalSpiritService {
             if (!stats.unlockedCovenants.contains("noden")) stats.unlockedCovenants.add("noden");
             stats.nodenCovenantLevel = highest - 1;
         }
-        if (OriginalSpiritData.supported(stats.originalSpiritPartner)) stats.activeCovenant = "noden";
-        else if ("noden".equals(stats.activeCovenant)) stats.activeCovenant = "";
+        if (stats.originalSpiritPartner > 0 && stats.originalSpirits.contains(stats.originalSpiritPartner)) {
+            stats.activeCovenant = stats.originalSpiritPartner <= 4 ? "noden" : "spirit:" + stats.originalSpiritPartner;
+        } else if ("noden".equals(stats.activeCovenant) || stats.activeCovenant.startsWith("spirit:")) stats.activeCovenant = "";
     }
 
     private static void initialize(BSPlayerStats stats) {
