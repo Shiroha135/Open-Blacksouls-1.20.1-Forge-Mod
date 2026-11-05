@@ -160,7 +160,10 @@ public final class OriginalNpcPlacements {
             npc.discard();
             return Outcome.SPAWN_FAILED;
         }
-        data.record(npcId, npc.getUUID());
+        if (!data.record(npcId, npc.getUUID()) && !npc.getUUID().equals(data.entityId(npcId))) {
+            npc.discard();
+            return Outcome.SPAWN_FAILED;
+        }
         BlackSouls.LOGGER.info("Added original NPC {} at {} in {}", npcId, site.position(), level.dimension().location());
         return Outcome.INSTALLED;
     }
