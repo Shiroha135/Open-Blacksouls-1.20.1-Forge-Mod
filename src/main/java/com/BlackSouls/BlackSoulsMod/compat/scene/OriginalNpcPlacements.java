@@ -32,6 +32,8 @@ import java.util.Set;
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class OriginalNpcPlacements {
     public static final BlockPos CEMETERY_BONFIRE = new BlockPos(786, 11, -607);
+    public static final BlockPos MARKET_ROOM_BONFIRE = new BlockPos(341, -59, -12);
+    public static final BlockPos MARKET_ROOM_ROASTER_BONFIRE = new BlockPos(336, -59, -11);
     private static final double NEARBY_DISTANCE_SQUARED = 64.0D * 64.0D;
     private static final List<Site> SITES = List.of(
             new Site("map002_ev059", new Vec3(615.5D, 13.0D, -531.5D), 180.0F,
@@ -68,7 +70,11 @@ public final class OriginalNpcPlacements {
             new Site("map033_ev023", new Vec3(788.5D, 11.0D, -607.5D), 90.0F,
                     "minecraft:grass_block", cemeteryLandmarks()),
             new Site("map086_ev021", new Vec3(307.5D, -59.0D, -83.5D), 180.0F,
-                    "blacksouls2:y_yu_di_ban", fishMarketLandmarks()));
+                    "blacksouls2:y_yu_di_ban", fishMarketLandmarks()),
+            new Site("map091_ev020", new Vec3(336.5D, -59.0D, -11.5D), 0.0F,
+                    "minecraft:blue_ice", marketRoomLandmarks()),
+            new Site("map091_ev022", new Vec3(344.5D, -58.984375D, -13.5D), 180.0F,
+                    "minecraft:blue_ice", marketRoomLandmarks(), true));
 
     private OriginalNpcPlacements() {
     }
@@ -109,7 +115,8 @@ public final class OriginalNpcPlacements {
 
     public static String redHoodSourceAtBonfire(ServerLevel level, BlockPos position) {
         if (!hasDeployedMap(level)) return null;
-        return CEMETERY_BONFIRE.equals(position) ? "map033_ev023" : null;
+        if (CEMETERY_BONFIRE.equals(position)) return "map033_ev023";
+        return MARKET_ROOM_BONFIRE.equals(position) || MARKET_ROOM_ROASTER_BONFIRE.equals(position) ? "map091_ev022" : null;
     }
 
     public static Outcome install(ServerPlayer player, String npcId) {
@@ -241,6 +248,17 @@ public final class OriginalNpcPlacements {
                 landmark(290, -58, -105, "minecraft:oak_sign", Map.of("rotation", "8")),
                 landmark(307, -59, -83, "dustydecorations:rope", Map.of("axis", "y")),
                 landmark(307, -56, -83, "minecraft:oak_fence", Map.of()));
+    }
+
+    private static List<Landmark> marketRoomLandmarks() {
+        return List.of(
+                landmark(341, -61, -20, "minecraft:command_block", Map.of("facing", "up", "conditional", "false")),
+                landmark(305, -61, -20, "minecraft:command_block", Map.of("facing", "up", "conditional", "false")),
+                landmark(341, -59, -12, "minecraft:campfire", Map.of("facing", "south")),
+                landmark(336, -59, -11, "minecraft:campfire", Map.of("facing", "south")),
+                landmark(336, -58, -11, "butchersdelight:roaster", Map.of("facing", "north")),
+                landmark(344, -59, -13, "dustydecorations:cod_barrel", Map.of("facing", "north")),
+                landmark(338, -60, -13, "minecraft:blue_ice", Map.of()));
     }
 
     private static List<Landmark> wardSeatLandmarks(int x, int z, String type) {
