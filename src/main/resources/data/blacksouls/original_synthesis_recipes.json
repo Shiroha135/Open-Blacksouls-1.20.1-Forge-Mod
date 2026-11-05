@@ -1,0 +1,7460 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "scriptsSha256": "ba3e506e47c31acfc5ff30572b94677c2cd309bfd79b22e0fb9f01dd5adb5a24",
+    "databaseHashes": {
+      "Items": "199bb18718c5135e61db5781f7a7b994f9baaa312a766a27017f9c2a6cc128d8",
+      "Weapons": "489b93aa75ff5597ce15698a057bf27cb44d3a4d658adfb634340a80f14d2bc4",
+      "Armors": "0f185e88ec538611930745aa2a3d23abab21cb4cf824df8ba1e6885fc90f02b8",
+      "CommonEvents": "68aa6ebf5c42f0e362080bf48af601b33322ae51e3f343ed746a943fb9d837ea",
+      "Troops": "c0ea391c0413e634d3d09b42c02b26af7f584c1d263a0854c76adddd9beac5be",
+      "System": "1260a03acc2aa71bf5c3a041ff7a1da74a67f05de7e85ee9e5262f553558d199"
+    },
+    "scriptIndex": 153
+  },
+  "configuration": {
+    "costView": false,
+    "categories": {
+      "item": false,
+      "weapon": true,
+      "armor": false,
+      "keyItem": false
+    }
+  },
+  "recipes": [
+    {
+      "kind": 1,
+      "id": 102,
+      "name": "骑士之剑＋1",
+      "cost": 0,
+      "sourceLine": 42,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 101,
+          "quantity": 1,
+          "name": "骑士之剑"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 103,
+      "name": "骑士之剑＋2",
+      "cost": 0,
+      "sourceLine": 43,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 102,
+          "quantity": 1,
+          "name": "骑士之剑＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 104,
+      "name": "骑士之剑＋3",
+      "cost": 0,
+      "sourceLine": 44,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 103,
+          "quantity": 1,
+          "name": "骑士之剑＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 105,
+      "name": "骑士之剑＋4",
+      "cost": 0,
+      "sourceLine": 45,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 104,
+          "quantity": 1,
+          "name": "骑士之剑＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 106,
+      "name": "骑士之剑＋5",
+      "cost": 0,
+      "sourceLine": 46,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 105,
+          "quantity": 1,
+          "name": "骑士之剑＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 107,
+      "name": "骑士之剑＋6",
+      "cost": 0,
+      "sourceLine": 47,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 106,
+          "quantity": 1,
+          "name": "骑士之剑＋5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 108,
+      "name": "骑士之剑＋7",
+      "cost": 0,
+      "sourceLine": 48,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 107,
+          "quantity": 1,
+          "name": "骑士之剑＋6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 109,
+      "name": "骑士之剑＋8",
+      "cost": 0,
+      "sourceLine": 49,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 108,
+          "quantity": 1,
+          "name": "骑士之剑＋7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 110,
+      "name": "骑士之剑＋9",
+      "cost": 0,
+      "sourceLine": 50,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 109,
+          "quantity": 1,
+          "name": "骑士之剑＋8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 111,
+      "name": "骑士王之剑",
+      "cost": 0,
+      "sourceLine": 51,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 110,
+          "quantity": 1,
+          "name": "骑士之剑＋9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 113,
+      "name": "盗贼短刀＋1",
+      "cost": 0,
+      "sourceLine": 52,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 112,
+          "quantity": 1,
+          "name": "盗贼短刀"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 114,
+      "name": "盗贼短刀＋2",
+      "cost": 0,
+      "sourceLine": 53,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 113,
+          "quantity": 1,
+          "name": "盗贼短刀＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 115,
+      "name": "盗贼短刀＋3",
+      "cost": 0,
+      "sourceLine": 54,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 114,
+          "quantity": 1,
+          "name": "盗贼短刀＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 116,
+      "name": "盗贼短刀＋4",
+      "cost": 0,
+      "sourceLine": 55,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 115,
+          "quantity": 1,
+          "name": "盗贼短刀＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 117,
+      "name": "盗贼短刀＋5",
+      "cost": 0,
+      "sourceLine": 56,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 116,
+          "quantity": 1,
+          "name": "盗贼短刀＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 118,
+      "name": "盗贼短刀＋6",
+      "cost": 0,
+      "sourceLine": 57,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 117,
+          "quantity": 1,
+          "name": "盗贼短刀＋5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 119,
+      "name": "盗贼短刀＋7",
+      "cost": 0,
+      "sourceLine": 58,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 118,
+          "quantity": 1,
+          "name": "盗贼短刀＋6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 120,
+      "name": "盗贼短刀＋8",
+      "cost": 0,
+      "sourceLine": 59,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 119,
+          "quantity": 1,
+          "name": "盗贼短刀＋7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 121,
+      "name": "盗贼短刀＋9",
+      "cost": 0,
+      "sourceLine": 60,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 120,
+          "quantity": 1,
+          "name": "盗贼短刀＋8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 122,
+      "name": "大盗贼的短刀",
+      "cost": 0,
+      "sourceLine": 61,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 121,
+          "quantity": 1,
+          "name": "盗贼短刀＋9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 124,
+      "name": "大剑＋1",
+      "cost": 0,
+      "sourceLine": 62,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 123,
+          "quantity": 1,
+          "name": "大剑"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 125,
+      "name": "大剑＋2",
+      "cost": 0,
+      "sourceLine": 63,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 124,
+          "quantity": 1,
+          "name": "大剑＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 126,
+      "name": "大剑＋3",
+      "cost": 0,
+      "sourceLine": 64,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 125,
+          "quantity": 1,
+          "name": "大剑＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 127,
+      "name": "大剑＋4",
+      "cost": 0,
+      "sourceLine": 65,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 126,
+          "quantity": 1,
+          "name": "大剑＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 128,
+      "name": "大剑＋5",
+      "cost": 0,
+      "sourceLine": 66,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 127,
+          "quantity": 1,
+          "name": "大剑＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 129,
+      "name": "大剑＋6",
+      "cost": 0,
+      "sourceLine": 67,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 128,
+          "quantity": 1,
+          "name": "大剑＋5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 130,
+      "name": "大剑＋7",
+      "cost": 0,
+      "sourceLine": 68,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 129,
+          "quantity": 1,
+          "name": "大剑＋6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 131,
+      "name": "大剑＋8",
+      "cost": 0,
+      "sourceLine": 69,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 130,
+          "quantity": 1,
+          "name": "大剑＋7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 132,
+      "name": "大剑＋9",
+      "cost": 0,
+      "sourceLine": 70,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 131,
+          "quantity": 1,
+          "name": "大剑＋8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 133,
+      "name": "巨人剑",
+      "cost": 0,
+      "sourceLine": 71,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 132,
+          "quantity": 1,
+          "name": "大剑＋9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 135,
+      "name": "魔刀＋1",
+      "cost": 0,
+      "sourceLine": 72,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 134,
+          "quantity": 1,
+          "name": "魔刀"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 136,
+      "name": "魔刀＋2",
+      "cost": 0,
+      "sourceLine": 73,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 135,
+          "quantity": 1,
+          "name": "魔刀＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 137,
+      "name": "魔刀＋3",
+      "cost": 0,
+      "sourceLine": 74,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 136,
+          "quantity": 1,
+          "name": "魔刀＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 138,
+      "name": "魔刀＋4",
+      "cost": 0,
+      "sourceLine": 75,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 137,
+          "quantity": 1,
+          "name": "魔刀＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 139,
+      "name": "魔刀＋5",
+      "cost": 0,
+      "sourceLine": 76,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 138,
+          "quantity": 1,
+          "name": "魔刀＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 140,
+      "name": "魔刀＋6",
+      "cost": 0,
+      "sourceLine": 77,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 139,
+          "quantity": 1,
+          "name": "魔刀＋5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 141,
+      "name": "魔刀＋7",
+      "cost": 0,
+      "sourceLine": 78,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 140,
+          "quantity": 1,
+          "name": "魔刀＋6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 142,
+      "name": "魔刀＋8",
+      "cost": 0,
+      "sourceLine": 79,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 141,
+          "quantity": 1,
+          "name": "魔刀＋7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 143,
+      "name": "魔刀＋9",
+      "cost": 0,
+      "sourceLine": 80,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 142,
+          "quantity": 1,
+          "name": "魔刀＋8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 144,
+      "name": "魔神刀",
+      "cost": 0,
+      "sourceLine": 81,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 143,
+          "quantity": 1,
+          "name": "魔刀＋9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 146,
+      "name": "阔头枪＋1",
+      "cost": 0,
+      "sourceLine": 82,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 145,
+          "quantity": 1,
+          "name": "阔头枪"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 147,
+      "name": "阔头枪＋2",
+      "cost": 0,
+      "sourceLine": 83,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 146,
+          "quantity": 1,
+          "name": "阔头枪＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 148,
+      "name": "阔头枪＋3",
+      "cost": 0,
+      "sourceLine": 84,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 147,
+          "quantity": 1,
+          "name": "阔头枪＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 149,
+      "name": "阔头枪＋4",
+      "cost": 0,
+      "sourceLine": 85,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 148,
+          "quantity": 1,
+          "name": "阔头枪＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 150,
+      "name": "阔头枪＋5",
+      "cost": 0,
+      "sourceLine": 86,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 149,
+          "quantity": 1,
+          "name": "阔头枪＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 151,
+      "name": "阔头枪＋6",
+      "cost": 0,
+      "sourceLine": 87,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 150,
+          "quantity": 1,
+          "name": "阔头枪＋5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 152,
+      "name": "阔头枪＋7",
+      "cost": 0,
+      "sourceLine": 88,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 151,
+          "quantity": 1,
+          "name": "阔头枪＋6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 153,
+      "name": "阔头枪＋8",
+      "cost": 0,
+      "sourceLine": 89,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 152,
+          "quantity": 1,
+          "name": "阔头枪＋7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 154,
+      "name": "阔头枪＋9",
+      "cost": 0,
+      "sourceLine": 90,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 153,
+          "quantity": 1,
+          "name": "阔头枪＋8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 155,
+      "name": "冈格尼尔",
+      "cost": 0,
+      "sourceLine": 91,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 154,
+          "quantity": 1,
+          "name": "阔头枪＋9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 157,
+      "name": "棍棒＋1",
+      "cost": 0,
+      "sourceLine": 92,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 156,
+          "quantity": 1,
+          "name": "棍棒"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 158,
+      "name": "棍棒＋2",
+      "cost": 0,
+      "sourceLine": 93,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 157,
+          "quantity": 1,
+          "name": "棍棒＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 159,
+      "name": "棍棒＋3",
+      "cost": 0,
+      "sourceLine": 94,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 158,
+          "quantity": 1,
+          "name": "棍棒＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 160,
+      "name": "棍棒＋4",
+      "cost": 0,
+      "sourceLine": 95,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 159,
+          "quantity": 1,
+          "name": "棍棒＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 161,
+      "name": "棍棒＋5",
+      "cost": 0,
+      "sourceLine": 96,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 160,
+          "quantity": 1,
+          "name": "棍棒＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 162,
+      "name": "棍棒＋6",
+      "cost": 0,
+      "sourceLine": 97,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 161,
+          "quantity": 1,
+          "name": "棍棒＋5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 163,
+      "name": "棍棒＋7",
+      "cost": 0,
+      "sourceLine": 98,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 162,
+          "quantity": 1,
+          "name": "棍棒＋6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 164,
+      "name": "棍棒＋8",
+      "cost": 0,
+      "sourceLine": 99,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 163,
+          "quantity": 1,
+          "name": "棍棒＋7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 165,
+      "name": "棍棒＋9",
+      "cost": 0,
+      "sourceLine": 100,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 164,
+          "quantity": 1,
+          "name": "棍棒＋8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 166,
+      "name": "王棒",
+      "cost": 0,
+      "sourceLine": 101,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 165,
+          "quantity": 1,
+          "name": "棍棒＋9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 168,
+      "name": "魔术师之杖＋1",
+      "cost": 0,
+      "sourceLine": 102,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 167,
+          "quantity": 1,
+          "name": "魔术师之杖"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 169,
+      "name": "魔术师之杖＋2",
+      "cost": 0,
+      "sourceLine": 103,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 168,
+          "quantity": 1,
+          "name": "魔术师之杖＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 170,
+      "name": "魔术师之杖＋3",
+      "cost": 0,
+      "sourceLine": 104,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 169,
+          "quantity": 1,
+          "name": "魔术师之杖＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 171,
+      "name": "魔术师之杖＋4",
+      "cost": 0,
+      "sourceLine": 105,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 170,
+          "quantity": 1,
+          "name": "魔术师之杖＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 172,
+      "name": "魔术师之杖＋5",
+      "cost": 0,
+      "sourceLine": 106,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 171,
+          "quantity": 1,
+          "name": "魔术师之杖＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 173,
+      "name": "魔术师之杖＋6",
+      "cost": 0,
+      "sourceLine": 107,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 172,
+          "quantity": 1,
+          "name": "魔术师之杖＋5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 174,
+      "name": "魔术师之杖＋7",
+      "cost": 0,
+      "sourceLine": 108,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 173,
+          "quantity": 1,
+          "name": "魔术师之杖＋6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 175,
+      "name": "魔术师之杖＋8",
+      "cost": 0,
+      "sourceLine": 109,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 174,
+          "quantity": 1,
+          "name": "魔术师之杖＋7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 176,
+      "name": "魔术师之杖＋9",
+      "cost": 0,
+      "sourceLine": 110,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 175,
+          "quantity": 1,
+          "name": "魔术师之杖＋8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 177,
+      "name": "万象之杖",
+      "cost": 0,
+      "sourceLine": 111,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 176,
+          "quantity": 1,
+          "name": "魔术师之杖＋9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 179,
+      "name": "猎弓＋1",
+      "cost": 0,
+      "sourceLine": 112,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 178,
+          "quantity": 1,
+          "name": "猎弓"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 180,
+      "name": "猎弓＋2",
+      "cost": 0,
+      "sourceLine": 113,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 179,
+          "quantity": 1,
+          "name": "猎弓＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 181,
+      "name": "猎弓＋3",
+      "cost": 0,
+      "sourceLine": 114,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 180,
+          "quantity": 1,
+          "name": "猎弓＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 182,
+      "name": "猎弓＋4",
+      "cost": 0,
+      "sourceLine": 115,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 181,
+          "quantity": 1,
+          "name": "猎弓＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 183,
+      "name": "猎弓＋5",
+      "cost": 0,
+      "sourceLine": 116,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 182,
+          "quantity": 1,
+          "name": "猎弓＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 184,
+      "name": "猎弓＋6",
+      "cost": 0,
+      "sourceLine": 117,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 183,
+          "quantity": 1,
+          "name": "猎弓＋5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 185,
+      "name": "猎弓＋7",
+      "cost": 0,
+      "sourceLine": 118,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 184,
+          "quantity": 1,
+          "name": "猎弓＋6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 186,
+      "name": "猎弓＋8",
+      "cost": 0,
+      "sourceLine": 119,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 185,
+          "quantity": 1,
+          "name": "猎弓＋7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 187,
+      "name": "猎弓＋9",
+      "cost": 0,
+      "sourceLine": 120,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 186,
+          "quantity": 1,
+          "name": "猎弓＋8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 188,
+      "name": "勇者之弓",
+      "cost": 0,
+      "sourceLine": 121,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 187,
+          "quantity": 1,
+          "name": "猎弓＋9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 190,
+      "name": "断肉大斧＋1",
+      "cost": 0,
+      "sourceLine": 122,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 189,
+          "quantity": 1,
+          "name": "断肉大斧"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 191,
+      "name": "断肉大斧＋2",
+      "cost": 0,
+      "sourceLine": 123,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 190,
+          "quantity": 1,
+          "name": "断肉大斧＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 192,
+      "name": "断肉大斧＋3",
+      "cost": 0,
+      "sourceLine": 124,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 191,
+          "quantity": 1,
+          "name": "断肉大斧＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 193,
+      "name": "断肉大斧＋4",
+      "cost": 0,
+      "sourceLine": 125,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 192,
+          "quantity": 1,
+          "name": "断肉大斧＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 194,
+      "name": "断肉大斧＋5",
+      "cost": 0,
+      "sourceLine": 126,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 193,
+          "quantity": 1,
+          "name": "断肉大斧＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 195,
+      "name": "断肉大斧＋6",
+      "cost": 0,
+      "sourceLine": 127,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 194,
+          "quantity": 1,
+          "name": "断肉大斧＋5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 196,
+      "name": "断肉大斧＋7",
+      "cost": 0,
+      "sourceLine": 128,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 195,
+          "quantity": 1,
+          "name": "断肉大斧＋6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 197,
+      "name": "断肉大斧＋8",
+      "cost": 0,
+      "sourceLine": 129,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 196,
+          "quantity": 1,
+          "name": "断肉大斧＋7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 198,
+      "name": "断肉大斧＋9",
+      "cost": 0,
+      "sourceLine": 130,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 197,
+          "quantity": 1,
+          "name": "断肉大斧＋8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 199,
+      "name": "虐杀者大斧",
+      "cost": 0,
+      "sourceLine": 131,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 198,
+          "quantity": 1,
+          "name": "断肉大斧＋9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 201,
+      "name": "锤矛＋1",
+      "cost": 0,
+      "sourceLine": 132,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 200,
+          "quantity": 1,
+          "name": "锤矛"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 202,
+      "name": "锤矛＋2",
+      "cost": 0,
+      "sourceLine": 133,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 201,
+          "quantity": 1,
+          "name": "锤矛＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 203,
+      "name": "锤矛＋3",
+      "cost": 0,
+      "sourceLine": 134,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 202,
+          "quantity": 1,
+          "name": "锤矛＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 204,
+      "name": "锤矛＋4",
+      "cost": 0,
+      "sourceLine": 135,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 203,
+          "quantity": 1,
+          "name": "锤矛＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 205,
+      "name": "锤矛＋5",
+      "cost": 0,
+      "sourceLine": 136,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 204,
+          "quantity": 1,
+          "name": "锤矛＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 206,
+      "name": "锤矛＋6",
+      "cost": 0,
+      "sourceLine": 137,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 205,
+          "quantity": 1,
+          "name": "锤矛＋5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 207,
+      "name": "锤矛＋7",
+      "cost": 0,
+      "sourceLine": 138,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 206,
+          "quantity": 1,
+          "name": "锤矛＋6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 208,
+      "name": "锤矛＋8",
+      "cost": 0,
+      "sourceLine": 139,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 207,
+          "quantity": 1,
+          "name": "锤矛＋7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 209,
+      "name": "锤矛＋9",
+      "cost": 0,
+      "sourceLine": 140,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 208,
+          "quantity": 1,
+          "name": "锤矛＋8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 210,
+      "name": "神罚的锤矛",
+      "cost": 0,
+      "sourceLine": 141,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 209,
+          "quantity": 1,
+          "name": "锤矛＋9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 212,
+      "name": "斧枪＋1",
+      "cost": 0,
+      "sourceLine": 142,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 211,
+          "quantity": 1,
+          "name": "斧枪"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 213,
+      "name": "斧枪＋2",
+      "cost": 0,
+      "sourceLine": 143,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 212,
+          "quantity": 1,
+          "name": "斧枪＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 214,
+      "name": "斧枪＋3",
+      "cost": 0,
+      "sourceLine": 144,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 213,
+          "quantity": 1,
+          "name": "斧枪＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 215,
+      "name": "斧枪＋4",
+      "cost": 0,
+      "sourceLine": 145,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 214,
+          "quantity": 1,
+          "name": "斧枪＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 216,
+      "name": "斧枪＋5",
+      "cost": 0,
+      "sourceLine": 146,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 215,
+          "quantity": 1,
+          "name": "斧枪＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 217,
+      "name": "斧枪＋6",
+      "cost": 0,
+      "sourceLine": 147,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 216,
+          "quantity": 1,
+          "name": "斧枪＋5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 218,
+      "name": "斧枪＋7",
+      "cost": 0,
+      "sourceLine": 148,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 217,
+          "quantity": 1,
+          "name": "斧枪＋6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 219,
+      "name": "斧枪＋8",
+      "cost": 0,
+      "sourceLine": 149,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 218,
+          "quantity": 1,
+          "name": "斧枪＋7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 220,
+      "name": "斧枪＋9",
+      "cost": 0,
+      "sourceLine": 150,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 219,
+          "quantity": 1,
+          "name": "斧枪＋8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 221,
+      "name": "巴哈姆特",
+      "cost": 0,
+      "sourceLine": 151,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 220,
+          "quantity": 1,
+          "name": "斧枪＋9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 223,
+      "name": "猎兽锯＋1",
+      "cost": 0,
+      "sourceLine": 152,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 222,
+          "quantity": 1,
+          "name": "猎兽锯"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 224,
+      "name": "猎兽锯＋2",
+      "cost": 0,
+      "sourceLine": 153,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 223,
+          "quantity": 1,
+          "name": "猎兽锯＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 225,
+      "name": "猎兽锯＋3",
+      "cost": 0,
+      "sourceLine": 154,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 224,
+          "quantity": 1,
+          "name": "猎兽锯＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 226,
+      "name": "猎兽锯＋4",
+      "cost": 0,
+      "sourceLine": 155,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 225,
+          "quantity": 1,
+          "name": "猎兽锯＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 227,
+      "name": "猎兽锯＋5",
+      "cost": 0,
+      "sourceLine": 156,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 226,
+          "quantity": 1,
+          "name": "猎兽锯＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 228,
+      "name": "猎兽锯＋6",
+      "cost": 0,
+      "sourceLine": 157,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 227,
+          "quantity": 1,
+          "name": "猎兽锯＋5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 229,
+      "name": "猎兽锯＋7",
+      "cost": 0,
+      "sourceLine": 158,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 228,
+          "quantity": 1,
+          "name": "猎兽锯＋6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 230,
+      "name": "猎兽锯＋8",
+      "cost": 0,
+      "sourceLine": 159,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 229,
+          "quantity": 1,
+          "name": "猎兽锯＋7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 231,
+      "name": "猎兽锯＋9",
+      "cost": 0,
+      "sourceLine": 160,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 230,
+          "quantity": 1,
+          "name": "猎兽锯＋8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 232,
+      "name": "猎杀魔兽之锯剑",
+      "cost": 0,
+      "sourceLine": 161,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 231,
+          "quantity": 1,
+          "name": "猎兽锯＋9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 234,
+      "name": "盾卫堡垒+1",
+      "cost": 0,
+      "sourceLine": 162,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 233,
+          "quantity": 1,
+          "name": "盾卫堡垒"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 235,
+      "name": "盾卫堡垒+2",
+      "cost": 0,
+      "sourceLine": 163,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 234,
+          "quantity": 1,
+          "name": "盾卫堡垒+1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 236,
+      "name": "盾卫堡垒+3",
+      "cost": 0,
+      "sourceLine": 164,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 235,
+          "quantity": 1,
+          "name": "盾卫堡垒+2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 237,
+      "name": "盾卫堡垒+4",
+      "cost": 0,
+      "sourceLine": 165,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 236,
+          "quantity": 1,
+          "name": "盾卫堡垒+3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 238,
+      "name": "盾卫堡垒+5",
+      "cost": 0,
+      "sourceLine": 166,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 237,
+          "quantity": 1,
+          "name": "盾卫堡垒+4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 239,
+      "name": "盾卫堡垒+6",
+      "cost": 0,
+      "sourceLine": 167,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 238,
+          "quantity": 1,
+          "name": "盾卫堡垒+5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 240,
+      "name": "盾卫堡垒+7",
+      "cost": 0,
+      "sourceLine": 168,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 239,
+          "quantity": 1,
+          "name": "盾卫堡垒+6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 241,
+      "name": "盾卫堡垒+8",
+      "cost": 0,
+      "sourceLine": 169,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 240,
+          "quantity": 1,
+          "name": "盾卫堡垒+7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 242,
+      "name": "盾卫堡垒+9",
+      "cost": 0,
+      "sourceLine": 170,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 241,
+          "quantity": 1,
+          "name": "盾卫堡垒+8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 243,
+      "name": "守护者堡垒",
+      "cost": 0,
+      "sourceLine": 171,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 242,
+          "quantity": 1,
+          "name": "盾卫堡垒+9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 245,
+      "name": "黑暗剑＋1",
+      "cost": 0,
+      "sourceLine": 172,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 244,
+          "quantity": 1,
+          "name": "黑暗剑"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 246,
+      "name": "黑暗剑＋2",
+      "cost": 0,
+      "sourceLine": 173,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 245,
+          "quantity": 1,
+          "name": "黑暗剑＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 247,
+      "name": "黑暗剑＋3",
+      "cost": 0,
+      "sourceLine": 174,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 246,
+          "quantity": 1,
+          "name": "黑暗剑＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 248,
+      "name": "黑暗剑＋4",
+      "cost": 0,
+      "sourceLine": 175,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 247,
+          "quantity": 1,
+          "name": "黑暗剑＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 249,
+      "name": "黑暗剑＋5",
+      "cost": 0,
+      "sourceLine": 176,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 248,
+          "quantity": 1,
+          "name": "黑暗剑＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 250,
+      "name": "黑暗剑＋6",
+      "cost": 0,
+      "sourceLine": 177,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 249,
+          "quantity": 1,
+          "name": "黑暗剑＋5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 251,
+      "name": "黑暗剑＋7",
+      "cost": 0,
+      "sourceLine": 178,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 250,
+          "quantity": 1,
+          "name": "黑暗剑＋6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 252,
+      "name": "黑暗剑＋8",
+      "cost": 0,
+      "sourceLine": 179,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 251,
+          "quantity": 1,
+          "name": "黑暗剑＋7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 253,
+      "name": "黑暗剑＋9",
+      "cost": 0,
+      "sourceLine": 180,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 252,
+          "quantity": 1,
+          "name": "黑暗剑＋8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 254,
+      "name": "黑暗之刃",
+      "cost": 0,
+      "sourceLine": 181,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 253,
+          "quantity": 1,
+          "name": "黑暗剑＋9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 256,
+      "name": "断剑+1",
+      "cost": 0,
+      "sourceLine": 182,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 21,
+          "quantity": 1,
+          "name": "废弃垃圾"
+        },
+        {
+          "kind": 1,
+          "id": 255,
+          "quantity": 1,
+          "name": "断剑"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 257,
+      "name": "断剑+2",
+      "cost": 0,
+      "sourceLine": 183,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 21,
+          "quantity": 2,
+          "name": "废弃垃圾"
+        },
+        {
+          "kind": 1,
+          "id": 256,
+          "quantity": 1,
+          "name": "断剑+1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 258,
+      "name": "断剑+3",
+      "cost": 0,
+      "sourceLine": 184,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 21,
+          "quantity": 3,
+          "name": "废弃垃圾"
+        },
+        {
+          "kind": 1,
+          "id": 257,
+          "quantity": 1,
+          "name": "断剑+2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 259,
+      "name": "断剑+4",
+      "cost": 0,
+      "sourceLine": 185,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 21,
+          "quantity": 4,
+          "name": "废弃垃圾"
+        },
+        {
+          "kind": 1,
+          "id": 258,
+          "quantity": 1,
+          "name": "断剑+3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 260,
+      "name": "断剑+5",
+      "cost": 0,
+      "sourceLine": 186,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 21,
+          "quantity": 5,
+          "name": "废弃垃圾"
+        },
+        {
+          "kind": 1,
+          "id": 259,
+          "quantity": 1,
+          "name": "断剑+4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 261,
+      "name": "断剑+6",
+      "cost": 0,
+      "sourceLine": 187,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 21,
+          "quantity": 6,
+          "name": "废弃垃圾"
+        },
+        {
+          "kind": 1,
+          "id": 260,
+          "quantity": 1,
+          "name": "断剑+5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 262,
+      "name": "断剑+7",
+      "cost": 0,
+      "sourceLine": 188,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 21,
+          "quantity": 7,
+          "name": "废弃垃圾"
+        },
+        {
+          "kind": 1,
+          "id": 261,
+          "quantity": 1,
+          "name": "断剑+6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 263,
+      "name": "断剑+8",
+      "cost": 0,
+      "sourceLine": 189,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 21,
+          "quantity": 8,
+          "name": "废弃垃圾"
+        },
+        {
+          "kind": 1,
+          "id": 262,
+          "quantity": 1,
+          "name": "断剑+7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 264,
+      "name": "断剑+9",
+      "cost": 0,
+      "sourceLine": 190,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 21,
+          "quantity": 9,
+          "name": "废弃垃圾"
+        },
+        {
+          "kind": 1,
+          "id": 263,
+          "quantity": 1,
+          "name": "断剑+8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 265,
+      "name": "怨恨之剑",
+      "cost": 0,
+      "sourceLine": 191,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 21,
+          "quantity": 10,
+          "name": "废弃垃圾"
+        },
+        {
+          "kind": 1,
+          "id": 264,
+          "quantity": 1,
+          "name": "断剑+9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 267,
+      "name": "战锤＋1",
+      "cost": 0,
+      "sourceLine": 192,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 266,
+          "quantity": 1,
+          "name": "战锤"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 268,
+      "name": "战锤＋2",
+      "cost": 0,
+      "sourceLine": 193,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 267,
+          "quantity": 1,
+          "name": "战锤＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 269,
+      "name": "战锤＋3",
+      "cost": 0,
+      "sourceLine": 194,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 268,
+          "quantity": 1,
+          "name": "战锤＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 270,
+      "name": "战锤＋4",
+      "cost": 0,
+      "sourceLine": 195,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 269,
+          "quantity": 1,
+          "name": "战锤＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 271,
+      "name": "战锤＋5",
+      "cost": 0,
+      "sourceLine": 196,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 270,
+          "quantity": 1,
+          "name": "战锤＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 272,
+      "name": "战锤＋6",
+      "cost": 0,
+      "sourceLine": 197,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 271,
+          "quantity": 1,
+          "name": "战锤＋5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 273,
+      "name": "战锤＋7",
+      "cost": 0,
+      "sourceLine": 198,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 272,
+          "quantity": 1,
+          "name": "战锤＋6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 274,
+      "name": "战锤＋8",
+      "cost": 0,
+      "sourceLine": 199,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 273,
+          "quantity": 1,
+          "name": "战锤＋7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 275,
+      "name": "战锤＋9",
+      "cost": 0,
+      "sourceLine": 200,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 274,
+          "quantity": 1,
+          "name": "战锤＋8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 276,
+      "name": "异形战锤",
+      "cost": 0,
+      "sourceLine": 201,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 275,
+          "quantity": 1,
+          "name": "战锤＋9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 278,
+      "name": "指虎＋1",
+      "cost": 0,
+      "sourceLine": 202,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 277,
+          "quantity": 1,
+          "name": "指虎"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 279,
+      "name": "指虎＋2",
+      "cost": 0,
+      "sourceLine": 203,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 278,
+          "quantity": 1,
+          "name": "指虎＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 280,
+      "name": "指虎＋3",
+      "cost": 0,
+      "sourceLine": 204,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 279,
+          "quantity": 1,
+          "name": "指虎＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 281,
+      "name": "指虎＋4",
+      "cost": 0,
+      "sourceLine": 205,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 280,
+          "quantity": 1,
+          "name": "指虎＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 282,
+      "name": "指虎＋5",
+      "cost": 0,
+      "sourceLine": 206,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 281,
+          "quantity": 1,
+          "name": "指虎＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 283,
+      "name": "指虎＋6",
+      "cost": 0,
+      "sourceLine": 207,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 282,
+          "quantity": 1,
+          "name": "指虎＋5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 284,
+      "name": "指虎＋7",
+      "cost": 0,
+      "sourceLine": 208,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 283,
+          "quantity": 1,
+          "name": "指虎＋6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 285,
+      "name": "指虎＋8",
+      "cost": 0,
+      "sourceLine": 209,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 284,
+          "quantity": 1,
+          "name": "指虎＋7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 286,
+      "name": "指虎＋9",
+      "cost": 0,
+      "sourceLine": 210,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 285,
+          "quantity": 1,
+          "name": "指虎＋8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 287,
+      "name": "凯撒拳套",
+      "cost": 0,
+      "sourceLine": 211,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 286,
+          "quantity": 1,
+          "name": "指虎＋9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 289,
+      "name": "沃柏尔之刃＋1",
+      "cost": 0,
+      "sourceLine": 212,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 288,
+          "quantity": 1,
+          "name": "沃柏尔之刃"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 290,
+      "name": "沃柏尔之刃＋2",
+      "cost": 0,
+      "sourceLine": 213,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 289,
+          "quantity": 1,
+          "name": "沃柏尔之刃＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 291,
+      "name": "沃柏尔之刃＋3",
+      "cost": 0,
+      "sourceLine": 214,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 290,
+          "quantity": 1,
+          "name": "沃柏尔之刃＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 292,
+      "name": "沃柏尔之刃＋4",
+      "cost": 0,
+      "sourceLine": 215,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 291,
+          "quantity": 1,
+          "name": "沃柏尔之刃＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 293,
+      "name": "沃柏尔之刃＋5",
+      "cost": 0,
+      "sourceLine": 216,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 292,
+          "quantity": 1,
+          "name": "沃柏尔之刃＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 294,
+      "name": "沃柏尔之刃＋6",
+      "cost": 0,
+      "sourceLine": 217,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 293,
+          "quantity": 1,
+          "name": "沃柏尔之刃＋5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 295,
+      "name": "沃柏尔之刃＋7",
+      "cost": 0,
+      "sourceLine": 218,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 294,
+          "quantity": 1,
+          "name": "沃柏尔之刃＋6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 296,
+      "name": "沃柏尔之刃＋8",
+      "cost": 0,
+      "sourceLine": 219,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 295,
+          "quantity": 1,
+          "name": "沃柏尔之刃＋7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 297,
+      "name": "沃柏尔之刃＋9",
+      "cost": 0,
+      "sourceLine": 220,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 296,
+          "quantity": 1,
+          "name": "沃柏尔之刃＋8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 298,
+      "name": "沃柏尔之剑",
+      "cost": 0,
+      "sourceLine": 221,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 297,
+          "quantity": 1,
+          "name": "沃柏尔之刃＋9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 300,
+      "name": "打刀+1",
+      "cost": 0,
+      "sourceLine": 282,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 299,
+          "quantity": 1,
+          "name": "打刀"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 301,
+      "name": "打刀+2",
+      "cost": 0,
+      "sourceLine": 283,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 300,
+          "quantity": 1,
+          "name": "打刀+1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 302,
+      "name": "打刀+3",
+      "cost": 0,
+      "sourceLine": 284,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 301,
+          "quantity": 1,
+          "name": "打刀+2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 303,
+      "name": "打刀+4",
+      "cost": 0,
+      "sourceLine": 285,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 302,
+          "quantity": 1,
+          "name": "打刀+3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 304,
+      "name": "打刀+5",
+      "cost": 0,
+      "sourceLine": 286,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 303,
+          "quantity": 1,
+          "name": "打刀+4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 305,
+      "name": "打刀+6",
+      "cost": 0,
+      "sourceLine": 287,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 304,
+          "quantity": 1,
+          "name": "打刀+5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 306,
+      "name": "打刀+7",
+      "cost": 0,
+      "sourceLine": 288,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 305,
+          "quantity": 1,
+          "name": "打刀+6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 307,
+      "name": "打刀+8",
+      "cost": 0,
+      "sourceLine": 289,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 306,
+          "quantity": 1,
+          "name": "打刀+7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 308,
+      "name": "打刀+9",
+      "cost": 0,
+      "sourceLine": 290,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 307,
+          "quantity": 1,
+          "name": "打刀+8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 309,
+      "name": "鬼神刀",
+      "cost": 0,
+      "sourceLine": 291,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 308,
+          "quantity": 1,
+          "name": "打刀+9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 312,
+      "name": "双刃大剑+1",
+      "cost": 0,
+      "sourceLine": 322,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 1,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 311,
+          "quantity": 1,
+          "name": "双刃大剑"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 313,
+      "name": "双刃大剑+2",
+      "cost": 0,
+      "sourceLine": 323,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 3,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 312,
+          "quantity": 1,
+          "name": "双刃大剑+1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 314,
+      "name": "双刃大剑+3",
+      "cost": 0,
+      "sourceLine": 324,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 26,
+          "quantity": 5,
+          "name": "强化石的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 313,
+          "quantity": 1,
+          "name": "双刃大剑+2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 315,
+      "name": "双刃大剑+4",
+      "cost": 0,
+      "sourceLine": 325,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 1,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 314,
+          "quantity": 1,
+          "name": "双刃大剑+3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 316,
+      "name": "双刃大剑+5",
+      "cost": 0,
+      "sourceLine": 326,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 3,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 315,
+          "quantity": 1,
+          "name": "双刃大剑+4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 317,
+      "name": "双刃大剑+6",
+      "cost": 0,
+      "sourceLine": 327,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 27,
+          "quantity": 5,
+          "name": "强化石大碎片"
+        },
+        {
+          "kind": 1,
+          "id": 316,
+          "quantity": 1,
+          "name": "双刃大剑+5"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 318,
+      "name": "双刃大剑+7",
+      "cost": 0,
+      "sourceLine": 328,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 1,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 317,
+          "quantity": 1,
+          "name": "双刃大剑+6"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 319,
+      "name": "双刃大剑+8",
+      "cost": 0,
+      "sourceLine": 329,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 3,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 318,
+          "quantity": 1,
+          "name": "双刃大剑+7"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 320,
+      "name": "双刃大剑+9",
+      "cost": 0,
+      "sourceLine": 330,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 28,
+          "quantity": 5,
+          "name": "强化石块"
+        },
+        {
+          "kind": 1,
+          "id": 319,
+          "quantity": 1,
+          "name": "双刃大剑+8"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 321,
+      "name": "诸神黄昏",
+      "cost": 0,
+      "sourceLine": 331,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 29,
+          "quantity": 1,
+          "name": "强化石原盘"
+        },
+        {
+          "kind": 1,
+          "id": 320,
+          "quantity": 1,
+          "name": "双刃大剑+9"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 356,
+      "name": "大铁球＋1",
+      "cost": 0,
+      "sourceLine": 222,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 355,
+          "quantity": 1,
+          "name": "大铁球"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 357,
+      "name": "大铁球＋2",
+      "cost": 0,
+      "sourceLine": 223,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 356,
+          "quantity": 1,
+          "name": "大铁球＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 358,
+      "name": "大铁球＋3",
+      "cost": 0,
+      "sourceLine": 224,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 357,
+          "quantity": 1,
+          "name": "大铁球＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 359,
+      "name": "大铁球＋4",
+      "cost": 0,
+      "sourceLine": 225,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 358,
+          "quantity": 1,
+          "name": "大铁球＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 360,
+      "name": "大铁球＋5",
+      "cost": 0,
+      "sourceLine": 226,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 359,
+          "quantity": 1,
+          "name": "大铁球＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 362,
+      "name": "汉斯的机关枪+1",
+      "cost": 0,
+      "sourceLine": 227,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 361,
+          "quantity": 1,
+          "name": "汉斯的机关枪"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 363,
+      "name": "汉斯的机关枪+2",
+      "cost": 0,
+      "sourceLine": 228,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 362,
+          "quantity": 1,
+          "name": "汉斯的机关枪+1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 364,
+      "name": "汉斯的机关枪+3",
+      "cost": 0,
+      "sourceLine": 229,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 363,
+          "quantity": 1,
+          "name": "汉斯的机关枪+2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 365,
+      "name": "汉斯的机关枪+4",
+      "cost": 0,
+      "sourceLine": 230,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 364,
+          "quantity": 1,
+          "name": "汉斯的机关枪+3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 366,
+      "name": "汉斯的机关枪+5",
+      "cost": 0,
+      "sourceLine": 231,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 365,
+          "quantity": 1,
+          "name": "汉斯的机关枪+4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 368,
+      "name": "审判者大镰＋1",
+      "cost": 0,
+      "sourceLine": 232,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 367,
+          "quantity": 1,
+          "name": "审判者大镰"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 369,
+      "name": "审判者大镰＋2",
+      "cost": 0,
+      "sourceLine": 233,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 368,
+          "quantity": 1,
+          "name": "审判者大镰＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 370,
+      "name": "审判者大镰＋3",
+      "cost": 0,
+      "sourceLine": 234,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 369,
+          "quantity": 1,
+          "name": "审判者大镰＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 371,
+      "name": "审判者大镰＋4",
+      "cost": 0,
+      "sourceLine": 235,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 370,
+          "quantity": 1,
+          "name": "审判者大镰＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 372,
+      "name": "审判者大镰＋5",
+      "cost": 0,
+      "sourceLine": 236,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 371,
+          "quantity": 1,
+          "name": "审判者大镰＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 374,
+      "name": "暴风之律＋1",
+      "cost": 0,
+      "sourceLine": 237,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 373,
+          "quantity": 1,
+          "name": "暴风之律"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 375,
+      "name": "暴风之律＋2",
+      "cost": 0,
+      "sourceLine": 238,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 374,
+          "quantity": 1,
+          "name": "暴风之律＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 376,
+      "name": "暴风之律＋3",
+      "cost": 0,
+      "sourceLine": 239,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 375,
+          "quantity": 1,
+          "name": "暴风之律＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 377,
+      "name": "暴风之律＋4",
+      "cost": 0,
+      "sourceLine": 240,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 376,
+          "quantity": 1,
+          "name": "暴风之律＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 378,
+      "name": "暴风之律＋5",
+      "cost": 0,
+      "sourceLine": 241,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 377,
+          "quantity": 1,
+          "name": "暴风之律＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 380,
+      "name": "安多鲁之剑＋1",
+      "cost": 0,
+      "sourceLine": 242,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 379,
+          "quantity": 1,
+          "name": "安多鲁之剑"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 381,
+      "name": "安多鲁之剑＋2",
+      "cost": 0,
+      "sourceLine": 243,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 380,
+          "quantity": 1,
+          "name": "安多鲁之剑＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 382,
+      "name": "安多鲁之剑＋3",
+      "cost": 0,
+      "sourceLine": 244,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 381,
+          "quantity": 1,
+          "name": "安多鲁之剑＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 383,
+      "name": "安多鲁之剑＋4",
+      "cost": 0,
+      "sourceLine": 245,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 382,
+          "quantity": 1,
+          "name": "安多鲁之剑＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 384,
+      "name": "安多鲁之剑＋5",
+      "cost": 0,
+      "sourceLine": 246,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 383,
+          "quantity": 1,
+          "name": "安多鲁之剑＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 386,
+      "name": "飞龙剑＋1",
+      "cost": 0,
+      "sourceLine": 247,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 385,
+          "quantity": 1,
+          "name": "飞龙剑"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 387,
+      "name": "飞龙剑＋2",
+      "cost": 0,
+      "sourceLine": 248,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 386,
+          "quantity": 1,
+          "name": "飞龙剑＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 388,
+      "name": "飞龙剑＋3",
+      "cost": 0,
+      "sourceLine": 249,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 387,
+          "quantity": 1,
+          "name": "飞龙剑＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 389,
+      "name": "飞龙剑＋4",
+      "cost": 0,
+      "sourceLine": 250,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 388,
+          "quantity": 1,
+          "name": "飞龙剑＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 390,
+      "name": "飞龙剑＋5",
+      "cost": 0,
+      "sourceLine": 251,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 389,
+          "quantity": 1,
+          "name": "飞龙剑＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 392,
+      "name": "恶魔之杖＋1",
+      "cost": 0,
+      "sourceLine": 252,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 391,
+          "quantity": 1,
+          "name": "恶魔之杖"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 393,
+      "name": "恶魔之杖＋2",
+      "cost": 0,
+      "sourceLine": 253,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 392,
+          "quantity": 1,
+          "name": "恶魔之杖＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 394,
+      "name": "恶魔之杖＋3",
+      "cost": 0,
+      "sourceLine": 254,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 393,
+          "quantity": 1,
+          "name": "恶魔之杖＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 395,
+      "name": "恶魔之杖＋4",
+      "cost": 0,
+      "sourceLine": 255,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 394,
+          "quantity": 1,
+          "name": "恶魔之杖＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 396,
+      "name": "恶魔之杖＋5",
+      "cost": 0,
+      "sourceLine": 256,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 395,
+          "quantity": 1,
+          "name": "恶魔之杖＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 398,
+      "name": "月光大剑＋1",
+      "cost": 0,
+      "sourceLine": 257,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 397,
+          "quantity": 1,
+          "name": "月光大剑"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 399,
+      "name": "月光大剑＋2",
+      "cost": 0,
+      "sourceLine": 258,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 398,
+          "quantity": 1,
+          "name": "月光大剑＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 400,
+      "name": "月光大剑＋3",
+      "cost": 0,
+      "sourceLine": 259,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 399,
+          "quantity": 1,
+          "name": "月光大剑＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 401,
+      "name": "月光大剑＋4",
+      "cost": 0,
+      "sourceLine": 260,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 400,
+          "quantity": 1,
+          "name": "月光大剑＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 402,
+      "name": "月光大剑＋5",
+      "cost": 0,
+      "sourceLine": 261,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 401,
+          "quantity": 1,
+          "name": "月光大剑＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 404,
+      "name": "暴剑班达斯奈奇＋1",
+      "cost": 0,
+      "sourceLine": 262,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 403,
+          "quantity": 1,
+          "name": "暴剑班达斯奈奇"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 405,
+      "name": "暴剑班达斯奈奇＋2",
+      "cost": 0,
+      "sourceLine": 263,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 404,
+          "quantity": 1,
+          "name": "暴剑班达斯奈奇＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 406,
+      "name": "暴剑班达斯奈奇＋3",
+      "cost": 0,
+      "sourceLine": 264,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 405,
+          "quantity": 1,
+          "name": "暴剑班达斯奈奇＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 407,
+      "name": "暴剑班达斯奈奇＋4",
+      "cost": 0,
+      "sourceLine": 265,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 406,
+          "quantity": 1,
+          "name": "暴剑班达斯奈奇＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 408,
+      "name": "暴剑班达斯奈奇＋5",
+      "cost": 0,
+      "sourceLine": 266,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 407,
+          "quantity": 1,
+          "name": "暴剑班达斯奈奇＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 410,
+      "name": "腐镰贾巴沃克＋1",
+      "cost": 0,
+      "sourceLine": 267,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 409,
+          "quantity": 1,
+          "name": "腐镰贾巴沃克"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 411,
+      "name": "腐镰贾巴沃克＋2",
+      "cost": 0,
+      "sourceLine": 268,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 410,
+          "quantity": 1,
+          "name": "腐镰贾巴沃克＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 412,
+      "name": "腐镰贾巴沃克＋3",
+      "cost": 0,
+      "sourceLine": 269,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 411,
+          "quantity": 1,
+          "name": "腐镰贾巴沃克＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 413,
+      "name": "腐镰贾巴沃克＋4",
+      "cost": 0,
+      "sourceLine": 270,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 412,
+          "quantity": 1,
+          "name": "腐镰贾巴沃克＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 414,
+      "name": "腐镰贾巴沃克＋5",
+      "cost": 0,
+      "sourceLine": 271,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 413,
+          "quantity": 1,
+          "name": "腐镰贾巴沃克＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 416,
+      "name": "狂弓贾布加布＋1",
+      "cost": 0,
+      "sourceLine": 272,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 415,
+          "quantity": 1,
+          "name": "狂弓贾布加布"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 417,
+      "name": "狂弓贾布加布＋2",
+      "cost": 0,
+      "sourceLine": 273,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 416,
+          "quantity": 1,
+          "name": "狂弓贾布加布＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 418,
+      "name": "狂弓贾布加布＋3",
+      "cost": 0,
+      "sourceLine": 274,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 417,
+          "quantity": 1,
+          "name": "狂弓贾布加布＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 419,
+      "name": "狂弓贾布加布＋4",
+      "cost": 0,
+      "sourceLine": 275,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 418,
+          "quantity": 1,
+          "name": "狂弓贾布加布＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 420,
+      "name": "狂弓贾布加布＋5",
+      "cost": 0,
+      "sourceLine": 276,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 419,
+          "quantity": 1,
+          "name": "狂弓贾布加布＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 422,
+      "name": "米兰达之斧＋1",
+      "cost": 0,
+      "sourceLine": 277,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 421,
+          "quantity": 1,
+          "name": "米兰达之斧"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 423,
+      "name": "米兰达之斧＋2",
+      "cost": 0,
+      "sourceLine": 278,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 422,
+          "quantity": 1,
+          "name": "米兰达之斧＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 424,
+      "name": "米兰达之斧＋3",
+      "cost": 0,
+      "sourceLine": 279,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 423,
+          "quantity": 1,
+          "name": "米兰达之斧＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 425,
+      "name": "米兰达之斧＋4",
+      "cost": 0,
+      "sourceLine": 280,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 424,
+          "quantity": 1,
+          "name": "米兰达之斧＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 426,
+      "name": "米兰达之斧＋5",
+      "cost": 0,
+      "sourceLine": 281,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 425,
+          "quantity": 1,
+          "name": "米兰达之斧＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 428,
+      "name": "拉莱耶之杖＋1",
+      "cost": 0,
+      "sourceLine": 292,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 427,
+          "quantity": 1,
+          "name": "拉莱耶之杖"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 429,
+      "name": "拉莱耶之杖＋2",
+      "cost": 0,
+      "sourceLine": 293,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 428,
+          "quantity": 1,
+          "name": "拉莱耶之杖＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 430,
+      "name": "拉莱耶之杖＋3",
+      "cost": 0,
+      "sourceLine": 294,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 429,
+          "quantity": 1,
+          "name": "拉莱耶之杖＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 431,
+      "name": "拉莱耶之杖＋4",
+      "cost": 0,
+      "sourceLine": 295,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 430,
+          "quantity": 1,
+          "name": "拉莱耶之杖＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 432,
+      "name": "拉莱耶之杖＋5",
+      "cost": 0,
+      "sourceLine": 296,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 431,
+          "quantity": 1,
+          "name": "拉莱耶之杖＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 434,
+      "name": "深海骑士的锚＋1",
+      "cost": 0,
+      "sourceLine": 297,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 433,
+          "quantity": 1,
+          "name": "深海骑士的锚"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 435,
+      "name": "深海骑士的锚＋2",
+      "cost": 0,
+      "sourceLine": 298,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 434,
+          "quantity": 1,
+          "name": "深海骑士的锚＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 436,
+      "name": "深海骑士的锚＋3",
+      "cost": 0,
+      "sourceLine": 299,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 435,
+          "quantity": 1,
+          "name": "深海骑士的锚＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 437,
+      "name": "深海骑士的锚＋4",
+      "cost": 0,
+      "sourceLine": 300,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 436,
+          "quantity": 1,
+          "name": "深海骑士的锚＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 438,
+      "name": "深海骑士的锚＋5",
+      "cost": 0,
+      "sourceLine": 301,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 437,
+          "quantity": 1,
+          "name": "深海骑士的锚＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 440,
+      "name": "失落之剑＋1",
+      "cost": 0,
+      "sourceLine": 302,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 439,
+          "quantity": 1,
+          "name": "失落之剑"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 441,
+      "name": "失落之剑＋2",
+      "cost": 0,
+      "sourceLine": 303,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 440,
+          "quantity": 1,
+          "name": "失落之剑＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 442,
+      "name": "失落之剑＋3",
+      "cost": 0,
+      "sourceLine": 304,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 441,
+          "quantity": 1,
+          "name": "失落之剑＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 443,
+      "name": "失落之剑＋4",
+      "cost": 0,
+      "sourceLine": 305,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 442,
+          "quantity": 1,
+          "name": "失落之剑＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 444,
+      "name": "失落之剑＋5",
+      "cost": 0,
+      "sourceLine": 306,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 443,
+          "quantity": 1,
+          "name": "失落之剑＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 446,
+      "name": "格拉奇德＋1",
+      "cost": 0,
+      "sourceLine": 307,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 445,
+          "quantity": 1,
+          "name": "格拉奇德"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 447,
+      "name": "格拉奇德＋2",
+      "cost": 0,
+      "sourceLine": 308,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 446,
+          "quantity": 1,
+          "name": "格拉奇德＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 448,
+      "name": "格拉奇德＋3",
+      "cost": 0,
+      "sourceLine": 309,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 447,
+          "quantity": 1,
+          "name": "格拉奇德＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 449,
+      "name": "格拉奇德＋4",
+      "cost": 0,
+      "sourceLine": 310,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 448,
+          "quantity": 1,
+          "name": "格拉奇德＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 450,
+      "name": "格拉奇德＋5",
+      "cost": 0,
+      "sourceLine": 311,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 449,
+          "quantity": 1,
+          "name": "格拉奇德＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 452,
+      "name": "屠宰者的电锯＋1",
+      "cost": 0,
+      "sourceLine": 312,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 451,
+          "quantity": 1,
+          "name": "屠宰者的电锯"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 453,
+      "name": "屠宰者的电锯＋2",
+      "cost": 0,
+      "sourceLine": 313,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 452,
+          "quantity": 1,
+          "name": "屠宰者的电锯＋1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 454,
+      "name": "屠宰者的电锯＋3",
+      "cost": 0,
+      "sourceLine": 314,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 453,
+          "quantity": 1,
+          "name": "屠宰者的电锯＋2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 455,
+      "name": "屠宰者的电锯＋4",
+      "cost": 0,
+      "sourceLine": 315,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 454,
+          "quantity": 1,
+          "name": "屠宰者的电锯＋3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 456,
+      "name": "屠宰者的电锯＋5",
+      "cost": 0,
+      "sourceLine": 316,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 455,
+          "quantity": 1,
+          "name": "屠宰者的电锯＋4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 458,
+      "name": "假海龟的大汤勺+1",
+      "cost": 0,
+      "sourceLine": 317,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 457,
+          "quantity": 1,
+          "name": "假海龟的大汤勺"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 459,
+      "name": "假海龟的大汤勺+2",
+      "cost": 0,
+      "sourceLine": 318,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 458,
+          "quantity": 1,
+          "name": "假海龟的大汤勺+1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 460,
+      "name": "假海龟的大汤勺+3",
+      "cost": 0,
+      "sourceLine": 319,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 459,
+          "quantity": 1,
+          "name": "假海龟的大汤勺+2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 461,
+      "name": "假海龟的大汤勺+4",
+      "cost": 0,
+      "sourceLine": 320,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 460,
+          "quantity": 1,
+          "name": "假海龟的大汤勺+3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 462,
+      "name": "假海龟的大汤勺+5",
+      "cost": 0,
+      "sourceLine": 321,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 461,
+          "quantity": 1,
+          "name": "假海龟的大汤勺+4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 464,
+      "name": "神天使双剑+1",
+      "cost": 0,
+      "sourceLine": 332,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 463,
+          "quantity": 1,
+          "name": "神天使双剑"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 465,
+      "name": "神天使双剑+2",
+      "cost": 0,
+      "sourceLine": 333,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 464,
+          "quantity": 1,
+          "name": "神天使双剑+1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 466,
+      "name": "神天使双剑+3",
+      "cost": 0,
+      "sourceLine": 334,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 465,
+          "quantity": 1,
+          "name": "神天使双剑+2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 467,
+      "name": "神天使双剑+4",
+      "cost": 0,
+      "sourceLine": 335,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 466,
+          "quantity": 1,
+          "name": "神天使双剑+3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 468,
+      "name": "神天使双剑+5",
+      "cost": 0,
+      "sourceLine": 336,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 467,
+          "quantity": 1,
+          "name": "神天使双剑+4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 470,
+      "name": "神圣铳剑+1",
+      "cost": 0,
+      "sourceLine": 337,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 469,
+          "quantity": 1,
+          "name": "神圣铳剑"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 471,
+      "name": "神圣铳剑+2",
+      "cost": 0,
+      "sourceLine": 338,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 470,
+          "quantity": 1,
+          "name": "神圣铳剑+1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 472,
+      "name": "神圣铳剑+3",
+      "cost": 0,
+      "sourceLine": 339,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 471,
+          "quantity": 1,
+          "name": "神圣铳剑+2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 473,
+      "name": "神圣铳剑+4",
+      "cost": 0,
+      "sourceLine": 340,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 472,
+          "quantity": 1,
+          "name": "神圣铳剑+3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 474,
+      "name": "神圣铳剑+5",
+      "cost": 0,
+      "sourceLine": 341,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 473,
+          "quantity": 1,
+          "name": "神圣铳剑+4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 477,
+      "name": "尤妮丝的刺剑+1",
+      "cost": 0,
+      "sourceLine": 342,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 476,
+          "quantity": 1,
+          "name": "尤妮丝的刺剑"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 478,
+      "name": "尤妮丝的刺剑+2",
+      "cost": 0,
+      "sourceLine": 343,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 477,
+          "quantity": 1,
+          "name": "尤妮丝的刺剑+1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 479,
+      "name": "尤妮丝的刺剑+3",
+      "cost": 0,
+      "sourceLine": 344,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 478,
+          "quantity": 1,
+          "name": "尤妮丝的刺剑+2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 480,
+      "name": "尤妮丝的刺剑+4",
+      "cost": 0,
+      "sourceLine": 345,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 479,
+          "quantity": 1,
+          "name": "尤妮丝的刺剑+3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 481,
+      "name": "尤妮丝的刺剑+5",
+      "cost": 0,
+      "sourceLine": 346,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 480,
+          "quantity": 1,
+          "name": "尤妮丝的刺剑+4"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 483,
+      "name": "莱登的双斧+1",
+      "cost": 0,
+      "sourceLine": 347,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 482,
+          "quantity": 1,
+          "name": "莱登的双斧"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 484,
+      "name": "莱登的双斧+2",
+      "cost": 0,
+      "sourceLine": 348,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 483,
+          "quantity": 1,
+          "name": "莱登的双斧+1"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 485,
+      "name": "莱登的双斧+3",
+      "cost": 0,
+      "sourceLine": 349,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 484,
+          "quantity": 1,
+          "name": "莱登的双斧+2"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 486,
+      "name": "莱登的双斧+4",
+      "cost": 0,
+      "sourceLine": 350,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 485,
+          "quantity": 1,
+          "name": "莱登的双斧+3"
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 487,
+      "name": "莱登的双斧+5",
+      "cost": 0,
+      "sourceLine": 351,
+      "materials": [
+        {
+          "kind": 0,
+          "id": 25,
+          "quantity": 1,
+          "name": "神秘的碎片"
+        },
+        {
+          "kind": 1,
+          "id": 486,
+          "quantity": 1,
+          "name": "莱登的双斧+4"
+        }
+      ]
+    }
+  ],
+  "commonEventUnlockRules": [
+    {
+      "commonEventId": 7,
+      "conditionCommand": 0,
+      "scriptCommand": 1,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 101,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 15,
+      "scriptCommand": 16,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 104,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 30,
+      "scriptCommand": 31,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 112,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 45,
+      "scriptCommand": 46,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 123,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 60,
+      "scriptCommand": 61,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 134,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 75,
+      "scriptCommand": 76,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 145,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 90,
+      "scriptCommand": 91,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 156,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 105,
+      "scriptCommand": 106,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 167,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 120,
+      "scriptCommand": 121,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 178,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 135,
+      "scriptCommand": 136,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 189,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 150,
+      "scriptCommand": 151,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 200,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 165,
+      "scriptCommand": 166,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 211,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 180,
+      "scriptCommand": 181,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 222,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        223,
+        224,
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 195,
+      "scriptCommand": 196,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 233,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240,
+        241,
+        242,
+        243
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 210,
+      "scriptCommand": 211,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 244,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 225,
+      "scriptCommand": 226,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 255,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        256,
+        257,
+        258,
+        259,
+        260,
+        261,
+        262,
+        263,
+        264,
+        265
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 240,
+      "scriptCommand": 241,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 266,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        267,
+        268,
+        269,
+        270,
+        271,
+        272,
+        273,
+        274,
+        275,
+        276
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 255,
+      "scriptCommand": 256,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 277,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        278,
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        285,
+        286,
+        287
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 270,
+      "scriptCommand": 271,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 288,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        289,
+        290,
+        291,
+        292,
+        293,
+        294,
+        295,
+        296,
+        297,
+        298
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 285,
+      "scriptCommand": 286,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 355,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        356,
+        357,
+        358,
+        359,
+        360
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 295,
+      "scriptCommand": 296,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 361,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        362,
+        363,
+        364,
+        365,
+        366
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 305,
+      "scriptCommand": 306,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 367,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        368,
+        369,
+        370,
+        371,
+        372
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 315,
+      "scriptCommand": 316,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 373,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        374,
+        375,
+        376,
+        377,
+        378
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 325,
+      "scriptCommand": 326,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 379,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        380,
+        381,
+        382,
+        383,
+        384
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 335,
+      "scriptCommand": 336,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 385,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        386,
+        387,
+        388,
+        389,
+        390
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 345,
+      "scriptCommand": 346,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 391,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        392,
+        393,
+        394,
+        395,
+        396
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 355,
+      "scriptCommand": 356,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 397,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        398,
+        399,
+        400,
+        401,
+        402
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 365,
+      "scriptCommand": 366,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 403,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        404,
+        405,
+        406,
+        407,
+        408
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 375,
+      "scriptCommand": 376,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 409,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        410,
+        411,
+        412,
+        413,
+        414
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 385,
+      "scriptCommand": 386,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 415,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        416,
+        417,
+        418,
+        419,
+        420
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 395,
+      "scriptCommand": 396,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 421,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        422,
+        423,
+        424,
+        425,
+        426
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 405,
+      "scriptCommand": 406,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 427,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        428,
+        429,
+        430,
+        431,
+        432
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 415,
+      "scriptCommand": 416,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 433,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        434,
+        435,
+        436,
+        437,
+        438
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 425,
+      "scriptCommand": 426,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 299,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        300,
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307,
+        308,
+        309
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 440,
+      "scriptCommand": 441,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 439,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        440,
+        441,
+        442,
+        443,
+        444
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 450,
+      "scriptCommand": 451,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 445,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        446,
+        447,
+        448,
+        449,
+        450
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 460,
+      "scriptCommand": 461,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 451,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        452,
+        453,
+        454,
+        455,
+        456
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 470,
+      "scriptCommand": 471,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 457,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        458,
+        459,
+        460,
+        461,
+        462
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 480,
+      "scriptCommand": 481,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 311,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        312,
+        313,
+        314,
+        315,
+        316,
+        317,
+        318,
+        319,
+        320,
+        321
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 495,
+      "scriptCommand": 496,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 463,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        464,
+        465,
+        466,
+        467,
+        468
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 505,
+      "scriptCommand": 506,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 469,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        470,
+        471,
+        472,
+        473,
+        474
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 515,
+      "scriptCommand": 516,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 476,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        477,
+        478,
+        479,
+        480,
+        481
+      ],
+      "persistent": true
+    },
+    {
+      "commonEventId": 7,
+      "conditionCommand": 525,
+      "scriptCommand": 526,
+      "condition": {
+        "type": "hasWeapon",
+        "kind": 1,
+        "id": 482,
+        "includeEquipment": true
+      },
+      "unlockWeaponIds": [
+        483,
+        484,
+        485,
+        486,
+        487
+      ],
+      "persistent": true
+    }
+  ]
+}

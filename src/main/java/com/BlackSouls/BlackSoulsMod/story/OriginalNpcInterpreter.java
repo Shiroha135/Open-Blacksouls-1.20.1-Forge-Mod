@@ -65,6 +65,8 @@ public final class OriginalNpcInterpreter {
             }
         } else if (pending != null && pending.type() == Type.ITEM_KEEP) {
             if (selection != -1) return pending;
+        } else if (pending != null && pending.type() == Type.SYNTHESIS) {
+            if (selection != -1) return pending;
         } else if (pending != null && pending.type() == Type.BLOCKED) {
             return pending;
         }
@@ -213,6 +215,20 @@ public final class OriginalNpcInterpreter {
                             context.openItemKeep();
                             return emit(Type.ITEM_KEEP, "", "", 0, List.of(), List.of(), "");
                         }
+                        if (script.toString().equals("SceneManager.call(Scene_ItemSynthesis)")) {
+                            context.openSynthesis();
+                            return emit(Type.SYNTHESIS, "", "", 0, List.of(), List.of(), "");
+                        }
+                        if (script.toString().equals("recipe_all_switch_on")) {
+                            context.unlockWeaponRecipes(com.BlackSouls.BlackSoulsMod.util.OriginalSynthesisRecipes.values().stream()
+                                    .map(com.BlackSouls.BlackSoulsMod.util.OriginalSynthesisRecipes.Recipe::id).toList());
+                            break;
+                        }
+                        List<Integer> unlocks = com.BlackSouls.BlackSoulsMod.util.OriginalSynthesisRecipes.unlockScript(script.toString());
+                        if (unlocks != null) {
+                            context.unlockWeaponRecipes(unlocks);
+                            break;
+                        }
                         context.unlockAchievement(OriginalNpcAchievements.parse(script.toString()));
                     }
                     case 331, 332, 333, 334, 335, 336, 337, 339 -> {
@@ -327,6 +343,12 @@ public final class OriginalNpcInterpreter {
     public Prompt refreshItemKeep() {
         if (pending == null || pending.type() != Type.ITEM_KEEP) throw new IllegalStateException("No pending original item keep");
         return emit(Type.ITEM_KEEP, pending.text(), pending.portrait(), pending.portraitIndex(),
+                pending.choices(), pending.goods(), pending.reason());
+    }
+
+    public Prompt refreshSynthesis() {
+        if (pending == null || pending.type() != Type.SYNTHESIS) throw new IllegalStateException("No pending original synthesis");
+        return emit(Type.SYNTHESIS, pending.text(), pending.portrait(), pending.portraitIndex(),
                 pending.choices(), pending.goods(), pending.reason());
     }
 
@@ -689,7 +711,7 @@ public final class OriginalNpcInterpreter {
     }
 
     public enum Type {
-        TEXT, CHOICE, SHOP, END, BLOCKED, BATTLE, WAIT, ROUTE_WAIT, ANIMATION_WAIT, ITEM_KEEP
+        TEXT, CHOICE, SHOP, END, BLOCKED, BATTLE, WAIT, ROUTE_WAIT, ANIMATION_WAIT, ITEM_KEEP, SYNTHESIS
     }
 
     public enum BattleOutcome {
@@ -715,6 +737,14 @@ public final class OriginalNpcInterpreter {
     }
 
     public interface Context {
+        default void openSynthesis() {
+            throw new UnsupportedOperationException("original_synthesis");
+        }
+
+        default void unlockWeaponRecipes(List<Integer> ids) {
+            throw new UnsupportedOperationException("original_recipe_unlock");
+        }
+
         default void openItemKeep() {
             throw new UnsupportedOperationException("call_keep");
         }

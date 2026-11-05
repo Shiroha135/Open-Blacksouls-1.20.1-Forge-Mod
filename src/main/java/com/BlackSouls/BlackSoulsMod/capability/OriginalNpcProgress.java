@@ -28,12 +28,29 @@ public final class OriginalNpcProgress extends SavedData {
     private final Map<String, byte[]> conversations = new HashMap<>();
     private final Map<String, Boolean> timedWaits = new HashMap<>();
     private final Set<UUID> cheshireLegacyMigrated = new HashSet<>();
+    private final Set<String> unlockedRecipes = new HashSet<>();
     private Boolean nameWindowEnabled;
     private final Map<UUID, byte[]> nameWindowStates = new HashMap<>();
     private OriginalBattleMusic battleMusic = OriginalBattleMusic.UNSET;
 
     public boolean nameWindowEnabled() {
         return Boolean.TRUE.equals(nameWindowEnabled);
+    }
+
+    public boolean recipeUnlocked(int kind, int id) {
+        return unlockedRecipes.contains(recipeKey(kind, id));
+    }
+
+    public void setRecipeUnlocked(int kind, int id, boolean unlocked) {
+        String key = recipeKey(kind, id);
+        if (unlocked ? unlockedRecipes.add(key) : unlockedRecipes.remove(key)) setDirty();
+    }
+
+    private static String recipeKey(int kind, int id) {
+        if (kind < 0 || kind > 2 || id < 1 || com.BlackSouls.BlackSoulsMod.util.OriginalNpcItems.get(kind, id) == null) {
+            throw new IllegalArgumentException("Invalid original recipe identity");
+        }
+        return kind + ":" + id;
     }
 
     public void setNameWindowEnabled(boolean enabled) {
@@ -235,6 +252,19 @@ public final class OriginalNpcProgress extends SavedData {
         for (Tag entry : tag.getList("CheshireLegacyMigrated", Tag.TAG_STRING)) {
             data.cheshireLegacyMigrated.add(UUID.fromString(entry.getAsString()));
         }
+        if (tag.contains("UnlockedRecipes") && !tag.contains("UnlockedRecipes", Tag.TAG_LIST)) {
+            throw new IllegalArgumentException("Invalid original recipe state");
+        }
+        if (tag.get("UnlockedRecipes") instanceof ListTag savedRecipes && !savedRecipes.isEmpty()
+                && savedRecipes.getElementType() != Tag.TAG_STRING) {
+            throw new IllegalArgumentException("Invalid original recipe entry type");
+        }
+        ListTag recipes = tag.getList("UnlockedRecipes", Tag.TAG_STRING);
+        for (Tag entry : recipes) {
+            String[] parts = entry.getAsString().split(":", -1);
+            if (parts.length != 2) throw new IllegalArgumentException("Invalid original recipe entry");
+            data.unlockedRecipes.add(recipeKey(Integer.parseInt(parts[0]), Integer.parseInt(parts[1])));
+        }
         CompoundTag conversations = tag.getCompound("Conversations");
         for (String key : conversations.getAllKeys()) {
             if (conversations.contains(key, Tag.TAG_BYTE_ARRAY)) {
@@ -266,6 +296,9 @@ public final class OriginalNpcProgress extends SavedData {
         ListTag migrated = new ListTag();
         cheshireLegacyMigrated.stream().map(UUID::toString).sorted().map(StringTag::valueOf).forEach(migrated::add);
         tag.put("CheshireLegacyMigrated", migrated);
+        ListTag recipes = new ListTag();
+        unlockedRecipes.stream().sorted().map(StringTag::valueOf).forEach(recipes::add);
+        tag.put("UnlockedRecipes", recipes);
         CompoundTag conversationsTag = new CompoundTag();
         conversations.forEach(conversationsTag::putByteArray);
         tag.put("Conversations", conversationsTag);

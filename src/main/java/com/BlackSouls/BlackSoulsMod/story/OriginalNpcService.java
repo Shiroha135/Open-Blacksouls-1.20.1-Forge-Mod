@@ -46,6 +46,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -369,6 +370,17 @@ public final class OriginalNpcService {
                 session.lastPortrait = saved.has("lastPortrait") ? saved.get("lastPortrait").getAsString() : "";
                 session.lastPortraitIndex = saved.has("lastPortraitIndex") ? saved.get("lastPortraitIndex").getAsInt() : 0;
                 session.restoringPresentation = true;
+                if (saved.has("synthesisRecipes")) {
+                    List<Integer> recipes = new ArrayList<>();
+                    for (JsonElement value : saved.getAsJsonArray("synthesisRecipes")) {
+                        int id = value.getAsBigDecimal().intValueExact();
+                        if (com.BlackSouls.BlackSoulsMod.util.OriginalSynthesisRecipes.get(1, id) == null || recipes.contains(id)) {
+                            throw new IllegalArgumentException("Invalid saved synthesis recipe list");
+                        }
+                        recipes.add(id);
+                    }
+                    session.synthesisRecipes = List.copyOf(recipes);
+                }
                 SESSIONS.put(player.getUUID(), session);
                 OriginalNpcInterpreter.Prompt prompt = interpreter.pendingPrompt();
                 if (prompt == null) {
@@ -407,12 +419,21 @@ public final class OriginalNpcService {
         if (action == null || session == null || session.entityId != entityId || !session.token.equals(token)
                 || session.prompt == null || session.prompt.type() != OriginalNpcInterpreter.Type.SHOP
                 && session.prompt.type() != OriginalNpcInterpreter.Type.ITEM_KEEP
+                && session.prompt.type() != OriginalNpcInterpreter.Type.SYNTHESIS
                 || session.prompt.revision() != revision || !player.level().dimension().location().equals(session.dimension)
                 || TurnBattleManager.isInBattle(player)) return;
         Entity entity = player.serverLevel().getEntity(entityId);
         if (!(entity instanceof PathfinderMob npc) || !matchesActor(npc, session.npcId)
                 || session.npcUuid == null || !session.npcUuid.equals(npc.getUUID()) || !canInteract(player, npc)
                 || player.serverLevel().getGameTime() - session.updated > 2400L) return;
+        if (session.prompt.type() == OriginalNpcInterpreter.Type.SYNTHESIS) {
+            if (action != ServerboundOriginalNpcTradePacket.Action.SYNTHESIZE) return;
+            if (session.synthesisRecipes != null && session.synthesisRecipes.contains(id)) {
+                OriginalNpcSynthesisService.synthesize(player, kind, id, quantity);
+            }
+            present(player, npc, session, session.interpreter.refreshSynthesis());
+            return;
+        }
         if (session.prompt.type() == OriginalNpcInterpreter.Type.ITEM_KEEP) {
             if (action != ServerboundOriginalNpcTradePacket.Action.DEPOSIT
                     && action != ServerboundOriginalNpcTradePacket.Action.WITHDRAW) return;
@@ -477,6 +498,7 @@ public final class OriginalNpcService {
             return;
         }
         if (session.prompt.type() == OriginalNpcInterpreter.Type.ITEM_KEEP && selection != -1 && selection != -3) return;
+        if (session.prompt.type() == OriginalNpcInterpreter.Type.SYNTHESIS && selection != -1 && selection != -3) return;
         if (selection == -3) {
             checkpoint(player, session);
             SESSIONS.remove(player.getUUID());
@@ -547,6 +569,11 @@ public final class OriginalNpcService {
         saved.addProperty("lastText", session.lastText);
         saved.addProperty("lastPortrait", session.lastPortrait);
         saved.addProperty("lastPortraitIndex", session.lastPortraitIndex);
+        if (effective.type() == OriginalNpcInterpreter.Type.SYNTHESIS && session.synthesisRecipes != null) {
+            com.google.gson.JsonArray recipes = new com.google.gson.JsonArray();
+            session.synthesisRecipes.forEach(recipes::add);
+            saved.add("synthesisRecipes", recipes);
+        }
         if (effective.type() == OriginalNpcInterpreter.Type.WAIT) {
             long remaining = session.stagedPrompt != null ? effective.waitTicks()
                     : Math.max(0L, session.waitUntil - player.serverLevel().getGameTime());
@@ -565,6 +592,11 @@ public final class OriginalNpcService {
         session.prompt = prompt;
         session.npcUuid = npc.getUUID();
         session.updated = player.serverLevel().getGameTime();
+        if (prompt.type() == OriginalNpcInterpreter.Type.SYNTHESIS && session.synthesisRecipes == null) {
+            session.synthesisRecipes = OriginalNpcSynthesisService.unlockedRecipes(player);
+        } else if (prompt.type() != OriginalNpcInterpreter.Type.SYNTHESIS) {
+            session.synthesisRecipes = null;
+        }
         if (prompt.type() == OriginalNpcInterpreter.Type.TEXT) {
             session.lastText = resolveText(prompt.text(), player, npc, session.npcId);
             session.lastPortrait = prompt.portrait();
@@ -601,7 +633,7 @@ public final class OriginalNpcService {
         OriginalNpcInterpreter.Prompt display = prompt;
         if (session.restoringPresentation && prompt.text().isEmpty()
                 && (prompt.type() == OriginalNpcInterpreter.Type.CHOICE || prompt.type() == OriginalNpcInterpreter.Type.SHOP
-                || prompt.type() == OriginalNpcInterpreter.Type.ITEM_KEEP)) {
+                || prompt.type() == OriginalNpcInterpreter.Type.ITEM_KEEP || prompt.type() == OriginalNpcInterpreter.Type.SYNTHESIS)) {
             display = new OriginalNpcInterpreter.Prompt(prompt.revision(), prompt.type(), session.lastText,
                     session.lastPortrait, session.lastPortraitIndex, prompt.choices(), prompt.goods(), prompt.reason(),
                     prompt.battle(), prompt.waitTicks());
@@ -612,7 +644,8 @@ public final class OriginalNpcService {
                 prompt.choices().stream().map(value -> resolveText(value, player, npc, session.npcId)).toList(),
                 prompt.type() == OriginalNpcInterpreter.Type.SHOP ? OriginalNpcShopService.view(player, prompt.goods(),
                         session.shopStorage, session.interpreter.shopPurchaseOnly()) : null,
-                prompt.type() == OriginalNpcInterpreter.Type.ITEM_KEEP ? OriginalNpcItemKeepService.view(player) : null), player);
+                prompt.type() == OriginalNpcInterpreter.Type.ITEM_KEEP ? OriginalNpcItemKeepService.view(player) : null,
+                prompt.type() == OriginalNpcInterpreter.Type.SYNTHESIS ? OriginalNpcSynthesisService.view(player, session.synthesisRecipes) : null), player);
         StatEventHandler.syncToClient(player);
     }
 
@@ -778,6 +811,19 @@ public final class OriginalNpcService {
         @Override
         public void openItemKeep() {
             if (player == null) throw new UnsupportedOperationException("requires_player");
+        }
+
+        @Override
+        public void openSynthesis() {
+            if (player == null) throw new UnsupportedOperationException("requires_player");
+        }
+
+        @Override
+        public void unlockWeaponRecipes(List<Integer> ids) {
+            if (ids.isEmpty() || ids.stream().anyMatch(id -> com.BlackSouls.BlackSoulsMod.util.OriginalSynthesisRecipes.get(1, id) == null)) {
+                throw new UnsupportedOperationException("unmapped_original_recipe_unlock");
+            }
+            for (int id : ids) progress.setRecipeUnlocked(1, id, true);
         }
 
         @Override
@@ -1009,6 +1055,7 @@ public final class OriginalNpcService {
         private int lastPortraitIndex;
         private boolean restoringPresentation;
         private boolean shopStorage;
+        private List<Integer> synthesisRecipes;
 
         private Session(UUID playerId, int entityId, String npcId, ResourceLocation dimension,
                         OriginalNpcInterpreter interpreter) {

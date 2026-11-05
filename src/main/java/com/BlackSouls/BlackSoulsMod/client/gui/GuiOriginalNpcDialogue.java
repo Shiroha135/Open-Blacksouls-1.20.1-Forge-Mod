@@ -69,6 +69,14 @@ public final class GuiOriginalNpcDialogue extends Screen {
     private int keepOffset;
     private ClientboundOriginalNpcPacket.KeepOffer keepOffer;
     private List<ClientboundOriginalNpcPacket.KeepOffer> keepOffers = List.of();
+    private SynthesisPage synthesisPage = SynthesisPage.CATEGORY;
+    private boolean synthesisStatus;
+    private int synthesisQuantity = 1;
+    private int synthesisSelection;
+    private int synthesisOffset;
+    private int synthesisDetailOffset;
+    private ClientboundOriginalNpcPacket.SynthesisOffer synthesisOffer;
+    private List<ClientboundOriginalNpcPacket.SynthesisOffer> synthesisOffers = List.of();
 
     public GuiOriginalNpcDialogue(ClientboundOriginalNpcPacket packet) {
         super(Component.literal(packet.name()));
@@ -93,9 +101,12 @@ public final class GuiOriginalNpcDialogue extends Screen {
             return;
         }
         boolean samePrompt = packet != null && next.revision() == packet.revision();
-        if (samePrompt && (!awaitingResponse || isItemKeep())) {
+        if (samePrompt && (!awaitingResponse || isItemKeep() || isSynthesis())) {
             return;
         }
+        boolean previousSynthesis = isSynthesis();
+        boolean nextSynthesis = next.type() == OriginalNpcInterpreter.Type.SYNTHESIS && next.synthesisView() != null;
+        ClientboundOriginalNpcPacket.SynthesisOffer previousSynthesisOffer = previousSynthesis ? selectedSynthesisOffer() : null;
         boolean previousKeep = isItemKeep();
         boolean nextKeep = next.type() == OriginalNpcInterpreter.Type.ITEM_KEEP && next.keepView() != null;
         boolean previousTrade = isTradeShop();
@@ -103,7 +114,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
         boolean tradeReply = previousTrade && awaitingResponse;
         boolean changedStorage = previousTrade && nextTrade && packet.shopView().storage() != next.shopView().storage();
         boolean retainText = next.text().isEmpty()
-                && (next.type() == OriginalNpcInterpreter.Type.CHOICE || next.type() == OriginalNpcInterpreter.Type.SHOP || nextKeep);
+                && (next.type() == OriginalNpcInterpreter.Type.CHOICE || next.type() == OriginalNpcInterpreter.Type.SHOP || nextKeep || nextSynthesis);
         if (!retainText) {
             currentText = next.text();
             currentPortrait = next.portrait();
@@ -117,12 +128,59 @@ public final class GuiOriginalNpcDialogue extends Screen {
         boolean sameShop = packet != null && packet.type() == OriginalNpcInterpreter.Type.SHOP
                 && next.type() == OriginalNpcInterpreter.Type.SHOP
                 && (packet.offers().equals(next.offers()) || previousTrade && nextTrade);
-        if (packet == null || packet.type() != next.type() || !samePrompt && !sameShop && !(previousKeep && nextKeep)) {
+        if (packet == null || packet.type() != next.type() || !samePrompt && !sameShop && !(previousKeep && nextKeep) && !(previousSynthesis && nextSynthesis)) {
             selected = 0;
             listOffset = 0;
         }
         packet = next;
         awaitingResponse = isSilentWait();
+        if (nextSynthesis) {
+            if (!previousSynthesis) {
+                synthesisPage = SynthesisPage.CATEGORY;
+                synthesisStatus = false;
+                synthesisQuantity = 1;
+                synthesisOffer = null;
+                synthesisDetailOffset = 0;
+                shopPage = ShopPage.COMMAND;
+                quantityOffer = null;
+                tradeOffers = List.of();
+                keepPage = KeepPage.CATEGORY;
+                keepOffer = null;
+                keepOffers = List.of();
+                keepDelta = 0;
+            }
+            rebuildSynthesisLabels();
+            if (previousSynthesisOffer != null && synthesisPage != SynthesisPage.CATEGORY) {
+                int currentIndex = -1;
+                for (int index = 0; index < synthesisOffers.size(); index++) {
+                    var offer = synthesisOffers.get(index);
+                    if (offer.kind() == previousSynthesisOffer.kind() && offer.id() == previousSynthesisOffer.id()) {
+                        currentIndex = index;
+                        break;
+                    }
+                }
+                if (currentIndex >= 0) selected = currentIndex;
+                if (synthesisPage == SynthesisPage.QUANTITY) {
+                    var updated = currentIndex < 0 ? null : synthesisOffers.get(currentIndex);
+                    if (updated == null || !updated.enabled() || updated.maximum() == 0) {
+                        closeSynthesisQuantity();
+                        if (currentIndex >= 0) selected = currentIndex;
+                    } else {
+                        synthesisOffer = updated;
+                        synthesisSelection = currentIndex;
+                        synthesisQuantity = Math.min(synthesisQuantity, updated.maximum());
+                    }
+                }
+            }
+            if (synthesisPage != SynthesisPage.CATEGORY) keepSelectionVisible();
+            reflowText();
+            return;
+        }
+        synthesisPage = SynthesisPage.CATEGORY;
+        synthesisOffer = null;
+        synthesisOffers = List.of();
+        synthesisQuantity = 1;
+        synthesisDetailOffset = 0;
         if (nextKeep) {
             if (!previousKeep) {
                 shopPage = ShopPage.COMMAND;
@@ -195,6 +253,110 @@ public final class GuiOriginalNpcDialogue extends Screen {
         labels = List.copyOf(nextLabels);
         selected = Math.max(0, Math.min(selected, labels.size() - 1));
         reflowText();
+    }
+
+    private boolean isSynthesis() {
+        return packet != null && packet.type() == OriginalNpcInterpreter.Type.SYNTHESIS && packet.synthesisView() != null;
+    }
+
+    private static Component synthesisText(String key, Object... values) {
+        return Component.translatable("gui.blacksouls.synthesis." + key, values);
+    }
+
+    private void rebuildSynthesisLabels() {
+        synthesisOffers = packet.synthesisView().offers().stream().filter(offer -> offer.category() == 1).toList();
+        labels = synthesisPage == SynthesisPage.CATEGORY ? List.of(synthesisText("weapons"))
+                : synthesisOffers.stream().map(offer -> formatOriginalText(offer.name())).toList();
+        selected = Math.max(0, Math.min(selected, labels.size() - 1));
+        listOffset = Math.max(0, Math.min(listOffset, Math.max(0, labels.size() - 1)));
+    }
+
+    private ClientboundOriginalNpcPacket.SynthesisOffer selectedSynthesisOffer() {
+        if (synthesisPage == SynthesisPage.QUANTITY) return synthesisOffer;
+        return synthesisPage == SynthesisPage.LIST && selected >= 0 && selected < synthesisOffers.size()
+                ? synthesisOffers.get(selected) : null;
+    }
+
+    private void selectSynthesisRow() {
+        if (awaitingResponse) return;
+        if (synthesisPage == SynthesisPage.CATEGORY) {
+            synthesisPage = SynthesisPage.LIST;
+            synthesisStatus = false;
+            selected = 0;
+            listOffset = 0;
+            synthesisDetailOffset = 0;
+            rebuildSynthesisLabels();
+        } else if (synthesisPage == SynthesisPage.LIST) {
+            var offer = selectedSynthesisOffer();
+            if (offer == null || !offer.enabled() || offer.maximum() == 0) return;
+            synthesisSelection = selected;
+            synthesisOffset = listOffset;
+            synthesisOffer = offer;
+            synthesisQuantity = 1;
+            synthesisPage = SynthesisPage.QUANTITY;
+            synthesisDetailOffset = 0;
+        }
+    }
+
+    private void closeSynthesisQuantity() {
+        synthesisPage = SynthesisPage.LIST;
+        selected = synthesisSelection;
+        listOffset = synthesisOffset;
+        synthesisOffer = null;
+        synthesisQuantity = 1;
+        synthesisDetailOffset = 0;
+        rebuildSynthesisLabels();
+    }
+
+    private void changeSynthesisQuantity(int amount) {
+        if (synthesisOffer != null && !awaitingResponse) {
+            synthesisQuantity = Math.max(1, Math.min(synthesisOffer.maximum(), synthesisQuantity + amount));
+        }
+    }
+
+    private void confirmSynthesisQuantity() {
+        if (synthesisOffer == null || !synthesisOffer.enabled() || synthesisOffer.maximum() < 1 || awaitingResponse) return;
+        var offer = synthesisOffer;
+        int amount = synthesisQuantity;
+        closeSynthesisQuantity();
+        sendTrade(ServerboundOriginalNpcTradePacket.Action.SYNTHESIZE, offer.kind(), offer.id(), amount);
+    }
+
+    private void toggleSynthesisStatus() {
+        if (synthesisPage != SynthesisPage.CATEGORY && !awaitingResponse) {
+            synthesisStatus = !synthesisStatus;
+            synthesisDetailOffset = 0;
+        }
+    }
+
+    private List<Component> synthesisDetails() {
+        var offer = selectedSynthesisOffer();
+        if (offer == null) return List.of();
+        List<Component> result = new ArrayList<>();
+        result.add(synthesisText("owned", offer.owned()));
+        if (synthesisStatus) {
+            List<String> keys = List.of("hp", "mp", "attack", "defense", "magic_attack", "magic_defense", "agility", "luck");
+            for (int index = 0; index < keys.size(); index++) {
+                result.add(synthesisText(keys.get(index), offer.parameters().get(index)));
+            }
+            for (var comparison : offer.comparisons()) {
+                result.add(Component.literal(comparison.actorName()));
+                result.add(synthesisText("equipped", comparison.equippedName()));
+                result.add(comparison.equippable() ? synthesisText("difference", comparison.attackDifference() > 0
+                        ? "+" + comparison.attackDifference() : Integer.toString(comparison.attackDifference()))
+                        : synthesisText("not_equippable"));
+            }
+        } else {
+            result.add(synthesisText("materials"));
+            int amount = synthesisPage == SynthesisPage.QUANTITY ? synthesisQuantity : 1;
+            for (var material : offer.materials()) {
+                long required = (long) material.required() * amount;
+                int color = Math.max(required, 1L) > material.owned() ? 0xAAAAAA : 0xFFFFFF;
+                result.add(formatOriginalText(material.name()).copy().withStyle(style -> style.withColor(color)));
+                result.add(Component.literal(required + " / " + material.owned()).withStyle(style -> style.withColor(color)));
+            }
+        }
+        return List.copyOf(result);
     }
 
     private boolean isItemKeep() {
@@ -405,8 +567,8 @@ public final class GuiOriginalNpcDialogue extends Screen {
     }
 
     private ListBox listBox() {
-        boolean shop = packet.type() == OriginalNpcInterpreter.Type.SHOP || isItemKeep();
-        int desiredWidth = shop ? Math.max(240, width * 3 / 5) : 140;
+        boolean shop = packet.type() == OriginalNpcInterpreter.Type.SHOP || isItemKeep() || isSynthesis();
+        int desiredWidth = isSynthesis() ? Math.max(120, width / 2) : shop ? Math.max(240, width * 3 / 5) : 140;
         if (!shop) {
             for (Component label : labels) {
                 desiredWidth = Math.max(desiredWidth, font.width(label) + PADDING * 2);
@@ -418,7 +580,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
         int visible = Math.min(Math.max(1, labels.size()),
                 Math.max(1, (available - PADDING * 2 - header) / ROW_HEIGHT));
         int boxHeight = PADDING * 2 + header + visible * ROW_HEIGHT;
-        return new ListBox(width - boxWidth, Math.max(2, mainTop() - 16 - boxHeight),
+        return new ListBox(isSynthesis() ? 0 : width - boxWidth, Math.max(2, mainTop() - 16 - boxHeight),
                 boxWidth, boxHeight, visible, header);
     }
 
@@ -427,7 +589,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
         if (isSilentWait()) return;
         hoveredTooltip = null;
         BSGuiUtils.drawRMWindow(graphics, 0, mainTop(), width, mainHeight());
-        if (!labels.isEmpty() || isItemKeep()) {
+        if (!labels.isEmpty() || isItemKeep() || isSynthesis()) {
             renderList(graphics, mouseX, mouseY);
         }
         if (!npcName.isEmpty()) {
@@ -462,6 +624,8 @@ public final class GuiOriginalNpcDialogue extends Screen {
         super.render(graphics, mouseX, mouseY, partialTicks);
         if (isTradeShop() && shopPage == ShopPage.QUANTITY) renderQuantity(graphics, mouseX, mouseY);
         if (isItemKeep() && keepPage == KeepPage.QUANTITY) renderKeepQuantity(graphics, mouseX, mouseY);
+        if (isSynthesis() && synthesisPage != SynthesisPage.CATEGORY) renderSynthesisDetails(graphics, mouseX, mouseY);
+        if (isSynthesis() && synthesisPage == SynthesisPage.QUANTITY) renderSynthesisQuantity(graphics, mouseX, mouseY);
         if (hoveredTooltip != null) {
             graphics.renderTooltip(font, hoveredTooltip, mouseX, mouseY);
         }
@@ -474,7 +638,11 @@ public final class GuiOriginalNpcDialogue extends Screen {
         long souls = isTradeShop() ? packet.shopView().money() : minecraft == null || minecraft.player == null ? 0L
                 : minecraft.player.getCapability(BSPlayerStats.CAPABILITY).map(stats -> stats.souls).orElse(0L);
         if (box.header() > 0) {
-            if (isItemKeep()) {
+            if (isSynthesis()) {
+                Component header = synthesisPage == SynthesisPage.CATEGORY ? synthesisText("title")
+                        : synthesisText("money", packet.synthesisView().money());
+                graphics.drawString(font, header, box.x() + PADDING, box.y() + PADDING, 0xFFFFFF, false);
+            } else if (isItemKeep()) {
                 graphics.drawString(font, keepText("title"), box.x() + PADDING, box.y() + PADDING, 0xFFFFFF, false);
                 if (keepPage != KeepPage.CATEGORY) {
                     Component counters = keepText("columns");
@@ -496,7 +664,17 @@ public final class GuiOriginalNpcDialogue extends Screen {
             }
             int labelWidth = box.width() - PADDING * 2;
             int color = awaitingResponse ? 0xAAAAAA : 0xFFFFFF;
-            if (isItemKeep()) {
+            if (isSynthesis()) {
+                if (synthesisPage != SynthesisPage.CATEGORY && index < synthesisOffers.size()) {
+                    var offer = synthesisOffers.get(index);
+                    if (!offer.enabled() || offer.maximum() == 0) color = 0xAAAAAA;
+                    if (packet.synthesisView().costVisible()) {
+                        String cost = offer.cost() + " S";
+                        labelWidth -= font.width(cost) + 12;
+                        graphics.drawString(font, cost, box.x() + box.width() - PADDING - font.width(cost), y + 4, color, false);
+                    }
+                }
+            } else if (isItemKeep()) {
                 if (!keepRowEnabled(index)) color = 0xAAAAAA;
                 if (keepPage != KeepPage.CATEGORY && index < keepOffers.size()) {
                     var offer = keepOffers.get(index);
@@ -624,12 +802,96 @@ public final class GuiOriginalNpcDialogue extends Screen {
         graphics.drawString(font, keepText("cancel"), middle + PADDING, buttonsY + 4, color, false);
     }
 
+    private ListBox synthesisDetailsBox() {
+        ListBox list = listBox();
+        int x = Math.min(width, list.width() + 4);
+        int boxWidth = Math.max(1, width - x);
+        int boxHeight = Math.max(PADDING * 2 + ROW_HEIGHT * 3, mainTop() - 18);
+        return new ListBox(x, 2, boxWidth, boxHeight, Math.max(1, (boxHeight - PADDING * 2) / ROW_HEIGHT - 1), ROW_HEIGHT);
+    }
+
+    private void renderSynthesisDetails(GuiGraphics graphics, int mouseX, int mouseY) {
+        ListBox box = synthesisDetailsBox();
+        BSGuiUtils.drawRMWindow(graphics, box.x(), box.y(), box.width(), box.height());
+        graphics.drawString(font, synthesisText("toggle"), box.x() + PADDING, box.y() + PADDING, 0xFFFFFF, false);
+        List<FormattedCharSequence> details = new ArrayList<>();
+        for (Component line : synthesisDetails()) details.addAll(font.split(line, Math.max(16, box.width() - PADDING * 2)));
+        synthesisDetailOffset = Math.max(0, Math.min(synthesisDetailOffset, Math.max(0, details.size() - box.visible())));
+        graphics.enableScissor(box.x() + PADDING, box.y() + PADDING + ROW_HEIGHT,
+                box.x() + box.width() - PADDING, box.y() + box.height() - PADDING);
+        for (int index = 0; index < box.visible() && index + synthesisDetailOffset < details.size(); index++) {
+            graphics.drawString(font, details.get(index + synthesisDetailOffset), box.x() + PADDING,
+                    box.y() + PADDING + ROW_HEIGHT * (index + 1) + 4, 0xFFFFFF, false);
+        }
+        graphics.disableScissor();
+        if (details.size() > box.visible()) {
+            graphics.drawString(font, "↕", box.x() + box.width() - PADDING, box.y() + box.height() - PADDING, 0xAAAAAA, false);
+        }
+        var offer = selectedSynthesisOffer();
+        if (offer != null && !offer.description().isEmpty() && box.contains(mouseX, mouseY)) {
+            hoveredTooltip = formatOriginalText(offer.description());
+        }
+    }
+
+    private ListBox synthesisQuantityBox() {
+        int boxWidth = Math.min(Math.max(1, width - 4), Math.max(240, width * 3 / 5));
+        int rows = packet.synthesisView().costVisible() ? 5 : 4;
+        int boxHeight = PADDING * 2 + ROW_HEIGHT * rows;
+        return new ListBox(Math.max(2, (width - boxWidth) / 2), Math.max(2, (height - boxHeight) / 2),
+                boxWidth, boxHeight, rows, 0);
+    }
+
+    private void renderSynthesisQuantity(GuiGraphics graphics, int mouseX, int mouseY) {
+        ListBox box = synthesisQuantityBox();
+        BSGuiUtils.drawRMWindow(graphics, box.x(), box.y(), box.width(), box.height());
+        int x = box.x() + PADDING;
+        int y = box.y() + PADDING;
+        int color = awaitingResponse ? 0xAAAAAA : 0xFFFFFF;
+        graphics.drawString(font, synthesisText("money", packet.synthesisView().money()), x, y + 4, color, false);
+        Component label = formatOriginalText(synthesisOffer.name());
+        List<FormattedCharSequence> wrapped = font.split(label, Math.max(16, box.width() - PADDING * 2));
+        if (!wrapped.isEmpty()) graphics.drawString(font, wrapped.get(0), x, y + ROW_HEIGHT + 4, color, false);
+        if (wrapped.size() > 1 && box.contains(mouseX, mouseY) && mouseY >= y + ROW_HEIGHT && mouseY < y + ROW_HEIGHT * 2) {
+            hoveredTooltip = label;
+        }
+        Component number = synthesisText("quantity", synthesisQuantity, synthesisOffer.maximum());
+        graphics.drawString(font, "−", x, y + ROW_HEIGHT * 2 + 4, color, false);
+        graphics.drawString(font, number, box.x() + (box.width() - font.width(number)) / 2, y + ROW_HEIGHT * 2 + 4, color, false);
+        graphics.drawString(font, "+", box.x() + box.width() - PADDING - font.width("+"), y + ROW_HEIGHT * 2 + 4, color, false);
+        int buttonsRow = 3;
+        if (packet.synthesisView().costVisible()) {
+            graphics.drawString(font, synthesisText("total", java.math.BigInteger.valueOf(synthesisOffer.cost())
+                    .multiply(java.math.BigInteger.valueOf(synthesisQuantity))), x, y + ROW_HEIGHT * 3 + 4, color, false);
+            buttonsRow++;
+        }
+        int buttonsY = y + ROW_HEIGHT * buttonsRow;
+        int middle = box.x() + box.width() / 2;
+        if (box.contains(mouseX, mouseY) && mouseY >= buttonsY && mouseY < buttonsY + ROW_HEIGHT) {
+            graphics.fill(mouseX < middle ? x - 4 : middle, buttonsY + 1,
+                    mouseX < middle ? middle : box.x() + box.width() - PADDING + 4, buttonsY + ROW_HEIGHT - 1, 0x55FFFFFF);
+        }
+        graphics.drawString(font, synthesisText("confirm"), x, buttonsY + 4, color, false);
+        graphics.drawString(font, synthesisText("cancel"), middle + PADDING, buttonsY + 4, color, false);
+    }
+
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (isSilentWait()) return true;
-        if ((isTradeShop() || isItemKeep()) && awaitingResponse) return true;
+        if ((isTradeShop() || isItemKeep() || isSynthesis()) && awaitingResponse) return true;
         if (button == 1) {
             cancelOrReturn();
+            return true;
+        }
+        if (isSynthesis() && synthesisPage == SynthesisPage.QUANTITY) {
+            ListBox box = synthesisQuantityBox();
+            int row = (int) ((mouseY - box.y() - PADDING) / ROW_HEIGHT);
+            if (button == 0 && box.contains(mouseX, mouseY)) {
+                if (row == 2) changeSynthesisQuantity(mouseX < box.x() + box.width() / 2.0D ? -1 : 1);
+                else if (row == (packet.synthesisView().costVisible() ? 4 : 3)) {
+                    if (mouseX < box.x() + box.width() / 2.0D) confirmSynthesisQuantity();
+                    else cancelOrReturn();
+                }
+            }
             return true;
         }
         if (isItemKeep() && keepPage == KeepPage.QUANTITY) {
@@ -665,6 +927,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
             if (box.contains(mouseX, mouseY) && mouseY >= box.y() + PADDING + box.header()
                     && row >= 0 && row < box.visible() && row + listOffset < labels.size()) {
                 selected = row + listOffset;
+                if (isSynthesis()) synthesisDetailOffset = 0;
                 chooseSelected();
                 return true;
             }
@@ -679,7 +942,19 @@ public final class GuiOriginalNpcDialogue extends Screen {
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
         if (isSilentWait()) return true;
-        if ((isTradeShop() || isItemKeep()) && awaitingResponse) return true;
+        if ((isTradeShop() || isItemKeep() || isSynthesis()) && awaitingResponse) return true;
+        if (isSynthesis() && synthesisPage == SynthesisPage.QUANTITY && synthesisQuantityBox().contains(mouseX, mouseY)) {
+            if (delta != 0.0D) changeSynthesisQuantity(delta > 0.0D ? 1 : -1);
+            return true;
+        }
+        if (isSynthesis() && synthesisPage != SynthesisPage.CATEGORY && synthesisDetailsBox().contains(mouseX, mouseY)) {
+            if (delta != 0.0D) synthesisDetailOffset = Math.max(0, synthesisDetailOffset + (delta > 0.0D ? -1 : 1));
+            return true;
+        }
+        if (isSynthesis() && synthesisPage == SynthesisPage.QUANTITY) {
+            if (delta != 0.0D) changeSynthesisQuantity(delta > 0.0D ? 1 : -1);
+            return true;
+        }
         if (isItemKeep() && keepPage == KeepPage.QUANTITY) {
             if (delta != 0.0D) changeKeepQuantity(delta > 0.0D ? 1 : -1);
             return true;
@@ -705,6 +980,25 @@ public final class GuiOriginalNpcDialogue extends Screen {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (isSilentWait()) return true;
+        if (isSynthesis()) {
+            if (awaitingResponse) return true;
+            if (keyCode == GLFW.GLFW_KEY_D) {
+                toggleSynthesisStatus();
+                return true;
+            }
+            if (keyCode == GLFW.GLFW_KEY_Z) return true;
+            if (synthesisPage == SynthesisPage.QUANTITY) {
+                if (keyCode == GLFW.GLFW_KEY_ESCAPE) cancelOrReturn();
+                else if (keyCode == GLFW.GLFW_KEY_RIGHT) changeSynthesisQuantity(1);
+                else if (keyCode == GLFW.GLFW_KEY_LEFT) changeSynthesisQuantity(-1);
+                else if (keyCode == GLFW.GLFW_KEY_UP) changeSynthesisQuantity(10);
+                else if (keyCode == GLFW.GLFW_KEY_DOWN) changeSynthesisQuantity(-10);
+                else if (keyCode == GLFW.GLFW_KEY_ENTER || keyCode == GLFW.GLFW_KEY_KP_ENTER || keyCode == GLFW.GLFW_KEY_SPACE) {
+                    confirmSynthesisQuantity();
+                }
+                return true;
+            }
+        }
         if (isItemKeep()) {
             if (awaitingResponse) return true;
             if (keyCode == GLFW.GLFW_KEY_Z) return true;
@@ -778,6 +1072,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
                 textPage = Math.max(0, Math.min(textPage + step, pageCount() - 1));
             } else {
                 selected = Math.floorMod(selected + step, labels.size());
+                if (isSynthesis()) synthesisDetailOffset = 0;
                 keepSelectionVisible();
             }
             return true;
@@ -803,7 +1098,9 @@ public final class GuiOriginalNpcDialogue extends Screen {
     }
 
     private void chooseSelected() {
-        if (isItemKeep()) {
+        if (isSynthesis()) {
+            selectSynthesisRow();
+        } else if (isItemKeep()) {
             selectKeepRow();
         } else if (isTradeShop()) {
             selectTradeRow();
@@ -815,7 +1112,18 @@ public final class GuiOriginalNpcDialogue extends Screen {
     }
 
     private void cancelOrReturn() {
-        if (isItemKeep()) {
+        if (isSynthesis()) {
+            if (awaitingResponse) return;
+            if (synthesisPage == SynthesisPage.QUANTITY) closeSynthesisQuantity();
+            else if (synthesisPage == SynthesisPage.LIST) {
+                synthesisPage = SynthesisPage.CATEGORY;
+                synthesisStatus = false;
+                synthesisDetailOffset = 0;
+                selected = 0;
+                listOffset = 0;
+                rebuildSynthesisLabels();
+            } else respond(-1);
+        } else if (isItemKeep()) {
             if (awaitingResponse) return;
             if (keepPage == KeepPage.QUANTITY) {
                 closeKeepQuantity();
@@ -862,7 +1170,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
     @Override
     public void onClose() {
         if (isSilentWait()) return;
-        if (isTradeShop() || isItemKeep()) {
+        if (isTradeShop() || isItemKeep() || isSynthesis()) {
             cancelOrReturn();
             return;
         }
@@ -878,6 +1186,12 @@ public final class GuiOriginalNpcDialogue extends Screen {
     @Override
     public boolean isPauseScreen() {
         return false;
+    }
+
+    private enum SynthesisPage {
+        CATEGORY,
+        LIST,
+        QUANTITY
     }
 
     private enum KeepPage {

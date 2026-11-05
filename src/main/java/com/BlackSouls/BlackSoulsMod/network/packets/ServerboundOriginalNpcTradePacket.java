@@ -43,6 +43,7 @@ public record ServerboundOriginalNpcTradePacket(int entityId, UUID sessionId, lo
         SELL,
         TOGGLE_STORAGE,
         DEPOSIT,
-        WITHDRAW
+        WITHDRAW,
+        SYNTHESIZE
     }
 }
