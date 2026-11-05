@@ -2,12 +2,17 @@ package com.BlackSouls.BlackSoulsMod.network;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
+import com.BlackSouls.BlackSoulsMod.compat.scene.OriginalWhiteBearPlacement;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketOpenWhiteBearDialogue;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketSyncStats;
 import net.minecraft.server.level.ServerPlayer;
 
 public final class WhiteBearShopService {
     public static void interact(ServerPlayer player) {
+        if (OriginalWhiteBearPlacement.isOriginalSiteContext(player)) {
+            OriginalWhiteBearPlacement.interact(player);
+            return;
+        }
         player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
             stats.whiteBearProgress = Math.max(
                     stats.whiteBearProgress,
