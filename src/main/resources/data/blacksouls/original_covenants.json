@@ -1,0 +1,116 @@
+{
+  "sourceFiles": [
+    {
+      "path": "D:/BLACK SOULS II/Data/CommonEvents.rvdata2",
+      "sha256": "68aa6ebf5c42f0e362080bf48af601b33322ae51e3f343ed746a943fb9d837ea"
+    },
+    {
+      "path": "D:/BLACK SOULS II/Data/System.rvdata2",
+      "sha256": "1260a03acc2aa71bf5c3a041ff7a1da74a67f05de7e85ee9e5262f553558d199"
+    }
+  ],
+  "families": [
+    {
+      "commonEvent": 80,
+      "firstSpirit": 1,
+      "pledgeSwitch": 157,
+      "stageVariable": 68
+    },
+    {
+      "commonEvent": 81,
+      "firstSpirit": 5,
+      "pledgeSwitch": 169,
+      "stageVariable": 69
+    },
+    {
+      "commonEvent": 82,
+      "firstSpirit": 9,
+      "pledgeSwitch": 196,
+      "stageVariable": 70
+    },
+    {
+      "commonEvent": 83,
+      "firstSpirit": 13,
+      "pledgeSwitch": 71,
+      "stageVariable": 71
+    },
+    {
+      "commonEvent": 84,
+      "firstSpirit": 17,
+      "pledgeSwitch": 216,
+      "stageVariable": 72
+    },
+    {
+      "commonEvent": 85,
+      "firstSpirit": 21,
+      "pledgeSwitch": 384,
+      "stageVariable": 73
+    },
+    {
+      "commonEvent": 86,
+      "firstSpirit": 25,
+      "pledgeSwitch": 397,
+      "stageVariable": 74
+    },
+    {
+      "commonEvent": 87,
+      "firstSpirit": 29,
+      "pledgeSwitch": 419,
+      "stageVariable": 75
+    },
+    {
+      "commonEvent": 88,
+      "firstSpirit": 33,
+      "pledgeSwitch": 432,
+      "stageVariable": 76
+    },
+    {
+      "commonEvent": 89,
+      "firstSpirit": 37,
+      "pledgeSwitch": 456,
+      "stageVariable": 78
+    },
+    {
+      "commonEvent": 90,
+      "firstSpirit": 41,
+      "pledgeSwitch": 460,
+      "stageVariable": 77
+    },
+    {
+      "commonEvent": 91,
+      "firstSpirit": 45,
+      "pledgeSwitch": 464,
+      "stageVariable": 79
+    },
+    {
+      "commonEvent": 92,
+      "firstSpirit": 49,
+      "pledgeSwitch": 548,
+      "stageVariable": 81
+    },
+    {
+      "commonEvent": 93,
+      "firstSpirit": 53,
+      "pledgeSwitch": 556,
+      "stageVariable": 82
+    },
+    {
+      "commonEvent": 94,
+      "firstSpirit": 61,
+      "pledgeSwitch": 591,
+      "stageVariable": 100
+    },
+    {
+      "commonEvent": 95,
+      "firstSpirit": 57,
+      "pledgeSwitch": 634,
+      "stageVariable": 113
+    },
+    {
+      "commonEvent": 351,
+      "firstSpirit": 65,
+      "pledgeSwitch": 912,
+      "stageVariable": 887
+    }
+  ]
+}

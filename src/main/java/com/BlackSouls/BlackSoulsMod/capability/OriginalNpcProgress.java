@@ -108,6 +108,11 @@ public final class OriginalNpcProgress extends SavedData {
     }
 
     public static long readVariable(ServerPlayer player, int id) {
+        var covenant = com.BlackSouls.BlackSoulsMod.util.OriginalCovenantData.forVariable(id);
+        if (covenant != null && covenant.commonEvent() != 80) {
+            BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original covenant stats"));
+            return stats.originalCovenants.computeIfAbsent(covenant.commonEvent(), ignored -> new BSPlayerStats.CovenantProgress(false, 0)).stage();
+        }
         if (id == 68) {
             BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original covenant stats"));
             if (stats.originalNodenProgressKnown) return stats.originalNodenStage;
@@ -123,6 +128,13 @@ public final class OriginalNpcProgress extends SavedData {
     }
 
     public static void writeVariable(ServerPlayer player, int id, long value) {
+        var covenant = com.BlackSouls.BlackSoulsMod.util.OriginalCovenantData.forVariable(id);
+        if (covenant != null && covenant.commonEvent() != 80) {
+            BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original covenant stats"));
+            var previous = stats.originalCovenants.getOrDefault(covenant.commonEvent(), new BSPlayerStats.CovenantProgress(false, 0));
+            stats.originalCovenants.put(covenant.commonEvent(), new BSPlayerStats.CovenantProgress(previous.pledged(), value));
+            return;
+        }
         if (id == 68) {
             BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original covenant stats"));
             if (stats.originalNodenProgressKnown) {
@@ -148,11 +160,27 @@ public final class OriginalNpcProgress extends SavedData {
     }
 
     public static boolean readSwitch(ServerPlayer player, int id) {
+        var covenant = com.BlackSouls.BlackSoulsMod.util.OriginalCovenantData.forSwitch(id);
+        if (covenant != null && covenant.commonEvent() != 80) {
+            BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original covenant stats"));
+            return stats.originalCovenants.computeIfAbsent(covenant.commonEvent(), ignored -> new BSPlayerStats.CovenantProgress(false, 0)).pledged();
+        }
         if (id == 157) {
             BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original covenant stats"));
             if (stats.originalNodenProgressKnown) return stats.originalNodenPledged;
         }
         return get(player.server).switchValue(id);
+    }
+
+    public static void writeSwitch(ServerPlayer player, int id, boolean value) {
+        var covenant = com.BlackSouls.BlackSoulsMod.util.OriginalCovenantData.forSwitch(id);
+        BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original covenant stats"));
+        if (covenant != null && covenant.commonEvent() != 80) {
+            var previous = stats.originalCovenants.getOrDefault(covenant.commonEvent(), new BSPlayerStats.CovenantProgress(false, 0));
+            stats.originalCovenants.put(covenant.commonEvent(), new BSPlayerStats.CovenantProgress(value, previous.stage()));
+        } else if (id == 157 && stats.originalNodenProgressKnown) {
+            stats.originalNodenPledged = value;
+        } else get(player.server).setSwitch(id, value);
     }
 
     public void setSelfSwitch(String eventId, String key, boolean enabled) {

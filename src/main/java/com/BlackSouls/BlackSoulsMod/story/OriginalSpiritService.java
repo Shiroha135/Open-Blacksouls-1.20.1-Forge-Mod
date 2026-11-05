@@ -7,6 +7,10 @@ import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketSyncStats;
 import com.BlackSouls.BlackSoulsMod.util.OriginalSpiritData;
+import com.BlackSouls.BlackSoulsMod.util.OriginalCovenantData;
+import com.BlackSouls.BlackSoulsMod.util.BSOriginalNpcData;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import net.minecraft.server.level.ServerPlayer;
 
 public final class OriginalSpiritService {
@@ -46,6 +50,32 @@ public final class OriginalSpiritService {
         }
         synchronizeLegacyNoden(stats);
         update(player);
+    }
+
+    public static void restoreLegacyCovenantProgress(ServerPlayer player, JsonObject snapshot) {
+        if (snapshot.has("contextState") && snapshot.getAsJsonObject("contextState").has("personalCovenants")) return;
+        BSPlayerStats stats = stats(player);
+        for (var covenant : OriginalCovenantData.values()) {
+            if (covenant.commonEvent() == 80 || stats.originalCovenants.containsKey(covenant.commonEvent())) continue;
+            JsonArray expected = new JsonArray();
+            for (var command : BSOriginalNpcData.commonEvent(covenant.commonEvent())) {
+                JsonObject row = new JsonObject();
+                row.addProperty("code", command.code());
+                row.addProperty("indent", command.indent());
+                JsonArray parameters = new JsonArray();
+                command.parameters().forEach(value -> parameters.add(value.deepCopy()));
+                row.add("parameters", parameters);
+                expected.add(row);
+            }
+            for (var frame : snapshot.getAsJsonArray("frames")) {
+                if (expected.equals(frame.getAsJsonObject().getAsJsonArray("commands"))) {
+                    var progress = OriginalNpcProgress.get(player.server);
+                    stats.originalCovenants.put(covenant.commonEvent(), new BSPlayerStats.CovenantProgress(
+                            progress.switchValue(covenant.pledgeSwitch()), progress.variable(covenant.stageVariable())));
+                    break;
+                }
+            }
+        }
     }
 
     public static boolean select(ServerPlayer player, int spiritId) {

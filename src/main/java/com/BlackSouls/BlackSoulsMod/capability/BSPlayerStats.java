@@ -86,6 +86,7 @@ public class BSPlayerStats {
     public boolean originalNodenProgressKnown;
     public boolean originalNodenPledged;
     public long originalNodenStage;
+    public java.util.Map<Integer, CovenantProgress> originalCovenants = new java.util.HashMap<>();
     public List<String> unlockedSkills = new ArrayList<>();
     public List<BonfireEntry> unlockedBonfires = new ArrayList<>();
 
@@ -214,7 +215,7 @@ public class BSPlayerStats {
             listCov.add(StringTag.valueOf(s));
         }
         nbt.put("UnlockedCovenants", listCov);
-        if (originalSpiritsInitialized || originalNodenProgressKnown) {
+        if (originalSpiritsInitialized || originalNodenProgressKnown || !originalCovenants.isEmpty()) {
             CompoundTag spirits = new CompoundTag();
             spirits.putInt("Version", 1);
             spirits.putBoolean("Initialized", originalSpiritsInitialized);
@@ -223,6 +224,17 @@ public class BSPlayerStats {
             spirits.putBoolean("NodenProgressKnown", originalNodenProgressKnown);
             spirits.putBoolean("NodenPledged", originalNodenPledged);
             spirits.putLong("NodenStage", originalNodenStage);
+            if (!originalCovenants.isEmpty()) {
+                ListTag covenants = new ListTag();
+                originalCovenants.entrySet().stream().sorted(java.util.Map.Entry.comparingByKey()).forEach(entry -> {
+                    CompoundTag covenant = new CompoundTag();
+                    covenant.putInt("CommonEvent", entry.getKey());
+                    covenant.putBoolean("Pledged", entry.getValue().pledged());
+                    covenant.putLong("Stage", entry.getValue().stage());
+                    covenants.add(covenant);
+                });
+                spirits.put("Covenants", covenants);
+            }
             nbt.put("OriginalSpiritState", spirits);
         }
 
@@ -242,6 +254,7 @@ public class BSPlayerStats {
         }
         CompoundTag spirits = nbt.getCompound("OriginalSpiritState");
         List<Integer> owned = new ArrayList<>();
+        java.util.Map<Integer, CovenantProgress> covenantProgress = new java.util.HashMap<>();
         if (nbt.contains("OriginalSpiritState")) {
             if (spirits.getInt("Version") != 1 || !spirits.contains("Initialized", Tag.TAG_BYTE)
                     || !spirits.contains("Owned", Tag.TAG_INT_ARRAY) || !spirits.contains("Partner", Tag.TAG_INT)
@@ -256,6 +269,21 @@ public class BSPlayerStats {
             if (spirits.getInt("Partner") != 0 && !owned.contains(spirits.getInt("Partner"))) {
                 throw new IllegalArgumentException("Unowned original spirit partner");
             }
+            if (spirits.contains("Covenants")) {
+                if (!spirits.contains("Covenants", Tag.TAG_LIST)) throw new IllegalArgumentException("Invalid original covenant progress type");
+                ListTag covenants = (ListTag) spirits.get("Covenants");
+                if (!covenants.isEmpty() && covenants.getElementType() != Tag.TAG_COMPOUND) throw new IllegalArgumentException("Invalid original covenant progress list");
+                for (Tag value : covenants) {
+                    CompoundTag covenant = (CompoundTag) value;
+                    if (!covenant.contains("CommonEvent", Tag.TAG_INT) || !covenant.contains("Pledged", Tag.TAG_BYTE)
+                            || !covenant.contains("Stage", Tag.TAG_LONG)) throw new IllegalArgumentException("Invalid original covenant progress");
+                    int common = covenant.getInt("CommonEvent");
+                    if (common == 80 || com.BlackSouls.BlackSoulsMod.util.OriginalCovenantData.get(common) == null
+                            || covenantProgress.put(common, new CovenantProgress(covenant.getBoolean("Pledged"), covenant.getLong("Stage"))) != null) {
+                        throw new IllegalArgumentException("Unknown or duplicate original covenant progress");
+                    }
+                }
+            }
         }
         originalSpiritsInitialized = spirits.getBoolean("Initialized");
         originalSpirits = owned;
@@ -263,6 +291,7 @@ public class BSPlayerStats {
         originalNodenProgressKnown = spirits.getBoolean("NodenProgressKnown");
         originalNodenPledged = spirits.getBoolean("NodenPledged");
         originalNodenStage = spirits.getLong("NodenStage");
+        originalCovenants = covenantProgress;
         this.level = Math.max(1, nbt.getInt("Level"));
         this.developerNoCooldown = nbt.getBoolean("DeveloperNoCooldown");
         this.developerLimitBreak = nbt.getBoolean("DeveloperLimitBreak");
@@ -527,6 +556,9 @@ public class BSPlayerStats {
         mpRegenRate += spirit.sum(22, 8);
         targetingRate *= spirit.rate(23, 0);
         mpCostRate *= spirit.rate(23, 4);
+    }
+
+    public record CovenantProgress(boolean pledged, long stage) {
     }
 
     public static class PurgeCommissionTask {

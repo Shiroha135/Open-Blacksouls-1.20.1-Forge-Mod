@@ -53,7 +53,10 @@ public class PacketSetCovenant {
     }
 
     private boolean applyChange(ServerPlayer player, BSPlayerStats stats) {
-        if ("noden".equals(covenantName) && stats.originalNodenProgressKnown) {
+        if (!player.isAlive() || player.isSpectator()
+                || com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager.isInBattle(player)) return false;
+        if ("noden".equals(covenantName) && (stats.originalNodenProgressKnown
+                || stats.originalSpiritsInitialized && stats.originalSpirits.stream().anyMatch(id -> id >= 1 && id <= 4))) {
             if (level != -1) return false;
             int spirit = stats.originalSpirits.stream().filter(id -> id >= 1 && id <= 4).mapToInt(Integer::intValue).max().orElse(0);
             return spirit != 0 && OriginalSpiritService.select(player, spirit);
@@ -64,7 +67,7 @@ public class PacketSetCovenant {
             }
             stats.activeCovenant = covenantName;
             if (stats.originalSpiritsInitialized) stats.originalSpiritPartner = 0;
-            stats.recalculateStats();
+            OriginalSpiritService.update(player);
             return true;
         }
 
@@ -79,7 +82,7 @@ public class PacketSetCovenant {
                 changed = true;
             }
             if (changed) {
-                stats.recalculateStats();
+                OriginalSpiritService.update(player);
             }
             return changed;
         }
@@ -97,7 +100,7 @@ public class PacketSetCovenant {
                 stats.activeCovenant = "noden";
             }
             stats.nodenCovenantLevel = 0;
-            stats.recalculateStats();
+            OriginalSpiritService.update(player);
             playSuccessSound(player);
             return true;
         }
@@ -125,7 +128,7 @@ public class PacketSetCovenant {
             stats.originalSpiritPartner = 0;
             if ("noden".equals(stats.activeCovenant)) stats.activeCovenant = "";
         }
-        stats.recalculateStats();
+        OriginalSpiritService.update(player);
         playSuccessSound(player);
         return true;
     }
