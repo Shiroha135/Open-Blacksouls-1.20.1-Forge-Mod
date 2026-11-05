@@ -104,7 +104,12 @@ public final class OriginalNpcPlacements {
     }
 
     public static boolean isOriginalRedHoodBonfire(ServerLevel level, BlockPos position) {
-        return CEMETERY_BONFIRE.equals(position) && hasDeployedMap(level);
+        return redHoodSourceAtBonfire(level, position) != null;
+    }
+
+    public static String redHoodSourceAtBonfire(ServerLevel level, BlockPos position) {
+        if (!hasDeployedMap(level)) return null;
+        return CEMETERY_BONFIRE.equals(position) ? "map033_ev023" : null;
     }
 
     public static Outcome install(ServerPlayer player, String npcId) {

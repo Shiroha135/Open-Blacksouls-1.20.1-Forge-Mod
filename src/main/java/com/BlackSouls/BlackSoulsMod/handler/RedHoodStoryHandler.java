@@ -33,7 +33,7 @@ public final class RedHoodStoryHandler {
 
     public static void onBonfireRest(ServerPlayer player, ServerLevel level, BlockPos bonfirePos) {
         if (OriginalNpcPlacements.isOriginalRedHoodBonfire(level, bonfirePos)) {
-            OriginalNpcPlacements.install(player, "map033_ev023");
+            OriginalNpcPlacements.install(player, OriginalNpcPlacements.redHoodSourceAtBonfire(level, bonfirePos));
             return;
         }
         BSWorldData data = BSWorldData.get(level.getServer().overworld());
