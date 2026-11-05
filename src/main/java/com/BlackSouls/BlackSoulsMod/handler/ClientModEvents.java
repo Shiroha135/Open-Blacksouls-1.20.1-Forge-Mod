@@ -47,7 +47,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(BSEntityRegistry.RED_HOOD.get(),
                 context -> new SwitchableMmdRenderer<>(context, "小红帽", RenderRedHoodFallback::new));
         event.registerEntityRenderer(BSEntityRegistry.RABBIT_HOLE_NPC.get(), RabbitRenderer::new);
-        event.registerEntityRenderer(BSEntityRegistry.RABBIT_KNIGHT.get(), RenderRabbitKnight::new);
+        event.registerEntityRenderer(BSEntityRegistry.RABBIT_KNIGHT.get(), RenderSourceRabbitKnight::new);
         event.registerEntityRenderer(BSEntityRegistry.CHESHIRE_CAT.get(),
                 context -> new SwitchableMmdRenderer<>(context, "柴郡猫", RenderCheshireCat::new, 0.25F));
         event.registerEntityRenderer(BSEntityRegistry.HOLMES.get(), EntityHolmesRenderer::new);
