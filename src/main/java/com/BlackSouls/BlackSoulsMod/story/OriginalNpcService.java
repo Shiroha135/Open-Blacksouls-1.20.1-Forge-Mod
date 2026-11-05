@@ -372,13 +372,14 @@ public final class OriginalNpcService {
         }
         EventContext context = new EventContext(player, npc, npcId);
         OriginalNpcProgress progress = OriginalNpcProgress.get(player.server);
-        if (npc instanceof EntityCheshireCat && progress.hasOtherConversation(player.getUUID(), CHESHIRE_EVENTS)) return;
         JsonObject saved = progress.conversation(player.getUUID(), npcId);
+        if (progress.hasOtherConversation(player.getUUID(), npc instanceof EntityCheshireCat
+                ? CHESHIRE_EVENTS : java.util.Set.of(npcId)) && (npc instanceof EntityCheshireCat || saved == null)) return;
         if (savedContinuation && saved == null) return;
         if (saved != null) {
             try {
-                if (npc instanceof EntityCheshireCat && saved.has("entityUuid") && (!npc.getUUID().toString().equals(saved.get("entityUuid").getAsString())
-                        || !player.level().dimension().location().toString().equals(saved.get("dimension").getAsString()))) return;
+                if (saved.has("entityUuid") && !npc.getUUID().toString().equals(saved.get("entityUuid").getAsString())
+                        || saved.has("dimension") && !player.level().dimension().location().toString().equals(saved.get("dimension").getAsString())) return;
                 OriginalNpcInterpreter interpreter = OriginalNpcInterpreter.restore(saved.getAsJsonObject("interpreter"), context);
                 Session session = new Session(player.getUUID(), npc.getId(), npcId,
                         player.level().dimension().location(), interpreter);
@@ -397,6 +398,7 @@ public final class OriginalNpcService {
                     }
                     session.synthesisRecipes = List.copyOf(recipes);
                 }
+                progress.claimConversation(player.getUUID(), npcId);
                 SESSIONS.put(player.getUUID(), session);
                 OriginalNpcInterpreter.Prompt prompt = interpreter.pendingPrompt();
                 if (prompt == null) {
