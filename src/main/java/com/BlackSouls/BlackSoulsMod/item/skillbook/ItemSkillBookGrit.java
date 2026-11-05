@@ -22,6 +22,9 @@ public class ItemSkillBookGrit extends ItemLoreBase {
         ItemStack stack = player.getItemInHand(hand);
 
         if (!level.isClientSide) {
+            if (com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager.isInBattle(player)) {
+                return InteractionResultHolder.fail(stack);
+            }
             if (SkillUtils.hasLearnedSkill(player, "bs2_skill_grit")) {
                 player.sendSystemMessage(Component.translatable("message.blacksouls.skill.already_learned").withStyle(ChatFormatting.RED));
                 return InteractionResultHolder.fail(stack);

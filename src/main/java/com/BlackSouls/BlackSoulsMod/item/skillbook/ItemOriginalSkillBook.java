@@ -35,6 +35,9 @@ public class ItemOriginalSkillBook extends ItemLoreBase {
     public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, @NotNull InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (!level.isClientSide) {
+            if (com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager.isInBattle(player)) {
+                return InteractionResultHolder.fail(stack);
+            }
             if (SkillUtils.hasLearnedSkill(player, profile.getSkillId())) {
                 player.sendSystemMessage(Component.translatable("message.blacksouls.skill.already_learned").withStyle(ChatFormatting.RED));
                 return InteractionResultHolder.fail(stack);

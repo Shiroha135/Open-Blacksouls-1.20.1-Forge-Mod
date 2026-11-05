@@ -33,6 +33,9 @@ public class ItemSkillBookCarthusBloodCurse extends Item {
         ItemStack itemstack = player.getItemInHand(hand);
 
         if (!level.isClientSide()) {
+            if (com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager.isInBattle(player)) {
+                return InteractionResultHolder.fail(itemstack);
+            }
             player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
                 String skillId = "bs2_skill_carthus_blood_curse";
 
