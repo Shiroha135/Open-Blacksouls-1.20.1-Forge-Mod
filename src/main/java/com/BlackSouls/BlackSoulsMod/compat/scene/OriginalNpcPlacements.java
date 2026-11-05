@@ -31,6 +31,7 @@ import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class OriginalNpcPlacements {
+    public static final BlockPos CEMETERY_BONFIRE = new BlockPos(786, 11, -607);
     private static final double NEARBY_DISTANCE_SQUARED = 64.0D * 64.0D;
     private static final List<Site> SITES = List.of(
             new Site("map002_ev059", new Vec3(615.5D, 13.0D, -531.5D), 180.0F,
@@ -61,7 +62,11 @@ public final class OriginalNpcPlacements {
             new Site("map012_ev010", new Vec3(709.5D, -58.4375D, -442.35D), 0.0F,
                     "cfm:oak_park_bench", wardSeatLandmarks(709, -443, "left"), true),
             new Site("map012_ev011", new Vec3(717.5D, -58.4375D, -442.35D), 0.0F,
-                    "cfm:oak_park_bench", wardSeatLandmarks(717, -443, "left"), true));
+                    "cfm:oak_park_bench", wardSeatLandmarks(717, -443, "left"), true),
+            new Site("map033_ev042", new Vec3(786.5D, 11.0D, -603.5D), 180.0F,
+                    "minecraft:grass_block", cemeteryLandmarks()),
+            new Site("map033_ev023", new Vec3(788.5D, 11.0D, -607.5D), 90.0F,
+                    "minecraft:grass_block", cemeteryLandmarks()));
 
     private OriginalNpcPlacements() {
     }
@@ -94,6 +99,10 @@ public final class OriginalNpcPlacements {
         return HokoniwaDestination.DIMENSION.equals(level.dimension()) && Files.isRegularFile(level.getServer()
                 .getWorldPath(LevelResource.ROOT).resolve("dimensions").resolve("blacksouls")
                 .resolve("hokoniwa").resolve("blacksouls_hakoniwa-v4.flag"));
+    }
+
+    public static boolean isOriginalRedHoodBonfire(ServerLevel level, BlockPos position) {
+        return CEMETERY_BONFIRE.equals(position) && hasDeployedMap(level);
     }
 
     public static Outcome install(ServerPlayer player, String npcId) {
@@ -202,6 +211,16 @@ public final class OriginalNpcPlacements {
                 landmark(581, 13, -576, "minecraft:spruce_door", Map.of("facing", "east", "half", "lower")),
                 landmark(577, 13, -577, "minecraft:spruce_door", Map.of("facing", "south", "half", "lower")),
                 landmark(580, 12, -570, "minecraft:stone_bricks", Map.of()));
+    }
+
+    private static List<Landmark> cemeteryLandmarks() {
+        return List.of(
+                landmark(786, 11, -607, "minecraft:campfire", Map.of("facing", "east")),
+                landmark(786, 11, -603, "blacksouls2:l_lu_deng_1", Map.of("facing", "north")),
+                landmark(786, 14, -603, "blacksouls2:l_lu_deng_3", Map.of("facing", "north")),
+                landmark(788, 11, -605, "minecraft:oak_log", Map.of("axis", "y")),
+                landmark(788, 12, -605, "moa_decor_garden_:hachaclavada", Map.of("facing", "up")),
+                landmark(784, 11, -610, "blacksouls2:sh_sheng_zi", Map.of("facing", "north")));
     }
 
     private static List<Landmark> wardSeatLandmarks(int x, int z, String type) {

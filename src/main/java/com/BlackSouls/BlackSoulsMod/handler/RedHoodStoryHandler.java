@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.handler;
 
 import com.BlackSouls.BlackSoulsMod.capability.BSWorldData;
+import com.BlackSouls.BlackSoulsMod.compat.scene.OriginalNpcPlacements;
 import com.BlackSouls.BlackSoulsMod.entity.EntityRedHood;
 import com.BlackSouls.BlackSoulsMod.entity.RedHoodDialogue;
 import com.BlackSouls.BlackSoulsMod.util.BonfireMetadata;
@@ -31,6 +32,10 @@ public final class RedHoodStoryHandler {
     }
 
     public static void onBonfireRest(ServerPlayer player, ServerLevel level, BlockPos bonfirePos) {
+        if (OriginalNpcPlacements.isOriginalRedHoodBonfire(level, bonfirePos)) {
+            OriginalNpcPlacements.install(player, "map033_ev023");
+            return;
+        }
         BSWorldData data = BSWorldData.get(level.getServer().overworld());
         GlobalPos bonfire = GlobalPos.of(level.dimension(), bonfirePos);
         if (!data.isRedHoodAwaitingNextBonfire() || data.isRedHoodLastBonfire(bonfire)) {
