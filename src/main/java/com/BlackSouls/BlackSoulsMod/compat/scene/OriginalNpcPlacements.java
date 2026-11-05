@@ -93,7 +93,7 @@ public final class OriginalNpcPlacements {
     }
 
     public static List<Site> sites() {
-        return SITES;
+        return java.util.stream.Stream.concat(SITES.stream(), OriginalBillPlacement.sites().stream()).toList();
     }
 
     public static Map<String, Outcome> installNearby(ServerPlayer player) {
@@ -101,7 +101,7 @@ public final class OriginalNpcPlacements {
             return Map.of();
         }
         Map<String, Outcome> results = new LinkedHashMap<>();
-        for (Site site : SITES) {
+        for (Site site : sites()) {
             results.put(site.npcId(), install(player, site.npcId()));
         }
         results.put(OriginalReceptionistPlacement.NPC_ID, OriginalReceptionistPlacement.install(player));
@@ -127,7 +127,7 @@ public final class OriginalNpcPlacements {
 
     public static Outcome install(ServerPlayer player, String npcId) {
         if (OriginalReceptionistPlacement.NPC_ID.equals(npcId)) return OriginalReceptionistPlacement.install(player);
-        Site site = SITES.stream().filter(value -> value.npcId().equals(npcId)).findFirst().orElse(null);
+        Site site = sites().stream().filter(value -> value.npcId().equals(npcId)).findFirst().orElse(null);
         if (site == null) {
             return Outcome.UNKNOWN_SITE;
         }
@@ -170,7 +170,7 @@ public final class OriginalNpcPlacements {
         npc.setNpcId(npcId);
         AABB bounds = npc.getBoundingBox();
         if (!level.noCollision(npc, bounds) || site.shapedSupport() && level.noCollision(npc, bounds.move(0.0D, -0.02D, 0.0D))
-                || level.containsAnyLiquid(bounds)
+                || level.containsAnyLiquid(bounds) && !OriginalBillPlacement.allowsFootWater(level, site, bounds)
                 || !level.getEntitiesOfClass(LivingEntity.class, bounds,
                 entity -> entity.isAlive() && !entity.isSpectator()).isEmpty()) {
             npc.discard();

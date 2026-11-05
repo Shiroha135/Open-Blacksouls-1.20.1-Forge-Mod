@@ -69,6 +69,13 @@
       "width": 640,
       "height": 480,
       "sourceSha256": "4641e39534487e0b2e8fce223448cf3e875c1ca18c7721490aaac622172b9179"
+    },
+    {
+      "name": "9",
+      "texture": "blacksouls:textures/gui/original_pictures/9.png",
+      "width": 640,
+      "height": 480,
+      "sourceSha256": "339c790c5b2afec05495d022551262861a1cc0e5df9462c15d88cd2bdba85abd"
     }
   ]
 }

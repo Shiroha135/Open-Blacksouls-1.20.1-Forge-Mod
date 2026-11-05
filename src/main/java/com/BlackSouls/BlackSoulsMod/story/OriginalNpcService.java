@@ -347,6 +347,8 @@ public final class OriginalNpcService {
 
     public static void interact(ServerPlayer player, EntityOriginalNpc npc) {
         if (!matchesActor(npc, npc.getNpcId())) return;
+        if (com.BlackSouls.BlackSoulsMod.compat.scene.OriginalBillPlacement.INITIAL_NPC.equals(npc.getNpcId())
+                && OriginalBillInteraction.tryInteract(player)) return;
         interact(player, npc, npc.getNpcId(), false);
     }
 
@@ -391,6 +393,7 @@ public final class OriginalNpcService {
                 if (saved.has("entityUuid") && !npc.getUUID().toString().equals(saved.get("entityUuid").getAsString())
                         || saved.has("dimension") && !player.level().dimension().location().toString().equals(saved.get("dimension").getAsString())) return;
                 OriginalNpcInterpreter interpreter = OriginalNpcInterpreter.restore(saved.getAsJsonObject("interpreter"), context);
+                OriginalSpiritService.restoreLegacyCovenantProgress(player, saved.getAsJsonObject("interpreter"));
                 Session session = new Session(player.getUUID(), npc.getId(), npcId,
                         player.level().dimension().location(), interpreter);
                 session.lastText = saved.has("lastText") ? saved.get("lastText").getAsString() : "";
@@ -820,6 +823,7 @@ public final class OriginalNpcService {
         @Override
         public JsonObject savePresentationState() {
             JsonObject state = nameWindow.snapshot();
+            state.addProperty("personalCovenants", true);
             JsonObject numeric = new JsonObject();
             numericVariables.forEach((key, value) -> numeric.addProperty(Integer.toString(key), value));
             if (!numericVariables.isEmpty()) state.add("numericVariables", numeric);
@@ -828,6 +832,9 @@ public final class OriginalNpcService {
 
         @Override
         public void restorePresentationState(JsonObject saved) {
+            if (saved.has("personalCovenants") && (!saved.get("personalCovenants").isJsonPrimitive()
+                    || !saved.getAsJsonPrimitive("personalCovenants").isBoolean()
+                    || !saved.get("personalCovenants").getAsBoolean())) throw new IllegalArgumentException("Invalid personal covenant checkpoint marker");
             nameWindow = OriginalNpcNameWindow.State.restore(saved);
             numericVariables.clear();
             if (saved.has("numericVariables")) {
@@ -854,6 +861,18 @@ public final class OriginalNpcService {
         }
 
         @Override
+        public int characterDirection(int target) {
+            if (!(npc instanceof EntityOriginalNpc original)) throw new UnsupportedOperationException("condition_character_source");
+            Entity entity = OriginalNpcCharacterBindings.resolveEvent(player, original, target);
+            if (entity instanceof EntityOriginalNpc character) return character.getSpriteDirection();
+            var source = BSOriginalNpcData.get(npcId);
+            if (entity == player && source != null && source.mapId() == 62) {
+                return com.BlackSouls.BlackSoulsMod.compat.scene.OriginalBillPlacement.playerDirection(player);
+            }
+            throw new UnsupportedOperationException("condition_character_direction_mapping:" + target);
+        }
+
+        @Override
         public void openItemKeep() {
             if (player == null) throw new UnsupportedOperationException("requires_player");
         }
@@ -873,8 +892,8 @@ public final class OriginalNpcService {
 
         @Override
         public void setSwitch(int id, boolean value) {
-            if (player != null && id == 157 && stats().originalNodenProgressKnown) {
-                stats().originalNodenPledged = value;
+            if (player != null) {
+                OriginalNpcProgress.writeSwitch(player, id, value);
                 return;
             }
             progress.setSwitch(id, value);
