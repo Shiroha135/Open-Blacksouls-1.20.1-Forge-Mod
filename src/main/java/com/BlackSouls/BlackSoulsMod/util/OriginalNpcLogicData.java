@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 public final class OriginalNpcLogicData {
-    private static final Map<Integer, Integer> EXPECTED_PAGES = Map.of(59, 5, 95, 8, 96, 4, 97, 4);
+    private static final Map<String, Integer> EXPECTED_PAGES = Map.of("map051_ev059", 5, "map051_ev095", 8,
+            "map051_ev096", 4, "map051_ev097", 4, "map178_ev007", 1);
     private static final Map<String, BSOriginalNpcData.Entry> ENTRIES = load();
 
     private OriginalNpcLogicData() {
@@ -33,7 +34,7 @@ public final class OriginalNpcLogicData {
                 int mapId = integer(json, "mapId");
                 int eventId = integer(json, "eventId");
                 String id = json.get("id").getAsString();
-                if (mapId != 51 || !EXPECTED_PAGES.containsKey(eventId) || !id.equals("map051_ev%03d".formatted(eventId))) {
+                if (!EXPECTED_PAGES.containsKey(id) || !id.equals("map%03d_ev%03d".formatted(mapId, eventId))) {
                     throw new IllegalArgumentException("Unreviewed original logic event: " + id);
                 }
                 List<BSOriginalNpcData.Page> pages = new ArrayList<>();
@@ -61,7 +62,7 @@ public final class OriginalNpcLogicData {
                     pages.add(new BSOriginalNpcData.Page(page.getAsJsonObject("condition"), page.getAsJsonObject("graphic"),
                             integer(page, "trigger"), commands, movement));
                 }
-                if (pages.size() != EXPECTED_PAGES.get(eventId)) throw new IllegalArgumentException("Unexpected original logic page count: " + id);
+                if (pages.size() != EXPECTED_PAGES.get(id)) throw new IllegalArgumentException("Unexpected original logic page count: " + id);
                 BSOriginalNpcData.Entry entry = new BSOriginalNpcData.Entry(id, mapId, eventId,
                         json.get("name").getAsString(), integer(json, "x"), integer(json, "y"), pages);
                 if (entries.put(id, entry) != null) throw new IllegalArgumentException("Duplicate original logic event: " + id);
