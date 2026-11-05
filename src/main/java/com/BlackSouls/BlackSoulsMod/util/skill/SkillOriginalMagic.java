@@ -633,7 +633,7 @@ public class SkillOriginalMagic extends AbstractSkill {
 
     private void castResurrection(ServerPlayer player, LivingEntity turnTarget) {
         LivingEntity ally = turnTarget == null ? selectAlly(player) : turnTarget;
-        ally.heal(ally.getMaxHealth() * 0.50F);
+        ally.heal((float) Math.floor(ally.getMaxHealth() * 0.50D * StatEventHandler.getOriginalSpiritRate(ally, 23, 2)));
         ally.addEffect(new MobEffectInstance(BlackSouls.BUFF_REQUIEM.get(), 200, 0));
         playAnimation(ally);
         playCastSound(player);
@@ -693,7 +693,7 @@ public class SkillOriginalMagic extends AbstractSkill {
     }
 
     private void castVerdantPower(ServerPlayer player) {
-        player.heal(player.getMaxHealth() * 0.50F);
+        player.heal((float) Math.floor(player.getMaxHealth() * 0.50D * StatEventHandler.getOriginalSpiritRate(player, 23, 2)));
         clearHarmfulEffects(player);
         playAnimation(player);
         playCastSound(player);

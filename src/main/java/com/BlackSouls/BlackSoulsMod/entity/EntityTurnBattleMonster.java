@@ -176,4 +176,8 @@ public abstract class EntityTurnBattleMonster extends Monster {
     public List<ItemStack> rollTurnBattleDrops(RandomSource random) {
         return List.of();
     }
+
+    public List<ItemStack> rollTurnBattleDrops(RandomSource random, int rate) {
+        return rollTurnBattleDrops(random);
+    }
 }

@@ -186,13 +186,14 @@ public final class TurnBattleManager {
             member.fallDistance = 0.0F;
         }
         configureInitialEnemies(player, enemy, session);
+        initializeOriginalEncounter(player, session, false);
         player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats ->
                 session.remainingPlayerActions = rollPlayerActionCount(player, stats));
         session.openingPending = BSOriginalBattleProfileData.get(profileId).preemptiveSkillId() > 0;
-        session.resolving = session.openingPending;
+        session.resolving = session.openingPending || session.surprisePending;
         session.presentationDriver = player.getUUID();
         broadcastState(session, true, battleIntro(session.battleProfileId, enemy),
-                !session.openingPending, ClientboundTurnBattlePacket.Outcome.NONE, 0L);
+                !session.resolving, ClientboundTurnBattlePacket.Outcome.NONE, 0L);
     }
 
     public static boolean tryStartOriginalTroop(ServerPlayer player, EntityTurnBattleMonster rootEnemy,
@@ -255,14 +256,15 @@ public final class TurnBattleManager {
             BlackSouls.LOGGER.error("Failed to create original battle troop {}", troopId, exception);
             return false;
         }
+        initializeOriginalEncounter(player, session, scripted);
         session.remainingPlayerActions = rollPlayerActionCount(player, battlePlayerStats(player));
         session.presentationDriver = player.getUUID();
         if (RUNNER_TROOPS.contains(troopId)) {
             session.troopContext = new TroopEventContext(player, session);
             session.troopRunner = new OriginalTroopEventRunner(troop, session.troopContext);
             runTroopEvents(player, session, () -> {
-                session.resolving = false;
-                broadcastState(session, true, Component.empty(), true,
+                session.resolving = session.surprisePending;
+                broadcastState(session, true, Component.empty(), !session.resolving,
                         ClientboundTurnBattlePacket.Outcome.NONE, 0L);
             }, false);
         } else {
@@ -272,8 +274,8 @@ public final class TurnBattleManager {
                 BlackSouls.LOGGER.warn("Original troop {} retains {} battle-event pages pending the generic troop runner", troopId, pendingPages);
             }
             session.openingPending = BSOriginalBattleProfileData.get(session.battleProfileId).preemptiveSkillId() > 0;
-            session.resolving = session.openingPending;
-            broadcastState(session, true, battleIntro(session.battleProfileId, rootEnemy), !session.openingPending,
+            session.resolving = session.openingPending || session.surprisePending;
+            broadcastState(session, true, battleIntro(session.battleProfileId, rootEnemy), !session.resolving,
                     ClientboundTurnBattlePacket.Outcome.NONE, 0L);
         }
         return true;
@@ -694,6 +696,7 @@ public final class TurnBattleManager {
         int profileId = entity instanceof EntityOriginalDatabaseEnemy original ? original.getProfileId()
                 : entity instanceof EntityOriginalTurnBattleEnemy legacy ? legacy.getOriginalBattleProfileId() : 0;
         double rate = 1.0D;
+        rate *= StatEventHandler.getOriginalSpiritRate(entity, 11, elementId);
         for (BSOriginalCombatData.Feature feature : BSOriginalCombatData.enemy(profileId).features()) {
             if (feature.code() == 11 && feature.dataId() == elementId) {
                 rate *= feature.value();
@@ -764,7 +767,7 @@ public final class TurnBattleManager {
                     action, player.getGameProfile().getName(), session.openingPending,
                     session.awaitingPhasePresentation, session.enemySequenceActive,
                     session.enemyActionQueue.size());
-            if (session.openingPending) {
+            if (session.openingPending || session.surprisePending) {
                 handlePresentationComplete(player);
                 return;
             }
@@ -869,8 +872,7 @@ public final class TurnBattleManager {
                 playerMessage = Component.literal(player.getDisplayName().getString() + "采取了防御姿态！");
             }
             case ESCAPE -> {
-                double chance = Mth.clamp(0.50D + (stats.speed - 40.0D) / 200.0D, 0.10D, 0.95D);
-                if (player.getRandom().nextDouble() < chance) {
+                if (session.preemptive || player.getRandom().nextDouble() < session.escapeRatio) {
                     if (session.partyMembers.size() > 1 && !PartyManager.isLeader(player)) {
                         session.remainingPlayerActions = Math.max(0, session.remainingPlayerActions - 1);
                         removePartyCombatant(player, session,
@@ -887,6 +889,7 @@ public final class TurnBattleManager {
                     }
                     return;
                 }
+                session.escapeRatio += 0.10D;
                 playerMessage = Component.literal(player.getDisplayName().getString() + "没能逃走！");
             }
             case WEAPON_CHANGE -> {
@@ -1082,16 +1085,12 @@ public final class TurnBattleManager {
         if (domain != null && domain.normalAttackDisabled()) {
             return new ActionResult(Component.literal("领域封锁了通常攻击。"), false);
         }
-        if (player.getRandom().nextDouble() >= 0.90D) {
-            String reaction = rollTurnBattleCounter(player, player, enemy, 1,
-                    BSOriginalReactionData.metadata(1), session)
-                    ? executeTurnBattleCounter(player, enemy, player, session) : "";
-            return new ActionResult(Component.literal(actor + "的攻击！\n但是没有命中" + target + "！" + reaction), true);
-        }
         double enemyDefense = battleParameter(enemy, 3, player, session);
         int dualSwordAura = getDualSwordAura(player);
-        int hitCount = player.getMainHandItem().is(BlackSouls.DIVINE_ANGEL_DUAL_SWORDS.get())
+        int weaponHits = player.getMainHandItem().is(BlackSouls.DIVINE_ANGEL_DUAL_SWORDS.get())
                 ? dualSwordAura + 1 : 1;
+        int hitCount = weaponHits + (int) Math.max(0.0D, session.originalState.features(player).stream()
+                .filter(feature -> feature.code() == 34).mapToDouble(BSOriginalCombatData.Feature::value).sum());
         List<ClientboundTurnBattlePacket.DamageHit> hits = new ArrayList<>();
         int totalDamage = 0;
         boolean critical = false;
@@ -1102,12 +1101,19 @@ public final class TurnBattleManager {
             }
             boolean counter = rollTurnBattleCounter(player, player, enemy, 1,
                     BSOriginalReactionData.metadata(1), session);
-            double multiplier = hit == 0 ? 4.0D : 3.0D;
+            double chance = Mth.clamp(originalHitRate(player, session), 0.0D, 1.0D)
+                    * (1.0D - session.originalState.xparam(enemy, 1));
+            if (player.getRandom().nextDouble() >= Mth.clamp(chance, 0.0D, 1.0D)) {
+                if (counter) reactions.append(executeTurnBattleCounter(player, enemy, player, session));
+                continue;
+            }
+            double multiplier = hit == 0 || hit >= weaponHits ? 4.0D : 3.0D;
             double damage = varied(player, Math.max(
                     1.0D, battleParameter(player, 2, player, session)
                             * multiplier - enemyDefense * 2.0D));
             boolean hitCritical = player.getRandom().nextDouble()
-                    < (stats.critRate + stats.bonusCritRate) / 100.0D;
+                    < (stats.critRate + stats.bonusCritRate + session.originalState.xparam(player, 2) * 100.0D)
+                    / 100.0D * (1.0D - session.originalState.xparam(enemy, 3));
             if (hitCritical) {
                 damage *= 3.0D;
                 critical = true;
@@ -1548,6 +1554,11 @@ public final class TurnBattleManager {
             beginOpeningSequence(player, stats, session);
             return;
         }
+        if (session.surprisePending) {
+            session.surprisePending = false;
+            beginEnemySequence(player, stats, session, Component.literal("遭到了敌人的突然袭击！"));
+            return;
+        }
         if (session.troopRunner != null && session.counterVictoryPending && session.awaitingPhasePresentation) {
             session.counterVictoryPending = false;
             session.awaitingPhasePresentation = false;
@@ -1934,6 +1945,13 @@ public final class TurnBattleManager {
 
     private static void beginEnemySequence(ServerPlayer player, BSPlayerStats stats,
                                            Session session, Component prefix) {
+        if (session.preemptive) {
+            session.preemptive = false;
+            session.enemySequenceCountsAsRound = true;
+            session.roundEffectSnapshots.clear();
+            presentNextEnemyAction(player, stats, session);
+            return;
+        }
         session.enemyActionQueue.clear();
         session.roundEffectSnapshots.clear();
         for (UUID memberId : session.partyMembers) {
@@ -2122,7 +2140,7 @@ public final class TurnBattleManager {
                 }
                 BSPlayerStats memberStats = member.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
                 if (memberStats != null) {
-                    restoreTurnBattleMana(memberStats);
+                    restoreTurnBattleMana(member, memberStats, session);
                 }
                 advanceBattleEffects(member, session.roundEffectSnapshots.getOrDefault(memberId, Map.of()), session);
                 session.originalState.advanceRound(member);
@@ -2317,7 +2335,8 @@ public final class TurnBattleManager {
             session.lastEnemyAnimationId = battleEnemy.getTurnBattleAttackAnimationId();
             String attackText = battleEnemy.getTurnBattleAttackText();
             if (player.getRandom().nextDouble() >= Mth.clamp(
-                    0.95D - effectiveEvasion / 100.0D, 0.05D, 0.99D)) {
+                    0.95D * (1.0D - effectiveEvasion / 100.0D
+                            - session.originalState.xparam(player, 1)), 0.0D, 1.0D)) {
                 return new EnemyActionResult(
                         Component.literal(enemy + attackText + "！\n但是攻击落空了！"), 0);
             }
@@ -2338,7 +2357,7 @@ public final class TurnBattleManager {
                     anyCritical = true;
                 }
                 if (guard) {
-                    damage *= 0.5D;
+                    damage /= 2.0D * Math.max(0.000001D, session.originalState.sparam(player, 1));
                 }
                 damage *= Math.max(0.0D, stats.physicalDamageRate);
                 applyIncomingHit(session, player, safeDamageInt(damage), critical);
@@ -2403,13 +2422,9 @@ public final class TurnBattleManager {
                         ? battlePlayerStats(player).magicEvasion / 100.0D : 0.0D;
                 evasion += session.originalState.xparam(target, 1);
                 magicEvasion += session.originalState.xparam(target, 4);
-                double hitRate = action.hitType() == 1 ? session.originalState.xparam(caster, 0) : 1.0D;
-                if (action.hitType() == 1 && hitRate == 0.0D
-                        && !(caster instanceof EntityOriginalDatabaseEnemy)) {
-                    hitRate = 0.95D;
-                }
+                double hitRate = action.hitType() == 1 ? originalHitRate(caster, session) : 1.0D;
                 double avoid = action.hitType() == 1 ? evasion : action.hitType() == 2 ? magicEvasion : 0.0D;
-                double chance = action.successRate() / 100.0D * hitRate * (1.0D - avoid);
+                double chance = Mth.clamp(action.successRate() / 100.0D * hitRate, 0.0D, 1.0D) * (1.0D - avoid);
                 if (observer.getRandom().nextDouble() >= Mth.clamp(chance, 0.0D, 1.0D)) {
                     if (counter) {
                         message.append(executeTurnBattleCounter(observer, selectedTarget, caster, session));
@@ -2962,7 +2977,7 @@ public final class TurnBattleManager {
         if (!player.isAlive()) {
             return null;
         }
-        double counterRate = StatEventHandler.getWeaponCounterRate(player);
+        double counterRate = StatEventHandler.getWeaponCounterRate(player) + session.originalState.xparam(player, 6) * 100.0D;
         if (counterRate <= 0.0D
                 || counterRate < 100.0D && player.getRandom().nextDouble() * 100.0D >= counterRate) {
             return null;
@@ -3108,11 +3123,12 @@ public final class TurnBattleManager {
         return (int) Math.min(Integer.MAX_VALUE, Math.max(0L, Math.round(value)));
     }
 
-    private static void restoreTurnBattleMana(BSPlayerStats stats) {
-        if (stats == null || stats.maxMp <= 0.0D || stats.mpRegenRate <= 0.0D) {
+    private static void restoreTurnBattleMana(ServerPlayer player, BSPlayerStats stats, Session session) {
+        double rate = (stats == null ? 0.0D : stats.mpRegenRate) + session.originalState.xparam(player, 8);
+        if (stats == null || stats.maxMp <= 0.0D || rate <= 0.0D) {
             return;
         }
-        double restored = Math.floor(stats.maxMp * stats.mpRegenRate);
+        double restored = Math.floor(stats.maxMp * rate);
         if (restored > 0.0D) {
             stats.mp = Math.min(stats.maxMp, stats.mp + restored);
         }
@@ -3294,14 +3310,16 @@ public final class TurnBattleManager {
     private static long rewardVictory(ServerPlayer player, BSPlayerStats stats,
                                       Session session) {
         long soulReward = 0L;
+        int goldRate = originalPartyAbility(player, session, 4) ? 2 : 1;
+        int dropRate = originalPartyAbility(player, session, 5) ? 2 : 1;
         session.rewardItems.clear();
         for (EntityTurnBattleMonster enemy : getEnemies(player, session)) {
             if (session.escapedEnemyIds.contains(enemy.getUUID())) {
                 continue;
             }
             soulReward += DifficultyManager.scaleManagedSoulReward(
-                    enemy.level(), enemy.getTurnBattleSoulReward());
-            for (ItemStack drop : enemy.rollTurnBattleDrops(player.getRandom())) {
+                    enemy.level(), enemy.getTurnBattleSoulReward()) * goldRate;
+            for (ItemStack drop : enemy.rollTurnBattleDrops(player.getRandom(), dropRate)) {
                 mergeRewardItem(session.rewardItems, drop);
                 if (!player.getInventory().add(drop)) {
                     player.drop(drop, false);
@@ -3643,7 +3661,58 @@ public final class TurnBattleManager {
         if (fractional > 0.0D && player.getRandom().nextDouble() < fractional) {
             result++;
         }
+        Session session = PLAYER_SESSIONS.get(player.getUUID());
+        var spirit = stats == null ? null : stats.getOriginalSpirit();
+        var features = session != null ? session.originalState.features(player)
+                : spirit == null ? List.<BSOriginalCombatData.Feature>of() : spirit.features();
+        for (var feature : features) {
+            if (feature.code() == 61 && player.getRandom().nextDouble() < feature.value()) result++;
+        }
         return result;
+    }
+
+    private static double originalHitRate(LivingEntity entity, Session session) {
+        boolean originalProfile = entity instanceof EntityOriginalDatabaseEnemy
+                || entity instanceof EntityOriginalTurnBattleEnemy legacy && legacy.getOriginalBattleProfileId() > 0;
+        return (originalProfile ? 0.0D : entity instanceof Player ? 1.0D : 0.95D) + session.originalState.xparam(entity, 0);
+    }
+
+    private static boolean originalPartyAbility(ServerPlayer player, Session session, int ability) {
+        for (UUID memberId : session.partyMembers) {
+            ServerPlayer member = player.server.getPlayerList().getPlayer(memberId);
+            if (member != null && session.originalState.hasFeature(member, 64, ability)) return true;
+        }
+        return false;
+    }
+
+    private static void initializeOriginalEncounter(ServerPlayer player, Session session, boolean scripted) {
+        double partyAgility = session.partyMembers.stream().map(player.server.getPlayerList()::getPlayer)
+                .filter(member -> member != null && member.isAlive())
+                .mapToDouble(member -> battleParameter(member, 6, player, session)).average().orElse(1.0D);
+        double troopAgility = getEnemies(player, session).stream().filter(enemy -> !enemy.isTurnBattleDefeated())
+                .mapToDouble(enemy -> battleParameter(enemy, 6, player, session)).average().orElse(1.0D);
+        double escapeBonus = session.partyMembers.stream().map(player.server.getPlayerList()::getPlayer)
+                .filter(java.util.Objects::nonNull).mapToDouble(member -> {
+                    var spirit = battlePlayerStats(member).getOriginalSpirit();
+                    return spirit == null ? 0.0D : spirit.escapeBonus();
+                }).sum();
+        double escapePenalty = getAllEnemies(player, session).stream().mapToDouble(enemy -> {
+            int profile = enemy instanceof EntityOriginalDatabaseEnemy original ? original.getProfileId()
+                    : enemy instanceof EntityOriginalTurnBattleEnemy legacy ? legacy.getOriginalBattleProfileId() : 0;
+            var matcher = java.util.regex.Pattern.compile("<逃走成功率減少[:：](\\S+)>")
+                    .matcher(BSOriginalCombatData.enemy(profile).note());
+            return matcher.find() ? Integer.parseInt(matcher.group(1)) : 0.0D;
+        }).sum();
+        session.escapeRatio = Math.max(0.20D, Mth.clamp(1.5D - Math.floor(troopAgility)
+                / Math.max(1.0D, Math.floor(partyAgility)), 0.40D, 1.0D) + (escapeBonus - escapePenalty) * 0.01D);
+        if (!scripted) {
+            double preemptiveRate = (partyAgility >= troopAgility ? 0.05D : 0.03D)
+                    * (originalPartyAbility(player, session, 3) ? 4.0D : 1.0D);
+            session.preemptive = player.getRandom().nextDouble() < preemptiveRate;
+            session.surprisePending = player.getRandom().nextDouble()
+                    < (partyAgility >= troopAgility ? 0.03D : 0.05D) && !session.preemptive
+                    && !originalPartyAbility(player, session, 2);
+        }
     }
 
     private static boolean allEnemiesDefeated(ServerPlayer player, Session session) {
@@ -4011,6 +4080,9 @@ public final class TurnBattleManager {
         private boolean resolving;
         private boolean awaitingPhasePresentation;
         private boolean openingPending;
+        private boolean preemptive;
+        private boolean surprisePending;
+        private double escapeRatio;
         private boolean enemySequenceActive;
         private boolean enemySequenceCountsAsRound;
         private boolean counterVictoryPending;

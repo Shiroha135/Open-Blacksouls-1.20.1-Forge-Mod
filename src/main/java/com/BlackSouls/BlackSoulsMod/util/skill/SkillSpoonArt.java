@@ -29,8 +29,9 @@ public class SkillSpoonArt extends AbstractOriginalWeaponSkill {
         player.swing(InteractionHand.MAIN_HAND, true);
         playAnimation(player, 37);
         playSound(player, BlackSouls.ICE1_EVENT.get(), 0.5F);
-        player.heal(player.getMaxHealth() * 0.5F);
-        stats.mp = Math.min(stats.maxMp, stats.mp + stats.maxMp * 0.5D);
+        double recovery = stats.getOriginalSpiritRate(23, 2);
+        player.heal((float) Math.floor(player.getMaxHealth() * 0.5D * recovery));
+        stats.mp = Math.min(stats.maxMp, stats.mp + Math.floor(stats.maxMp * 0.5D * recovery));
         StatEventHandler.syncToClient(player);
     }
 
@@ -43,9 +44,10 @@ public class SkillSpoonArt extends AbstractOriginalWeaponSkill {
         player.swing(InteractionHand.MAIN_HAND, true);
         playAnimation(ally, 37);
         playSound(ally, BlackSouls.ICE1_EVENT.get(), 0.5F);
-        ally.heal(ally.getMaxHealth() * 0.5F);
+        double recovery = StatEventHandler.getOriginalSpiritRate(ally, 23, 2);
+        ally.heal((float) Math.floor(ally.getMaxHealth() * 0.5D * recovery));
         ally.getCapability(BSPlayerStats.CAPABILITY).ifPresent(allyStats -> {
-            allyStats.mp = Math.min(allyStats.maxMp, allyStats.mp + allyStats.maxMp * 0.5D);
+            allyStats.mp = Math.min(allyStats.maxMp, allyStats.mp + Math.floor(allyStats.maxMp * 0.5D * recovery));
             StatEventHandler.syncToClient(ally);
         });
     }

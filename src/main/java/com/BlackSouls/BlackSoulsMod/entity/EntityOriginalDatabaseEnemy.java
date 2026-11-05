@@ -453,9 +453,14 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
 
     @Override
     public List<ItemStack> rollTurnBattleDrops(RandomSource random) {
+        return rollTurnBattleDrops(random, 1);
+    }
+
+    @Override
+    public List<ItemStack> rollTurnBattleDrops(RandomSource random, int rate) {
         List<ItemStack> result = new ArrayList<>();
         for (BSOriginalEnemyData.Drop drop : getProfile().drops()) {
-            if (random.nextInt(Math.max(1, drop.denominator())) != 0) {
+            if (random.nextInt(Math.max(1, drop.denominator())) >= Math.max(1, rate)) {
                 continue;
             }
             Item item = ForgeRegistries.ITEMS.getValue(

@@ -56,7 +56,7 @@ public abstract class AbstractSkill {
 
     protected float getEffectiveManaCost(BSPlayerStats stats) {
         double rate = stats == null ? 1.0D : stats.mpCostRate;
-        return (float) Math.max(0.0D, getManaCost() * rate);
+        return (float) Math.max(0.0D, Math.floor(getManaCost() * rate));
     }
 
     public boolean canCast(ServerPlayer player, BSPlayerStats stats) {

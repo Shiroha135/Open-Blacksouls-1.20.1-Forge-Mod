@@ -2,6 +2,7 @@ package com.BlackSouls.BlackSoulsMod.util.skill;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
+import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketPlayAnim;
 import com.BlackSouls.BlackSoulsMod.util.SkillUtils;
@@ -93,7 +94,7 @@ public class SkillSoulLight extends AbstractSkill {
         double variance = 0.8 + (Math.random() * 0.4);
         rawHeal *= variance;
 
-        target.heal((float) rawHeal);
+        target.heal((float) Math.floor(rawHeal * StatEventHandler.getOriginalSpiritRate(target, 23, 2)));
     }
 
     private List<LivingEntity> getAlliesInRange(Player player, double range) {

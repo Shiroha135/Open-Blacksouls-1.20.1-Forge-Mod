@@ -2,6 +2,7 @@ package com.BlackSouls.BlackSoulsMod.util.skill;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
+import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketPlayAnim;
 import net.minecraft.ChatFormatting;
@@ -46,7 +47,7 @@ public class SkillKnightsGlory extends WeaponSkill {
         player.level().playSound(null, player.getX(), player.getY(), player.getZ(), BlackSouls.SAINT7_EVENT.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
 
         float healAmount = player.getMaxHealth() * 0.5f;
-        player.heal(healAmount);
+        player.heal((float) Math.floor(healAmount * StatEventHandler.getOriginalSpiritRate(player, 23, 2)));
 
         if (BlackSouls.BUFF_KNIGHTS_GLORY.isPresent()) {
             player.addEffect(new MobEffectInstance(BlackSouls.BUFF_KNIGHTS_GLORY.get(), 2000, 0));
