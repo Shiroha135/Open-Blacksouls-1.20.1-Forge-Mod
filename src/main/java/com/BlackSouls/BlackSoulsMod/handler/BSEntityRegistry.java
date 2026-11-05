@@ -10,6 +10,9 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class BSEntityRegistry {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, BlackSouls.MODID);
+    public static final RegistryObject<EntityType<EntityOriginalMarketCat>> ORIGINAL_MARKET_CAT = ENTITY_TYPES.register("original_market_cat",
+            () -> EntityType.Builder.of(EntityOriginalMarketCat::new, MobCategory.MISC)
+                    .sized(0.1F, 0.1F).clientTrackingRange(8).updateInterval(20).build("original_market_cat"));
     public static final RegistryObject<EntityType<EntityOriginalCemeteryCat>> ORIGINAL_CEMETERY_CAT = ENTITY_TYPES.register("original_cemetery_cat",
             () -> EntityType.Builder.of(EntityOriginalCemeteryCat::new, MobCategory.MISC)
                     .sized(0.1F, 0.1F).clientTrackingRange(8).updateInterval(20).build("original_cemetery_cat"));
