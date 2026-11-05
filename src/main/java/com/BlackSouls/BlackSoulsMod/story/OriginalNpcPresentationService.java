@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.story;
 
 import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalNpc;
+import com.BlackSouls.BlackSoulsMod.entity.EntityRabbitKnight;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundOriginalNpcPresentationPacket;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalNpcData;
@@ -63,6 +64,14 @@ public final class OriginalNpcPresentationService {
                 bool(parameters, 3);
             }
             case 213 -> {
+                if (subject instanceof EntityRabbitKnight rabbit && OriginalRabbitKnightBinding.matches(rabbit)) {
+                    int requested = integer(parameters, 0, -1, Integer.MAX_VALUE);
+                    if (requested != -1 && requested != 0) throw unsupported(code, "Unsupported bound rabbit balloon target");
+                    target = requested == -1 ? player.getId() : rabbit.getId();
+                    values.add((double) integer(parameters, 1, 1, 10));
+                    bool(parameters, 2);
+                    break;
+                }
                 if (!(subject instanceof EntityOriginalNpc npc)) {
                     throw unsupported(code, "Original character balloon requires a map event context");
                 }

@@ -15,6 +15,7 @@ import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalMarketCat;
 import com.BlackSouls.BlackSoulsMod.compat.scene.OriginalMarketCatPlacement;
 import com.BlackSouls.BlackSoulsMod.compat.scene.OriginalCemeteryCatPlacement;
 import com.BlackSouls.BlackSoulsMod.entity.EntityCheshireCat;
+import com.BlackSouls.BlackSoulsMod.entity.EntityRabbitKnight;
 import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalDatabaseEnemy;
 import com.BlackSouls.BlackSoulsMod.handler.BSEntityRegistry;
 import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
@@ -80,6 +81,7 @@ public final class OriginalNpcService {
         if (npc instanceof EntityOriginalReceptionist receptionist
                 && !OriginalReceptionistPlacement.matches(receptionist)) return false;
         if (npc instanceof EntityOriginalNpc original) return original.getNpcId().equals(npcId);
+        if (npc instanceof EntityRabbitKnight rabbit) return rabbit.isOriginalSourceManaged() && OriginalRabbitKnightBinding.SOURCE_ID.equals(npcId) && OriginalRabbitKnightBinding.matches(rabbit);
         return npc instanceof EntityCheshireCat cat && cat.isOriginalSourceManaged() && CHESHIRE_EVENTS.contains(npcId)
                 && OriginalNpcCharacterBindings.matches(cat, OriginalNpcCharacterBindings.CHESHIRE_RABBIT_HOLE);
     }
@@ -87,6 +89,14 @@ public final class OriginalNpcService {
     private static void refreshActor(PathfinderMob npc, ServerPlayer player) {
         if (npc instanceof EntityOriginalNpc original) refreshPage(original, player);
         else if (npc instanceof EntityCheshireCat cat) cat.refreshOriginalRoutePage();
+        else if (npc instanceof EntityRabbitKnight rabbit) rabbit.refreshOriginalSourcePage();
+    }
+
+    public static void interactRabbitKnight(ServerPlayer player, EntityRabbitKnight rabbit) {
+        rabbit.refreshOriginalSourcePage();
+        if (!matchesActor(rabbit, OriginalRabbitKnightBinding.SOURCE_ID) || !canInteract(player, rabbit)
+                || TurnBattleManager.isInBattle(player)) return;
+        interact(player, rabbit, OriginalRabbitKnightBinding.SOURCE_ID, false);
     }
 
     public static void interactCheshire(ServerPlayer player, EntityCheshireCat cat) {
@@ -741,7 +751,8 @@ public final class OriginalNpcService {
         public EventContext(ServerPlayer player, PathfinderMob npc, String npcId) {
             if (!(npc instanceof EntityOriginalNpc original && original.getNpcId().equals(npcId))
                     && !(npc instanceof EntityCheshireCat && (CHESHIRE_EVENTS.contains(npcId)
-                    || OriginalNpcCharacterBindings.CHESHIRE_RABBIT_HOLE.equals(npcId)))) {
+                    || OriginalNpcCharacterBindings.CHESHIRE_RABBIT_HOLE.equals(npcId)))
+                    && !(npc instanceof EntityRabbitKnight && OriginalRabbitKnightBinding.SOURCE_ID.equals(npcId))) {
                 throw new IllegalArgumentException("Invalid original NPC actor " + npcId);
             }
             this.npcId = npcId;
@@ -979,6 +990,10 @@ public final class OriginalNpcService {
         @Override
         public String animation(int target, int id, boolean wait) {
             if (npc instanceof EntityOriginalNpc original) return OriginalNpcAnimationService.start(player, original, target, id, wait);
+            if (npc instanceof EntityRabbitKnight rabbit) {
+                if (target != 0 || !matchesActor(rabbit, npcId)) throw new UnsupportedOperationException("rabbit_animation_target:" + target);
+                return OriginalNpcAnimationService.startRabbitCharacter(player, rabbit, id, wait);
+            }
             requireCheshireVisual(target);
             return OriginalNpcAnimationService.startBoundCharacter(player, OriginalNpcCharacterBindings.CHESHIRE_RABBIT_HOLE, id, wait);
         }
@@ -1010,6 +1025,10 @@ public final class OriginalNpcService {
         @Override
         public String moveRoute(int target, JsonObject route) {
             if (npc instanceof EntityOriginalNpc original) return OriginalNpcMovementService.start(player, original, target, route);
+            if (npc instanceof EntityRabbitKnight rabbit) {
+                if (target != 0 || !matchesActor(rabbit, npcId)) throw new UnsupportedOperationException("rabbit_route_target:" + target);
+                return OriginalNpcMovementService.startRabbitCharacter(player, rabbit, route);
+            }
             requireCheshireVisual(target);
             return OriginalNpcMovementService.startBoundCharacter(player, OriginalNpcCharacterBindings.CHESHIRE_RABBIT_HOLE, route);
         }

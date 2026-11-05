@@ -5,6 +5,7 @@ import com.BlackSouls.BlackSoulsMod.capability.OriginalNpcProgress;
 import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBossData;
 import com.BlackSouls.BlackSoulsMod.entity.EntityCheshireCat;
 import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalNpc;
+import com.BlackSouls.BlackSoulsMod.entity.EntityRabbitKnight;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalNpcData;
 import com.BlackSouls.BlackSoulsMod.util.OriginalNpcTextures;
@@ -51,6 +52,14 @@ public final class OriginalNpcMovementService {
         return enqueue(player, subject, sourceId, runner);
     }
 
+    public static String startRabbitCharacter(ServerPlayer player, EntityRabbitKnight rabbit, JsonObject route) {
+        if (!OriginalRabbitKnightBinding.matches(rabbit) || player.level() != rabbit.level()) throw new UnsupportedOperationException("rabbit_route_identity");
+        var runner = new OriginalNpcMoveRouteRunner(route);
+        runner.validate(new RouteContext(player, rabbit));
+        rabbit.refreshOriginalSourcePage();
+        return enqueue(player, rabbit, OriginalRabbitKnightBinding.SOURCE_ID, runner);
+    }
+
     private static String enqueue(ServerPlayer player, Entity subject, String sourceId, OriginalNpcMoveRouteRunner runner) {
         OriginalNpcMovementData data = OriginalNpcMovementData.get(player.server);
         String id = UUID.randomUUID().toString();
@@ -61,6 +70,7 @@ public final class OriginalNpcMovementService {
         data.add(ticket);
         if (subject instanceof EntityOriginalNpc original) original.beginForcedRoute(id);
         else if (subject instanceof EntityCheshireCat cat) cat.beginForcedRoute(id);
+        else if (subject instanceof EntityRabbitKnight rabbit) rabbit.beginForcedRoute(id);
         data.setDirty();
         return id;
     }
@@ -173,6 +183,14 @@ public final class OriginalNpcMovementService {
                     collect = true;
                     continue;
                 }
+            } else if (subject instanceof EntityRabbitKnight rabbit) {
+                if (!OriginalRabbitKnightBinding.SOURCE_ID.equals(ticket.npcId) || !OriginalRabbitKnightBinding.matches(rabbit)) continue;
+                rabbit.refreshOriginalSourcePage();
+                if (!rabbit.forcedRouteTicket().equals(ticket.id)) {
+                    data.finish(ticket);
+                    collect = true;
+                    continue;
+                }
             } else if (!(subject instanceof ServerPlayer) || !ticket.npcId.isEmpty()) {
                 continue;
             }
@@ -200,6 +218,14 @@ public final class OriginalNpcMovementService {
                             break;
                         }
                     }
+                    if (subject instanceof EntityRabbitKnight rabbit) {
+                        rabbit.refreshOriginalSourcePage();
+                        if (!rabbit.forcedRouteTicket().equals(ticket.id)) {
+                            data.finish(ticket);
+                            collect = true;
+                            break;
+                        }
+                    }
                     if (!ticket.runner.isComplete()) ticket.runner.advanceFrame(context);
                 }
                 if (ticket.runner.isComplete()) {
@@ -207,6 +233,7 @@ public final class OriginalNpcMovementService {
                     collect = true;
                     if (subject instanceof EntityOriginalNpc npc) npc.endForcedRoute(ticket.id);
                     else if (subject instanceof EntityCheshireCat cat) cat.endForcedRoute(ticket.id);
+                    else if (subject instanceof EntityRabbitKnight rabbit) rabbit.endForcedRoute(ticket.id);
                 }
                 data.setDirty();
             } catch (RuntimeException exception) {
@@ -252,7 +279,7 @@ public final class OriginalNpcMovementService {
 
         @Override
         public void validate(int code, List<JsonElement> parameters) {
-            if (subject instanceof EntityCheshireCat) {
+            if (subject instanceof EntityCheshireCat || subject instanceof EntityRabbitKnight) {
                 if (code != 0 && code != 15 && code != 37 && code != 39 && code != 40 && code != 42) {
                     throw new UnsupportedOperationException("bound_character_route_command:" + code);
                 }
@@ -287,6 +314,8 @@ public final class OriginalNpcMovementService {
                 npc.applyOriginalMoveCommand(code, parameters);
             } else if (subject instanceof EntityCheshireCat cat) {
                 cat.applyOriginalMoveCommand(code, parameters);
+            } else if (subject instanceof EntityRabbitKnight rabbit) {
+                rabbit.applyOriginalMoveCommand(code, parameters);
             } else {
                 throw new UnsupportedOperationException("player_route_sprite:" + code);
             }

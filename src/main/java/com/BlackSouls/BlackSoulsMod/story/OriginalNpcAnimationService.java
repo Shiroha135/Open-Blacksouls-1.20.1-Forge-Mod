@@ -42,6 +42,12 @@ public final class OriginalNpcAnimationService {
         return enqueue(player, subject, sourceId, animationId, wait);
     }
 
+    public static String startRabbitCharacter(ServerPlayer player, com.BlackSouls.BlackSoulsMod.entity.EntityRabbitKnight rabbit, int animationId, boolean wait) {
+        if (!OriginalRabbitKnightBinding.matches(rabbit) || player.level() != rabbit.level()) throw new UnsupportedOperationException("rabbit_animation_identity");
+        if (animationId > 0) OriginalNpcAnimationState.validate(BSOriginalAnimationData.get(animationId), animationId);
+        return enqueue(player, rabbit, OriginalRabbitKnightBinding.SOURCE_ID, animationId, wait);
+    }
+
     private static String enqueue(ServerPlayer player, Entity subject, String sourceId, int animationId, boolean wait) {
         String dimension = subject.level().dimension().location().toString();
         String key = dimension + ":" + subject.getUUID();

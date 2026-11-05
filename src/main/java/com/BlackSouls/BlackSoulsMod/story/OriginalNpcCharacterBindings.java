@@ -71,6 +71,7 @@ public final class OriginalNpcCharacterBindings {
     }
 
     public static boolean matches(Entity subject, String sourceId) {
+        if (OriginalRabbitKnightBinding.SOURCE_ID.equals(sourceId) && subject instanceof com.BlackSouls.BlackSoulsMod.entity.EntityRabbitKnight) return OriginalRabbitKnightBinding.matches(subject);
         if (!CHESHIRE_RABBIT_HOLE.equals(sourceId)) {
             return subject instanceof EntityOriginalNpc original && original.getNpcId().equals(sourceId);
         }
