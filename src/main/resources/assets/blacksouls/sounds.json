@@ -1485,5 +1485,9 @@
   "original_crow": {
     "category": "neutral",
     "sounds": ["blacksouls:original_crow"]
+  },
+  "original_cat9": {
+    "category": "neutral",
+    "sounds": ["blacksouls:original_cat9"]
   }
 }

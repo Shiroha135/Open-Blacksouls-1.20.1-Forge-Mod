@@ -177,6 +177,7 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> ORIGINAL_SWORD_STAB_EVENT = registerSound("original_sword_stab");
     public static final RegistryObject<SoundEvent> ORIGINAL_SHEEP_EVENT = registerSound("original_sheep");
     public static final RegistryObject<SoundEvent> ORIGINAL_CROW_EVENT = registerSound("original_crow");
+    public static final RegistryObject<SoundEvent> ORIGINAL_CAT9_EVENT = registerSound("original_cat9");
     public static final RegistryObject<SoundEvent> ORIGINAL_LAUGHTER_BOY4_EVENT = registerSound("mbjh_se_laughter_boy4");
     public static final RegistryObject<SoundEvent> DAO_EVENT = registerSound("dao");
     public static final RegistryObject<SoundEvent> BLOOD_SPLATTER_EVENT = registerSound("blood_splatter");

@@ -1819,6 +1819,10 @@
     "Crow": {
       "sound": "blacksouls:original_crow",
       "sourceFile": "Crow.ogg"
+    },
+    "猫９": {
+      "sound": "blacksouls:original_cat9",
+      "sourceFile": "猫９.mp3"
     }
   }
 }
