@@ -2809,5 +2809,18 @@
   "dialogue.blacksouls.holmes.ripper_1": "「……By the way,\n　have you heard of a killer called §cJack the Ripper§f?」",
   "dialogue.blacksouls.holmes.ripper_2": "「…No…… never mind.\n　Forget I said anything.」",
   "dialogue.blacksouls.holmes.ripper_3": "「I must capture him myself……」",
-  "entity.blacksouls.original_receptionist": "Receptionist"
+  "entity.blacksouls.original_receptionist": "Receptionist",
+  "gui.blacksouls.item_keep.title": "Storage",
+  "gui.blacksouls.item_keep.items": "Items",
+  "gui.blacksouls.item_keep.weapons": "Weapons",
+  "gui.blacksouls.item_keep.armor": "Armor",
+  "gui.blacksouls.item_keep.key_items": "Key Items",
+  "gui.blacksouls.item_keep.columns": "Carried / Stored / Limit",
+  "gui.blacksouls.item_keep.preview": "Carried %s    Stored %s / %s",
+  "gui.blacksouls.item_keep.delta": "Transfer %s",
+  "gui.blacksouls.item_keep.one": "Up +1   Down -1",
+  "gui.blacksouls.item_keep.ten": "Right +10   Left -10",
+  "gui.blacksouls.item_keep.hundred": "Shift +100   Ctrl -100",
+  "gui.blacksouls.item_keep.confirm": "Confirm",
+  "gui.blacksouls.item_keep.cancel": "Cancel"
 }

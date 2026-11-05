@@ -41,6 +41,8 @@ public record ServerboundOriginalNpcTradePacket(int entityId, UUID sessionId, lo
     public enum Action {
         BUY,
         SELL,
-        TOGGLE_STORAGE
+        TOGGLE_STORAGE,
+        DEPOSIT,
+        WITHDRAW
     }
 }

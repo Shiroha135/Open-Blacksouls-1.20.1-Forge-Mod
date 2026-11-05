@@ -13,13 +13,23 @@ import java.util.function.Supplier;
 public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long revision,
                                            String name, String text, String portrait, int portraitIndex,
                                            OriginalNpcInterpreter.Type type, List<String> choices, List<Offer> offers,
-                                           ShopView shopView) {
+                                           ShopView shopView, KeepView keepView) {
     public ClientboundOriginalNpcPacket {
         choices = List.copyOf(choices);
         offers = List.copyOf(offers);
         if (shopView != null && type != OriginalNpcInterpreter.Type.SHOP) {
             throw new IllegalArgumentException("Shop state outside an original shop prompt");
         }
+        if (keepView != null && type != OriginalNpcInterpreter.Type.ITEM_KEEP) {
+            throw new IllegalArgumentException("Storage state outside an original item keep prompt");
+        }
+    }
+
+    public ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long revision,
+                                       String name, String text, String portrait, int portraitIndex,
+                                       OriginalNpcInterpreter.Type type, List<String> choices, List<Offer> offers,
+                                       ShopView shopView) {
+        this(entityId, sessionId, revision, name, text, portrait, portraitIndex, type, choices, offers, shopView, null);
     }
 
     public ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long revision,
@@ -35,18 +45,24 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
 
     public ClientboundOriginalNpcPacket(int entityId, UUID sessionId, String name, String text,
                                        OriginalNpcInterpreter.Prompt prompt, List<String> choices, ShopView shopView) {
+        this(entityId, sessionId, name, text, prompt, choices, shopView, null);
+    }
+
+    public ClientboundOriginalNpcPacket(int entityId, UUID sessionId, String name, String text,
+                                       OriginalNpcInterpreter.Prompt prompt, List<String> choices,
+                                       ShopView shopView, KeepView keepView) {
         this(entityId, sessionId, prompt.revision(), name, text, prompt.portrait(), prompt.portraitIndex(),
                 prompt.type(), choices, prompt.goods().stream().map(goods -> {
                     OriginalNpcItems.Entry item = OriginalNpcItems.get(goods.kind(), goods.id());
                     return new Offer(item.name(), goods.price() >= 0L ? goods.price() : item.price(),
                             item.registry().toString());
-                }).toList(), shopView);
+                }).toList(), shopView, keepView);
     }
 
     public ClientboundOriginalNpcPacket(FriendlyByteBuf buffer) {
         this(buffer.readVarInt(), buffer.readUUID(), buffer.readVarLong(), buffer.readUtf(512),
                 buffer.readUtf(16384), buffer.readUtf(512), buffer.readVarInt(),
-                buffer.readEnum(OriginalNpcInterpreter.Type.class), readChoices(buffer), readOffers(buffer), readShopView(buffer));
+                buffer.readEnum(OriginalNpcInterpreter.Type.class), readChoices(buffer), readOffers(buffer), readShopView(buffer), readKeepView(buffer));
     }
 
     public void toBytes(FriendlyByteBuf buffer) {
@@ -74,6 +90,23 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
             buffer.writeVarLong(shopView.money());
             writeTrades(buffer, shopView.buys());
             writeTrades(buffer, shopView.sells());
+        }
+        buffer.writeBoolean(keepView != null);
+        if (keepView != null) {
+            buffer.writeVarInt(keepView.offers().size());
+            for (KeepOffer offer : keepView.offers()) {
+                buffer.writeVarInt(offer.kind());
+                buffer.writeVarInt(offer.id());
+                buffer.writeVarInt(offer.category());
+                buffer.writeUtf(offer.name(), 512);
+                buffer.writeUtf(offer.registry(), 512);
+                buffer.writeVarInt(offer.carried());
+                buffer.writeVarInt(offer.stored());
+                buffer.writeVarInt(offer.maxDeposit());
+                buffer.writeVarInt(offer.maxWithdraw());
+                buffer.writeVarInt(offer.storageLimit());
+                buffer.writeBoolean(offer.storageForbidden());
+            }
         }
     }
 
@@ -113,6 +146,18 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
     private static ShopView readShopView(FriendlyByteBuf buffer) {
         return buffer.readBoolean() ? new ShopView(buffer.readBoolean(), buffer.readBoolean(), buffer.readBoolean(),
                 buffer.readVarLong(), readTrades(buffer), readTrades(buffer)) : null;
+    }
+
+    private static KeepView readKeepView(FriendlyByteBuf buffer) {
+        if (!buffer.readBoolean()) return null;
+        int count = count(buffer, 1150);
+        List<KeepOffer> result = new ArrayList<>();
+        for (int index = 0; index < count; index++) {
+            result.add(new KeepOffer(buffer.readVarInt(), buffer.readVarInt(), buffer.readVarInt(),
+                    buffer.readUtf(512), buffer.readUtf(512), buffer.readVarInt(), buffer.readVarInt(),
+                    buffer.readVarInt(), buffer.readVarInt(), buffer.readVarInt(), buffer.readBoolean()));
+        }
+        return new KeepView(result);
     }
 
     private static List<TradeOffer> readTrades(FriendlyByteBuf buffer) {
@@ -158,6 +203,26 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
             if (kind < 0 || kind > 2 || id < 1 || category < 0 || category > 3
                     || name == null || registry == null || price < 0L || owned < 0 || maximum < 0 || maximum > 999) {
                 throw new IllegalArgumentException("Invalid original shop offer");
+            }
+        }
+    }
+
+    public record KeepView(List<KeepOffer> offers) {
+        public KeepView {
+            offers = List.copyOf(offers);
+            if (offers.size() > 1150) throw new IllegalArgumentException("Invalid original storage view");
+        }
+    }
+
+    public record KeepOffer(int kind, int id, int category, String name, String registry,
+                            int carried, int stored, int maxDeposit, int maxWithdraw, int storageLimit, boolean storageForbidden) {
+        public KeepOffer {
+            if (kind < 0 || kind > 2 || id < 1 || category < 0 || category > 3
+                    || name == null || registry == null || carried < 0 || stored < 0 || stored > 999
+                    || storageLimit < 0 || storageLimit > 999 || maxDeposit < 0 || maxDeposit > 999
+                    || maxDeposit > carried || maxWithdraw < 0 || maxWithdraw > 999 || maxWithdraw > stored
+                    || storageForbidden && (maxDeposit != 0 || maxWithdraw != 0)) {
+                throw new IllegalArgumentException("Invalid original storage offer");
             }
         }
     }

@@ -63,6 +63,8 @@ public final class OriginalNpcInterpreter {
             if (selection != -1) {
                 return pending;
             }
+        } else if (pending != null && pending.type() == Type.ITEM_KEEP) {
+            if (selection != -1) return pending;
         } else if (pending != null && pending.type() == Type.BLOCKED) {
             return pending;
         }
@@ -207,6 +209,10 @@ public final class OriginalNpcInterpreter {
                         while (frame.position < frame.commands.size() && frame.commands.get(frame.position).code() == 655) {
                             script.append('\n').append(text(frame.commands.get(frame.position++).parameters(), 0));
                         }
+                        if (script.toString().equals("call_keep")) {
+                            context.openItemKeep();
+                            return emit(Type.ITEM_KEEP, "", "", 0, List.of(), List.of(), "");
+                        }
                         context.unlockAchievement(OriginalNpcAchievements.parse(script.toString()));
                     }
                     case 331, 332, 333, 334, 335, 336, 337, 339 -> {
@@ -316,6 +322,12 @@ public final class OriginalNpcInterpreter {
     public Prompt refreshShop() {
         if (pending == null || pending.type() != Type.SHOP) throw new IllegalStateException("No pending original shop");
         return emit(Type.SHOP, pending.text(), pending.portrait(), pending.portraitIndex(), pending.choices(), pending.goods(), pending.reason());
+    }
+
+    public Prompt refreshItemKeep() {
+        if (pending == null || pending.type() != Type.ITEM_KEEP) throw new IllegalStateException("No pending original item keep");
+        return emit(Type.ITEM_KEEP, pending.text(), pending.portrait(), pending.portraitIndex(),
+                pending.choices(), pending.goods(), pending.reason());
     }
 
     public JsonObject snapshot() {
@@ -677,7 +689,7 @@ public final class OriginalNpcInterpreter {
     }
 
     public enum Type {
-        TEXT, CHOICE, SHOP, END, BLOCKED, BATTLE, WAIT, ROUTE_WAIT, ANIMATION_WAIT
+        TEXT, CHOICE, SHOP, END, BLOCKED, BATTLE, WAIT, ROUTE_WAIT, ANIMATION_WAIT, ITEM_KEEP
     }
 
     public enum BattleOutcome {
@@ -703,6 +715,10 @@ public final class OriginalNpcInterpreter {
     }
 
     public interface Context {
+        default void openItemKeep() {
+            throw new UnsupportedOperationException("call_keep");
+        }
+
         boolean switchValue(int id);
         void setSwitch(int id, boolean value);
         long variable(int id);

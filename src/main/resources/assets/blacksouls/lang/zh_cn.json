@@ -3252,5 +3252,18 @@
   "dialogue.blacksouls.holmes.ripper_1": "「……话说回来，\n　你听说过一个叫做§c开膛手杰克§f的杀人鬼么？」",
   "dialogue.blacksouls.holmes.ripper_2": "「…不……没什么。\n　就当我没说过这句话吧」",
   "dialogue.blacksouls.holmes.ripper_3": "「我必须亲自去捉住他……」",
-  "entity.blacksouls.original_receptionist": "接待员"
+  "entity.blacksouls.original_receptionist": "接待员",
+  "gui.blacksouls.item_keep.title": "仓库",
+  "gui.blacksouls.item_keep.items": "道具",
+  "gui.blacksouls.item_keep.weapons": "武器",
+  "gui.blacksouls.item_keep.armor": "防具",
+  "gui.blacksouls.item_keep.key_items": "重要物品",
+  "gui.blacksouls.item_keep.columns": "所持 / 仓库 / 上限",
+  "gui.blacksouls.item_keep.preview": "所持 %s    仓库 %s / %s",
+  "gui.blacksouls.item_keep.delta": "存取 %s",
+  "gui.blacksouls.item_keep.one": "↑ 存入1    ↓ 取出1",
+  "gui.blacksouls.item_keep.ten": "→ 存入10   ← 取出10",
+  "gui.blacksouls.item_keep.hundred": "Shift 存入100   Ctrl 取出100",
+  "gui.blacksouls.item_keep.confirm": "确认",
+  "gui.blacksouls.item_keep.cancel": "取消"
 }

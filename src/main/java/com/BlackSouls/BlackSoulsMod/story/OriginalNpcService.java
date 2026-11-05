@@ -403,12 +403,22 @@ public final class OriginalNpcService {
         Session session = SESSIONS.get(player.getUUID());
         if (action == null || session == null || session.entityId != entityId || !session.token.equals(token)
                 || session.prompt == null || session.prompt.type() != OriginalNpcInterpreter.Type.SHOP
+                && session.prompt.type() != OriginalNpcInterpreter.Type.ITEM_KEEP
                 || session.prompt.revision() != revision || !player.level().dimension().location().equals(session.dimension)
                 || TurnBattleManager.isInBattle(player)) return;
         Entity entity = player.serverLevel().getEntity(entityId);
         if (!(entity instanceof PathfinderMob npc) || !matchesActor(npc, session.npcId)
                 || session.npcUuid == null || !session.npcUuid.equals(npc.getUUID()) || !canInteract(player, npc)
                 || player.serverLevel().getGameTime() - session.updated > 2400L) return;
+        if (session.prompt.type() == OriginalNpcInterpreter.Type.ITEM_KEEP) {
+            if (action != ServerboundOriginalNpcTradePacket.Action.DEPOSIT
+                    && action != ServerboundOriginalNpcTradePacket.Action.WITHDRAW) return;
+            OriginalNpcItemKeepService.transfer(player, action, kind, id, quantity);
+            present(player, npc, session, session.interpreter.refreshItemKeep());
+            return;
+        }
+        if (action != ServerboundOriginalNpcTradePacket.Action.BUY && action != ServerboundOriginalNpcTradePacket.Action.SELL
+                && action != ServerboundOriginalNpcTradePacket.Action.TOGGLE_STORAGE) return;
         if (action == ServerboundOriginalNpcTradePacket.Action.TOGGLE_STORAGE) {
             if (kind != 0 || id != 0 || quantity != 0) return;
             if (!OriginalNpcProgress.get(player.server).switchValue(201)) session.shopStorage = !session.shopStorage;
@@ -463,6 +473,7 @@ public final class OriginalNpcService {
         if (selection == -4 || TurnBattleManager.isInBattle(player)) {
             return;
         }
+        if (session.prompt.type() == OriginalNpcInterpreter.Type.ITEM_KEEP && selection != -1 && selection != -3) return;
         if (selection == -3) {
             checkpoint(player, session);
             SESSIONS.remove(player.getUUID());
@@ -586,7 +597,8 @@ public final class OriginalNpcService {
         }
         OriginalNpcInterpreter.Prompt display = prompt;
         if (session.restoringPresentation && prompt.text().isEmpty()
-                && (prompt.type() == OriginalNpcInterpreter.Type.CHOICE || prompt.type() == OriginalNpcInterpreter.Type.SHOP)) {
+                && (prompt.type() == OriginalNpcInterpreter.Type.CHOICE || prompt.type() == OriginalNpcInterpreter.Type.SHOP
+                || prompt.type() == OriginalNpcInterpreter.Type.ITEM_KEEP)) {
             display = new OriginalNpcInterpreter.Prompt(prompt.revision(), prompt.type(), session.lastText,
                     session.lastPortrait, session.lastPortraitIndex, prompt.choices(), prompt.goods(), prompt.reason(),
                     prompt.battle(), prompt.waitTicks());
@@ -596,7 +608,8 @@ public final class OriginalNpcService {
                 session.interpreter.speakerName(), resolveText(display.text(), player, npc, session.npcId), display,
                 prompt.choices().stream().map(value -> resolveText(value, player, npc, session.npcId)).toList(),
                 prompt.type() == OriginalNpcInterpreter.Type.SHOP ? OriginalNpcShopService.view(player, prompt.goods(),
-                        session.shopStorage, session.interpreter.shopPurchaseOnly()) : null), player);
+                        session.shopStorage, session.interpreter.shopPurchaseOnly()) : null,
+                prompt.type() == OriginalNpcInterpreter.Type.ITEM_KEEP ? OriginalNpcItemKeepService.view(player) : null), player);
         StatEventHandler.syncToClient(player);
     }
 
@@ -757,6 +770,11 @@ public final class OriginalNpcService {
         @Override
         public boolean switchValue(int id) {
             return progress.switchValue(id);
+        }
+
+        @Override
+        public void openItemKeep() {
+            if (player == null) throw new UnsupportedOperationException("requires_player");
         }
 
         @Override

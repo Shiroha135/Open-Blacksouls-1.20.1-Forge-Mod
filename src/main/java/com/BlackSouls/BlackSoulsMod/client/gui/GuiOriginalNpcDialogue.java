@@ -62,6 +62,13 @@ public final class GuiOriginalNpcDialogue extends Screen {
     private int quantityOffset;
     private ClientboundOriginalNpcPacket.TradeOffer quantityOffer;
     private List<ClientboundOriginalNpcPacket.TradeOffer> tradeOffers = List.of();
+    private KeepPage keepPage = KeepPage.CATEGORY;
+    private int keepCategory;
+    private int keepDelta;
+    private int keepSelection;
+    private int keepOffset;
+    private ClientboundOriginalNpcPacket.KeepOffer keepOffer;
+    private List<ClientboundOriginalNpcPacket.KeepOffer> keepOffers = List.of();
 
     public GuiOriginalNpcDialogue(ClientboundOriginalNpcPacket packet) {
         super(Component.literal(packet.name()));
@@ -86,15 +93,17 @@ public final class GuiOriginalNpcDialogue extends Screen {
             return;
         }
         boolean samePrompt = packet != null && next.revision() == packet.revision();
-        if (samePrompt && !awaitingResponse) {
+        if (samePrompt && (!awaitingResponse || isItemKeep())) {
             return;
         }
+        boolean previousKeep = isItemKeep();
+        boolean nextKeep = next.type() == OriginalNpcInterpreter.Type.ITEM_KEEP && next.keepView() != null;
         boolean previousTrade = isTradeShop();
         boolean nextTrade = next.type() == OriginalNpcInterpreter.Type.SHOP && next.shopView() != null;
         boolean tradeReply = previousTrade && awaitingResponse;
         boolean changedStorage = previousTrade && nextTrade && packet.shopView().storage() != next.shopView().storage();
         boolean retainText = next.text().isEmpty()
-                && (next.type() == OriginalNpcInterpreter.Type.CHOICE || next.type() == OriginalNpcInterpreter.Type.SHOP);
+                && (next.type() == OriginalNpcInterpreter.Type.CHOICE || next.type() == OriginalNpcInterpreter.Type.SHOP || nextKeep);
         if (!retainText) {
             currentText = next.text();
             currentPortrait = next.portrait();
@@ -108,12 +117,40 @@ public final class GuiOriginalNpcDialogue extends Screen {
         boolean sameShop = packet != null && packet.type() == OriginalNpcInterpreter.Type.SHOP
                 && next.type() == OriginalNpcInterpreter.Type.SHOP
                 && (packet.offers().equals(next.offers()) || previousTrade && nextTrade);
-        if (packet == null || packet.type() != next.type() || !samePrompt && !sameShop) {
+        if (packet == null || packet.type() != next.type() || !samePrompt && !sameShop && !(previousKeep && nextKeep)) {
             selected = 0;
             listOffset = 0;
         }
         packet = next;
         awaitingResponse = isSilentWait();
+        if (nextKeep) {
+            if (!previousKeep) {
+                shopPage = ShopPage.COMMAND;
+                quantityOffer = null;
+                tradeOffers = List.of();
+                keepPage = KeepPage.CATEGORY;
+                keepCategory = 0;
+                keepOffer = null;
+                keepDelta = 0;
+            } else if (keepPage == KeepPage.QUANTITY) {
+                ClientboundOriginalNpcPacket.KeepOffer updated = packet.keepView().offers().stream()
+                        .filter(offer -> offer.kind() == keepOffer.kind() && offer.id() == keepOffer.id())
+                        .findFirst().orElse(null);
+                if (updated == null || updated.storageForbidden()) {
+                    closeKeepQuantity();
+                } else {
+                    keepOffer = updated;
+                    keepDelta = Math.max(-updated.maxWithdraw(), Math.min(updated.maxDeposit(), keepDelta));
+                }
+            }
+            rebuildKeepLabels();
+            reflowText();
+            return;
+        }
+        keepPage = KeepPage.CATEGORY;
+        keepOffer = null;
+        keepOffers = List.of();
+        keepDelta = 0;
         if (nextTrade) {
             if (!previousTrade) {
                 shopPage = ShopPage.COMMAND;
@@ -158,6 +195,77 @@ public final class GuiOriginalNpcDialogue extends Screen {
         labels = List.copyOf(nextLabels);
         selected = Math.max(0, Math.min(selected, labels.size() - 1));
         reflowText();
+    }
+
+    private boolean isItemKeep() {
+        return packet != null && packet.type() == OriginalNpcInterpreter.Type.ITEM_KEEP && packet.keepView() != null;
+    }
+
+    private static Component keepText(String key, Object... values) {
+        return Component.translatable("gui.blacksouls.item_keep." + key, values);
+    }
+
+    private void rebuildKeepLabels() {
+        List<Component> next = new ArrayList<>();
+        keepOffers = packet.keepView().offers().stream().filter(offer -> offer.category() == keepCategory).toList();
+        if (keepPage == KeepPage.CATEGORY) {
+            for (String category : List.of("items", "weapons", "armor", "key_items")) {
+                next.add(keepText(category));
+            }
+        } else {
+            keepOffers.forEach(offer -> next.add(formatOriginalText(offer.name())));
+        }
+        labels = List.copyOf(next);
+        selected = Math.max(0, Math.min(selected, labels.size() - 1));
+        listOffset = Math.max(0, Math.min(listOffset, Math.max(0, labels.size() - 1)));
+    }
+
+    private boolean keepRowEnabled(int index) {
+        return keepPage == KeepPage.CATEGORY || index >= 0 && index < keepOffers.size()
+                && !keepOffers.get(index).storageForbidden();
+    }
+
+    private void selectKeepRow() {
+        if (awaitingResponse || !keepRowEnabled(selected)) return;
+        if (keepPage == KeepPage.CATEGORY) {
+            keepCategory = selected;
+            keepPage = KeepPage.LIST;
+            selected = 0;
+            listOffset = 0;
+        } else if (keepPage == KeepPage.LIST) {
+            keepSelection = selected;
+            keepOffset = listOffset;
+            keepOffer = keepOffers.get(selected);
+            keepDelta = 0;
+            keepPage = KeepPage.QUANTITY;
+        }
+        rebuildKeepLabels();
+    }
+
+    private void closeKeepQuantity() {
+        keepPage = KeepPage.LIST;
+        selected = keepSelection;
+        listOffset = keepOffset;
+        keepOffer = null;
+        keepDelta = 0;
+        rebuildKeepLabels();
+    }
+
+    private void changeKeepQuantity(int amount) {
+        if (keepOffer != null && !awaitingResponse) {
+            keepDelta = Math.max(-keepOffer.maxWithdraw(), Math.min(keepOffer.maxDeposit(), keepDelta + amount));
+        }
+    }
+
+    private void confirmKeepQuantity() {
+        if (keepOffer == null || awaitingResponse) return;
+        int delta = keepDelta;
+        ClientboundOriginalNpcPacket.KeepOffer offer = keepOffer;
+        closeKeepQuantity();
+        if (delta != 0) {
+            sendTrade(delta > 0 ? ServerboundOriginalNpcTradePacket.Action.DEPOSIT
+                    : ServerboundOriginalNpcTradePacket.Action.WITHDRAW, offer.kind(), offer.id(), Math.abs(delta));
+        }
     }
 
     private boolean isTradeShop() {
@@ -297,7 +405,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
     }
 
     private ListBox listBox() {
-        boolean shop = packet.type() == OriginalNpcInterpreter.Type.SHOP;
+        boolean shop = packet.type() == OriginalNpcInterpreter.Type.SHOP || isItemKeep();
         int desiredWidth = shop ? Math.max(240, width * 3 / 5) : 140;
         if (!shop) {
             for (Component label : labels) {
@@ -319,7 +427,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
         if (isSilentWait()) return;
         hoveredTooltip = null;
         BSGuiUtils.drawRMWindow(graphics, 0, mainTop(), width, mainHeight());
-        if (!labels.isEmpty()) {
+        if (!labels.isEmpty() || isItemKeep()) {
             renderList(graphics, mouseX, mouseY);
         }
         if (!npcName.isEmpty()) {
@@ -353,6 +461,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
         }
         super.render(graphics, mouseX, mouseY, partialTicks);
         if (isTradeShop() && shopPage == ShopPage.QUANTITY) renderQuantity(graphics, mouseX, mouseY);
+        if (isItemKeep() && keepPage == KeepPage.QUANTITY) renderKeepQuantity(graphics, mouseX, mouseY);
         if (hoveredTooltip != null) {
             graphics.renderTooltip(font, hoveredTooltip, mouseX, mouseY);
         }
@@ -365,9 +474,18 @@ public final class GuiOriginalNpcDialogue extends Screen {
         long souls = isTradeShop() ? packet.shopView().money() : minecraft == null || minecraft.player == null ? 0L
                 : minecraft.player.getCapability(BSPlayerStats.CAPABILITY).map(stats -> stats.souls).orElse(0L);
         if (box.header() > 0) {
-            String balance = "持有 " + souls + " S";
-            graphics.drawString(font, balance, box.x() + PADDING, box.y() + PADDING, 0xFFFFFF, false);
-            if (isTradeShop()) renderShopMode(graphics, box);
+            if (isItemKeep()) {
+                graphics.drawString(font, keepText("title"), box.x() + PADDING, box.y() + PADDING, 0xFFFFFF, false);
+                if (keepPage != KeepPage.CATEGORY) {
+                    Component counters = keepText("columns");
+                    graphics.drawString(font, counters, box.x() + box.width() - PADDING - font.width(counters),
+                            box.y() + PADDING, 0xFFFFFF, false);
+                }
+            } else {
+                String balance = "持有 " + souls + " S";
+                graphics.drawString(font, balance, box.x() + PADDING, box.y() + PADDING, 0xFFFFFF, false);
+                if (isTradeShop()) renderShopMode(graphics, box);
+            }
         }
         for (int row = 0; row < box.visible() && row + listOffset < labels.size(); row++) {
             int index = row + listOffset;
@@ -378,7 +496,15 @@ public final class GuiOriginalNpcDialogue extends Screen {
             }
             int labelWidth = box.width() - PADDING * 2;
             int color = awaitingResponse ? 0xAAAAAA : 0xFFFFFF;
-            if (isTradeShop()) {
+            if (isItemKeep()) {
+                if (!keepRowEnabled(index)) color = 0xAAAAAA;
+                if (keepPage != KeepPage.CATEGORY && index < keepOffers.size()) {
+                    var offer = keepOffers.get(index);
+                    String right = offer.carried() + " / " + offer.stored() + " / " + offer.storageLimit();
+                    labelWidth -= font.width(right) + 12;
+                    graphics.drawString(font, right, box.x() + box.width() - PADDING - font.width(right), y + 4, color, false);
+                }
+            } else if (isTradeShop()) {
                 if (!tradeRowEnabled(index)) color = 0xAAAAAA;
                 if (index < tradeOffers.size()) {
                     var offer = tradeOffers.get(index);
@@ -459,12 +585,63 @@ public final class GuiOriginalNpcDialogue extends Screen {
         graphics.drawString(font, "取消", middle + PADDING, y + 4, color, false);
     }
 
+    private ListBox keepQuantityBox() {
+        ListBox box = quantityBox();
+        return new ListBox(box.x(), Math.max(2, (height - (PADDING * 2 + ROW_HEIGHT * 7)) / 2),
+                box.width(), PADDING * 2 + ROW_HEIGHT * 7, 7, 0);
+    }
+
+    private void renderKeepQuantity(GuiGraphics graphics, int mouseX, int mouseY) {
+        ListBox box = keepQuantityBox();
+        BSGuiUtils.drawRMWindow(graphics, box.x(), box.y(), box.width(), box.height());
+        int x = box.x() + PADDING;
+        int y = box.y() + PADDING;
+        int color = awaitingResponse ? 0xAAAAAA : 0xFFFFFF;
+        Component label = formatOriginalText(keepOffer.name());
+        List<FormattedCharSequence> wrapped = font.split(label, Math.max(16, box.width() - PADDING * 2));
+        if (!wrapped.isEmpty()) graphics.drawString(font, wrapped.get(0), x, y + 4, color, false);
+        if (wrapped.size() > 1 && box.contains(mouseX, mouseY) && mouseY >= y && mouseY < y + ROW_HEIGHT) {
+            hoveredTooltip = label;
+        }
+        graphics.drawString(font, keepText("preview", keepOffer.carried() - keepDelta, keepOffer.stored() + keepDelta,
+                keepOffer.storageLimit()), x, y + ROW_HEIGHT + 4, color, false);
+        Component delta = keepText("delta", keepDelta > 0 ? "+" + keepDelta : Integer.toString(keepDelta));
+        graphics.drawString(font, "−", x, y + ROW_HEIGHT * 2 + 4, color, false);
+        graphics.drawString(font, delta, box.x() + (box.width() - font.width(delta)) / 2,
+                y + ROW_HEIGHT * 2 + 4, color, false);
+        graphics.drawString(font, "+", box.x() + box.width() - PADDING - font.width("+"),
+                y + ROW_HEIGHT * 2 + 4, color, false);
+        graphics.drawString(font, keepText("one"), x, y + ROW_HEIGHT * 3 + 4, color, false);
+        graphics.drawString(font, keepText("ten"), x, y + ROW_HEIGHT * 4 + 4, color, false);
+        graphics.drawString(font, keepText("hundred"), x, y + ROW_HEIGHT * 5 + 4, color, false);
+        int middle = box.x() + box.width() / 2;
+        int buttonsY = y + ROW_HEIGHT * 6;
+        if (!awaitingResponse && box.contains(mouseX, mouseY) && mouseY >= buttonsY && mouseY < buttonsY + ROW_HEIGHT) {
+            graphics.fill(mouseX < middle ? x - 4 : middle, buttonsY + 1,
+                    mouseX < middle ? middle : box.x() + box.width() - PADDING + 4, buttonsY + ROW_HEIGHT - 1, 0x55FFFFFF);
+        }
+        graphics.drawString(font, keepText("confirm"), x, buttonsY + 4, color, false);
+        graphics.drawString(font, keepText("cancel"), middle + PADDING, buttonsY + 4, color, false);
+    }
+
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (isSilentWait()) return true;
-        if (isTradeShop() && awaitingResponse) return true;
+        if ((isTradeShop() || isItemKeep()) && awaitingResponse) return true;
         if (button == 1) {
             cancelOrReturn();
+            return true;
+        }
+        if (isItemKeep() && keepPage == KeepPage.QUANTITY) {
+            ListBox box = keepQuantityBox();
+            int row = (int) ((mouseY - box.y() - PADDING) / ROW_HEIGHT);
+            if (button == 0 && box.contains(mouseX, mouseY)) {
+                if (row == 2) changeKeepQuantity(mouseX < box.x() + box.width() / 2.0D ? -1 : 1);
+                else if (row == 6) {
+                    if (mouseX < box.x() + box.width() / 2.0D) confirmKeepQuantity();
+                    else cancelOrReturn();
+                }
+            }
             return true;
         }
         if (isTradeShop() && shopPage == ShopPage.QUANTITY) {
@@ -502,7 +679,11 @@ public final class GuiOriginalNpcDialogue extends Screen {
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
         if (isSilentWait()) return true;
-        if (isTradeShop() && awaitingResponse) return true;
+        if ((isTradeShop() || isItemKeep()) && awaitingResponse) return true;
+        if (isItemKeep() && keepPage == KeepPage.QUANTITY) {
+            if (delta != 0.0D) changeKeepQuantity(delta > 0.0D ? 1 : -1);
+            return true;
+        }
         if (isTradeShop() && shopPage == ShopPage.QUANTITY) {
             if (delta != 0.0D) changeQuantity(delta > 0.0D ? 1 : -1);
             return true;
@@ -524,6 +705,29 @@ public final class GuiOriginalNpcDialogue extends Screen {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (isSilentWait()) return true;
+        if (isItemKeep()) {
+            if (awaitingResponse) return true;
+            if (keyCode == GLFW.GLFW_KEY_Z) return true;
+            if (keepPage == KeepPage.CATEGORY && (keyCode == GLFW.GLFW_KEY_LEFT || keyCode == GLFW.GLFW_KEY_RIGHT)) {
+                selected = Math.floorMod(selected + (keyCode == GLFW.GLFW_KEY_LEFT ? -1 : 1), 4);
+                keepSelectionVisible();
+                return true;
+            }
+            if (keepPage == KeepPage.QUANTITY) {
+                if (keyCode == GLFW.GLFW_KEY_ESCAPE) cancelOrReturn();
+                else if (keyCode == GLFW.GLFW_KEY_ENTER || keyCode == GLFW.GLFW_KEY_KP_ENTER || keyCode == GLFW.GLFW_KEY_SPACE) {
+                    confirmKeepQuantity();
+                } else if (keyCode == GLFW.GLFW_KEY_LEFT_SHIFT || keyCode == GLFW.GLFW_KEY_RIGHT_SHIFT
+                        || (modifiers & GLFW.GLFW_MOD_SHIFT) != 0) changeKeepQuantity(100);
+                else if (keyCode == GLFW.GLFW_KEY_LEFT_CONTROL || keyCode == GLFW.GLFW_KEY_RIGHT_CONTROL
+                        || (modifiers & GLFW.GLFW_MOD_CONTROL) != 0) changeKeepQuantity(-100);
+                else if (keyCode == GLFW.GLFW_KEY_UP) changeKeepQuantity(1);
+                else if (keyCode == GLFW.GLFW_KEY_DOWN) changeKeepQuantity(-1);
+                else if (keyCode == GLFW.GLFW_KEY_RIGHT) changeKeepQuantity(10);
+                else if (keyCode == GLFW.GLFW_KEY_LEFT) changeKeepQuantity(-10);
+                return true;
+            }
+        }
         if (isTradeShop()) {
             if (awaitingResponse) return true;
             if (keyCode == GLFW.GLFW_KEY_Z) {
@@ -599,7 +803,9 @@ public final class GuiOriginalNpcDialogue extends Screen {
     }
 
     private void chooseSelected() {
-        if (isTradeShop()) {
+        if (isItemKeep()) {
+            selectKeepRow();
+        } else if (isTradeShop()) {
             selectTradeRow();
         } else if (packet.type() == OriginalNpcInterpreter.Type.CHOICE && selected < packet.choices().size()) {
             respond(selected);
@@ -609,7 +815,19 @@ public final class GuiOriginalNpcDialogue extends Screen {
     }
 
     private void cancelOrReturn() {
-        if (isTradeShop()) {
+        if (isItemKeep()) {
+            if (awaitingResponse) return;
+            if (keepPage == KeepPage.QUANTITY) {
+                closeKeepQuantity();
+            } else if (keepPage == KeepPage.LIST) {
+                keepPage = KeepPage.CATEGORY;
+                selected = keepCategory;
+                listOffset = 0;
+                rebuildKeepLabels();
+            } else {
+                respond(-1);
+            }
+        } else if (isTradeShop()) {
             if (awaitingResponse) return;
             if (shopPage == ShopPage.QUANTITY) {
                 closeQuantity();
@@ -644,7 +862,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
     @Override
     public void onClose() {
         if (isSilentWait()) return;
-        if (isTradeShop()) {
+        if (isTradeShop() || isItemKeep()) {
             cancelOrReturn();
             return;
         }
@@ -660,6 +878,12 @@ public final class GuiOriginalNpcDialogue extends Screen {
     @Override
     public boolean isPauseScreen() {
         return false;
+    }
+
+    private enum KeepPage {
+        CATEGORY,
+        LIST,
+        QUANTITY
     }
 
     private enum ShopPage {
