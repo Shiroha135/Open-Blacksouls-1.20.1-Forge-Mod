@@ -1,8 +1,14 @@
 package com.shiroha.mmdskin;
 
 import com.shiroha.mmdskin.config.PathConstants;
+import com.shiroha.mmdskin.asset.catalog.ModelCatalogEntry;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +19,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.HexFormat;
+import java.util.Set;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +41,7 @@ public final class MmdClientResourceBootstrap {
             new BundledModelSpec("小红帽", "/assets/mmdskin/bundled_models/red_hood.zip", ".blacksouls-red-hood-v1"),
             new BundledModelSpec("诺登", "/assets/mmdskin/bundled_models/noden.zip", ".blacksouls-noden-v1")
     );
+    private static final List<BundledModelSpec> FRIEND_MODELS = loadFriendModels();
     private static final String[] DEFAULT_ANIM_FILES = {
             "Drink.vmd", "crawl.vmd", "die.vmd", "elytraFly.vmd", "idle.vmd",
             "itemActive_minecraft.bow_Left_using.vmd", "itemActive_minecraft.iron_sword_Right_swinging.vmd",
@@ -78,15 +91,19 @@ public final class MmdClientResourceBootstrap {
     }
 
     private static void installBundledModelIfNeeded() {
-        for (BundledModelSpec spec : BUNDLED_MODELS) {
-            installBundledModel(spec);
-        }
+        for (BundledModelSpec spec : BUNDLED_MODELS) installBundledModel(spec);
+        for (BundledModelSpec spec : FRIEND_MODELS) installBundledModel(spec);
+        ModelCatalogEntry.invalidateCache();
     }
 
     private static void installBundledModel(BundledModelSpec spec) {
-        Path targetDirectory = PathConstants.getModelDir(spec.name()).toPath().toAbsolutePath().normalize();
+        installBundledModelAt(spec, PathConstants.getModelDir(spec.name()).toPath());
+    }
+
+    private static void installBundledModelAt(BundledModelSpec spec, Path directory) {
+        Path targetDirectory = directory.toAbsolutePath().normalize();
         Path marker = targetDirectory.resolve(spec.marker());
-        if (Files.isRegularFile(marker) && isBundledModelInstalled(spec.name())) {
+        if (Files.isRegularFile(marker) && Files.isRegularFile(targetDirectory.resolve("model.pmx"))) {
             return;
         }
 
@@ -101,7 +118,7 @@ public final class MmdClientResourceBootstrap {
             Path staging = Files.createTempDirectory(parent, ".mmdskin-bundle-");
             Path backup = null;
             try {
-                extractZip(resource, staging);
+                extractZip(verifiedResource(resource, spec), staging);
                 if (!Files.isRegularFile(staging.resolve("model.pmx"))) {
                     throw new IOException("内置模型缺少 model.pmx: " + spec.name());
                 }
@@ -227,8 +244,49 @@ public final class MmdClientResourceBootstrap {
         }
     }
 
-    private static boolean isBundledModelInstalled(String modelName) {
-        return Files.isRegularFile(PathConstants.getModelDir(modelName).toPath().resolve("model.pmx"));
+    private static List<BundledModelSpec> loadFriendModels() {
+        String manifest = "/data/blacksouls/friend_mmd_catalog.json";
+        try (InputStream input = MmdClientResourceBootstrap.class.getResourceAsStream(manifest)) {
+            if (input == null) return List.of();
+            JsonObject json = JsonParser.parseReader(new InputStreamReader(input, StandardCharsets.UTF_8)).getAsJsonObject();
+            if (json.get("version").getAsBigDecimal().intValueExact() != 1) throw new IllegalArgumentException("Unsupported NPC MMD catalog");
+            Set<String> names = new HashSet<>();
+            for (BundledModelSpec spec : BUNDLED_MODELS) names.add(spec.name());
+            List<BundledModelSpec> models = new ArrayList<>();
+            for (JsonElement element : json.getAsJsonArray("models")) {
+                JsonObject entry = element.getAsJsonObject();
+                String name = entry.get("modelName").getAsString();
+                String resource = entry.get("resource").getAsString();
+                String marker = entry.get("marker").getAsString();
+                String digest = entry.get("zipSha256").getAsString();
+                int count = entry.get("files").getAsBigDecimal().intValueExact();
+                long size = entry.get("uncompressedBytes").getAsBigDecimal().longValueExact();
+                if (!"ready".equals(entry.get("status").getAsString()) || name.isBlank() || name.length() > 128
+                        || name.equals(".") || name.equals("..") || name.contains("/") || name.contains("\\") || name.contains(":")
+                        || !resource.matches("/assets/mmdskin/bundled_models/friend_[a-f0-9]+\\.zip")
+                        || !marker.matches("\\.blacksouls-friend-[a-f0-9]{12,64}") || !digest.matches("[a-f0-9]{64}")
+                        || count < 1 || count > MAX_ENTRIES || size < 1 || size > MAX_EXTRACTED_BYTES || !names.add(name)) {
+                    throw new IllegalArgumentException("Invalid NPC MMD catalog entry: " + name);
+                }
+                models.add(new BundledModelSpec(name, resource, marker, digest));
+            }
+            return List.copyOf(models);
+        } catch (IOException | RuntimeException exception) {
+            throw new IllegalStateException("Failed to load NPC MMD catalog", exception);
+        }
+    }
+
+    private static InputStream verifiedResource(InputStream input, BundledModelSpec spec) throws IOException {
+        if (spec.sha256() == null) return input;
+        byte[] content = input.readNBytes((int) MAX_EXTRACTED_BYTES + 8 * 1024 * 1024 + 1);
+        if (content.length > MAX_EXTRACTED_BYTES + 8 * 1024 * 1024) throw new IOException("NPC MMD archive is too large");
+        try {
+            String actual = HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(content));
+            if (!spec.sha256().equals(actual)) throw new IOException("NPC MMD archive checksum mismatch: " + spec.name());
+        } catch (NoSuchAlgorithmException exception) {
+            throw new IllegalStateException(exception);
+        }
+        return new ByteArrayInputStream(content);
     }
 
     private static void extractZip(InputStream resource, Path targetDirectory) throws IOException {
@@ -282,6 +340,9 @@ public final class MmdClientResourceBootstrap {
         }
     }
 
-    private record BundledModelSpec(String name, String resourcePath, String marker) {
+    private record BundledModelSpec(String name, String resourcePath, String marker, String sha256) {
+        private BundledModelSpec(String name, String resourcePath, String marker) {
+            this(name, resourcePath, marker, null);
+        }
     }
 }

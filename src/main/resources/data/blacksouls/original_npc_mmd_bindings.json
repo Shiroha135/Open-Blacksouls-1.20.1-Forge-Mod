@@ -1,0 +1,563 @@
+{
+  "version": 1,
+  "bindings": [
+    {
+      "npcId": "map006_ev051",
+      "characterName": "$チェシャ",
+      "characterIndex": 0,
+      "model": "柴郡猫"
+    },
+    {
+      "npcId": "map007_ev011",
+      "characterName": "もこ",
+      "characterIndex": 0,
+      "model": "莫可莫可"
+    },
+    {
+      "npcId": "map009_ev047",
+      "characterName": "$紅",
+      "characterIndex": 0,
+      "model": "小红帽"
+    },
+    {
+      "npcId": "map022_ev003",
+      "characterName": "トゥイードルダム",
+      "characterIndex": 0,
+      "model": "达姆"
+    },
+    {
+      "npcId": "map022_ev004",
+      "characterName": "トゥイードルディー",
+      "characterIndex": 0,
+      "model": "蒂"
+    },
+    {
+      "npcId": "map026_ev032",
+      "characterName": "$紅",
+      "characterIndex": 0,
+      "model": "小红帽"
+    },
+    {
+      "npcId": "map027_ev003",
+      "characterName": "ウミガメモドキ",
+      "characterIndex": 0,
+      "model": "假海龟"
+    },
+    {
+      "npcId": "map031_ev082",
+      "characterName": "$紅",
+      "characterIndex": 0,
+      "model": "小红帽"
+    },
+    {
+      "npcId": "map033_ev023",
+      "characterName": "$紅",
+      "characterIndex": 0,
+      "model": "小红帽"
+    },
+    {
+      "npcId": "map034_ev074",
+      "characterName": "$紅",
+      "characterIndex": 0,
+      "model": "小红帽"
+    },
+    {
+      "npcId": "map035_ev072",
+      "characterName": "$紅",
+      "characterIndex": 0,
+      "model": "小红帽"
+    },
+    {
+      "npcId": "map036_ev017",
+      "characterName": "$紅",
+      "characterIndex": 0,
+      "model": "小红帽"
+    },
+    {
+      "npcId": "map037_ev053",
+      "characterName": "$ドド",
+      "characterIndex": 0,
+      "model": "愚鸟渡渡"
+    },
+    {
+      "npcId": "map039_ev153",
+      "characterName": "$紅",
+      "characterIndex": 0,
+      "model": "小红帽"
+    },
+    {
+      "npcId": "map043_ev011",
+      "characterName": "$ジャブジャブ",
+      "characterIndex": 0,
+      "model": "狂鸟"
+    },
+    {
+      "npcId": "map045_ev011",
+      "characterName": "$ハイン",
+      "characterIndex": 0,
+      "model": "海因大爷"
+    },
+    {
+      "npcId": "map045_ev012",
+      "characterName": "$ビクトリア",
+      "characterIndex": 0,
+      "model": "维多利亚"
+    },
+    {
+      "npcId": "map053_ev011",
+      "characterName": "$うさぎ騎士",
+      "characterIndex": 0,
+      "model": "黑兔骑士"
+    },
+    {
+      "npcId": "map053_ev066",
+      "characterName": "$紅",
+      "characterIndex": 0,
+      "model": "小红帽"
+    },
+    {
+      "npcId": "map057_ev100",
+      "characterName": "プリケット",
+      "characterIndex": 0,
+      "model": "普利凯特"
+    },
+    {
+      "npcId": "map062_ev084",
+      "characterName": "ビル",
+      "characterIndex": 0,
+      "model": "比尔"
+    },
+    {
+      "npcId": "map062_ev085",
+      "characterName": "蛇神",
+      "characterIndex": 1,
+      "model": "蛇神"
+    },
+    {
+      "npcId": "map069_ev059",
+      "characterName": "トゥイードルディー",
+      "characterIndex": 0,
+      "model": "蒂"
+    },
+    {
+      "npcId": "map074_ev013",
+      "characterName": "$ドド",
+      "characterIndex": 0,
+      "model": "愚鸟渡渡"
+    },
+    {
+      "npcId": "map078_ev083",
+      "characterName": "$紅",
+      "characterIndex": 0,
+      "model": "小红帽"
+    },
+    {
+      "npcId": "map091_ev020",
+      "characterName": "$うさぎ騎士",
+      "characterIndex": 0,
+      "model": "黑兔骑士"
+    },
+    {
+      "npcId": "map091_ev022",
+      "characterName": "$紅",
+      "characterIndex": 0,
+      "model": "小红帽"
+    },
+    {
+      "npcId": "map095_ev035",
+      "characterName": "$紅",
+      "characterIndex": 0,
+      "model": "小红帽"
+    },
+    {
+      "npcId": "map101_ev009",
+      "characterName": "$ノーデ",
+      "characterIndex": 0,
+      "model": "诺登"
+    },
+    {
+      "npcId": "map101_ev015",
+      "characterName": "$ノーデ",
+      "characterIndex": 0,
+      "model": "诺登"
+    },
+    {
+      "npcId": "map108_ev030",
+      "characterName": "$うさぎ騎士",
+      "characterIndex": 0,
+      "model": "黑兔骑士"
+    },
+    {
+      "npcId": "map112_ev011",
+      "characterName": "$紅",
+      "characterIndex": 0,
+      "model": "小红帽"
+    },
+    {
+      "npcId": "map112_ev013",
+      "characterName": "$紅",
+      "characterIndex": 0,
+      "model": "小红帽"
+    },
+    {
+      "npcId": "map126_ev054",
+      "characterName": "$紅",
+      "characterIndex": 0,
+      "model": "小红帽"
+    },
+    {
+      "npcId": "map133_ev005",
+      "characterName": "バンダースナッチ",
+      "characterIndex": 0,
+      "model": "班达斯奈奇"
+    },
+    {
+      "npcId": "map137_ev007",
+      "characterName": "$ロリーナ",
+      "characterIndex": 0,
+      "model": "罗莉娜"
+    },
+    {
+      "npcId": "map146_ev010",
+      "characterName": "$ジャブジャブ",
+      "characterIndex": 0,
+      "model": "狂鸟"
+    },
+    {
+      "npcId": "map151_ev038",
+      "characterName": "$紅",
+      "characterIndex": 0,
+      "model": "小红帽"
+    },
+    {
+      "npcId": "map152_ev012",
+      "characterName": "眠りネズミ",
+      "characterIndex": 0,
+      "model": "睡鼠山眠"
+    },
+    {
+      "npcId": "map152_ev017",
+      "characterName": "ビル",
+      "characterIndex": 0,
+      "model": "比尔"
+    },
+    {
+      "npcId": "map152_ev018",
+      "characterName": "$ドド",
+      "characterIndex": 0,
+      "model": "愚鸟渡渡"
+    },
+    {
+      "npcId": "map152_ev019",
+      "characterName": "シーシャ",
+      "characterIndex": 1,
+      "model": "芋虫希夏"
+    },
+    {
+      "npcId": "map152_ev021",
+      "characterName": "トゥイードルダム",
+      "characterIndex": 0,
+      "model": "达姆"
+    },
+    {
+      "npcId": "map152_ev022",
+      "characterName": "トゥイードルディー",
+      "characterIndex": 0,
+      "model": "蒂"
+    },
+    {
+      "npcId": "map152_ev024",
+      "characterName": "$ロリーナ",
+      "characterIndex": 0,
+      "model": "罗莉娜"
+    },
+    {
+      "npcId": "map152_ev026",
+      "characterName": "$三月ウサギ",
+      "characterIndex": 0,
+      "model": "三月兔赫伊尔"
+    },
+    {
+      "npcId": "map152_ev027",
+      "characterName": "眠りネズミ",
+      "characterIndex": 0,
+      "model": "睡鼠山眠"
+    },
+    {
+      "npcId": "map152_ev028",
+      "characterName": "$帽子屋",
+      "characterIndex": 0,
+      "model": "疯帽子哈塔"
+    },
+    {
+      "npcId": "map152_ev034",
+      "characterName": "ウミガメモドキ",
+      "characterIndex": 0,
+      "model": "假海龟"
+    },
+    {
+      "npcId": "map152_ev067",
+      "characterName": "眠りネズミ",
+      "characterIndex": 0,
+      "model": "睡鼠山眠"
+    },
+    {
+      "npcId": "map152_ev071",
+      "characterName": "$チェシャ",
+      "characterIndex": 0,
+      "model": "柴郡猫"
+    },
+    {
+      "npcId": "map156_ev025",
+      "characterName": "$帽子屋",
+      "characterIndex": 0,
+      "model": "疯帽子哈塔"
+    },
+    {
+      "npcId": "map156_ev026",
+      "characterName": "$三月ウサギ",
+      "characterIndex": 0,
+      "model": "三月兔赫伊尔"
+    },
+    {
+      "npcId": "map156_ev027",
+      "characterName": "眠りネズミ",
+      "characterIndex": 0,
+      "model": "睡鼠山眠"
+    },
+    {
+      "npcId": "map169_ev008",
+      "characterName": "プリケット",
+      "characterIndex": 0,
+      "model": "普利凯特"
+    },
+    {
+      "npcId": "map178_ev008",
+      "characterName": "$ノーデ",
+      "characterIndex": 0,
+      "model": "诺登"
+    },
+    {
+      "npcId": "map180_ev010",
+      "characterName": "$ジャバ",
+      "characterIndex": 0,
+      "model": "尸龙迦巴沃克"
+    },
+    {
+      "npcId": "map181_ev007",
+      "characterName": "$ノーデ",
+      "characterIndex": 0,
+      "model": "诺登"
+    },
+    {
+      "npcId": "map191_ev002",
+      "characterName": "$ノーデ",
+      "characterIndex": 0,
+      "model": "诺登"
+    },
+    {
+      "npcId": "map192_ev002",
+      "characterName": "$ノーデ",
+      "characterIndex": 0,
+      "model": "诺登"
+    },
+    {
+      "npcId": "map202_ev030",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map208_ev042",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map215_ev006",
+      "characterName": "$ジャバ",
+      "characterIndex": 0,
+      "model": "尸龙迦巴沃克"
+    },
+    {
+      "npcId": "map215_ev007",
+      "characterName": "$ジャブジャブ",
+      "characterIndex": 0,
+      "model": "狂鸟"
+    },
+    {
+      "npcId": "map215_ev008",
+      "characterName": "バンダースナッチ",
+      "characterIndex": 0,
+      "model": "班达斯奈奇"
+    },
+    {
+      "npcId": "map263_ev006",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map264_ev006",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map265_ev006",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map266_ev006",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map267_ev005",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map268_ev005",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map269_ev005",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map270_ev005",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map271_ev008",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map271_ev019",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map272_ev005",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map276_ev020",
+      "characterName": "プリケット",
+      "characterIndex": 0,
+      "model": "普利凯特"
+    },
+    {
+      "npcId": "map277_ev009",
+      "characterName": "プリケット",
+      "characterIndex": 0,
+      "model": "普利凯特"
+    },
+    {
+      "npcId": "map280_ev027",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map332_ev016",
+      "characterName": "$ゲルダ",
+      "characterIndex": 0,
+      "model": "雪之少女格尔达"
+    },
+    {
+      "npcId": "map340_ev032",
+      "characterName": "$ゲルダ",
+      "characterIndex": 0,
+      "model": "雪之少女格尔达"
+    },
+    {
+      "npcId": "map341_ev003",
+      "characterName": "$ゲルダ",
+      "characterIndex": 0,
+      "model": "雪之少女格尔达"
+    },
+    {
+      "npcId": "map347_ev104",
+      "characterName": "$帽子屋",
+      "characterIndex": 0,
+      "model": "疯帽子哈塔"
+    },
+    {
+      "npcId": "map347_ev105",
+      "characterName": "$三月ウサギ",
+      "characterIndex": 0,
+      "model": "三月兔赫伊尔"
+    },
+    {
+      "npcId": "map348_ev019",
+      "characterName": "$ゲルダ",
+      "characterIndex": 0,
+      "model": "雪之少女格尔达"
+    },
+    {
+      "npcId": "map352_ev015",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map356_ev030",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map357_ev005",
+      "characterName": "$ゲルダ",
+      "characterIndex": 0,
+      "model": "雪之少女格尔达"
+    },
+    {
+      "npcId": "map361_ev006",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map361_ev007",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map363_ev024",
+      "characterName": "$メイベル",
+      "characterIndex": 0,
+      "model": "梅贝尔"
+    },
+    {
+      "npcId": "map409_ev032",
+      "characterName": "$三月ウサギ",
+      "characterIndex": 0,
+      "model": "三月兔赫伊尔"
+    },
+    {
+      "npcId": "map409_ev033",
+      "characterName": "$帽子屋",
+      "characterIndex": 0,
+      "model": "疯帽子哈塔"
+    }
+  ]
+}

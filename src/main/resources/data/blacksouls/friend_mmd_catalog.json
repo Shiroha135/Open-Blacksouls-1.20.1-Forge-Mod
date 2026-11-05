@@ -1,0 +1,840 @@
+{
+  "version": 1,
+  "sourceRoot": "H:\\Blacksouls MMD模型，朋友的",
+  "models": [
+    {
+      "modelName": "三月兔赫伊尔",
+      "sourceRelativePath": "三月兔赫伊尔/三月兔赫伊尔.pmx",
+      "sourceSha256": "d0a2291805f290e788f2f6f5df5b57cbfdc0130a1872b430f8ba96f387f3633b",
+      "generatedPmxSha256": "0902f2fae1327ebf611b908f70c4a89cca04128dfda7da45cb1d1cf426e363de",
+      "resource": "/assets/mmdskin/bundled_models/friend_1ebf862b35a0ead48a72dc3c.zip",
+      "zipSha256": "1ebf862b35a0ead48a72dc3c169a276948fd858c6f6bb09bcc915acfcb8ae1c7",
+      "files": 21,
+      "uncompressedBytes": 5455014,
+      "textureCount": 20,
+      "status": "ready",
+      "marker": ".blacksouls-friend-1ebf862b35a0ead4"
+    },
+    {
+      "modelName": "人鱼姬",
+      "sourceRelativePath": "人鱼姬/鱼人姬.pmx",
+      "sourceSha256": "c0a0fccacb0a6bad7c6cb4b213faa53cd8d7473edcc3ee6e9d51a3b6ac5f452d",
+      "generatedPmxSha256": "7495c36e25e35d4ba4abd4f1fdc5bc6d9c933b303c060d4951d96ae0c4437657",
+      "resource": "/assets/mmdskin/bundled_models/friend_5e3ceed3de758323004b419a.zip",
+      "zipSha256": "5e3ceed3de758323004b419ad5acfd9cb9f6541a650682892e4ffd90f7ab2677",
+      "files": 25,
+      "uncompressedBytes": 7817106,
+      "textureCount": 24,
+      "status": "ready",
+      "marker": ".blacksouls-friend-5e3ceed3de758323"
+    },
+    {
+      "modelName": "伊迪斯",
+      "sourceRelativePath": "伊迪斯/伊迪斯.pmx",
+      "sourceSha256": "80f06b3c192dfd551cc74e78aa4d93b43efd73ad5c81ed0047ae49dde22b950f",
+      "generatedPmxSha256": "2f8c8b7f9ba70be6f1088339204511eb5133c5faf167324609a690e16fc7cb68",
+      "resource": "/assets/mmdskin/bundled_models/friend_2c16e920a7e1f52c0e2d6d94.zip",
+      "zipSha256": "2c16e920a7e1f52c0e2d6d9446589c75317d6c269b8b7f51e82e068191504a5f",
+      "files": 25,
+      "uncompressedBytes": 10886976,
+      "textureCount": 24,
+      "status": "ready",
+      "marker": ".blacksouls-friend-2c16e920a7e1f52c"
+    },
+    {
+      "modelName": "假海龟",
+      "sourceRelativePath": "假海龟/假海龟.pmx",
+      "sourceSha256": "36a1a0a3177c6d88e92e1d5719f109bd9ce4f70a4cdcce1097259a2a4e619cdd",
+      "generatedPmxSha256": "93b712156b388bedb3b6b94967a602bbd060c6b48d440094e9444d3621635652",
+      "resource": "/assets/mmdskin/bundled_models/friend_ce576428fb612f0e76f8f008.zip",
+      "zipSha256": "ce576428fb612f0e76f8f008c8d313d1a3ae78c51a349d152add9da5e3a6a0d9",
+      "files": 23,
+      "uncompressedBytes": 5865194,
+      "textureCount": 22,
+      "status": "ready",
+      "marker": ".blacksouls-friend-ce576428fb612f0e"
+    },
+    {
+      "modelName": "冬之钟",
+      "sourceRelativePath": "冬之钟/冬之钟.pmx",
+      "sourceSha256": "df8868cf110ba9b9c7c5180e98426dcbc201e0c7672587cc961fe89855865696",
+      "generatedPmxSha256": "3a7c96417482817b767df582f650efa3bb9105da3ca1bb5569b4575c5c4e764d",
+      "resource": "/assets/mmdskin/bundled_models/friend_2229a89c4cebd0045f235c99.zip",
+      "zipSha256": "2229a89c4cebd0045f235c99813c722c9f3665c55b372ac709114d9e8fdf73df",
+      "files": 27,
+      "uncompressedBytes": 9979830,
+      "textureCount": 26,
+      "status": "ready",
+      "marker": ".blacksouls-friend-2229a89c4cebd004"
+    },
+    {
+      "modelName": "卡塔丽娜",
+      "sourceRelativePath": "卡塔丽娜/卡塔丽娜.pmx",
+      "sourceSha256": "fcfb2d600c55630906dc174a3ac596f4253f01da565b9e6e33a98a8a345a2f50",
+      "generatedPmxSha256": "489800e06c02034c9869d3247ea70adcd2d9baaa7a98f495e5232f21f800f40f",
+      "resource": "/assets/mmdskin/bundled_models/friend_2cb0281e4020d783e3a1c780.zip",
+      "zipSha256": "2cb0281e4020d783e3a1c7807647f90ca1e4d863b639272527359b4793df85a3",
+      "files": 26,
+      "uncompressedBytes": 7730083,
+      "textureCount": 25,
+      "status": "ready",
+      "marker": ".blacksouls-friend-2cb0281e4020d783"
+    },
+    {
+      "modelName": "古兰 - 操线傀儡",
+      "sourceRelativePath": "古兰/古兰 - 操线傀儡.pmx",
+      "sourceSha256": "0975a1cfde0b1144bcaf85b8b919b2275d12530e7b33fd647bb778054c5da27a",
+      "generatedPmxSha256": "fd850a7dc743677a8253bcf2d8b7fcab1797f2109edefcfd2ac47f43be0194de",
+      "resource": "/assets/mmdskin/bundled_models/friend_2bd72a6e681248f0de54349d.zip",
+      "zipSha256": "2bd72a6e681248f0de54349d3bba2858cca069e1017c5ec48a848de1bcf85837",
+      "files": 26,
+      "uncompressedBytes": 7476975,
+      "textureCount": 25,
+      "status": "ready",
+      "marker": ".blacksouls-friend-2bd72a6e681248f0"
+    },
+    {
+      "modelName": "古兰(fullcloth)",
+      "sourceRelativePath": "古兰/古兰(fullcloth).pmx",
+      "sourceSha256": "623b792043c44fac3042283f2715e076dbc77df2f8d5de780fb17c42377d6d04",
+      "generatedPmxSha256": "eabc8d32b4a43c3309d922264032a076a3f0de8cddb4d3aa6818d7482ea53989",
+      "resource": "/assets/mmdskin/bundled_models/friend_b338326436eaa9060b1d7d5d.zip",
+      "zipSha256": "b338326436eaa9060b1d7d5d0a8b4c3492f84ce6c2fdf90c5deef460967f4d99",
+      "files": 27,
+      "uncompressedBytes": 7891781,
+      "textureCount": 26,
+      "status": "ready",
+      "marker": ".blacksouls-friend-b338326436eaa906"
+    },
+    {
+      "modelName": "古琳达",
+      "sourceRelativePath": "古琳达/古琳达.pmx",
+      "sourceSha256": "1755816ca81fbda888c7f46990795ae33aa6a2fd9e065a7a70bc487d7779c2a1",
+      "generatedPmxSha256": "9666de21bdb89bee6360985a52761c80196182a4f101604bd04de09f9b55b997",
+      "resource": "/assets/mmdskin/bundled_models/friend_23a08b309e3b81464ebfdb20.zip",
+      "zipSha256": "23a08b309e3b81464ebfdb20e0465b63e1731be805a5ab5f347942890322deae",
+      "files": 23,
+      "uncompressedBytes": 6567781,
+      "textureCount": 22,
+      "status": "ready",
+      "marker": ".blacksouls-friend-23a08b309e3b8146"
+    },
+    {
+      "modelName": "多罗茜（精神病人）【多罗茜(等身)】",
+      "sourceRelativePath": "多罗茜（精神病人）/多罗茜(等身).pmx",
+      "sourceSha256": "3185cddeaa2b692491eb4b2c37ed816a8563519d66d782afa71192024acefe9c",
+      "generatedPmxSha256": "f4d6a6ccc8ce512eb447947deb88e4de4b56d78422b7fdb99763a80eb8f3f9b3",
+      "resource": "/assets/mmdskin/bundled_models/friend_b3fda1955571b48fee3ff9d6.zip",
+      "zipSha256": "b3fda1955571b48fee3ff9d6096360cd9839627d1b1779cc8b53b52cc202e55f",
+      "files": 22,
+      "uncompressedBytes": 6646937,
+      "textureCount": 21,
+      "status": "ready",
+      "marker": ".blacksouls-friend-b3fda1955571b48f"
+    },
+    {
+      "modelName": "多罗茜（精神病人）【多罗茜】",
+      "sourceRelativePath": "多罗茜（精神病人）/多罗茜.pmx",
+      "sourceSha256": "ecf174dcca615ff5394a7e270425e1644322cca3e2ebd8aa9c2fb5ae242326c2",
+      "generatedPmxSha256": "2810d7d982b72f4a42a134a837b77a6764cfe77955b19363b886988aaaf92460",
+      "resource": "/assets/mmdskin/bundled_models/friend_85c3b46c034b90f276c0d66e.zip",
+      "zipSha256": "85c3b46c034b90f276c0d66e25fa84a1c97835b394d16edd4384a71d9debacd5",
+      "files": 22,
+      "uncompressedBytes": 6633911,
+      "textureCount": 21,
+      "status": "ready",
+      "marker": ".blacksouls-friend-85c3b46c034b90f2"
+    },
+    {
+      "modelName": "富鸟古兹",
+      "sourceRelativePath": "富鸟古兹/富鸟古兹.pmx",
+      "sourceSha256": "86cd27762ff48f4bf5edd80ce4cade754e54ea5876cf0a4d7c82153ec096e1f4",
+      "generatedPmxSha256": "ac9f368d630e4427125de42030937f19ce1ba19e8e06a77c21e700bceac76347",
+      "resource": "/assets/mmdskin/bundled_models/friend_0f6b7fe07738284d5c2e718e.zip",
+      "zipSha256": "0f6b7fe07738284d5c2e718eea129ee713c1a01a14ac68883c0964461d4e4e8e",
+      "files": 22,
+      "uncompressedBytes": 5649530,
+      "textureCount": 21,
+      "status": "ready",
+      "marker": ".blacksouls-friend-0f6b7fe07738284d"
+    },
+    {
+      "modelName": "小红帽（朋友版）",
+      "sourceRelativePath": "小红帽/小红帽.pmx",
+      "sourceSha256": "ab9c3b39d21b1c28d04d63a99d09c087b2a44890b6f3568dca86e802059dfbc0",
+      "generatedPmxSha256": "6a647a8cde424b1c30cf20579b9685d4baea6b1910746c0e33775728dca419fe",
+      "resource": "/assets/mmdskin/bundled_models/friend_183cae8989f28aa93aad2b4f.zip",
+      "zipSha256": "183cae8989f28aa93aad2b4fe61dab4a1dfb1fc1e347bca630e4b202b1a1da41",
+      "files": 32,
+      "uncompressedBytes": 8827658,
+      "textureCount": 31,
+      "status": "ready",
+      "marker": ".blacksouls-friend-183cae8989f28aa9"
+    },
+    {
+      "modelName": "尸龙迦巴沃克",
+      "sourceRelativePath": "尸龙迦巴沃克/尸龙迦巴沃克.pmx",
+      "sourceSha256": "d9dceaba8288cb6fb51e5f6aff65fa1c2b1b07f9f193f1cfc40f806e705490ba",
+      "generatedPmxSha256": "4ae40f5983e8961f92ba829c461791d640af4217bd0269a88000d00835af5046",
+      "resource": "/assets/mmdskin/bundled_models/friend_e5e7b4838f3f2e1f11a77c7c.zip",
+      "zipSha256": "e5e7b4838f3f2e1f11a77c7c1a7aff337d938cdae1d4382937db460dfb290575",
+      "files": 25,
+      "uncompressedBytes": 11029626,
+      "textureCount": 24,
+      "status": "ready",
+      "marker": ".blacksouls-friend-e5e7b4838f3f2e1f"
+    },
+    {
+      "modelName": "柴郡猫",
+      "sourceRelativePath": "柴郡猫/柴郡猫.pmx",
+      "sourceSha256": "7de8e6f4559dc5d07c97690bc4c9bfd104fabe6d9cd989a3f69e1d97be4945eb",
+      "generatedPmxSha256": "22d8f5fb101991de5df71fe75384ebb8c3b275ba36316c311c992e0097d3206c",
+      "resource": "/assets/mmdskin/bundled_models/friend_533cea7a5e07e7f101c1ee4d.zip",
+      "zipSha256": "533cea7a5e07e7f101c1ee4d69242c486f55516d36c485fbf3a0c625dcfd1ae6",
+      "files": 24,
+      "uncompressedBytes": 5513087,
+      "textureCount": 23,
+      "status": "ready",
+      "marker": ".blacksouls-friend-533cea7a5e07e7f1"
+    },
+    {
+      "modelName": "格林",
+      "sourceRelativePath": "格林/格林.pmx",
+      "sourceSha256": "ea250c2bb8f32a03b001d054109b1b15b76dfd9b87c3e556f6572b8ff26fbfc9",
+      "generatedPmxSha256": "0d95cd17d5ddb1495ef3e92a80abc74b0f9567b7625fd936fbf259f3d04485b8",
+      "resource": "/assets/mmdskin/bundled_models/friend_fc151568fde448ff6784fecb.zip",
+      "zipSha256": "fc151568fde448ff6784fecb7843ab0ecf1fedeede1415edad9a22929754b4e0",
+      "files": 11,
+      "uncompressedBytes": 1678546,
+      "textureCount": 10,
+      "status": "ready",
+      "marker": ".blacksouls-friend-fc151568fde448ff"
+    },
+    {
+      "modelName": "比尔",
+      "sourceRelativePath": "比尔/比尔.pmx",
+      "sourceSha256": "ec9d5fcc5f8b0ee371c3a561892b2cf1273c3293d6585ad9cb9e67ce162df7b2",
+      "generatedPmxSha256": "5d0915623312682368b861765a8db5e1efc4abf1721010b4c3eb547a4e0506f4",
+      "resource": "/assets/mmdskin/bundled_models/friend_4540ea2ab9ee38b3e6c09f5e.zip",
+      "zipSha256": "4540ea2ab9ee38b3e6c09f5e1365d445118c64dd57430c29078694f76b74f314",
+      "files": 30,
+      "uncompressedBytes": 6275380,
+      "textureCount": 29,
+      "status": "ready",
+      "marker": ".blacksouls-friend-4540ea2ab9ee38b3"
+    },
+    {
+      "modelName": "海因大爷",
+      "sourceRelativePath": "海因大爷/海因大爷.pmx",
+      "sourceSha256": "c25ad489cf99eb4a9f9a999612d456f3102b35109faa13998a55c3c688cb5c3e",
+      "generatedPmxSha256": "3530831bb3b651a1335fb27792b1eef52e42c56034ed728fc2a745e0cac27a08",
+      "resource": "/assets/mmdskin/bundled_models/friend_f37a9d00a461d27cdd396e6b.zip",
+      "zipSha256": "f37a9d00a461d27cdd396e6b2d301c3d04d9b157773ccd5771db708e7d989f01",
+      "files": 13,
+      "uncompressedBytes": 3042621,
+      "textureCount": 12,
+      "status": "ready",
+      "marker": ".blacksouls-friend-f37a9d00a461d27c"
+    },
+    {
+      "modelName": "爱丽丝-小红帽",
+      "sourceRelativePath": "爱丽丝-小红帽/爱丽丝-小红帽.pmx",
+      "sourceSha256": "a403cb0427b598e55eddc0ffd1f1de628fde2010d23dce09ea3e1cd21c461127",
+      "generatedPmxSha256": "2be18224536c307bc46ad92c2a81670ccfb0272750db7b7c4865ef8f6d689617",
+      "resource": "/assets/mmdskin/bundled_models/friend_411c45b7babd744754269fc7.zip",
+      "zipSha256": "411c45b7babd744754269fc7cb16a7bb0bcfa957d5affd99415f305eed7ee3a2",
+      "files": 27,
+      "uncompressedBytes": 7804378,
+      "textureCount": 26,
+      "status": "ready",
+      "marker": ".blacksouls-friend-411c45b7babd7447"
+    },
+    {
+      "modelName": "爱丽丝01",
+      "sourceRelativePath": "爱丽丝01/爱丽丝01.pmx",
+      "sourceSha256": "25ef1791ff53db42c92444daa7479c06d67aea99c3381ce9a9457737cf3ee51c",
+      "generatedPmxSha256": "04d69d6985cbeba6536b51d36e4e7c79dc402a4a042426204a719bd447503e77",
+      "resource": "/assets/mmdskin/bundled_models/friend_73e2993f5a21914f08af007d.zip",
+      "zipSha256": "73e2993f5a21914f08af007d7c86829ae7990407e154ebb91432be1226448cf3",
+      "files": 30,
+      "uncompressedBytes": 10788077,
+      "textureCount": 29,
+      "status": "ready",
+      "marker": ".blacksouls-friend-73e2993f5a21914f"
+    },
+    {
+      "modelName": "狂鸟",
+      "sourceRelativePath": "狂鸟/狂鸟.pmx",
+      "sourceSha256": "66a89c01a37f43b330185a2448e9f9f69da07678b230ec6f9971d7c1349212d1",
+      "generatedPmxSha256": "6e5f8437e7a9a599ed517c644125fb74b4c8076b64cab0102fe38543fe432232",
+      "resource": "/assets/mmdskin/bundled_models/friend_5bf1d905f84abafa02299230.zip",
+      "zipSha256": "5bf1d905f84abafa022992307e783c3ce31b902bcbddb349b5e508386810ebef",
+      "files": 27,
+      "uncompressedBytes": 8216730,
+      "textureCount": 26,
+      "status": "ready",
+      "marker": ".blacksouls-friend-5bf1d905f84abafa"
+    },
+    {
+      "modelName": "玛丽安娜",
+      "sourceRelativePath": "玛丽安娜/玛丽安娜.pmx",
+      "sourceSha256": "de2fa9979af5ee8f32599dc4410e1471239a8d5c73149734167eb6e0a9a56fa2",
+      "generatedPmxSha256": "cf5bc30c7649fca77bc3bbab13789486a53dc50df6ebcf1e67e9431e412412ea",
+      "resource": "/assets/mmdskin/bundled_models/friend_cb20a08794a98fb24aa3fffb.zip",
+      "zipSha256": "cb20a08794a98fb24aa3fffb450b18472895429065db09718715181f7e25ef1c",
+      "files": 19,
+      "uncompressedBytes": 6354418,
+      "textureCount": 18,
+      "status": "ready",
+      "marker": ".blacksouls-friend-cb20a08794a98fb2"
+    },
+    {
+      "modelName": "班达斯奈奇",
+      "sourceRelativePath": "班达斯奈奇/班达斯奈奇.pmx",
+      "sourceSha256": "0e3db0bc4c07035c51cd0cb8ee89e4ebdbebd3110198535d982cca806aad82ec",
+      "generatedPmxSha256": "ddae8abded64859cb6b9fa07c5a4b1ef6b22ed2a2e571bb6b1d13abb4f2de0d2",
+      "resource": "/assets/mmdskin/bundled_models/friend_94b54381711a567d0044af95.zip",
+      "zipSha256": "94b54381711a567d0044af953e996ae7ff92f1d44e2da85e9de6e0abc60e7bbd",
+      "files": 22,
+      "uncompressedBytes": 10456512,
+      "textureCount": 21,
+      "status": "ready",
+      "marker": ".blacksouls-friend-94b54381711a567d"
+    },
+    {
+      "modelName": "疯帽子哈塔",
+      "sourceRelativePath": "疯帽子哈塔/疯帽子哈塔.pmx",
+      "sourceSha256": "afa254ed3d6b8f1046c26934792348e84d4be72f633e051a123f89063cf063a7",
+      "generatedPmxSha256": "63206ed3d1521fbf491b7026b53c5effc72e27fb727a2c2b699dbd4561376a0c",
+      "resource": "/assets/mmdskin/bundled_models/friend_10958aaf1f2c8cf5371d4a6f.zip",
+      "zipSha256": "10958aaf1f2c8cf5371d4a6fefe4a44773df5bbcff26cd189870775f9438e46c",
+      "files": 27,
+      "uncompressedBytes": 6998835,
+      "textureCount": 26,
+      "status": "ready",
+      "marker": ".blacksouls-friend-10958aaf1f2c8cf5"
+    },
+    {
+      "modelName": "睡鼠山眠",
+      "sourceRelativePath": "睡鼠山眠/睡鼠山眠.pmx",
+      "sourceSha256": "7c810a9a4a4e9b46092ff9fbc5ad0f97bba4a5a71f8e92ee1a5556e0b2478bcc",
+      "generatedPmxSha256": "e0404356a06eb14e500d916b3d6c6486c6cf64bc794e6d5d5861f7d671287541",
+      "resource": "/assets/mmdskin/bundled_models/friend_bbe2e408cabf7ce4e503874a.zip",
+      "zipSha256": "bbe2e408cabf7ce4e503874a9a6830ee4456d83da9efffbe3eb0695563f2ce1c",
+      "files": 22,
+      "uncompressedBytes": 6098814,
+      "textureCount": 21,
+      "status": "ready",
+      "marker": ".blacksouls-friend-bbe2e408cabf7ce4"
+    },
+    {
+      "modelName": "米兰达",
+      "sourceRelativePath": "米兰达/米兰达.pmx",
+      "sourceSha256": "930a657515d9b704fe46ee58b7a649812049bf8331f5c234f231181652226242",
+      "generatedPmxSha256": "75f47626c54c0f16ad626574f87a5a307514d4d5c889017b8ed85a02bc642392",
+      "resource": "/assets/mmdskin/bundled_models/friend_e358b6a9f0fb32d283457a84.zip",
+      "zipSha256": "e358b6a9f0fb32d283457a8448c40f7de8a915946dd57e0b26625f4cfddcac2b",
+      "files": 24,
+      "uncompressedBytes": 6337789,
+      "textureCount": 23,
+      "status": "ready",
+      "marker": ".blacksouls-friend-e358b6a9f0fb32d2"
+    },
+    {
+      "modelName": "维多利亚",
+      "sourceRelativePath": "维多利亚/维多利亚.pmx",
+      "sourceSha256": "8f8020a22b2e468655b3f5df8cebbcc18c4261fee58274b234c30a9a0ed2d254",
+      "generatedPmxSha256": "08776e9667291be4437ee05123a6610d89695f36647586519ebaa9bd4ee58295",
+      "resource": "/assets/mmdskin/bundled_models/friend_b11a4f87528afb6d80ccf229.zip",
+      "zipSha256": "b11a4f87528afb6d80ccf22999205fc2fcae009543f414dcbc383bff8afd4373",
+      "files": 27,
+      "uncompressedBytes": 7984338,
+      "textureCount": 26,
+      "status": "ready",
+      "marker": ".blacksouls-friend-b11a4f87528afb6d"
+    },
+    {
+      "modelName": "罗莉娜",
+      "sourceRelativePath": "罗莉娜/罗莉娜.pmx",
+      "sourceSha256": "a8b6c70272cb8949882073f12a7e5e3bcc92fad53c9b54a0ce050a76f93d4956",
+      "generatedPmxSha256": "4e49f0e77d306a793fea569578b121c422aaecf5a90ba9e52f59bac4bfa53650",
+      "resource": "/assets/mmdskin/bundled_models/friend_570c3b0fd368481fd87cef29.zip",
+      "zipSha256": "570c3b0fd368481fd87cef29551ef24964ff2c75ba6d06a99b1a011354af0540",
+      "files": 29,
+      "uncompressedBytes": 9813326,
+      "textureCount": 28,
+      "status": "ready",
+      "marker": ".blacksouls-friend-570c3b0fd368481f"
+    },
+    {
+      "modelName": "艾露玛",
+      "sourceRelativePath": "艾露玛/艾露玛.pmx",
+      "sourceSha256": "68fc6b3db0bd5de77c38b16db402915b87f1869d0d7583bfe6965b6df9a739a3",
+      "generatedPmxSha256": "1f4766483b44421fb7e01d7b1b289cc2f3bc0be590dde19892605f35f5e3928e",
+      "resource": "/assets/mmdskin/bundled_models/friend_610c68414c5af0bcb704144d.zip",
+      "zipSha256": "610c68414c5af0bcb704144d9d7659402e7ed2365cc2c8ef62524e61903e00e9",
+      "files": 27,
+      "uncompressedBytes": 5734426,
+      "textureCount": 26,
+      "status": "ready",
+      "marker": ".blacksouls-friend-610c68414c5af0bc"
+    },
+    {
+      "modelName": "芋虫希夏",
+      "sourceRelativePath": "芋虫希夏/芋虫希夏.pmx",
+      "sourceSha256": "b83f04c79f303c4bf7e9fadbd33e78960ea34612a440b1a08c46258195013b31",
+      "generatedPmxSha256": "3d86f8f91e88dd4442955ac7d8fed74057b221ebbe89842936d102bc9e53bd02",
+      "resource": "/assets/mmdskin/bundled_models/friend_b8d5705aab1c08efef910cdb.zip",
+      "zipSha256": "b8d5705aab1c08efef910cdb898db65f2d80bd3bf11e3e7458f8a9d9cb510a57",
+      "files": 25,
+      "uncompressedBytes": 6032580,
+      "textureCount": 24,
+      "status": "ready",
+      "marker": ".blacksouls-friend-b8d5705aab1c08ef"
+    },
+    {
+      "modelName": "莉耶芙",
+      "sourceRelativePath": "莉耶芙/莉耶芙.pmx",
+      "sourceSha256": "28aef89a7d4d16cfac5e66b2454d9053e712c5ea2f1b8f696f814fa37a10054d",
+      "generatedPmxSha256": "768500dfedea0922ce9ce226bf1e6d5abc28840f8c440b01fe0b27357a415a84",
+      "resource": "/assets/mmdskin/bundled_models/friend_8d8c404c813bde5edac7a1db.zip",
+      "zipSha256": "8d8c404c813bde5edac7a1dbbd99de7f4d35b7c43df2341aac963136fb9a8d63",
+      "files": 22,
+      "uncompressedBytes": 6525131,
+      "textureCount": 21,
+      "status": "ready",
+      "marker": ".blacksouls-friend-8d8c404c813bde5e"
+    },
+    {
+      "modelName": "莉耶芙（女仆装）",
+      "sourceRelativePath": "莉耶芙（女仆装）/莉耶芙.pmx",
+      "sourceSha256": "e89e0ddb432ddd807d376fa7cfe53a3bbaf18fcc9d62e53040813fd6ef9ce6f3",
+      "generatedPmxSha256": "8f04d54f54578dd9740bf73f3a9d8b32d0e73a2c04e2fd4febb8f9eb81623ad1",
+      "resource": "/assets/mmdskin/bundled_models/friend_303130ed05cf4c72d370b6a9.zip",
+      "zipSha256": "303130ed05cf4c72d370b6a917ad8c02079a3aec82150a87ab43b303aa20629e",
+      "files": 27,
+      "uncompressedBytes": 7874886,
+      "textureCount": 26,
+      "status": "ready",
+      "marker": ".blacksouls-friend-303130ed05cf4c72"
+    },
+    {
+      "modelName": "莉耶芙（铁道双子）",
+      "sourceRelativePath": "莉耶芙（铁道双子）/莉耶芙.pmx",
+      "sourceSha256": "5e7216af92e75f750cf4b09f0bc3243e0728273d1f61e87871aa93893dab2c56",
+      "generatedPmxSha256": "093c0cb01e8732927e4270568b2a69764038151eb2ca8a90932f9e115909e696",
+      "resource": "/assets/mmdskin/bundled_models/friend_0f3c4c18d99a47d9ff4020e1.zip",
+      "zipSha256": "0f3c4c18d99a47d9ff4020e1e43fc71ceba97909612f2d9b03e14bc3f06f8bca",
+      "files": 28,
+      "uncompressedBytes": 7932038,
+      "textureCount": 27,
+      "status": "ready",
+      "marker": ".blacksouls-friend-0f3c4c18d99a47d9"
+    },
+    {
+      "modelName": "莫可莫可",
+      "sourceRelativePath": "莫可莫可/莫可莫可.pmx",
+      "sourceSha256": "3548a334453b63f1e4edb271db98716cc42cca90f0547eb39d4379b23194005a",
+      "generatedPmxSha256": "c556e8e9a46cc7f3e7b905a200b8a4f65aad6f58b11001e2c6a960c92a3ebe1b",
+      "resource": "/assets/mmdskin/bundled_models/friend_d631b7bac2ab1c89b0c088bd.zip",
+      "zipSha256": "d631b7bac2ab1c89b0c088bd73816b1a28d9d4f1ddd468659de4b2efbcd28dff",
+      "files": 8,
+      "uncompressedBytes": 209917,
+      "textureCount": 7,
+      "status": "ready",
+      "marker": ".blacksouls-friend-d631b7bac2ab1c89"
+    },
+    {
+      "modelName": "蒂",
+      "sourceRelativePath": "蒂/蒂.pmx",
+      "sourceSha256": "8a7c51c2bb11ad1583f76b6338e5028689b544bbffcff1ac8b5f5976244638f8",
+      "generatedPmxSha256": "118f205958fbb1146d8471bafb8145fe44fc379d024199686f524b3a52e52d3c",
+      "resource": "/assets/mmdskin/bundled_models/friend_e6a7afbd3116b5f3f0620a4d.zip",
+      "zipSha256": "e6a7afbd3116b5f3f0620a4d50665e0188a70882aaaed5c0b71a670496e19783",
+      "files": 20,
+      "uncompressedBytes": 6059854,
+      "textureCount": 19,
+      "status": "ready",
+      "marker": ".blacksouls-friend-e6a7afbd3116b5f3"
+    },
+    {
+      "modelName": "达姆",
+      "sourceRelativePath": "达姆/达姆.pmx",
+      "sourceSha256": "71ffe021117a6fce5b6182594995c625e5726e9d1326795fe70956a670afc80f",
+      "generatedPmxSha256": "4b5862a5285e34e0399db3e839361575a074dc169045afa918405a77cae614a9",
+      "resource": "/assets/mmdskin/bundled_models/friend_a12f16da4e7b6dc11667fa8f.zip",
+      "zipSha256": "a12f16da4e7b6dc11667fa8f8f07fd8d4964f90bacda9e74e9cf90cef15a88dc",
+      "files": 20,
+      "uncompressedBytes": 6088337,
+      "textureCount": 19,
+      "status": "ready",
+      "marker": ".blacksouls-friend-a12f16da4e7b6dc1"
+    },
+    {
+      "modelName": "雪之少女格尔达",
+      "sourceRelativePath": "雪之少女格尔达/雪之少女格尔达.pmx",
+      "sourceSha256": "8958d755129abc75870af6baf6d11a53f229b28429130bbf10a91f556fa872d5",
+      "generatedPmxSha256": "b705254ce108130d04e68f10f54dc0b8255984c97cbbccb0ab5a0dced2a66bf0",
+      "resource": "/assets/mmdskin/bundled_models/friend_d5880eb391a48ceb8b4d9ddb.zip",
+      "zipSha256": "d5880eb391a48ceb8b4d9ddbe209a7a5560c830ca337ca10ca50ccd6bee389d2",
+      "files": 24,
+      "uncompressedBytes": 6780683,
+      "textureCount": 23,
+      "status": "ready",
+      "marker": ".blacksouls-friend-d5880eb391a48ceb"
+    },
+    {
+      "modelName": "魄罗【Grey Wolf】",
+      "sourceRelativePath": "魄罗/Grey Wolf.pmx",
+      "sourceSha256": "27ab23bd6c6a8c637852de9329212b46972221cfac40bab790e3d43430ee5b66",
+      "generatedPmxSha256": "0d7c09389c9ea1408ddd9e18c78709536f3cdb63b6beb40b1789df9ea3955d24",
+      "resource": "/assets/mmdskin/bundled_models/friend_56bdc86b05ec876d024960e4.zip",
+      "zipSha256": "56bdc86b05ec876d024960e460a9219c5b250329864af3da42559f4ed9b2374f",
+      "files": 2,
+      "uncompressedBytes": 4461647,
+      "textureCount": 1,
+      "status": "ready",
+      "marker": ".blacksouls-friend-56bdc86b05ec876d"
+    },
+    {
+      "modelName": "魄罗【Grey Wolf（人）】",
+      "sourceRelativePath": "魄罗/Grey Wolf（人）.pmx",
+      "sourceSha256": "fcf2e7115c5fbdea65a388fc0a68dd556c48f2d7ad342872322d99bc9e770c07",
+      "generatedPmxSha256": "4d90613a6525a77af7134b7cb3155466c0f1db3ff372e3f9db2038262c686192",
+      "resource": "/assets/mmdskin/bundled_models/friend_be11d3749891c45e18cb9e21.zip",
+      "zipSha256": "be11d3749891c45e18cb9e218aae750f7915f2fde9da063183d9f240c8e7fab9",
+      "files": 2,
+      "uncompressedBytes": 4461741,
+      "textureCount": 1,
+      "status": "ready",
+      "marker": ".blacksouls-friend-be11d3749891c45e"
+    },
+    {
+      "modelName": "黑兔骑士",
+      "sourceRelativePath": "黑兔骑士/黑兔骑士巴纳伊.pmx",
+      "sourceSha256": "9132603a3758f8e2798a57e44042b9f5a44225ed86ac46a5d00c3de6ea27e7d3",
+      "generatedPmxSha256": "1d14aa8cd5a1befa84d7ede0ece1bb940f3ed88517c4e013c1b6f4f104a6af1b",
+      "resource": "/assets/mmdskin/bundled_models/friend_a16f2114afcafc604c22589c.zip",
+      "zipSha256": "a16f2114afcafc604c22589c7922f92a89dd5eddd269fb5195f87e2f28d70fde",
+      "files": 16,
+      "uncompressedBytes": 19539947,
+      "textureCount": 14,
+      "status": "ready",
+      "marker": ".blacksouls-friend-a16f2114afcafc60"
+    },
+    {
+      "modelName": "黑山羊巴风特",
+      "sourceRelativePath": "黑山羊巴风特/巴风特.pmx",
+      "sourceSha256": "96f0debe183c3ede948f3aa115e0d8745f3add74bb646f4822798e69e1fdc45f",
+      "generatedPmxSha256": "0cda91feefef3b17c907009b275d910d7fa5403e24241194206e3f385144c6a0",
+      "resource": "/assets/mmdskin/bundled_models/friend_76af98ff60de2e4062281e40.zip",
+      "zipSha256": "76af98ff60de2e4062281e40be736c0f9564a11d81ba9c88f429b37c42d7cad9",
+      "files": 24,
+      "uncompressedBytes": 5360445,
+      "textureCount": 23,
+      "status": "ready",
+      "marker": ".blacksouls-friend-76af98ff60de2e40"
+    }
+  ],
+  "existing": [
+    {
+      "modelName": "小红帽",
+      "sourceRelativePath": "redhood(bs2)/小红帽.pmx",
+      "sourceSha256": "bce596c1abfe2172ad176ef6ed1bff81a0f03c3f92d0a0084444a7382d0af2aa",
+      "resource": "/assets/mmdskin/bundled_models/red_hood.zip",
+      "status": "existing",
+      "zipSha256": "a47cace3d067083cf65991c25616a39daf14dd1563b8722966fd41eded6fc53f"
+    },
+    {
+      "modelName": "诺登",
+      "sourceRelativePath": "诺登/诺登.pmx",
+      "sourceSha256": "891c9fbb17a7a80405d91075d41122bb0f924e4c9eec50425fdf64076ddb2105",
+      "resource": "/assets/mmdskin/bundled_models/noden.zip",
+      "status": "existing",
+      "zipSha256": "5a3091b8cbf6ed7f2fb5e3fa09f3cd88504599143221c5d4581190bc423963c0"
+    }
+  ],
+  "pending": [
+    {
+      "directory": "古兰",
+      "reason": "multiple_character_variants_no_automatic_default",
+      "variantModelNames": [
+        "古兰 - 操线傀儡",
+        "古兰(fullcloth)"
+      ],
+      "status": "pending_choice"
+    },
+    {
+      "directory": "多罗茜（精神病人）",
+      "reason": "multiple_character_variants_no_automatic_default",
+      "variantModelNames": [
+        "多罗茜（精神病人）【多罗茜(等身)】",
+        "多罗茜（精神病人）【多罗茜】"
+      ],
+      "status": "pending_choice"
+    },
+    {
+      "directory": "小红帽(bs2)",
+      "reason": "multiple_character_variants_no_automatic_default",
+      "variantModelNames": [
+        "小红帽(bs2)【小红帽(手部IK)】",
+        "小红帽(bs2)"
+      ],
+      "status": "pending_choice"
+    },
+    {
+      "directory": "魄罗",
+      "reason": "multiple_character_variants_no_automatic_default",
+      "variantModelNames": [
+        "魄罗【Grey Wolf】",
+        "魄罗【Grey Wolf（人）】"
+      ],
+      "status": "pending_choice"
+    },
+    {
+      "modelName": "伊丽莎白",
+      "sourceRelativePath": "伊丽莎白/伊丽莎白.pmx",
+      "sourceSha256": "f7882a883a64d0c722b1fc96f8c10790075bbec791d68709f2919a03eae460f2",
+      "reason": "unresolved_used_texture",
+      "missing": [
+        {
+          "index": 22,
+          "sourceReference": "cf_m_top_fwanpi (Instance)_(-1246146).png",
+          "used": true,
+          "sameTopDirectoryCandidates": [],
+          "status": "unresolved_used_texture",
+          "reason": "no_same_top_basename"
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "modelName": "多罗茜",
+      "sourceRelativePath": "多罗茜/多罗茜.pmx",
+      "sourceSha256": "857ac224961b002c13d9d5c0b8d58424126f8c5595dcb70da36136b720d5ea6b",
+      "reason": "unresolved_used_texture",
+      "missing": [
+        {
+          "index": 3,
+          "sourceReference": "Hair_Spa.png",
+          "used": true,
+          "sameTopDirectoryCandidates": [],
+          "status": "unresolved_used_texture",
+          "reason": "no_same_top_basename"
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "modelName": "小红帽(bs2)【小红帽(手部IK)】",
+      "sourceRelativePath": "小红帽(bs2)/小红帽(手部IK).pmx",
+      "sourceSha256": "3970eb64ade50362470520b163b9896d32b4432790d1024b6fdd1775bef90de3",
+      "reason": "unresolved_used_texture",
+      "missing": [
+        {
+          "index": 28,
+          "sourceReference": "tears.png",
+          "used": true,
+          "sameTopDirectoryCandidates": [],
+          "status": "unresolved_used_texture",
+          "reason": "no_same_top_basename"
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "modelName": "小红帽(bs2)",
+      "sourceRelativePath": "小红帽(bs2)/小红帽.pmx",
+      "sourceSha256": "564e4ee3d6afe23d83b920cafa95e4692a170162d943eed7e73e643350ad9ec5",
+      "reason": "unresolved_used_texture",
+      "missing": [
+        {
+          "index": 28,
+          "sourceReference": "tears.png",
+          "used": true,
+          "sameTopDirectoryCandidates": [],
+          "status": "unresolved_used_texture",
+          "reason": "no_same_top_basename"
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "modelName": "开膛手杰克",
+      "sourceRelativePath": "开膛手杰克/Jack.pmx",
+      "sourceSha256": "eb77cd741c4798491b9e5518020eb21d73523e248a8eb2ce4d34776ead673cc9",
+      "reason": "unresolved_used_texture",
+      "missing": [
+        {
+          "index": 10,
+          "sourceReference": "cloth_toon.png",
+          "used": true,
+          "sameTopDirectoryCandidates": [],
+          "status": "unresolved_used_texture",
+          "reason": "no_same_top_basename"
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "modelName": "愚鸟渡渡",
+      "sourceRelativePath": "愚鸟渡渡/愚鸟渡渡.pmx",
+      "sourceSha256": "1a0afacc2bdd3c9be622f18af7f1d26480cd63d8daca22700d90441820512d93",
+      "reason": "unresolved_used_texture",
+      "missing": [
+        {
+          "index": 7,
+          "sourceReference": "skint_toon.png",
+          "used": true,
+          "sameTopDirectoryCandidates": [],
+          "status": "unresolved_used_texture",
+          "reason": "no_same_top_basename"
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "modelName": "普利凯特",
+      "sourceRelativePath": "普利凯特/普利凯特.pmx",
+      "sourceSha256": "4955cda5aac5b3d694ccfa1ad45d981591be5b58816ca65039da9580b8bc2e27",
+      "reason": "unresolved_used_texture",
+      "missing": [
+        {
+          "index": 2,
+          "sourceReference": "spa_hair06.png",
+          "used": true,
+          "sameTopDirectoryCandidates": [],
+          "status": "unresolved_used_texture",
+          "reason": "no_same_top_basename"
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "modelName": "梅贝尔",
+      "sourceRelativePath": "梅贝尔/梅贝尔.pmx",
+      "sourceSha256": "a78f2bce3073688b5cb24efaacb44b0ef26644689bd3c981c8746161a0fc080e",
+      "reason": "unresolved_used_texture",
+      "missing": [
+        {
+          "index": 1,
+          "sourceReference": "hair_spa.png",
+          "used": true,
+          "sameTopDirectoryCandidates": [],
+          "status": "unresolved_used_texture",
+          "reason": "no_same_top_basename"
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "modelName": "梅贝尔JK",
+      "sourceRelativePath": "梅贝尔JK/梅贝尔.pmx",
+      "sourceSha256": "3e5c45d0f7226a45992be9f1279b772088cbd6dcb7671dbfb068508b9b0fc0c5",
+      "reason": "unresolved_used_texture",
+      "missing": [
+        {
+          "index": 1,
+          "sourceReference": "hair_spa.png",
+          "used": true,
+          "sameTopDirectoryCandidates": [],
+          "status": "unresolved_used_texture",
+          "reason": "no_same_top_basename"
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "modelName": "爱丽丝妹妹",
+      "sourceRelativePath": "爱丽丝妹妹/爱丽丝妹妹.pmx",
+      "sourceSha256": "ab42cecb3c263eaee729a58cec589c3d024a5847ef4ac7f63cd569947970d192",
+      "reason": "unresolved_used_texture",
+      "missing": [
+        {
+          "index": 1,
+          "sourceReference": "Hair_Spa.png",
+          "used": true,
+          "sameTopDirectoryCandidates": [],
+          "status": "unresolved_used_texture",
+          "reason": "no_same_top_basename"
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "modelName": "罗莉娜（现实）",
+      "sourceRelativePath": "罗莉娜（现实）/罗莉娜.pmx",
+      "sourceSha256": "1f4381e8bfb904afb5c89fbea4b774115b4189f556d6d801d0f1137195901148",
+      "reason": "unresolved_used_texture",
+      "missing": [
+        {
+          "index": 2,
+          "sourceReference": "cf_m_face_00.png",
+          "used": true,
+          "sameTopDirectoryCandidates": [],
+          "status": "unresolved_used_texture",
+          "reason": "no_same_top_basename"
+        },
+        {
+          "index": 12,
+          "sourceReference": "cf_m_body.png",
+          "used": true,
+          "sameTopDirectoryCandidates": [],
+          "status": "unresolved_used_texture",
+          "reason": "no_same_top_basename"
+        },
+        {
+          "index": 16,
+          "sourceReference": "cf_m_top_inner01 (Instance)_(-1787268).png",
+          "used": true,
+          "sameTopDirectoryCandidates": [],
+          "status": "unresolved_used_texture",
+          "reason": "no_same_top_basename"
+        },
+        {
+          "index": 18,
+          "sourceReference": "cf_m_bot_classicalSK_mini_d (Instance)_(-1854036).png",
+          "used": true,
+          "sameTopDirectoryCandidates": [],
+          "status": "unresolved_used_texture",
+          "reason": "no_same_top_basename"
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "modelName": "蛇神",
+      "sourceRelativePath": "蛇神/蛇神.pmx",
+      "sourceSha256": "3398572271e4ce56fe20550473841e67ff61238400b70fa4487734f564cd7ef5",
+      "reason": "unresolved_used_texture",
+      "missing": [
+        {
+          "index": 14,
+          "sourceReference": "cf_m_bodytights (Instance)_(-728402).png",
+          "used": true,
+          "sameTopDirectoryCandidates": [],
+          "status": "unresolved_used_texture",
+          "reason": "no_same_top_basename"
+        }
+      ],
+      "status": "pending"
+    },
+    {
+      "modelName": "贞德",
+      "sourceRelativePath": "贞德/贞德.pmx",
+      "sourceSha256": "67b0f2a6e9a8efb991efbd8589ea79cae5926639b702ea23ffc528537e52775f",
+      "reason": "unresolved_used_texture",
+      "missing": [
+        {
+          "index": 24,
+          "sourceReference": "cf_m_bodytights (Instance)_(-816708).png",
+          "used": true,
+          "sameTopDirectoryCandidates": [],
+          "status": "unresolved_used_texture",
+          "reason": "no_same_top_basename"
+        }
+      ],
+      "status": "pending"
+    }
+  ]
+}
