@@ -130,6 +130,7 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
         if (synthesisView != null) {
             buffer.writeVarLong(synthesisView.money());
             buffer.writeBoolean(synthesisView.costVisible());
+            buffer.writeBoolean(synthesisView.composeStatus());
             buffer.writeVarInt(synthesisView.offers().size());
             for (SynthesisOffer offer : synthesisView.offers()) {
                 buffer.writeVarInt(offer.kind());
@@ -160,6 +161,7 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
                     buffer.writeUtf(comparison.equippedName(), 512);
                     buffer.writeVarInt(comparison.attackDifference());
                 }
+                writeTradeMaterials(buffer, offer.exchangeMaterials());
             }
         }
     }
@@ -218,6 +220,7 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
         if (!buffer.readBoolean()) return null;
         long money = buffer.readVarLong();
         boolean costVisible = buffer.readBoolean();
+        boolean composeStatus = buffer.readBoolean();
         int count = count(buffer, 1150);
         List<SynthesisOffer> offers = new ArrayList<>();
         for (int index = 0; index < count; index++) {
@@ -246,9 +249,9 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
                         buffer.readUtf(512), buffer.readVarInt()));
             }
             offers.add(new SynthesisOffer(kind, id, category, name, registry, description, owned, maximum,
-                    enabled, cost, parameters, materials, comparisons));
+                    enabled, cost, parameters, materials, comparisons, readTradeMaterials(buffer)));
         }
-        return new SynthesisView(money, costVisible, offers);
+        return new SynthesisView(money, costVisible, composeStatus, offers);
     }
 
     private static List<TradeOffer> readTrades(FriendlyByteBuf buffer) {
@@ -257,7 +260,7 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
         for (int index = 0; index < count; index++) {
             result.add(new TradeOffer(buffer.readVarInt(), buffer.readVarInt(), buffer.readVarInt(),
                     buffer.readUtf(512), buffer.readUtf(512), buffer.readVarLong(), buffer.readVarInt(),
-                    buffer.readVarInt(), buffer.readBoolean(), readTradeMaterials(buffer)));
+                    buffer.readVarInt(), buffer.readBoolean(), readTradeMaterials(buffer), readEquipmentView(buffer)));
         }
         return result;
     }
@@ -284,14 +287,56 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
             buffer.writeVarInt(offer.owned());
             buffer.writeVarInt(offer.maximum());
             buffer.writeBoolean(offer.enabled());
-            buffer.writeVarInt(offer.materials().size());
-            for (SynthesisMaterial material : offer.materials()) {
-                buffer.writeVarInt(material.kind());
-                buffer.writeVarInt(material.id());
-                buffer.writeUtf(material.name(), 512);
-                buffer.writeUtf(material.registry(), 512);
-                buffer.writeVarInt(material.required());
-                buffer.writeVarInt(material.owned());
+            writeTradeMaterials(buffer, offer.materials());
+            writeEquipmentView(buffer, offer.equipment());
+        }
+    }
+
+    private static void writeTradeMaterials(FriendlyByteBuf buffer, List<SynthesisMaterial> materials) {
+        buffer.writeVarInt(materials.size());
+        for (SynthesisMaterial material : materials) {
+            buffer.writeVarInt(material.kind());
+            buffer.writeVarInt(material.id());
+            buffer.writeUtf(material.name(), 512);
+            buffer.writeUtf(material.registry(), 512);
+            buffer.writeVarInt(material.required());
+            buffer.writeVarInt(material.owned());
+        }
+    }
+
+    private static EquipmentView readEquipmentView(FriendlyByteBuf buffer) {
+        if (!buffer.readBoolean()) return null;
+        int parameter = buffer.readVarInt();
+        String description = buffer.readUtf(8192);
+        int count = count(buffer, 16);
+        List<SynthesisComparison> comparisons = new ArrayList<>();
+        for (int index = 0; index < count; index++) {
+            comparisons.add(new SynthesisComparison(buffer.readVarInt(), buffer.readUtf(512), buffer.readBoolean(),
+                    buffer.readUtf(512), buffer.readVarInt()));
+        }
+        return new EquipmentView(parameter, description, comparisons);
+    }
+
+    private static void writeEquipmentView(FriendlyByteBuf buffer, EquipmentView equipment) {
+        buffer.writeBoolean(equipment != null);
+        if (equipment == null) return;
+        buffer.writeVarInt(equipment.parameterId());
+        buffer.writeUtf(equipment.description(), 8192);
+        buffer.writeVarInt(equipment.comparisons().size());
+        for (SynthesisComparison comparison : equipment.comparisons()) {
+            buffer.writeVarInt(comparison.actorId());
+            buffer.writeUtf(comparison.actorName(), 512);
+            buffer.writeBoolean(comparison.equippable());
+            buffer.writeUtf(comparison.equippedName(), 512);
+            buffer.writeVarInt(comparison.attackDifference());
+        }
+    }
+
+    public record EquipmentView(int parameterId, String description, List<SynthesisComparison> comparisons) {
+        public EquipmentView {
+            comparisons = List.copyOf(comparisons);
+            if (parameterId != 2 && parameterId != 3 || description == null || comparisons.size() > 16) {
+                throw new IllegalArgumentException("Invalid original equipment view");
             }
         }
     }
@@ -313,10 +358,14 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
     }
 
     public record TradeOffer(int kind, int id, int category, String name, String registry,
-                             long price, int owned, int maximum, boolean enabled, List<SynthesisMaterial> materials) {
+                             long price, int owned, int maximum, boolean enabled, List<SynthesisMaterial> materials, EquipmentView equipment) {
+        public TradeOffer(int kind, int id, int category, String name, String registry, long price, int owned,
+                          int maximum, boolean enabled, List<SynthesisMaterial> materials) {
+            this(kind, id, category, name, registry, price, owned, maximum, enabled, materials, null);
+        }
         public TradeOffer(int kind, int id, int category, String name, String registry,
                           long price, int owned, int maximum, boolean enabled) {
-            this(kind, id, category, name, registry, price, owned, maximum, enabled, List.of());
+            this(kind, id, category, name, registry, price, owned, maximum, enabled, List.of(), null);
         }
 
         public TradeOffer {
@@ -349,7 +398,10 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
         }
     }
 
-    public record SynthesisView(long money, boolean costVisible, List<SynthesisOffer> offers) {
+    public record SynthesisView(long money, boolean costVisible, boolean composeStatus, List<SynthesisOffer> offers) {
+        public SynthesisView(long money, boolean costVisible, List<SynthesisOffer> offers) {
+            this(money, costVisible, false, offers);
+        }
         public SynthesisView {
             offers = List.copyOf(offers);
             if (money < 0L || offers.size() > 1150) throw new IllegalArgumentException("Invalid original synthesis view");
@@ -358,14 +410,21 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
 
     public record SynthesisOffer(int kind, int id, int category, String name, String registry, String description,
                                  int owned, int maximum, boolean enabled, long cost, List<Integer> parameters,
-                                 List<SynthesisMaterial> materials, List<SynthesisComparison> comparisons) {
+                                 List<SynthesisMaterial> materials, List<SynthesisComparison> comparisons, List<SynthesisMaterial> exchangeMaterials) {
+        public SynthesisOffer(int kind, int id, int category, String name, String registry, String description,
+                              int owned, int maximum, boolean enabled, long cost, List<Integer> parameters,
+                              List<SynthesisMaterial> materials, List<SynthesisComparison> comparisons) {
+            this(kind, id, category, name, registry, description, owned, maximum, enabled, cost, parameters, materials, comparisons, List.of());
+        }
+
         public SynthesisOffer {
+            exchangeMaterials = List.copyOf(exchangeMaterials);
             parameters = List.copyOf(parameters);
             materials = List.copyOf(materials);
             comparisons = List.copyOf(comparisons);
             if (kind < 0 || kind > 2 || id < 1 || category < 0 || category > 3 || name == null || registry == null
                     || description == null || owned < 0 || maximum < 0 || maximum > 99 || cost < 0L
-                    || parameters.size() != 8 || materials.size() > 64 || comparisons.size() > 16) {
+                    || parameters.size() != 8 || materials.size() > 64 || comparisons.size() > 16 || exchangeMaterials.size() > 64) {
                 throw new IllegalArgumentException("Invalid original synthesis offer");
             }
         }

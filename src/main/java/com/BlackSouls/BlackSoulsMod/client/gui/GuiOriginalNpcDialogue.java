@@ -61,6 +61,8 @@ public final class GuiOriginalNpcDialogue extends Screen {
     private int quantitySelection;
     private int quantityOffset;
     private int exchangeDetailOffset;
+    private boolean exchangeEquipment;
+    private boolean exchangeComposeMain;
     private ClientboundOriginalNpcPacket.TradeOffer quantityOffer;
     private List<ClientboundOriginalNpcPacket.TradeOffer> tradeOffers = List.of();
     private KeepPage keepPage = KeepPage.CATEGORY;
@@ -72,6 +74,8 @@ public final class GuiOriginalNpcDialogue extends Screen {
     private List<ClientboundOriginalNpcPacket.KeepOffer> keepOffers = List.of();
     private SynthesisPage synthesisPage = SynthesisPage.CATEGORY;
     private boolean synthesisStatus;
+    private boolean synthesisComposeMaterials = true;
+    private boolean synthesisComposeMain;
     private int synthesisQuantity = 1;
     private int synthesisSelection;
     private int synthesisOffset;
@@ -139,6 +143,8 @@ public final class GuiOriginalNpcDialogue extends Screen {
             if (!previousSynthesis) {
                 synthesisPage = SynthesisPage.CATEGORY;
                 synthesisStatus = false;
+                synthesisComposeMaterials = next.synthesisView().composeStatus();
+                synthesisComposeMain = next.synthesisView().composeStatus();
                 synthesisQuantity = 1;
                 synthesisOffer = null;
                 synthesisDetailOffset = 0;
@@ -212,6 +218,9 @@ public final class GuiOriginalNpcDialogue extends Screen {
         keepDelta = 0;
         if (nextTrade) {
             if (!previousTrade) {
+                exchangeEquipment = false;
+                exchangeComposeMain = next.shopView().exchange();
+                exchangeDetailOffset = 0;
                 shopPage = ShopPage.COMMAND;
                 sellCategory = 0;
                 quantityOffer = null;
@@ -335,24 +344,16 @@ public final class GuiOriginalNpcDialogue extends Screen {
         if (offer == null) return List.of();
         List<Component> result = new ArrayList<>();
         result.add(synthesisText("owned", offer.owned()));
-        if (synthesisStatus) {
-            List<String> keys = List.of("hp", "mp", "attack", "defense", "magic_attack", "magic_defense", "agility", "luck");
-            for (int index = 0; index < keys.size(); index++) {
-                result.add(synthesisText(keys.get(index), offer.parameters().get(index)));
-            }
-            for (var comparison : offer.comparisons()) {
-                result.add(Component.literal(comparison.actorName()));
-                result.add(synthesisText("equipped", comparison.equippedName()));
-                result.add(comparison.equippable() ? synthesisText("difference", comparison.attackDifference() > 0
-                        ? "+" + comparison.attackDifference() : Integer.toString(comparison.attackDifference()))
-                        : synthesisText("not_equippable"));
-            }
+        if (synthesisStatus && !synthesisComposeMaterials) {
+            result.addAll(equipmentDetails(new ClientboundOriginalNpcPacket.EquipmentView(2, offer.description(), offer.comparisons())));
         } else {
-            result.add(synthesisText("materials"));
+            if (synthesisStatus && !synthesisComposeMain) return List.copyOf(result);
+            boolean compose = synthesisStatus && synthesisComposeMain;
+            result.add(compose ? shopStatusText("materials") : synthesisText("materials"));
             int amount = synthesisPage == SynthesisPage.QUANTITY ? synthesisQuantity : 1;
-            for (var material : offer.materials()) {
+            for (var material : compose ? offer.exchangeMaterials() : offer.materials()) {
                 long required = (long) material.required() * amount;
-                int color = Math.max(required, 1L) > material.owned() ? 0xAAAAAA : 0xFFFFFF;
+                int color = (compose ? required : Math.max(required, 1L)) > material.owned() ? 0xAAAAAA : 0xFFFFFF;
                 result.add(formatOriginalText(material.name()).copy().withStyle(style -> style.withColor(color)));
                 result.add(Component.literal(required + " / " + material.owned()).withStyle(style -> style.withColor(color)));
             }
@@ -436,7 +437,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
     }
 
     private boolean isExchangeShop() {
-        return isTradeShop() && packet.shopView().exchange();
+        return isTradeShop() && exchangeComposeMain;
     }
 
     private ClientboundOriginalNpcPacket.TradeOffer selectedExchangeOffer() {
@@ -446,13 +447,48 @@ public final class GuiOriginalNpcDialogue extends Screen {
     }
 
     private boolean hideTradePrice() {
-        return isExchangeShop() && quantityReturn == ShopPage.BUY && quantityOffer != null && quantityOffer.price() == 0L;
+        return isExchangeShop() && packet.shopView().exchange() && quantityReturn == ShopPage.BUY && quantityOffer != null && quantityOffer.price() == 0L;
+    }
+
+    private static Component shopStatusText(String key, Object... values) {
+        return Component.translatable("gui.blacksouls.shop_status." + key, values);
+    }
+
+    private boolean exchangeEquipmentVisible() {
+        var offer = selectedExchangeOffer();
+        return exchangeEquipment && offer != null && offer.equipment() != null;
+    }
+
+    private void toggleExchangeEquipment() {
+        var offer = selectedExchangeOffer();
+        if (packet.shopView().exchange() && offer != null && offer.equipment() != null) {
+            exchangeEquipment = !exchangeEquipment;
+            exchangeDetailOffset = 0;
+        }
+    }
+
+    private static List<Component> equipmentDetails(ClientboundOriginalNpcPacket.EquipmentView view) {
+        List<Component> result = new ArrayList<>();
+        for (var comparison : view.comparisons()) {
+            result.add(Component.literal(comparison.actorName()).withStyle(comparison.equippable() ? ChatFormatting.WHITE : ChatFormatting.GRAY));
+            result.add(synthesisText("equipped", comparison.equippedName()));
+            int change = comparison.attackDifference();
+            result.add(comparison.equippable() ? shopStatusText(view.parameterId() == 2 ? "attack_difference" : "defense_difference",
+                    change >= 0 ? "+" + change : Integer.toString(change)).copy().withStyle(change > 0 ? ChatFormatting.GREEN
+                    : change < 0 ? ChatFormatting.RED : ChatFormatting.WHITE) : synthesisText("not_equippable"));
+        }
+        return List.copyOf(result);
     }
 
     private List<Component> exchangeDetails() {
         var offer = selectedExchangeOffer();
         if (offer == null) return List.of();
         List<Component> result = new ArrayList<>();
+        result.add(synthesisText("owned", offer.owned()));
+        if (exchangeEquipmentVisible()) {
+            result.addAll(equipmentDetails(offer.equipment()));
+            return List.copyOf(result);
+        }
         result.add(formatOriginalText(offer.name()));
         int amount = shopPage == ShopPage.QUANTITY ? quantity : 1;
         for (var material : offer.materials()) {
@@ -653,7 +689,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
             graphics.drawString(font, "▼", width - PADDING - 9, height - 13, 0xAAAAAA, false);
         }
         super.render(graphics, mouseX, mouseY, partialTicks);
-        if (isExchangeShop()) renderExchangeDetails(graphics);
+        if (isExchangeShop()) renderExchangeDetails(graphics, mouseX, mouseY);
         if (isTradeShop() && shopPage == ShopPage.QUANTITY) renderQuantity(graphics, mouseX, mouseY);
         if (isItemKeep() && keepPage == KeepPage.QUANTITY) renderKeepQuantity(graphics, mouseX, mouseY);
         if (isSynthesis() && synthesisPage != SynthesisPage.CATEGORY) renderSynthesisDetails(graphics, mouseX, mouseY);
@@ -718,7 +754,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
                 if (!tradeRowEnabled(index)) color = 0xAAAAAA;
                 if (index < tradeOffers.size()) {
                     var offer = tradeOffers.get(index);
-                    String right = "×" + offer.owned() + (isExchangeShop() && shopPage == ShopPage.BUY
+                    String right = "×" + offer.owned() + (isExchangeShop() && packet.shopView().exchange() && shopPage == ShopPage.BUY
                             && offer.price() == 0L ? "" : "  " + offer.price() + " S");
                     labelWidth -= font.width(right) + 12;
                     graphics.drawString(font, right, box.x() + box.width() - PADDING - font.width(right), y + 4, color, false);
@@ -764,10 +800,13 @@ public final class GuiOriginalNpcDialogue extends Screen {
                 Math.max(1, (boxHeight - PADDING * 2) / ROW_HEIGHT - 1), ROW_HEIGHT);
     }
 
-    private void renderExchangeDetails(GuiGraphics graphics) {
+    private void renderExchangeDetails(GuiGraphics graphics, int mouseX, int mouseY) {
         ListBox box = exchangeDetailsBox();
         BSGuiUtils.drawRMWindow(graphics, box.x(), box.y(), box.width(), box.height());
-        graphics.drawString(font, "糖果数", box.x() + PADDING, box.y() + PADDING, 0xFFFFFF, false);
+        var offer = selectedExchangeOffer();
+        Component title = shopStatusText(exchangeEquipmentVisible() ? "equipment" : "materials");
+        if (offer != null && offer.equipment() != null) title = title.copy().append(" [A]");
+        graphics.drawString(font, title, box.x() + PADDING, box.y() + PADDING, 0xFFFFFF, false);
         List<FormattedCharSequence> details = new ArrayList<>();
         for (Component line : exchangeDetails()) details.addAll(font.split(line, Math.max(16, box.width() - PADDING * 2)));
         exchangeDetailOffset = Math.max(0, Math.min(exchangeDetailOffset, Math.max(0, details.size() - box.visible())));
@@ -778,6 +817,8 @@ public final class GuiOriginalNpcDialogue extends Screen {
                     box.y() + PADDING + ROW_HEIGHT * (index + 1) + 4, 0xFFFFFF, false);
         }
         graphics.disableScissor();
+        if (offer != null && offer.equipment() != null && !offer.equipment().description().isEmpty()
+                && box.contains(mouseX, mouseY)) hoveredTooltip = formatOriginalText(offer.equipment().description());
     }
 
     private ListBox quantityBox() {
@@ -877,7 +918,9 @@ public final class GuiOriginalNpcDialogue extends Screen {
     private void renderSynthesisDetails(GuiGraphics graphics, int mouseX, int mouseY) {
         ListBox box = synthesisDetailsBox();
         BSGuiUtils.drawRMWindow(graphics, box.x(), box.y(), box.width(), box.height());
-        graphics.drawString(font, synthesisText("toggle"), box.x() + PADDING, box.y() + PADDING, 0xFFFFFF, false);
+        Component toggle = synthesisText("toggle");
+        if (synthesisStatus && packet.synthesisView().composeStatus()) toggle = toggle.copy().append(" [A]");
+        graphics.drawString(font, toggle, box.x() + PADDING, box.y() + PADDING, 0xFFFFFF, false);
         List<FormattedCharSequence> details = new ArrayList<>();
         for (Component line : synthesisDetails()) details.addAll(font.split(line, Math.max(16, box.width() - PADDING * 2)));
         synthesisDetailOffset = Math.max(0, Math.min(synthesisDetailOffset, Math.max(0, details.size() - box.visible())));
@@ -1050,6 +1093,11 @@ public final class GuiOriginalNpcDialogue extends Screen {
         if (isSilentWait()) return true;
         if (isSynthesis()) {
             if (awaitingResponse) return true;
+            if (keyCode == GLFW.GLFW_KEY_A && synthesisStatus && selectedSynthesisOffer() != null && packet.synthesisView().composeStatus()) {
+                synthesisComposeMaterials = !synthesisComposeMaterials;
+                synthesisDetailOffset = 0;
+                return true;
+            }
             if (keyCode == GLFW.GLFW_KEY_D) {
                 toggleSynthesisStatus();
                 return true;
@@ -1092,6 +1140,10 @@ public final class GuiOriginalNpcDialogue extends Screen {
         }
         if (isTradeShop()) {
             if (awaitingResponse) return true;
+            if (keyCode == GLFW.GLFW_KEY_A && isExchangeShop()) {
+                toggleExchangeEquipment();
+                return true;
+            }
             if (keyCode == GLFW.GLFW_KEY_D || keyCode == GLFW.GLFW_KEY_Z) {
                 if (shopPage != ShopPage.QUANTITY && packet.shopView().canToggleStorage()) {
                     sendTrade(ServerboundOriginalNpcTradePacket.Action.TOGGLE_STORAGE, 0, 0, 0);

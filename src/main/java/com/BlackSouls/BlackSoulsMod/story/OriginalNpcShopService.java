@@ -33,26 +33,24 @@ public final class OriginalNpcShopService {
             int owned = count(player, storage, offer.kind(), offer.id());
             int maximum = maxBuy(player, storage, item, price);
             List<ClientboundOriginalNpcPacket.SynthesisMaterial> materials = new ArrayList<>();
-            if (exchange(player)) {
-                for (var material : OriginalNpcExchangeData.materials(item.kind(), item.id())) {
-                    var input = OriginalNpcItems.get(material.kind(), material.id());
-                    if (OriginalNpcItems.item(material.kind(), material.id()) == null) {
-                        throw new UnsupportedOperationException("unmapped_exchange_material");
-                    }
-                    materials.add(new ClientboundOriginalNpcPacket.SynthesisMaterial(material.kind(), material.id(),
-                            input.name(), input.registry().toString(), material.quantity(),
-                            count(player, storage, material.kind(), material.id())));
+            for (var material : OriginalNpcExchangeData.materials(item.kind(), item.id())) {
+                var input = OriginalNpcItems.get(material.kind(), material.id());
+                if (OriginalNpcItems.item(material.kind(), material.id()) == null) {
+                    throw new UnsupportedOperationException("unmapped_exchange_material");
                 }
+                materials.add(new ClientboundOriginalNpcPacket.SynthesisMaterial(material.kind(), material.id(),
+                        input.name(), input.registry().toString(), material.quantity(),
+                        count(player, storage, material.kind(), material.id())));
             }
             buys.add(new ClientboundOriginalNpcPacket.TradeOffer(item.kind(), item.id(),
                     OriginalNpcShopRules.category(item.kind(), item.id()), item.name(), item.registry().toString(),
-                    price, owned, maximum, maximum > 0, materials));
+                    price, owned, maximum, maximum > 0, materials, OriginalNpcEquipmentService.view(player, item.kind(), item.id())));
         }
         if (!purchaseOnly) {
             for (OriginalNpcItems.Entry item : OriginalNpcItems.values()) {
                 if (OriginalNpcItems.item(item.kind(), item.id()) == null) continue;
                 int owned = count(player, storage, item.kind(), item.id());
-                if (owned > 0) sells.add(offer(item, item.price() / 2L, owned,
+                if (owned > 0) sells.add(offer(player, item, item.price() / 2L, owned,
                         Math.min(999, owned), item.price() > 0L));
             }
         }
@@ -60,11 +58,11 @@ public final class OriginalNpcShopService {
                 !OriginalNpcProgress.get(player.server).switchValue(201), exchange(player), Math.max(0L, stats(player).souls), buys, sells);
     }
 
-    private static ClientboundOriginalNpcPacket.TradeOffer offer(OriginalNpcItems.Entry item, long price,
+    private static ClientboundOriginalNpcPacket.TradeOffer offer(ServerPlayer player, OriginalNpcItems.Entry item, long price,
                                                                  int owned, int maximum, boolean enabled) {
         return new ClientboundOriginalNpcPacket.TradeOffer(item.kind(), item.id(),
                 OriginalNpcShopRules.category(item.kind(), item.id()), item.name(), item.registry().toString(),
-                price, owned, maximum, enabled);
+                price, owned, maximum, enabled, List.of(), OriginalNpcEquipmentService.view(player, item.kind(), item.id()));
     }
 
     public static boolean transact(ServerPlayer player, List<OriginalNpcInterpreter.Goods> goods,

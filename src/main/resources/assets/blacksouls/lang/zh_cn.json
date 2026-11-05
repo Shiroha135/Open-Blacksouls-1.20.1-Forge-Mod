@@ -3301,5 +3301,9 @@
   "item.blacksouls.girl_hand_mirror.lore.2": "在回想房间中追加新的造型。",
   "item.blacksouls.original_weapon.level": "%s＋%s",
   "item.blacksouls.map152_ev035_spawn_egg": "白鸦交换店刷怪蛋",
-  "item.blacksouls.map152_ev036_spawn_egg": "白鸦刷怪蛋"
+  "item.blacksouls.map152_ev036_spawn_egg": "白鸦刷怪蛋",
+  "gui.blacksouls.shop_status.materials": "糖果数",
+  "gui.blacksouls.shop_status.equipment": "装备",
+  "gui.blacksouls.shop_status.attack_difference": "攻击力变化 %s",
+  "gui.blacksouls.shop_status.defense_difference": "防御力变化 %s"
 }

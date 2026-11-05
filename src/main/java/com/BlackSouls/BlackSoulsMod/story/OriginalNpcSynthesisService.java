@@ -49,9 +49,11 @@ public final class OriginalNpcSynthesisService {
             int maximum = maximum(player, recipe);
             offers.add(new ClientboundOriginalNpcPacket.SynthesisOffer(recipe.kind(), recipe.id(), 1, entry.name(),
                     entry.registry().toString(), weapon.description(), OriginalNpcInventoryService.count(player, 1, recipe.id()),
-                    maximum, maximum > 0, recipe.cost(), weapon.parameters(), materials, comparisons(player, weapon)));
+                    maximum, maximum > 0, recipe.cost(), weapon.parameters(), materials,
+                    OriginalNpcEquipmentService.view(player, recipe.kind(), recipe.id()).comparisons(), exchangeMaterials(player, recipe.kind(), recipe.id())));
         }
-        return new ClientboundOriginalNpcPacket.SynthesisView(Math.max(0L, stats(player).souls), false, offers);
+        return new ClientboundOriginalNpcPacket.SynthesisView(Math.max(0L, stats(player).souls), false,
+                OriginalNpcProgress.get(player.server).switchValue(935), offers);
     }
 
     public static boolean synthesize(ServerPlayer player, int kind, int id, int quantity) {
@@ -139,12 +141,13 @@ public final class OriginalNpcSynthesisService {
         return false;
     }
 
-    private static List<ClientboundOriginalNpcPacket.SynthesisComparison> comparisons(ServerPlayer player, OriginalSynthesisRecipes.Weapon output) {
-        OriginalSynthesisRecipes.Weapon equipped = OriginalSynthesisRecipes.weapon(OriginalNpcItems.sourceId(player.getMainHandItem()));
-        if (equipped != null && equipped.equipmentType() != output.equipmentType()) equipped = null;
-        boolean equippable = output.equipmentType() == 0 && output.weaponType() >= 1 && output.weaponType() <= 10;
-        return List.of(new ClientboundOriginalNpcPacket.SynthesisComparison(2, StoryNameData.get(player), equippable,
-                equipped == null ? "" : equipped.name(), output.parameters().get(2) - (equipped == null ? 0 : equipped.parameters().get(2))));
+    private static List<ClientboundOriginalNpcPacket.SynthesisMaterial> exchangeMaterials(ServerPlayer player, int kind, int id) {
+        return com.BlackSouls.BlackSoulsMod.util.OriginalNpcExchangeData.materials(kind, id).stream().map(material -> {
+            var item = OriginalNpcItems.get(material.kind(), material.id());
+            if (OriginalNpcItems.item(material.kind(), material.id()) == null) throw new UnsupportedOperationException("unmapped_status_material");
+            return new ClientboundOriginalNpcPacket.SynthesisMaterial(material.kind(), material.id(), item.name(),
+                    item.registry().toString(), material.quantity(), OriginalNpcInventoryService.count(player, material.kind(), material.id()));
+        }).toList();
     }
 
     private static BSPlayerStats stats(ServerPlayer player) {

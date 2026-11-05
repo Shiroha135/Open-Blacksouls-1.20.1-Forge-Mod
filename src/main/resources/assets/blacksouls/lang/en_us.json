@@ -2858,5 +2858,9 @@
   "item.blacksouls.girl_hand_mirror.lore.2": "Adds a new appearance in the recollection room.",
   "item.blacksouls.original_weapon.level": "%s +%s",
   "item.blacksouls.map152_ev035_spawn_egg": "White Crow Exchange Spawn Egg",
-  "item.blacksouls.map152_ev036_spawn_egg": "White Crow Spawn Egg"
+  "item.blacksouls.map152_ev036_spawn_egg": "White Crow Spawn Egg",
+  "gui.blacksouls.shop_status.materials": "Candy required",
+  "gui.blacksouls.shop_status.equipment": "Equipment",
+  "gui.blacksouls.shop_status.attack_difference": "ATK change %s",
+  "gui.blacksouls.shop_status.defense_difference": "DEF change %s"
 }
