@@ -77,7 +77,9 @@ public final class OriginalNpcPlacements {
             new Site("map091_ev022", new Vec3(344.5D, -58.984375D, -13.5D), 180.0F,
                     "minecraft:blue_ice", marketRoomLandmarks(), true),
             new Site("map009_ev047", new Vec3(180.5D, -42.0D, -1314.5D), 180.0F,
-                    "minecraft:grass_block", academyLandmarks()));
+                    "minecraft:grass_block", academyLandmarks()),
+            new Site("map101_ev009", new Vec3(-49.5D, -42.25937497615814D, 41.5D), 270.0F,
+                    "decocraft:stool_4_spruce", libraryLandmarks(), true));
 
     private OriginalNpcPlacements() {
     }
@@ -252,6 +254,17 @@ public final class OriginalNpcPlacements {
                 landmark(290, -58, -105, "minecraft:oak_sign", Map.of("rotation", "8")),
                 landmark(307, -59, -83, "dustydecorations:rope", Map.of("axis", "y")),
                 landmark(307, -56, -83, "minecraft:oak_fence", Map.of()));
+    }
+
+    private static List<Landmark> libraryLandmarks() {
+        return List.of(
+                landmark(-50, -43, 41, "decocraft:stool_4_spruce", Map.of("facing", "west")),
+                landmark(-49, -42, 41, "decocraft:spellbook_flipbook.00", Map.of("facing", "west")),
+                landmark(-49, -43, 39, "decocraft:modular_desk_left_spruce", Map.of("facing", "north")),
+                landmark(-49, -43, 43, "decocraft:modular_desk_right_spruce", Map.of("facing", "south")),
+                landmark(-40, -43, 43, "blacksouls2:bai_xiong_mao_shop", Map.of("facing", "north")),
+                landmark(-49, -43, 47, "minecraft:campfire", Map.of("facing", "south")),
+                landmark(-49, -40, 56, "minecraft:birch_door", Map.of("facing", "south", "half", "lower")));
     }
 
     private static List<Landmark> academyLandmarks() {
