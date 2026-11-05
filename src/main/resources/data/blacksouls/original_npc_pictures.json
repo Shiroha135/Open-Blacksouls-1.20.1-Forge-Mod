@@ -13,6 +13,62 @@
       "width": 640,
       "height": 480,
       "sourceSha256": "3f26badb76d39d15bcde2ec562ca94c48188f657963db513e403830b5b55ba54"
+    },
+    {
+      "name": "153",
+      "texture": "blacksouls:textures/gui/original_pictures/153.png",
+      "width": 640,
+      "height": 480,
+      "sourceSha256": "cbba90ffc19d408b40e187a18af1a7e76228ab40a770a5810634c12b492148ae"
+    },
+    {
+      "name": "153-1",
+      "texture": "blacksouls:textures/gui/original_pictures/153-1.png",
+      "width": 640,
+      "height": 480,
+      "sourceSha256": "7f593cd1f13caa7fc0577301a22f8fca06426ee6e74df3098492e5a195ccbab9"
+    },
+    {
+      "name": "97",
+      "texture": "blacksouls:textures/gui/original_pictures/97.png",
+      "width": 640,
+      "height": 480,
+      "sourceSha256": "c98b013b945a0d4075c7f5de19d43cf94cb43e6aba1845353014b3d9056dedd4"
+    },
+    {
+      "name": "97-1",
+      "texture": "blacksouls:textures/gui/original_pictures/97-1.png",
+      "width": 640,
+      "height": 480,
+      "sourceSha256": "bdbdac8dc1adf0b74e3d1cb9ac68bcc79c7275433bf1dd6b765fdcbf90f40368"
+    },
+    {
+      "name": "97-2",
+      "texture": "blacksouls:textures/gui/original_pictures/97-2.png",
+      "width": 640,
+      "height": 480,
+      "sourceSha256": "c8f628c165159ee89c72da547aa9582dd5c06db86799a7b284dc3221623e7872"
+    },
+    {
+      "name": "97-3",
+      "texture": "blacksouls:textures/gui/original_pictures/97-3.png",
+      "width": 640,
+      "height": 480,
+      "sourceSha256": "8f369ad899700bb690688ec2d63481144be296e3325d8c363d36f7b1b803d51e"
+    },
+    {
+      "name": "97-4",
+      "texture": "blacksouls:textures/gui/original_pictures/97-4.png",
+      "width": 640,
+      "height": 480,
+      "sourceSha256": "11832276fafa7512cbf37dc6094e08d1e3f4f6b24204e2e10a7a16eb1d01422b"
+    },
+    {
+      "name": "black",
+      "texture": "blacksouls:textures/gui/original_pictures/black.png",
+      "width": 640,
+      "height": 480,
+      "sourceSha256": "4641e39534487e0b2e8fce223448cf3e875c1ca18c7721490aaac622172b9179"
     }
   ]
 }
