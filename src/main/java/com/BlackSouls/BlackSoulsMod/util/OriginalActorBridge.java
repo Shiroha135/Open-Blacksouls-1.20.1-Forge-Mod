@@ -42,14 +42,14 @@ public final class OriginalActorBridge {
             throw new UnsupportedOperationException("unmapped_actor_equipment:" + kind + ":" + originalItemId);
         }
         if (kind == 1) {
-            return player.getMainHandItem().is(item) || player.getOffhandItem().is(item);
+            return OriginalNpcItems.matches(kind, originalItemId, player.getMainHandItem()) || OriginalNpcItems.matches(kind, originalItemId, player.getOffhandItem());
         }
-        if (item instanceof ShieldItem && player.getOffhandItem().is(item)) return true;
+        if (item instanceof ShieldItem && OriginalNpcItems.matches(kind, originalItemId, player.getOffhandItem())) return true;
         for (ItemStack stack : player.getArmorSlots()) {
-            if (stack.is(item)) {
+            if (OriginalNpcItems.matches(kind, originalItemId, stack)) {
                 return true;
             }
         }
-        return CuriosApi.getCuriosInventory(player).map(handler -> !handler.findCurios(item).isEmpty()).orElse(false);
+        return CuriosApi.getCuriosInventory(player).map(handler -> !handler.findCurios(stack -> OriginalNpcItems.matches(kind, originalItemId, stack)).isEmpty()).orElse(false);
     }
 }

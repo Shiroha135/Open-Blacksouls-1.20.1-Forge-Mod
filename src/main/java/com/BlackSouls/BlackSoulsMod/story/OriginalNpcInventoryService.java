@@ -31,7 +31,7 @@ public final class OriginalNpcInventoryService {
         for (int slot = 0; slot < player.getInventory().items.size(); slot++) {
             if (equippedMainHand(player, kind, slot)) continue;
             ItemStack stack = player.getInventory().items.get(slot);
-            if (stack.is(item)) count += stack.getCount();
+            if (OriginalNpcItems.matches(kind, id, stack)) count += stack.getCount();
         }
         if (count > Integer.MAX_VALUE) throw new UnsupportedOperationException("original_inventory_count_overflow");
         return (int) count;
@@ -54,11 +54,11 @@ public final class OriginalNpcInventoryService {
             sourceTotal = NORMAL_LIMIT;
         }
         int nextCount = sourceTotal.max(BigInteger.ZERO).min(NORMAL_LIMIT).intValueExact();
-        List<ItemStack> inventory = planInventory(player, kind, item, nextCount - current);
+        List<ItemStack> inventory = planInventory(player, kind, id, item, nextCount - current);
         if (inventory == null) return false;
         List<EquipmentChange> equipment = new ArrayList<>();
         if (includeEquipment && sourceTotal.signum() < 0) {
-            planEquipment(player, kind, item, sourceTotal.negate(), inventory, equipment);
+            planEquipment(player, kind, id, item, sourceTotal.negate(), inventory, equipment);
         }
         for (int slot = 0; slot < inventory.size(); slot++) player.getInventory().items.set(slot, inventory.get(slot));
         for (EquipmentChange change : equipment) change.setter().accept(change.stack());
@@ -69,16 +69,16 @@ public final class OriginalNpcInventoryService {
         return true;
     }
 
-    private static List<ItemStack> planInventory(ServerPlayer player, int kind, Item item, int delta) {
+    private static List<ItemStack> planInventory(ServerPlayer player, int kind, int id, Item item, int delta) {
         List<ItemStack> plan = player.getInventory().items.stream().map(ItemStack::copy)
                 .collect(java.util.stream.Collectors.toCollection(ArrayList::new));
         long remaining = Math.abs((long) delta);
-        ItemStack template = new ItemStack(item);
+        ItemStack template = OriginalNpcItems.createStack(kind, id, 1);
         for (int pass = 0; pass < (delta > 0 ? 2 : 1) && remaining > 0; pass++) {
             for (int slot = 0; slot < plan.size() && remaining > 0; slot++) {
                 if (equippedMainHand(player, kind, slot)) continue;
                 ItemStack stack = plan.get(slot);
-                if (delta < 0 && stack.is(item)) {
+                if (delta < 0 && OriginalNpcItems.matches(kind, id, stack)) {
                     int removed = (int) Math.min(remaining, stack.getCount());
                     stack.shrink(removed);
                     remaining -= removed;
@@ -86,7 +86,7 @@ public final class OriginalNpcInventoryService {
                         || pass == 1 && stack.isEmpty())) {
                     int room = Math.min(item.getMaxStackSize(), player.getInventory().getMaxStackSize()) - stack.getCount();
                     int added = (int) Math.min(remaining, Math.max(0, room));
-                    if (stack.isEmpty()) plan.set(slot, new ItemStack(item, added));
+                    if (stack.isEmpty()) plan.set(slot, template.copyWithCount(added));
                     else stack.grow(added);
                     remaining -= added;
                 }
@@ -95,12 +95,12 @@ public final class OriginalNpcInventoryService {
         return remaining == 0 ? plan : null;
     }
 
-    private static void planEquipment(ServerPlayer player, int kind, Item item, BigInteger remaining,
+    private static void planEquipment(ServerPlayer player, int kind, int id, Item item, BigInteger remaining,
                                       List<ItemStack> inventory, List<EquipmentChange> changes) {
         int selected = player.getInventory().selected;
         if (kind == 1 && selected >= 0 && selected < inventory.size()) {
             ItemStack selectedStack = inventory.get(selected);
-            if (selectedStack.is(item)) {
+            if (OriginalNpcItems.matches(kind, id, selectedStack)) {
                 int removed = remaining.min(BigInteger.valueOf(selectedStack.getCount())).intValueExact();
                 selectedStack.shrink(removed);
                 remaining = remaining.subtract(BigInteger.valueOf(removed));
@@ -108,7 +108,7 @@ public final class OriginalNpcInventoryService {
         }
         for (EquipmentSlot slot : List.of(EquipmentSlot.OFFHAND, EquipmentSlot.HEAD, EquipmentSlot.CHEST,
                 EquipmentSlot.LEGS, EquipmentSlot.FEET)) {
-            remaining = removeEquipment(item, remaining, player.getItemBySlot(slot), stack -> player.setItemSlot(slot, stack), changes);
+            remaining = removeEquipment(kind, id, remaining, player.getItemBySlot(slot), stack -> player.setItemSlot(slot, stack), changes);
         }
         var curios = CuriosApi.getCuriosInventory(player).orElse(null);
         if (curios == null || remaining.signum() == 0) return;
@@ -119,15 +119,15 @@ public final class OriginalNpcInventoryService {
             var stacks = handler.getValue().getStacks();
             for (int index = 0; index < stacks.getSlots() && remaining.signum() > 0; index++) {
                 int slot = index;
-                remaining = removeEquipment(item, remaining, stacks.getStackInSlot(slot),
+                remaining = removeEquipment(kind, id, remaining, stacks.getStackInSlot(slot),
                         stack -> stacks.setStackInSlot(slot, stack), changes);
             }
         }
     }
 
-    private static BigInteger removeEquipment(Item item, BigInteger remaining, ItemStack current,
+    private static BigInteger removeEquipment(int kind, int id, BigInteger remaining, ItemStack current,
                                                Consumer<ItemStack> setter, List<EquipmentChange> changes) {
-        if (remaining.signum() == 0 || !current.is(item)) return remaining;
+        if (remaining.signum() == 0 || !OriginalNpcItems.matches(kind, id, current)) return remaining;
         int removed = remaining.min(BigInteger.valueOf(current.getCount())).intValueExact();
         ItemStack result = current.copy();
         result.shrink(removed);

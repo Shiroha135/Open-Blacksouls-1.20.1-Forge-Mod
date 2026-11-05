@@ -70,14 +70,14 @@ public final class OriginalNpcShopService {
             if (stats.souls < total) return false;
             nextGold = clampGold(stats.souls - total);
             nextCount = Math.addExact(current, quantity);
-            if (!storage) planned = planInventory(player, kind, item, quantity);
+            if (!storage) planned = planInventory(player, kind, id, item, quantity);
         } else if (action == ServerboundOriginalNpcTradePacket.Action.SELL) {
             if (purchaseOnly || entry.price() <= 0L || quantity > current) return false;
             long income = Math.multiplyExact(entry.price() / 2L, quantity);
             nextGold = stats.souls >= OriginalNpcShopRules.MAX_GOLD - income
                     ? OriginalNpcShopRules.MAX_GOLD : clampGold(stats.souls + income);
             nextCount = current - quantity;
-            if (!storage) planned = planInventory(player, kind, item, -quantity);
+            if (!storage) planned = planInventory(player, kind, id, item, -quantity);
         } else return false;
         if (!storage && planned == null) return false;
         if (storage) OriginalNpcShopStorageData.get(player.server).setCount(player.getUUID(), kind, id, nextCount);
@@ -99,7 +99,7 @@ public final class OriginalNpcShopService {
         for (int slot = 0; slot < player.getInventory().items.size(); slot++) {
             if (equippedMainHand(player, kind, slot)) continue;
             ItemStack stack = player.getInventory().items.get(slot);
-            if (stack.is(item)) count = Math.addExact(count, stack.getCount());
+            if (OriginalNpcItems.matches(kind, id, stack)) count = Math.addExact(count, stack.getCount());
         }
         return count;
     }
@@ -114,7 +114,7 @@ public final class OriginalNpcShopService {
         if (!storage) {
             Item item = OriginalNpcItems.item(entry.kind(), entry.id());
             int capacity = 0;
-            ItemStack template = new ItemStack(item);
+            ItemStack template = OriginalNpcItems.createStack(entry.kind(), entry.id(), 1);
             for (int slot = 0; slot < player.getInventory().items.size(); slot++) {
                 if (equippedMainHand(player, entry.kind(), slot)) continue;
                 ItemStack stack = player.getInventory().items.get(slot);
@@ -126,16 +126,16 @@ public final class OriginalNpcShopService {
         return maximum;
     }
 
-    private static List<ItemStack> planInventory(ServerPlayer player, int kind, Item item, int delta) {
+    private static List<ItemStack> planInventory(ServerPlayer player, int kind, int id, Item item, int delta) {
         List<ItemStack> plan = player.getInventory().items.stream().map(ItemStack::copy)
                 .collect(java.util.stream.Collectors.toCollection(ArrayList::new));
         int remaining = Math.abs(delta);
-        ItemStack template = new ItemStack(item);
+        ItemStack template = OriginalNpcItems.createStack(kind, id, 1);
         for (int pass = 0; pass < (delta > 0 ? 2 : 1) && remaining > 0; pass++) {
             for (int slot = 0; slot < plan.size() && remaining > 0; slot++) {
                 if (equippedMainHand(player, kind, slot)) continue;
                 ItemStack stack = plan.get(slot);
-                if (delta < 0 && stack.is(item)) {
+                if (delta < 0 && OriginalNpcItems.matches(kind, id, stack)) {
                     int removed = Math.min(remaining, stack.getCount());
                     stack.shrink(removed);
                     remaining -= removed;
@@ -143,7 +143,7 @@ public final class OriginalNpcShopService {
                         || pass == 1 && stack.isEmpty())) {
                     int room = Math.min(item.getMaxStackSize(), player.getInventory().getMaxStackSize()) - stack.getCount();
                     int added = Math.min(remaining, Math.max(0, room));
-                    if (stack.isEmpty()) plan.set(slot, new ItemStack(item, added));
+                    if (stack.isEmpty()) plan.set(slot, template.copyWithCount(added));
                     else stack.grow(added);
                     remaining -= added;
                 }

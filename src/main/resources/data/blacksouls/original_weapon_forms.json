@@ -1,0 +1,10278 @@
+{
+  "version": 1,
+  "sourceSha256": "489b93aa75ff5597ce15698a057bf27cb44d3a4d658adfb634340a80f14d2bc4",
+  "forms": [
+    {
+      "sourceId": 101,
+      "registry": "blacksouls:knight_sword",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 102,
+      "registry": "blacksouls:knight_sword",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 103,
+      "registry": "blacksouls:knight_sword",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 104,
+      "registry": "blacksouls:knight_sword",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 105,
+      "registry": "blacksouls:knight_sword",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 106,
+      "registry": "blacksouls:knight_sword",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 107,
+      "registry": "blacksouls:knight_sword",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 108,
+      "registry": "blacksouls:knight_sword",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 109,
+      "registry": "blacksouls:knight_sword",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 110,
+      "registry": "blacksouls:knight_sword",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 111,
+      "registry": "blacksouls:knight_king_sword",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 112,
+      "registry": "blacksouls:thiefs_dagger",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 113,
+      "registry": "blacksouls:thiefs_dagger",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 114,
+      "registry": "blacksouls:thiefs_dagger",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 115,
+      "registry": "blacksouls:thiefs_dagger",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 116,
+      "registry": "blacksouls:thiefs_dagger",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 117,
+      "registry": "blacksouls:thiefs_dagger",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 118,
+      "registry": "blacksouls:thiefs_dagger",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 119,
+      "registry": "blacksouls:thiefs_dagger",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 120,
+      "registry": "blacksouls:thiefs_dagger",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 121,
+      "registry": "blacksouls:thiefs_dagger",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 122,
+      "registry": "blacksouls:great_thiefs_dagger",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 123,
+      "registry": "blacksouls:great_sword",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 124,
+      "registry": "blacksouls:great_sword",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 125,
+      "registry": "blacksouls:great_sword",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 126,
+      "registry": "blacksouls:great_sword",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 127,
+      "registry": "blacksouls:great_sword",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 128,
+      "registry": "blacksouls:great_sword",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 129,
+      "registry": "blacksouls:great_sword",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 130,
+      "registry": "blacksouls:great_sword",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 131,
+      "registry": "blacksouls:great_sword",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 132,
+      "registry": "blacksouls:great_sword",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 133,
+      "registry": "blacksouls:giant_sword",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 134,
+      "registry": "blacksouls:magic_blade",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 135,
+      "registry": "blacksouls:magic_blade",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 136,
+      "registry": "blacksouls:magic_blade",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 137,
+      "registry": "blacksouls:magic_blade",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 138,
+      "registry": "blacksouls:magic_blade",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 139,
+      "registry": "blacksouls:magic_blade",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 140,
+      "registry": "blacksouls:magic_blade",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 141,
+      "registry": "blacksouls:magic_blade",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 142,
+      "registry": "blacksouls:magic_blade",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 143,
+      "registry": "blacksouls:magic_blade",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 144,
+      "registry": "blacksouls:demon_god_blade",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 145,
+      "registry": "blacksouls:broad_spear",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 146,
+      "registry": "blacksouls:broad_spear",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 147,
+      "registry": "blacksouls:broad_spear",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 148,
+      "registry": "blacksouls:broad_spear",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 149,
+      "registry": "blacksouls:broad_spear",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 150,
+      "registry": "blacksouls:broad_spear",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 151,
+      "registry": "blacksouls:broad_spear",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 152,
+      "registry": "blacksouls:broad_spear",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 153,
+      "registry": "blacksouls:broad_spear",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 154,
+      "registry": "blacksouls:broad_spear",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 155,
+      "registry": "blacksouls:gungnir",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 156,
+      "registry": "blacksouls:club",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 157,
+      "registry": "blacksouls:club",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 158,
+      "registry": "blacksouls:club",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 159,
+      "registry": "blacksouls:club",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 160,
+      "registry": "blacksouls:club",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 161,
+      "registry": "blacksouls:club",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 162,
+      "registry": "blacksouls:club",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 163,
+      "registry": "blacksouls:club",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 164,
+      "registry": "blacksouls:club",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 165,
+      "registry": "blacksouls:club",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 166,
+      "registry": "blacksouls:king_club",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 167,
+      "registry": "blacksouls:magicians_staff",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 168,
+      "registry": "blacksouls:magicians_staff",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 169,
+      "registry": "blacksouls:magicians_staff",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 170,
+      "registry": "blacksouls:magicians_staff",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 171,
+      "registry": "blacksouls:magicians_staff",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 172,
+      "registry": "blacksouls:magicians_staff",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 173,
+      "registry": "blacksouls:magicians_staff",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 174,
+      "registry": "blacksouls:magicians_staff",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 175,
+      "registry": "blacksouls:magicians_staff",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 176,
+      "registry": "blacksouls:magicians_staff",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 177,
+      "registry": "blacksouls:all_creation_staff",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 178,
+      "registry": "blacksouls:hunting_bow",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 179,
+      "registry": "blacksouls:hunting_bow",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 180,
+      "registry": "blacksouls:hunting_bow",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 181,
+      "registry": "blacksouls:hunting_bow",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 182,
+      "registry": "blacksouls:hunting_bow",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 183,
+      "registry": "blacksouls:hunting_bow",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 184,
+      "registry": "blacksouls:hunting_bow",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 185,
+      "registry": "blacksouls:hunting_bow",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 186,
+      "registry": "blacksouls:hunting_bow",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 187,
+      "registry": "blacksouls:hunting_bow",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 188,
+      "registry": "blacksouls:brave_bow",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 189,
+      "registry": "blacksouls:meat_cleaver_greataxe",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 190,
+      "registry": "blacksouls:meat_cleaver_greataxe",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 191,
+      "registry": "blacksouls:meat_cleaver_greataxe",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 192,
+      "registry": "blacksouls:meat_cleaver_greataxe",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 193,
+      "registry": "blacksouls:meat_cleaver_greataxe",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 194,
+      "registry": "blacksouls:meat_cleaver_greataxe",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 195,
+      "registry": "blacksouls:meat_cleaver_greataxe",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 196,
+      "registry": "blacksouls:meat_cleaver_greataxe",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 197,
+      "registry": "blacksouls:meat_cleaver_greataxe",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 198,
+      "registry": "blacksouls:meat_cleaver_greataxe",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 199,
+      "registry": "blacksouls:slaughterer_greataxe",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 200,
+      "registry": "blacksouls:mace",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 201,
+      "registry": "blacksouls:mace",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 202,
+      "registry": "blacksouls:mace",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 203,
+      "registry": "blacksouls:mace",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 204,
+      "registry": "blacksouls:mace",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 205,
+      "registry": "blacksouls:mace",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 206,
+      "registry": "blacksouls:mace",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 207,
+      "registry": "blacksouls:mace",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 208,
+      "registry": "blacksouls:mace",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 209,
+      "registry": "blacksouls:mace",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 210,
+      "registry": "blacksouls:divine_punishment_mace",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 211,
+      "registry": "blacksouls:halberd",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 212,
+      "registry": "blacksouls:halberd",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 213,
+      "registry": "blacksouls:halberd",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 214,
+      "registry": "blacksouls:halberd",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 215,
+      "registry": "blacksouls:halberd",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 216,
+      "registry": "blacksouls:halberd",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 217,
+      "registry": "blacksouls:halberd",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 218,
+      "registry": "blacksouls:halberd",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 219,
+      "registry": "blacksouls:halberd",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 220,
+      "registry": "blacksouls:halberd",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 221,
+      "registry": "blacksouls:bahamut",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 222,
+      "registry": "blacksouls:beast_hunter_saw",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 223,
+      "registry": "blacksouls:beast_hunter_saw",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 224,
+      "registry": "blacksouls:beast_hunter_saw",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 225,
+      "registry": "blacksouls:beast_hunter_saw",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 226,
+      "registry": "blacksouls:beast_hunter_saw",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 227,
+      "registry": "blacksouls:beast_hunter_saw",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 228,
+      "registry": "blacksouls:beast_hunter_saw",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 229,
+      "registry": "blacksouls:beast_hunter_saw",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 230,
+      "registry": "blacksouls:beast_hunter_saw",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 231,
+      "registry": "blacksouls:beast_hunter_saw",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 232,
+      "registry": "blacksouls:beast_slaying_saw_sword",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 233,
+      "registry": "blacksouls:shield_guard_fortress",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 234,
+      "registry": "blacksouls:shield_guard_fortress",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 235,
+      "registry": "blacksouls:shield_guard_fortress",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 236,
+      "registry": "blacksouls:shield_guard_fortress",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 237,
+      "registry": "blacksouls:shield_guard_fortress",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 238,
+      "registry": "blacksouls:shield_guard_fortress",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 239,
+      "registry": "blacksouls:shield_guard_fortress",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 240,
+      "registry": "blacksouls:shield_guard_fortress",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 241,
+      "registry": "blacksouls:shield_guard_fortress",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 242,
+      "registry": "blacksouls:shield_guard_fortress",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 243,
+      "registry": "blacksouls:guardian_fortress",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 244,
+      "registry": "blacksouls:dark_sword",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 245,
+      "registry": "blacksouls:dark_sword",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 246,
+      "registry": "blacksouls:dark_sword",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 247,
+      "registry": "blacksouls:dark_sword",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 248,
+      "registry": "blacksouls:dark_sword",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 249,
+      "registry": "blacksouls:dark_sword",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 250,
+      "registry": "blacksouls:dark_sword",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 251,
+      "registry": "blacksouls:dark_sword",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 252,
+      "registry": "blacksouls:dark_sword",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 253,
+      "registry": "blacksouls:dark_sword",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 254,
+      "registry": "blacksouls:dark_blade",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 255,
+      "registry": "blacksouls:broken_sword",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 256,
+      "registry": "blacksouls:broken_sword",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 257,
+      "registry": "blacksouls:broken_sword",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 258,
+      "registry": "blacksouls:broken_sword",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 259,
+      "registry": "blacksouls:broken_sword",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 260,
+      "registry": "blacksouls:broken_sword",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 261,
+      "registry": "blacksouls:broken_sword",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 262,
+      "registry": "blacksouls:broken_sword",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 263,
+      "registry": "blacksouls:broken_sword",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 264,
+      "registry": "blacksouls:broken_sword",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 265,
+      "registry": "blacksouls:grudge_sword",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 266,
+      "registry": "blacksouls:warhammer",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 267,
+      "registry": "blacksouls:warhammer",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 268,
+      "registry": "blacksouls:warhammer",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 269,
+      "registry": "blacksouls:warhammer",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 270,
+      "registry": "blacksouls:warhammer",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 271,
+      "registry": "blacksouls:warhammer",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 272,
+      "registry": "blacksouls:warhammer",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 273,
+      "registry": "blacksouls:warhammer",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 274,
+      "registry": "blacksouls:warhammer",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 275,
+      "registry": "blacksouls:warhammer",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 276,
+      "registry": "blacksouls:aberrant_warhammer",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 277,
+      "registry": "blacksouls:knuckle_duster",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 278,
+      "registry": "blacksouls:knuckle_duster",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 279,
+      "registry": "blacksouls:knuckle_duster",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 280,
+      "registry": "blacksouls:knuckle_duster",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 281,
+      "registry": "blacksouls:knuckle_duster",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 282,
+      "registry": "blacksouls:knuckle_duster",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 283,
+      "registry": "blacksouls:knuckle_duster",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 284,
+      "registry": "blacksouls:knuckle_duster",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 285,
+      "registry": "blacksouls:knuckle_duster",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 286,
+      "registry": "blacksouls:knuckle_duster",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 287,
+      "registry": "blacksouls:kaiser_gauntlet",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 288,
+      "registry": "blacksouls:vorpal_blade",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 289,
+      "registry": "blacksouls:vorpal_blade",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 290,
+      "registry": "blacksouls:vorpal_blade",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 291,
+      "registry": "blacksouls:vorpal_blade",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 292,
+      "registry": "blacksouls:vorpal_blade",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 293,
+      "registry": "blacksouls:vorpal_blade",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 294,
+      "registry": "blacksouls:vorpal_blade",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 295,
+      "registry": "blacksouls:vorpal_blade",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 296,
+      "registry": "blacksouls:vorpal_blade",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 297,
+      "registry": "blacksouls:vorpal_blade",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 298,
+      "registry": "blacksouls:vorpal_sword",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 299,
+      "registry": "blacksouls:uchigatana",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 300,
+      "registry": "blacksouls:uchigatana",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 301,
+      "registry": "blacksouls:uchigatana",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 302,
+      "registry": "blacksouls:uchigatana",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 303,
+      "registry": "blacksouls:uchigatana",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 304,
+      "registry": "blacksouls:uchigatana",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 305,
+      "registry": "blacksouls:uchigatana",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 306,
+      "registry": "blacksouls:uchigatana",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 307,
+      "registry": "blacksouls:uchigatana",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 308,
+      "registry": "blacksouls:uchigatana",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 309,
+      "registry": "blacksouls:kishin_blade",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 310,
+      "registry": "blacksouls:brave_sword_vorpal",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 311,
+      "registry": "blacksouls:double_edged_greatsword",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 312,
+      "registry": "blacksouls:double_edged_greatsword",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 313,
+      "registry": "blacksouls:double_edged_greatsword",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 314,
+      "registry": "blacksouls:double_edged_greatsword",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 315,
+      "registry": "blacksouls:double_edged_greatsword",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 316,
+      "registry": "blacksouls:double_edged_greatsword",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 317,
+      "registry": "blacksouls:double_edged_greatsword",
+      "upgradeLevel": 6
+    },
+    {
+      "sourceId": 318,
+      "registry": "blacksouls:double_edged_greatsword",
+      "upgradeLevel": 7
+    },
+    {
+      "sourceId": 319,
+      "registry": "blacksouls:double_edged_greatsword",
+      "upgradeLevel": 8
+    },
+    {
+      "sourceId": 320,
+      "registry": "blacksouls:double_edged_greatsword",
+      "upgradeLevel": 9
+    },
+    {
+      "sourceId": 321,
+      "registry": "blacksouls:ragnarok",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 355,
+      "registry": "blacksouls:great_iron_ball",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 356,
+      "registry": "blacksouls:great_iron_ball",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 357,
+      "registry": "blacksouls:great_iron_ball",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 358,
+      "registry": "blacksouls:great_iron_ball",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 359,
+      "registry": "blacksouls:great_iron_ball",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 360,
+      "registry": "blacksouls:great_iron_ball",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 361,
+      "registry": "blacksouls:hans_machine_gun",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 362,
+      "registry": "blacksouls:hans_machine_gun",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 363,
+      "registry": "blacksouls:hans_machine_gun",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 364,
+      "registry": "blacksouls:hans_machine_gun",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 365,
+      "registry": "blacksouls:hans_machine_gun",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 366,
+      "registry": "blacksouls:hans_machine_gun",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 367,
+      "registry": "blacksouls:judgment_scythe",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 368,
+      "registry": "blacksouls:judgment_scythe",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 369,
+      "registry": "blacksouls:judgment_scythe",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 370,
+      "registry": "blacksouls:judgment_scythe",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 371,
+      "registry": "blacksouls:judgment_scythe",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 372,
+      "registry": "blacksouls:judgment_scythe",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 373,
+      "registry": "blacksouls:storm_ruler",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 374,
+      "registry": "blacksouls:storm_ruler",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 375,
+      "registry": "blacksouls:storm_ruler",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 376,
+      "registry": "blacksouls:storm_ruler",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 377,
+      "registry": "blacksouls:storm_ruler",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 378,
+      "registry": "blacksouls:storm_ruler",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 379,
+      "registry": "blacksouls:andor_sword",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 380,
+      "registry": "blacksouls:andor_sword",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 381,
+      "registry": "blacksouls:andor_sword",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 382,
+      "registry": "blacksouls:andor_sword",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 383,
+      "registry": "blacksouls:andor_sword",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 384,
+      "registry": "blacksouls:andor_sword",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 385,
+      "registry": "blacksouls:drake_sword",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 386,
+      "registry": "blacksouls:drake_sword",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 387,
+      "registry": "blacksouls:drake_sword",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 388,
+      "registry": "blacksouls:drake_sword",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 389,
+      "registry": "blacksouls:drake_sword",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 390,
+      "registry": "blacksouls:drake_sword",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 391,
+      "registry": "blacksouls:demon_staff",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 392,
+      "registry": "blacksouls:demon_staff",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 393,
+      "registry": "blacksouls:demon_staff",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 394,
+      "registry": "blacksouls:demon_staff",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 395,
+      "registry": "blacksouls:demon_staff",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 396,
+      "registry": "blacksouls:demon_staff",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 397,
+      "registry": "blacksouls:moonlight_greatsword",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 398,
+      "registry": "blacksouls:moonlight_greatsword",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 399,
+      "registry": "blacksouls:moonlight_greatsword",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 400,
+      "registry": "blacksouls:moonlight_greatsword",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 401,
+      "registry": "blacksouls:moonlight_greatsword",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 402,
+      "registry": "blacksouls:moonlight_greatsword",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 403,
+      "registry": "blacksouls:bandersnatch_sword",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 404,
+      "registry": "blacksouls:bandersnatch_sword",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 405,
+      "registry": "blacksouls:bandersnatch_sword",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 406,
+      "registry": "blacksouls:bandersnatch_sword",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 407,
+      "registry": "blacksouls:bandersnatch_sword",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 408,
+      "registry": "blacksouls:bandersnatch_sword",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 409,
+      "registry": "blacksouls:corrupt_jabberwock_scythe",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 410,
+      "registry": "blacksouls:corrupt_jabberwock_scythe",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 411,
+      "registry": "blacksouls:corrupt_jabberwock_scythe",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 412,
+      "registry": "blacksouls:corrupt_jabberwock_scythe",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 413,
+      "registry": "blacksouls:corrupt_jabberwock_scythe",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 414,
+      "registry": "blacksouls:corrupt_jabberwock_scythe",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 415,
+      "registry": "blacksouls:mad_bow_jubjub",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 416,
+      "registry": "blacksouls:mad_bow_jubjub",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 417,
+      "registry": "blacksouls:mad_bow_jubjub",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 418,
+      "registry": "blacksouls:mad_bow_jubjub",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 419,
+      "registry": "blacksouls:mad_bow_jubjub",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 420,
+      "registry": "blacksouls:mad_bow_jubjub",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 421,
+      "registry": "blacksouls:miranda_axe",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 422,
+      "registry": "blacksouls:miranda_axe",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 423,
+      "registry": "blacksouls:miranda_axe",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 424,
+      "registry": "blacksouls:miranda_axe",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 425,
+      "registry": "blacksouls:miranda_axe",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 426,
+      "registry": "blacksouls:miranda_axe",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 427,
+      "registry": "blacksouls:rlyeh_staff",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 428,
+      "registry": "blacksouls:rlyeh_staff",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 429,
+      "registry": "blacksouls:rlyeh_staff",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 430,
+      "registry": "blacksouls:rlyeh_staff",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 431,
+      "registry": "blacksouls:rlyeh_staff",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 432,
+      "registry": "blacksouls:rlyeh_staff",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 433,
+      "registry": "blacksouls:deep_sea_knights_anchor",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 434,
+      "registry": "blacksouls:deep_sea_knights_anchor",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 435,
+      "registry": "blacksouls:deep_sea_knights_anchor",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 436,
+      "registry": "blacksouls:deep_sea_knights_anchor",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 437,
+      "registry": "blacksouls:deep_sea_knights_anchor",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 438,
+      "registry": "blacksouls:deep_sea_knights_anchor",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 439,
+      "registry": "blacksouls:lost_sword",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 440,
+      "registry": "blacksouls:lost_sword",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 441,
+      "registry": "blacksouls:lost_sword",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 442,
+      "registry": "blacksouls:lost_sword",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 443,
+      "registry": "blacksouls:lost_sword",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 444,
+      "registry": "blacksouls:lost_sword",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 445,
+      "registry": "blacksouls:glachid",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 446,
+      "registry": "blacksouls:glachid",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 447,
+      "registry": "blacksouls:glachid",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 448,
+      "registry": "blacksouls:glachid",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 449,
+      "registry": "blacksouls:glachid",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 450,
+      "registry": "blacksouls:glachid",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 451,
+      "registry": "blacksouls:slaughterers_chainsaw",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 452,
+      "registry": "blacksouls:slaughterers_chainsaw",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 453,
+      "registry": "blacksouls:slaughterers_chainsaw",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 454,
+      "registry": "blacksouls:slaughterers_chainsaw",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 455,
+      "registry": "blacksouls:slaughterers_chainsaw",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 456,
+      "registry": "blacksouls:slaughterers_chainsaw",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 457,
+      "registry": "blacksouls:mock_turtle_soup_ladle",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 458,
+      "registry": "blacksouls:mock_turtle_soup_ladle",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 459,
+      "registry": "blacksouls:mock_turtle_soup_ladle",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 460,
+      "registry": "blacksouls:mock_turtle_soup_ladle",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 461,
+      "registry": "blacksouls:mock_turtle_soup_ladle",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 462,
+      "registry": "blacksouls:mock_turtle_soup_ladle",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 463,
+      "registry": "blacksouls:divine_angel_dual_swords",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 464,
+      "registry": "blacksouls:divine_angel_dual_swords",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 465,
+      "registry": "blacksouls:divine_angel_dual_swords",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 466,
+      "registry": "blacksouls:divine_angel_dual_swords",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 467,
+      "registry": "blacksouls:divine_angel_dual_swords",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 468,
+      "registry": "blacksouls:divine_angel_dual_swords",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 469,
+      "registry": "blacksouls:holy_gunblade",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 470,
+      "registry": "blacksouls:holy_gunblade",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 471,
+      "registry": "blacksouls:holy_gunblade",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 472,
+      "registry": "blacksouls:holy_gunblade",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 473,
+      "registry": "blacksouls:holy_gunblade",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 474,
+      "registry": "blacksouls:holy_gunblade",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 475,
+      "registry": "blacksouls:mary_sues_branch_staff",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 476,
+      "registry": "blacksouls:eunices_rapier",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 477,
+      "registry": "blacksouls:eunices_rapier",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 478,
+      "registry": "blacksouls:eunices_rapier",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 479,
+      "registry": "blacksouls:eunices_rapier",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 480,
+      "registry": "blacksouls:eunices_rapier",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 481,
+      "registry": "blacksouls:eunices_rapier",
+      "upgradeLevel": 5
+    },
+    {
+      "sourceId": 482,
+      "registry": "blacksouls:raidens_dual_axes",
+      "upgradeLevel": 0
+    },
+    {
+      "sourceId": 483,
+      "registry": "blacksouls:raidens_dual_axes",
+      "upgradeLevel": 1
+    },
+    {
+      "sourceId": 484,
+      "registry": "blacksouls:raidens_dual_axes",
+      "upgradeLevel": 2
+    },
+    {
+      "sourceId": 485,
+      "registry": "blacksouls:raidens_dual_axes",
+      "upgradeLevel": 3
+    },
+    {
+      "sourceId": 486,
+      "registry": "blacksouls:raidens_dual_axes",
+      "upgradeLevel": 4
+    },
+    {
+      "sourceId": 487,
+      "registry": "blacksouls:raidens_dual_axes",
+      "upgradeLevel": 5
+    }
+  ],
+  "weapons": [
+    {
+      "id": 1,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 2,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 3,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 4,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 5,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 6,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 7,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 8,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 9,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 10,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 11,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 12,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 13,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 14,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 15,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 16,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 17,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 18,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 19,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 20,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 21,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 22,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 23,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 24,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 25,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 26,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 27,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 28,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 29,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 30,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 31,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 32,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 33,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 34,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 35,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 36,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 37,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 38,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 39,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 40,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 41,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 42,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 43,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 44,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 45,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 46,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 47,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 48,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 49,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 50,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 51,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 52,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 53,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 54,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 55,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 56,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 57,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 58,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 59,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 60,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 61,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 62,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 63,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 64,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 65,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 66,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 67,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 68,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 69,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 70,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 71,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 72,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 73,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 74,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 75,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 76,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 77,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 78,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 79,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 80,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 81,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 82,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 83,
+      "name": "弗洛伦斯铳剑",
+      "description": "救济的化身所持的铳剑。拯救她自己的救济，直到最终也没有出现。\n【攻击后，枪火击溃/十字切断/铳弹装填】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 84,
+      "name": "格尔达猎枪",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 85,
+      "name": "卡纳奇",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 86,
+      "name": "罗宾弓",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 87,
+      "name": "巴纳伊之剑",
+      "description": "在遥远的过去勇士曾用这把剑刎下了邪龙的头颅。\n【三段斩/强化附加/对贾巴沃克特攻/眩晕率+15%】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 88,
+      "name": "格里菲枪",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 89,
+      "name": "狼之爪",
+      "description": "连续攻击",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        30,
+        0
+      ],
+      "wtypeId": 2,
+      "etypeId": 0
+    },
+    {
+      "id": 90,
+      "name": "南瓜剑",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 91,
+      "name": "猫大剑",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 92,
+      "name": "小红帽的包丁",
+      "description": "沾满血的菜刀，即死+80%",
+      "params": [
+        0,
+        0,
+        50,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 93,
+      "name": "丑小鸭棒",
+      "description": "猎人使用的猎弓。\n【足击/三重射击/暴击率+5%】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 94,
+      "name": "韩塞尔格蕾特武器",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 95,
+      "name": "辛巴达武器",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 96,
+      "name": "布莱梅武器",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 97,
+      "name": "汉斯武器",
+      "description": "非常沉重的机关枪，强化起来的话就会拥有绝大的火力。\n【火药补充/瞄准/快速装弹/装弹数+11/命中率-50%】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 98,
+      "name": "帕托拉休武器",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 99,
+      "name": "卡塔",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 100,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 101,
+      "name": "骑士之剑",
+      "description": "在安多鲁的骑士们之间被广泛使用的剑。\n【武器击溃/护甲击溃/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        18,
+        10,
+        0,
+        10,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 102,
+      "name": "骑士之剑＋1",
+      "description": "在安多鲁的骑士们之间被广泛使用的剑。\n【武器击溃/护甲击溃/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        25,
+        15,
+        0,
+        15,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 103,
+      "name": "骑士之剑＋2",
+      "description": "在安多鲁的骑士们之间被广泛使用的剑。\n【武器击溃/护甲击溃/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        34,
+        20,
+        0,
+        20,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 104,
+      "name": "骑士之剑＋3",
+      "description": "在安多鲁的骑士们之间被广泛使用的剑。\n【武器击溃/护甲击溃/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        46,
+        25,
+        0,
+        25,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 105,
+      "name": "骑士之剑＋4",
+      "description": "在安多鲁的骑士们之间被广泛使用的剑。\n【武器击溃/护甲击溃/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        55,
+        30,
+        0,
+        30,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 106,
+      "name": "骑士之剑＋5",
+      "description": "在安多鲁的骑士们之间被广泛使用的剑。\n【武器击溃/护甲击溃/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        63,
+        35,
+        0,
+        35,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 107,
+      "name": "骑士之剑＋6",
+      "description": "在安多鲁的骑士们之间被广泛使用的剑。\n【武器击溃/护甲击溃/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        72,
+        40,
+        0,
+        40,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 108,
+      "name": "骑士之剑＋7",
+      "description": "在安多鲁的骑士们之间被广泛使用的剑。\n【武器击溃/护甲击溃/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        84,
+        45,
+        0,
+        45,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 109,
+      "name": "骑士之剑＋8",
+      "description": "在安多鲁的骑士们之间被广泛使用的剑。\n【武器击溃/护甲击溃/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        95,
+        50,
+        0,
+        50,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 110,
+      "name": "骑士之剑＋9",
+      "description": "在安多鲁的骑士们之间被广泛使用的剑。\n【武器击溃/护甲击溃/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        105,
+        55,
+        0,
+        55,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 111,
+      "name": "骑士王之剑",
+      "description": "骑士中的骑士所使用的荣耀之剑。\n【武器击溃/护甲击溃/骑士的荣耀/防+50%/魔防+50%/晕眩率+20%】",
+      "params": [
+        0,
+        0,
+        120,
+        60,
+        0,
+        60,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 112,
+      "name": "盗贼短刀",
+      "description": "属于盗贼以及草寇的，卑贱者们的武器。\n【连续攻击/斩首/捉迷藏/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        8,
+        0,
+        0,
+        0,
+        20,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 113,
+      "name": "盗贼短刀＋1",
+      "description": "属于盗贼以及草寇的，卑贱者们的武器。\n【连续攻击/斩首/捉迷藏/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        13,
+        0,
+        0,
+        0,
+        30,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 114,
+      "name": "盗贼短刀＋2",
+      "description": "属于盗贼以及草寇的，卑贱者们的武器。\n【连续攻击/斩首/捉迷藏/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        18,
+        0,
+        0,
+        0,
+        40,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 115,
+      "name": "盗贼短刀＋3",
+      "description": "属于盗贼以及草寇的，卑贱者们的武器。\n【连续攻击/斩首/捉迷藏/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        26,
+        0,
+        0,
+        0,
+        50,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 116,
+      "name": "盗贼短刀＋4",
+      "description": "属于盗贼以及草寇的，卑贱者们的武器。\n【连续攻击/斩首/捉迷藏/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        32,
+        0,
+        0,
+        0,
+        60,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 117,
+      "name": "盗贼短刀＋5",
+      "description": "属于盗贼以及草寇的，卑贱者们的武器。\n【连续攻击/斩首/捉迷藏/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        42,
+        0,
+        0,
+        0,
+        70,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 118,
+      "name": "盗贼短刀＋6",
+      "description": "属于盗贼以及草寇的，卑贱者们的武器。\n【连续攻击/斩首/捉迷藏/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        49,
+        0,
+        0,
+        0,
+        80,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 119,
+      "name": "盗贼短刀＋7",
+      "description": "属于盗贼以及草寇的，卑贱者们的武器。\n【连续攻击/斩首/捉迷藏/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        56,
+        0,
+        0,
+        0,
+        90,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 120,
+      "name": "盗贼短刀＋8",
+      "description": "属于盗贼以及草寇的，卑贱者们的武器。\n【连续攻击/斩首/捉迷藏/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        62,
+        0,
+        0,
+        0,
+        100,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 121,
+      "name": "盗贼短刀＋9",
+      "description": "属于盗贼以及草寇的，卑贱者们的武器。\n【连续攻击/斩首/捉迷藏/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        68,
+        0,
+        0,
+        0,
+        110,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 122,
+      "name": "大盗贼的短刀",
+      "description": "能够夺取世间一切之人的武器。\n【三连续攻击/斩首/捉迷藏/绝影/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        72,
+        0,
+        0,
+        0,
+        120,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 123,
+      "name": "大剑",
+      "description": "有着不得了的重量以及攻击力的大剑。\n【横扫/狂战士的咆哮/速度-50%/眩晕率+80%】",
+      "params": [
+        0,
+        0,
+        60,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 124,
+      "name": "大剑＋1",
+      "description": "有着不得了的重量以及攻击力的大剑。\n【横扫/狂战士的咆哮/速度-50%/眩晕率+80%】",
+      "params": [
+        0,
+        0,
+        80,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 125,
+      "name": "大剑＋2",
+      "description": "有着不得了的重量以及攻击力的大剑。\n【横扫/狂战士的咆哮/速度-50%/眩晕率+80%】",
+      "params": [
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 126,
+      "name": "大剑＋3",
+      "description": "有着不得了的重量以及攻击力的大剑。\n【横扫/狂战士的咆哮/速度-50%/眩晕率+80%】",
+      "params": [
+        0,
+        0,
+        120,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 127,
+      "name": "大剑＋4",
+      "description": "有着不得了的重量以及攻击力的大剑。\n【横扫/狂战士的咆哮/速度-50%/眩晕率+80%】",
+      "params": [
+        0,
+        0,
+        140,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 128,
+      "name": "大剑＋5",
+      "description": "有着不得了的重量以及攻击力的大剑。\n【横扫/狂战士的咆哮/速度-50%/眩晕率+80%】",
+      "params": [
+        0,
+        0,
+        160,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 129,
+      "name": "大剑＋6",
+      "description": "有着不得了的重量以及攻击力的大剑。\n【横扫/狂战士的咆哮/速度-50%/眩晕率+80%】",
+      "params": [
+        0,
+        0,
+        180,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 130,
+      "name": "大剑＋7",
+      "description": "有着不得了的重量以及攻击力的大剑。\n【横扫/狂战士的咆哮/速度-50%/眩晕率+80%】",
+      "params": [
+        0,
+        0,
+        200,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 131,
+      "name": "大剑＋8",
+      "description": "有着不得了的重量以及攻击力的大剑。\n【横扫/狂战士的咆哮/速度-50%/眩晕率+80%】",
+      "params": [
+        0,
+        0,
+        220,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 132,
+      "name": "大剑＋9",
+      "description": "有着不得了的重量以及攻击力的大剑。\n【横扫/狂战士的咆哮/速度-50%/眩晕率+80%】",
+      "params": [
+        0,
+        0,
+        240,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 133,
+      "name": "巨人剑",
+      "description": "能将挡在面前的一切全部破坏的大剑。\n【横扫/狂战士的咆哮/铁槌/攻击力+100%/速度-50%/眩晕率+80%】",
+      "params": [
+        0,
+        0,
+        280,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 134,
+      "name": "魔刀",
+      "description": "从东洋传来的，会同时侵蚀敌人与主人的受诅咒的刀。\n【八相/燕反/HP吸收/HP-20%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        50,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 135,
+      "name": "魔刀＋1",
+      "description": "从东洋传来的，会同时侵蚀敌人与主人的受诅咒的刀。\n【八相/燕反/HP吸收/HP-20%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        65,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 136,
+      "name": "魔刀＋2",
+      "description": "从东洋传来的，会同时侵蚀敌人与主人的受诅咒的刀。\n【八相/燕反/HP吸收/HP-20%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        75,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 137,
+      "name": "魔刀＋3",
+      "description": "从东洋传来的，会同时侵蚀敌人与主人的受诅咒的刀。\n【八相/燕反/HP吸收/HP-20%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        85,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 138,
+      "name": "魔刀＋4",
+      "description": "从东洋传来的，会同时侵蚀敌人与主人的受诅咒的刀。\n【八相/燕反/HP吸收/HP-20%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        94,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 139,
+      "name": "魔刀＋5",
+      "description": "从东洋传来的，会同时侵蚀敌人与主人的受诅咒的刀。\n【八相/燕反/HP吸收/HP-20%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        102,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 140,
+      "name": "魔刀＋6",
+      "description": "从东洋传来的，会同时侵蚀敌人与主人的受诅咒的刀。\n【八相/燕反/HP吸收/HP-20%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        114,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 141,
+      "name": "魔刀＋7",
+      "description": "从东洋传来的，会同时侵蚀敌人与主人的受诅咒的刀。\n【八相/燕反/HP吸收/HP-20%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        127,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 142,
+      "name": "魔刀＋8",
+      "description": "从东洋传来的，会同时侵蚀敌人与主人的受诅咒的刀。\n【八相/燕反/HP吸收/HP-20%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        144,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 143,
+      "name": "魔刀＋9",
+      "description": "从东洋传来的，会同时侵蚀敌人与主人的受诅咒的刀。\n【八相/燕反/HP吸收/HP-20%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        160,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 144,
+      "name": "魔神刀",
+      "description": "东洋传来的寄宿着不祥的魔神之力的刀。\n【八相/燕反/一闪/HP吸收/HP-10%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        190,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 145,
+      "name": "阔头枪",
+      "description": "在宽阔的剑形枪尖两侧带有刀刃的枪。\n【命中率＋100%/反击率＋50%/眩晕率+10%/穿甲】",
+      "params": [
+        0,
+        0,
+        30,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 146,
+      "name": "阔头枪＋1",
+      "description": "在宽阔的剑形枪尖两侧带有刀刃的枪。\n【命中率＋100%/反击率＋50%/眩晕率+10%/穿甲】",
+      "params": [
+        0,
+        0,
+        42,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 147,
+      "name": "阔头枪＋2",
+      "description": "在宽阔的剑形枪尖两侧带有刀刃的枪。\n【命中率＋100%/反击率＋50%/眩晕率+10%/穿甲】",
+      "params": [
+        0,
+        0,
+        50,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 148,
+      "name": "阔头枪＋3",
+      "description": "在宽阔的剑形枪尖两侧带有刀刃的枪。\n【命中率＋100%/反击率＋50%/眩晕率+10%/穿甲】",
+      "params": [
+        0,
+        0,
+        62,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 149,
+      "name": "阔头枪＋4",
+      "description": "在宽阔的剑形枪尖两侧带有刀刃的枪。\n【命中率＋100%/反击率＋50%/眩晕率+10%/穿甲】",
+      "params": [
+        0,
+        0,
+        71,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 150,
+      "name": "阔头枪＋5",
+      "description": "在宽阔的剑形枪尖两侧带有刀刃的枪。\n【命中率＋100%/反击率＋50%/眩晕率+10%/穿甲】",
+      "params": [
+        0,
+        0,
+        85,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 151,
+      "name": "阔头枪＋6",
+      "description": "在宽阔的剑形枪尖两侧带有刀刃的枪。\n【命中率＋100%/反击率＋50%/眩晕率+10%/穿甲】",
+      "params": [
+        0,
+        0,
+        93,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 152,
+      "name": "阔头枪＋7",
+      "description": "在宽阔的剑形枪尖两侧带有刀刃的枪。\n【命中率＋100%/反击率＋50%/眩晕率+10%/穿甲】",
+      "params": [
+        0,
+        0,
+        104,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 153,
+      "name": "阔头枪＋8",
+      "description": "在宽阔的剑形枪尖两侧带有刀刃的枪。\n【命中率＋100%/反击率＋50%/眩晕率+10%/穿甲】",
+      "params": [
+        0,
+        0,
+        115,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 154,
+      "name": "阔头枪＋9",
+      "description": "在宽阔的剑形枪尖两侧带有刀刃的枪。\n【命中率＋100%/反击率＋50%/眩晕率+10%/穿甲】",
+      "params": [
+        0,
+        0,
+        124,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 155,
+      "name": "冈格尼尔",
+      "description": "就连神也能贯穿的指引胜利的长枪。\n【命中率＋100%/反击率＋100%/眩晕率+10%/穿甲/疾风六段突】",
+      "params": [
+        0,
+        0,
+        150,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 156,
+      "name": "棍棒",
+      "description": "粗糙的木棒，但杀伤力十足。\n【击溃攻击/奋斗/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        22,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 157,
+      "name": "棍棒＋1",
+      "description": "粗糙的木棒，但杀伤力十足。\n【击溃攻击/奋斗/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        30,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 158,
+      "name": "棍棒＋2",
+      "description": "粗糙的木棒，但杀伤力十足。\n【击溃攻击/奋斗/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        38,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 159,
+      "name": "棍棒＋3",
+      "description": "粗糙的木棒，但杀伤力十足。\n【击溃攻击/奋斗/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        46,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 160,
+      "name": "棍棒＋4",
+      "description": "粗糙的木棒，但杀伤力十足。\n【击溃攻击/奋斗/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        55,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 161,
+      "name": "棍棒＋5",
+      "description": "粗糙的木棒，但杀伤力十足。\n【击溃攻击/奋斗/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        65,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 162,
+      "name": "棍棒＋6",
+      "description": "粗糙的木棒，但杀伤力十足。\n【击溃攻击/奋斗/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        71,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 163,
+      "name": "棍棒＋7",
+      "description": "粗糙的木棒，但杀伤力十足。\n【击溃攻击/奋斗/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        80,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 164,
+      "name": "棍棒＋8",
+      "description": "粗糙的木棒，但杀伤力十足。\n【击溃攻击/奋斗/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        95,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 165,
+      "name": "棍棒＋9",
+      "description": "粗糙的木棒，但杀伤力十足。\n【击溃攻击/奋斗/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        123,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 166,
+      "name": "王棒",
+      "description": "怎么看都已经不能称之为棍棒的巨木。破坏力拔群。\n【强击溃攻击/奋斗/眩晕率+60%】",
+      "params": [
+        0,
+        0,
+        150,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 167,
+      "name": "魔术师之杖",
+      "description": "黑魔术师所持有的法杖，可作为使用魔术时的触媒。\n【MP消耗率1/2】",
+      "params": [
+        0,
+        0,
+        2,
+        0,
+        10,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 168,
+      "name": "魔术师之杖＋1",
+      "description": "黑魔术师所持有的法杖，可作为使用魔术时的触媒。\n【MP消耗率1/2】",
+      "params": [
+        0,
+        0,
+        4,
+        0,
+        15,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 169,
+      "name": "魔术师之杖＋2",
+      "description": "黑魔术师所持有的法杖，可作为使用魔术时的触媒。\n【MP消耗率1/2】",
+      "params": [
+        0,
+        0,
+        7,
+        0,
+        20,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 170,
+      "name": "魔术师之杖＋3",
+      "description": "黑魔术师所持有的法杖，可作为使用魔术时的触媒。\n【MP消耗率1/2】",
+      "params": [
+        0,
+        0,
+        9,
+        0,
+        28,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 171,
+      "name": "魔术师之杖＋4",
+      "description": "黑魔术师所持有的法杖，可作为使用魔术时的触媒。\n【MP消耗率1/2】",
+      "params": [
+        0,
+        0,
+        11,
+        0,
+        35,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 172,
+      "name": "魔术师之杖＋5",
+      "description": "黑魔术师所持有的法杖，可作为使用魔术时的触媒。\n【MP消耗率1/2】",
+      "params": [
+        0,
+        0,
+        12,
+        0,
+        42,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 173,
+      "name": "魔术师之杖＋6",
+      "description": "黑魔术师所持有的法杖，可作为使用魔术时的触媒。\n【MP消耗率1/2】",
+      "params": [
+        0,
+        0,
+        15,
+        0,
+        49,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 174,
+      "name": "魔术师之杖＋7",
+      "description": "黑魔术师所持有的法杖，可作为使用魔术时的触媒。\n【MP消耗率1/2】",
+      "params": [
+        0,
+        0,
+        15,
+        0,
+        56,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 175,
+      "name": "魔术师之杖＋8",
+      "description": "黑魔术师所持有的法杖，可作为使用魔术时的触媒。\n【MP消耗率1/2】",
+      "params": [
+        0,
+        0,
+        17,
+        0,
+        66,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 176,
+      "name": "魔术师之杖＋9",
+      "description": "黑魔术师所持有的法杖，可作为使用魔术时的触媒。\n【MP消耗率1/2】",
+      "params": [
+        0,
+        0,
+        19,
+        0,
+        77,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 177,
+      "name": "万象之杖",
+      "description": "伟大的魔术师所持有的法杖，可作为使用魔术的触媒。\n【MP消耗率0】",
+      "params": [
+        0,
+        0,
+        21,
+        0,
+        100,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 178,
+      "name": "猎弓",
+      "description": "猎人使用的猎弓。\n【足击/三重射击/暴击率+5%】",
+      "params": [
+        0,
+        0,
+        10,
+        0,
+        0,
+        0,
+        5,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 179,
+      "name": "猎弓＋1",
+      "description": "猎人使用的猎弓。\n【足击/三重射击/暴击率+10%】",
+      "params": [
+        0,
+        0,
+        19,
+        0,
+        0,
+        0,
+        10,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 180,
+      "name": "猎弓＋2",
+      "description": "猎人使用的猎弓。\n【足击/三重射击/暴击率+15%】",
+      "params": [
+        0,
+        0,
+        22,
+        0,
+        0,
+        0,
+        15,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 181,
+      "name": "猎弓＋3",
+      "description": "猎人使用的猎弓。\n【足击/三重射击/暴击率+20%】",
+      "params": [
+        0,
+        0,
+        28,
+        0,
+        0,
+        0,
+        22,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 182,
+      "name": "猎弓＋4",
+      "description": "猎人使用的猎弓。\n【足击/三重射击/暴击率+25%】",
+      "params": [
+        0,
+        0,
+        34,
+        0,
+        0,
+        0,
+        30,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 183,
+      "name": "猎弓＋5",
+      "description": "猎人使用的猎弓。\n【足击/三重射击/暴击率+30%】",
+      "params": [
+        0,
+        0,
+        40,
+        0,
+        0,
+        0,
+        40,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 184,
+      "name": "猎弓＋6",
+      "description": "猎人使用的猎弓。\n【足击/三重射击/暴击率+35%】",
+      "params": [
+        0,
+        0,
+        48,
+        0,
+        0,
+        0,
+        48,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 185,
+      "name": "猎弓＋7",
+      "description": "猎人使用的猎弓。\n【足击/三重射击/暴击率+45%】",
+      "params": [
+        0,
+        0,
+        52,
+        0,
+        0,
+        0,
+        53,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 186,
+      "name": "猎弓＋8",
+      "description": "猎人使用的猎弓。\n【足击/三重射击/暴击率+55%】",
+      "params": [
+        0,
+        0,
+        55,
+        0,
+        0,
+        0,
+        62,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 187,
+      "name": "猎弓＋9",
+      "description": "猎人使用的猎弓。\n【足击/三重射击/暴击率+65%】",
+      "params": [
+        0,
+        0,
+        61,
+        0,
+        0,
+        0,
+        70,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 188,
+      "name": "勇者之弓",
+      "description": "曾经击落了各式各样的魔兽的勇者所使用的弓。\n【足击/三重射击/万箭齐发/暴击率+70%】",
+      "params": [
+        0,
+        0,
+        70,
+        0,
+        0,
+        0,
+        80,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 189,
+      "name": "断肉大斧",
+      "description": "大到异常的斧头。对出血状态的敌人造成2倍伤害。\n【斩落/灭杀之斧/出血率+30%/晕眩率+30%/命中率-30%】",
+      "params": [
+        0,
+        0,
+        40,
+        0,
+        0,
+        0,
+        -10,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 190,
+      "name": "断肉大斧＋1",
+      "description": "大到异常的斧头。对出血状态的敌人造成2倍伤害。\n【斩落/灭杀之斧/出血率+35%/晕眩率+30%/命中率-30%】",
+      "params": [
+        0,
+        0,
+        50,
+        0,
+        0,
+        0,
+        -15,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 191,
+      "name": "断肉大斧＋2",
+      "description": "大到异常的斧头。对出血状态的敌人造成2倍伤害。\n【斩落/灭杀之斧/出血率+40%/晕眩率+30%/命中率-30%】",
+      "params": [
+        0,
+        0,
+        69,
+        0,
+        0,
+        0,
+        -20,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 192,
+      "name": "断肉大斧＋3",
+      "description": "大到异常的斧头。对出血状态的敌人造成2倍伤害。\n【斩落/灭杀之斧/出血率+45%/晕眩率+30%/命中率-30%】",
+      "params": [
+        0,
+        0,
+        78,
+        0,
+        0,
+        0,
+        -25,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 193,
+      "name": "断肉大斧＋4",
+      "description": "大到异常的斧头。对出血状态的敌人造成2倍伤害。\n【斩落/灭杀之斧/出血率+50%/晕眩率+30%/命中率-30%】",
+      "params": [
+        0,
+        0,
+        85,
+        0,
+        0,
+        0,
+        -30,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 194,
+      "name": "断肉大斧＋5",
+      "description": "大到异常的斧头。对出血状态的敌人造成2倍伤害。\n【斩落/灭杀之斧/出血率+55%/晕眩率+30%/命中率-30%】",
+      "params": [
+        0,
+        0,
+        93,
+        0,
+        0,
+        0,
+        -35,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 195,
+      "name": "断肉大斧＋6",
+      "description": "大到异常的斧头。对出血状态的敌人造成2倍伤害。\n【斩落/灭杀之斧/出血率+60%/晕眩率+30%/命中率-30%】",
+      "params": [
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        -40,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 196,
+      "name": "断肉大斧＋7",
+      "description": "大到异常的斧头。对出血状态的敌人造成2倍伤害。\n【斩落/灭杀之斧/出血率+65%/晕眩率+30%/命中率-30%】",
+      "params": [
+        0,
+        0,
+        115,
+        0,
+        0,
+        0,
+        -45,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 197,
+      "name": "断肉大斧＋8",
+      "description": "大到异常的斧头。对出血状态的敌人造成2倍伤害。\n【斩落/灭杀之斧/出血率+70%/晕眩率+30%/命中率-30%】",
+      "params": [
+        0,
+        0,
+        128,
+        0,
+        0,
+        0,
+        -50,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 198,
+      "name": "断肉大斧＋9",
+      "description": "大到异常的斧头。对出血状态的敌人造成2倍伤害。\n【斩落/灭杀之斧/出血率+75%/晕眩率+30%/命中率-30%】",
+      "params": [
+        0,
+        0,
+        135,
+        0,
+        0,
+        0,
+        -55,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 199,
+      "name": "虐杀者大斧",
+      "description": "足以削肉裂骨的，用于屠戮的大斧。对出血状态的敌人造成2倍伤害。\n【斩落/灭杀之斧/巨人断头台/出血率+100%/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        150,
+        0,
+        0,
+        0,
+        -60,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 200,
+      "name": "锤矛",
+      "description": "圣职者所使用的铁锤。\n【法力恢复/HP再生率+20%/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        28,
+        0,
+        5,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 201,
+      "name": "锤矛＋1",
+      "description": "圣职者所使用的铁锤。\n【法力恢复/HP再生率+20%/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        34,
+        0,
+        10,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 202,
+      "name": "锤矛＋2",
+      "description": "圣职者所使用的铁锤。\n【法力恢复/HP再生率+20%/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        40,
+        0,
+        15,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 203,
+      "name": "锤矛＋3",
+      "description": "圣职者所使用的铁锤。\n【法力恢复/HP再生率+20%/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        50,
+        0,
+        20,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 204,
+      "name": "锤矛＋4",
+      "description": "圣职者所使用的铁锤。\n【法力恢复/HP再生率+30%/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        60,
+        0,
+        25,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 205,
+      "name": "锤矛＋5",
+      "description": "圣职者所使用的铁锤。\n【法力恢复/HP再生率+30%/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        70,
+        0,
+        30,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 206,
+      "name": "锤矛＋6",
+      "description": "圣职者所使用的铁锤。\n【法力恢复/HP再生率+30%/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        80,
+        0,
+        40,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 207,
+      "name": "锤矛＋7",
+      "description": "圣职者所使用的铁锤。\n【法力恢复/HP再生率+40%/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        90,
+        0,
+        50,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 208,
+      "name": "锤矛＋8",
+      "description": "圣职者所使用的铁锤。\n【法力恢复/HP再生率+40%/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        100,
+        0,
+        60,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 209,
+      "name": "锤矛＋9",
+      "description": "圣职者所使用的铁锤。\n【法力恢复/HP再生率+40%/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        110,
+        0,
+        70,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 210,
+      "name": "神罚的锤矛",
+      "description": "用于对骄傲自大的人类降下神罚的铁锤。\n【法力恢复/法力燃烧/HP再生率+50%/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        130,
+        0,
+        90,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 8,
+      "etypeId": 0
+    },
+    {
+      "id": 211,
+      "name": "斧枪",
+      "description": "兼顾了斧头和长枪两种功能的长柄武器。\n【反击/精神破坏/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        26,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 212,
+      "name": "斧枪＋1",
+      "description": "兼顾了斧头和长枪两种功能的长柄武器。\n【反击/精神破坏/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        41,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 213,
+      "name": "斧枪＋2",
+      "description": "兼顾了斧头和长枪两种功能的长柄武器。\n【反击/精神破坏/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        48,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 214,
+      "name": "斧枪＋3",
+      "description": "兼顾了斧头和长枪两种功能的长柄武器。\n【反击/精神破坏/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        53,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 215,
+      "name": "斧枪＋4",
+      "description": "兼顾了斧头和长枪两种功能的长柄武器。\n【反击/精神破坏/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        65,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 216,
+      "name": "斧枪＋5",
+      "description": "兼顾了斧头和长枪两种功能的长柄武器。\n【反击/精神破坏/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        70,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 217,
+      "name": "斧枪＋6",
+      "description": "兼顾了斧头和长枪两种功能的长柄武器。\n【反击/精神破坏/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        80,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 218,
+      "name": "斧枪＋7",
+      "description": "兼顾了斧头和长枪两种功能的长柄武器。\n【反击/精神破坏/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        88,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 219,
+      "name": "斧枪＋8",
+      "description": "兼顾了斧头和长枪两种功能的长柄武器。\n【反击/精神破坏/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 220,
+      "name": "斧枪＋9",
+      "description": "兼顾了斧头和长枪两种功能的长柄武器。\n【反击/精神破坏/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        125,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 221,
+      "name": "巴哈姆特",
+      "description": "带有龙鱼之力的斧枪。\n【反击/精神破坏/银月雷光斧/眩晕率+45%】",
+      "params": [
+        0,
+        0,
+        170,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 222,
+      "name": "猎兽锯",
+      "description": "猎人为了切削野兽的血肉而使用的武器。\n【削肉/血之追迹/兽特攻/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        19,
+        0,
+        0,
+        0,
+        5,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 223,
+      "name": "猎兽锯＋1",
+      "description": "猎人为了切削野兽的血肉而使用的武器。\n【削肉/血之追迹/兽特攻/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        33,
+        0,
+        0,
+        0,
+        12,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 224,
+      "name": "猎兽锯＋2",
+      "description": "猎人为了切削野兽的血肉而使用的武器。\n【削肉/血之追迹/兽特攻/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        47,
+        0,
+        0,
+        0,
+        18,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 225,
+      "name": "猎兽锯＋3",
+      "description": "猎人为了切削野兽的血肉而使用的武器。\n【削肉/血之追迹/兽特攻/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        58,
+        0,
+        0,
+        0,
+        22,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 226,
+      "name": "猎兽锯＋4",
+      "description": "猎人为了切削野兽的血肉而使用的武器。\n【削肉/血之追迹/兽特攻/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        68,
+        0,
+        0,
+        0,
+        28,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 227,
+      "name": "猎兽锯＋5",
+      "description": "猎人为了切削野兽的血肉而使用的武器。\n【削肉/血之追迹/兽特攻/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        75,
+        0,
+        0,
+        0,
+        36,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 228,
+      "name": "猎兽锯＋6",
+      "description": "猎人为了切削野兽的血肉而使用的武器。\n【削肉/血之追迹/兽特攻/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        84,
+        0,
+        0,
+        0,
+        42,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 229,
+      "name": "猎兽锯＋7",
+      "description": "猎人为了切削野兽的血肉而使用的武器。\n【削肉/血之追迹/兽特攻/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        90,
+        0,
+        0,
+        0,
+        47,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 230,
+      "name": "猎兽锯＋8",
+      "description": "猎人为了切削野兽的血肉而使用的武器。\n【削肉/血之追迹/兽特攻/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        54,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 231,
+      "name": "猎兽锯＋9",
+      "description": "猎人为了切削野兽的血肉而使用的武器。\n【削肉/血之追迹/兽特攻/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        115,
+        0,
+        0,
+        0,
+        60,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 232,
+      "name": "猎杀魔兽之锯剑",
+      "description": "刀刃上沾满了魔兽鲜血的令人畏惧之剑。\n【削肉/血之追迹/血色刃缘/兽特攻/眩晕率+30%】",
+      "params": [
+        0,
+        0,
+        144,
+        0,
+        0,
+        0,
+        90,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 233,
+      "name": "盾卫堡垒",
+      "description": "用宽厚的剑和强韧的盾所组合起来的武器。\n【防御攻击/物理耐性＋5%/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        10,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 234,
+      "name": "盾卫堡垒+1",
+      "description": "用宽厚的剑和强韧的盾所组合起来的武器。\n【防御攻击/物理耐性＋5%/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        15,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 235,
+      "name": "盾卫堡垒+2",
+      "description": "用宽厚的剑和强韧的盾所组合起来的武器。\n【防御攻击/物理耐性＋15%/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        22,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 236,
+      "name": "盾卫堡垒+3",
+      "description": "用宽厚的剑和强韧的盾所组合起来的武器。\n【防御攻击/物理耐性＋20%/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        30,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 237,
+      "name": "盾卫堡垒+4",
+      "description": "用宽厚的剑和强韧的盾所组合起来的武器。\n【防御攻击/物理耐性＋25%/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        36,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 238,
+      "name": "盾卫堡垒+5",
+      "description": "用宽厚的剑和强韧的盾所组合起来的武器。\n【防御攻击/物理耐性＋30%/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        48,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 239,
+      "name": "盾卫堡垒+6",
+      "description": "用宽厚的剑和强韧的盾所组合起来的武器。\n【防御攻击/物理耐性＋35%/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        51,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 240,
+      "name": "盾卫堡垒+7",
+      "description": "用宽厚的剑和强韧的盾所组合起来的武器。\n【防御攻击/物理耐性＋40%/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        58,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 241,
+      "name": "盾卫堡垒+8",
+      "description": "用宽厚的剑和强韧的盾所组合起来的武器。\n【防御攻击/物理耐性＋45%/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        65,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 242,
+      "name": "盾卫堡垒+9",
+      "description": "用宽厚的剑和强韧的盾所组合起来的武器。\n【防御攻击/物理耐性＋50%/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        80,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 243,
+      "name": "守护者堡垒",
+      "description": "大剑和大盾所组合成的铁壁一般的武器。\n【防御攻击/物理耐性＋55%/晕眩率+15%/盾牌猛击】",
+      "params": [
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 6,
+      "etypeId": 0
+    },
+    {
+      "id": 244,
+      "name": "黑暗剑",
+      "description": "被黑暗毁灭的古代小国幸存者所使用的漆黑直剑。\n【罪业击溃/黑暗/晕眩率+20%】",
+      "params": [
+        0,
+        0,
+        24,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 245,
+      "name": "黑暗剑＋1",
+      "description": "被黑暗毁灭的古代小国幸存者所使用的漆黑直剑。\n【罪业击溃/黑暗/晕眩率+20%】",
+      "params": [
+        0,
+        0,
+        34,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 246,
+      "name": "黑暗剑＋2",
+      "description": "被黑暗毁灭的古代小国幸存者所使用的漆黑直剑。\n【罪业击溃/黑暗/晕眩率+20%】",
+      "params": [
+        0,
+        0,
+        48,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 247,
+      "name": "黑暗剑＋3",
+      "description": "被黑暗毁灭的古代小国幸存者所使用的漆黑直剑。\n【罪业击溃/黑暗/晕眩率+20%】",
+      "params": [
+        0,
+        0,
+        55,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 248,
+      "name": "黑暗剑＋4",
+      "description": "被黑暗毁灭的古代小国幸存者所使用的漆黑直剑。\n【罪业击溃/黑暗/晕眩率+20%】",
+      "params": [
+        0,
+        0,
+        64,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 249,
+      "name": "黑暗剑＋5",
+      "description": "被黑暗毁灭的古代小国幸存者所使用的漆黑直剑。\n【罪业击溃/黑暗/晕眩率+20%】",
+      "params": [
+        0,
+        0,
+        77,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 250,
+      "name": "黑暗剑＋6",
+      "description": "被黑暗毁灭的古代小国幸存者所使用的漆黑直剑。\n【罪业击溃/黑暗/晕眩率+20%】",
+      "params": [
+        0,
+        0,
+        83,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 251,
+      "name": "黑暗剑＋7",
+      "description": "被黑暗毁灭的古代小国幸存者所使用的漆黑直剑。\n【罪业击溃/黑暗/晕眩率+20%】",
+      "params": [
+        0,
+        0,
+        90,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 252,
+      "name": "黑暗剑＋8",
+      "description": "被黑暗毁灭的古代小国幸存者所使用的漆黑直剑。\n【罪业击溃/黑暗/晕眩率+20%】",
+      "params": [
+        0,
+        0,
+        104,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 253,
+      "name": "黑暗剑＋9",
+      "description": "被黑暗毁灭的古代小国幸存者所使用的漆黑直剑。\n【罪业击溃/黑暗/晕眩率+20%】",
+      "params": [
+        0,
+        0,
+        110,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 254,
+      "name": "黑暗之刃",
+      "description": "寄宿着深渊的暗之力的直剑。\n【罪业击溃/罪业爆发/黑暗/晕眩率+20%】",
+      "params": [
+        0,
+        0,
+        175,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 255,
+      "name": "断剑",
+      "description": "已经失去一半刀刃的剑。\n【自伤/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        7,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 256,
+      "name": "断剑+1",
+      "description": "已经失去一半刀刃的剑。\n【自伤/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        14,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 257,
+      "name": "断剑+2",
+      "description": "已经失去一半刀刃的剑。\n【自伤/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        21,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 258,
+      "name": "断剑+3",
+      "description": "已经失去一半刀刃的剑。\n【自伤/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        28,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 259,
+      "name": "断剑+4",
+      "description": "已经失去一半刀刃的剑。\n【自伤/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        35,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 260,
+      "name": "断剑+5",
+      "description": "已经失去一半刀刃的剑。\n【自伤/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        43,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 261,
+      "name": "断剑+6",
+      "description": "已经失去一半刀刃的剑。\n【自伤/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        50,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 262,
+      "name": "断剑+7",
+      "description": "已经失去一半刀刃的剑。\n【自伤/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        57,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 263,
+      "name": "断剑+8",
+      "description": "已经失去一半刀刃的剑。\n【自伤/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        64,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 264,
+      "name": "断剑+9",
+      "description": "已经失去一半刀刃的剑。\n【自伤/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        70,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 265,
+      "name": "怨恨之剑",
+      "description": "缠绕着被遗弃之物的怨恨的剑。\n【自伤/亡者的一击/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        77,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 266,
+      "name": "战锤",
+      "description": "极其耐用的战士大锤。\n【瞄准/暴击率＋50%/命中率-30%/眩晕率+50%】",
+      "params": [
+        0,
+        0,
+        50,
+        0,
+        -50,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 267,
+      "name": "战锤＋1",
+      "description": "极其耐用的战士大锤。\n【瞄准/暴击率＋50%/命中率-30%/眩晕率+50%】",
+      "params": [
+        0,
+        0,
+        80,
+        0,
+        -80,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 268,
+      "name": "战锤＋2",
+      "description": "极其耐用的战士大锤。\n【瞄准/暴击率＋50%/命中率-30%/眩晕率+50%】",
+      "params": [
+        0,
+        0,
+        92,
+        0,
+        -92,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 269,
+      "name": "战锤＋3",
+      "description": "极其耐用的战士大锤。\n【瞄准/暴击率＋50%/命中率-30%/眩晕率+50%】",
+      "params": [
+        0,
+        0,
+        107,
+        0,
+        -107,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 270,
+      "name": "战锤＋4",
+      "description": "极其耐用的战士大锤。\n【瞄准/暴击率＋50%/命中率-30%/眩晕率+50%】",
+      "params": [
+        0,
+        0,
+        118,
+        0,
+        -118,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 271,
+      "name": "战锤＋5",
+      "description": "极其耐用的战士大锤。\n【瞄准/暴击率＋50%/命中率-30%/眩晕率+50%】",
+      "params": [
+        0,
+        0,
+        126,
+        0,
+        -126,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 272,
+      "name": "战锤＋6",
+      "description": "极其耐用的战士大锤。\n【瞄准/暴击率＋50%/命中率-30%/眩晕率+50%】",
+      "params": [
+        0,
+        0,
+        139,
+        0,
+        -117,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 273,
+      "name": "战锤＋7",
+      "description": "极其耐用的战士大锤。\n【瞄准/暴击率＋50%/命中率-30%/眩晕率+50%】",
+      "params": [
+        0,
+        0,
+        150,
+        0,
+        -106,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 274,
+      "name": "战锤＋8",
+      "description": "极其耐用的战士大锤。\n【瞄准/暴击率＋50%/命中率-30%/眩晕率+50%】",
+      "params": [
+        0,
+        0,
+        166,
+        0,
+        -90,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 275,
+      "name": "战锤＋9",
+      "description": "极其耐用的战士大锤。\n【瞄准/暴击率＋50%/命中率-30%/眩晕率+50%】",
+      "params": [
+        0,
+        0,
+        180,
+        0,
+        -76,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 276,
+      "name": "异形战锤",
+      "description": "变化成歪曲的形状的大锤，恐怕只有非人类才能用的顺手吧。\n【瞄准/劈头盖脸/暴击率＋100%/命中率-30%/眩晕率+50%】",
+      "params": [
+        0,
+        0,
+        300,
+        0,
+        -500,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 277,
+      "name": "指虎",
+      "description": "嵌入双拳的武器。若是久经锻炼的肉体的话跟魔兽互殴应该也没问题。\n【连续攻击/霸气/速度＋5%/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        20,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 2,
+      "etypeId": 0
+    },
+    {
+      "id": 278,
+      "name": "指虎＋1",
+      "description": "嵌入双拳的武器。若是久经锻炼的肉体的话跟魔兽互殴应该也没问题。\n【连续攻击/霸气/速度＋10%/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        28,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 2,
+      "etypeId": 0
+    },
+    {
+      "id": 279,
+      "name": "指虎＋2",
+      "description": "嵌入双拳的武器。若是久经锻炼的肉体的话跟魔兽互殴应该也没问题。\n【连续攻击/霸气/速度＋15%/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        39,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 2,
+      "etypeId": 0
+    },
+    {
+      "id": 280,
+      "name": "指虎＋3",
+      "description": "嵌入双拳的武器。若是久经锻炼的肉体的话跟魔兽互殴应该也没问题。\n【连续攻击/霸气/速度＋20%/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        48,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 2,
+      "etypeId": 0
+    },
+    {
+      "id": 281,
+      "name": "指虎＋4",
+      "description": "嵌入双拳的武器。若是久经锻炼的肉体的话跟魔兽互殴应该也没问题。\n【连续攻击/霸气/速度＋25%/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        56,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 2,
+      "etypeId": 0
+    },
+    {
+      "id": 282,
+      "name": "指虎＋5",
+      "description": "嵌入双拳的武器。若是久经锻炼的肉体的话跟魔兽互殴应该也没问题。\n【连续攻击/霸气/速度＋30%/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        66,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 2,
+      "etypeId": 0
+    },
+    {
+      "id": 283,
+      "name": "指虎＋6",
+      "description": "嵌入双拳的武器。若是久经锻炼的肉体的话跟魔兽互殴应该也没问题。\n【连续攻击/霸气/速度＋35%/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        73,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 2,
+      "etypeId": 0
+    },
+    {
+      "id": 284,
+      "name": "指虎＋7",
+      "description": "嵌入双拳的武器。若是久经锻炼的肉体的话跟魔兽互殴应该也没问题。\n【连续攻击/霸气/速度＋40%/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        79,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 2,
+      "etypeId": 0
+    },
+    {
+      "id": 285,
+      "name": "指虎＋8",
+      "description": "嵌入双拳的武器。若是久经锻炼的肉体的话跟魔兽互殴应该也没问题。\n【连续攻击/霸气/速度＋45%/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        85,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 2,
+      "etypeId": 0
+    },
+    {
+      "id": 286,
+      "name": "指虎＋9",
+      "description": "嵌入双拳的武器。若是久经锻炼的肉体的话跟魔兽互殴应该也没问题。\n【连续攻击/霸气/速度＋50%/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        90,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 2,
+      "etypeId": 0
+    },
+    {
+      "id": 287,
+      "name": "凯撒拳套",
+      "description": "嵌入双拳的武器。黄金的铁拳是不可能落伍的。\n【连续攻击/霸气/百裂拳/速度＋60%/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 2,
+      "etypeId": 0
+    },
+    {
+      "id": 288,
+      "name": "沃柏尔之刃",
+      "description": "用猎颅兔的利刃所打造的武器。\n【三段斩/强化附加/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        21,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 289,
+      "name": "沃柏尔之刃＋1",
+      "description": "用猎颅兔的利刃所打造的武器。\n【三段斩/强化附加/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        33,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 290,
+      "name": "沃柏尔之刃＋2",
+      "description": "用猎颅兔的利刃所打造的武器。\n【三段斩/强化附加/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        46,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 291,
+      "name": "沃柏尔之刃＋3",
+      "description": "用猎颅兔的利刃所打造的武器。\n【三段斩/强化附加/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        55,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 292,
+      "name": "沃柏尔之刃＋4",
+      "description": "用猎颅兔的利刃所打造的武器。\n【三段斩/强化附加/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        64,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 293,
+      "name": "沃柏尔之刃＋5",
+      "description": "用猎颅兔的利刃所打造的武器。\n【三段斩/强化附加/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        70,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 294,
+      "name": "沃柏尔之刃＋6",
+      "description": "用猎颅兔的利刃所打造的武器。\n【三段斩/强化附加/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        82,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 295,
+      "name": "沃柏尔之刃＋7",
+      "description": "用猎颅兔的利刃所打造的武器。\n【三段斩/强化附加/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        91,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 296,
+      "name": "沃柏尔之刃＋8",
+      "description": "用猎颅兔的利刃所打造的武器。\n【三段斩/强化附加/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        98,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 297,
+      "name": "沃柏尔之刃＋9",
+      "description": "用猎颅兔的利刃所打造的武器。\n【三段斩/强化附加/晕眩率+15%】",
+      "params": [
+        0,
+        0,
+        108,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 298,
+      "name": "沃柏尔之剑",
+      "description": "在遥远的过去勇士曾用这把剑刎下了邪龙的头颅。\n【三段斩/强化附加/对贾巴沃克特攻/眩晕率+15%】",
+      "params": [
+        0,
+        0,
+        160,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 299,
+      "name": "打刀",
+      "description": "东方所锻造的刀剑。\n【居合/踏前斩/暴击率+50%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        40,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 300,
+      "name": "打刀+1",
+      "description": "东方所锻造的刀剑。\n【居合/踏前斩/暴击率+50%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        53,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 301,
+      "name": "打刀+2",
+      "description": "东方所锻造的刀剑。\n【居合/踏前斩/暴击率+50%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        65,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 302,
+      "name": "打刀+3",
+      "description": "东方所锻造的刀剑。\n【居合/踏前斩/暴击率+50%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        77,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 303,
+      "name": "打刀+4",
+      "description": "东方所锻造的刀剑。\n【居合/踏前斩/暴击率+50%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        84,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 304,
+      "name": "打刀+5",
+      "description": "东方所锻造的刀剑。\n【居合/踏前斩/暴击率+50%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        92,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 305,
+      "name": "打刀+6",
+      "description": "东方所锻造的刀剑。\n【居合/踏前斩/暴击率+50%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 306,
+      "name": "打刀+7",
+      "description": "东方所锻造的刀剑。\n【居合/踏前斩/暴击率+50%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        111,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 307,
+      "name": "打刀+8",
+      "description": "东方所锻造的刀剑。\n【居合/踏前斩/暴击率+50%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        124,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 308,
+      "name": "打刀+9",
+      "description": "东方所锻造的刀剑。\n【居合/踏前斩/暴击率+50%/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        136,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 309,
+      "name": "鬼神刀",
+      "description": "寄宿了被诅咒的鬼武者的力量的刀剑。\n【居合/踏前斩/狂风绝息斩/暴击率+100%/晕眩率+25%】",
+      "params": [
+        0,
+        0,
+        170,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 310,
+      "name": "勇剑沃柏尔",
+      "description": "只有勇士所认可的人才配得上这把剑。沃柏尔的血确实地被继承了下去。\n【究极三段斩/强化附加/对贾巴沃克特攻/即死率+15%】",
+      "params": [
+        0,
+        0,
+        180,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 311,
+      "name": "双刃大剑",
+      "description": "圣十字骑士团所使用的大剑。对处于晕眩状态的敌人造成2倍伤害。\n【剑柄击晕/一刀两断/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        45,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 312,
+      "name": "双刃大剑+1",
+      "description": "圣十字骑士团所使用的大剑。对处于晕眩状态的敌人造成2倍伤害。\n【剑柄击晕/一刀两断/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        54,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 313,
+      "name": "双刃大剑+2",
+      "description": "圣十字骑士团所使用的大剑。对处于晕眩状态的敌人造成2倍伤害。\n【剑柄击晕/一刀两断/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        67,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 314,
+      "name": "双刃大剑+3",
+      "description": "圣十字骑士团所使用的大剑。对处于晕眩状态的敌人造成2倍伤害。\n【剑柄击晕/一刀两断/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        78,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 315,
+      "name": "双刃大剑+4",
+      "description": "圣十字骑士团所使用的大剑。对处于晕眩状态的敌人造成2倍伤害。\n【剑柄击晕/一刀两断/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        86,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 316,
+      "name": "双刃大剑+5",
+      "description": "圣十字骑士团所使用的大剑。对处于晕眩状态的敌人造成2倍伤害。\n【剑柄击晕/一刀两断/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        95,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 317,
+      "name": "双刃大剑+6",
+      "description": "圣十字骑士团所使用的大剑。对处于晕眩状态的敌人造成2倍伤害。\n【剑柄击晕/一刀两断/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        106,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 318,
+      "name": "双刃大剑+7",
+      "description": "圣十字骑士团所使用的大剑。对处于晕眩状态的敌人造成2倍伤害。\n【剑柄击晕/一刀两断/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        115,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 319,
+      "name": "双刃大剑+8",
+      "description": "圣十字骑士团所使用的大剑。对处于晕眩状态的敌人造成2倍伤害。\n【剑柄击晕/一刀两断/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        129,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 320,
+      "name": "双刃大剑+9",
+      "description": "圣十字骑士团所使用的大剑。对处于晕眩状态的敌人造成2倍伤害。\n【剑柄击晕/一刀两断/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        140,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 321,
+      "name": "诸神黄昏",
+      "description": "终结了圣战的大剑。对处于晕眩状态的敌人造成2倍伤害。\n【剑柄击晕/一刀两断/黄昏之神怒/晕眩率+40%】",
+      "params": [
+        0,
+        0,
+        200,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 322,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 323,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 324,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 325,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 326,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 327,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 328,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 329,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 330,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 331,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 332,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 333,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 334,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 335,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 336,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 337,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 338,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 339,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 340,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 341,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 342,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 343,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 344,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 345,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 346,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 347,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 348,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 349,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 350,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 351,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 352,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 353,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 354,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 355,
+      "name": "大铁球",
+      "description": "旋转挥舞的铁球，全体攻击。\n【查克拉/鲁莽打击/眩晕率＋10%】",
+      "params": [
+        0,
+        0,
+        18,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 10,
+      "etypeId": 0
+    },
+    {
+      "id": 356,
+      "name": "大铁球＋1",
+      "description": "旋转挥舞的铁球，全体攻击。\n【查克拉/鲁莽打击/眩晕率＋20%】",
+      "params": [
+        0,
+        0,
+        36,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 10,
+      "etypeId": 0
+    },
+    {
+      "id": 357,
+      "name": "大铁球＋2",
+      "description": "旋转挥舞的铁球，全体攻击。\n【查克拉/鲁莽打击/眩晕率＋30%】",
+      "params": [
+        0,
+        0,
+        58,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 10,
+      "etypeId": 0
+    },
+    {
+      "id": 358,
+      "name": "大铁球＋3",
+      "description": "旋转挥舞的铁球，全体攻击。\n【查克拉/鲁莽打击/眩晕率＋40%】",
+      "params": [
+        0,
+        0,
+        72,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 10,
+      "etypeId": 0
+    },
+    {
+      "id": 359,
+      "name": "大铁球＋4",
+      "description": "旋转挥舞的铁球，全体攻击。\n【查克拉/鲁莽打击/眩晕率＋50%】",
+      "params": [
+        0,
+        0,
+        92,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 10,
+      "etypeId": 0
+    },
+    {
+      "id": 360,
+      "name": "大铁球＋5",
+      "description": "旋转挥舞的铁球，全体攻击。\n【查克拉/鲁莽打击/双重冲撞/眩晕率＋60%】",
+      "params": [
+        0,
+        0,
+        130,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 10,
+      "etypeId": 0
+    },
+    {
+      "id": 361,
+      "name": "汉斯的机关枪",
+      "description": "沉眠于地底的杀戮兵器的机关枪。强化之后会拥有极大的火力。\n【火药补充/瞄准/连射数+1】",
+      "params": [
+        0,
+        0,
+        20,
+        0,
+        0,
+        0,
+        -30,
+        0
+      ],
+      "wtypeId": 10,
+      "etypeId": 0
+    },
+    {
+      "id": 362,
+      "name": "汉斯的机关枪+1",
+      "description": "沉眠于地底的杀戮兵器的机关枪。强化之后会拥有极大的火力。\n【火药补充/瞄准/连射数+3】",
+      "params": [
+        0,
+        0,
+        30,
+        0,
+        0,
+        0,
+        -40,
+        0
+      ],
+      "wtypeId": 10,
+      "etypeId": 0
+    },
+    {
+      "id": 363,
+      "name": "汉斯的机关枪+2",
+      "description": "沉眠于地底的杀戮兵器的机关枪。强化之后会拥有极大的火力。\n【火药补充/瞄准/连射数+5】",
+      "params": [
+        0,
+        0,
+        40,
+        0,
+        0,
+        0,
+        -50,
+        0
+      ],
+      "wtypeId": 10,
+      "etypeId": 0
+    },
+    {
+      "id": 364,
+      "name": "汉斯的机关枪+3",
+      "description": "沉眠于地底的杀戮兵器的机关枪。强化之后会拥有极大的火力。\n【火药补充/瞄准/连射数+7】",
+      "params": [
+        0,
+        0,
+        50,
+        0,
+        0,
+        0,
+        -60,
+        0
+      ],
+      "wtypeId": 10,
+      "etypeId": 0
+    },
+    {
+      "id": 365,
+      "name": "汉斯的机关枪+4",
+      "description": "沉眠于地底的杀戮兵器的机关枪。强化之后会拥有极大的火力。\n【火药补充/瞄准/连射数+9】",
+      "params": [
+        0,
+        0,
+        60,
+        0,
+        0,
+        0,
+        -70,
+        0
+      ],
+      "wtypeId": 10,
+      "etypeId": 0
+    },
+    {
+      "id": 366,
+      "name": "汉斯的机关枪+5",
+      "description": "沉眠于地底的杀戮兵器的机关枪。强化之后会拥有极大的火力。\n【火药补充/瞄准/快速装弹/连射数+11】",
+      "params": [
+        0,
+        0,
+        70,
+        0,
+        0,
+        0,
+        -80,
+        0
+      ],
+      "wtypeId": 10,
+      "etypeId": 0
+    },
+    {
+      "id": 367,
+      "name": "审判者大镰",
+      "description": "黑之审判者海因喜欢用的大镰。\n【HPMP再生率+6%/灵魂收割/晕眩率+6%】",
+      "params": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 368,
+      "name": "审判者大镰＋1",
+      "description": "黑之审判者海因喜欢用的大镰。\n【HPMP再生率+6%/灵魂收割/晕眩率+6%】",
+      "params": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 369,
+      "name": "审判者大镰＋2",
+      "description": "黑之审判者海因喜欢用的大镰。\n【HPMP再生率+6%/灵魂收割/晕眩率+6%】",
+      "params": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 370,
+      "name": "审判者大镰＋3",
+      "description": "黑之审判者海因喜欢用的大镰。\n【HPMP再生率+6%/灵魂收割/晕眩率+6%】",
+      "params": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 371,
+      "name": "审判者大镰＋4",
+      "description": "黑之审判者海因喜欢用的大镰。\n【HPMP再生率+6%/灵魂收割/晕眩率+6%】",
+      "params": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 372,
+      "name": "审判者大镰＋5",
+      "description": "黑之审判者海因喜欢用的大镰。\n【HPMP再生率+6%/灵魂收割/真・灵魂收割/晕眩率+6%】",
+      "params": [
+        66,
+        66,
+        66,
+        66,
+        66,
+        66,
+        66,
+        66
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 373,
+      "name": "暴风之律",
+      "description": "蕴含着曾经打倒魔姬拉普谢尔的风暴之力的剑。\n【风暴之王/常时必中攻击/先制攻击率上升/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        24,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 374,
+      "name": "暴风之律＋1",
+      "description": "蕴含着曾经打倒魔姬拉普谢尔的风暴之力的剑。\n【风暴之王/常时必中攻击/先制攻击率上升/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        42,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 375,
+      "name": "暴风之律＋2",
+      "description": "蕴含着曾经打倒魔姬拉普谢尔的风暴之力的剑。\n【风暴之王/常时必中攻击/先制攻击率上升/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        63,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 376,
+      "name": "暴风之律＋3",
+      "description": "蕴含着曾经打倒魔姬拉普谢尔的风暴之力的剑。\n【风暴之王/常时必中攻击/先制攻击率上升/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        84,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 377,
+      "name": "暴风之律＋4",
+      "description": "蕴含着曾经打倒魔姬拉普谢尔的风暴之力的剑。\n【风暴之王/常时必中攻击/先制攻击率上升/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        111,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 378,
+      "name": "暴风之律＋5",
+      "description": "蕴含着曾经打倒魔姬拉普谢尔的风暴之力的剑。\n【风暴之霸王/常时必中攻击/先制攻击率上升/眩晕率+10%】",
+      "params": [
+        0,
+        300,
+        120,
+        0,
+        0,
+        0,
+        100,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 379,
+      "name": "安多鲁之剑",
+      "description": "被毁灭的王国所传承下来的剑。\n【灵气刃/行动回数追加+30%/MP消耗率2倍】",
+      "params": [
+        0,
+        0,
+        10,
+        10,
+        10,
+        10,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 380,
+      "name": "安多鲁之剑＋1",
+      "description": "被毁灭的王国所传承下来的剑。\n【灵气刃/行动回数追加+30%/MP消耗率2倍】",
+      "params": [
+        0,
+        0,
+        32,
+        21,
+        32,
+        21,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 381,
+      "name": "安多鲁之剑＋2",
+      "description": "被毁灭的王国所传承下来的剑。\n【灵气刃/行动回数追加+50%/MP消耗率2倍】",
+      "params": [
+        0,
+        0,
+        50,
+        40,
+        50,
+        40,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 382,
+      "name": "安多鲁之剑＋3",
+      "description": "被毁灭的王国所传承下来的剑。\n【灵气刃/行动回数追加+70%/MP消耗率2倍】",
+      "params": [
+        0,
+        0,
+        70,
+        60,
+        70,
+        60,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 383,
+      "name": "安多鲁之剑＋4",
+      "description": "被毁灭的王国所传承下来的剑。\n【灵气刃/行动回数追加+90%/MP消耗率2倍】",
+      "params": [
+        0,
+        0,
+        90,
+        80,
+        90,
+        80,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 384,
+      "name": "安多鲁之剑＋5",
+      "description": "被毁灭的王国所传承下来的剑。\n【灵气刃/辉耀之剑/行动回数追加+100%/MP消耗率2倍】",
+      "params": [
+        0,
+        0,
+        100,
+        90,
+        100,
+        90,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 385,
+      "name": "飞龙剑",
+      "description": "用飞龙海尔凯萨的尾巴做成的武器。\n【燃烧率+15%/龙之冲击波/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        26,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 386,
+      "name": "飞龙剑＋1",
+      "description": "用飞龙海尔凯萨的尾巴做成的武器。\n【燃烧率+30%/龙之冲击波/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        50,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 387,
+      "name": "飞龙剑＋2",
+      "description": "用飞龙海尔凯萨的尾巴做成的武器。\n【燃烧率+40%/龙之冲击波/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        70,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 388,
+      "name": "飞龙剑＋3",
+      "description": "用飞龙海尔凯萨的尾巴做成的武器。\n【燃烧率+60%/龙之冲击波/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        110,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 389,
+      "name": "飞龙剑＋4",
+      "description": "用飞龙海尔凯萨的尾巴做成的武器。\n【燃烧率+70%/龙之冲击波/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        130,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 390,
+      "name": "飞龙剑＋5",
+      "description": "用飞龙海尔凯萨的尾巴做成的武器。\n【燃烧率+100%/龙之冲击波/狱炎剑/晕眩率+10%】",
+      "params": [
+        0,
+        0,
+        160,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 391,
+      "name": "恶魔之杖",
+      "description": "只在传说中被提及过的古老恶魔之杖。\n【魔力+50%/MP消耗率2倍】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        20,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 392,
+      "name": "恶魔之杖＋1",
+      "description": "只在传说中被提及过的古老恶魔之杖。\n【魔力+50%/MP消耗率2倍】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        30,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 393,
+      "name": "恶魔之杖＋2",
+      "description": "只在传说中被提及过的古老恶魔之杖。\n【魔力+50%/MP消耗率2倍】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        40,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 394,
+      "name": "恶魔之杖＋3",
+      "description": "只在传说中被提及过的古老恶魔之杖。\n【魔力+50%/MP消耗率2倍】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        50,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 395,
+      "name": "恶魔之杖＋4",
+      "description": "只在传说中被提及过的古老恶魔之杖。\n【魔力+50%/MP消耗率2倍】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        60,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 396,
+      "name": "恶魔之杖＋5",
+      "description": "只在传说中被提及过的古老恶魔之杖。\n【魔力+100%/MP消耗率3倍】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        70,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 397,
+      "name": "月光大剑",
+      "description": "闪耀着纯白光辉的大剑。这次不是为了神明而是为你献上了祈祷。\n【HPMP再生率+5%/月光刃/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        35,
+        0,
+        35,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 398,
+      "name": "月光大剑＋1",
+      "description": "闪耀着纯白光辉的大剑。这次不是为了神明而是为你献上了祈祷。\n【HPMP再生率+5%/月光刃/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        50,
+        0,
+        50,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 399,
+      "name": "月光大剑＋2",
+      "description": "闪耀着纯白光辉的大剑。这次不是为了神明而是为你献上了祈祷。\n【HPMP再生率+5%/月光刃/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        66,
+        0,
+        66,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 400,
+      "name": "月光大剑＋3",
+      "description": "闪耀着纯白光辉的大剑。这次不是为了神明而是为你献上了祈祷。\n【HPMP再生率+5%/月光刃/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        70,
+        0,
+        70,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 401,
+      "name": "月光大剑＋4",
+      "description": "闪耀着纯白光辉的大剑。这次不是为了神明而是为你献上了祈祷。\n【HPMP再生率+5%/月光刃/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        82,
+        0,
+        82,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 402,
+      "name": "月光大剑＋5",
+      "description": "闪耀着纯白光辉的大剑。这次不是为了神明而是为你献上了祈祷。\n【HPMP再生率+15%/月光刃/月光破/晕眩率+5%】",
+      "params": [
+        0,
+        0,
+        100,
+        0,
+        100,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 403,
+      "name": "暴剑班达斯奈奇",
+      "description": "寄宿着熏烟狂躁的班达斯奈奇的力量的大剑。\n【沉重一击/熏狂的逆鳞/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        50,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 404,
+      "name": "暴剑班达斯奈奇＋1",
+      "description": "寄宿着熏烟狂躁的班达斯奈奇的力量的大剑。\n【沉重一击/熏狂的逆鳞/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        70,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 405,
+      "name": "暴剑班达斯奈奇＋2",
+      "description": "寄宿着熏烟狂躁的班达斯奈奇的力量的大剑。\n【沉重一击/熏狂的逆鳞/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        90,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 406,
+      "name": "暴剑班达斯奈奇＋3",
+      "description": "寄宿着熏烟狂躁的班达斯奈奇的力量的大剑。\n【沉重一击/熏狂的逆鳞/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        110,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 407,
+      "name": "暴剑班达斯奈奇＋4",
+      "description": "寄宿着熏烟狂躁的班达斯奈奇的力量的大剑。\n【沉重一击/熏狂的逆鳞/晕眩率+30%】",
+      "params": [
+        0,
+        0,
+        135,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 408,
+      "name": "暴剑班达斯奈奇＋5",
+      "description": "寄宿着熏烟狂躁的班达斯奈奇的力量的大剑。\n【沉重一击/熏狂的逆鳞/晕眩率+30%/暴击率＋30%】",
+      "params": [
+        0,
+        0,
+        180,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 409,
+      "name": "腐镰贾巴沃克",
+      "description": "寄宿着尸龙贾巴沃克力量的大镰。\n【1%生命伤害/怨嗟的宵暗/尸龙的威压】",
+      "params": [
+        0,
+        0,
+        5,
+        0,
+        5,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 410,
+      "name": "腐镰贾巴沃克＋1",
+      "description": "寄宿着尸龙贾巴沃克力量的大镰。\n【1%生命伤害/怨嗟的宵暗/尸龙的威压】",
+      "params": [
+        0,
+        0,
+        10,
+        0,
+        10,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 411,
+      "name": "腐镰贾巴沃克＋2",
+      "description": "寄宿着尸龙贾巴沃克力量的大镰。\n【1%生命伤害/怨嗟的宵暗/尸龙的威压】",
+      "params": [
+        0,
+        0,
+        15,
+        0,
+        15,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 412,
+      "name": "腐镰贾巴沃克＋3",
+      "description": "寄宿着尸龙贾巴沃克力量的大镰。\n【1%生命伤害/怨嗟的宵暗/尸龙的威压】",
+      "params": [
+        0,
+        0,
+        20,
+        0,
+        20,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 413,
+      "name": "腐镰贾巴沃克＋4",
+      "description": "寄宿着尸龙贾巴沃克力量的大镰。\n【1%生命伤害/怨嗟的宵暗/尸龙的威压】",
+      "params": [
+        0,
+        0,
+        25,
+        0,
+        25,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 414,
+      "name": "腐镰贾巴沃克＋5",
+      "description": "寄宿着尸龙贾巴沃克力量的大镰。\n【1%生命伤害/怨嗟的宵暗/尸龙的威压/魂之崩坏】",
+      "params": [
+        0,
+        0,
+        30,
+        0,
+        30,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 415,
+      "name": "狂弓贾布加布",
+      "description": "寄宿着狂鸟贾布加布力量的大弓。\n【随机2次攻击/狂鸟的呼唤】",
+      "params": [
+        0,
+        0,
+        25,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 416,
+      "name": "狂弓贾布加布＋1",
+      "description": "寄宿着狂鸟贾布加布力量的大弓。\n【随机2次攻击/狂鸟的呼唤】",
+      "params": [
+        0,
+        0,
+        35,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 417,
+      "name": "狂弓贾布加布＋2",
+      "description": "寄宿着狂鸟贾布加布力量的大弓。\n【随机2次攻击/狂鸟的呼唤】",
+      "params": [
+        0,
+        0,
+        44,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 418,
+      "name": "狂弓贾布加布＋3",
+      "description": "寄宿着狂鸟贾布加布力量的大弓。\n【随机3次攻击/狂鸟的呼唤】",
+      "params": [
+        0,
+        0,
+        54,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 419,
+      "name": "狂弓贾布加布＋4",
+      "description": "寄宿着狂鸟贾布加布力量的大弓。\n【随机3次攻击/狂鸟的呼唤】",
+      "params": [
+        0,
+        0,
+        65,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 420,
+      "name": "狂弓贾布加布＋5",
+      "description": "寄宿着狂鸟贾布加布力量的大弓。\n【随机4次攻击/狂鸟的呼唤】",
+      "params": [
+        0,
+        0,
+        70,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 421,
+      "name": "米兰达之斧",
+      "description": "作为黑之断罪者的武器而遭到忌讳的巨斧。\n【必中攻击/防御状态贯通/暴击率+30%/反击率+30%】",
+      "params": [
+        0,
+        0,
+        50,
+        0,
+        0,
+        0,
+        -50,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 422,
+      "name": "米兰达之斧＋1",
+      "description": "作为黑之断罪者的武器而遭到忌讳的巨斧。\n【必中攻击/防御状态贯通/暴击率+30%/反击率+30%】",
+      "params": [
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        -100,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 423,
+      "name": "米兰达之斧＋2",
+      "description": "作为黑之断罪者的武器而遭到忌讳的巨斧。\n【必中攻击/防御状态贯通/暴击率+30%/反击率+30%】",
+      "params": [
+        0,
+        0,
+        200,
+        0,
+        0,
+        0,
+        -106,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 424,
+      "name": "米兰达之斧＋3",
+      "description": "作为黑之断罪者的武器而遭到忌讳的巨斧。\n【必中攻击/防御状态贯通/暴击率+30%/反击率+30%】",
+      "params": [
+        0,
+        0,
+        300,
+        0,
+        0,
+        0,
+        -56,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 425,
+      "name": "米兰达之斧＋4",
+      "description": "作为黑之断罪者的武器而遭到忌讳的巨斧。\n【必中攻击/防御状态贯通/暴击率+30%/反击率+30%】",
+      "params": [
+        0,
+        0,
+        400,
+        0,
+        0,
+        0,
+        -6,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 426,
+      "name": "米兰达之斧＋5",
+      "description": "作为黑之断罪者的武器而遭到忌讳的巨斧。\n【必中攻击/防御状态贯通/暴击率+40%/反击率+40%】",
+      "params": [
+        0,
+        0,
+        500,
+        0,
+        0,
+        0,
+        -300,
+        0
+      ],
+      "wtypeId": 1,
+      "etypeId": 0
+    },
+    {
+      "id": 427,
+      "name": "拉莱耶之杖",
+      "description": "公主们将这把杖从海底都市拉莱耶带出，打开了通往梦之国的大门。\n【魔法闪避率+30%/MP再生率+50%】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        25,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 428,
+      "name": "拉莱耶之杖＋1",
+      "description": "公主们将这把杖从海底都市拉莱耶带出，打开了通往梦之国的大门。\n【魔法闪避率+30%/MP再生率+50%】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        45,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 429,
+      "name": "拉莱耶之杖＋2",
+      "description": "公主们将这把杖从海底都市拉莱耶带出，打开了通往梦之国的大门。\n【魔法闪避率+30%/MP再生率+50%】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        65,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 430,
+      "name": "拉莱耶之杖＋3",
+      "description": "公主们将这把杖从海底都市拉莱耶带出，打开了通往梦之国的大门。\n【魔法闪避率+30%/MP再生率+50%】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        80,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 431,
+      "name": "拉莱耶之杖＋4",
+      "description": "公主们将这把杖从海底都市拉莱耶带出，打开了通往梦之国的大门。\n【魔法闪避率+30%/MP再生率+50%】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        95,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 432,
+      "name": "拉莱耶之杖＋5",
+      "description": "公主们将这把杖从海底都市拉莱耶带出，打开了通往梦之国的大门。\n【魔法闪避率+30%/MP再生率+50%/精神统一】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        125,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 433,
+      "name": "深海骑士的锚",
+      "description": "附有秘密姬的加护的大锚。足以粉碎坚物的它最后沉入了深海。\n【粉碎水/攻击力+100%/暴击率-100%/眩晕率+60%】",
+      "params": [
+        0,
+        0,
+        45,
+        0,
+        0,
+        0,
+        -100,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 434,
+      "name": "深海骑士的锚＋1",
+      "description": "附有秘密姬的加护的大锚。足以粉碎坚物的它最后沉入了深海。\n【粉碎水/攻击力+100%/暴击率-100%/眩晕率+60%】",
+      "params": [
+        0,
+        0,
+        95,
+        0,
+        0,
+        0,
+        -120,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 435,
+      "name": "深海骑士的锚＋2",
+      "description": "附有秘密姬的加护的大锚。足以粉碎坚物的它最后沉入了深海。\n【粉碎水/攻击力+100%/暴击率-100%/眩晕率+60%】",
+      "params": [
+        0,
+        0,
+        170,
+        0,
+        0,
+        0,
+        -106,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 436,
+      "name": "深海骑士的锚＋3",
+      "description": "附有秘密姬的加护的大锚。足以粉碎坚物的它最后沉入了深海。\n【粉碎水/攻击力+100%/暴击率-100%/眩晕率+60%】",
+      "params": [
+        0,
+        0,
+        240,
+        0,
+        0,
+        0,
+        -76,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 437,
+      "name": "深海骑士的锚＋4",
+      "description": "附有秘密姬的加护的大锚。足以粉碎坚物的它最后沉入了深海。\n【粉碎水/攻击力+100%/暴击率-100%/眩晕率+60%】",
+      "params": [
+        0,
+        0,
+        300,
+        0,
+        0,
+        0,
+        -56,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 438,
+      "name": "深海骑士的锚＋5",
+      "description": "附有秘密姬的加护的大锚。足以粉碎坚物的它最后沉入了深海。\n【激愤/粉碎水/攻击力+200%/暴击率-100%/眩晕率+80%】",
+      "params": [
+        0,
+        0,
+        450,
+        0,
+        0,
+        0,
+        -6,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 439,
+      "name": "失落之剑",
+      "description": "雾之国——失落帝国的王子所使用的直剑。\n【日蚀/天顶之刃/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        30,
+        30,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 440,
+      "name": "失落之剑＋1",
+      "description": "雾之国——失落帝国的王子所使用的直剑。\n【日蚀/天顶之刃/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        50,
+        50,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 441,
+      "name": "失落之剑＋2",
+      "description": "雾之国——失落帝国的王子所使用的直剑。\n【日蚀/天顶之刃/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        80,
+        80,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 442,
+      "name": "失落之剑＋3",
+      "description": "雾之国——失落帝国的王子所使用的直剑。\n【日蚀/天顶之刃/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        120,
+        120,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 443,
+      "name": "失落之剑＋4",
+      "description": "雾之国——失落帝国的王子所使用的直剑。\n【日蚀/天顶之刃/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        160,
+        160,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 444,
+      "name": "失落之剑＋5",
+      "description": "雾国王子的直剑。他为了驱散魔雾，让失去的阳光重新照耀而挥舞此剑。\n【日蚀/天顶之刃/日炎耀斑/眩晕率+20%】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        220,
+        220,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 445,
+      "name": "格拉奇德",
+      "description": "巨大的棘刺。无法理解繁殖是为了什么的湖栖神被混沌所屠戮。\n【防御力无视攻击/湖栖神默示录/眩晕率+15%】",
+      "params": [
+        0,
+        0,
+        30,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 446,
+      "name": "格拉奇德＋1",
+      "description": "巨大的棘刺。无法理解繁殖是为了什么的湖栖神被混沌所屠戮。\n【防御力无视攻击/湖栖神默示录/眩晕率+15%】",
+      "params": [
+        0,
+        0,
+        60,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 447,
+      "name": "格拉奇德＋2",
+      "description": "巨大的棘刺。无法理解繁殖是为了什么的湖栖神被混沌所屠戮。\n【防御力无视攻击/湖栖神默示录/眩晕率+15%】",
+      "params": [
+        0,
+        0,
+        90,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 448,
+      "name": "格拉奇德＋3",
+      "description": "巨大的棘刺。无法理解繁殖是为了什么的湖栖神被混沌所屠戮。\n【防御力无视攻击/湖栖神默示录/眩晕率+15%】",
+      "params": [
+        0,
+        0,
+        120,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 449,
+      "name": "格拉奇德＋4",
+      "description": "巨大的棘刺。无法理解繁殖是为了什么的湖栖神被混沌所屠戮。\n【防御力无视攻击/湖栖神默示录/眩晕率+15%】",
+      "params": [
+        0,
+        0,
+        140,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 450,
+      "name": "格拉奇德＋5",
+      "description": "巨大的棘刺。无法理解繁殖是为了什么的湖栖神被混沌所屠戮。\n【防御力无视攻击/湖栖神默示录/绿之崩坏/眩晕率+15%】",
+      "params": [
+        0,
+        0,
+        160,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 451,
+      "name": "屠宰者的电锯",
+      "description": "屠夫爱用的武器。能够将皮肉切下削成碎末。\n【血之试炼/苦痛的祝福/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        25,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 452,
+      "name": "屠宰者的电锯＋1",
+      "description": "屠夫爱用的武器。能够将皮肉切下削成碎末。\n【血之试炼/苦痛的祝福/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        45,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 453,
+      "name": "屠宰者的电锯＋2",
+      "description": "屠夫爱用的武器。能够将皮肉切下削成碎末。\n【血之试炼/苦痛的祝福/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        60,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 454,
+      "name": "屠宰者的电锯＋3",
+      "description": "屠夫爱用的武器。能够将皮肉切下削成碎末。\n【血之试炼/苦痛的祝福/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        80,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 455,
+      "name": "屠宰者的电锯＋4",
+      "description": "屠夫爱用的武器。能够将皮肉切下削成碎末。\n【血之试炼/苦痛的祝福/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        92,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 456,
+      "name": "屠宰者的电锯＋5",
+      "description": "屠夫爱用的武器。能够将皮肉切下削成碎末。\n【血之试炼/苦痛的祝福/屠宰开始/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        108,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 457,
+      "name": "假海龟的大汤勺",
+      "description": "假海龟常用的普通的大汤勺。不要期待它作为武器能有什么表现比较好。\n【运+5%/眩晕率+3%】",
+      "params": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        10
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 458,
+      "name": "假海龟的大汤勺+1",
+      "description": "假海龟常用的普通的大汤勺。不要期待它作为武器能有什么表现比较好。\n【运+10%/眩晕率+3%】",
+      "params": [
+        0,
+        0,
+        2,
+        0,
+        0,
+        0,
+        0,
+        15
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 459,
+      "name": "假海龟的大汤勺+2",
+      "description": "假海龟常用的普通的大汤勺。不要期待它作为武器能有什么表现比较好。\n【运+20%/眩晕率+3%】",
+      "params": [
+        0,
+        0,
+        3,
+        0,
+        0,
+        0,
+        0,
+        20
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 460,
+      "name": "假海龟的大汤勺+3",
+      "description": "假海龟常用的普通的大汤勺。不要期待它作为武器能有什么表现比较好。\n【运+30%/眩晕率+3%】",
+      "params": [
+        0,
+        0,
+        4,
+        0,
+        0,
+        0,
+        0,
+        30
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 461,
+      "name": "假海龟的大汤勺+4",
+      "description": "假海龟常用的普通的大汤勺。不要期待它作为武器能有什么表现比较好。\n【运+40%/眩晕率+3%】",
+      "params": [
+        0,
+        0,
+        5,
+        0,
+        0,
+        0,
+        0,
+        40
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 462,
+      "name": "假海龟的大汤勺+5",
+      "description": "假海龟常用的普通的大汤勺。不要期待它作为武器能有什么表现比较好。\n【美味的汤/运+50%/眩晕率+5%】",
+      "params": [
+        0,
+        0,
+        6,
+        0,
+        0,
+        0,
+        0,
+        50
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 463,
+      "name": "神天使双剑",
+      "description": "神之猎人擅用的兵器。漂流而来的他，成为了星之医学最初的临床试验者。\n【晕眩率+3% 攻击时获得1层剑气(最大7)剑气-增加攻击力和攻击回数】",
+      "params": [
+        0,
+        0,
+        30,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 464,
+      "name": "神天使双剑+1",
+      "description": "神之猎人擅用的兵器。漂流而来的他，成为了星之医学最初的临床试验者。\n【晕眩率+3% 攻击时获得1层剑气(最大7)剑气-增加攻击力和攻击回数】",
+      "params": [
+        0,
+        0,
+        40,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 465,
+      "name": "神天使双剑+2",
+      "description": "神之猎人擅用的兵器。漂流而来的他，成为了星之医学最初的临床试验者。\n【晕眩率+3% 攻击时获得1层剑气(最大7)剑气-增加攻击力和攻击回数】",
+      "params": [
+        0,
+        0,
+        50,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 466,
+      "name": "神天使双剑+3",
+      "description": "神之猎人擅用的兵器。漂流而来的他，成为了星之医学最初的临床试验者。\n【晕眩率+3% 攻击时获得1层剑气(最大7)剑气-增加攻击力和攻击回数】",
+      "params": [
+        0,
+        0,
+        60,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 467,
+      "name": "神天使双剑+4",
+      "description": "神之猎人擅用的兵器。漂流而来的他，成为了星之医学最初的临床试验者。\n【晕眩率+3% 攻击时获得1层剑气(最大7)剑气-增加攻击力和攻击回数】",
+      "params": [
+        0,
+        0,
+        70,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 468,
+      "name": "神天使双剑+5",
+      "description": "神之猎人擅用的兵器。漂流而来的他，成为了星之医学最初的临床试验者。\n【晕眩率+5% 攻击时获得1层剑气(最大7)剑气-增加攻击力和攻击回数】",
+      "params": [
+        0,
+        0,
+        80,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 469,
+      "name": "神圣铳剑",
+      "description": "救济的化身所持的铳剑。拯救她自己的救济，直到最终也没有出现。\n【攻击后，枪火击溃/十字切断/铳弹装填】",
+      "params": [
+        0,
+        0,
+        60,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 470,
+      "name": "神圣铳剑+1",
+      "description": "救济的化身所持的铳剑。拯救她自己的救济，直到最终也没有出现。\n【攻击后，枪火击溃/十字切断/铳弹装填】",
+      "params": [
+        0,
+        0,
+        75,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 471,
+      "name": "神圣铳剑+2",
+      "description": "救济的化身所持的铳剑。拯救她自己的救济，直到最终也没有出现。\n【攻击后，枪火击溃/十字切断/铳弹装填】",
+      "params": [
+        0,
+        0,
+        83,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 472,
+      "name": "神圣铳剑+3",
+      "description": "救济的化身所持的铳剑。拯救她自己的救济，直到最终也没有出现。\n【攻击后，枪火击溃/十字切断/铳弹装填】",
+      "params": [
+        0,
+        0,
+        95,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 473,
+      "name": "神圣铳剑+4",
+      "description": "救济的化身所持的铳剑。拯救她自己的救济，直到最终也没有出现。\n【攻击后，枪火击溃/十字切断/铳弹装填】",
+      "params": [
+        0,
+        0,
+        110,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 474,
+      "name": "神圣铳剑+5",
+      "description": "救济的化身所持的铳剑。拯救她自己的救济，直到最终也没有出现。\n【攻击后，枪火击溃/十字切断/铳弹装填/内脏攻击/即死耐性+100%】",
+      "params": [
+        0,
+        0,
+        130,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 475,
+      "name": "玛丽苏的枝杖",
+      "description": "我所创造的伟大的万能的众神都恋慕得不能自已的最强之杖！\n【全体必中强化解除攻击/速度+100%/全状态异常无效化】",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        500,
+        0,
+        500,
+        0
+      ],
+      "wtypeId": 9,
+      "etypeId": 0
+    },
+    {
+      "id": 476,
+      "name": "尤妮丝的刺剑",
+      "description": "将污秽突刺扫净的独角兽之刺剑。对弱点状态的敌人造成1.5倍伤害。\n【弱点攻击/暴击率+15%/破空斩/心眼刀】",
+      "params": [
+        0,
+        0,
+        40,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 477,
+      "name": "尤妮丝的刺剑+1",
+      "description": "将污秽突刺扫净的独角兽之刺剑。对弱点状态的敌人造成1.5倍伤害。\n【弱点攻击/暴击率+15%/破空斩/心眼刀】",
+      "params": [
+        0,
+        0,
+        65,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 478,
+      "name": "尤妮丝的刺剑+2",
+      "description": "将污秽突刺扫净的独角兽之刺剑。对弱点状态的敌人造成1.5倍伤害。\n【弱点攻击/暴击率+15%/破空斩/心眼刀】",
+      "params": [
+        0,
+        0,
+        85,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 479,
+      "name": "尤妮丝的刺剑+3",
+      "description": "将污秽突刺扫净的独角兽之刺剑。对弱点状态的敌人造成1.5倍伤害。\n【弱点攻击/暴击率+15%/破空斩/心眼刀】",
+      "params": [
+        0,
+        0,
+        105,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 480,
+      "name": "尤妮丝的刺剑+4",
+      "description": "将污秽突刺扫净的独角兽之刺剑。对弱点状态的敌人造成1.5倍伤害。\n【弱点攻击/暴击率+15%/破空斩/心眼刀】",
+      "params": [
+        0,
+        0,
+        125,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 481,
+      "name": "尤妮丝的刺剑+5",
+      "description": "将污秽突刺扫净的独角兽之刺剑。对弱点状态的敌人造成1.5倍伤害。\n【弱点攻击/暴击率+20%/破空斩/心眼刀/无双挑战】",
+      "params": [
+        0,
+        0,
+        145,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 482,
+      "name": "莱登的双斧",
+      "description": "只有绝对强者才能驾驭的白狮子之双斧。这把武器无法造成暴击。\n【依据当前HP攻击/轰天爆雷/HP+30%/晕眩率+30%】",
+      "params": [
+        500,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 483,
+      "name": "莱登的双斧+1",
+      "description": "只有绝对强者才能驾驭的白狮子之双斧。这把武器无法造成暴击。\n【依据当前HP攻击/轰天爆雷/HP+30%/晕眩率+30%】",
+      "params": [
+        1000,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 484,
+      "name": "莱登的双斧+2",
+      "description": "只有绝对强者才能驾驭的白狮子之双斧。这把武器无法造成暴击。\n【依据当前HP攻击/轰天爆雷/HP+30%/晕眩率+30%】",
+      "params": [
+        1500,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 485,
+      "name": "莱登的双斧+3",
+      "description": "只有绝对强者才能驾驭的白狮子之双斧。这把武器无法造成暴击。\n【依据当前HP攻击/轰天爆雷/HP+30%/晕眩率+30%】",
+      "params": [
+        2000,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 486,
+      "name": "莱登的双斧+4",
+      "description": "只有绝对强者才能驾驭的白狮子之双斧。这把武器无法造成暴击。\n【依据当前HP攻击/轰天爆雷/HP+30%/晕眩率+30%】",
+      "params": [
+        2500,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 487,
+      "name": "莱登的双斧+5",
+      "description": "只有绝对强者才能驾驭的白狮子之双斧。这把武器无法造成暴击。\n【依据当前HP攻击/轰天爆雷/双斧狮子旋风/HP+40%/晕眩率+40%】",
+      "params": [
+        3000,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 4,
+      "etypeId": 0
+    },
+    {
+      "id": 488,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 489,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 490,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 491,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 492,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 493,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 494,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 495,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 496,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 497,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 498,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 499,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    },
+    {
+      "id": 500,
+      "name": "",
+      "description": "",
+      "params": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "wtypeId": 0,
+      "etypeId": 0
+    }
+  ]
+}

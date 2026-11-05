@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -37,6 +38,31 @@ public final class OriginalNpcItems {
         return item == null || item == Items.AIR ? null : item;
     }
 
+    public static boolean matches(int kind, int id, ItemStack stack) {
+        if (kind < 0 || kind > 2 || id < 1 || stack == null || stack.isEmpty()) return false;
+        if (kind == 1) return sourceId(stack) == id;
+        Item item = item(kind, id);
+        return item != null && stack.is(item);
+    }
+
+    public static int sourceId(ItemStack stack) {
+        return OriginalWeaponForms.sourceId(stack);
+    }
+
+    public static OriginalWeaponForms.WeaponData details(int sourceId) {
+        return OriginalWeaponForms.details(sourceId);
+    }
+
+    public static ItemStack createStack(int kind, int id, int count) {
+        Item item = item(kind, id);
+        if (item == null || count < 0) throw new IllegalArgumentException("Invalid original item stack: " + kind + ":" + id);
+        if (count == 0) return ItemStack.EMPTY;
+        ItemStack stack = new ItemStack(item, count);
+        OriginalWeaponForms.Form form = kind == 1 ? OriginalWeaponForms.get(id) : null;
+        if (form != null && form.upgradeLevel() > 0) stack.getOrCreateTag().putInt("bs2_upgrade_level", form.upgradeLevel());
+        return stack;
+    }
+
     private static Map<String, Entry> load() {
         try (InputStream stream = OriginalNpcItems.class.getResourceAsStream(
                 "/data/blacksouls/original_npc_items.json")) {
@@ -47,9 +73,12 @@ public final class OriginalNpcItems {
             for (JsonElement element : JsonParser.parseReader(new InputStreamReader(stream,
                     StandardCharsets.UTF_8)).getAsJsonArray()) {
                 JsonObject json = element.getAsJsonObject();
+                int kind = json.get("kind").getAsInt();
+                int id = json.get("id").getAsInt();
+                OriginalWeaponForms.Form form = kind == 1 ? OriginalWeaponForms.get(id) : null;
                 Entry entry = new Entry(json.get("kind").getAsInt(), json.get("id").getAsInt(),
                         json.get("name").getAsString(), json.get("price").getAsLong(),
-                        json.has("registry") && !json.get("registry").isJsonNull()
+                        form != null ? form.registry() : json.has("registry") && !json.get("registry").isJsonNull()
                                 ? ResourceLocation.tryParse(json.get("registry").getAsString()) : null);
                 entries.put(entry.kind() + ":" + entry.id(), entry);
             }

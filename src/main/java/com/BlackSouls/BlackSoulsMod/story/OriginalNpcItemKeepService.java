@@ -76,7 +76,7 @@ public final class OriginalNpcItemKeepService {
             for (int slot = 0; slot < inventory.size() && remaining > 0; slot++) {
                 if (equippedMainHand(player, kind, slot)) continue;
                 ItemStack stack = inventory.get(slot);
-                if (!stack.is(item)) continue;
+                if (!OriginalNpcItems.matches(kind, id, stack)) continue;
                 int amount = Math.min(remaining, stack.getCount());
                 stored.add(stack.copyWithCount(amount));
                 stack.shrink(amount);

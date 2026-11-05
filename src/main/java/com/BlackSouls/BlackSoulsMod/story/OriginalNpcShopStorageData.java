@@ -77,7 +77,7 @@ public final class OriginalNpcShopStorageData extends SavedData {
         if (count < 0) throw new IllegalStateException("Original storage stack count exceeds ledger");
         while (count > 0) {
             int amount = Math.min(count, item.getMaxStackSize());
-            result.add(new ItemStack(item, amount));
+            result.add(OriginalNpcItems.createStack(kind, id, amount));
             count -= amount;
         }
         return List.copyOf(result);
@@ -89,7 +89,7 @@ public final class OriginalNpcShopStorageData extends SavedData {
         int count = 0;
         List<ItemStack> copies = new ArrayList<>();
         for (ItemStack stack : stacks) {
-            if (stack.isEmpty() || !stack.is(item)) throw new IllegalArgumentException("Mismatched original storage stack");
+            if (!OriginalNpcItems.matches(kind, id, stack)) throw new IllegalArgumentException("Mismatched original storage stack");
             count = Math.addExact(count, stack.getCount());
             int remaining = stack.getCount();
             while (remaining > 0) {
@@ -114,6 +114,10 @@ public final class OriginalNpcShopStorageData extends SavedData {
 
     public static OriginalNpcShopStorageData load(CompoundTag tag) {
         OriginalNpcShopStorageData data = new OriginalNpcShopStorageData();
+        boolean legacy = !tag.contains("WeaponFormsVersion");
+        if (!legacy && (!tag.contains("WeaponFormsVersion", Tag.TAG_INT) || tag.getInt("WeaponFormsVersion") != 1)) {
+            throw new IllegalArgumentException("Invalid original weapon storage version");
+        }
         if (tag.contains("Owners") && !tag.contains("Owners", Tag.TAG_COMPOUND)
                 || tag.contains("StackContents") && !tag.contains("StackContents", Tag.TAG_COMPOUND)) {
             throw new IllegalArgumentException("Invalid original storage container");
@@ -168,11 +172,39 @@ public final class OriginalNpcShopStorageData extends SavedData {
                 data.stackContents.computeIfAbsent(owner, ignored -> new HashMap<>()).put(new ItemKey(kind, id), List.copyOf(stacks));
             }
         }
+        for (var owner : new ArrayList<>(data.stackContents.entrySet())) {
+            Map<ItemKey, List<ItemStack>> classified = new HashMap<>();
+            Map<ItemKey, Integer> counts = new HashMap<>(data.inventories.getOrDefault(owner.getKey(), Map.of()));
+            for (var payload : owner.getValue().entrySet()) {
+                ItemKey original = payload.getKey();
+                for (ItemStack stack : payload.getValue()) {
+                    ItemKey target = original;
+                    if (!OriginalNpcItems.matches(original.kind(), original.id(), stack)) {
+                        int source = original.kind() == 1 ? OriginalNpcItems.sourceId(stack) : -1;
+                        if (!legacy || source < 1) throw new IllegalArgumentException("Invalid original stored weapon form");
+                        target = new ItemKey(1, source);
+                        int old = counts.getOrDefault(original, 0) - stack.getCount();
+                        if (old == 0) counts.remove(original); else counts.put(original, old);
+                        int migrated = Math.addExact(counts.getOrDefault(target, 0), stack.getCount());
+                        counts.put(target, migrated);
+                        data.setDirty();
+                    }
+                    classified.computeIfAbsent(target, ignored -> new ArrayList<>()).add(stack.copy());
+                }
+            }
+            if (counts.values().stream().anyMatch(count -> count < 1 || count > 999)) {
+                throw new IllegalArgumentException("Original weapon migration exceeds storage limit");
+            }
+            if (counts.isEmpty()) data.inventories.remove(owner.getKey());
+            else data.inventories.put(owner.getKey(), counts);
+            data.stackContents.put(owner.getKey(), classified);
+        }
         return data;
     }
 
     @Override
     public CompoundTag save(CompoundTag tag) {
+        tag.putInt("WeaponFormsVersion", 1);
         CompoundTag owners = new CompoundTag();
         inventories.forEach((owner, inventory) -> {
             CompoundTag entries = new CompoundTag();
