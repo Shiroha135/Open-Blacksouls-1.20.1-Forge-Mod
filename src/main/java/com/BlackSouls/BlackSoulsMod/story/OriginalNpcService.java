@@ -10,6 +10,8 @@ import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalReceptionist;
 import com.BlackSouls.BlackSoulsMod.compat.scene.OriginalReceptionistPlacement;
 import com.BlackSouls.BlackSoulsMod.compat.scene.OriginalWhiteBearPlacement;
 import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalWhiteBear;
+import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalCemeteryCat;
+import com.BlackSouls.BlackSoulsMod.compat.scene.OriginalCemeteryCatPlacement;
 import com.BlackSouls.BlackSoulsMod.entity.EntityCheshireCat;
 import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalDatabaseEnemy;
 import com.BlackSouls.BlackSoulsMod.handler.BSEntityRegistry;
@@ -71,6 +73,7 @@ public final class OriginalNpcService {
 
     private static boolean matchesActor(PathfinderMob npc, String npcId) {
         if (npc instanceof EntityOriginalWhiteBear whiteBear && !OriginalWhiteBearPlacement.matches(whiteBear)) return false;
+        if (npc instanceof EntityOriginalCemeteryCat cat && !OriginalCemeteryCatPlacement.matches(cat)) return false;
         if (npc instanceof EntityOriginalReceptionist receptionist
                 && !OriginalReceptionistPlacement.matches(receptionist)) return false;
         if (npc instanceof EntityOriginalNpc original) return original.getNpcId().equals(npcId);
