@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -86,6 +87,12 @@ public final class OriginalWhiteBearPlacement {
         if (npc != null && npc.claimInteractionTick(player.getUUID(), player.serverLevel().getGameTime())) {
             OriginalNpcService.interact(player, npc);
         }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (event.phase == TickEvent.Phase.END && event.player instanceof ServerPlayer player
+                && player.tickCount % 100 == 0 && isOriginalSiteContext(player)) resolve(player);
     }
 
     public static EntityOriginalWhiteBear resolve(ServerPlayer player) {

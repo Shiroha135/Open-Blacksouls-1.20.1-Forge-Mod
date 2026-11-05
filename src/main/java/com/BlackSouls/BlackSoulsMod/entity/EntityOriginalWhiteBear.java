@@ -2,6 +2,9 @@ package com.BlackSouls.BlackSoulsMod.entity;
 
 import com.BlackSouls.BlackSoulsMod.compat.scene.OriginalWhiteBearPlacement;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -17,7 +20,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public final class EntityOriginalWhiteBear extends EntityOriginalNpc {
-    private boolean nativeBlockBound;
+    private static final EntityDataAccessor<Boolean> NATIVE_BLOCK_BOUND = SynchedEntityData.defineId(
+            EntityOriginalWhiteBear.class, EntityDataSerializers.BOOLEAN);
     private final Map<UUID, Long> interactionTicks = new HashMap<>();
 
     public EntityOriginalWhiteBear(EntityType<? extends PathfinderMob> type, Level level) {
@@ -26,6 +30,12 @@ public final class EntityOriginalWhiteBear extends EntityOriginalNpc {
         setNoGravity(true);
         noPhysics = true;
         setInvisible(true);
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(NATIVE_BLOCK_BOUND, false);
     }
 
     @Override
@@ -40,11 +50,11 @@ public final class EntityOriginalWhiteBear extends EntityOriginalNpc {
         if (level().isClientSide || position().distanceToSqr(OriginalWhiteBearPlacement.POSITION) > 1.0E-8D) {
             throw new IllegalStateException("Invalid white bear anchor");
         }
-        nativeBlockBound = true;
+        entityData.set(NATIVE_BLOCK_BOUND, true);
     }
 
     public boolean isNativeBlockBound() {
-        return nativeBlockBound;
+        return entityData.get(NATIVE_BLOCK_BOUND);
     }
 
     public boolean claimInteractionTick(UUID playerId, long tick) {
@@ -108,13 +118,13 @@ public final class EntityOriginalWhiteBear extends EntityOriginalNpc {
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putBoolean("OriginalWhiteBearBlockBound", nativeBlockBound);
+        tag.putBoolean("OriginalWhiteBearBlockBound", isNativeBlockBound());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        nativeBlockBound = tag.getBoolean("OriginalWhiteBearBlockBound");
+        entityData.set(NATIVE_BLOCK_BOUND, tag.getBoolean("OriginalWhiteBearBlockBound"));
         interactionTicks.clear();
         setNoGravity(true);
         noPhysics = true;
