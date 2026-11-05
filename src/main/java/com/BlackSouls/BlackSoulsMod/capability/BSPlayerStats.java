@@ -349,6 +349,22 @@ public class BSPlayerStats {
         return this.developerLimitBreak ? DEVELOPER_MAX_LEVEL : NORMAL_MAX_LEVEL;
     }
 
+    public void changeExp(long total) {
+        currentExp = Math.max(0L, total);
+        int low = 1, high = getLevelLimit(), reached = 1;
+        while (low <= high) {
+            int middle = low + (high - low) / 2;
+            if (getExpToReachLevel(middle) <= currentExp) {
+                reached = middle;
+                low = middle + 1;
+            } else {
+                high = middle - 1;
+            }
+        }
+        level = reached;
+        recalculateStats();
+    }
+
     public boolean consumeMP(float amount) {
         if (this.mp >= amount) {
             this.mp -= amount;
@@ -415,7 +431,7 @@ public class BSPlayerStats {
 
     private double getRMStat(int level, double val1, double val99, double delta99) {
         if (level <= 99) {
-            return Math.round(val1 + (val99 - val1) * (level - 1) / 98.0);
+            return Math.ceil(val1 + (val99 - val1) * (level - 1) / 98.0);
         }
         double limitBreakBonus = Math.floor(delta99 * (level - 99) * 1.05);
         return val99 + limitBreakBonus;

@@ -6,6 +6,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import top.theillusivec4.curios.api.CuriosApi;
+import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
+import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
+import com.BlackSouls.BlackSoulsMod.network.packets.PacketSyncStats;
 
 public final class OriginalActorBridge {
     private OriginalActorBridge() {
@@ -13,6 +16,34 @@ public final class OriginalActorBridge {
 
     public static boolean isPlayerActor(ServerPlayer player, int actorId) {
         return player != null && actorId == 2;
+    }
+
+    public static String changeExperience(ServerPlayer player, int actorId, long amount, boolean show) {
+        return applyExperience(player, actorId, amount, show, 0L);
+    }
+
+    public static String convertExperience(ServerPlayer player, int actorId, long amount, boolean show) {
+        if (amount < 0) throw new UnsupportedOperationException("negative_soul_experience");
+        return applyExperience(player, actorId, amount, show, amount);
+    }
+
+    private static String applyExperience(ServerPlayer player, int actorId, long amount, boolean show, long soulCost) {
+        if (actorId == 0) actorId = 2;
+        if (!isPlayerActor(player, actorId)) throw new UnsupportedOperationException("unmapped_actor_experience:" + actorId);
+        BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original actor stats"));
+        if (stats.currentExp < 0) throw new UnsupportedOperationException("invalid_actor_experience");
+        if (soulCost > 0 && stats.souls < soulCost) throw new UnsupportedOperationException("experience_funding_changed");
+        long next = amount < -stats.currentExp ? 0L : Math.addExact(stats.currentExp, amount);
+        int before = stats.level;
+        float health = player.getHealth();
+        double mana = stats.mp;
+        stats.changeExp(next);
+        stats.souls -= soulCost;
+        StatEventHandler.applyStats(player);
+        stats.mp = Math.max(0.0D, Math.min(mana, stats.maxMp));
+        player.setHealth(Math.min(health, player.getMaxHealth()));
+        NetworkHandler.sendToPlayer(new PacketSyncStats(stats.serializeNBT()), player);
+        return show && stats.level > before ? StoryNameData.get(player) + "提高到了等级 " + stats.level + " ！" : "";
     }
 
     public static long gameData(ServerPlayer player, int actorId, int property) {
