@@ -1473,5 +1473,9 @@
     "sounds": [
       "blacksouls:mbjh_se_laughter_boy4"
     ]
+  },
+  "original_sword_stab": {
+    "category": "neutral",
+    "sounds": ["blacksouls:original_sword_stab"]
   }
 }

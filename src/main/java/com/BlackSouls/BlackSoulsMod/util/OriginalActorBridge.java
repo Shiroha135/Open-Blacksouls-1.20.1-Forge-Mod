@@ -4,6 +4,7 @@ import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShieldItem;
 import top.theillusivec4.curios.api.CuriosApi;
 
 public final class OriginalActorBridge {
@@ -43,6 +44,7 @@ public final class OriginalActorBridge {
         if (kind == 1) {
             return player.getMainHandItem().is(item) || player.getOffhandItem().is(item);
         }
+        if (item instanceof ShieldItem && player.getOffhandItem().is(item)) return true;
         for (ItemStack stack : player.getArmorSlots()) {
             if (stack.is(item)) {
                 return true;

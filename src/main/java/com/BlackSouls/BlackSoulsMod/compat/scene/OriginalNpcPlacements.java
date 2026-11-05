@@ -53,7 +53,15 @@ public final class OriginalNpcPlacements {
                     landmark(92, -57, -1507, "blacksouls2:l_lu_deng_1", Map.of()),
                     landmark(92, -54, -1507, "blacksouls2:l_lu_deng_3", Map.of()),
                     landmark(84, -57, -1510, "blacksouls2:l_lu_deng_1", Map.of()),
-                    landmark(100, -57, -1507, "blacksouls2:l_lu_deng_1", Map.of()))));
+                    landmark(100, -57, -1507, "blacksouls2:l_lu_deng_1", Map.of()))),
+            new Site("map012_ev008", new Vec3(704.5D, -59.0D, -441.5D), 90.0F,
+                    "blacksouls2:bai", wardLandmarks()),
+            new Site("map012_ev009", new Vec3(715.5D, -58.4375D, -438.35D), 0.0F,
+                    "cfm:oak_park_bench", wardSeatLandmarks(715, -439, "right"), true),
+            new Site("map012_ev010", new Vec3(709.5D, -58.4375D, -442.35D), 0.0F,
+                    "cfm:oak_park_bench", wardSeatLandmarks(709, -443, "left"), true),
+            new Site("map012_ev011", new Vec3(717.5D, -58.4375D, -442.35D), 0.0F,
+                    "cfm:oak_park_bench", wardSeatLandmarks(717, -443, "left"), true));
 
     private OriginalNpcPlacements() {
     }
@@ -78,6 +86,7 @@ public final class OriginalNpcPlacements {
         for (Site site : SITES) {
             results.put(site.npcId(), install(player, site.npcId()));
         }
+        results.put(OriginalReceptionistPlacement.NPC_ID, OriginalReceptionistPlacement.install(player));
         return Map.copyOf(results);
     }
 
@@ -88,6 +97,7 @@ public final class OriginalNpcPlacements {
     }
 
     public static Outcome install(ServerPlayer player, String npcId) {
+        if (OriginalReceptionistPlacement.NPC_ID.equals(npcId)) return OriginalReceptionistPlacement.install(player);
         Site site = SITES.stream().filter(value -> value.npcId().equals(npcId)).findFirst().orElse(null);
         if (site == null) {
             return Outcome.UNKNOWN_SITE;
@@ -114,9 +124,9 @@ public final class OriginalNpcPlacements {
             data.record(npcId, existing.getUUID());
             return Outcome.REUSED_EXISTING;
         }
-        BlockPos floor = BlockPos.containing(site.position()).below();
+        BlockPos floor = BlockPos.containing(site.position().add(0.0D, -0.02D, 0.0D));
         BlockState support = level.getBlockState(floor);
-        if (!blockId(support).equals(site.supportBlock()) || !support.isFaceSturdy(level, floor, Direction.UP)
+        if (!blockId(support).equals(site.supportBlock()) || !site.shapedSupport() && !support.isFaceSturdy(level, floor, Direction.UP)
                 || site.landmarks().stream().anyMatch(landmark -> !landmark.matches(level))) {
             return Outcome.TERRAIN_MISMATCH;
         }
@@ -130,7 +140,8 @@ public final class OriginalNpcPlacements {
         npc.yBodyRot = site.yaw();
         npc.setNpcId(npcId);
         AABB bounds = npc.getBoundingBox();
-        if (!level.noCollision(npc, bounds) || level.containsAnyLiquid(bounds)
+        if (!level.noCollision(npc, bounds) || site.shapedSupport() && level.noCollision(npc, bounds.move(0.0D, -0.02D, 0.0D))
+                || level.containsAnyLiquid(bounds)
                 || !level.getEntitiesOfClass(LivingEntity.class, bounds,
                 entity -> entity.isAlive() && !entity.isSpectator()).isEmpty()) {
             npc.discard();
@@ -193,6 +204,21 @@ public final class OriginalNpcPlacements {
                 landmark(580, 12, -570, "minecraft:stone_bricks", Map.of()));
     }
 
+    private static List<Landmark> wardSeatLandmarks(int x, int z, String type) {
+        java.util.ArrayList<Landmark> landmarks = new java.util.ArrayList<>(wardLandmarks());
+        landmarks.add(landmark(x, -59, z, "cfm:oak_park_bench", Map.of("facing", "north", "type", type)));
+        return List.copyOf(landmarks);
+    }
+
+    private static List<Landmark> wardLandmarks() {
+        return List.of(
+                landmark(716, -59, -435, "mcwfurnitures:spruce_covered_desk", Map.of("facing", "east", "connection", "right")),
+                landmark(708, -59, -435, "mcwfurnitures:spruce_covered_desk", Map.of("facing", "east", "connection", "left")),
+                landmark(712, -59, -441, "blacksouls2:pen_zai", Map.of("facing", "south")),
+                landmark(705, -59, -432, "minecraft:dark_oak_door", Map.of("facing", "south", "half", "lower")),
+                landmark(719, -59, -432, "minecraft:dark_oak_door", Map.of("facing", "south", "half", "lower")));
+    }
+
     private static Landmark landmark(int x, int y, int z, String blockId, Map<String, String> properties) {
         return new Landmark(new BlockPos(x, y, z), blockId, properties);
     }
@@ -201,7 +227,11 @@ public final class OriginalNpcPlacements {
         return BuiltInRegistries.BLOCK.getKey(state.getBlock()).toString();
     }
 
-    public record Site(String npcId, Vec3 position, float yaw, String supportBlock, List<Landmark> landmarks) {
+    public record Site(String npcId, Vec3 position, float yaw, String supportBlock, List<Landmark> landmarks, boolean shapedSupport) {
+        public Site(String npcId, Vec3 position, float yaw, String supportBlock, List<Landmark> landmarks) {
+            this(npcId, position, yaw, supportBlock, landmarks, false);
+        }
+
         public Site {
             landmarks = List.copyOf(landmarks);
         }
@@ -237,7 +267,7 @@ public final class OriginalNpcPlacements {
     }
 
     public enum Outcome {
-        INSTALLED, REUSED_EXISTING, ALREADY_RECORDED, UNKNOWN_SITE, WRONG_DIMENSION,
+        RECOVERED_MIGRATION, INSTALLED, REUSED_EXISTING, ALREADY_RECORDED, UNKNOWN_SITE, WRONG_DIMENSION,
         MAP_NOT_DEPLOYED, TOO_FAR, CHUNKS_UNAVAILABLE, TERRAIN_MISMATCH, COLLISION, SPAWN_FAILED
     }
 }

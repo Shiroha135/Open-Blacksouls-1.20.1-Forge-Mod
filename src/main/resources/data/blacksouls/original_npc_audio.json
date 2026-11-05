@@ -1807,6 +1807,10 @@
     "MBJH_SE_Laughter_boy4": {
       "sound": "blacksouls:mbjh_se_laughter_boy4",
       "sourceFile": "MBJH_SE_Laughter_boy4.ogg"
+    },
+    "剣　突き刺す": {
+      "sound": "blacksouls:original_sword_stab",
+      "sourceFile": "剣　突き刺す.wav"
     }
   }
 }

@@ -23,6 +23,7 @@ public final class OriginalNpcInterpreter {
     private int pendingCancel;
     private int battleIndent;
     private long revision;
+    private boolean shopPurchaseOnly;
 
     public OriginalNpcInterpreter(List<BSOriginalNpcData.Command> commands, Context context) {
         this.context = Objects.requireNonNull(context);
@@ -83,13 +84,22 @@ public final class OriginalNpcInterpreter {
                 switch (command.code()) {
                     case 0, 505 -> {
                     }
-                    case 108, 408 -> context.comment(text(p, 0));
+                    case 108 -> {
+                        StringBuilder comment = new StringBuilder(text(p, 0));
+                        while (frame.position < frame.commands.size() && frame.commands.get(frame.position).code() == 408) {
+                            comment.append(text(frame.commands.get(frame.position++).parameters(), 0));
+                        }
+                        context.comment(comment.toString());
+                    }
+                    case 408 -> {
+                    }
                     case 101 -> {
                         List<String> lines = new ArrayList<>();
                         while (frame.position < frame.commands.size()
                                 && frame.commands.get(frame.position).code() == 401) {
                             lines.add(frame.commands.get(frame.position++).parameters().get(0).getAsString());
                         }
+                        context.beginMessage(text(p, 0), integer(p, 1));
                         return emit(Type.TEXT, String.join("\n", lines), text(p, 0), integer(p, 1), List.of(), List.of(), "");
                     }
                     case 102 -> {
@@ -141,11 +151,18 @@ public final class OriginalNpcInterpreter {
                     }
                     case 122 -> variables(p);
                     case 123 -> context.setSelfSwitch(text(p, 0), integer(p, 1) == 0);
-                    case 125 -> context.changeGold(operand(p, 1, 2) * (integer(p, 0) == 0 ? 1L : -1L));
+                    case 125 -> context.changeGold(Math.multiplyExact(operand(p, 1, 2), integer(p, 0) == 0 ? 1L : -1L));
                     case 132 -> context.changeBattleBgm(p.get(0).getAsJsonObject());
                     case 126, 127, 128 -> {
-                        long amount = operand(p, 2, 3) * (integer(p, 1) == 0 ? 1L : -1L);
-                        if (!context.changeItem(command.code() - 126, integer(p, 0), amount)) {
+                        long amount = Math.multiplyExact(operand(p, 2, 3), integer(p, 1) == 0 ? 1L : -1L);
+                        boolean includeEquipment = false;
+                        if (command.code() != 126 && p.size() > 4) {
+                            if (!p.get(4).isJsonPrimitive() || !p.get(4).getAsJsonPrimitive().isBoolean()) {
+                                throw new UnsupportedOperationException("item_include_equipment");
+                            }
+                            includeEquipment = p.get(4).getAsBoolean();
+                        }
+                        if (!context.changeItem(command.code() - 126, integer(p, 0), amount, includeEquipment)) {
                             throw new UnsupportedOperationException("item:" + (command.code() - 126) + ":" + integer(p, 0));
                         }
                     }
@@ -199,6 +216,10 @@ public final class OriginalNpcInterpreter {
                         }
                     }
                     case 302 -> {
+                        if (p.size() < 5 || !p.get(4).isJsonPrimitive() || !p.get(4).getAsJsonPrimitive().isBoolean()) {
+                            throw new UnsupportedOperationException("shop_purchase_only");
+                        }
+                        shopPurchaseOnly = p.get(4).getAsBoolean();
                         List<Goods> goods = new ArrayList<>();
                         goods.add(goods(p));
                         while (frame.position < frame.commands.size()
@@ -284,10 +305,26 @@ public final class OriginalNpcInterpreter {
         return pending;
     }
 
+    public String speakerName() {
+        return context.speakerName();
+    }
+
+    public boolean shopPurchaseOnly() {
+        return shopPurchaseOnly;
+    }
+
+    public Prompt refreshShop() {
+        if (pending == null || pending.type() != Type.SHOP) throw new IllegalStateException("No pending original shop");
+        return emit(Type.SHOP, pending.text(), pending.portrait(), pending.portraitIndex(), pending.choices(), pending.goods(), pending.reason());
+    }
+
     public JsonObject snapshot() {
         JsonObject result = new JsonObject();
         result.addProperty("version", SNAPSHOT_VERSION);
         result.addProperty("revision", revision);
+        result.addProperty("shopPurchaseOnly", shopPurchaseOnly);
+        JsonObject contextState = context.savePresentationState();
+        if (contextState != null) result.add("contextState", contextState);
         result.addProperty("pendingIndent", pendingIndent);
         result.addProperty("pendingCancel", pendingCancel);
         result.addProperty("battleIndent", battleIndent);
@@ -322,8 +359,16 @@ public final class OriginalNpcInterpreter {
             throw new IllegalArgumentException("Unsupported original NPC snapshot version");
         }
         OriginalNpcInterpreter result = new OriginalNpcInterpreter(List.of(), context);
+        if (snapshot.has("contextState")) context.restorePresentationState(snapshot.getAsJsonObject("contextState"));
         result.frames.clear();
         result.revision = savedLong(snapshot, "revision");
+        if (snapshot.has("shopPurchaseOnly")) {
+            if (!snapshot.get("shopPurchaseOnly").isJsonPrimitive()
+                    || !snapshot.getAsJsonPrimitive("shopPurchaseOnly").isBoolean()) {
+                throw new IllegalArgumentException("Invalid original shop purchase flag");
+            }
+            result.shopPurchaseOnly = snapshot.get("shopPurchaseOnly").getAsBoolean();
+        }
         result.pendingIndent = savedInt(snapshot, "pendingIndent");
         result.pendingCancel = savedInt(snapshot, "pendingCancel");
         result.battleIndent = savedInt(snapshot, "battleIndent");
@@ -518,7 +563,17 @@ public final class OriginalNpcInterpreter {
             case 5 -> context.enemyCondition(integer(p, 1), integer(p, 2), p.size() > 3 ? p.get(3) : null);
             case 7 -> compare(context.gold(), p.get(1).getAsLong(),
                     integer(p, 2) == 0 ? 1 : integer(p, 2) == 1 ? 2 : 4);
-            case 8, 9, 10 -> context.itemCount(integer(p, 0) - 8, integer(p, 1)) > 0;
+            case 8 -> context.itemCount(0, integer(p, 1)) > 0;
+            case 9, 10 -> {
+                boolean includeEquipment = false;
+                if (p.size() > 2) {
+                    if (!p.get(2).isJsonPrimitive() || !p.get(2).getAsJsonPrimitive().isBoolean()) {
+                        throw new UnsupportedOperationException("condition_include_equipment");
+                    }
+                    includeEquipment = p.get(2).getAsBoolean();
+                }
+                yield context.itemPresent(integer(p, 0) - 8, integer(p, 1), includeEquipment);
+            }
             case 12 -> context.scriptCondition(text(p, 1));
             default -> throw new UnsupportedOperationException("condition:" + integer(p, 0));
         };
@@ -555,6 +610,7 @@ public final class OriginalNpcInterpreter {
 
     private Prompt emit(Type type, String text, String portrait, int portraitIndex,
                         List<String> choices, List<Goods> goods, String reason) {
+        if (type == Type.END) context.closeMessage();
         pending = new Prompt(++revision, type, text, portrait, portraitIndex, choices, goods, reason);
         return pending;
     }
@@ -656,7 +712,18 @@ public final class OriginalNpcInterpreter {
         long gold();
         void changeGold(long amount);
         int itemCount(int kind, int id);
+        default boolean itemPresent(int kind, int id, boolean includeEquipment) {
+            if (itemCount(kind, id) > 0) return true;
+            if (includeEquipment) throw new UnsupportedOperationException("condition_include_equipment");
+            return false;
+        }
+
         boolean changeItem(int kind, int id, long amount);
+        default boolean changeItem(int kind, int id, long amount, boolean includeEquipment) {
+            if (includeEquipment) throw new UnsupportedOperationException("include_equipment");
+            return changeItem(kind, id, amount);
+        }
+
         boolean hasActor(int actorId);
         boolean actorCondition(int actorId, int condition, JsonElement value);
         boolean scriptCondition(String expression);
@@ -680,6 +747,24 @@ public final class OriginalNpcInterpreter {
 
         default void comment(String text) {
         }
+
+        default void beginMessage(String faceName, int faceIndex) {
+        }
+
+        default void closeMessage() {
+        }
+
+        default String speakerName() {
+            return "";
+        }
+
+        default JsonObject savePresentationState() {
+            return null;
+        }
+
+        default void restorePresentationState(JsonObject saved) {
+        }
+
 
         default int presentation(int command, List<JsonElement> parameters) {
             throw new UnsupportedOperationException("command:" + command);

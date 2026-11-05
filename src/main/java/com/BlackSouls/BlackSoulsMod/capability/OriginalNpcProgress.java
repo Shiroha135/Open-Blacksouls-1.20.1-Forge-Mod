@@ -28,7 +28,34 @@ public final class OriginalNpcProgress extends SavedData {
     private final Map<String, byte[]> conversations = new HashMap<>();
     private final Map<String, Boolean> timedWaits = new HashMap<>();
     private final Set<UUID> cheshireLegacyMigrated = new HashSet<>();
+    private Boolean nameWindowEnabled;
+    private final Map<UUID, byte[]> nameWindowStates = new HashMap<>();
     private OriginalBattleMusic battleMusic = OriginalBattleMusic.UNSET;
+
+    public boolean nameWindowEnabled() {
+        return Boolean.TRUE.equals(nameWindowEnabled);
+    }
+
+    public void setNameWindowEnabled(boolean enabled) {
+        if (nameWindowEnabled == null || nameWindowEnabled != enabled) {
+            nameWindowEnabled = enabled;
+            setDirty();
+        }
+    }
+
+    public void bootstrapNameWindow() {
+        if (nameWindowEnabled == null) setNameWindowEnabled(true);
+    }
+
+    public JsonObject nameWindowState(UUID player) {
+        byte[] value = nameWindowStates.get(player);
+        return value == null ? null : JsonParser.parseString(new String(value, StandardCharsets.UTF_8)).getAsJsonObject();
+    }
+
+    public void setNameWindowState(UUID player, JsonObject value) {
+        nameWindowStates.put(player, value.toString().getBytes(StandardCharsets.UTF_8));
+        setDirty();
+    }
 
     public OriginalBattleMusic battleMusic() {
         return battleMusic;
@@ -184,6 +211,11 @@ public final class OriginalNpcProgress extends SavedData {
 
     public static OriginalNpcProgress load(CompoundTag tag) {
         OriginalNpcProgress data = new OriginalNpcProgress();
+        if (tag.contains("NameWindowEnabled", Tag.TAG_BYTE)) data.nameWindowEnabled = tag.getBoolean("NameWindowEnabled");
+        CompoundTag names = tag.getCompound("NameWindowStates");
+        for (String player : names.getAllKeys()) {
+            if (names.contains(player, Tag.TAG_BYTE_ARRAY)) data.nameWindowStates.put(UUID.fromString(player), names.getByteArray(player));
+        }
         for (int id : tag.getIntArray("Switches")) {
             data.switches.add(id);
         }
@@ -217,6 +249,10 @@ public final class OriginalNpcProgress extends SavedData {
 
     @Override
     public CompoundTag save(CompoundTag tag) {
+        if (nameWindowEnabled != null) tag.putBoolean("NameWindowEnabled", nameWindowEnabled);
+        CompoundTag names = new CompoundTag();
+        nameWindowStates.forEach((player, value) -> names.putByteArray(player.toString(), value));
+        tag.put("NameWindowStates", names);
         tag.putIntArray("Switches", switches.stream().sorted().mapToInt(Integer::intValue).toArray());
         CompoundTag variableTag = new CompoundTag();
         variables.forEach((id, value) -> variableTag.putLong(id.toString(), value));

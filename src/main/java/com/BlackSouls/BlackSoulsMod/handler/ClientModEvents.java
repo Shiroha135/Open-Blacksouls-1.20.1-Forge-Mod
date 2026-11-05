@@ -51,6 +51,7 @@ public class ClientModEvents {
         event.registerEntityRenderer(BSEntityRegistry.CHESHIRE_CAT.get(), RenderCheshireCat::new);
         event.registerEntityRenderer(BSEntityRegistry.HOLMES.get(), EntityHolmesRenderer::new);
         event.registerEntityRenderer(BSEntityRegistry.ORIGINAL_NPC.get(), RenderOriginalNpc::new);
+        event.registerEntityRenderer(BSEntityRegistry.ORIGINAL_RECEPTIONIST.get(), RenderOriginalReceptionist::new);
         event.registerEntityRenderer(BSEntityRegistry.HAIL_CAESAR.get(), RenderHailCaesar::new);
         event.registerEntityRenderer(BSEntityRegistry.TEST_DUMMY.get(), RenderTestDummy::new);
         event.registerEntityRenderer(BSEntityRegistry.THROWN_BLADE.get(), ThrownItemRenderer::new);

@@ -20,7 +20,7 @@ import java.util.Optional;
 @SuppressWarnings("removal")
 public class NetworkHandler {
 
-    private static final String PROTOCOL_VERSION = "6";
+    private static final String PROTOCOL_VERSION = "8";
 
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(BlackSouls.MODID, "main"),
@@ -96,6 +96,7 @@ public class NetworkHandler {
         register(ServerboundPartySyncPacket.class, ServerboundPartySyncPacket::toBytes, ServerboundPartySyncPacket::new, ServerboundPartySyncPacket::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ClientboundOriginalNpcPacket.class, ClientboundOriginalNpcPacket::toBytes, ClientboundOriginalNpcPacket::new, ClientboundOriginalNpcPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(ServerboundOriginalNpcPacket.class, ServerboundOriginalNpcPacket::toBytes, ServerboundOriginalNpcPacket::new, ServerboundOriginalNpcPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ServerboundOriginalNpcTradePacket.class, ServerboundOriginalNpcTradePacket::toBytes, ServerboundOriginalNpcTradePacket::new, ServerboundOriginalNpcTradePacket::handle, NetworkDirection.PLAY_TO_SERVER);
         register(ClientboundOriginalNpcPresentationPacket.class, ClientboundOriginalNpcPresentationPacket::toBytes, ClientboundOriginalNpcPresentationPacket::new, ClientboundOriginalNpcPresentationPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(ClientboundOriginalNpcAnimationPacket.class, ClientboundOriginalNpcAnimationPacket::toBytes, ClientboundOriginalNpcAnimationPacket::new, ClientboundOriginalNpcAnimationPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(ClientboundOriginalNpcPicturesPacket.class, ClientboundOriginalNpcPicturesPacket::toBytes, ClientboundOriginalNpcPicturesPacket::new, ClientboundOriginalNpcPicturesPacket::handle, NetworkDirection.PLAY_TO_CLIENT);

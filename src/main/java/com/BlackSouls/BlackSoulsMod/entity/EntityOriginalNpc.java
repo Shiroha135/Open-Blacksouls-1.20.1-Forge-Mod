@@ -26,7 +26,7 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public final class EntityOriginalNpc extends PathfinderMob {
+public class EntityOriginalNpc extends PathfinderMob {
     private static final EntityDataAccessor<String> NPC_ID = SynchedEntityData.defineId(
             EntityOriginalNpc.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Integer> PAGE = SynchedEntityData.defineId(

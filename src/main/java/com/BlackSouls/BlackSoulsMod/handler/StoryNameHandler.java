@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.handler;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.BlackSouls.BlackSoulsMod.capability.OriginalNpcProgress;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundStoryNamePacket;
 import com.BlackSouls.BlackSoulsMod.util.StoryNameData;
@@ -16,6 +17,8 @@ public final class StoryNameHandler {
         if (!(event.getEntity() instanceof ServerPlayer player)) {
             return;
         }
+
+        OriginalNpcProgress.get(player.server).bootstrapNameWindow();
 
         if (!StoryNameData.hasStarted(player)) {
             StoryNameData.start(player);

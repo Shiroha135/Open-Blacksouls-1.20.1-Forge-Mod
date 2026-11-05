@@ -3251,5 +3251,6 @@
   "dialogue.blacksouls.holmes.alice_2": "「要想找人的话就去§c西南边的酒场§f吧。\n　虽说那里只会提供一些难喝的啤酒和猛烈的杜松子酒，\n　但那里姑且也算是个交流情报的好地方吧」",
   "dialogue.blacksouls.holmes.ripper_1": "「……话说回来，\n　你听说过一个叫做§c开膛手杰克§f的杀人鬼么？」",
   "dialogue.blacksouls.holmes.ripper_2": "「…不……没什么。\n　就当我没说过这句话吧」",
-  "dialogue.blacksouls.holmes.ripper_3": "「我必须亲自去捉住他……」"
+  "dialogue.blacksouls.holmes.ripper_3": "「我必须亲自去捉住他……」",
+  "entity.blacksouls.original_receptionist": "接待员"
 }

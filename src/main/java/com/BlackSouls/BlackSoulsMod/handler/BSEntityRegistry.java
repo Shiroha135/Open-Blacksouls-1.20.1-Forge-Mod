@@ -10,6 +10,9 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class BSEntityRegistry {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, BlackSouls.MODID);
+    public static final RegistryObject<EntityType<EntityOriginalReceptionist>> ORIGINAL_RECEPTIONIST = ENTITY_TYPES.register("original_receptionist",
+            () -> EntityType.Builder.of(EntityOriginalReceptionist::new, MobCategory.CREATURE)
+                    .sized(0.5F, 1.125F).clientTrackingRange(10).updateInterval(3).build("original_receptionist"));
     public static final RegistryObject<EntityType<EntityOriginalNpc>> ORIGINAL_NPC = ENTITY_TYPES.register("original_npc",
             () -> EntityType.Builder.of(EntityOriginalNpc::new, MobCategory.CREATURE)
                     .sized(0.6F, 1.9F).clientTrackingRange(10).updateInterval(3).build("original_npc"));

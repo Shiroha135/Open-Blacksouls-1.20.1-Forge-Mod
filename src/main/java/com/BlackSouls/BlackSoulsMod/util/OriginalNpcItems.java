@@ -20,6 +20,10 @@ public final class OriginalNpcItems {
     private OriginalNpcItems() {
     }
 
+    public static java.util.List<Entry> values() {
+        return ENTRIES.values().stream().sorted(java.util.Comparator.comparingInt(Entry::kind).thenComparingInt(Entry::id)).toList();
+    }
+
     public static Entry get(int kind, int id) {
         return ENTRIES.get(kind + ":" + id);
     }

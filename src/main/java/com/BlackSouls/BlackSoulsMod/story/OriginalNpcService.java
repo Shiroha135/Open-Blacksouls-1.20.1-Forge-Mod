@@ -6,12 +6,15 @@ import com.BlackSouls.BlackSoulsMod.capability.OriginalNpcProgress;
 import com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager;
 import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBossData;
 import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalNpc;
+import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalReceptionist;
+import com.BlackSouls.BlackSoulsMod.compat.scene.OriginalReceptionistPlacement;
 import com.BlackSouls.BlackSoulsMod.entity.EntityCheshireCat;
 import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalDatabaseEnemy;
 import com.BlackSouls.BlackSoulsMod.handler.BSEntityRegistry;
 import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundOriginalNpcPacket;
+import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundOriginalNpcTradePacket;
 import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundTurnBattlePacket;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketPlayAnim;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalNpcData;
@@ -19,6 +22,7 @@ import com.BlackSouls.BlackSoulsMod.util.BSOriginalEnemyData;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalTroopData;
 import com.BlackSouls.BlackSoulsMod.util.OriginalNpcItems;
 import com.BlackSouls.BlackSoulsMod.util.OriginalNpcLogicData;
+import com.BlackSouls.BlackSoulsMod.util.OriginalNpcNameWindow;
 import com.BlackSouls.BlackSoulsMod.util.OriginalActorBridge;
 import com.BlackSouls.BlackSoulsMod.util.PlayerStatService;
 import com.BlackSouls.BlackSoulsMod.util.StoryNameData;
@@ -63,6 +67,8 @@ public final class OriginalNpcService {
     }
 
     private static boolean matchesActor(PathfinderMob npc, String npcId) {
+        if (npc instanceof EntityOriginalReceptionist receptionist
+                && !OriginalReceptionistPlacement.matches(receptionist)) return false;
         if (npc instanceof EntityOriginalNpc original) return original.getNpcId().equals(npcId);
         return npc instanceof EntityCheshireCat cat && cat.isOriginalSourceManaged() && CHESHIRE_EVENTS.contains(npcId)
                 && OriginalNpcCharacterBindings.matches(cat, OriginalNpcCharacterBindings.CHESHIRE_RABBIT_HOLE);
@@ -313,6 +319,7 @@ public final class OriginalNpcService {
     }
 
     public static void interact(ServerPlayer player, EntityOriginalNpc npc) {
+        if (!matchesActor(npc, npc.getNpcId())) return;
         interact(player, npc, npc.getNpcId(), false);
     }
 
@@ -391,6 +398,27 @@ public final class OriginalNpcService {
         present(player, npc, session, session.interpreter.advance(-1));
     }
 
+    public static void trade(ServerPlayer player, int entityId, UUID token, long revision,
+                             ServerboundOriginalNpcTradePacket.Action action, int kind, int id, int quantity) {
+        Session session = SESSIONS.get(player.getUUID());
+        if (action == null || session == null || session.entityId != entityId || !session.token.equals(token)
+                || session.prompt == null || session.prompt.type() != OriginalNpcInterpreter.Type.SHOP
+                || session.prompt.revision() != revision || !player.level().dimension().location().equals(session.dimension)
+                || TurnBattleManager.isInBattle(player)) return;
+        Entity entity = player.serverLevel().getEntity(entityId);
+        if (!(entity instanceof PathfinderMob npc) || !matchesActor(npc, session.npcId)
+                || session.npcUuid == null || !session.npcUuid.equals(npc.getUUID()) || !canInteract(player, npc)
+                || player.serverLevel().getGameTime() - session.updated > 2400L) return;
+        if (action == ServerboundOriginalNpcTradePacket.Action.TOGGLE_STORAGE) {
+            if (kind != 0 || id != 0 || quantity != 0) return;
+            if (!OriginalNpcProgress.get(player.server).switchValue(201)) session.shopStorage = !session.shopStorage;
+        } else {
+            OriginalNpcShopService.transact(player, session.prompt.goods(), session.shopStorage,
+                    session.interpreter.shopPurchaseOnly(), action, kind, id, quantity);
+        }
+        present(player, npc, session, session.interpreter.refreshShop());
+    }
+
     public static void respond(ServerPlayer player, int entityId, UUID sessionId, long revision, int selection) {
         Session session = SESSIONS.get(player.getUUID());
         if (session == null || session.entityId != entityId || !session.token.equals(sessionId)
@@ -422,6 +450,14 @@ public final class OriginalNpcService {
             session.stagedPrompt = null;
             session.battleOutcome = null;
             present(player, npc, session, staged);
+            return;
+        }
+        if (session.prompt.type() == OriginalNpcInterpreter.Type.SHOP && selection >= 0) {
+            if (selection < session.prompt.goods().size()) {
+                OriginalNpcInterpreter.Goods goods = session.prompt.goods().get(selection);
+                trade(player, entityId, sessionId, revision, ServerboundOriginalNpcTradePacket.Action.BUY,
+                        goods.kind(), goods.id(), 1);
+            }
             return;
         }
         if (selection == -4 || TurnBattleManager.isInBattle(player)) {
@@ -468,7 +504,9 @@ public final class OriginalNpcService {
     }
 
     private static boolean canInteract(ServerPlayer player, PathfinderMob npc) {
-        return player.isAlive() && npc.isAlive() && !npc.isRemoved() && player.level() == npc.level()
+        return (!(npc instanceof EntityOriginalReceptionist receptionist)
+                || OriginalReceptionistPlacement.matches(receptionist) && !receptionist.isInvisible())
+                && player.isAlive() && npc.isAlive() && !npc.isRemoved() && player.level() == npc.level()
                 && player.distanceToSqr(npc) <= 64.0D;
     }
 
@@ -555,8 +593,10 @@ public final class OriginalNpcService {
         }
         session.restoringPresentation = false;
         NetworkHandler.sendToPlayer(new ClientboundOriginalNpcPacket(npc.getId(), session.token,
-                npc.getName().getString(), resolveText(display.text(), player, npc, session.npcId), display,
-                prompt.choices().stream().map(value -> resolveText(value, player, npc, session.npcId)).toList()), player);
+                session.interpreter.speakerName(), resolveText(display.text(), player, npc, session.npcId), display,
+                prompt.choices().stream().map(value -> resolveText(value, player, npc, session.npcId)).toList(),
+                prompt.type() == OriginalNpcInterpreter.Type.SHOP ? OriginalNpcShopService.view(player, prompt.goods(),
+                        session.shopStorage, session.interpreter.shopPurchaseOnly()) : null), player);
         StatEventHandler.syncToClient(player);
     }
 
@@ -637,6 +677,7 @@ public final class OriginalNpcService {
         private final PathfinderMob npc;
         private final String npcId;
         private final OriginalNpcProgress progress;
+        private OriginalNpcNameWindow.State nameWindow;
 
         public EventContext(ServerPlayer player, EntityOriginalNpc npc) {
             this(player, npc, npc.getNpcId());
@@ -652,6 +693,57 @@ public final class OriginalNpcService {
             this.player = player;
             this.npc = npc;
             this.progress = OriginalNpcProgress.get(npc.level().getServer());
+            JsonObject state = player == null ? null : progress.nameWindowState(player.getUUID());
+            nameWindow = state == null ? new OriginalNpcNameWindow.State() : OriginalNpcNameWindow.State.restore(state);
+        }
+
+        private OriginalNpcNameWindow.Access nameAccess() {
+            return new OriginalNpcNameWindow.Access() {
+                @Override public boolean enabled() { return progress.nameWindowEnabled(); }
+                @Override public void setEnabled(boolean enabled) { progress.setNameWindowEnabled(enabled); }
+                @Override public String actorName(int id) {
+                    if (id == 2 && player != null) return StoryNameData.get(player);
+                    throw new UnsupportedOperationException("unmapped_name_window_actor:" + id);
+                }
+            };
+        }
+
+        @Override
+        public void comment(String text) {
+            nameWindow.comment(text, nameAccess());
+            saveNameWindow();
+        }
+
+        @Override
+        public void beginMessage(String faceName, int faceIndex) {
+            nameWindow.beginMessage(faceName, faceIndex, nameAccess());
+            saveNameWindow();
+        }
+
+        @Override
+        public void closeMessage() {
+            nameWindow.closeMessage();
+            saveNameWindow();
+        }
+
+        private void saveNameWindow() {
+            if (player != null) progress.setNameWindowState(player.getUUID(), nameWindow.snapshot());
+        }
+
+        @Override
+        public String speakerName() {
+            return nameWindow.visible() ? nameWindow.displayName() : "";
+        }
+
+        @Override
+        public JsonObject savePresentationState() {
+            return nameWindow.snapshot();
+        }
+
+        @Override
+        public void restorePresentationState(JsonObject saved) {
+            nameWindow = OriginalNpcNameWindow.State.restore(saved);
+            saveNameWindow();
         }
 
         private BSPlayerStats stats() {
@@ -716,7 +808,10 @@ public final class OriginalNpcService {
 
         @Override
         public void changeGold(long amount) {
-            stats().souls = Math.max(0L, Math.addExact(stats().souls, amount));
+            BSPlayerStats stats = stats();
+            stats.souls = java.math.BigInteger.valueOf(stats.souls).add(java.math.BigInteger.valueOf(amount))
+                    .max(java.math.BigInteger.ZERO).min(java.math.BigInteger.valueOf(
+                            com.BlackSouls.BlackSoulsMod.util.OriginalNpcShopRules.MAX_GOLD)).longValueExact();
         }
 
         @Override
@@ -725,38 +820,23 @@ public final class OriginalNpcService {
             if (item == null) {
                 throw new UnsupportedOperationException("unmapped_item:" + kind + ":" + id);
             }
-            return player == null ? 0 : player.getInventory().countItem(item);
+            return player == null ? 0 : OriginalNpcInventoryService.count(player, kind, id);
+        }
+
+        @Override
+        public boolean itemPresent(int kind, int id, boolean includeEquipment) {
+            return itemCount(kind, id) > 0 || includeEquipment && player != null
+                    && OriginalActorBridge.equipped(player, 2, kind, id);
         }
 
         @Override
         public boolean changeItem(int kind, int id, long amount) {
-            Item item = OriginalNpcItems.item(kind, id);
-            if (item == null || amount < Integer.MIN_VALUE || amount > 100000L) {
-                return false;
-            }
-            int remaining = (int) Math.abs(amount);
-            if (amount < 0L) {
-                for (int slot = 0; slot < player.getInventory().getContainerSize() && remaining > 0; slot++) {
-                    ItemStack stack = player.getInventory().getItem(slot);
-                    if (stack.is(item)) {
-                        int remove = Math.min(stack.getCount(), remaining);
-                        stack.shrink(remove);
-                        remaining -= remove;
-                    }
-                }
-            } else {
-                while (remaining > 0) {
-                    int count = Math.min(remaining, item.getMaxStackSize());
-                    ItemStack stack = new ItemStack(item, count);
-                    if (!player.addItem(stack)) {
-                        player.drop(stack, false);
-                    }
-                    remaining -= count;
-                }
-            }
-            player.getInventory().setChanged();
-            player.containerMenu.broadcastChanges();
-            return true;
+            return changeItem(kind, id, amount, false);
+        }
+
+        @Override
+        public boolean changeItem(int kind, int id, long amount, boolean includeEquipment) {
+            return OriginalNpcInventoryService.change(player, kind, id, amount, includeEquipment);
         }
 
         @Override
@@ -880,19 +960,13 @@ public final class OriginalNpcService {
 
         @Override
         public boolean canTrade(OriginalNpcInterpreter.Goods goods) {
-            return OriginalNpcItems.item(goods.kind(), goods.id()) != null;
+            return !progress.switchValue(935) && OriginalNpcItems.item(goods.kind(), goods.id()) != null;
         }
 
         @Override
         public void buy(OriginalNpcInterpreter.Goods goods) {
-            OriginalNpcItems.Entry item = OriginalNpcItems.get(goods.kind(), goods.id());
-            long price = goods.price() >= 0L ? goods.price() : item.price();
-            if (price < 0L || gold() < price) {
-                return;
-            }
-            if (changeItem(goods.kind(), goods.id(), 1)) {
-                changeGold(-price);
-            }
+            OriginalNpcShopService.transact(player, List.of(goods), false, false,
+                    ServerboundOriginalNpcTradePacket.Action.BUY, goods.kind(), goods.id(), 1);
         }
     }
 
@@ -913,6 +987,7 @@ public final class OriginalNpcService {
         private String lastPortrait = "";
         private int lastPortraitIndex;
         private boolean restoringPresentation;
+        private boolean shopStorage;
 
         private Session(UUID playerId, int entityId, String npcId, ResourceLocation dimension,
                         OriginalNpcInterpreter interpreter) {
