@@ -5,8 +5,10 @@ import com.BlackSouls.BlackSoulsMod.compat.scene.OriginalNpcPlacements;
 import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBossData;
 import com.BlackSouls.BlackSoulsMod.entity.EntityCheshireCat;
 import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalNpc;
+import com.BlackSouls.BlackSoulsMod.util.BSOriginalNpcData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.phys.AABB;
@@ -29,6 +31,28 @@ public final class OriginalNpcCharacterBindings {
             landmark(79, -28, 171, "minecraft:polished_diorite", Map.of()));
 
     private OriginalNpcCharacterBindings() {
+    }
+
+    public static Entity resolveEvent(ServerPlayer player, EntityOriginalNpc subject, int eventId) {
+        if (player == null || subject == null || player.level() != subject.level()
+                || !subject.isAlive() || subject.isRemoved()) {
+            throw new UnsupportedOperationException("event_character_context:" + eventId);
+        }
+        if (eventId < 0) return player;
+        if (eventId == 0) return subject;
+        var source = BSOriginalNpcData.get(subject.getNpcId());
+        if (source == null) throw new UnsupportedOperationException("event_character_source");
+        if (eventId == source.eventId()) return subject;
+        EntityOriginalNpc resolved = null;
+        for (Entity entity : player.serverLevel().getAllEntities()) {
+            if (!(entity instanceof EntityOriginalNpc candidate) || !candidate.isAlive() || candidate.isRemoved()) continue;
+            var definition = BSOriginalNpcData.get(candidate.getNpcId());
+            if (definition == null || definition.mapId() != source.mapId() || definition.eventId() != eventId) continue;
+            if (resolved != null) throw new UnsupportedOperationException("event_character_ambiguous:" + eventId);
+            resolved = candidate;
+        }
+        if (resolved == null) throw new UnsupportedOperationException("event_character_unloaded:" + eventId);
+        return resolved;
     }
 
     public static Set<ChunkPos> cheshireRequiredChunks() {

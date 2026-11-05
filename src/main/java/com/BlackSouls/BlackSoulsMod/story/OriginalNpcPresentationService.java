@@ -150,31 +150,7 @@ public final class OriginalNpcPresentationService {
     }
 
     private static Entity resolveCharacter(ServerPlayer player, EntityOriginalNpc npc, int eventId) {
-        if (eventId == -1) {
-            return player;
-        }
-        if (eventId == 0) {
-            return npc;
-        }
-        BSOriginalNpcData.Entry source = BSOriginalNpcData.get(npc.getNpcId());
-        if (source == null) {
-            throw unsupported(213, "NPC has no original map context");
-        }
-        EntityOriginalNpc nearest = null;
-        for (Entity entity : player.serverLevel().getAllEntities()) {
-            if (!(entity instanceof EntityOriginalNpc candidate)) {
-                continue;
-            }
-            BSOriginalNpcData.Entry entry = BSOriginalNpcData.get(candidate.getNpcId());
-            if (entry != null && entry.mapId() == source.mapId() && entry.eventId() == eventId
-                    && (nearest == null || npc.distanceToSqr(candidate) < npc.distanceToSqr(nearest))) {
-                nearest = candidate;
-            }
-        }
-        if (nearest == null) {
-            throw unsupported(213, "Referenced original character is not loaded " + eventId);
-        }
-        return nearest;
+        return OriginalNpcCharacterBindings.resolveEvent(player, npc, eventId);
     }
 
     private static JsonObject object(List<JsonElement> parameters, int index) {

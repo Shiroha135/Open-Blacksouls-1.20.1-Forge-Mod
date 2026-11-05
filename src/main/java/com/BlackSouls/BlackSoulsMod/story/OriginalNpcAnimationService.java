@@ -247,24 +247,7 @@ public final class OriginalNpcAnimationService {
     }
 
     private static Entity resolve(ServerPlayer player, EntityOriginalNpc npc, int target) {
-        if (player == null || npc == null || npc.level() != player.level() || npc.isRemoved()) {
-            throw new UnsupportedOperationException("animation_source_context");
-        }
-        if (target < 0) return player;
-        if (target == 0) return npc;
-        BSOriginalNpcData.Entry source = BSOriginalNpcData.get(npc.getNpcId());
-        if (source == null) throw new UnsupportedOperationException("animation_source_map");
-        boolean mapped = BSOriginalNpcData.values().stream()
-                .anyMatch(entry -> entry.mapId() == source.mapId() && entry.eventId() == target);
-        if (!mapped) throw new UnsupportedOperationException("animation_target_unmapped:" + target);
-        EntityOriginalNpc nearest = null;
-        for (Entity entity : player.serverLevel().getAllEntities()) {
-            if (!(entity instanceof EntityOriginalNpc candidate) || candidate.isRemoved()) continue;
-            BSOriginalNpcData.Entry definition = BSOriginalNpcData.get(candidate.getNpcId());
-            if (definition != null && definition.mapId() == source.mapId() && definition.eventId() == target
-                    && (nearest == null || npc.distanceToSqr(candidate) < npc.distanceToSqr(nearest))) nearest = candidate;
-        }
-        if (nearest == null) throw new UnsupportedOperationException("animation_target_unloaded:" + target);
-        return nearest;
+        return OriginalNpcCharacterBindings.resolveEvent(player, npc, target);
     }
+
 }

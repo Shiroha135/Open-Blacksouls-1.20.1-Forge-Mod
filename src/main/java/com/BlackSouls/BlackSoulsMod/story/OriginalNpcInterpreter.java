@@ -147,6 +147,22 @@ public final class OriginalNpcInterpreter {
                         }
                         frames.push(new Frame(common));
                     }
+                    case 118 -> {
+                        String label = text(p, 0);
+                        if (label.contains("タイマーの操作：非表示") || label.contains("タイマーの操作：表示")) {
+                            throw new UnsupportedOperationException("label_timer_visibility");
+                        }
+                    }
+                    case 119 -> {
+                        String label = text(p, 0);
+                        for (int index = 0; index < frame.commands.size(); index++) {
+                            var target = frame.commands.get(index);
+                            if (target.code() == 118 && text(target.parameters(), 0).equals(label)) {
+                                frame.position = index + 1;
+                                break;
+                            }
+                        }
+                    }
                     case 121 -> {
                         range(integer(p, 0), integer(p, 1));
                         for (int id = integer(p, 0); id <= integer(p, 1); id++) {

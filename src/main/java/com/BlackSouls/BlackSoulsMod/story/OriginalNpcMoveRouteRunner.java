@@ -119,7 +119,7 @@ public final class OriginalNpcMoveRouteRunner {
 
     private static void validate(int code, List<JsonElement> parameters) {
         switch (code) {
-            case 0, 16, 17, 18, 19, 20, 21, 22, 23, 24, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40 -> size(parameters, 0);
+            case 0, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40 -> size(parameters, 0);
             case 15, 27, 28, 29, 30, 42, 43 -> {
                 size(parameters, 1);
                 int minimum = code == 27 || code == 28 || code == 29 || code == 30 ? 1 : 0;

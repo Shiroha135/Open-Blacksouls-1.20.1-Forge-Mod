@@ -248,24 +248,7 @@ public final class OriginalNpcMovementService {
     }
 
     private static Entity resolve(ServerPlayer player, EntityOriginalNpc npc, int target) {
-        if (target < -1 || npc == null || npc.isRemoved() || npc.level() != player.level()) {
-            throw new UnsupportedOperationException("route_target:" + target);
-        }
-        if (target == -1) return player;
-        if (target == 0) return npc;
-        BSOriginalNpcData.Entry source = BSOriginalNpcData.get(npc.getNpcId());
-        if (source == null) throw new UnsupportedOperationException("route_source_map");
-        EntityOriginalNpc nearest = null;
-        for (Entity entity : player.serverLevel().getAllEntities()) {
-            if (!(entity instanceof EntityOriginalNpc candidate) || candidate.isRemoved()) continue;
-            BSOriginalNpcData.Entry definition = BSOriginalNpcData.get(candidate.getNpcId());
-            if (definition != null && definition.mapId() == source.mapId() && definition.eventId() == target
-                    && (nearest == null || npc.distanceToSqr(candidate) < npc.distanceToSqr(nearest))) {
-                nearest = candidate;
-            }
-        }
-        if (nearest == null) throw new UnsupportedOperationException("route_target_unloaded:" + target);
-        return nearest;
+        return OriginalNpcCharacterBindings.resolveEvent(player, npc, target);
     }
 
     private static final class RouteContext implements OriginalNpcMoveRouteRunner.Context {
@@ -311,7 +294,24 @@ public final class OriginalNpcMovementService {
             } else if (code == 44) {
                 NetworkHandler.sendToPlayer(OriginalNpcPresentationService.createPacket(owner, subject, 250, parameters), owner);
             } else if (subject instanceof EntityOriginalNpc npc) {
-                npc.applyOriginalMoveCommand(code, parameters);
+                if (code == 25 || code == 26) {
+                    double dx = owner.getX() - npc.getX(), dz = owner.getZ() - npc.getZ();
+                    if (dx == 0 && dz == 0) return;
+                    float facing = Math.abs(dx) > Math.abs(dz) ? (dx > 0 ? 270.0F : 90.0F) : (dz > 0 ? 0.0F : 180.0F);
+                    if (code == 26) facing += 180.0F;
+                    int direction = npc.getSpriteDirection();
+                    int quarter = direction == 4 ? 1 : direction == 8 ? 2 : direction == 6 ? 3 : 0;
+                    int turns = Math.round(net.minecraft.util.Mth.wrapDegrees(facing - npc.getMmdBodyYaw(npc.getYRot())) / 90.0F);
+                    int command = switch (Math.floorMod(quarter + turns, 4)) {
+                        case 1 -> 17;
+                        case 2 -> 19;
+                        case 3 -> 18;
+                        default -> 16;
+                    };
+                    npc.applyOriginalMoveCommand(command, List.of());
+                } else {
+                    npc.applyOriginalMoveCommand(code, parameters);
+                }
             } else if (subject instanceof EntityCheshireCat cat) {
                 cat.applyOriginalMoveCommand(code, parameters);
             } else if (subject instanceof EntityRabbitKnight rabbit) {
