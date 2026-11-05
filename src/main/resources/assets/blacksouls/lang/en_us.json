@@ -2843,5 +2843,17 @@
   "gui.blacksouls.synthesis.luck": "Luck %s",
   "gui.blacksouls.synthesis.equipped": "Equipped %s",
   "gui.blacksouls.synthesis.difference": "Attack change %s",
-  "gui.blacksouls.synthesis.not_equippable": "Cannot equip"
+  "gui.blacksouls.synthesis.not_equippable": "Cannot equip",
+  "item.blacksouls.pumpkin_hand_mirror": "Pumpkin's Hand Mirror",
+  "item.blacksouls.pumpkin_hand_mirror.lore.1": "A bright hand mirror that reflects a familiar figure.",
+  "item.blacksouls.pumpkin_hand_mirror.lore.2": "Adds a new appearance in the recollection room.",
+  "item.blacksouls.detective_hand_mirror": "Detective's Hand Mirror",
+  "item.blacksouls.detective_hand_mirror.lore.1": "A bright hand mirror that reflects a familiar figure.",
+  "item.blacksouls.detective_hand_mirror.lore.2": "Adds a new appearance in the recollection room.",
+  "item.blacksouls.black_rabbit_hand_mirror": "Black Rabbit's Hand Mirror",
+  "item.blacksouls.black_rabbit_hand_mirror.lore.1": "A bright hand mirror that reflects a familiar figure.",
+  "item.blacksouls.black_rabbit_hand_mirror.lore.2": "Adds a new appearance in the recollection room.",
+  "item.blacksouls.girl_hand_mirror": "Girl's Hand Mirror",
+  "item.blacksouls.girl_hand_mirror.lore.1": "A bright hand mirror that reflects a familiar figure.",
+  "item.blacksouls.girl_hand_mirror.lore.2": "Adds a new appearance in the recollection room."
 }

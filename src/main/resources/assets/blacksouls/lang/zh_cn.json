@@ -3286,5 +3286,17 @@
   "gui.blacksouls.synthesis.luck": "幸运 %s",
   "gui.blacksouls.synthesis.equipped": "当前装备 %s",
   "gui.blacksouls.synthesis.difference": "攻击变化 %s",
-  "gui.blacksouls.synthesis.not_equippable": "无法装备"
+  "gui.blacksouls.synthesis.not_equippable": "无法装备",
+  "item.blacksouls.pumpkin_hand_mirror": "南瓜的手镜",
+  "item.blacksouls.pumpkin_hand_mirror.lore.1": "明亮的手镜。能够映出某个眼熟的身影",
+  "item.blacksouls.pumpkin_hand_mirror.lore.2": "在回想房间中追加新的造型。",
+  "item.blacksouls.detective_hand_mirror": "侦探的手镜",
+  "item.blacksouls.detective_hand_mirror.lore.1": "明亮的手镜。能够映出某个眼熟的身影",
+  "item.blacksouls.detective_hand_mirror.lore.2": "在回想房间中追加新的造型。",
+  "item.blacksouls.black_rabbit_hand_mirror": "黑兔的手镜",
+  "item.blacksouls.black_rabbit_hand_mirror.lore.1": "明亮的手镜。能够映出某个眼熟的身影",
+  "item.blacksouls.black_rabbit_hand_mirror.lore.2": "在回想房间中追加新的造型。",
+  "item.blacksouls.girl_hand_mirror": "少女的手镜",
+  "item.blacksouls.girl_hand_mirror.lore.1": "明亮的手镜。能够映出某个眼熟的身影",
+  "item.blacksouls.girl_hand_mirror.lore.2": "在回想房间中追加新的造型。"
 }

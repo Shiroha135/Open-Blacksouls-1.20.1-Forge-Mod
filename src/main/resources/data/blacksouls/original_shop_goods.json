@@ -1,0 +1,529 @@
+{
+  "version": 1,
+  "sourceItemsSha256": "199bb18718c5135e61db5781f7a7b994f9baaa312a766a27017f9c2a6cc128d8",
+  "goods": [
+    {
+      "kind": 0,
+      "id": 180,
+      "name": "南瓜的手镜",
+      "registry": "blacksouls:pumpkin_hand_mirror",
+      "type": "mirror"
+    },
+    {
+      "kind": 0,
+      "id": 181,
+      "name": "侦探的手镜",
+      "registry": "blacksouls:detective_hand_mirror",
+      "type": "mirror"
+    },
+    {
+      "kind": 0,
+      "id": 182,
+      "name": "黑兔的手镜",
+      "registry": "blacksouls:black_rabbit_hand_mirror",
+      "type": "mirror"
+    },
+    {
+      "kind": 0,
+      "id": 183,
+      "name": "少女的手镜",
+      "registry": "blacksouls:girl_hand_mirror",
+      "type": "mirror"
+    },
+    {
+      "kind": 0,
+      "id": 317,
+      "name": "魔书【魂之连射】",
+      "registry": "blacksouls:skill_book_soul_volley",
+      "profile": "SOUL_VOLLEY",
+      "sourceSkillId": 24,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 320,
+      "name": "魔书【驱散】",
+      "registry": "blacksouls:skill_book_dispel",
+      "profile": "DISPEL",
+      "sourceSkillId": 96,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 321,
+      "name": "魔书【识破攻击】",
+      "registry": "blacksouls:skill_book_see_through_attack",
+      "profile": "SEE_THROUGH_ATTACK",
+      "sourceSkillId": 212,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 323,
+      "name": "魔书【毒素】",
+      "registry": "blacksouls:skill_book_poison",
+      "profile": "POISON",
+      "sourceSkillId": 35,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 324,
+      "name": "魔书【毒素Ⅱ】",
+      "registry": "blacksouls:skill_book_poison_ii",
+      "profile": "POISON_II",
+      "sourceSkillId": 36,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 325,
+      "name": "魔书【催眠】",
+      "registry": "blacksouls:skill_book_hypnosis",
+      "profile": "HYPNOSIS",
+      "sourceSkillId": 39,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 326,
+      "name": "圣书【治愈】",
+      "registry": "blacksouls:skill_book_cure",
+      "profile": "CURE",
+      "sourceSkillId": 31,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 327,
+      "name": "魔书【魔力祝福】",
+      "registry": "blacksouls:skill_book_magic_blessing",
+      "profile": "MAGIC_BLESSING",
+      "sourceSkillId": 127,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 328,
+      "name": "魔书【横冲直撞】",
+      "registry": "blacksouls:skill_book_rampage",
+      "profile": "RAMPAGE",
+      "sourceSkillId": 173,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 329,
+      "name": "魔书【全面祝福】",
+      "registry": "blacksouls:skill_book_full_blessing",
+      "profile": "FULL_BLESSING",
+      "sourceSkillId": 51,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 330,
+      "name": "圣书【还魂】",
+      "registry": "blacksouls:skill_book_resurrection",
+      "profile": "RESURRECTION",
+      "sourceSkillId": 33,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 331,
+      "name": "魔书【魔力吸收】",
+      "registry": "blacksouls:skill_book_mana_absorption",
+      "profile": "MANA_ABSORPTION",
+      "sourceSkillId": 50,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 332,
+      "name": "圣书【擦除】",
+      "registry": "blacksouls:skill_book_erase",
+      "profile": "ERASE",
+      "sourceSkillId": 113,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 333,
+      "name": "魔书【王之号令】",
+      "registry": "blacksouls:skill_book_kings_command",
+      "profile": "KINGS_COMMAND",
+      "sourceSkillId": 140,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 336,
+      "name": "魔书【火炎】",
+      "registry": "blacksouls:skill_book_fire",
+      "profile": "FIRE",
+      "sourceSkillId": 132,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 337,
+      "name": "魔书【沉溺之泡】",
+      "registry": "blacksouls:skill_book_drowning_bubble",
+      "profile": "DROWNING_BUBBLE",
+      "sourceSkillId": 136,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 338,
+      "name": "魔书【月之暗面】",
+      "registry": "blacksouls:skill_book_dark_side_of_moon",
+      "profile": "DARK_SIDE_OF_MOON",
+      "sourceSkillId": 141,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 339,
+      "name": "魔书【冰结之魔弹】",
+      "registry": "blacksouls:skill_book_freezing_magic_bullet",
+      "profile": "FREEZING_MAGIC_BULLET",
+      "sourceSkillId": 142,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 340,
+      "name": "魔书【业火】",
+      "registry": "blacksouls:skill_book_hellfire",
+      "profile": "HELLFIRE",
+      "sourceSkillId": 143,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 341,
+      "name": "魔书【破灭风暴】",
+      "registry": "blacksouls:skill_book_destruction_storm",
+      "profile": "DESTRUCTION_STORM",
+      "sourceSkillId": 144,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 342,
+      "name": "魔书【内在潜力】",
+      "registry": "blacksouls:skill_book_inner_potential",
+      "profile": "INNER_POTENTIAL",
+      "sourceSkillId": 195,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 343,
+      "name": "魔书【魂之巨矢】",
+      "registry": "blacksouls:skill_book_great_soul_arrow",
+      "profile": "GREAT_SOUL_ARROW",
+      "sourceSkillId": 79,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 344,
+      "name": "魔书【新绿之力】",
+      "registry": "blacksouls:skill_book_verdant_power",
+      "profile": "VERDANT_POWER",
+      "sourceSkillId": 139,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 345,
+      "name": "魔书【岩之体】",
+      "registry": "blacksouls:skill_book_rock_body",
+      "profile": "ROCK_BODY",
+      "sourceSkillId": 22,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 346,
+      "name": "魔书【暗之球】",
+      "registry": "blacksouls:skill_book_dark_orb",
+      "profile": "DARK_ORB",
+      "sourceSkillId": 28,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 347,
+      "name": "魔书【暗之乱舞】",
+      "registry": "blacksouls:skill_book_dark_dance",
+      "profile": "DARK_DANCE",
+      "sourceSkillId": 29,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 348,
+      "name": "魔书【暗之群来】",
+      "registry": "blacksouls:skill_book_dark_swarm",
+      "profile": "DARK_SWARM",
+      "sourceSkillId": 30,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 349,
+      "name": "魔书【神雷】",
+      "registry": "blacksouls:skill_book_divine_thunder",
+      "profile": "DIVINE_THUNDER",
+      "sourceSkillId": 128,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 350,
+      "name": "魔书【神兽之雷鸣】",
+      "registry": "blacksouls:skill_book_divine_beast_thunder",
+      "profile": "DIVINE_BEAST_THUNDER",
+      "sourceSkillId": 129,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 351,
+      "name": "魔书【流星群】",
+      "registry": "blacksouls:skill_book_meteor_swarm",
+      "profile": "METEOR_SWARM",
+      "sourceSkillId": 150,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 352,
+      "name": "魔书【全面诅咒】",
+      "registry": "blacksouls:skill_book_full_curse",
+      "profile": "FULL_CURSE",
+      "sourceSkillId": 240,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 353,
+      "name": "魔书【魂之巨矢连射】",
+      "registry": "blacksouls:skill_book_great_soul_arrow_volley",
+      "profile": "GREAT_SOUL_ARROW_VOLLEY",
+      "sourceSkillId": 88,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 355,
+      "name": "圣书【致命守护】",
+      "registry": "blacksouls:skill_book_fatal_guard",
+      "profile": "FATAL_GUARD",
+      "sourceSkillId": 271,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 356,
+      "name": "魔书【幽火】",
+      "registry": "blacksouls:skill_book_ghost_fire",
+      "profile": "GHOST_FIRE",
+      "sourceSkillId": 244,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 357,
+      "name": "魔书【法拉克斯】",
+      "registry": "blacksouls:skill_book_phalanx",
+      "profile": "PHALANX",
+      "sourceSkillId": 584,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 358,
+      "name": "魔书【绝对必中】",
+      "registry": "blacksouls:skill_book_absolute_hit",
+      "profile": "ABSOLUTE_HIT",
+      "sourceSkillId": 603,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 359,
+      "name": "魔书【混沌爆炎】",
+      "registry": "blacksouls:skill_book_chaos_explosion",
+      "profile": "CHAOS_EXPLOSION",
+      "sourceSkillId": 153,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 360,
+      "name": "魔书【会心一击】",
+      "registry": "blacksouls:skill_book_critical_strike",
+      "profile": "CRITICAL_STRIKE",
+      "sourceSkillId": 621,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 361,
+      "name": "圣书【灵魂盾】",
+      "registry": "blacksouls:skill_book_soul_shield",
+      "profile": "SOUL_SHIELD",
+      "sourceSkillId": 625,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 362,
+      "name": "魔书【密螺旋体】",
+      "registry": "blacksouls:skill_book_dense_spirochete",
+      "profile": "DENSE_SPIROCHETE",
+      "sourceSkillId": 814,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 363,
+      "name": "圣书【肉壁召唤】",
+      "registry": "blacksouls:skill_book_summon_meat_wall",
+      "profile": "SUMMON_MEAT_WALL",
+      "sourceSkillId": 836,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 364,
+      "name": "魔书【撕裂的遗恨】",
+      "registry": "blacksouls:skill_book_torn_grudge",
+      "profile": "TORN_GRUDGE",
+      "sourceSkillId": 838,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 365,
+      "name": "魔书【贯穿冰柱】",
+      "registry": "blacksouls:skill_book_piercing_icicle",
+      "profile": "PIERCING_ICICLE",
+      "sourceSkillId": 839,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 366,
+      "name": "魔书【灭亡的箭雨】",
+      "registry": "blacksouls:skill_book_rain_of_ruin",
+      "profile": "RAIN_OF_RUIN",
+      "sourceSkillId": 840,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 367,
+      "name": "魔书【阴暗之沼】",
+      "registry": "blacksouls:skill_book_gloomy_swamp",
+      "profile": "GLOOMY_SWAMP",
+      "sourceSkillId": 841,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 368,
+      "name": "魔书【酸雨】",
+      "registry": "blacksouls:skill_book_acid_rain",
+      "profile": "ACID_RAIN",
+      "sourceSkillId": 842,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 369,
+      "name": "魔书【皇家红茶】",
+      "registry": "blacksouls:skill_book_royal_tea",
+      "profile": "ROYAL_TEA",
+      "sourceSkillId": 844,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 370,
+      "name": "魔书【神速之舞】",
+      "registry": "blacksouls:skill_book_godspeed_dance",
+      "profile": "GODSPEED_DANCE",
+      "sourceSkillId": 845,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 371,
+      "name": "圣书【卡塔丽娜的车轮】",
+      "registry": "blacksouls:skill_book_katarina_wheel",
+      "profile": "KATARINA_WHEEL",
+      "sourceSkillId": 846,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 372,
+      "name": "圣书【圣骑士的御旗】",
+      "registry": "blacksouls:skill_book_paladin_banner",
+      "profile": "PALADIN_BANNER",
+      "sourceSkillId": 847,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 373,
+      "name": "魔书【黑之波动】",
+      "registry": "blacksouls:skill_book_black_wave",
+      "profile": "BLACK_WAVE",
+      "sourceSkillId": 848,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 374,
+      "name": "魔书【黑之斩击】",
+      "registry": "blacksouls:skill_book_black_slash",
+      "profile": "BLACK_SLASH",
+      "sourceSkillId": 849,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 375,
+      "name": "魔书【觉醒】",
+      "registry": "blacksouls:skill_book_awakening",
+      "profile": "AWAKENING",
+      "sourceSkillId": 850,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 376,
+      "name": "魔书【毒蛇的拥抱】",
+      "registry": "blacksouls:skill_book_serpent_embrace",
+      "profile": "SERPENT_EMBRACE",
+      "sourceSkillId": 918,
+      "type": "skill_book"
+    },
+    {
+      "kind": 0,
+      "id": 377,
+      "name": "魔书【魂之奔流】",
+      "registry": "blacksouls:skill_book_soul_stream",
+      "profile": "SOUL_STREAM",
+      "sourceSkillId": 80,
+      "type": "skill_book"
+    }
+  ]
+}

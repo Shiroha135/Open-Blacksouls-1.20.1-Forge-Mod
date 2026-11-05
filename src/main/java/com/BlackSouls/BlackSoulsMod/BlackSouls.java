@@ -175,6 +175,7 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> CURSOR1_EVENT = registerSound("cursor1");
     public static final RegistryObject<SoundEvent> STORY_NAME_SEA_EVENT = registerSound("story_name_sea");
     public static final RegistryObject<SoundEvent> ORIGINAL_SWORD_STAB_EVENT = registerSound("original_sword_stab");
+    public static final RegistryObject<SoundEvent> ORIGINAL_SHEEP_EVENT = registerSound("original_sheep");
     public static final RegistryObject<SoundEvent> ORIGINAL_LAUGHTER_BOY4_EVENT = registerSound("mbjh_se_laughter_boy4");
     public static final RegistryObject<SoundEvent> DAO_EVENT = registerSound("dao");
     public static final RegistryObject<SoundEvent> BLOOD_SPLATTER_EVENT = registerSound("blood_splatter");
@@ -427,6 +428,10 @@ public class BlackSouls {
     public static final RegistryObject<Item> PRESCRIPTION_MEDICINE = ITEMS.register("prescription_medicine", () -> new ItemPrescriptionMedicine(new Item.Properties()));
     // 少女的写真
     public static final RegistryObject<Item> GIRLS_PHOTO = ITEMS.register("girls_photo", () -> new ItemGirlsPhoto(new Item.Properties()));
+    public static final RegistryObject<Item> PUMPKIN_HAND_MIRROR = ITEMS.register("pumpkin_hand_mirror", () -> new com.BlackSouls.BlackSoulsMod.item.ItemLoreBase(new Item.Properties()));
+    public static final RegistryObject<Item> DETECTIVE_HAND_MIRROR = ITEMS.register("detective_hand_mirror", () -> new com.BlackSouls.BlackSoulsMod.item.ItemLoreBase(new Item.Properties()));
+    public static final RegistryObject<Item> BLACK_RABBIT_HAND_MIRROR = ITEMS.register("black_rabbit_hand_mirror", () -> new com.BlackSouls.BlackSoulsMod.item.ItemLoreBase(new Item.Properties()));
+    public static final RegistryObject<Item> GIRL_HAND_MIRROR = ITEMS.register("girl_hand_mirror", () -> new com.BlackSouls.BlackSoulsMod.item.ItemLoreBase(new Item.Properties()));
     // 黑之灰
     public static final RegistryObject <Item> BLACK_ASH = ITEMS.register("black_ash", () -> new ItemBlackAsh(new Item.Properties()));
     // 归还的蛇骨

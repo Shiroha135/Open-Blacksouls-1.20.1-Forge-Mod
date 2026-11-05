@@ -76,9 +76,13 @@ public final class OriginalNpcItems {
                 int kind = json.get("kind").getAsInt();
                 int id = json.get("id").getAsInt();
                 OriginalWeaponForms.Form form = kind == 1 ? OriginalWeaponForms.get(id) : null;
+                OriginalShopGoods.Good good = OriginalShopGoods.get(kind, id);
+                if (good != null && !good.name().equals(json.get("name").getAsString())) {
+                    throw new IllegalArgumentException("Original shop goods source identity mismatch");
+                }
                 Entry entry = new Entry(json.get("kind").getAsInt(), json.get("id").getAsInt(),
                         json.get("name").getAsString(), json.get("price").getAsLong(),
-                        form != null ? form.registry() : json.has("registry") && !json.get("registry").isJsonNull()
+                        form != null ? form.registry() : good != null ? good.registry() : json.has("registry") && !json.get("registry").isJsonNull()
                                 ? ResourceLocation.tryParse(json.get("registry").getAsString()) : null);
                 entries.put(entry.kind() + ":" + entry.id(), entry);
             }

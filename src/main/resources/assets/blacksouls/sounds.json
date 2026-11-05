@@ -1477,5 +1477,9 @@
   "original_sword_stab": {
     "category": "neutral",
     "sounds": ["blacksouls:original_sword_stab"]
+  },
+  "original_sheep": {
+    "category": "neutral",
+    "sounds": ["blacksouls:original_sheep"]
   }
 }

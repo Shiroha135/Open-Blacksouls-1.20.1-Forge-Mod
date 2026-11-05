@@ -1811,6 +1811,10 @@
     "剣　突き刺す": {
       "sound": "blacksouls:original_sword_stab",
       "sourceFile": "剣　突き刺す.wav"
+    },
+    "Sheep": {
+      "sound": "blacksouls:original_sheep",
+      "sourceFile": "Sheep.ogg"
     }
   }
 }
