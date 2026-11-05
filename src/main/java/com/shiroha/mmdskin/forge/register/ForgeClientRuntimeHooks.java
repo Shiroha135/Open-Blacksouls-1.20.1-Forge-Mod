@@ -1,6 +1,5 @@
 package com.shiroha.mmdskin.forge.register;
 
-import com.shiroha.mmdskin.MmdClientResourceBootstrap;
 import com.shiroha.mmdskin.config.UIConstants;
 import com.shiroha.mmdskin.debug.client.PerformanceHud;
 import com.shiroha.mmdskin.forge.network.MmdSkinNetworkPack;
@@ -91,13 +90,11 @@ final class ForgeClientRuntimeHooks {
         if (minecraft.player == null) {
             return;
         }
-        boolean selectedBundledModel = MmdClientResourceBootstrap.selectBundledModelForPlayer(
-            minecraft.player.getUUID(), minecraft.player.getName().getString());
         String selectedModel = ModelSelectorConfig.getInstance().getPlayerModel(minecraft.player.getName().getString());
-        if (!selectedBundledModel && selectedModel != null && !selectedModel.isEmpty()
-                && !selectedModel.equals(UIConstants.DEFAULT_MODEL_NAME)) {
-            PlayerModelSyncService.broadcastLocalModelSelection(minecraft.player.getUUID(), selectedModel);
+        if (selectedModel == null || selectedModel.isEmpty()) {
+            selectedModel = UIConstants.DEFAULT_MODEL_NAME;
         }
+        PlayerModelSyncService.broadcastLocalModelSelection(minecraft.player.getUUID(), selectedModel);
         MmdSkinRegisterCommon.channel.sendToServer(
             new MmdSkinNetworkPack(NetworkOpCode.REQUEST_ALL_MODELS, minecraft.player.getUUID(), ""));
     }

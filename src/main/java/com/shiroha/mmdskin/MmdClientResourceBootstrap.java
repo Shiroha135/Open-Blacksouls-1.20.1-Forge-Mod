@@ -1,8 +1,6 @@
 package com.shiroha.mmdskin;
 
 import com.shiroha.mmdskin.config.PathConstants;
-import com.shiroha.mmdskin.config.UIConstants;
-import com.shiroha.mmdskin.ui.config.ModelSelectorConfig;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -11,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -24,8 +21,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 public final class MmdClientResourceBootstrap {
-    public static final String BUNDLED_MODEL_NAME = "小红帽";
-
     private static final int BUFFER_SIZE = 8192;
     private static final long MAX_EXTRACTED_BYTES = 100L * 1024L * 1024L;
     private static final int MAX_ENTRIES = 1024;
@@ -50,40 +45,6 @@ public final class MmdClientResourceBootstrap {
         ensureDirectories();
         extractDefaultAnimIfNeeded();
         installBundledModelIfNeeded();
-    }
-
-    public static boolean selectBundledModelForPlayer(UUID playerId, String playerName) {
-        if (playerId == null || playerName == null || playerName.isBlank() || !isBundledModelInstalled(BUNDLED_MODEL_NAME)) {
-            return false;
-        }
-
-        Path marker = PathConstants.getConfigRootPath()
-                .resolve("bundled_models")
-                .resolve("red_hood")
-                .resolve(playerId + ".selected");
-        if (Files.exists(marker)) {
-            return false;
-        }
-
-        boolean changed = false;
-        try {
-            ModelSelectorConfig selector = ModelSelectorConfig.getInstance();
-            String selectedModel = selector.getPlayerModel(playerName);
-            if (selectedModel == null || selectedModel.isBlank() || UIConstants.DEFAULT_MODEL_NAME.equals(selectedModel)) {
-                selector.setPlayerModel(playerName, BUNDLED_MODEL_NAME);
-                selector.saveNow();
-                changed = true;
-            }
-
-            Files.createDirectories(marker.getParent());
-            try {
-                Files.writeString(marker, BUNDLED_MODEL_NAME, StandardCharsets.UTF_8, StandardOpenOption.CREATE_NEW);
-            } catch (FileAlreadyExistsException ignored) {
-            }
-        } catch (IOException e) {
-            MmdSkinClient.logger.warn("记录内置模型首次选择状态失败", e);
-        }
-        return changed;
     }
 
     private static void ensureDirectories() {
