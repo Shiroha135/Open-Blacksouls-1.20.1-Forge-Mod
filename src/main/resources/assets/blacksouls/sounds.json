@@ -1489,5 +1489,9 @@
   "original_cat9": {
     "category": "neutral",
     "sounds": ["blacksouls:original_cat9"]
+  },
+  "original_cheshire_cat_11": {
+    "category": "neutral",
+    "sounds": ["blacksouls:original_cheshire_cat_11"]
   }
 }

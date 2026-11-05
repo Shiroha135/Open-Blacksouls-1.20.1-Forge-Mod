@@ -219,6 +219,7 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> ORIGINAL_CHESHIRE_CAT_4_EVENT = registerSound("original_cheshire_cat_4");
     public static final RegistryObject<SoundEvent> ORIGINAL_CHESHIRE_CAT_6_EVENT = registerSound("original_cheshire_cat_6");
     public static final RegistryObject<SoundEvent> ORIGINAL_CHESHIRE_CAT_8_EVENT = registerSound("original_cheshire_cat_8");
+    public static final RegistryObject<SoundEvent> ORIGINAL_CHESHIRE_CAT_11_EVENT = registerSound("original_cheshire_cat_11");
     public static final RegistryObject<SoundEvent> BOOK2_EVENT = registerSound("book2");
     public static final RegistryObject<SoundEvent> EXPLOSION1_EVENT = registerSound("explosion1");
     public static final RegistryObject<SoundEvent> CHESHIRE_THEME_EVENT = registerSound("cheshire_theme");

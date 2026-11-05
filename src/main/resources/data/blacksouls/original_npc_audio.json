@@ -1823,6 +1823,10 @@
     "猫９": {
       "sound": "blacksouls:original_cat9",
       "sourceFile": "猫９.mp3"
+    },
+    "猫１１": {
+      "sound": "blacksouls:original_cheshire_cat_11",
+      "sourceFile": "猫１１.mp3"
     }
   }
 }
