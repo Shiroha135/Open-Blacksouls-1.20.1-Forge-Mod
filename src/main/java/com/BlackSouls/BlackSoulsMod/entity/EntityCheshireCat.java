@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.entity;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
+import com.shiroha.mmdskin.render.entity.CustomEntityRenderStateProvider;
 import com.BlackSouls.BlackSoulsMod.handler.BSEntityRegistry;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketOpenDialogue;
@@ -39,7 +40,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.UUID;
 
-public final class EntityCheshireCat extends PathfinderMob implements DialogueResettable {
+public final class EntityCheshireCat extends PathfinderMob implements DialogueResettable, CustomEntityRenderStateProvider {
     private static final EntityDataAccessor<Boolean> ORIGINAL_SOURCE_MANAGED = SynchedEntityData.defineId(
             EntityCheshireCat.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> ORIGINAL_ROUTE_PAGE = SynchedEntityData.defineId(
@@ -90,6 +91,16 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
 
     public int getSpriteOpacity() {
         return entityData.get(ORIGINAL_ROUTE_STATE).getInt("Opacity");
+    }
+
+    @Override
+    public float getMmdRenderOpacity() {
+        return getSpriteOpacity() / 255.0F;
+    }
+
+    @Override
+    public float getMmdBodyYaw(float resolvedYaw) {
+        return isOriginalSourceManaged() ? 180.0F : resolvedYaw;
     }
 
     public CompoundTag originalRouteState() {

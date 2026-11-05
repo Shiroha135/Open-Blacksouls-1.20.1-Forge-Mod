@@ -8,6 +8,7 @@ import com.shiroha.mmdskin.model.runtime.ManagedModel;
 import com.shiroha.mmdskin.model.runtime.ModelRequestKey;
 import com.shiroha.mmdskin.render.bootstrap.ClientRenderRuntime;
 import com.shiroha.mmdskin.render.scene.RenderScene;
+import com.shiroha.mmdskin.render.material.EntityRenderOpacity;
 import com.shiroha.mmdskin.render.scene.MutableRenderPose;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -21,6 +22,9 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
+import org.lwjgl.opengl.GL46C;
+import com.mojang.blaze3d.platform.GlStateManager;
+import net.minecraft.client.renderer.ShaderInstance;
 
 /**
  * MMD 自定义实体渲染器。
@@ -46,9 +50,12 @@ public class MmdSkinRenderer<T extends Entity> extends EntityRenderer<T> {
     @Override
     public void render(T entityIn, float entityYaw, float tickDelta, PoseStack matrixStackIn,
                        MultiBufferSource bufferIn, int packedLightIn) {
+        float opacity = entityIn instanceof CustomEntityRenderStateProvider provider
+                ? EntityRenderOpacity.clamp(provider.getMmdRenderOpacity()) : 1.0F;
+        if (entityIn.isInvisible() || opacity <= 0.0F) return;
         ManagedModel model = ClientRenderRuntime.get().modelRepository()
                 .acquire(ModelRequestKey.mob(entityIn, modelName));
-        if (model == null) {
+        if (model == null || model.modelInstance() == null) {
             super.render(entityIn, entityYaw, tickDelta, matrixStackIn, bufferIn, packedLightIn);
             return;
         }
@@ -60,29 +67,70 @@ public class MmdSkinRenderer<T extends Entity> extends EntityRenderer<T> {
         }
         float labelOffset = entityIn.getBbHeight() * (effectiveScale - 1.0f);
         matrixStackIn.pushPose();
-        matrixStackIn.translate(0.0D, labelOffset, 0.0D);
-        super.render(entityIn, entityYaw, tickDelta, matrixStackIn, bufferIn, packedLightIn);
-        matrixStackIn.popPose();
+        try {
+            matrixStackIn.translate(0.0D, labelOffset, 0.0D);
+            super.render(entityIn, entityYaw, tickDelta, matrixStackIn, bufferIn, packedLightIn);
+        } finally {
+            matrixStackIn.popPose();
+        }
 
         reusablePose.reset();
         EntityAnimationResolver.resolve(entityIn, model, entityYaw, tickDelta, reusablePose);
+        if (entityIn instanceof CustomEntityRenderStateProvider provider) {
+            reusablePose.bodyYaw = provider.getMmdBodyYaw(reusablePose.bodyYaw);
+        }
 
         matrixStackIn.pushPose();
+        DrawState previousState = entityIn instanceof CustomEntityRenderStateProvider ? DrawState.capture() : null;
+        try (EntityRenderOpacity.Scope ignored = entityIn instanceof CustomEntityRenderStateProvider
+                ? EntityRenderOpacity.open(opacity) : null) {
+            if (entityIn instanceof LivingEntity living && living.isBaby()) {
+                matrixStackIn.scale(0.5f, 0.5f, 0.5f);
+            }
+            if (InventoryRenderHelper.isInventoryScreen()) {
+                renderInInventory(entityIn, model, entityYaw, tickDelta, matrixStackIn, packedLightIn, size);
+            } else {
+                matrixStackIn.scale(size[0], size[0], size[0]);
+                RenderSystem.setShader(entityIn instanceof CustomEntityRenderStateProvider
+                        ? GameRenderer::getRendertypeEntityTranslucentShader : GameRenderer::getRendertypeEntityCutoutNoCullShader);
+                model.modelInstance().render(entityIn, reusablePose.bodyYaw, reusablePose.bodyPitch, reusablePose.translation,
+                        tickDelta, matrixStackIn, packedLightIn, RenderScene.WORLD);
+            }
+        } finally {
+            matrixStackIn.popPose();
+            if (previousState != null) previousState.restore();
+        }
+    }
 
-        if (entityIn instanceof LivingEntity living && living.isBaby()) {
-            matrixStackIn.scale(0.5f, 0.5f, 0.5f);
+    private record DrawState(float red, float green, float blue, float alpha, boolean depthMask,
+                             boolean cull, int cullFace, boolean blend, int blendEquationRgb,
+                             int blendEquationAlpha, int sourceRgb, int destinationRgb,
+                             int sourceAlpha, int destinationAlpha, int activeTexture, int program,
+                             ShaderInstance shader) {
+        private static DrawState capture() {
+            float[] color = RenderSystem.getShaderColor();
+            return new DrawState(color[0], color[1], color[2], color[3], GL46C.glGetBoolean(GL46C.GL_DEPTH_WRITEMASK),
+                    GL46C.glIsEnabled(GL46C.GL_CULL_FACE), GL46C.glGetInteger(GL46C.GL_CULL_FACE_MODE),
+                    GL46C.glIsEnabled(GL46C.GL_BLEND), GL46C.glGetInteger(GL46C.GL_BLEND_EQUATION_RGB),
+                    GL46C.glGetInteger(GL46C.GL_BLEND_EQUATION_ALPHA), GL46C.glGetInteger(GL46C.GL_BLEND_SRC_RGB),
+                    GL46C.glGetInteger(GL46C.GL_BLEND_DST_RGB), GL46C.glGetInteger(GL46C.GL_BLEND_SRC_ALPHA),
+                    GL46C.glGetInteger(GL46C.GL_BLEND_DST_ALPHA), GL46C.glGetInteger(GL46C.GL_ACTIVE_TEXTURE),
+                    GL46C.glGetInteger(GL46C.GL_CURRENT_PROGRAM), RenderSystem.getShader());
         }
 
-        if (InventoryRenderHelper.isInventoryScreen()) {
-            renderInInventory(entityIn, model, entityYaw, tickDelta, matrixStackIn, packedLightIn, size);
-        } else {
-            matrixStackIn.scale(size[0], size[0], size[0]);
-            RenderSystem.setShader(GameRenderer::getRendertypeEntityCutoutNoCullShader);
-            model.modelInstance().render(entityIn, reusablePose.bodyYaw, reusablePose.bodyPitch, reusablePose.translation,
-                             tickDelta, matrixStackIn, packedLightIn, RenderScene.WORLD);
+        private void restore() {
+            RenderSystem.setShaderColor(red, green, blue, alpha);
+            RenderSystem.depthMask(depthMask);
+            if (cull) RenderSystem.enableCull(); else RenderSystem.disableCull();
+            GL46C.glCullFace(cullFace);
+            if (blend) RenderSystem.enableBlend(); else RenderSystem.disableBlend();
+            GL46C.glBlendEquationSeparate(blendEquationRgb, blendEquationAlpha);
+            RenderSystem.blendFuncSeparate(sourceRgb, destinationRgb, sourceAlpha, destinationAlpha);
+            RenderSystem.activeTexture(activeTexture);
+            RenderSystem.setShader(() -> shader);
+            GL46C.glUseProgram(program);
+            GlStateManager._glUseProgram(program);
         }
-
-        matrixStackIn.popPose();
     }
 
     private void renderInInventory(T entityIn, ManagedModel model, float entityYaw,
@@ -95,22 +143,26 @@ public class MmdSkinRenderer<T extends Entity> extends EntityRenderer<T> {
 
         int posX = (mc.screen.width - 176) / 2;
         int posY = (mc.screen.height - 166) / 2;
-        modelViewStack.translate(posX + 51, posY + 60, 50.0);
         modelViewStack.pushPose();
-        modelViewStack.scale(20.0f, 20.0f, -20.0f);
-        modelViewStack.scale(size[1], size[1], size[1]);
+        try {
+            modelViewStack.translate(posX + 51, posY + 60, 50.0);
+            modelViewStack.scale(20.0f, 20.0f, -20.0f);
+            modelViewStack.scale(size[1], size[1], size[1]);
 
-        reusableQuat.identity()
-                .rotateZ((float) Math.PI)
-                .rotateX(-entityIn.getXRot() * ((float) Math.PI / 180F))
-                .rotateY(-entityIn.getYRot() * ((float) Math.PI / 180F));
-        modelViewStack.mulPose(reusableQuat);
+            reusableQuat.identity()
+                    .rotateZ((float) Math.PI)
+                    .rotateX(-entityIn.getXRot() * ((float) Math.PI / 180F))
+                    .rotateY(-entityIn.getYRot() * ((float) Math.PI / 180F));
+            modelViewStack.mulPose(reusableQuat);
 
-        RenderSystem.setShader(GameRenderer::getRendertypeEntityCutoutNoCullShader);
-        reusableVec.set(0.0f);
-        model.modelInstance().render(entityIn, entityYaw, 0.0f, reusableVec,
-                          tickDelta, modelViewStack, packedLight, RenderScene.INVENTORY);
-        modelViewStack.popPose();
+            RenderSystem.setShader(entityIn instanceof CustomEntityRenderStateProvider
+                            ? GameRenderer::getRendertypeEntityTranslucentShader : GameRenderer::getRendertypeEntityCutoutNoCullShader);
+            reusableVec.set(0.0f);
+            model.modelInstance().render(entityIn, entityYaw, 0.0f, reusableVec,
+                              tickDelta, modelViewStack, packedLight, RenderScene.INVENTORY);
+        } finally {
+            modelViewStack.popPose();
+        }
     }
 
     private static float[] parseModelSize(ManagedModel model, float[] out) {

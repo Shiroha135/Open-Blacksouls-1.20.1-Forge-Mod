@@ -81,7 +81,7 @@ public final class ModelRepository implements ModelRepositoryPort, ModelDiagnost
             return;
         }
         loadCoordinator.removeMatching(key -> key.endsWith(":" + modelName), this::cleanupLoadedResult);
-        runtimeAccessPort.clearPreloadedTextures();
+        clearPreloadedTextures();
         modelCache.removeMatching(key -> key.endsWith(":" + modelName), this::disposeModel);
     }
 
@@ -99,11 +99,12 @@ public final class ModelRepository implements ModelRepositoryPort, ModelDiagnost
         loadCoordinator.cancelAll(this::cleanupLoadedResult);
         modelCache.clear(this::disposeModel);
         extensionPort.onRepositoryReloadAll();
-        runtimeAccessPort.clearPreloadedTextures();
+        clearPreloadedTextures();
     }
 
     @Override
     public void tick() {
+        loadCoordinator.cleanupExpiredCompleted(System.currentTimeMillis());
         modelCache.tick(this::disposeModel);
         runtimeAccessPort.tickTextures();
     }
@@ -134,22 +135,30 @@ public final class ModelRepository implements ModelRepositoryPort, ModelDiagnost
     }
 
     private ManagedModel finalizeLoadedModel(ModelRequestKey requestKey, ModelLoadCoordinator.AsyncLoadResult result) {
+        if (!result.consumeNativeHandle()) return null;
+        ModelInstance modelInstance = null;
+        boolean transferred = false;
         try {
-            ModelInstance modelInstance = runtimeAccessPort.createModelFromHandle(
-                    result.modelHandle,
-                    result.modelInfo.getFolderPath(),
-                    result.modelInfo.isPMD());
-            if (modelInstance == null) {
-                cleanupLoadedResult(result);
-                return null;
-            }
-
-            ManagedModel managedModel = createManagedModel(requestKey, modelInstance);
-            return managedModel;
+            modelInstance = runtimeAccessPort.createModelFromHandle(
+                    result.modelHandle, result.modelInfo.getFolderPath(), result.modelInfo.isPMD());
+            if (modelInstance == null) return null;
+            ManagedModel model = createManagedModel(requestKey, modelInstance);
+            transferred = true;
+            return model;
         } catch (Exception e) {
             logger.error("Failed to finalize model: {}", requestKey, e);
-            cleanupLoadedResult(result);
             return null;
+        } finally {
+            if (!transferred) {
+                try {
+                    if (modelInstance == null) runtimeAccessPort.deleteModel(result.modelHandle);
+                    else modelInstance.dispose();
+                } catch (Exception exception) {
+                    logger.warn("Failed to release an unfinalized model: {}", requestKey, exception);
+                } finally {
+                    clearPreloadedTextures();
+                }
+            }
         }
     }
 
@@ -214,8 +223,22 @@ public final class ModelRepository implements ModelRepositoryPort, ModelDiagnost
     }
 
     private void cleanupLoadedResult(ModelLoadCoordinator.AsyncLoadResult result) {
-        if (result != null && result.modelHandle != 0L) {
-            runtimeAccessPort.deleteModel(result.modelHandle);
+        if (result != null && result.modelHandle != 0L && result.consumeNativeHandle()) {
+            try {
+                runtimeAccessPort.deleteModel(result.modelHandle);
+            } catch (Exception exception) {
+                logger.warn("Failed to release an asynchronous model: {}", result.modelName, exception);
+            } finally {
+                clearPreloadedTextures();
+            }
+        }
+    }
+
+    private void clearPreloadedTextures() {
+        try {
+            runtimeAccessPort.clearPreloadedTextures();
+        } catch (Exception exception) {
+            logger.warn("Failed to clear preloaded model textures", exception);
         }
     }
 }

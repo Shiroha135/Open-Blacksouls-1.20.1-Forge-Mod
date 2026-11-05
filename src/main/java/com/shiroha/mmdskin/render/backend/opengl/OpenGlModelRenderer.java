@@ -13,6 +13,7 @@ import com.shiroha.mmdskin.render.pipeline.LightingHelper;
 import com.shiroha.mmdskin.render.pipeline.RenderPerformanceProfiler;
 import com.shiroha.mmdskin.render.material.ModelMaterial;
 import com.shiroha.mmdskin.render.material.SubMeshDrawHelper;
+import com.shiroha.mmdskin.render.material.EntityRenderOpacity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -121,13 +122,16 @@ final class OpenGlModelRenderer {
         RenderSystem.blendEquation(GL46C.GL_FUNC_ADD);
         RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 
-        uploadDynamicBuffers(target, light.blockLight(), light.skyLight(), light.skyDarken(), irisActive);
-        uploadMatrixUniforms(target, deliverStack);
-        bindStandardAttributes(target);
-        bindCustomShaderAttributes(target);
-        bindIrisAttributes(target);
-        drawSubMeshes(target, minecraft);
-        clearStandardRenderState(target);
+        try {
+            uploadDynamicBuffers(target, light.blockLight(), light.skyLight(), light.skyDarken(), irisActive);
+            uploadMatrixUniforms(target, deliverStack);
+            bindStandardAttributes(target);
+            bindCustomShaderAttributes(target);
+            bindIrisAttributes(target);
+            drawSubMeshes(target, minecraft);
+        } finally {
+            clearStandardRenderState(target);
+        }
     }
 
     private static boolean bindActiveShader(OpenGlModelInstance target, PoseStack deliverStack) {
@@ -372,13 +376,14 @@ final class OpenGlModelRenderer {
         int missingTextureId = minecraft.getTextureManager()
                 .getTexture(TextureManager.INTENTIONAL_MISSING_TEXTURE)
                 .getId();
-        SubMeshDrawHelper.draw(
+        SubMeshDrawHelper.drawStandard(
                 target.subMeshDataBuf,
                 target.subMeshCount,
                 target.indexElementSize,
                 target.indexType,
                 materialId -> target.mats[materialId].tex == 0 ? missingTextureId : target.mats[materialId].tex,
-                target::effectiveMaterialAlpha);
+                target::effectiveMaterialAlpha, target.shaderProgram, RenderSystem.getShaderColor()[0],
+                RenderSystem.getShaderColor()[1], RenderSystem.getShaderColor()[2]);
     }
 
     private static void clearStandardRenderState(OpenGlModelInstance target) {
@@ -461,18 +466,17 @@ final class OpenGlModelRenderer {
         RenderSystem.getProjectionMatrix().get(target.projMatBuff);
         GL46C.glBindBuffer(GL46C.GL_ELEMENT_ARRAY_BUFFER, target.indexBufferObject);
 
-        renderToonMainPass(target, minecraft, lightIntensity);
-
-        if (ToonRenderHelper.isOutlineEnabled()) {
-            renderOutlinePass(target, minecraft);
+        try {
+            renderToonMainPass(target, minecraft, lightIntensity);
+            if (ToonRenderHelper.isOutlineEnabled()) renderOutlinePass(target, minecraft);
+        } finally {
+            GL46C.glBindBuffer(GL46C.GL_ARRAY_BUFFER, 0);
+            GL46C.glBindBuffer(GL46C.GL_ELEMENT_ARRAY_BUFFER, 0);
+            GL46C.glBindVertexArray(0);
+            GL46C.glUseProgram(0);
+            RenderSystem.activeTexture(GL46C.GL_TEXTURE0);
+            BufferUploader.reset();
         }
-
-        GL46C.glBindBuffer(GL46C.GL_ARRAY_BUFFER, 0);
-        GL46C.glBindBuffer(GL46C.GL_ELEMENT_ARRAY_BUFFER, 0);
-        GL46C.glBindVertexArray(0);
-        GL46C.glUseProgram(0);
-        RenderSystem.activeTexture(GL46C.GL_TEXTURE0);
-        BufferUploader.reset();
     }
 
     private static void renderOutlinePass(OpenGlModelInstance target, Minecraft minecraft) {
@@ -500,6 +504,7 @@ final class OpenGlModelRenderer {
         OpenGlModelInstance.toonShaderCpu.setOutlineProjectionMatrix(target.projMatBuff);
         OpenGlModelInstance.toonShaderCpu.setOutlineModelViewMatrix(target.modelViewMatBuff);
         ToonRenderHelper.setupOutlineUniforms(OpenGlModelInstance.toonShaderCpu);
+        OpenGlModelInstance.toonShaderCpu.setOutlineAlphaCutoff(0.1F * EntityRenderOpacity.current());
         int missingTextureId = minecraft.getTextureManager()
                 .getTexture(TextureManager.INTENTIONAL_MISSING_TEXTURE)
                 .getId();
@@ -554,6 +559,7 @@ final class OpenGlModelRenderer {
         OpenGlModelInstance.toonShaderCpu.setProjectionMatrix(target.projMatBuff);
         OpenGlModelInstance.toonShaderCpu.setModelViewMatrix(target.modelViewMatBuff);
         ToonRenderHelper.setupToonUniforms(OpenGlModelInstance.toonShaderCpu, lightIntensity, target.light0Direction);
+        OpenGlModelInstance.toonShaderCpu.setAlphaCutoff(0.1F * EntityRenderOpacity.current());
 
         drawToonSubMeshes(target, minecraft);
 

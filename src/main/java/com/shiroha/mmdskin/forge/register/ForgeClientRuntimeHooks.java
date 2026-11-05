@@ -104,6 +104,7 @@ final class ForgeClientRuntimeHooks {
         PlayerModelSyncService.onDisconnect();
         MmdSkinRendererPlayerHelper.onDisconnect();
         StageClientRuntime.get().sessionService().onDisconnect();
+        ClientRenderRuntime.get().modelRepository().reloadAll();
     }
 
     void onPlayerDeath(LivingDeathEvent event) {

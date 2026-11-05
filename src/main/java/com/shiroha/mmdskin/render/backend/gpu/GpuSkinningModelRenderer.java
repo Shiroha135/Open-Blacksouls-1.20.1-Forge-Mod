@@ -9,6 +9,7 @@ import com.shiroha.mmdskin.compat.iris.IrisCompat;
 import com.shiroha.mmdskin.config.ConfigManager;
 import com.shiroha.mmdskin.render.material.ModelMaterial;
 import com.shiroha.mmdskin.render.material.SubMeshDrawHelper;
+import com.shiroha.mmdskin.render.material.EntityRenderOpacity;
 import com.shiroha.mmdskin.render.pipeline.LightingHelper;
 import com.shiroha.mmdskin.render.pipeline.RenderPerformanceProfiler;
 import com.shiroha.mmdskin.render.shader.SkinningComputeShader;
@@ -83,20 +84,19 @@ final class GpuSkinningModelRenderer {
             }
         } finally {
             RenderPerformanceProfiler.get().endTimer(RenderPerformanceProfiler.SECTION_DRAW, drawTimer);
-        }
+            cleanupVertexAttributes(target);
+            GL46C.glBindBuffer(GL46C.GL_ARRAY_BUFFER, 0);
+            GL46C.glBindBuffer(GL46C.GL_ELEMENT_ARRAY_BUFFER, 0);
+            GL46C.glBindVertexArray(0);
+            RenderSystem.activeTexture(GL46C.GL_TEXTURE0);
 
-        cleanupVertexAttributes(target);
-        GL46C.glBindBuffer(GL46C.GL_ARRAY_BUFFER, 0);
-        GL46C.glBindBuffer(GL46C.GL_ELEMENT_ARRAY_BUFFER, 0);
-        GL46C.glBindVertexArray(0);
-        RenderSystem.activeTexture(GL46C.GL_TEXTURE0);
-
-        ShaderInstance currentShader = RenderSystem.getShader();
-        if (currentShader != null) {
-            currentShader.clear();
+            ShaderInstance currentShader = RenderSystem.getShader();
+            if (currentShader != null) {
+                currentShader.clear();
+            }
+            BufferUploader.reset();
+            RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         }
-        BufferUploader.reset();
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
     }
 
     private static boolean initializeToonShaderIfNeeded() {
@@ -316,6 +316,7 @@ final class GpuSkinningModelRenderer {
         GpuSkinningModelInstance.toonShaderCpu.setProjectionMatrix(target.projMatBuff);
         GpuSkinningModelInstance.toonShaderCpu.setModelViewMatrix(target.modelViewMatBuff);
         ToonRenderHelper.setupToonUniforms(GpuSkinningModelInstance.toonShaderCpu, lightIntensity, target.light0Direction);
+        GpuSkinningModelInstance.toonShaderCpu.setAlphaCutoff(0.1F * EntityRenderOpacity.current());
 
         drawToonSubMeshes(target, minecraft);
 
@@ -357,6 +358,7 @@ final class GpuSkinningModelRenderer {
         GpuSkinningModelInstance.toonShaderCpu.setOutlineProjectionMatrix(target.projMatBuff);
         GpuSkinningModelInstance.toonShaderCpu.setOutlineModelViewMatrix(target.modelViewMatBuff);
         ToonRenderHelper.setupOutlineUniforms(GpuSkinningModelInstance.toonShaderCpu);
+        GpuSkinningModelInstance.toonShaderCpu.setOutlineAlphaCutoff(0.1F * EntityRenderOpacity.current());
         int missingTextureId = minecraft.getTextureManager()
                 .getTexture(TextureManager.INTENTIONAL_MISSING_TEXTURE)
                 .getId();
@@ -391,13 +393,14 @@ final class GpuSkinningModelRenderer {
         int missingTextureId = minecraft.getTextureManager()
                 .getTexture(TextureManager.INTENTIONAL_MISSING_TEXTURE)
                 .getId();
-        SubMeshDrawHelper.draw(
+        SubMeshDrawHelper.drawStandard(
                 target.subMeshDataBuf,
                 target.subMeshCount,
                 target.indexElementSize,
                 target.indexType,
                 materialId -> target.mats[materialId].tex == 0 ? missingTextureId : target.mats[materialId].tex,
-                target::effectiveMaterialAlpha
+                target::effectiveMaterialAlpha, target.shaderProgram, RenderSystem.getShaderColor()[0],
+                RenderSystem.getShaderColor()[1], RenderSystem.getShaderColor()[2]
         );
     }
 

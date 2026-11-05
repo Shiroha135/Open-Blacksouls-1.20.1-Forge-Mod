@@ -66,8 +66,9 @@ public final class SubMeshDrawHelper {
             boolean visible = subMeshDataBuf.get(base + 16) != 0;
             boolean bothFace = subMeshDataBuf.get(base + 17) != 0;
 
-            float effectiveAlpha = alphaResolver.resolve(materialId, alpha);
-            if (!visible || effectiveAlpha < 0.001f || !drawFilter.test(materialId, effectiveAlpha)) {
+            float materialAlpha = EntityRenderOpacity.clamp(alphaResolver.resolve(materialId, alpha));
+            float effectiveAlpha = EntityRenderOpacity.apply(materialAlpha);
+            if (!visible || materialAlpha < 0.001f || effectiveAlpha <= 0.0f || !drawFilter.test(materialId, effectiveAlpha)) {
                 continue;
             }
 
@@ -88,6 +89,51 @@ public final class SubMeshDrawHelper {
 
             long startPos = (long) beginIndex * indexElementSize;
             GL46C.glDrawElements(GL46C.GL_TRIANGLES, vertexCount, indexType, startPos);
+        }
+    }
+
+    public static void drawStandard(ByteBuffer subMeshDataBuf, int subMeshCount, int indexElementSize,
+                                    int indexType, TextureResolver textures, AlphaResolver alphaResolver,
+                                    int program, float red, float green, float blue) {
+        if (!EntityRenderOpacity.isScoped()) {
+            draw(subMeshDataBuf, subMeshCount, indexElementSize, indexType, textures, alphaResolver);
+            return;
+        }
+        boolean depthMask = GL46C.glGetBoolean(GL46C.GL_DEPTH_WRITEMASK);
+        int colorLocation = GL46C.glGetUniformLocation(program, "ColorModulator");
+        float[] previousUniform = new float[4];
+        if (colorLocation >= 0) GL46C.glGetUniformfv(program, colorLocation, previousUniform);
+        int[] attributes = colorLocation >= 0 ? new int[0]
+                : new int[]{GL46C.glGetAttribLocation(program, "Color"), GL46C.glGetAttribLocation(program, "iris_Color")};
+        float[][] previousAttributes = new float[attributes.length][4];
+        boolean[] enabled = new boolean[attributes.length];
+        for (int i = 0; i < attributes.length; i++) {
+            if (attributes[i] < 0) continue;
+            enabled[i] = GL46C.glGetVertexAttribi(attributes[i], GL46C.GL_VERTEX_ATTRIB_ARRAY_ENABLED) != 0;
+            GL46C.glGetVertexAttribfv(attributes[i], GL46C.GL_CURRENT_VERTEX_ATTRIB, previousAttributes[i]);
+            GL46C.glDisableVertexAttribArray(attributes[i]);
+        }
+        MaterialBinder binder = (materialId, alpha) -> {
+            if (colorLocation >= 0) GL46C.glUniform4f(colorLocation, red, green, blue, alpha);
+            else for (int attribute : attributes) {
+                if (attribute >= 0) GL46C.glVertexAttrib4f(attribute, 1.0F, 1.0F, 1.0F, alpha);
+            }
+        };
+        try {
+            RenderSystem.depthMask(true);
+            draw(subMeshDataBuf, subMeshCount, indexElementSize, indexType, textures, alphaResolver,
+                    (materialId, alpha) -> alpha >= .999F, binder);
+            RenderSystem.depthMask(false);
+            draw(subMeshDataBuf, subMeshCount, indexElementSize, indexType, textures, alphaResolver,
+                    (materialId, alpha) -> alpha < .999F, binder);
+        } finally {
+            RenderSystem.depthMask(depthMask);
+            if (colorLocation >= 0) GL46C.glUniform4fv(colorLocation, previousUniform);
+            for (int i = 0; i < attributes.length; i++) {
+                if (attributes[i] < 0) continue;
+                GL46C.glVertexAttrib4fv(attributes[i], previousAttributes[i]);
+                if (enabled[i]) GL46C.glEnableVertexAttribArray(attributes[i]);
+            }
         }
     }
 
@@ -120,8 +166,9 @@ public final class SubMeshDrawHelper {
             float alpha = subMeshDataBuf.getFloat(base + 12);
             boolean visible = subMeshDataBuf.get(base + 16) != 0;
 
-            float effectiveAlpha = alphaResolver.resolve(materialId, alpha);
-            if (!visible || effectiveAlpha < 0.001f) {
+            float materialAlpha = EntityRenderOpacity.clamp(alphaResolver.resolve(materialId, alpha));
+            float effectiveAlpha = EntityRenderOpacity.apply(materialAlpha);
+            if (!visible || materialAlpha < 0.001f || effectiveAlpha <= 0.0f) {
                 continue;
             }
 

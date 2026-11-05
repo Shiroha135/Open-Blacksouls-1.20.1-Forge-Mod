@@ -1,6 +1,7 @@
 package com.BlackSouls.BlackSoulsMod.entity;
 
 import com.BlackSouls.BlackSoulsMod.story.OriginalNpcService;
+import com.shiroha.mmdskin.render.entity.CustomEntityRenderStateProvider;
 import com.BlackSouls.BlackSoulsMod.story.OriginalNpcMovementService;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalNpcData;
 import com.BlackSouls.BlackSoulsMod.util.OriginalNpcTextures;
@@ -26,7 +27,7 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public class EntityOriginalNpc extends PathfinderMob {
+public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRenderStateProvider {
     private static final EntityDataAccessor<String> NPC_ID = SynchedEntityData.defineId(
             EntityOriginalNpc.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Integer> PAGE = SynchedEntityData.defineId(
@@ -131,6 +132,36 @@ public class EntityOriginalNpc extends PathfinderMob {
 
     public int getSpriteOpacity() {
         return entityData.get(ROUTE_STATE).getInt("Opacity");
+    }
+
+    @Override
+    public float getMmdRenderOpacity() {
+        return getSpriteOpacity() / 255.0F;
+    }
+
+    @Override
+    public float getMmdBodyYaw(float resolvedYaw) {
+        BSOriginalNpcData.Entry definition = BSOriginalNpcData.get(getNpcId());
+        int base = getSpriteDirection();
+        if (definition != null) {
+            for (BSOriginalNpcData.Page page : definition.pages()) {
+                if (!page.graphic().get("character_name").getAsString().isBlank()) {
+                    base = page.graphic().has("direction") ? page.graphic().get("direction").getAsInt() : 2;
+                    break;
+                }
+            }
+        }
+        return net.minecraft.util.Mth.wrapDegrees(getYRot() + 90.0F
+                * (mmdDirectionQuarter(getSpriteDirection()) - mmdDirectionQuarter(base)));
+    }
+
+    private static int mmdDirectionQuarter(int direction) {
+        return switch (direction) {
+            case 4 -> 1;
+            case 8 -> 2;
+            case 6 -> 3;
+            default -> 0;
+        };
     }
 
     public String getRouteCharacterName() {
