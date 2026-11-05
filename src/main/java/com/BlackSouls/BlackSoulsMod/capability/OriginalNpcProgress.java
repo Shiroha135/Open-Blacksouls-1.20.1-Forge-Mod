@@ -26,6 +26,7 @@ public final class OriginalNpcProgress extends SavedData {
     private final Set<String> selfSwitches = new HashSet<>();
     private final Set<String> hiddenEvents = new HashSet<>();
     private final Map<String, byte[]> conversations = new HashMap<>();
+    private final Map<String, byte[]> supersededConversations = new HashMap<>();
     private final Map<String, Boolean> timedWaits = new HashMap<>();
     private final Set<UUID> cheshireLegacyMigrated = new HashSet<>();
     private final Set<String> unlockedRecipes = new HashSet<>();
@@ -194,6 +195,18 @@ public final class OriginalNpcProgress extends SavedData {
         return cheshireLegacyMigrated.contains(playerId);
     }
 
+    public void claimConversation(UUID playerId, String eventId) {
+        String ownKey = playerId + ":" + eventId;
+        if (!conversations.containsKey(ownKey)) return;
+        for (String key : Set.copyOf(conversations.keySet())) {
+            if (!key.equals(ownKey) && key.endsWith(":" + eventId)) {
+                supersededConversations.put(key + ":" + UUID.randomUUID(), conversations.remove(key));
+                timedWaits.remove(key);
+                setDirty();
+            }
+        }
+    }
+
     public void markCheshireLegacyMigrated(UUID playerId) {
         if (cheshireLegacyMigrated.add(playerId)) setDirty();
     }
@@ -271,6 +284,12 @@ public final class OriginalNpcProgress extends SavedData {
                 data.conversations.put(key, conversations.getByteArray(key));
             }
         }
+        CompoundTag superseded = tag.getCompound("SupersededConversations");
+        for (String key : superseded.getAllKeys()) {
+            if (superseded.contains(key, Tag.TAG_BYTE_ARRAY)) {
+                data.supersededConversations.put(key, superseded.getByteArray(key));
+            }
+        }
         if (tag.contains("BattleMusic", Tag.TAG_COMPOUND)) {
             data.battleMusic = OriginalBattleMusic.load(tag.getCompound("BattleMusic"));
         }
@@ -302,6 +321,9 @@ public final class OriginalNpcProgress extends SavedData {
         CompoundTag conversationsTag = new CompoundTag();
         conversations.forEach(conversationsTag::putByteArray);
         tag.put("Conversations", conversationsTag);
+        CompoundTag superseded = new CompoundTag();
+        supersededConversations.forEach(superseded::putByteArray);
+        tag.put("SupersededConversations", superseded);
         if (battleMusic.configured()) {
             tag.put("BattleMusic", battleMusic.save());
         } else {
