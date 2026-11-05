@@ -82,6 +82,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
     private int synthesisDetailOffset;
     private ClientboundOriginalNpcPacket.SynthesisOffer synthesisOffer;
     private List<ClientboundOriginalNpcPacket.SynthesisOffer> synthesisOffers = List.of();
+    private OriginalNumberInput numberInput;
 
     public GuiOriginalNpcDialogue(ClientboundOriginalNpcPacket packet) {
         super(Component.literal(packet.name()));
@@ -119,7 +120,8 @@ public final class GuiOriginalNpcDialogue extends Screen {
         boolean tradeReply = previousTrade && awaitingResponse;
         boolean changedStorage = previousTrade && nextTrade && packet.shopView().storage() != next.shopView().storage();
         boolean retainText = next.text().isEmpty()
-                && (next.type() == OriginalNpcInterpreter.Type.CHOICE || next.type() == OriginalNpcInterpreter.Type.SHOP || nextKeep || nextSynthesis);
+                && (next.type() == OriginalNpcInterpreter.Type.CHOICE || next.type() == OriginalNpcInterpreter.Type.SHOP || nextKeep || nextSynthesis
+                || next.type() == OriginalNpcInterpreter.Type.NUMBER_INPUT);
         if (!retainText) {
             currentText = next.text();
             currentPortrait = next.portrait();
@@ -138,6 +140,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
             listOffset = 0;
         }
         packet = next;
+        numberInput = next.numberView() == null ? null : new OriginalNumberInput(next.numberView());
         awaitingResponse = isSilentWait();
         if (nextSynthesis) {
             if (!previousSynthesis) {
@@ -267,6 +270,38 @@ public final class GuiOriginalNpcDialogue extends Screen {
 
     private boolean isSynthesis() {
         return packet != null && packet.type() == OriginalNpcInterpreter.Type.SYNTHESIS && packet.synthesisView() != null;
+    }
+
+    private boolean isNumberInput() {
+        return packet != null && packet.type() == OriginalNpcInterpreter.Type.NUMBER_INPUT && numberInput != null;
+    }
+
+    private ListBox numberInputBox() {
+        int rows = packet.numberView().moneyVisible() ? 3 : 2;
+        int boxWidth = Math.max(1, Math.min(width - 4, PADDING * 2 + packet.numberView().digits() * 20));
+        int boxHeight = Math.max(1, Math.min(height - 4, PADDING * 2 + ROW_HEIGHT * rows));
+        return new ListBox(Math.max(0, (width - boxWidth) / 2), Math.max(2, (height - boxHeight) / 2), boxWidth, boxHeight, rows, 0);
+    }
+
+    private void renderNumberInput(GuiGraphics graphics) {
+        ListBox box = numberInputBox();
+        BSGuiUtils.drawRMWindow(graphics, box.x(), box.y(), box.width(), box.height());
+        int y = box.y() + PADDING;
+        if (packet.numberView().moneyVisible()) {
+            String money = font.plainSubstrByWidth(packet.numberView().money() + " S", Math.max(1, box.width() - PADDING * 2));
+            graphics.drawString(font, money, box.x() + PADDING, y + 4, 0xFFFFFF, false);
+            y += ROW_HEIGHT;
+        }
+        String text = numberInput.text();
+        int cell = Math.max(1, (box.width() - PADDING * 2) / packet.numberView().digits());
+        for (int digit = 0; digit < text.length(); digit++) {
+            int x = box.x() + PADDING + digit * cell;
+            if (digit == numberInput.cursor()) graphics.fill(x, y, x + cell, y + ROW_HEIGHT, 0x55FFFFFF);
+            graphics.drawString(font, text.substring(digit, digit + 1), x + Math.max(0, (cell - font.width("0")) / 2), y + 4,
+                    awaitingResponse ? 0xAAAAAA : 0xFFFFFF, false);
+        }
+        graphics.drawString(font, keepText("confirm"), box.x() + PADDING, y + ROW_HEIGHT + 4,
+                awaitingResponse ? 0xAAAAAA : 0xFFFFFF, false);
     }
 
     private static Component synthesisText(String key, Object... values) {
@@ -694,6 +729,16 @@ public final class GuiOriginalNpcDialogue extends Screen {
         if (isItemKeep() && keepPage == KeepPage.QUANTITY) renderKeepQuantity(graphics, mouseX, mouseY);
         if (isSynthesis() && synthesisPage != SynthesisPage.CATEGORY) renderSynthesisDetails(graphics, mouseX, mouseY);
         if (isSynthesis() && synthesisPage == SynthesisPage.QUANTITY) renderSynthesisQuantity(graphics, mouseX, mouseY);
+        if (isNumberInput()) renderNumberInput(graphics);
+        else if (currentText.contains("\\$") && minecraft != null && minecraft.player != null) {
+            minecraft.player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
+                String money = stats.souls + " S";
+                int boxWidth = Math.min(Math.max(1, width - 4), font.width(money) + PADDING * 2);
+                BSGuiUtils.drawRMWindow(graphics, width - boxWidth - 2, 2, boxWidth, PADDING * 2 + LINE_HEIGHT);
+                graphics.drawString(font, font.plainSubstrByWidth(money, Math.max(1, boxWidth - PADDING * 2)),
+                        width - boxWidth - 2 + PADDING, 2 + PADDING, 0xFFFFFF, false);
+            });
+        }
         if (hoveredTooltip != null) {
             graphics.renderTooltip(font, hoveredTooltip, mouseX, mouseY);
         }
@@ -984,6 +1029,18 @@ public final class GuiOriginalNpcDialogue extends Screen {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if (isSilentWait()) return true;
+        if (isNumberInput()) {
+            if (awaitingResponse) return true;
+            ListBox box = numberInputBox();
+            int row = (int) ((mouseY - box.y() - PADDING) / ROW_HEIGHT);
+            int digitsRow = packet.numberView().moneyVisible() ? 1 : 0;
+            if (button == 0 && box.contains(mouseX, mouseY)) {
+                if (row == digitsRow) numberInput.select((int) (mouseX - box.x() - PADDING)
+                        / Math.max(1, (box.width() - PADDING * 2) / packet.numberView().digits()));
+                else if (row == digitsRow + 1) respond(numberInput.value());
+            }
+            return true;
+        }
         if ((isTradeShop() || isItemKeep() || isSynthesis()) && awaitingResponse) return true;
         if (button == 1) {
             cancelOrReturn();
@@ -1048,6 +1105,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+        if (isNumberInput()) return true;
         if (isSilentWait()) return true;
         if ((isTradeShop() || isItemKeep() || isSynthesis()) && awaitingResponse) return true;
         if (isSynthesis() && synthesisPage == SynthesisPage.QUANTITY && synthesisQuantityBox().contains(mouseX, mouseY)) {
@@ -1091,6 +1149,15 @@ public final class GuiOriginalNpcDialogue extends Screen {
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (isSilentWait()) return true;
+        if (isNumberInput()) {
+            if (awaitingResponse) return true;
+            if (keyCode == GLFW.GLFW_KEY_LEFT) numberInput.move(-1);
+            else if (keyCode == GLFW.GLFW_KEY_RIGHT) numberInput.move(1);
+            else if (keyCode == GLFW.GLFW_KEY_UP) numberInput.change(1);
+            else if (keyCode == GLFW.GLFW_KEY_DOWN) numberInput.change(-1);
+            else if (keyCode == GLFW.GLFW_KEY_ENTER || keyCode == GLFW.GLFW_KEY_KP_ENTER || keyCode == GLFW.GLFW_KEY_SPACE) respond(numberInput.value());
+            return true;
+        }
         if (isSynthesis()) {
             if (awaitingResponse) return true;
             if (keyCode == GLFW.GLFW_KEY_A && synthesisStatus && selectedSynthesisOffer() != null && packet.synthesisView().composeStatus()) {
@@ -1232,6 +1299,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
     }
 
     private void cancelOrReturn() {
+        if (isNumberInput()) return;
         if (isSynthesis()) {
             if (awaitingResponse) return;
             if (synthesisPage == SynthesisPage.QUANTITY) closeSynthesisQuantity();
@@ -1290,6 +1358,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
     @Override
     public void onClose() {
         if (isSilentWait()) return;
+        if (isNumberInput()) return;
         if (isTradeShop() || isItemKeep() || isSynthesis()) {
             cancelOrReturn();
             return;
@@ -1360,7 +1429,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
                         }
                     }
                 }
-                if (".|!><^{}".indexOf(code) >= 0) {
+                if (".|!><^{}$".indexOf(code) >= 0) {
                     index += 2;
                     continue;
                 }
