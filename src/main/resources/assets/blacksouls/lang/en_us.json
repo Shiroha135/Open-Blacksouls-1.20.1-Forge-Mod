@@ -2855,5 +2855,6 @@
   "item.blacksouls.black_rabbit_hand_mirror.lore.2": "Adds a new appearance in the recollection room.",
   "item.blacksouls.girl_hand_mirror": "Girl's Hand Mirror",
   "item.blacksouls.girl_hand_mirror.lore.1": "A bright hand mirror that reflects a familiar figure.",
-  "item.blacksouls.girl_hand_mirror.lore.2": "Adds a new appearance in the recollection room."
+  "item.blacksouls.girl_hand_mirror.lore.2": "Adds a new appearance in the recollection room.",
+  "item.blacksouls.original_weapon.level": "%s +%s"
 }

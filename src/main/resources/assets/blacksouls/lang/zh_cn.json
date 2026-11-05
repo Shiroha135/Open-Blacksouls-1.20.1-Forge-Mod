@@ -3298,5 +3298,6 @@
   "item.blacksouls.black_rabbit_hand_mirror.lore.2": "在回想房间中追加新的造型。",
   "item.blacksouls.girl_hand_mirror": "少女的手镜",
   "item.blacksouls.girl_hand_mirror.lore.1": "明亮的手镜。能够映出某个眼熟的身影",
-  "item.blacksouls.girl_hand_mirror.lore.2": "在回想房间中追加新的造型。"
+  "item.blacksouls.girl_hand_mirror.lore.2": "在回想房间中追加新的造型。",
+  "item.blacksouls.original_weapon.level": "%s＋%s"
 }

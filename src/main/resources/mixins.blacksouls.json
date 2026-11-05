@@ -10,6 +10,7 @@
     "ServerLevelMixin",
     "ServerGamePacketListenerImplMixin",
     "ItemStackMaxStackMixin",
+    "OriginalWeaponNameMixin",
     "InventoryMaxStackMixin",
     "SimpleContainerMaxStackMixin",
     "SlotMaxStackMixin",
