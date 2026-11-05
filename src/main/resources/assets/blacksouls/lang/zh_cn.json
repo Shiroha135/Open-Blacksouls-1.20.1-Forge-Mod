@@ -3299,5 +3299,7 @@
   "item.blacksouls.girl_hand_mirror": "少女的手镜",
   "item.blacksouls.girl_hand_mirror.lore.1": "明亮的手镜。能够映出某个眼熟的身影",
   "item.blacksouls.girl_hand_mirror.lore.2": "在回想房间中追加新的造型。",
-  "item.blacksouls.original_weapon.level": "%s＋%s"
+  "item.blacksouls.original_weapon.level": "%s＋%s",
+  "item.blacksouls.map152_ev035_spawn_egg": "白鸦交换店刷怪蛋",
+  "item.blacksouls.map152_ev036_spawn_egg": "白鸦刷怪蛋"
 }

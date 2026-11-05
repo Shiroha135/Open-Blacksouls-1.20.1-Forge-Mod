@@ -1815,6 +1815,10 @@
     "Sheep": {
       "sound": "blacksouls:original_sheep",
       "sourceFile": "Sheep.ogg"
+    },
+    "Crow": {
+      "sound": "blacksouls:original_crow",
+      "sourceFile": "Crow.ogg"
     }
   }
 }

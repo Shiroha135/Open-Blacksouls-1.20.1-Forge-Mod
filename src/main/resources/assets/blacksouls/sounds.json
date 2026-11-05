@@ -1481,5 +1481,9 @@
   "original_sheep": {
     "category": "neutral",
     "sounds": ["blacksouls:original_sheep"]
+  },
+  "original_crow": {
+    "category": "neutral",
+    "sounds": ["blacksouls:original_crow"]
   }
 }

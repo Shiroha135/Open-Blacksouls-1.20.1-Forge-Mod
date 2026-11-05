@@ -381718,5 +381718,498 @@
     "eventName": "帽子屋",
     "nameSource": "original_event_name_unresolved",
     "classification": "character_dialogue"
+  },
+  {
+    "id": "map152_ev035",
+    "mapId": 152,
+    "eventId": 35,
+    "name": "EV035",
+    "x": 56,
+    "y": 8,
+    "pages": [
+      {
+        "condition": {
+          "switch1_valid": false,
+          "switch2_valid": false,
+          "variable_valid": false,
+          "self_switch_valid": false,
+          "item_valid": false,
+          "actor_valid": false,
+          "switch1_id": 171,
+          "switch2_id": 1,
+          "variable_id": 11,
+          "variable_value": 0,
+          "self_switch_ch": "A",
+          "item_id": 1,
+          "actor_id": 1,
+          "_class": "RPG::Event::Page::Condition"
+        },
+        "graphic": {
+          "tile_id": 0,
+          "character_name": "!Flame",
+          "character_index": 7,
+          "direction": 4,
+          "pattern": 0,
+          "_class": "RPG::Event::Page::Graphic"
+        },
+        "move_type": 0,
+        "move_speed": 3,
+        "move_frequency": 3,
+        "move_route": {
+          "repeat": true,
+          "skippable": false,
+          "wait": false,
+          "list": [
+            {
+              "code": 0,
+              "parameters": [],
+              "_class": "RPG::MoveCommand"
+            }
+          ],
+          "_class": "RPG::MoveRoute"
+        },
+        "walk_anime": false,
+        "step_anime": true,
+        "direction_fix": false,
+        "through": false,
+        "priority_type": 0,
+        "trigger": 0,
+        "commands": [
+          {
+            "code": 122,
+            "indent": 0,
+            "parameters": [
+              16,
+              16,
+              0,
+              3,
+              0,
+              49,
+              0
+            ]
+          },
+          {
+            "code": 213,
+            "indent": 0,
+            "parameters": [
+              36,
+              1,
+              false
+            ]
+          },
+          {
+            "code": 250,
+            "indent": 0,
+            "parameters": [
+              {
+                "name": "Crow",
+                "volume": 80,
+                "pitch": 150,
+                "_class": "RPG::SE"
+              }
+            ]
+          },
+          {
+            "code": 108,
+            "indent": 0,
+            "parameters": [
+              "NW名前指定 白鴉"
+            ]
+          },
+          {
+            "code": 108,
+            "indent": 0,
+            "parameters": [
+              "NW名前指定 白鸦"
+            ]
+          },
+          {
+            "code": 101,
+            "indent": 0,
+            "parameters": [
+              "",
+              0,
+              0,
+              2
+            ]
+          },
+          {
+            "code": 401,
+            "indent": 0,
+            "parameters": [
+              "「呐，呐，你啊，你啊"
+            ]
+          },
+          {
+            "code": 401,
+            "indent": 0,
+            "parameters": [
+              "　给我甜甜的东西」"
+            ]
+          },
+          {
+            "code": 108,
+            "indent": 0,
+            "parameters": [
+              "NW名前指定 白鴉"
+            ]
+          },
+          {
+            "code": 108,
+            "indent": 0,
+            "parameters": [
+              "NW名前指定 白鸦"
+            ]
+          },
+          {
+            "code": 101,
+            "indent": 0,
+            "parameters": [
+              "",
+              0,
+              0,
+              2
+            ]
+          },
+          {
+            "code": 401,
+            "indent": 0,
+            "parameters": [
+              "「我，咕咕，给糖，给糖！」"
+            ]
+          },
+          {
+            "code": 121,
+            "indent": 0,
+            "parameters": [
+              935,
+              935,
+              0
+            ]
+          },
+          {
+            "code": 302,
+            "indent": 0,
+            "parameters": [
+              0,
+              71,
+              1,
+              0,
+              true
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              0,
+              29,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              0,
+              25,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              0,
+              8,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              1,
+              134,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              0,
+              327,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              0,
+              340,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              0,
+              341,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              0,
+              358,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              0,
+              376,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              0,
+              377,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              2,
+              125,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              2,
+              123,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              2,
+              143,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              2,
+              113,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              2,
+              154,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              2,
+              155,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              2,
+              156,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              2,
+              242,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              2,
+              231,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 605,
+            "indent": 0,
+            "parameters": [
+              2,
+              230,
+              1,
+              0
+            ]
+          },
+          {
+            "code": 121,
+            "indent": 0,
+            "parameters": [
+              935,
+              935,
+              1
+            ]
+          },
+          {
+            "code": 108,
+            "indent": 0,
+            "parameters": [
+              "NW名前指定 白鴉"
+            ]
+          },
+          {
+            "code": 108,
+            "indent": 0,
+            "parameters": [
+              "NW名前指定 白鸦"
+            ]
+          },
+          {
+            "code": 101,
+            "indent": 0,
+            "parameters": [
+              "",
+              0,
+              0,
+              2
+            ]
+          },
+          {
+            "code": 401,
+            "indent": 0,
+            "parameters": [
+              "「再给我更多的甜甜的圆球！」"
+            ]
+          },
+          {
+            "code": 0,
+            "indent": 0,
+            "parameters": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "map152_ev036",
+    "mapId": 152,
+    "eventId": 36,
+    "name": "白鴉",
+    "x": 56,
+    "y": 5,
+    "pages": [
+      {
+        "condition": {
+          "switch1_valid": false,
+          "switch2_valid": false,
+          "variable_valid": false,
+          "self_switch_valid": false,
+          "item_valid": false,
+          "actor_valid": false,
+          "switch1_id": 1,
+          "switch2_id": 1,
+          "variable_id": 1,
+          "variable_value": 0,
+          "self_switch_ch": "A",
+          "item_id": 1,
+          "actor_id": 1,
+          "_class": "RPG::Event::Page::Condition"
+        },
+        "graphic": {
+          "tile_id": 0,
+          "character_name": "vx_chara07_a",
+          "character_index": 0,
+          "direction": 2,
+          "pattern": 1,
+          "_class": "RPG::Event::Page::Graphic"
+        },
+        "move_type": 0,
+        "move_speed": 3,
+        "move_frequency": 3,
+        "move_route": {
+          "repeat": true,
+          "skippable": false,
+          "wait": false,
+          "list": [
+            {
+              "code": 0,
+              "parameters": [],
+              "_class": "RPG::MoveCommand"
+            }
+          ],
+          "_class": "RPG::MoveRoute"
+        },
+        "walk_anime": true,
+        "step_anime": false,
+        "direction_fix": true,
+        "through": false,
+        "priority_type": 1,
+        "trigger": 0,
+        "commands": [
+          {
+            "code": 0,
+            "indent": 0,
+            "parameters": []
+          }
+        ]
+      }
+    ]
   }
 ]

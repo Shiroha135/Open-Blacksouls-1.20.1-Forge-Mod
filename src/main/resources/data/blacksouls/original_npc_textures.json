@@ -1189,6 +1189,16 @@
       "rows": 8,
       "frameWidth": 96,
       "frameHeight": 80
+    },
+    "vx_chara07_a": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_7331139324d91146.png",
+      "width": 384,
+      "height": 384,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 48
     }
   },
   "portraits": {
