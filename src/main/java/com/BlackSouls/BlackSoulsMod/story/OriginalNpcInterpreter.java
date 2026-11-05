@@ -24,6 +24,10 @@ public final class OriginalNpcInterpreter {
     private int battleIndent;
     private long revision;
     private boolean shopPurchaseOnly;
+    private Long numberMinimum;
+    private Long numberMaximum;
+    private final Deque<String> experienceMessages = new ArrayDeque<>();
+    private boolean experienceDisplay;
 
     public OriginalNpcInterpreter(List<BSOriginalNpcData.Command> commands, Context context) {
         this.context = Objects.requireNonNull(context);
@@ -67,10 +71,19 @@ public final class OriginalNpcInterpreter {
             if (selection != -1) return pending;
         } else if (pending != null && pending.type() == Type.SYNTHESIS) {
             if (selection != -1) return pending;
+        } else if (pending != null && pending.type() == Type.NUMBER_INPUT) {
+            NumberRequest number = pending.numberInput();
+            if (selection < 0) return pending;
+            if (selection < number.minimum() || selection > number.maximum()
+                    || !context.numberInputAllowed(number.variableId(), selection)) return numberPrompt(number.variableId(), number.digits(), selection);
+            context.setVariable(number.variableId(), selection);
+            numberMinimum = null;
+            numberMaximum = null;
         } else if (pending != null && pending.type() == Type.BLOCKED) {
             return pending;
         }
         pending = null;
+        experienceDisplay = false;
         for (int steps = 0; steps < 4096 && !frames.isEmpty(); steps++) {
             Frame frame = frames.peek();
             if (frame.position >= frame.commands.size()) {
@@ -79,6 +92,12 @@ public final class OriginalNpcInterpreter {
             }
             int commandPosition = frame.position;
             BSOriginalNpcData.Command command = frame.commands.get(frame.position++);
+            if (!experienceMessages.isEmpty() && (command.code() == 101 || command.code() == 102 || command.code() == 103)) {
+                frame.position--;
+                context.closeMessage();
+                experienceDisplay = true;
+                return emit(Type.TEXT, experienceMessages.removeFirst(), "", 0, List.of(), List.of(), "");
+            }
             if (deferPresentation && presentationCommand(command.code())) {
                 frame.position--;
                 return waitPrompt(0);
@@ -96,6 +115,13 @@ public final class OriginalNpcInterpreter {
                         context.comment(comment.toString());
                     }
                     case 408 -> {
+                    }
+                    case 103 -> {
+                        if (p.size() != 2) throw new UnsupportedOperationException("number_input_parameters");
+                        int variableId = integer(p, 0), digits = integer(p, 1);
+                        if (variableId < 1 || digits < 1 || digits > 8) throw new UnsupportedOperationException("number_input_parameters");
+                        context.prepareNumberInput(variableId);
+                        return numberPrompt(variableId, digits, context.variable(variableId));
                     }
                     case 101 -> {
                         List<String> lines = new ArrayList<>();
@@ -222,10 +248,39 @@ public final class OriginalNpcInterpreter {
                     }
                     case 250 -> context.sound(p.get(0).getAsJsonObject());
                     case 314 -> context.recoverAll(integer(p, 0), integer(p, 1));
+                    case 315 -> {
+                        if (p.size() != 6) throw new UnsupportedOperationException("experience_parameters");
+                        int mode = integer(p, 0), operandId = integer(p, 1);
+                        if (mode != 0 && mode != 1 || p.size() < 6 || !p.get(5).isJsonPrimitive()
+                                || !p.get(5).getAsJsonPrimitive().isBoolean()) throw new UnsupportedOperationException("experience_parameters");
+                        int actorId = Math.toIntExact(mode == 0 ? operandId : context.variable(operandId));
+                        long amount = Math.multiplyExact(operand(p, 3, 4), integer(p, 2) == 0 ? 1L : -1L);
+                        if (integer(p, 2) < 0 || integer(p, 2) > 1) throw new UnsupportedOperationException("experience_operation");
+                        boolean purchase = false;
+                        if (integer(p, 2) == 0 && integer(p, 3) == 1 && integer(p, 4) == 26 && frame.position < frame.commands.size()) {
+                            var next = frame.commands.get(frame.position);
+                            var payment = next.parameters();
+                            purchase = next.code() == 125 && payment.size() == 3 && integer(payment, 0) == 1
+                                    && integer(payment, 1) == 1 && integer(payment, 2) == 26;
+                        }
+                        String message = purchase ? context.convertExperience(actorId, amount, p.get(5).getAsBoolean())
+                                : context.changeExperience(actorId, amount, p.get(5).getAsBoolean());
+                        if (purchase) frame.position++;
+                        if (message != null && !message.isEmpty()) experienceMessages.addLast(message);
+                    }
                     case 355 -> {
                         StringBuilder script = new StringBuilder(text(p, 0));
                         while (frame.position < frame.commands.size() && frame.commands.get(frame.position).code() == 655) {
                             script.append('\n').append(text(frame.commands.get(frame.position++).parameters(), 0));
+                        }
+                        var range = java.util.regex.Pattern.compile("set_number_range\\(\\s*(-?\\d+)\\s*,\\s*(\\$game_party\\.gold|\\$game_variables\\[(\\d+)]|-?\\d+)\\s*\\)\\s*").matcher(script);
+                        if (range.matches()) {
+                            long minimum = Long.parseLong(range.group(1));
+                            long maximum = "$game_party.gold".equals(range.group(2)) ? context.gold()
+                                    : range.group(3) != null ? context.variable(Integer.parseInt(range.group(3))) : Long.parseLong(range.group(2));
+                            numberMinimum = Math.max(0L, minimum);
+                            numberMaximum = Math.max(numberMinimum, Math.max(0L, maximum));
+                            break;
                         }
                         if (script.toString().equals("call_keep")) {
                             context.openItemKeep();
@@ -306,6 +361,11 @@ public final class OriginalNpcInterpreter {
                 return emit(Type.BLOCKED, "", "", 0, List.of(), List.of(), exception.getMessage());
             }
         }
+        if (frames.isEmpty() && !experienceMessages.isEmpty()) {
+            context.closeMessage();
+            experienceDisplay = true;
+            return emit(Type.TEXT, experienceMessages.removeFirst(), "", 0, List.of(), List.of(), "");
+        }
         return emit(frames.isEmpty() ? Type.END : Type.BLOCKED, "", "", 0,
                 List.of(), List.of(), frames.isEmpty() ? "" : "execution_budget");
     }
@@ -347,6 +407,10 @@ public final class OriginalNpcInterpreter {
         return context.speakerName();
     }
 
+    public long variable(int id) {
+        return context.variable(id);
+    }
+
     public boolean shopPurchaseOnly() {
         return shopPurchaseOnly;
     }
@@ -368,11 +432,35 @@ public final class OriginalNpcInterpreter {
                 pending.choices(), pending.goods(), pending.reason());
     }
 
+    private Prompt numberPrompt(int variableId, int digits, long proposed) {
+        int limit = (int) Math.pow(10, digits) - 1;
+        long minimum = numberMinimum == null ? 0L : numberMinimum;
+        long maximum = numberMaximum == null ? limit : Math.min(limit, numberMaximum);
+        maximum = context.numberInputMaximum(variableId, maximum);
+        if (minimum > maximum || minimum < 0 || maximum > limit) throw new UnsupportedOperationException("number_input_range");
+        int initial = (int) Math.max(minimum, Math.min(maximum, proposed));
+        pending = new Prompt(++revision, Type.NUMBER_INPUT, "", "", 0, List.of(), List.of(), "", null, 0,
+                new NumberRequest(variableId, digits, (int) minimum, (int) maximum, initial, context.gold()));
+        return pending;
+    }
+
+    public Prompt refreshNumberInput() {
+        if (pending == null || pending.type() != Type.NUMBER_INPUT) throw new IllegalStateException("No pending original number input");
+        NumberRequest number = pending.numberInput();
+        return numberPrompt(number.variableId(), number.digits(), number.initial());
+    }
+
     public JsonObject snapshot() {
         JsonObject result = new JsonObject();
         result.addProperty("version", SNAPSHOT_VERSION);
         result.addProperty("revision", revision);
         result.addProperty("shopPurchaseOnly", shopPurchaseOnly);
+        if (numberMinimum != null) result.addProperty("numberMinimum", numberMinimum);
+        if (numberMaximum != null) result.addProperty("numberMaximum", numberMaximum);
+        JsonArray experience = new JsonArray();
+        experienceMessages.forEach(experience::add);
+        result.add("experienceMessages", experience);
+        result.addProperty("experienceDisplay", experienceDisplay);
         JsonObject contextState = context.savePresentationState();
         if (contextState != null) result.add("contextState", contextState);
         result.addProperty("pendingIndent", pendingIndent);
@@ -412,6 +500,29 @@ public final class OriginalNpcInterpreter {
         if (snapshot.has("contextState")) context.restorePresentationState(snapshot.getAsJsonObject("contextState"));
         result.frames.clear();
         result.revision = savedLong(snapshot, "revision");
+        if (snapshot.has("experienceDisplay")) {
+            if (!snapshot.get("experienceDisplay").isJsonPrimitive() || !snapshot.getAsJsonPrimitive("experienceDisplay").isBoolean()) {
+                throw new IllegalArgumentException("Invalid original experience display");
+            }
+            result.experienceDisplay = snapshot.get("experienceDisplay").getAsBoolean();
+        }
+        if (snapshot.has("numberMinimum")) result.numberMinimum = savedLong(snapshot, "numberMinimum");
+        if (snapshot.has("numberMaximum")) result.numberMaximum = savedLong(snapshot, "numberMaximum");
+        if ((result.numberMinimum == null) != (result.numberMaximum == null)
+                || result.numberMinimum != null && (result.numberMinimum < 0 || result.numberMaximum < result.numberMinimum)) {
+            throw new IllegalArgumentException("Invalid original number range snapshot");
+        }
+        if (snapshot.has("experienceMessages")) {
+            JsonArray messages = snapshot.getAsJsonArray("experienceMessages");
+            if (messages.size() > 64) throw new IllegalArgumentException("Too many original experience messages");
+            for (JsonElement message : messages) {
+                if (!message.isJsonPrimitive() || !message.getAsJsonPrimitive().isString()
+                        || message.getAsString().isEmpty() || message.getAsString().length() > 16384) {
+                    throw new IllegalArgumentException("Invalid original experience message");
+                }
+                result.experienceMessages.addLast(message.getAsString());
+            }
+        }
         if (snapshot.has("shopPurchaseOnly")) {
             if (!snapshot.get("shopPurchaseOnly").isJsonPrimitive()
                     || !snapshot.getAsJsonPrimitive("shopPurchaseOnly").isBoolean()) {
@@ -460,7 +571,8 @@ public final class OriginalNpcInterpreter {
         result.pending = pending.isJsonNull() ? null : loadPrompt(pending.getAsJsonObject());
         if (result.pending != null && (result.pending.revision() != result.revision
                 || result.pending.revision() <= 0 || result.frames.isEmpty()
-                && result.pending.type() != Type.END && result.pending.type() != Type.BLOCKED)) {
+                && result.pending.type() != Type.END && result.pending.type() != Type.BLOCKED
+                && !(result.pending.type() == Type.TEXT && result.experienceDisplay))) {
             throw new IllegalArgumentException("Inconsistent original NPC snapshot prompt");
         }
         return result;
@@ -500,6 +612,17 @@ public final class OriginalNpcInterpreter {
         result.addProperty("portraitIndex", prompt.portraitIndex());
         result.addProperty("reason", prompt.reason());
         result.addProperty("waitTicks", prompt.waitTicks());
+        if (prompt.numberInput() != null) {
+            NumberRequest request = prompt.numberInput();
+            JsonObject number = new JsonObject();
+            number.addProperty("variableId", request.variableId());
+            number.addProperty("digits", request.digits());
+            number.addProperty("minimum", request.minimum());
+            number.addProperty("maximum", request.maximum());
+            number.addProperty("initial", request.initial());
+            number.addProperty("money", request.money());
+            result.add("numberInput", number);
+        }
         JsonArray choices = new JsonArray();
         prompt.choices().forEach(choices::add);
         result.add("choices", choices);
@@ -541,13 +664,19 @@ public final class OriginalNpcInterpreter {
                     value.get("canLose").getAsBoolean());
         }
         int wait = savedInt(saved, "waitTicks");
+        NumberRequest number = null;
+        if (saved.has("numberInput")) {
+            JsonObject value = saved.getAsJsonObject("numberInput");
+            number = new NumberRequest(savedInt(value, "variableId"), savedInt(value, "digits"), savedInt(value, "minimum"),
+                    savedInt(value, "maximum"), savedInt(value, "initial"), savedLong(value, "money"));
+        }
         if (wait < 0 || wait > 120000 || (type == Type.BATTLE) != (battle != null)
                 || battle != null && battle.troopId() <= 0 || type != Type.WAIT && wait != 0) {
             throw new IllegalArgumentException("Invalid original NPC saved prompt");
         }
         return new Prompt(savedLong(saved, "revision"), type, saved.get("text").getAsString(),
                 saved.get("portrait").getAsString(), savedInt(saved, "portraitIndex"), choices, goods,
-                saved.get("reason").getAsString(), battle, wait);
+                saved.get("reason").getAsString(), battle, wait, number);
     }
 
     private static int savedInt(JsonObject object, String key) {
@@ -727,7 +856,7 @@ public final class OriginalNpcInterpreter {
     }
 
     public enum Type {
-        TEXT, CHOICE, SHOP, END, BLOCKED, BATTLE, WAIT, ROUTE_WAIT, ANIMATION_WAIT, ITEM_KEEP, SYNTHESIS
+        TEXT, CHOICE, SHOP, END, BLOCKED, BATTLE, WAIT, ROUTE_WAIT, ANIMATION_WAIT, ITEM_KEEP, SYNTHESIS, NUMBER_INPUT
     }
 
     public enum BattleOutcome {
@@ -741,7 +870,11 @@ public final class OriginalNpcInterpreter {
     }
 
     public record Prompt(long revision, Type type, String text, String portrait, int portraitIndex,
-                         List<String> choices, List<Goods> goods, String reason, BattleRequest battle, int waitTicks) {
+                         List<String> choices, List<Goods> goods, String reason, BattleRequest battle, int waitTicks, NumberRequest numberInput) {
+        public Prompt(long revision, Type type, String text, String portrait, int portraitIndex,
+                      List<String> choices, List<Goods> goods, String reason, BattleRequest battle, int waitTicks) {
+            this(revision, type, text, portrait, portraitIndex, choices, goods, reason, battle, waitTicks, null);
+        }
         public Prompt(long revision, Type type, String text, String portrait, int portraitIndex,
                       List<String> choices, List<Goods> goods, String reason) {
             this(revision, type, text, portrait, portraitIndex, choices, goods, reason, null, 0);
@@ -749,10 +882,38 @@ public final class OriginalNpcInterpreter {
         public Prompt {
             choices = List.copyOf(choices);
             goods = List.copyOf(goods);
+            if ((type == Type.NUMBER_INPUT) != (numberInput != null)) throw new IllegalArgumentException("Invalid original number prompt");
+        }
+    }
+
+    public record NumberRequest(int variableId, int digits, int minimum, int maximum, int initial, long money) {
+        public NumberRequest {
+            if (variableId < 1 || digits < 1 || digits > 8 || minimum < 0 || maximum < minimum
+                    || maximum >= (long) Math.pow(10, digits) || initial < minimum || initial > maximum || money < 0) {
+                throw new IllegalArgumentException("Invalid original number input");
+            }
         }
     }
 
     public interface Context {
+        default void prepareNumberInput(int variableId) {
+        }
+
+        default boolean numberInputAllowed(int variableId, int value) {
+            return true;
+        }
+
+        default long numberInputMaximum(int variableId, long maximum) {
+            return maximum;
+        }
+
+        default String changeExperience(int actorId, long amount, boolean show) {
+            throw new UnsupportedOperationException("actor_experience:" + actorId);
+        }
+
+        default String convertExperience(int actorId, long amount, boolean show) {
+            throw new UnsupportedOperationException("soul_experience_conversion:" + actorId);
+        }
         default void openSynthesis() {
             throw new UnsupportedOperationException("original_synthesis");
         }

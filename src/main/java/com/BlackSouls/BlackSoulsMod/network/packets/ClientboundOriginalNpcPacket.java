@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long revision,
                                            String name, String text, String portrait, int portraitIndex,
                                            OriginalNpcInterpreter.Type type, List<String> choices, List<Offer> offers,
-                                           ShopView shopView, KeepView keepView, SynthesisView synthesisView) {
+                                           ShopView shopView, KeepView keepView, SynthesisView synthesisView, NumberView numberView) {
     public ClientboundOriginalNpcPacket {
         choices = List.copyOf(choices);
         offers = List.copyOf(offers);
@@ -26,6 +26,17 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
         if (synthesisView != null && type != OriginalNpcInterpreter.Type.SYNTHESIS) {
             throw new IllegalArgumentException("Synthesis state outside an original synthesis prompt");
         }
+        if ((type == OriginalNpcInterpreter.Type.NUMBER_INPUT) != (numberView != null)) {
+            throw new IllegalArgumentException("Number state outside an original number prompt");
+        }
+    }
+
+    public ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long revision,
+                                       String name, String text, String portrait, int portraitIndex,
+                                       OriginalNpcInterpreter.Type type, List<String> choices, List<Offer> offers,
+                                       ShopView shopView, KeepView keepView, SynthesisView synthesisView) {
+        this(entityId, sessionId, revision, name, text, portrait, portraitIndex, type, choices, offers,
+                shopView, keepView, synthesisView, null);
     }
 
     public ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long revision,
@@ -73,13 +84,15 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
                     OriginalNpcItems.Entry item = OriginalNpcItems.get(goods.kind(), goods.id());
                     return new Offer(item.name(), goods.price() >= 0L ? goods.price() : item.price(),
                             item.registry().toString());
-                }).toList(), shopView, keepView, synthesisView);
+                }).toList(), shopView, keepView, synthesisView, prompt.numberInput() == null ? null : new NumberView(
+                        prompt.numberInput().digits(), prompt.numberInput().minimum(), prompt.numberInput().maximum(),
+                        prompt.numberInput().initial(), prompt.numberInput().money(), prompt.numberInput().variableId() == 26));
     }
 
     public ClientboundOriginalNpcPacket(FriendlyByteBuf buffer) {
         this(buffer.readVarInt(), buffer.readUUID(), buffer.readVarLong(), buffer.readUtf(512),
                 buffer.readUtf(16384), buffer.readUtf(512), buffer.readVarInt(),
-                buffer.readEnum(OriginalNpcInterpreter.Type.class), readChoices(buffer), readOffers(buffer), readShopView(buffer), readKeepView(buffer), readSynthesisView(buffer));
+                buffer.readEnum(OriginalNpcInterpreter.Type.class), readChoices(buffer), readOffers(buffer), readShopView(buffer), readKeepView(buffer), readSynthesisView(buffer), readNumberView(buffer));
     }
 
     public void toBytes(FriendlyByteBuf buffer) {
@@ -163,6 +176,26 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
                 }
                 writeTradeMaterials(buffer, offer.exchangeMaterials());
             }
+        }
+        buffer.writeBoolean(numberView != null);
+        if (numberView != null) {
+            buffer.writeVarInt(numberView.digits());
+            buffer.writeVarInt(numberView.minimum());
+            buffer.writeVarInt(numberView.maximum());
+            buffer.writeVarInt(numberView.initial());
+            buffer.writeVarLong(numberView.money());
+            buffer.writeBoolean(numberView.moneyVisible());
+        }
+    }
+
+    private static NumberView readNumberView(FriendlyByteBuf buffer) {
+        return buffer.readBoolean() ? new NumberView(buffer.readVarInt(), buffer.readVarInt(), buffer.readVarInt(), buffer.readVarInt(), buffer.readVarLong(), buffer.readBoolean()) : null;
+    }
+
+    public record NumberView(int digits, int minimum, int maximum, int initial, long money, boolean moneyVisible) {
+        public NumberView {
+            if (digits < 1 || digits > 8 || minimum < 0 || maximum < minimum || maximum >= (long) Math.pow(10, digits)
+                    || initial < minimum || initial > maximum || money < 0) throw new IllegalArgumentException("Invalid original number view");
         }
     }
 

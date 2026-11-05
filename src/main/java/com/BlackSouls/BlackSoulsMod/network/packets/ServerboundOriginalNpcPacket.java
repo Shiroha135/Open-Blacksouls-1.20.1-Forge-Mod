@@ -24,7 +24,8 @@ public record ServerboundOriginalNpcPacket(int entityId, UUID sessionId, long re
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
-            if (player != null && selection >= -4 && selection < 256 && revision >= 0L) {
+            if (player != null && selection >= -4 && revision >= 0L && (selection < 256
+                    || OriginalNpcService.isNumberInputResponse(player, entityId, sessionId, revision, selection))) {
                 OriginalNpcService.respond(player, entityId, sessionId, revision, selection);
             }
         });

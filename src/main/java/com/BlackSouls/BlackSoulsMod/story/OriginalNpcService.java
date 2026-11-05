@@ -187,6 +187,13 @@ public final class OriginalNpcService {
         return session != null && session.prompt != null && session.prompt.type() == OriginalNpcInterpreter.Type.BATTLE;
     }
 
+    public static boolean isNumberInputResponse(ServerPlayer player, int entityId, UUID token, long revision, int value) {
+        Session session = SESSIONS.get(player.getUUID());
+        return value >= 0 && value <= 99999999 && session != null && session.entityId == entityId
+                && session.token.equals(token) && session.prompt != null && session.prompt.revision() == revision
+                && session.prompt.type() == OriginalNpcInterpreter.Type.NUMBER_INPUT;
+    }
+
     public static boolean isPictureClockSuspended(ServerPlayer player) {
         return !SESSIONS.containsKey(player.getUUID())
                 && OriginalNpcProgress.get(player.server).hasSavedTimedWait(player.getUUID());
@@ -352,7 +359,10 @@ public final class OriginalNpcService {
         }
         Session previous = SESSIONS.get(player.getUUID());
         if (previous != null && isSuspended(previous)) {
-            if (previous.stagedPrompt == null) {
+            if (previous.prompt != null && previous.prompt.type() == OriginalNpcInterpreter.Type.NUMBER_INPUT) {
+                if (!previous.npcId.equals(npcId) || previous.npcUuid == null || !previous.npcUuid.equals(npc.getUUID())
+                        || !previous.dimension.equals(player.level().dimension().location())) return;
+            } else if (previous.stagedPrompt == null) {
                 return;
             }
             checkpoint(player, previous);
@@ -405,6 +415,8 @@ public final class OriginalNpcService {
                     prompt = interpreter.advance(-1);
                 } else if (prompt.type() == OriginalNpcInterpreter.Type.BLOCKED) {
                     prompt = interpreter.retryBlocked();
+                } else if (prompt.type() == OriginalNpcInterpreter.Type.NUMBER_INPUT) {
+                    prompt = interpreter.refreshNumberInput();
                 }
                 if (prompt.type() == OriginalNpcInterpreter.Type.WAIT && saved.has("waitRemaining")) {
                     prompt = new OriginalNpcInterpreter.Prompt(prompt.revision(), prompt.type(), prompt.text(),
@@ -568,7 +580,8 @@ public final class OriginalNpcService {
         return session.prompt != null && (session.prompt.type() == OriginalNpcInterpreter.Type.BATTLE
                 || session.prompt.type() == OriginalNpcInterpreter.Type.WAIT
                 || session.prompt.type() == OriginalNpcInterpreter.Type.ROUTE_WAIT
-                || session.prompt.type() == OriginalNpcInterpreter.Type.ANIMATION_WAIT);
+                || session.prompt.type() == OriginalNpcInterpreter.Type.ANIMATION_WAIT
+                || session.prompt.type() == OriginalNpcInterpreter.Type.NUMBER_INPUT);
     }
 
     private static void checkpoint(ServerPlayer player, Session session) {
@@ -616,7 +629,7 @@ public final class OriginalNpcService {
             session.synthesisRecipes = null;
         }
         if (prompt.type() == OriginalNpcInterpreter.Type.TEXT) {
-            session.lastText = resolveText(prompt.text(), player, npc, session.npcId);
+            session.lastText = resolveText(prompt.text(), player, session.interpreter);
             session.lastPortrait = prompt.portrait();
             session.lastPortraitIndex = prompt.portraitIndex();
         }
@@ -651,15 +664,16 @@ public final class OriginalNpcService {
         OriginalNpcInterpreter.Prompt display = prompt;
         if (session.restoringPresentation && prompt.text().isEmpty()
                 && (prompt.type() == OriginalNpcInterpreter.Type.CHOICE || prompt.type() == OriginalNpcInterpreter.Type.SHOP
-                || prompt.type() == OriginalNpcInterpreter.Type.ITEM_KEEP || prompt.type() == OriginalNpcInterpreter.Type.SYNTHESIS)) {
+                || prompt.type() == OriginalNpcInterpreter.Type.ITEM_KEEP || prompt.type() == OriginalNpcInterpreter.Type.SYNTHESIS
+                || prompt.type() == OriginalNpcInterpreter.Type.NUMBER_INPUT)) {
             display = new OriginalNpcInterpreter.Prompt(prompt.revision(), prompt.type(), session.lastText,
                     session.lastPortrait, session.lastPortraitIndex, prompt.choices(), prompt.goods(), prompt.reason(),
-                    prompt.battle(), prompt.waitTicks());
+                    prompt.battle(), prompt.waitTicks(), prompt.numberInput());
         }
         session.restoringPresentation = false;
         NetworkHandler.sendToPlayer(new ClientboundOriginalNpcPacket(npc.getId(), session.token,
-                session.interpreter.speakerName(), resolveText(display.text(), player, npc, session.npcId), display,
-                prompt.choices().stream().map(value -> resolveText(value, player, npc, session.npcId)).toList(),
+                session.interpreter.speakerName(), resolveText(display.text(), player, session.interpreter), display,
+                prompt.choices().stream().map(value -> resolveText(value, player, session.interpreter)).toList(),
                 prompt.type() == OriginalNpcInterpreter.Type.SHOP ? OriginalNpcShopService.view(player, prompt.goods(),
                         session.shopStorage, session.interpreter.shopPurchaseOnly()) : null,
                 prompt.type() == OriginalNpcInterpreter.Type.ITEM_KEEP ? OriginalNpcItemKeepService.view(player) : null,
@@ -732,8 +746,7 @@ public final class OriginalNpcService {
                 OriginalNpcInterpreter.Type.BLOCKED, "", "", 0, List.of(), List.of(), reason));
     }
 
-    private static String resolveText(String text, ServerPlayer player, PathfinderMob npc, String npcId) {
-        EventContext context = new EventContext(player, npc, npcId);
+    private static String resolveText(String text, ServerPlayer player, OriginalNpcInterpreter context) {
         String replaced = VARIABLE.matcher(text).replaceAll(match -> Long.toString(
                 context.variable(Integer.parseInt(match.group(1)))));
         return ACTOR_NAME.matcher(replaced).replaceAll(java.util.regex.Matcher.quoteReplacement(StoryNameData.get(player)));
@@ -745,6 +758,7 @@ public final class OriginalNpcService {
         private final String npcId;
         private final OriginalNpcProgress progress;
         private OriginalNpcNameWindow.State nameWindow;
+        private final Map<Integer, Long> numericVariables = new HashMap<>();
 
         public EventContext(ServerPlayer player, EntityOriginalNpc npc) {
             this(player, npc, npc.getNpcId());
@@ -805,12 +819,24 @@ public final class OriginalNpcService {
 
         @Override
         public JsonObject savePresentationState() {
-            return nameWindow.snapshot();
+            JsonObject state = nameWindow.snapshot();
+            JsonObject numeric = new JsonObject();
+            numericVariables.forEach((key, value) -> numeric.addProperty(Integer.toString(key), value));
+            if (!numericVariables.isEmpty()) state.add("numericVariables", numeric);
+            return state;
         }
 
         @Override
         public void restorePresentationState(JsonObject saved) {
             nameWindow = OriginalNpcNameWindow.State.restore(saved);
+            numericVariables.clear();
+            if (saved.has("numericVariables")) {
+                for (var entry : saved.getAsJsonObject("numericVariables").entrySet()) {
+                    int id = Integer.parseInt(entry.getKey());
+                    if (id != 26 && id != 27) throw new IllegalArgumentException("Invalid scoped number variable");
+                    numericVariables.put(id, entry.getValue().getAsBigDecimal().longValueExact());
+                }
+            }
             saveNameWindow();
         }
 
@@ -852,6 +878,7 @@ public final class OriginalNpcService {
 
         @Override
         public long variable(int id) {
+            if (numericVariables.containsKey(id)) return numericVariables.get(id);
             if (player != null) {
                 return OriginalNpcProgress.readVariable(player, id);
             }
@@ -863,6 +890,10 @@ public final class OriginalNpcService {
 
         @Override
         public void setVariable(int id, long value) {
+            if (player != null && (id == 26 || id == 27)) {
+                numericVariables.put(id, value);
+                return;
+            }
             if (player != null) {
                 OriginalNpcProgress.writeVariable(player, id, value);
                 return;
@@ -963,6 +994,36 @@ public final class OriginalNpcService {
                 return OriginalActorBridge.gameData(player, first, second);
             }
             throw new UnsupportedOperationException("game_data:" + type + ":" + first + ":" + second);
+        }
+
+        @Override
+        public void prepareNumberInput(int variableId) {
+            if (player == null) throw new UnsupportedOperationException("number_input_player");
+            if (variableId == 26) {
+                numericVariables.putIfAbsent(26, 0L);
+                numericVariables.putIfAbsent(27, gold());
+            }
+        }
+
+        @Override
+        public long numberInputMaximum(int variableId, long maximum) {
+            if (variableId != 26) return maximum;
+            return Math.max(0L, Math.min(maximum, Math.min(gold(), Long.MAX_VALUE - Math.max(0L, stats().currentExp))));
+        }
+
+        @Override
+        public boolean numberInputAllowed(int variableId, int value) {
+            return variableId != 26 || value <= gold() && stats().currentExp >= 0 && value <= Long.MAX_VALUE - stats().currentExp;
+        }
+
+        @Override
+        public String changeExperience(int actorId, long amount, boolean show) {
+            return OriginalActorBridge.changeExperience(player, actorId, amount, show);
+        }
+
+        @Override
+        public String convertExperience(int actorId, long amount, boolean show) {
+            return OriginalActorBridge.convertExperience(player, actorId, amount, show);
         }
 
         @Override
