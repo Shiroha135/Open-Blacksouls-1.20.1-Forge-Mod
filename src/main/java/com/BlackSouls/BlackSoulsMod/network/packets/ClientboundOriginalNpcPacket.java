@@ -104,6 +104,7 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
             buffer.writeBoolean(shopView.storage());
             buffer.writeBoolean(shopView.purchaseOnly());
             buffer.writeBoolean(shopView.canToggleStorage());
+            buffer.writeBoolean(shopView.exchange());
             buffer.writeVarLong(shopView.money());
             writeTrades(buffer, shopView.buys());
             writeTrades(buffer, shopView.sells());
@@ -198,7 +199,7 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
 
     private static ShopView readShopView(FriendlyByteBuf buffer) {
         return buffer.readBoolean() ? new ShopView(buffer.readBoolean(), buffer.readBoolean(), buffer.readBoolean(),
-                buffer.readVarLong(), readTrades(buffer), readTrades(buffer)) : null;
+                buffer.readBoolean(), buffer.readVarLong(), readTrades(buffer), readTrades(buffer)) : null;
     }
 
     private static KeepView readKeepView(FriendlyByteBuf buffer) {
@@ -256,9 +257,19 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
         for (int index = 0; index < count; index++) {
             result.add(new TradeOffer(buffer.readVarInt(), buffer.readVarInt(), buffer.readVarInt(),
                     buffer.readUtf(512), buffer.readUtf(512), buffer.readVarLong(), buffer.readVarInt(),
-                    buffer.readVarInt(), buffer.readBoolean()));
+                    buffer.readVarInt(), buffer.readBoolean(), readTradeMaterials(buffer)));
         }
         return result;
+    }
+
+    private static List<SynthesisMaterial> readTradeMaterials(FriendlyByteBuf buffer) {
+        int count = count(buffer, 64);
+        List<SynthesisMaterial> materials = new ArrayList<>();
+        for (int index = 0; index < count; index++) {
+            materials.add(new SynthesisMaterial(buffer.readVarInt(), buffer.readVarInt(), buffer.readUtf(512),
+                    buffer.readUtf(512), buffer.readVarInt(), buffer.readVarInt()));
+        }
+        return materials;
     }
 
     private static void writeTrades(FriendlyByteBuf buffer, List<TradeOffer> offers) {
@@ -273,11 +284,25 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
             buffer.writeVarInt(offer.owned());
             buffer.writeVarInt(offer.maximum());
             buffer.writeBoolean(offer.enabled());
+            buffer.writeVarInt(offer.materials().size());
+            for (SynthesisMaterial material : offer.materials()) {
+                buffer.writeVarInt(material.kind());
+                buffer.writeVarInt(material.id());
+                buffer.writeUtf(material.name(), 512);
+                buffer.writeUtf(material.registry(), 512);
+                buffer.writeVarInt(material.required());
+                buffer.writeVarInt(material.owned());
+            }
         }
     }
 
-    public record ShopView(boolean storage, boolean purchaseOnly, boolean canToggleStorage, long money,
+    public record ShopView(boolean storage, boolean purchaseOnly, boolean canToggleStorage, boolean exchange, long money,
                            List<TradeOffer> buys, List<TradeOffer> sells) {
+        public ShopView(boolean storage, boolean purchaseOnly, boolean canToggleStorage, long money,
+                        List<TradeOffer> buys, List<TradeOffer> sells) {
+            this(storage, purchaseOnly, canToggleStorage, false, money, buys, sells);
+        }
+
         public ShopView {
             buys = List.copyOf(buys);
             sells = List.copyOf(sells);
@@ -288,10 +313,17 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
     }
 
     public record TradeOffer(int kind, int id, int category, String name, String registry,
-                             long price, int owned, int maximum, boolean enabled) {
+                             long price, int owned, int maximum, boolean enabled, List<SynthesisMaterial> materials) {
+        public TradeOffer(int kind, int id, int category, String name, String registry,
+                          long price, int owned, int maximum, boolean enabled) {
+            this(kind, id, category, name, registry, price, owned, maximum, enabled, List.of());
+        }
+
         public TradeOffer {
+            materials = List.copyOf(materials);
             if (kind < 0 || kind > 2 || id < 1 || category < 0 || category > 3
-                    || name == null || registry == null || price < 0L || owned < 0 || maximum < 0 || maximum > 999) {
+                    || name == null || registry == null || price < 0L || owned < 0 || maximum < 0 || maximum > 999
+                    || materials.size() > 64) {
                 throw new IllegalArgumentException("Invalid original shop offer");
             }
         }

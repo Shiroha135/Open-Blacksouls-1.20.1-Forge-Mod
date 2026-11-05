@@ -5,13 +5,16 @@ import com.BlackSouls.BlackSoulsMod.capability.OriginalNpcProgress;
 import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundOriginalNpcPacket;
 import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundOriginalNpcTradePacket;
 import com.BlackSouls.BlackSoulsMod.util.OriginalNpcItems;
+import com.BlackSouls.BlackSoulsMod.util.OriginalNpcExchangeData;
 import com.BlackSouls.BlackSoulsMod.util.OriginalNpcShopRules;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class OriginalNpcShopService {
     private OriginalNpcShopService() {
@@ -29,7 +32,21 @@ public final class OriginalNpcShopService {
             long price = buyingPrice(goods, offer.kind(), offer.id());
             int owned = count(player, storage, offer.kind(), offer.id());
             int maximum = maxBuy(player, storage, item, price);
-            buys.add(offer(item, price, owned, maximum, maximum > 0));
+            List<ClientboundOriginalNpcPacket.SynthesisMaterial> materials = new ArrayList<>();
+            if (exchange(player)) {
+                for (var material : OriginalNpcExchangeData.materials(item.kind(), item.id())) {
+                    var input = OriginalNpcItems.get(material.kind(), material.id());
+                    if (OriginalNpcItems.item(material.kind(), material.id()) == null) {
+                        throw new UnsupportedOperationException("unmapped_exchange_material");
+                    }
+                    materials.add(new ClientboundOriginalNpcPacket.SynthesisMaterial(material.kind(), material.id(),
+                            input.name(), input.registry().toString(), material.quantity(),
+                            count(player, storage, material.kind(), material.id())));
+                }
+            }
+            buys.add(new ClientboundOriginalNpcPacket.TradeOffer(item.kind(), item.id(),
+                    OriginalNpcShopRules.category(item.kind(), item.id()), item.name(), item.registry().toString(),
+                    price, owned, maximum, maximum > 0, materials));
         }
         if (!purchaseOnly) {
             for (OriginalNpcItems.Entry item : OriginalNpcItems.values()) {
@@ -40,7 +57,7 @@ public final class OriginalNpcShopService {
             }
         }
         return new ClientboundOriginalNpcPacket.ShopView(storage, purchaseOnly,
-                !OriginalNpcProgress.get(player.server).switchValue(201), Math.max(0L, stats(player).souls), buys, sells);
+                !OriginalNpcProgress.get(player.server).switchValue(201), exchange(player), Math.max(0L, stats(player).souls), buys, sells);
     }
 
     private static ClientboundOriginalNpcPacket.TradeOffer offer(OriginalNpcItems.Entry item, long price,
@@ -53,8 +70,7 @@ public final class OriginalNpcShopService {
     public static boolean transact(ServerPlayer player, List<OriginalNpcInterpreter.Goods> goods,
                                    boolean storage, boolean purchaseOnly, ServerboundOriginalNpcTradePacket.Action action,
                                    int kind, int id, int quantity) {
-        if (quantity < 1 || quantity > 999 || kind < 0 || kind > 2 || id < 1
-                || OriginalNpcProgress.get(player.server).switchValue(935)) return false;
+        if (quantity < 1 || quantity > 999 || kind < 0 || kind > 2 || id < 1) return false;
         OriginalNpcItems.Entry entry = OriginalNpcItems.get(kind, id);
         Item item = OriginalNpcItems.item(kind, id);
         if (entry == null || item == null) return false;
@@ -63,6 +79,7 @@ public final class OriginalNpcShopService {
         int current = count(player, storage, kind, id);
         int nextCount;
         List<ItemStack> planned = null;
+        Map<OriginalNpcShopStorageData.ItemKey, Integer> storedPlan = new LinkedHashMap<>();
         if (action == ServerboundOriginalNpcTradePacket.Action.BUY) {
             long price = buyingPrice(goods, kind, id);
             if (price < 0L || quantity > maxBuy(player, storage, entry, price)) return false;
@@ -70,7 +87,17 @@ public final class OriginalNpcShopService {
             if (stats.souls < total) return false;
             nextGold = clampGold(stats.souls - total);
             nextCount = Math.addExact(current, quantity);
-            if (!storage) planned = planInventory(player, kind, id, item, quantity);
+            if (storage) {
+                if (exchange(player)) {
+                    for (var material : OriginalNpcExchangeData.materials(kind, id)) {
+                        var key = new OriginalNpcShopStorageData.ItemKey(material.kind(), material.id());
+                        storedPlan.put(key, count(player, true, material.kind(), material.id())
+                                - Math.multiplyExact(material.quantity(), quantity));
+                    }
+                }
+                var output = new OriginalNpcShopStorageData.ItemKey(kind, id);
+                storedPlan.put(output, Math.addExact(storedPlan.getOrDefault(output, current), quantity));
+            } else planned = planPurchase(player, kind, id, item, quantity);
         } else if (action == ServerboundOriginalNpcTradePacket.Action.SELL) {
             if (purchaseOnly || entry.price() <= 0L || quantity > current) return false;
             long income = Math.multiplyExact(entry.price() / 2L, quantity);
@@ -80,8 +107,12 @@ public final class OriginalNpcShopService {
             if (!storage) planned = planInventory(player, kind, id, item, -quantity);
         } else return false;
         if (!storage && planned == null) return false;
-        if (storage) OriginalNpcShopStorageData.get(player.server).setCount(player.getUUID(), kind, id, nextCount);
-        else {
+        if (storage) {
+            if (storedPlan.isEmpty()) storedPlan.put(new OriginalNpcShopStorageData.ItemKey(kind, id), nextCount);
+            if (storedPlan.values().stream().anyMatch(value -> value < 0 || value > 999)) return false;
+            var container = OriginalNpcShopStorageData.get(player.server);
+            storedPlan.forEach((key, value) -> container.setCount(player.getUUID(), key.kind(), key.id(), value));
+        } else {
             for (int slot = 0; slot < planned.size(); slot++) player.getInventory().items.set(slot, planned.get(slot));
             player.getInventory().setChanged();
         }
@@ -105,12 +136,23 @@ public final class OriginalNpcShopService {
     }
 
     private static int maxBuy(ServerPlayer player, boolean storage, OriginalNpcItems.Entry entry, long price) {
-        if (price < 0L || OriginalNpcProgress.get(player.server).switchValue(935)) return 0;
+        if (price < 0L) return 0;
         OriginalNpcShopRules.Rule rule = OriginalNpcShopRules.get(entry.kind(), entry.id());
         if (rule == null || storage && rule.storageForbidden()) return 0;
         int maximum = Math.max(0, (storage ? rule.storageLimit() : OriginalNpcShopRules.NORMAL_LIMIT)
                 - count(player, storage, entry.kind(), entry.id()));
         if (price > 0L) maximum = (int) Math.min(maximum, Math.max(0L, stats(player).souls) / price);
+        if (exchange(player)) {
+            for (var material : OriginalNpcExchangeData.materials(entry.kind(), entry.id())) {
+                if (OriginalNpcItems.item(material.kind(), material.id()) == null) return 0;
+                maximum = Math.min(maximum, count(player, storage, material.kind(), material.id()) / material.quantity());
+            }
+            if (!storage) {
+                Item item = OriginalNpcItems.item(entry.kind(), entry.id());
+                while (maximum > 0 && planPurchase(player, entry.kind(), entry.id(), item, maximum) == null) maximum--;
+            }
+            return maximum;
+        }
         if (!storage) {
             Item item = OriginalNpcItems.item(entry.kind(), entry.id());
             int capacity = 0;
@@ -129,6 +171,23 @@ public final class OriginalNpcShopService {
     private static List<ItemStack> planInventory(ServerPlayer player, int kind, int id, Item item, int delta) {
         List<ItemStack> plan = player.getInventory().items.stream().map(ItemStack::copy)
                 .collect(java.util.stream.Collectors.toCollection(ArrayList::new));
+        return applyInventory(player, plan, kind, id, item, delta) ? plan : null;
+    }
+
+    private static List<ItemStack> planPurchase(ServerPlayer player, int kind, int id, Item item, int quantity) {
+        List<ItemStack> plan = player.getInventory().items.stream().map(ItemStack::copy)
+                .collect(java.util.stream.Collectors.toCollection(ArrayList::new));
+        if (exchange(player)) {
+            for (var material : OriginalNpcExchangeData.materials(kind, id)) {
+                if (!applyInventory(player, plan, material.kind(), material.id(),
+                        OriginalNpcItems.item(material.kind(), material.id()), -Math.multiplyExact(material.quantity(), quantity))) return null;
+            }
+        }
+        return applyInventory(player, plan, kind, id, item, quantity) ? plan : null;
+    }
+
+    private static boolean applyInventory(ServerPlayer player, List<ItemStack> plan, int kind, int id, Item item, int delta) {
+        if (item == null) return false;
         int remaining = Math.abs(delta);
         ItemStack template = OriginalNpcItems.createStack(kind, id, 1);
         for (int pass = 0; pass < (delta > 0 ? 2 : 1) && remaining > 0; pass++) {
@@ -149,7 +208,11 @@ public final class OriginalNpcShopService {
                 }
             }
         }
-        return remaining == 0 ? plan : null;
+        return remaining == 0;
+    }
+
+    private static boolean exchange(ServerPlayer player) {
+        return OriginalNpcProgress.get(player.server).switchValue(935);
     }
 
     private static boolean equippedMainHand(ServerPlayer player, int kind, int slot) {

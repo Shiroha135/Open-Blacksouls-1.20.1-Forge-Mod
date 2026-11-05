@@ -1027,7 +1027,7 @@ public final class OriginalNpcService {
 
         @Override
         public boolean canTrade(OriginalNpcInterpreter.Goods goods) {
-            return !progress.switchValue(935) && OriginalNpcItems.item(goods.kind(), goods.id()) != null;
+            return OriginalNpcItems.item(goods.kind(), goods.id()) != null;
         }
 
         @Override

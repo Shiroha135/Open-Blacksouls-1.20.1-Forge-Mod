@@ -1,0 +1,271 @@
+{
+  "version": 1,
+  "switchId": 935,
+  "sourceScript203Sha256": "ac3acb044da6cf7512df48d36db5e4bfa952d7298b51180531ba4df41eb4898c",
+  "recipes": [
+    {
+      "kind": 0,
+      "id": 8,
+      "name": "女神之血",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 1
+        }
+      ]
+    },
+    {
+      "kind": 0,
+      "id": 25,
+      "name": "神秘的碎片",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "kind": 0,
+      "id": 29,
+      "name": "强化石原盘",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 10
+        }
+      ]
+    },
+    {
+      "kind": 0,
+      "id": 71,
+      "name": "兔之键",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "kind": 0,
+      "id": 327,
+      "name": "魔书【魔力祝福】",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "kind": 0,
+      "id": 340,
+      "name": "魔书【业火】",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 10
+        }
+      ]
+    },
+    {
+      "kind": 0,
+      "id": 341,
+      "name": "魔书【破灭风暴】",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 10
+        }
+      ]
+    },
+    {
+      "kind": 0,
+      "id": 358,
+      "name": "魔书【绝对必中】",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 30
+        }
+      ]
+    },
+    {
+      "kind": 0,
+      "id": 373,
+      "name": "魔书【黑之波动】",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 90
+        }
+      ]
+    },
+    {
+      "kind": 0,
+      "id": 376,
+      "name": "魔书【毒蛇的拥抱】",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 30
+        }
+      ]
+    },
+    {
+      "kind": 0,
+      "id": 377,
+      "name": "魔书【魂之奔流】",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 40
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 134,
+      "name": "魔刀",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 10
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 113,
+      "name": "黑山羊戒指",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 30
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 123,
+      "name": "暗沉木纹戒指",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 125,
+      "name": "四叶草戒指",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 143,
+      "name": "狱灭戒指",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 15
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 154,
+      "name": "蜜蜂戒指",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 5
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 155,
+      "name": "狂乱王的戒指",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 10
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 156,
+      "name": "韦陀天戒指",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 15
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 230,
+      "name": "古王戒指",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 50
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 231,
+      "name": "白熊戒指",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 50
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 242,
+      "name": "圣森戒指",
+      "materials": [
+        {
+          "kind": 0,
+          "id": 49,
+          "quantity": 1
+        }
+      ]
+    }
+  ]
+}

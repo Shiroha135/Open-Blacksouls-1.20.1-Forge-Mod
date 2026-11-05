@@ -60,6 +60,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
     private int quantity = 1;
     private int quantitySelection;
     private int quantityOffset;
+    private int exchangeDetailOffset;
     private ClientboundOriginalNpcPacket.TradeOffer quantityOffer;
     private List<ClientboundOriginalNpcPacket.TradeOffer> tradeOffers = List.of();
     private KeepPage keepPage = KeepPage.CATEGORY;
@@ -434,6 +435,35 @@ public final class GuiOriginalNpcDialogue extends Screen {
         return packet != null && packet.type() == OriginalNpcInterpreter.Type.SHOP && packet.shopView() != null;
     }
 
+    private boolean isExchangeShop() {
+        return isTradeShop() && packet.shopView().exchange();
+    }
+
+    private ClientboundOriginalNpcPacket.TradeOffer selectedExchangeOffer() {
+        if (!isExchangeShop()) return null;
+        if (shopPage == ShopPage.QUANTITY && quantityReturn == ShopPage.BUY) return quantityOffer;
+        return shopPage == ShopPage.BUY && selected >= 0 && selected < tradeOffers.size() ? tradeOffers.get(selected) : null;
+    }
+
+    private boolean hideTradePrice() {
+        return isExchangeShop() && quantityReturn == ShopPage.BUY && quantityOffer != null && quantityOffer.price() == 0L;
+    }
+
+    private List<Component> exchangeDetails() {
+        var offer = selectedExchangeOffer();
+        if (offer == null) return List.of();
+        List<Component> result = new ArrayList<>();
+        result.add(formatOriginalText(offer.name()));
+        int amount = shopPage == ShopPage.QUANTITY ? quantity : 1;
+        for (var material : offer.materials()) {
+            result.add(formatOriginalText(material.name()));
+            long required = (long) material.required() * amount;
+            result.add(Component.literal(required + " / " + material.owned())
+                    .withStyle(required <= material.owned() ? ChatFormatting.WHITE : ChatFormatting.GRAY));
+        }
+        return List.copyOf(result);
+    }
+
     private List<ClientboundOriginalNpcPacket.TradeOffer> offersFor(ShopPage page) {
         return page == ShopPage.BUY ? packet.shopView().buys()
                 : packet.shopView().sells().stream().filter(offer -> offer.category() == sellCategory).toList();
@@ -443,7 +473,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
         List<Component> next = new ArrayList<>();
         tradeOffers = List.of();
         if (shopPage == ShopPage.COMMAND) {
-            next.add(Component.literal("购入"));
+            next.add(Component.literal(isExchangeShop() ? "交换" : "购入"));
             next.add(Component.literal("卖出"));
             next.add(Component.literal("返回"));
         } else if (shopPage == ShopPage.CATEGORY) {
@@ -467,6 +497,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
 
     private void openShopPage(ShopPage page) {
         shopPage = page;
+        exchangeDetailOffset = 0;
         selected = 0;
         listOffset = 0;
         rebuildTradeLabels();
@@ -568,7 +599,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
 
     private ListBox listBox() {
         boolean shop = packet.type() == OriginalNpcInterpreter.Type.SHOP || isItemKeep() || isSynthesis();
-        int desiredWidth = isSynthesis() ? Math.max(120, width / 2) : shop ? Math.max(240, width * 3 / 5) : 140;
+        int desiredWidth = isSynthesis() || isExchangeShop() ? Math.max(120, width / 2) : shop ? Math.max(240, width * 3 / 5) : 140;
         if (!shop) {
             for (Component label : labels) {
                 desiredWidth = Math.max(desiredWidth, font.width(label) + PADDING * 2);
@@ -580,7 +611,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
         int visible = Math.min(Math.max(1, labels.size()),
                 Math.max(1, (available - PADDING * 2 - header) / ROW_HEIGHT));
         int boxHeight = PADDING * 2 + header + visible * ROW_HEIGHT;
-        return new ListBox(isSynthesis() ? 0 : width - boxWidth, Math.max(2, mainTop() - 16 - boxHeight),
+        return new ListBox(isSynthesis() || isExchangeShop() ? 0 : width - boxWidth, Math.max(2, mainTop() - 16 - boxHeight),
                 boxWidth, boxHeight, visible, header);
     }
 
@@ -622,6 +653,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
             graphics.drawString(font, "▼", width - PADDING - 9, height - 13, 0xAAAAAA, false);
         }
         super.render(graphics, mouseX, mouseY, partialTicks);
+        if (isExchangeShop()) renderExchangeDetails(graphics);
         if (isTradeShop() && shopPage == ShopPage.QUANTITY) renderQuantity(graphics, mouseX, mouseY);
         if (isItemKeep() && keepPage == KeepPage.QUANTITY) renderKeepQuantity(graphics, mouseX, mouseY);
         if (isSynthesis() && synthesisPage != SynthesisPage.CATEGORY) renderSynthesisDetails(graphics, mouseX, mouseY);
@@ -686,7 +718,8 @@ public final class GuiOriginalNpcDialogue extends Screen {
                 if (!tradeRowEnabled(index)) color = 0xAAAAAA;
                 if (index < tradeOffers.size()) {
                     var offer = tradeOffers.get(index);
-                    String right = "×" + offer.owned() + "  " + offer.price() + " S";
+                    String right = "×" + offer.owned() + (isExchangeShop() && shopPage == ShopPage.BUY
+                            && offer.price() == 0L ? "" : "  " + offer.price() + " S");
                     labelWidth -= font.width(right) + 12;
                     graphics.drawString(font, right, box.x() + box.width() - PADDING - font.width(right), y + 4, color, false);
                 }
@@ -718,12 +751,41 @@ public final class GuiOriginalNpcDialogue extends Screen {
 
     private void renderShopMode(GuiGraphics graphics, ListBox box) {
         String mode = packet.shopView().storage() ? "寄存所" : "所持品";
-        if (packet.shopView().canToggleStorage() && shopPage != ShopPage.QUANTITY) mode += " Z";
+        if (packet.shopView().canToggleStorage() && shopPage != ShopPage.QUANTITY) mode += " D";
         graphics.drawString(font, mode, box.x() + box.width() - PADDING - font.width(mode),
                 box.y() + PADDING, 0xFFFFFF, false);
     }
 
+    private ListBox exchangeDetailsBox() {
+        int x = Math.min(width, listBox().width() + 4);
+        int boxWidth = Math.max(1, width - x);
+        int boxHeight = Math.max(PADDING * 2 + ROW_HEIGHT * 3, mainTop() - 18);
+        return new ListBox(x, 2, boxWidth, boxHeight,
+                Math.max(1, (boxHeight - PADDING * 2) / ROW_HEIGHT - 1), ROW_HEIGHT);
+    }
+
+    private void renderExchangeDetails(GuiGraphics graphics) {
+        ListBox box = exchangeDetailsBox();
+        BSGuiUtils.drawRMWindow(graphics, box.x(), box.y(), box.width(), box.height());
+        graphics.drawString(font, "糖果数", box.x() + PADDING, box.y() + PADDING, 0xFFFFFF, false);
+        List<FormattedCharSequence> details = new ArrayList<>();
+        for (Component line : exchangeDetails()) details.addAll(font.split(line, Math.max(16, box.width() - PADDING * 2)));
+        exchangeDetailOffset = Math.max(0, Math.min(exchangeDetailOffset, Math.max(0, details.size() - box.visible())));
+        graphics.enableScissor(box.x() + PADDING, box.y() + PADDING + ROW_HEIGHT,
+                box.x() + box.width() - PADDING, box.y() + box.height() - PADDING);
+        for (int index = 0; index < box.visible() && index + exchangeDetailOffset < details.size(); index++) {
+            graphics.drawString(font, details.get(index + exchangeDetailOffset), box.x() + PADDING,
+                    box.y() + PADDING + ROW_HEIGHT * (index + 1) + 4, 0xFFFFFF, false);
+        }
+        graphics.disableScissor();
+    }
+
     private ListBox quantityBox() {
+        if (isExchangeShop()) {
+            int boxWidth = Math.min(width, Math.max(120, width / 2));
+            int boxHeight = PADDING * 2 + ROW_HEIGHT * (hideTradePrice() ? 4 : 5);
+            return new ListBox(0, Math.max(2, (height - boxHeight) / 2), boxWidth, boxHeight, 4, ROW_HEIGHT);
+        }
         int boxWidth = Math.min(Math.max(1, width - 4), Math.max(240, width * 3 / 5));
         int boxHeight = PADDING * 2 + ROW_HEIGHT * 5;
         return new ListBox(Math.max(2, width - boxWidth - 2), Math.max(2, (height - boxHeight) / 2),
@@ -750,9 +812,11 @@ public final class GuiOriginalNpcDialogue extends Screen {
         graphics.drawString(font, number, box.x() + (box.width() - font.width(number)) / 2, y + 4, 0xFFFFFF, false);
         graphics.drawString(font, "+", box.x() + box.width() - PADDING - font.width("+"), y + 4, 0xFFFFFF, false);
         y += ROW_HEIGHT;
-        String total = "合计 " + java.math.BigInteger.valueOf(quantityOffer.price()).multiply(java.math.BigInteger.valueOf(quantity)) + " S";
-        graphics.drawString(font, total, x, y + 4, 0xFFFFFF, false);
-        y += ROW_HEIGHT;
+        if (!hideTradePrice()) {
+            String total = "合计 " + java.math.BigInteger.valueOf(quantityOffer.price()).multiply(java.math.BigInteger.valueOf(quantity)) + " S";
+            graphics.drawString(font, total, x, y + 4, 0xFFFFFF, false);
+            y += ROW_HEIGHT;
+        }
         int middle = box.x() + box.width() / 2;
         if (!awaitingResponse && box.contains(mouseX, mouseY) && mouseY >= y && mouseY < y + ROW_HEIGHT) {
             graphics.fill(mouseX < middle ? x - 4 : middle, y + 1,
@@ -911,7 +975,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
             int row = (int) ((mouseY - box.y() - PADDING - box.header()) / ROW_HEIGHT);
             if (button == 0 && box.contains(mouseX, mouseY)) {
                 if (row == 1) changeQuantity(mouseX < box.x() + box.width() / 2.0D ? -1 : 1);
-                else if (row == 3) {
+                else if (row == (hideTradePrice() ? 2 : 3)) {
                     if (mouseX < box.x() + box.width() / 2.0D) confirmQuantity();
                     else cancelOrReturn();
                 }
@@ -957,6 +1021,10 @@ public final class GuiOriginalNpcDialogue extends Screen {
         }
         if (isItemKeep() && keepPage == KeepPage.QUANTITY) {
             if (delta != 0.0D) changeKeepQuantity(delta > 0.0D ? 1 : -1);
+            return true;
+        }
+        if (isExchangeShop() && exchangeDetailsBox().contains(mouseX, mouseY)) {
+            if (delta != 0.0D) exchangeDetailOffset = Math.max(0, exchangeDetailOffset + (delta > 0.0D ? -1 : 1));
             return true;
         }
         if (isTradeShop() && shopPage == ShopPage.QUANTITY) {
@@ -1024,7 +1092,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
         }
         if (isTradeShop()) {
             if (awaitingResponse) return true;
-            if (keyCode == GLFW.GLFW_KEY_Z) {
+            if (keyCode == GLFW.GLFW_KEY_D || keyCode == GLFW.GLFW_KEY_Z) {
                 if (shopPage != ShopPage.QUANTITY && packet.shopView().canToggleStorage()) {
                     sendTrade(ServerboundOriginalNpcTradePacket.Action.TOGGLE_STORAGE, 0, 0, 0);
                 }
