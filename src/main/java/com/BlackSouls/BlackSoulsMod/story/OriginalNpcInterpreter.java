@@ -282,6 +282,11 @@ public final class OriginalNpcInterpreter {
                             numberMaximum = Math.max(numberMinimum, Math.max(0L, maximum));
                             break;
                         }
+                        var spirit = java.util.regex.Pattern.compile("\\$game_party\\.(add_spirit|remove_spirit)\\((\\d+)\\)\\s*").matcher(script);
+                        if (spirit.matches()) {
+                            context.changeSpirit(Integer.parseInt(spirit.group(2)), spirit.group(1).equals("add_spirit"));
+                            break;
+                        }
                         if (script.toString().equals("call_keep")) {
                             context.openItemKeep();
                             return emit(Type.ITEM_KEEP, "", "", 0, List.of(), List.of(), "");
@@ -896,6 +901,9 @@ public final class OriginalNpcInterpreter {
     }
 
     public interface Context {
+        default void changeSpirit(int spiritId, boolean add) {
+            throw new UnsupportedOperationException("original_spirit:" + spiritId);
+        }
         default void prepareNumberInput(int variableId) {
         }
 

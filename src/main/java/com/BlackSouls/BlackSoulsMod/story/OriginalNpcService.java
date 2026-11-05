@@ -850,7 +850,7 @@ public final class OriginalNpcService {
 
         @Override
         public boolean switchValue(int id) {
-            return progress.switchValue(id);
+            return player != null ? OriginalNpcProgress.readSwitch(player, id) : progress.switchValue(id);
         }
 
         @Override
@@ -873,6 +873,10 @@ public final class OriginalNpcService {
 
         @Override
         public void setSwitch(int id, boolean value) {
+            if (player != null && id == 157 && stats().originalNodenProgressKnown) {
+                stats().originalNodenPledged = value;
+                return;
+            }
             progress.setSwitch(id, value);
         }
 
@@ -1036,7 +1040,15 @@ public final class OriginalNpcService {
 
         @Override
         public List<BSOriginalNpcData.Command> commonEvent(int id) {
+            if (id == 80 && player != null) OriginalSpiritService.beginNodenConversation(player);
             return BSOriginalNpcData.commonEvent(id);
+        }
+
+        @Override
+        public void changeSpirit(int spiritId, boolean add) {
+            if ((npcId.equals("map101_ev009") || npcId.equals("map101_ev015")) && spiritId >= 1 && spiritId <= 4
+                    && player != null && !stats().originalNodenProgressKnown) OriginalSpiritService.restoreLegacyNodenProgress(player);
+            OriginalSpiritService.change(player, spiritId, add);
         }
 
         @Override

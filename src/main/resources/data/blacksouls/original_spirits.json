@@ -1,0 +1,2476 @@
+{
+  "sourceScriptsSha256": "ba3e506e47c31acfc5ff30572b94677c2cd309bfd79b22e0fb9f01dd5adb5a24",
+  "databases": [
+    {
+      "path": "D:/BLACK SOULS II/Data/Actors.rvdata2",
+      "sha256": "3cdc3af09ebee61fc3868e42d02b0e8f6e04162691c490ffd2a983c8cf514036"
+    },
+    {
+      "path": "D:/BLACK SOULS II/Data/Classes.rvdata2",
+      "sha256": "f926cac6936d68d81d76d338848bbb3c18a6b535e1bc4cf350fece8d61357412"
+    },
+    {
+      "path": "D:/BLACK SOULS II/Data/CommonEvents.rvdata2",
+      "sha256": "68aa6ebf5c42f0e362080bf48af601b33322ae51e3f343ed746a943fb9d837ea"
+    }
+  ],
+  "playerActor2MaxPartners": 1,
+  "definitions": [
+    {
+      "id": 1,
+      "actorId": 17,
+      "name": "誓约：诺登",
+      "description": "誓约Lv0　\n【HP+10%/道具恢复效果增加】",
+      "classId": 39,
+      "initialLevel": 1,
+      "characterName": "$ノーデ",
+      "characterIndex": 0,
+      "faceName": "ノーデ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 0,
+          "value": 1.1,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 23,
+          "data_id": 3,
+          "value": 2.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "actorId": 18,
+      "name": "誓约：诺登",
+      "description": "誓约Lv1　\n【HP+25%/道具恢复效果增加】",
+      "classId": 39,
+      "initialLevel": 1,
+      "characterName": "$ノーデ",
+      "characterIndex": 0,
+      "faceName": "ノーデ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 0,
+          "value": 1.25,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 23,
+          "data_id": 3,
+          "value": 2.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "actorId": 19,
+      "name": "誓约：诺登",
+      "description": "誓约Lv2　\n【HP+35%/道具恢复效果增加】",
+      "classId": 39,
+      "initialLevel": 1,
+      "characterName": "$ノーデ",
+      "characterIndex": 0,
+      "faceName": "ノーデ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 0,
+          "value": 1.35,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 23,
+          "data_id": 3,
+          "value": 2.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "actorId": 20,
+      "name": "誓约：诺登",
+      "description": "誓约Lv3　\n【HP+50%/道具恢复效果增加】",
+      "classId": 39,
+      "initialLevel": 1,
+      "characterName": "$ノーデ",
+      "characterIndex": 0,
+      "faceName": "ノーデ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 0,
+          "value": 1.5,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 23,
+          "data_id": 3,
+          "value": 2.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "actorId": 21,
+      "name": "誓约：比尔",
+      "description": "誓约Lv0　\n【MP+10%/MP消耗率1/2】",
+      "classId": 40,
+      "initialLevel": 1,
+      "characterName": "ビル",
+      "characterIndex": 0,
+      "faceName": "ビル",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 1,
+          "value": 1.1,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 23,
+          "data_id": 4,
+          "value": 0.5,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "actorId": 22,
+      "name": "誓约：比尔",
+      "description": "誓约Lv1\n【MP+20%/MP消耗率1/2】",
+      "classId": 40,
+      "initialLevel": 1,
+      "characterName": "ビル",
+      "characterIndex": 0,
+      "faceName": "ビル",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 1,
+          "value": 1.2,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 23,
+          "data_id": 4,
+          "value": 0.5,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "actorId": 23,
+      "name": "誓约：比尔",
+      "description": "誓约Lv2\n【MP+30%/MP消耗率1/2】",
+      "classId": 40,
+      "initialLevel": 1,
+      "characterName": "ビル",
+      "characterIndex": 0,
+      "faceName": "ビル",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 1,
+          "value": 1.3,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 23,
+          "data_id": 4,
+          "value": 0.5,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "actorId": 24,
+      "name": "誓约：比尔",
+      "description": "誓约Lv3\n【MP+50%/MP消耗率1/2】",
+      "classId": 40,
+      "initialLevel": 1,
+      "characterName": "ビル",
+      "characterIndex": 0,
+      "faceName": "ビル",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 1,
+          "value": 1.5,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 23,
+          "data_id": 4,
+          "value": 0.5,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "actorId": 25,
+      "name": "誓约：渡渡",
+      "description": "誓约Lv0　\n【速度+10%/先制攻击率提升】",
+      "classId": 41,
+      "initialLevel": 1,
+      "characterName": "$ドド",
+      "characterIndex": 0,
+      "faceName": "ドド",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 6,
+          "value": 1.1,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 64,
+          "data_id": 3,
+          "value": 0.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "actorId": 26,
+      "name": "誓约：渡渡",
+      "description": "誓约Lv1\n【速度+20%/先制攻击率提升】",
+      "classId": 41,
+      "initialLevel": 1,
+      "characterName": "$ドド",
+      "characterIndex": 0,
+      "faceName": "ドド",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 6,
+          "value": 1.2,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 64,
+          "data_id": 3,
+          "value": 0.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "actorId": 27,
+      "name": "誓约：渡渡",
+      "description": "誓约Lv2\n【速度+30%/先制攻击率提升】",
+      "classId": 41,
+      "initialLevel": 1,
+      "characterName": "$ドド",
+      "characterIndex": 0,
+      "faceName": "ドド",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 6,
+          "value": 1.3,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 64,
+          "data_id": 3,
+          "value": 0.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "actorId": 28,
+      "name": "誓约：渡渡",
+      "description": "誓约Lv3\n【速度+50%/先制攻击率提升】",
+      "classId": 41,
+      "initialLevel": 1,
+      "characterName": "$ドド",
+      "characterIndex": 0,
+      "faceName": "ドド",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 6,
+          "value": 1.5,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 64,
+          "data_id": 3,
+          "value": 0.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "actorId": 29,
+      "name": "誓约：希夏",
+      "description": "誓约Lv0　\n【防御力+15%/防御效果率【小】】",
+      "classId": 42,
+      "initialLevel": 1,
+      "characterName": "シーシャ",
+      "characterIndex": 1,
+      "faceName": "シーシャ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 3,
+          "value": 1.15,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 23,
+          "data_id": 1,
+          "value": 1.5,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "actorId": 30,
+      "name": "誓约：希夏",
+      "description": "誓约Lv1\n【防御力+20%/防御效果率【小】】",
+      "classId": 42,
+      "initialLevel": 1,
+      "characterName": "シーシャ",
+      "characterIndex": 1,
+      "faceName": "シーシャ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 3,
+          "value": 1.2,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 23,
+          "data_id": 1,
+          "value": 1.5,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "actorId": 31,
+      "name": "誓约：希夏",
+      "description": "誓约Lv2\n【防御力+35%/防御效果率【小】】",
+      "classId": 42,
+      "initialLevel": 1,
+      "characterName": "シーシャ",
+      "characterIndex": 1,
+      "faceName": "シーシャ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 3,
+          "value": 1.35,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 23,
+          "data_id": 1,
+          "value": 1.5,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "actorId": 32,
+      "name": "誓约：希夏",
+      "description": "誓约Lv3\n【防御力+50%/防御效果率【中】】",
+      "classId": 42,
+      "initialLevel": 1,
+      "characterName": "シーシャ",
+      "characterIndex": 1,
+      "faceName": "シーシャ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 3,
+          "value": 1.5,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 23,
+          "data_id": 1,
+          "value": 2.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "actorId": 33,
+      "name": "誓约：玛格丽塔",
+      "description": "誓约Lv0　\n【行动回数追加+15%/速度-5%】",
+      "classId": 43,
+      "initialLevel": 1,
+      "characterName": "$公爵夫人",
+      "characterIndex": 0,
+      "faceName": "公爵夫人",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 61,
+          "data_id": 0,
+          "value": 0.15,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 21,
+          "data_id": 6,
+          "value": 0.95,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "actorId": 34,
+      "name": "誓约：玛格丽塔",
+      "description": "誓约Lv1\n【行动回数追加+30%/速度-15%】",
+      "classId": 43,
+      "initialLevel": 1,
+      "characterName": "$公爵夫人",
+      "characterIndex": 0,
+      "faceName": "公爵夫人",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 61,
+          "data_id": 0,
+          "value": 0.3,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 21,
+          "data_id": 6,
+          "value": 0.85,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "actorId": 35,
+      "name": "誓约：玛格丽塔",
+      "description": "誓约Lv2\n【行动回数追加+50%/速度-30%】",
+      "classId": 43,
+      "initialLevel": 1,
+      "characterName": "$公爵夫人",
+      "characterIndex": 0,
+      "faceName": "公爵夫人",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 61,
+          "data_id": 0,
+          "value": 0.5,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 21,
+          "data_id": 6,
+          "value": 0.7,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "actorId": 36,
+      "name": "誓约：玛格丽塔",
+      "description": "誓约Lv3\n【行动回数追加+100%/速度-50%】",
+      "classId": 43,
+      "initialLevel": 1,
+      "characterName": "$公爵夫人",
+      "characterIndex": 0,
+      "faceName": "公爵夫人",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 61,
+          "data_id": 0,
+          "value": 1.0,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 21,
+          "data_id": 6,
+          "value": 0.5,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "actorId": 37,
+      "name": "誓约：罗丽娜",
+      "description": "誓约Lv0　\n【炎冰雷光暗耐性+15%】",
+      "classId": 44,
+      "initialLevel": 1,
+      "characterName": "$ロリーナ",
+      "characterIndex": 0,
+      "faceName": "ロリーナ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 11,
+          "data_id": 3,
+          "value": 0.85,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 11,
+          "data_id": 4,
+          "value": 0.85,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 11,
+          "data_id": 5,
+          "value": 0.85,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 11,
+          "data_id": 9,
+          "value": 0.85,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 11,
+          "data_id": 10,
+          "value": 0.85,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "actorId": 38,
+      "name": "誓约：罗丽娜",
+      "description": "誓约Lv1\n【炎冰雷光暗耐性+25%】",
+      "classId": 44,
+      "initialLevel": 1,
+      "characterName": "$ロリーナ",
+      "characterIndex": 0,
+      "faceName": "ロリーナ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 11,
+          "data_id": 3,
+          "value": 0.75,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 11,
+          "data_id": 4,
+          "value": 0.75,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 11,
+          "data_id": 5,
+          "value": 0.75,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 11,
+          "data_id": 9,
+          "value": 0.75,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 11,
+          "data_id": 10,
+          "value": 0.75,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "actorId": 39,
+      "name": "誓约：罗丽娜",
+      "description": "誓约Lv2\n【炎冰雷光暗耐性+35%】",
+      "classId": 44,
+      "initialLevel": 1,
+      "characterName": "$ロリーナ",
+      "characterIndex": 0,
+      "faceName": "ロリーナ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 11,
+          "data_id": 3,
+          "value": 0.65,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 11,
+          "data_id": 4,
+          "value": 0.65,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 11,
+          "data_id": 5,
+          "value": 0.65,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 11,
+          "data_id": 9,
+          "value": 0.65,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 11,
+          "data_id": 10,
+          "value": 0.65,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "actorId": 40,
+      "name": "誓约：罗丽娜",
+      "description": "誓约Lv3\n【炎冰雷光暗耐性+50%】",
+      "classId": 44,
+      "initialLevel": 1,
+      "characterName": "$ロリーナ",
+      "characterIndex": 0,
+      "faceName": "ロリーナ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 11,
+          "data_id": 3,
+          "value": 0.5,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 11,
+          "data_id": 4,
+          "value": 0.5,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 11,
+          "data_id": 5,
+          "value": 0.5,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 11,
+          "data_id": 9,
+          "value": 0.5,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 11,
+          "data_id": 10,
+          "value": 0.5,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "actorId": 41,
+      "name": "誓约：哈塔",
+      "description": "誓约Lv0　\n【魔力+10%/发狂耐性+10%】",
+      "classId": 45,
+      "initialLevel": 1,
+      "characterName": "$帽子屋",
+      "characterIndex": 0,
+      "faceName": "帽子屋",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 4,
+          "value": 1.1,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 13,
+          "data_id": 28,
+          "value": 0.9,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "actorId": 42,
+      "name": "誓约：哈塔",
+      "description": "誓约Lv1\n【魔力+20%/发狂耐性+30%】",
+      "classId": 45,
+      "initialLevel": 1,
+      "characterName": "$帽子屋",
+      "characterIndex": 0,
+      "faceName": "帽子屋",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 4,
+          "value": 1.2,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 13,
+          "data_id": 28,
+          "value": 0.7,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "actorId": 43,
+      "name": "誓约：哈塔",
+      "description": "誓约Lv2\n【魔力+35%/发狂耐性+50%】",
+      "classId": 45,
+      "initialLevel": 1,
+      "characterName": "$帽子屋",
+      "characterIndex": 0,
+      "faceName": "帽子屋",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 4,
+          "value": 1.35,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 13,
+          "data_id": 28,
+          "value": 0.5,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "actorId": 44,
+      "name": "誓约：哈塔",
+      "description": "誓约Lv3\n【魔力+50%/发狂耐性+100%】",
+      "classId": 45,
+      "initialLevel": 1,
+      "characterName": "$帽子屋",
+      "characterIndex": 0,
+      "faceName": "帽子屋",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 4,
+          "value": 1.5,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 13,
+          "data_id": 28,
+          "value": 0.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "actorId": 45,
+      "name": "誓约:假海龟",
+      "description": "誓约Lv0　\n【魔法防御+15%/防御效果率【小】】",
+      "classId": 46,
+      "initialLevel": 1,
+      "characterName": "ウミガメモドキ",
+      "characterIndex": 0,
+      "faceName": "ウミガメ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 5,
+          "value": 1.15,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 23,
+          "data_id": 1,
+          "value": 1.5,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "actorId": 46,
+      "name": "誓约:假海龟",
+      "description": "誓约Lv1\n【魔法防御+20%/防御效果率【小】】",
+      "classId": 46,
+      "initialLevel": 1,
+      "characterName": "ウミガメモドキ",
+      "characterIndex": 0,
+      "faceName": "ウミガメ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 5,
+          "value": 1.2,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 23,
+          "data_id": 1,
+          "value": 1.5,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "actorId": 47,
+      "name": "誓约:假海龟",
+      "description": "誓约Lv2\n【魔法防御+35%/防御效果率【小】】",
+      "classId": 46,
+      "initialLevel": 1,
+      "characterName": "ウミガメモドキ",
+      "characterIndex": 0,
+      "faceName": "ウミガメ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 5,
+          "value": 1.35,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 23,
+          "data_id": 1,
+          "value": 1.5,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "actorId": 48,
+      "name": "誓约:假海龟",
+      "description": "誓约Lv3\n【魔法防御+50%/防御效果率【中】】",
+      "classId": 46,
+      "initialLevel": 1,
+      "characterName": "ウミガメモドキ",
+      "characterIndex": 0,
+      "faceName": "ウミガメ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 5,
+          "value": 1.5,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 23,
+          "data_id": 1,
+          "value": 2.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "actorId": 72,
+      "name": "誓约：维多利雅",
+      "description": "誓约Lv0　\n【运+50%/HPMP再生率+5%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$ビクトリア",
+      "characterIndex": 0,
+      "faceName": "ビク",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 7,
+          "value": 1.5,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 7,
+          "value": 0.05,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 8,
+          "value": 0.05,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "actorId": 73,
+      "name": "誓约：维多利雅",
+      "description": "誓约Lv1\n【运+60%/HPMP再生率+5%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$ビクトリア",
+      "characterIndex": 0,
+      "faceName": "ビク",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 7,
+          "value": 1.6,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 7,
+          "value": 0.05,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 8,
+          "value": 0.05,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "actorId": 74,
+      "name": "誓约：维多利雅",
+      "description": "誓约Lv2\n【运+70%/HPMP再生率+5%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$ビクトリア",
+      "characterIndex": 0,
+      "faceName": "ビク",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 7,
+          "value": 1.7,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 7,
+          "value": 0.05,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 8,
+          "value": 0.05,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "actorId": 75,
+      "name": "誓约：维多利雅",
+      "description": "誓约Lv3\n【运+100%/HPMP再生率+10%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$ビクトリア",
+      "characterIndex": 0,
+      "faceName": "ビク",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 7,
+          "value": 2.0,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 7,
+          "value": 0.1,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 8,
+          "value": 0.1,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "actorId": 76,
+      "name": "誓约：班达斯奈奇",
+      "description": "誓约Lv0　\n【攻击力+10%/反击率+10%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "バンダースナッチ",
+      "characterIndex": 0,
+      "faceName": "バン",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 2,
+          "value": 1.1,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 6,
+          "value": 0.1,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "actorId": 77,
+      "name": "誓约：班达斯奈奇",
+      "description": "誓约Lv1\n【攻击力+20%/反击率+15%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "バンダースナッチ",
+      "characterIndex": 0,
+      "faceName": "バン",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 2,
+          "value": 1.2,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 6,
+          "value": 0.15,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "actorId": 78,
+      "name": "誓约：班达斯奈奇",
+      "description": "誓约Lv2\n【攻击力+35%/反击率+20%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "バンダースナッチ",
+      "characterIndex": 0,
+      "faceName": "バン",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 2,
+          "value": 1.35,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 6,
+          "value": 0.2,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "actorId": 79,
+      "name": "誓约：班达斯奈奇",
+      "description": "誓约Lv3\n【攻击力+50%/反击率+30%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "バンダースナッチ",
+      "characterIndex": 0,
+      "faceName": "バン",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 21,
+          "data_id": 2,
+          "value": 1.5,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 6,
+          "value": 0.3,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "actorId": 80,
+      "name": "誓约：贾布加布",
+      "description": "誓约Lv0　\n【闪避率+5%/魔法反射率+10%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$ジャブジャブ",
+      "characterIndex": 0,
+      "faceName": "ジャブ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 22,
+          "data_id": 1,
+          "value": 0.05,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 4,
+          "value": 0.05,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 5,
+          "value": 0.1,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "actorId": 81,
+      "name": "誓约：贾布加布",
+      "description": "誓约Lv1\n【闪避率+10%/魔法反射率+15%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$ジャブジャブ",
+      "characterIndex": 0,
+      "faceName": "ジャブ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 22,
+          "data_id": 1,
+          "value": 0.1,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 4,
+          "value": 0.1,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 5,
+          "value": 0.15,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "actorId": 82,
+      "name": "誓约：贾布加布",
+      "description": "誓约Lv2\n【闪避率+15%/魔法反射率+20%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$ジャブジャブ",
+      "characterIndex": 0,
+      "faceName": "ジャブ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 22,
+          "data_id": 1,
+          "value": 0.15,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 4,
+          "value": 0.15,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 5,
+          "value": 0.2,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "actorId": 83,
+      "name": "誓约：贾布加布",
+      "description": "誓约Lv3\n【闪避率+30%/魔法反射率+30%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$ジャブジャブ",
+      "characterIndex": 0,
+      "faceName": "ジャブ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 22,
+          "data_id": 1,
+          "value": 0.3,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 4,
+          "value": 0.3,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 5,
+          "value": 0.3,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "actorId": 84,
+      "name": "誓约：贾巴沃克",
+      "description": "誓约Lv0　\n【暴击率+5%/命中率+5%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$ジャバ",
+      "characterIndex": 0,
+      "faceName": "ジャバ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 22,
+          "data_id": 2,
+          "value": 0.05,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 0,
+          "value": 0.05,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "actorId": 85,
+      "name": "誓约：贾巴沃克",
+      "description": "誓约Lv1\n【暴击率+10%/命中率+10%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$ジャバ",
+      "characterIndex": 0,
+      "faceName": "ジャバ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 22,
+          "data_id": 2,
+          "value": 0.1,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 0,
+          "value": 0.1,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "actorId": 86,
+      "name": "誓约：贾巴沃克",
+      "description": "誓约Lv2\n【暴击率+15%/命中率+15%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$ジャバ",
+      "characterIndex": 0,
+      "faceName": "ジャバ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 22,
+          "data_id": 2,
+          "value": 0.15,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 0,
+          "value": 0.15,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "actorId": 87,
+      "name": "誓约：贾巴沃克",
+      "description": "誓约Lv3\n【暴击率+30%/命中率+30%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$ジャバ",
+      "characterIndex": 0,
+      "faceName": "ジャバ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 22,
+          "data_id": 2,
+          "value": 0.3,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 22,
+          "data_id": 0,
+          "value": 0.3,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "actorId": 88,
+      "name": "誓约：希伏契",
+      "description": "誓约Lv0　\n【HP再生率+10%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "セイウチ",
+      "characterIndex": 0,
+      "faceName": "シヴーチ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 22,
+          "data_id": 7,
+          "value": 0.1,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "actorId": 89,
+      "name": "誓约：希伏契",
+      "description": "誓约Lv1\n【HP再生率+15%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "セイウチ",
+      "characterIndex": 0,
+      "faceName": "シヴーチ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 22,
+          "data_id": 7,
+          "value": 0.15,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "actorId": 90,
+      "name": "誓约：希伏契",
+      "description": "誓约Lv2\n【HP再生率+20%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "セイウチ",
+      "characterIndex": 0,
+      "faceName": "シヴーチ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 22,
+          "data_id": 7,
+          "value": 0.2,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "actorId": 91,
+      "name": "誓约：希伏契",
+      "description": "誓约Lv3\n【HP再生率+30%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "セイウチ",
+      "characterIndex": 0,
+      "faceName": "シヴーチ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 22,
+          "data_id": 7,
+          "value": 0.3,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "actorId": 92,
+      "name": "誓约：克缇",
+      "description": "誓约Lv0　\n【行动回数追加+5%/攻击追加回数+1】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$クティ",
+      "characterIndex": 0,
+      "faceName": "クティ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 61,
+          "data_id": 0,
+          "value": 0.05,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 34,
+          "data_id": 0,
+          "value": 1.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "actorId": 93,
+      "name": "誓约：克缇",
+      "description": "誓约Lv1\n【行动回数追加+15%/攻击追加回数+1】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$クティ",
+      "characterIndex": 0,
+      "faceName": "クティ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 61,
+          "data_id": 0,
+          "value": 0.15,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 34,
+          "data_id": 0,
+          "value": 1.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "actorId": 94,
+      "name": "誓约：克缇",
+      "description": "誓约Lv2\n【行动回数追加+35%/攻击追加回数+1】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$クティ",
+      "characterIndex": 0,
+      "faceName": "クティ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 61,
+          "data_id": 0,
+          "value": 0.35,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 34,
+          "data_id": 0,
+          "value": 1.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "actorId": 95,
+      "name": "誓约：克缇",
+      "description": "誓约Lv3\n【行动回数追加+50%/攻击追加回数+1】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$クティ",
+      "characterIndex": 0,
+      "faceName": "クティ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 61,
+          "data_id": 0,
+          "value": 0.5,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 34,
+          "data_id": 0,
+          "value": 1.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "actorId": 96,
+      "name": "誓约：普利凯特",
+      "description": "誓约Lv0　\n【攻击吸引率+200%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "プリケット",
+      "characterIndex": 0,
+      "faceName": "プリ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 23,
+          "data_id": 0,
+          "value": 2.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "actorId": 97,
+      "name": "誓约：普利凯特",
+      "description": "誓约Lv1\n【攻击吸引率+300%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "プリケット",
+      "characterIndex": 0,
+      "faceName": "プリ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 23,
+          "data_id": 0,
+          "value": 3.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "actorId": 98,
+      "name": "誓约：普利凯特",
+      "description": "誓约Lv2　\n【攻击吸引率+400%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "プリケット",
+      "characterIndex": 0,
+      "faceName": "プリ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 23,
+          "data_id": 0,
+          "value": 4.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "actorId": 99,
+      "name": "誓约：普利凯特",
+      "description": "誓约Lv3　\n【攻击吸引率+500%/获得魂2倍/掉落率2倍】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "プリケット",
+      "characterIndex": 0,
+      "faceName": "プリ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 64,
+          "data_id": 4,
+          "value": 0.0,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 64,
+          "data_id": 5,
+          "value": 0.0,
+          "_class": "RPG::BaseItem::Feature"
+        },
+        {
+          "code": 23,
+          "data_id": 0,
+          "value": 5.0,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "actorId": 102,
+      "name": "誓约：崔德尔",
+      "description": "誓约Lv0　\n【逃走成功率増加+25%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$双子",
+      "characterIndex": 0,
+      "faceName": "トゥ双子",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": []
+    },
+    {
+      "id": 62,
+      "actorId": 103,
+      "name": "誓约：崔德尔",
+      "description": "誓约Lv1\n【逃走成功率増加+50%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$双子",
+      "characterIndex": 0,
+      "faceName": "トゥ双子",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": []
+    },
+    {
+      "id": 63,
+      "actorId": 104,
+      "name": "誓约：崔德尔",
+      "description": "誓约Lv2\n【逃走成功率増加+70%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$双子",
+      "characterIndex": 0,
+      "faceName": "トゥ双子",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": []
+    },
+    {
+      "id": 64,
+      "actorId": 105,
+      "name": "誓约：崔德尔",
+      "description": "誓约Lv3\n【逃走成功率増加+100%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "$双子",
+      "characterIndex": 0,
+      "faceName": "トゥ双子",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": []
+    },
+    {
+      "id": 65,
+      "actorId": 115,
+      "name": "誓约：紫夜",
+      "description": "誓约Lv0　\n【受到百分比伤害-20%/恢复效果-20%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "!$シヨ",
+      "characterIndex": 0,
+      "faceName": "シヨ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 23,
+          "data_id": 2,
+          "value": 0.8,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 66,
+      "actorId": 116,
+      "name": "誓约：紫夜",
+      "description": "誓约Lv1\n【受到百分比伤害-30%/恢复效果-30%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "!$シヨ",
+      "characterIndex": 0,
+      "faceName": "シヨ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 23,
+          "data_id": 2,
+          "value": 0.7,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 67,
+      "actorId": 117,
+      "name": "誓约：紫夜",
+      "description": "誓约Lv2\n【受到百分比伤害-40%/恢复效果-40%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "!$シヨ",
+      "characterIndex": 0,
+      "faceName": "シヨ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 23,
+          "data_id": 2,
+          "value": 0.6,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    },
+    {
+      "id": 68,
+      "actorId": 118,
+      "name": "誓约：紫夜",
+      "description": "誓约Lv3\n【受到百分比伤害-50%/恢复效果-50%】",
+      "classId": 47,
+      "initialLevel": 1,
+      "characterName": "!$シヨ",
+      "characterIndex": 0,
+      "faceName": "シヨ",
+      "faceIndex": 0,
+      "parameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "features": [
+        {
+          "code": 23,
+          "data_id": 2,
+          "value": 0.5,
+          "_class": "RPG::BaseItem::Feature"
+        }
+      ]
+    }
+  ]
+}

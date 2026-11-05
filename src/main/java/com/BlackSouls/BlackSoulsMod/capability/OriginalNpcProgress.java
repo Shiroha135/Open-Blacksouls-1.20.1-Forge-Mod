@@ -108,6 +108,10 @@ public final class OriginalNpcProgress extends SavedData {
     }
 
     public static long readVariable(ServerPlayer player, int id) {
+        if (id == 68) {
+            BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original covenant stats"));
+            if (stats.originalNodenProgressKnown) return stats.originalNodenStage;
+        }
         if (id == 11) {
             return SceneSpawnerBossData.get(player.server).getStoryProgress();
         }
@@ -119,6 +123,13 @@ public final class OriginalNpcProgress extends SavedData {
     }
 
     public static void writeVariable(ServerPlayer player, int id, long value) {
+        if (id == 68) {
+            BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original covenant stats"));
+            if (stats.originalNodenProgressKnown) {
+                stats.originalNodenStage = value;
+                return;
+            }
+        }
         if (id == 38) {
             BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY)
                     .orElseThrow(() -> new IllegalStateException("Missing original player stats"));
@@ -134,6 +145,14 @@ public final class OriginalNpcProgress extends SavedData {
 
     public boolean selfSwitch(String eventId, String key) {
         return selfSwitches.contains(eventId + ":" + key);
+    }
+
+    public static boolean readSwitch(ServerPlayer player, int id) {
+        if (id == 157) {
+            BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original covenant stats"));
+            if (stats.originalNodenProgressKnown) return stats.originalNodenPledged;
+        }
+        return get(player.server).switchValue(id);
     }
 
     public void setSelfSwitch(String eventId, String key, boolean enabled) {

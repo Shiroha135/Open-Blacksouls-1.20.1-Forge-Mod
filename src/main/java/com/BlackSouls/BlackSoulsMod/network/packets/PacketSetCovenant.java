@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod.network.packets;
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.entity.EntityNoden;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
+import com.BlackSouls.BlackSoulsMod.story.OriginalSpiritService;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -52,11 +53,17 @@ public class PacketSetCovenant {
     }
 
     private boolean applyChange(ServerPlayer player, BSPlayerStats stats) {
+        if ("noden".equals(covenantName) && stats.originalNodenProgressKnown) {
+            if (level != -1) return false;
+            int spirit = stats.originalSpirits.stream().filter(id -> id >= 1 && id <= 4).mapToInt(Integer::intValue).max().orElse(0);
+            return spirit != 0 && OriginalSpiritService.select(player, spirit);
+        }
         if (level == -1) {
             if (!stats.unlockedCovenants.contains(covenantName) || covenantName.equals(stats.activeCovenant)) {
                 return false;
             }
             stats.activeCovenant = covenantName;
+            if (stats.originalSpiritsInitialized) stats.originalSpiritPartner = 0;
             stats.recalculateStats();
             return true;
         }
@@ -112,6 +119,12 @@ public class PacketSetCovenant {
 
         stats.souls -= cost;
         stats.nodenCovenantLevel = level;
+        if (stats.originalSpiritsInitialized) {
+            stats.originalSpirits.removeIf(id -> id >= 1 && id <= 4);
+            stats.originalSpirits.add(level + 1);
+            stats.originalSpiritPartner = 0;
+            if ("noden".equals(stats.activeCovenant)) stats.activeCovenant = "";
+        }
         stats.recalculateStats();
         playSuccessSound(player);
         return true;
