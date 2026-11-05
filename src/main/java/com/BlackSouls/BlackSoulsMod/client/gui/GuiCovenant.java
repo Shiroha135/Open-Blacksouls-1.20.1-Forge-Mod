@@ -144,7 +144,7 @@ public class GuiCovenant extends Screen {
         int origW = "tweedle".equals(id) ? 47 : 32;
         int renderW = origW * 20 / 32;
         if (getSpriteFor(id) != null) guiGraphics.blit(getSpriteFor(id), x, y + 2, renderW, 20, 0, 0, origW, 32, origW, 32);
-        guiGraphics.drawString(this.font, font.plainSubstrByWidth(getNameFor(id), entryWidth - renderW - 5), x + renderW + 5, y + 8, spiritId(id) > 4 ? 0x777777 : 0xFFFFFF, false);
+        guiGraphics.drawString(this.font, font.plainSubstrByWidth(getNameFor(id), entryWidth - renderW - 5), x + renderW + 5, y + 8, spiritId(id) > 0 && !OriginalSpiritData.supported(spiritId(id)) ? 0x777777 : 0xFFFFFF, false);
     }
 
     @Override
@@ -230,13 +230,13 @@ public class GuiCovenant extends Screen {
     private String getNameFor(String id) {
         int spirit = spiritId(id);
         if (spirit == 0) return I18n.get("gui.none");
-        if (spirit > 0) return spirit <= 4 ? "诺登 Lv." + (spirit - 1) : OriginalSpiritData.get(spirit).name();
+        if (spirit > 0) return OriginalSpiritData.get(spirit).name().replaceFirst("^誓约[：:]", "") + " Lv." + ((spirit - 1) % 4);
         String key = "covenant.blacksouls." + id + ".name";
         return I18n.exists(key) ? I18n.get(key) : I18n.get("covenant.blacksouls.unknown.name");
     }
 
     private String getLevelFor(String id, BSPlayerStats stats) {
-        if (spiritId(id) >= 0) return spiritId(id) >= 1 && spiritId(id) <= 4 ? "Lv." + (spiritId(id) - 1) : "";
+        if (spiritId(id) >= 0) return spiritId(id) > 0 ? "Lv." + ((spiritId(id) - 1) % 4) : "";
         return I18n.get("gui.blacksouls.covenant.level") + ("noden".equals(id) ? " Lv." + stats.nodenCovenantLevel : "");
     }
 
