@@ -22,6 +22,7 @@ public class BSPlayerStats {
     public static final int NORMAL_MAX_LEVEL = 999;
     public static final int DEVELOPER_MAX_LEVEL = Integer.MAX_VALUE - 2;
     private static final long[] EXP_THRESHOLDS = createExpThresholds();
+    private static final double[] NODEN_HP_RATES = {1.10D, 1.25D, 1.35D, 1.50D};
 
     public static final double HARD_CAP_HP = 1099998;
     public static final double HARD_CAP_MP = 109998;
@@ -80,6 +81,12 @@ public class BSPlayerStats {
     public String activeCovenant = "", skillZ = "", skillX = "", skillC = "", skillV = "";
     public int nodenCovenantLevel = 0;
     public List<String> unlockedCovenants = new ArrayList<>();
+    public boolean originalSpiritsInitialized;
+    public List<Integer> originalSpirits = new ArrayList<>();
+    public int originalSpiritPartner;
+    public boolean originalNodenProgressKnown;
+    public boolean originalNodenPledged;
+    public long originalNodenStage;
     public List<String> unlockedSkills = new ArrayList<>();
     public List<BonfireEntry> unlockedBonfires = new ArrayList<>();
 
@@ -208,6 +215,17 @@ public class BSPlayerStats {
             listCov.add(StringTag.valueOf(s));
         }
         nbt.put("UnlockedCovenants", listCov);
+        if (originalSpiritsInitialized || originalNodenProgressKnown) {
+            CompoundTag spirits = new CompoundTag();
+            spirits.putInt("Version", 1);
+            spirits.putBoolean("Initialized", originalSpiritsInitialized);
+            spirits.putIntArray("Owned", originalSpirits.stream().mapToInt(Integer::intValue).toArray());
+            spirits.putInt("Partner", originalSpiritPartner);
+            spirits.putBoolean("NodenProgressKnown", originalNodenProgressKnown);
+            spirits.putBoolean("NodenPledged", originalNodenPledged);
+            spirits.putLong("NodenStage", originalNodenStage);
+            nbt.put("OriginalSpiritState", spirits);
+        }
 
         ListTag listSkill = new ListTag();
         for (String s : unlockedSkills) {
@@ -220,6 +238,32 @@ public class BSPlayerStats {
 
     @SuppressWarnings("removal")
     public void deserializeNBT(CompoundTag nbt) {
+        if (nbt.contains("OriginalSpiritState") && !nbt.contains("OriginalSpiritState", Tag.TAG_COMPOUND)) {
+            throw new IllegalArgumentException("Invalid original spirit state type");
+        }
+        CompoundTag spirits = nbt.getCompound("OriginalSpiritState");
+        List<Integer> owned = new ArrayList<>();
+        if (nbt.contains("OriginalSpiritState")) {
+            if (spirits.getInt("Version") != 1 || !spirits.contains("Initialized", Tag.TAG_BYTE)
+                    || !spirits.contains("Owned", Tag.TAG_INT_ARRAY) || !spirits.contains("Partner", Tag.TAG_INT)
+                    || !spirits.contains("NodenProgressKnown", Tag.TAG_BYTE) || !spirits.contains("NodenPledged", Tag.TAG_BYTE)
+                    || !spirits.contains("NodenStage", Tag.TAG_LONG)) {
+                throw new IllegalArgumentException("Invalid original spirit state");
+            }
+            for (int id : spirits.getIntArray("Owned")) {
+                if (id < 1 || id > 68 || owned.contains(id)) throw new IllegalArgumentException("Invalid original spirit ownership");
+                owned.add(id);
+            }
+            if (spirits.getInt("Partner") != 0 && !owned.contains(spirits.getInt("Partner"))) {
+                throw new IllegalArgumentException("Unowned original spirit partner");
+            }
+        }
+        originalSpiritsInitialized = spirits.getBoolean("Initialized");
+        originalSpirits = owned;
+        originalSpiritPartner = spirits.getInt("Partner");
+        originalNodenProgressKnown = spirits.getBoolean("NodenProgressKnown");
+        originalNodenPledged = spirits.getBoolean("NodenPledged");
+        originalNodenStage = spirits.getLong("NodenStage");
         this.level = Math.max(1, nbt.getInt("Level"));
         this.developerNoCooldown = nbt.getBoolean("DeveloperNoCooldown");
         this.developerLimitBreak = nbt.getBoolean("DeveloperLimitBreak");
@@ -391,17 +435,7 @@ public class BSPlayerStats {
 
         double finalHp = baseHp + this.bonusHp;
 
-        if ("noden".equals(this.activeCovenant)) {
-            double hpMultiplier = 1.10;
-            if (this.nodenCovenantLevel == 1) {
-                hpMultiplier = 1.25;
-            } else if (this.nodenCovenantLevel == 2) {
-                hpMultiplier = 1.35;
-            } else if (this.nodenCovenantLevel >= 3) {
-                hpMultiplier = 1.50;
-            }
-            finalHp *= hpMultiplier;
-        }
+        if (getNodenHpMultiplier() != 1.0D) finalHp = Math.floor(finalHp * getNodenHpMultiplier());
 
         if (this.developerLimitBreak) {
             this.hp = Math.max(1.0D, finalHp);
@@ -435,6 +469,21 @@ public class BSPlayerStats {
         }
         double limitBreakBonus = Math.floor(delta99 * (level - 99) * 1.05);
         return val99 + limitBreakBonus;
+    }
+
+    public double getBaseHpBeforeCovenant() {
+        return getRMStat(Math.max(1, Math.min(getLevelLimit(), level)), 638, 6680, 61) + bonusHp;
+    }
+
+    public double getNodenHpMultiplier() {
+        if (!"noden".equals(activeCovenant)) return 1.0D;
+        int rank = originalSpiritsInitialized ? originalSpiritPartner - 1 : nodenCovenantLevel;
+        if (rank < 0 || rank > 3) return 1.0D;
+        return NODEN_HP_RATES[rank];
+    }
+
+    public double getNodenItemRecoveryMultiplier() {
+        return getNodenHpMultiplier() == 1.0D ? 1.0D : 2.0D;
     }
 
     public static class PurgeCommissionTask {
