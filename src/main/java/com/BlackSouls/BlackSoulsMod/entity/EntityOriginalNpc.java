@@ -365,7 +365,10 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
 
     @Override
     public boolean canBeCollidedWith() {
-        return !erased && isAlive() && !entityData.get(ROUTE_STATE).getBoolean("Through");
+        BSOriginalNpcData.Page page = currentPage();
+        if (erased || !isAlive() || page == null || entityData.get(ROUTE_STATE).getBoolean("Through")) return false;
+        JsonObject movement = page.movement();
+        return !movement.has("priority_type") || movement.get("priority_type").getAsInt() == 1;
     }
 
     @Override

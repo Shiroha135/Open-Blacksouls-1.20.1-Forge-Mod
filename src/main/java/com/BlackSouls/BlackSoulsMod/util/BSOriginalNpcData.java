@@ -79,7 +79,7 @@ public final class BSOriginalNpcData {
                                 command.get("indent").getAsInt(), parameters));
                     }
                     JsonObject movement = new JsonObject();
-                    for (String key : List.of("move_speed", "move_frequency", "walk_anime", "step_anime", "direction_fix", "through")) {
+                    for (String key : List.of("move_speed", "move_frequency", "walk_anime", "step_anime", "direction_fix", "through", "priority_type")) {
                         if (page.has(key)) movement.add(key, page.get(key).deepCopy());
                     }
                     pages.add(new Page(page.getAsJsonObject("condition"), page.getAsJsonObject("graphic"),
