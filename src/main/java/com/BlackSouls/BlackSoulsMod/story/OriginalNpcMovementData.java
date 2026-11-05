@@ -42,6 +42,15 @@ public final class OriginalNpcMovementData extends SavedData {
             ticket.released = value.contains("Released") ? value.getBoolean("Released") : !ticket.awaited;
             ticket.replacement = value.getString("Replacement");
             ticket.failure = value.getString("Failure");
+            ticket.sourceMap = value.getInt("SourceMap");
+            if (ticket.sourceMap < 0 || ticket.sourceMap > 999) throw new IllegalArgumentException("Invalid original movement source map");
+            ticket.gravityCaptured = value.getBoolean("GravityCaptured");
+            ticket.originalNoGravity = value.getBoolean("OriginalNoGravity");
+            if (value.contains("Motion")) {
+                if (!value.contains("Motion", Tag.TAG_BYTE_ARRAY)) throw new IllegalArgumentException("Invalid original movement motion");
+                ticket.motion = OriginalNpcMotion.restore(JsonParser.parseString(new String(value.getByteArray("Motion"), StandardCharsets.UTF_8)).getAsJsonObject());
+                if (!ticket.gravityCaptured || ticket.complete || ticket.motion.complete() || ticket.sourceMap != 62) throw new IllegalArgumentException("Invalid active original motion phase");
+            }
             if (!ticket.replacement.isEmpty()) UUID.fromString(ticket.replacement);
             if (data.tickets.put(id, ticket) != null) throw new IllegalArgumentException("Duplicate movement ticket");
             data.latestByTarget.put(ticket.target, id);
@@ -55,6 +64,12 @@ public final class OriginalNpcMovementData extends SavedData {
         String previousId = latestByTarget.get(ticket.target);
         Ticket previous = tickets.get(previousId);
         if (previous != null) {
+            if (previous.motion != null) {
+                ticket.motion = previous.motion;
+                ticket.gravityCaptured = previous.gravityCaptured;
+                ticket.originalNoGravity = previous.originalNoGravity;
+                previous.motion = null;
+            }
             previous.replacement = ticket.id;
             activeTickets.remove(previous.id);
         }
@@ -108,6 +123,10 @@ public final class OriginalNpcMovementData extends SavedData {
             value.putBoolean("Released", ticket.released);
             value.putString("Replacement", ticket.replacement);
             value.putString("Failure", ticket.failure);
+            value.putInt("SourceMap", ticket.sourceMap);
+            value.putBoolean("GravityCaptured", ticket.gravityCaptured);
+            value.putBoolean("OriginalNoGravity", ticket.originalNoGravity);
+            if (ticket.motion != null) value.putByteArray("Motion", ticket.motion.snapshot().toString().getBytes(StandardCharsets.UTF_8));
             entries.add(value);
         }
         saved.put("Tickets", entries);
@@ -125,6 +144,10 @@ public final class OriginalNpcMovementData extends SavedData {
         boolean awaited;
         boolean released;
         boolean validated;
+        int sourceMap;
+        boolean gravityCaptured;
+        boolean originalNoGravity;
+        OriginalNpcMotion motion;
         String replacement = "";
         String failure = "";
 

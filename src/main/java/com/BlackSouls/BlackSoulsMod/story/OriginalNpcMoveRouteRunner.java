@@ -12,6 +12,7 @@ public final class OriginalNpcMoveRouteRunner {
     private final List<Command> commands;
     private final boolean repeat;
     private final boolean wait;
+    private final boolean skippable;
     private int position;
     private int waitFrames;
     private long elapsedFrames;
@@ -21,7 +22,7 @@ public final class OriginalNpcMoveRouteRunner {
         route = source.deepCopy();
         repeat = bool(route, "repeat");
         wait = bool(route, "wait");
-        bool(route, "skippable");
+        skippable = bool(route, "skippable");
         require(route.has("list") && route.get("list").isJsonArray(), "missing_list");
         JsonArray list = route.getAsJsonArray("list");
         require(!list.isEmpty() && list.size() <= 4096, "list_size");
@@ -60,6 +61,7 @@ public final class OriginalNpcMoveRouteRunner {
     public void advanceFrame(Context context) {
         if (complete) return;
         elapsedFrames = Math.addExact(elapsedFrames, 1L);
+        if (context.advanceMovementFrame()) return;
         if (waitFrames > 0) {
             waitFrames--;
             return;
@@ -74,7 +76,7 @@ public final class OriginalNpcMoveRouteRunner {
             } else {
                 context.apply(command.code(), command.parameters());
             }
-            position++;
+            if (command.code() > 14 || context.movementSucceeded() || skippable) position++;
         }
     }
 
@@ -119,7 +121,12 @@ public final class OriginalNpcMoveRouteRunner {
 
     private static void validate(int code, List<JsonElement> parameters) {
         switch (code) {
-            case 0, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40 -> size(parameters, 0);
+            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40 -> size(parameters, 0);
+            case 14 -> {
+                size(parameters, 2);
+                integer(parameters.get(0), -1000000, 1000000);
+                integer(parameters.get(1), -1000000, 1000000);
+            }
             case 15, 27, 28, 29, 30, 42, 43 -> {
                 size(parameters, 1);
                 int minimum = code == 27 || code == 28 || code == 29 || code == 30 ? 1 : 0;
@@ -182,5 +189,13 @@ public final class OriginalNpcMoveRouteRunner {
     public interface Context {
         void validate(int code, List<JsonElement> parameters);
         void apply(int code, List<JsonElement> parameters);
+
+        default boolean advanceMovementFrame() {
+            return false;
+        }
+
+        default boolean movementSucceeded() {
+            return true;
+        }
     }
 }

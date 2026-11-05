@@ -282,9 +282,9 @@ public final class OriginalNpcInterpreter {
                             numberMaximum = Math.max(numberMinimum, Math.max(0L, maximum));
                             break;
                         }
-                        var spirit = java.util.regex.Pattern.compile("\\$game_party\\.(add_spirit|remove_spirit)\\((\\d+)\\)\\s*").matcher(script);
-                        if (spirit.matches()) {
-                            context.changeSpirit(Integer.parseInt(spirit.group(2)), spirit.group(1).equals("add_spirit"));
+                        List<Integer> spirits = spiritScript(script.toString());
+                        if (spirits != null) {
+                            for (int spirit : spirits) context.changeSpirit(Math.abs(spirit), spirit > 0);
                             break;
                         }
                         if (script.toString().equals("call_keep")) {
@@ -745,6 +745,7 @@ public final class OriginalNpcInterpreter {
             case 2 -> context.selfSwitch(text(p, 1)) == (integer(p, 2) == 0);
             case 4 -> context.actorCondition(integer(p, 1), integer(p, 2), p.size() > 3 ? p.get(3) : null);
             case 5 -> context.enemyCondition(integer(p, 1), integer(p, 2), p.size() > 3 ? p.get(3) : null);
+            case 6 -> characterFaces(p, context);
             case 7 -> compare(context.gold(), p.get(1).getAsLong(),
                     integer(p, 2) == 0 ? 1 : integer(p, 2) == 1 ? 2 : 4);
             case 8 -> context.itemCount(0, integer(p, 1)) > 0;
@@ -761,6 +762,43 @@ public final class OriginalNpcInterpreter {
             case 12 -> context.scriptCondition(text(p, 1));
             default -> throw new UnsupportedOperationException("condition:" + integer(p, 0));
         };
+    }
+
+    private static boolean characterFaces(List<JsonElement> parameters, Context context) {
+        if (parameters.size() != 3 || parameters.stream().anyMatch(value -> !value.isJsonPrimitive()
+                || !value.getAsJsonPrimitive().isNumber())) {
+            throw new UnsupportedOperationException("condition_direction_parameters");
+        }
+        parameters.get(0).getAsBigDecimal().intValueExact();
+        int target = parameters.get(1).getAsBigDecimal().intValueExact();
+        int direction = parameters.get(2).getAsBigDecimal().intValueExact();
+        if (target < -1) throw new UnsupportedOperationException("condition_character:" + target);
+        if (!cardinalDirection(direction)) throw new UnsupportedOperationException("condition_direction:" + direction);
+        int actual = context.characterDirection(target);
+        if (!cardinalDirection(actual)) throw new UnsupportedOperationException("condition_character_direction:" + actual);
+        return actual == direction;
+    }
+
+    private static boolean cardinalDirection(int direction) {
+        return direction == 2 || direction == 4 || direction == 6 || direction == 8;
+    }
+
+    private static List<Integer> spiritScript(String script) {
+        List<Integer> result = new ArrayList<>();
+        var pattern = java.util.regex.Pattern.compile("\\$game_party\\.(add_spirit|remove_spirit)\\(\\s*([1-9]\\d*)\\s*\\)");
+        for (String line : script.strip().lines().toList()) {
+            var matcher = pattern.matcher(line.strip());
+            if (!matcher.matches()) return null;
+            int id;
+            try {
+                id = Integer.parseInt(matcher.group(2));
+            } catch (NumberFormatException exception) {
+                throw new UnsupportedOperationException("original_spirit_id");
+            }
+            if (id < 1 || id > 68) throw new UnsupportedOperationException("unknown_original_spirit:" + id);
+            result.add(matcher.group(1).equals("add_spirit") ? id : -id);
+        }
+        return result.isEmpty() ? null : List.copyOf(result);
     }
 
     private void variables(List<JsonElement> p) {
@@ -901,6 +939,10 @@ public final class OriginalNpcInterpreter {
     }
 
     public interface Context {
+        default int characterDirection(int target) {
+            throw new UnsupportedOperationException("condition_character:" + target);
+        }
+
         default void changeSpirit(int spiritId, boolean add) {
             throw new UnsupportedOperationException("original_spirit:" + spiritId);
         }

@@ -126,6 +126,10 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         return entityData.get(ROUTE_STATE).getInt("Direction");
     }
 
+    public CompoundTag originalMovementState() {
+        return entityData.get(ROUTE_STATE).copy();
+    }
+
     public int getSpritePattern() {
         return entityData.get(ROUTE_STATE).getInt("Pattern");
     }
