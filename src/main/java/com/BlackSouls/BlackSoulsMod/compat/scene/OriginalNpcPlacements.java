@@ -66,7 +66,9 @@ public final class OriginalNpcPlacements {
             new Site("map033_ev042", new Vec3(786.5D, 11.0D, -603.5D), 180.0F,
                     "minecraft:grass_block", cemeteryLandmarks()),
             new Site("map033_ev023", new Vec3(788.5D, 11.0D, -607.5D), 90.0F,
-                    "minecraft:grass_block", cemeteryLandmarks()));
+                    "minecraft:grass_block", cemeteryLandmarks()),
+            new Site("map086_ev021", new Vec3(307.5D, -59.0D, -83.5D), 180.0F,
+                    "blacksouls2:y_yu_di_ban", fishMarketLandmarks()));
 
     private OriginalNpcPlacements() {
     }
@@ -224,6 +226,16 @@ public final class OriginalNpcPlacements {
                 landmark(788, 11, -605, "minecraft:oak_log", Map.of("axis", "y")),
                 landmark(788, 12, -605, "moa_decor_garden_:hachaclavada", Map.of("facing", "up")),
                 landmark(784, 11, -610, "blacksouls2:sh_sheng_zi", Map.of("facing", "north")));
+    }
+
+    private static List<Landmark> fishMarketLandmarks() {
+        return List.of(
+                landmark(324, -61, -43, "minecraft:command_block", Map.of("facing", "up", "conditional", "false")),
+                landmark(296, -61, -43, "minecraft:command_block", Map.of("facing", "up", "conditional", "false")),
+                landmark(294, -61, -103, "minecraft:command_block", Map.of("facing", "up", "conditional", "false")),
+                landmark(290, -58, -105, "minecraft:oak_sign", Map.of("rotation", "8")),
+                landmark(307, -59, -83, "dustydecorations:rope", Map.of("axis", "y")),
+                landmark(307, -56, -83, "minecraft:oak_fence", Map.of()));
     }
 
     private static List<Landmark> wardSeatLandmarks(int x, int z, String type) {
