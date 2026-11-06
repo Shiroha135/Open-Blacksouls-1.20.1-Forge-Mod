@@ -31,6 +31,19 @@ public final class OriginalNpcMovementService {
     private OriginalNpcMovementService() {
     }
 
+    public static void forgetActor(net.minecraft.world.entity.PathfinderMob actor) {
+        if (!(actor.level() instanceof ServerLevel level)) return;
+        OriginalNpcMovementData data = OriginalNpcMovementData.get(level.getServer());
+        for (OriginalNpcMovementData.Ticket ticket : List.copyOf(data.tickets.values())) {
+            if (actor.getUUID().equals(ticket.target)) {
+                stopMotion(actor, ticket);
+                ticket.released = true;
+                data.finish(ticket);
+            }
+        }
+        data.collect();
+    }
+
     public static String start(ServerPlayer player, EntityOriginalNpc npc, int target, JsonObject route) {
         OriginalNpcMoveRouteRunner runner = new OriginalNpcMoveRouteRunner(route);
         Entity subject = resolve(player, npc, target);
@@ -221,6 +234,7 @@ public final class OriginalNpcMovementService {
             if (level == null) continue;
             Entity subject = owner != null && ticket.target.equals(owner.getUUID()) ? owner : level.getEntity(ticket.target);
             if (subject == null || subject.isRemoved() || !subject.isAlive()) continue;
+            if (subject instanceof com.shiroha.mmdskin.render.entity.CustomEntityPoseProvider pose && pose.isSitting()) continue;
             if (subject instanceof EntityOriginalNpc npc) {
                 if (!npc.getNpcId().equals(ticket.npcId)) continue;
                 refreshPageWhileForcing(npc);

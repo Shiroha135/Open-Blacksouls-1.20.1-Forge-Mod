@@ -90,6 +90,10 @@ public class MmdSkinRenderer<T extends Entity> extends EntityRenderer<T> {
             if (InventoryRenderHelper.isInventoryScreen()) {
                 renderInInventory(entityIn, model, entityYaw, tickDelta, matrixStackIn, packedLightIn, size);
             } else {
+                if (entityIn instanceof CustomEntityModelOffsetProvider provider) {
+                    var offset = provider.getMmdModelOffset();
+                    matrixStackIn.translate(offset.x, offset.y, offset.z);
+                }
                 matrixStackIn.scale(size[0], size[0], size[0]);
                 RenderSystem.setShader(entityIn instanceof CustomEntityRenderStateProvider
                         ? GameRenderer::getRendertypeEntityTranslucentShader : GameRenderer::getRendertypeEntityCutoutNoCullShader);

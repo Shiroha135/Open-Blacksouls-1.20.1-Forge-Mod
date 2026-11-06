@@ -40,7 +40,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.UUID;
 
-public final class EntityCheshireCat extends PathfinderMob implements DialogueResettable, CustomEntityRenderStateProvider {
+public final class EntityCheshireCat extends PathfinderMob implements DialogueResettable, CustomEntityRenderStateProvider,
+        com.shiroha.mmdskin.render.entity.CustomEntityPoseProvider {
+    private static final EntityDataAccessor<CompoundTag> MODEL_OFFSET = SynchedEntityData.defineId(
+            EntityCheshireCat.class, EntityDataSerializers.COMPOUND_TAG);
+    private static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(
+            EntityCheshireCat.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> ORIGINAL_SOURCE_MANAGED = SynchedEntityData.defineId(
             EntityCheshireCat.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> ORIGINAL_ROUTE_PAGE = SynchedEntityData.defineId(
@@ -78,8 +83,26 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
     }
 
     @Override
+    public net.minecraft.world.phys.Vec3 getMmdModelOffset() {
+        CompoundTag offset = entityData.get(MODEL_OFFSET);
+        return new net.minecraft.world.phys.Vec3(offset.getDouble("X"), offset.getDouble("Y"), offset.getDouble("Z"));
+    }
+
+    @Override
+    public void setMmdModelOffset(net.minecraft.world.phys.Vec3 offset) {
+        if (!com.shiroha.mmdskin.render.entity.CustomEntityModelOffsetProvider.isValidOffset(offset)) return;
+        CompoundTag value = new CompoundTag();
+        value.putDouble("X", offset.x);
+        value.putDouble("Y", offset.y);
+        value.putDouble("Z", offset.z);
+        entityData.set(MODEL_OFFSET, value);
+    }
+
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        entityData.define(MODEL_OFFSET, new CompoundTag());
+        entityData.define(SITTING, false);
         entityData.define(ORIGINAL_SOURCE_MANAGED, false);
         entityData.define(ORIGINAL_ROUTE_PAGE, -2);
         entityData.define(ORIGINAL_ROUTE_STATE, initialOriginalRouteState());
@@ -87,6 +110,16 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
 
     public boolean isOriginalSourceManaged() {
         return entityData.get(ORIGINAL_SOURCE_MANAGED);
+    }
+
+    @Override
+    public boolean isSitting() {
+        return entityData.get(SITTING);
+    }
+
+    @Override
+    public void setSitting(boolean sitting) {
+        entityData.set(SITTING, sitting);
     }
 
     public int getSpriteOpacity() {
@@ -433,6 +466,8 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        saveMmdModelOffset(tag);
+        tag.putBoolean("MmdSitting", isSitting());
         tag.putString("CheshireSceneId", sceneId);
         tag.putBoolean("CheshireOriginalSourceManaged", isOriginalSourceManaged());
         tag.putInt("CheshireOriginalRoutePage", entityData.get(ORIGINAL_ROUTE_PAGE));
@@ -449,6 +484,8 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        loadMmdModelOffset(tag);
+        setSitting(tag.getBoolean("MmdSitting"));
         sceneId = CheshireDialogue.normalizeSceneId(tag.getString("CheshireSceneId"));
         entityData.set(ORIGINAL_SOURCE_MANAGED, tag.getBoolean("CheshireOriginalSourceManaged"));
         entityData.set(ORIGINAL_ROUTE_PAGE, tag.contains("CheshireOriginalRoutePage", Tag.TAG_INT)

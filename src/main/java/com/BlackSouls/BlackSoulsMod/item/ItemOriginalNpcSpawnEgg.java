@@ -48,6 +48,9 @@ public final class ItemOriginalNpcSpawnEgg extends ForgeSpawnEggItem {
         if (!level.noCollision(npc) || !level.addFreshEntity(npc)) {
             return InteractionResult.FAIL;
         }
+        if (context.getPlayer() instanceof net.minecraft.server.level.ServerPlayer player) {
+            com.BlackSouls.BlackSoulsMod.story.OriginalNpcService.reconnectDeveloperReplacement(player, npc);
+        }
         if (context.getPlayer() == null || !context.getPlayer().getAbilities().instabuild) {
             context.getItemInHand().shrink(1);
         }

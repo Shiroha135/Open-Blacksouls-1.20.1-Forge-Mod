@@ -29,7 +29,12 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public final class EntityRabbitKnight extends EntityOriginalDatabaseEnemy
-        implements DialogueResettable, CustomEntityRenderStateProvider {
+        implements DialogueResettable, CustomEntityRenderStateProvider,
+        com.shiroha.mmdskin.render.entity.CustomEntityPoseProvider {
+    private static final EntityDataAccessor<CompoundTag> MODEL_OFFSET = SynchedEntityData.defineId(
+            EntityRabbitKnight.class, EntityDataSerializers.COMPOUND_TAG);
+    private static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(
+            EntityRabbitKnight.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> SOURCE_MANAGED = SynchedEntityData.defineId(EntityRabbitKnight.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> SOURCE_PAGE = SynchedEntityData.defineId(EntityRabbitKnight.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<CompoundTag> SOURCE_ROUTE = SynchedEntityData.defineId(EntityRabbitKnight.class, EntityDataSerializers.COMPOUND_TAG);
@@ -48,8 +53,26 @@ public final class EntityRabbitKnight extends EntityOriginalDatabaseEnemy
     }
 
     @Override
+    public net.minecraft.world.phys.Vec3 getMmdModelOffset() {
+        CompoundTag offset = entityData.get(MODEL_OFFSET);
+        return new net.minecraft.world.phys.Vec3(offset.getDouble("X"), offset.getDouble("Y"), offset.getDouble("Z"));
+    }
+
+    @Override
+    public void setMmdModelOffset(net.minecraft.world.phys.Vec3 offset) {
+        if (!com.shiroha.mmdskin.render.entity.CustomEntityModelOffsetProvider.isValidOffset(offset)) return;
+        CompoundTag value = new CompoundTag();
+        value.putDouble("X", offset.x);
+        value.putDouble("Y", offset.y);
+        value.putDouble("Z", offset.z);
+        entityData.set(MODEL_OFFSET, value);
+    }
+
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        entityData.define(MODEL_OFFSET, new CompoundTag());
+        entityData.define(SITTING, false);
         entityData.define(SOURCE_MANAGED, false);
         entityData.define(SOURCE_PAGE, -2);
         entityData.define(SOURCE_ROUTE, initialSourceRoute());
@@ -57,6 +80,16 @@ public final class EntityRabbitKnight extends EntityOriginalDatabaseEnemy
 
     public boolean isOriginalSourceManaged() {
         return entityData.get(SOURCE_MANAGED);
+    }
+
+    @Override
+    public boolean isSitting() {
+        return entityData.get(SITTING);
+    }
+
+    @Override
+    public void setSitting(boolean sitting) {
+        entityData.set(SITTING, sitting);
     }
 
     public CompoundTag originalRouteState() {
@@ -262,6 +295,8 @@ public final class EntityRabbitKnight extends EntityOriginalDatabaseEnemy
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        saveMmdModelOffset(tag);
+        tag.putBoolean("MmdSitting", isSitting());
         tag.putBoolean("RabbitKnightIntroduced", introduced);
         tag.putBoolean("RabbitOriginalSourceManaged", isOriginalSourceManaged());
         tag.putInt("RabbitOriginalPage", entityData.get(SOURCE_PAGE));
@@ -272,6 +307,8 @@ public final class EntityRabbitKnight extends EntityOriginalDatabaseEnemy
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        loadMmdModelOffset(tag);
+        setSitting(tag.getBoolean("MmdSitting"));
         setProfileId(217);
         introduced = tag.getBoolean("RabbitKnightIntroduced");
         entityData.set(SOURCE_MANAGED, tag.getBoolean("RabbitOriginalSourceManaged"));

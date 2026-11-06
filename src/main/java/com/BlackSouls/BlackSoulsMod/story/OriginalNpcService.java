@@ -373,6 +373,45 @@ public final class OriginalNpcService {
         interact(player, npc, npc.getNpcId(), false);
     }
 
+    public static void forgetRemovedActor(PathfinderMob actor) {
+        if (!(actor.level() instanceof ServerLevel level)) return;
+        for (Session session : List.copyOf(SESSIONS.values())) {
+            if (!actor.getUUID().equals(session.npcUuid)) continue;
+            SESSIONS.remove(session.playerId, session);
+            OriginalNpcConversationMovement.release(session.playerId);
+            ServerPlayer owner = level.getServer().getPlayerList().getPlayer(session.playerId);
+            if (owner != null && session.prompt != null) {
+                closeWaitDisplay(owner, session);
+            }
+        }
+        OriginalNpcProgress.get(level.getServer()).removeActorConversations(actor.getUUID());
+        OriginalNpcMovementService.forgetActor(actor);
+    }
+
+    public static void reconnectDeveloperReplacement(ServerPlayer player, EntityOriginalNpc replacement) {
+        if (!player.isCreative() || !player.hasPermissions(4)) return;
+        OriginalNpcProgress progress = OriginalNpcProgress.get(player.server);
+        JsonObject saved = progress.conversation(player.getUUID(), replacement.getNpcId());
+        if (saved == null || !saved.has("entityUuid") || !saved.has("dimension")
+                || !replacement.level().dimension().location().toString().equals(saved.get("dimension").getAsString())) return;
+        UUID previousId;
+        try {
+            previousId = UUID.fromString(saved.get("entityUuid").getAsString());
+        } catch (IllegalArgumentException exception) {
+            return;
+        }
+        for (ServerLevel level : player.server.getAllLevels()) {
+            if (level.getEntity(previousId) != null) return;
+        }
+        Session previous = SESSIONS.get(player.getUUID());
+        if (previous != null && previousId.equals(previous.npcUuid)) {
+            SESSIONS.remove(player.getUUID(), previous);
+            OriginalNpcConversationMovement.release(player.getUUID());
+        }
+        saved.addProperty("entityUuid", replacement.getUUID().toString());
+        progress.setConversation(player.getUUID(), replacement.getNpcId(), saved);
+    }
+
     private static void interact(ServerPlayer player, PathfinderMob npc, String npcId, boolean savedContinuation) {
         if (OriginalDodoRunService.pending(player)) return;
         boolean available = savedContinuation

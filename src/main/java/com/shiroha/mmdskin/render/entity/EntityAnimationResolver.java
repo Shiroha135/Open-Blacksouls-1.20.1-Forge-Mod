@@ -29,8 +29,9 @@ public final class EntityAnimationResolver {
         params.bodyPitch = 0.0f;
         params.translation.zero();
 
-        if (entity instanceof CustomEntityAnimationProvider provider) {
-            String animation = provider.getMmdAnimation();
+        if (entity instanceof CustomEntityAnimationProvider || entity instanceof CustomEntityPoseProvider) {
+            String animation = entity instanceof CustomEntityPoseProvider pose && pose.isSitting() ? "ride"
+                    : entity instanceof CustomEntityAnimationProvider provider ? provider.getMmdAnimation() : "";
             if (animation != null && !animation.isBlank()
                     && changeCustomAnimationOnce(model, animation, 0)) {
                 return;

@@ -23,10 +23,13 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("removal")
-public class EntityNoden extends PathfinderMob implements DialogueResettable, CustomEntityAnimationProvider {
+public class EntityNoden extends PathfinderMob implements DialogueResettable, CustomEntityAnimationProvider,
+        com.shiroha.mmdskin.render.entity.CustomEntityPoseProvider {
 
     private static final double NODEN_MAX_HEALTH = Integer.MAX_VALUE;
 
+    private static final EntityDataAccessor<CompoundTag> MODEL_OFFSET = SynchedEntityData.defineId(
+            EntityNoden.class, EntityDataSerializers.COMPOUND_TAG);
     private static final EntityDataAccessor<Integer> DATA_TALK_COUNT = SynchedEntityData.defineId(EntityNoden.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_SITTING = SynchedEntityData.defineId(EntityNoden.class, EntityDataSerializers.BOOLEAN);
 
@@ -42,8 +45,25 @@ public class EntityNoden extends PathfinderMob implements DialogueResettable, Cu
     }
 
     @Override
+    public net.minecraft.world.phys.Vec3 getMmdModelOffset() {
+        CompoundTag offset = entityData.get(MODEL_OFFSET);
+        return new net.minecraft.world.phys.Vec3(offset.getDouble("X"), offset.getDouble("Y"), offset.getDouble("Z"));
+    }
+
+    @Override
+    public void setMmdModelOffset(net.minecraft.world.phys.Vec3 offset) {
+        if (!com.shiroha.mmdskin.render.entity.CustomEntityModelOffsetProvider.isValidOffset(offset)) return;
+        CompoundTag value = new CompoundTag();
+        value.putDouble("X", offset.x);
+        value.putDouble("Y", offset.y);
+        value.putDouble("Z", offset.z);
+        entityData.set(MODEL_OFFSET, value);
+    }
+
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        entityData.define(MODEL_OFFSET, new CompoundTag());
         this.entityData.define(DATA_TALK_COUNT, 0);
         this.entityData.define(DATA_SITTING, false);
     }
@@ -164,6 +184,7 @@ public class EntityNoden extends PathfinderMob implements DialogueResettable, Cu
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        saveMmdModelOffset(tag);
         tag.putInt("TalkCount", this.entityData.get(DATA_TALK_COUNT));
         tag.putBoolean("IsSitting", this.isSitting());
     }
@@ -172,6 +193,7 @@ public class EntityNoden extends PathfinderMob implements DialogueResettable, Cu
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        loadMmdModelOffset(tag);
         this.entityData.set(DATA_TALK_COUNT, tag.getInt("TalkCount"));
         this.setSitting(tag.getBoolean("IsSitting"));
     }

@@ -28,7 +28,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-public class EntityRedHood extends PathfinderMob implements DialogueResettable, CustomEntityAnimationProvider {
+public class EntityRedHood extends PathfinderMob implements DialogueResettable, CustomEntityAnimationProvider,
+        com.shiroha.mmdskin.render.entity.CustomEntityPoseProvider {
+    private static final EntityDataAccessor<CompoundTag> MODEL_OFFSET = SynchedEntityData.defineId(
+            EntityRedHood.class, EntityDataSerializers.COMPOUND_TAG);
+    private static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(
+            EntityRedHood.class, EntityDataSerializers.BOOLEAN);
     public static final int MAX_MMD_ANIMATION_LENGTH = 128;
     private static final EntityDataAccessor<String> MMD_ANIMATION = SynchedEntityData.defineId(
             EntityRedHood.class,
@@ -56,14 +61,42 @@ public class EntityRedHood extends PathfinderMob implements DialogueResettable, 
     }
 
     @Override
+    public net.minecraft.world.phys.Vec3 getMmdModelOffset() {
+        CompoundTag offset = entityData.get(MODEL_OFFSET);
+        return new net.minecraft.world.phys.Vec3(offset.getDouble("X"), offset.getDouble("Y"), offset.getDouble("Z"));
+    }
+
+    @Override
+    public void setMmdModelOffset(net.minecraft.world.phys.Vec3 offset) {
+        if (!com.shiroha.mmdskin.render.entity.CustomEntityModelOffsetProvider.isValidOffset(offset)) return;
+        CompoundTag value = new CompoundTag();
+        value.putDouble("X", offset.x);
+        value.putDouble("Y", offset.y);
+        value.putDouble("Z", offset.z);
+        entityData.set(MODEL_OFFSET, value);
+    }
+
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        entityData.define(MODEL_OFFSET, new CompoundTag());
+        this.entityData.define(SITTING, false);
         this.entityData.define(MMD_ANIMATION, "");
     }
 
     @Override
     public String getMmdAnimation() {
         return this.entityData.get(MMD_ANIMATION);
+    }
+
+    @Override
+    public boolean isSitting() {
+        return this.entityData.get(SITTING);
+    }
+
+    @Override
+    public void setSitting(boolean sitting) {
+        this.entityData.set(SITTING, sitting);
     }
 
     public void setMmdAnimation(String animation) {
@@ -163,6 +196,8 @@ public class EntityRedHood extends PathfinderMob implements DialogueResettable, 
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        saveMmdModelOffset(tag);
+        tag.putBoolean("MmdSitting", isSitting());
         tag.putInt("RedHoodStoryStage", this.storyStage);
         tag.putString("RedHoodDialogueScene", this.dialogueScene);
         tag.putBoolean("RedHoodStoryInitialized", this.storyInitialized);
@@ -174,6 +209,8 @@ public class EntityRedHood extends PathfinderMob implements DialogueResettable, 
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        loadMmdModelOffset(tag);
+        setSitting(tag.getBoolean("MmdSitting"));
         this.storyStage = Math.max(0, tag.getInt("RedHoodStoryStage"));
         this.dialogueScene = tag.getString("RedHoodDialogueScene");
         if (this.dialogueScene.isBlank()) {

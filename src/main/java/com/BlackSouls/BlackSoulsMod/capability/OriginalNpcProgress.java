@@ -238,6 +238,18 @@ public final class OriginalNpcProgress extends SavedData {
         return false;
     }
 
+    public void removeActorConversations(UUID actor) {
+        String uuid = actor.toString();
+        for (String key : Set.copyOf(conversations.keySet())) {
+            JsonObject saved = JsonParser.parseString(new String(conversations.get(key), StandardCharsets.UTF_8)).getAsJsonObject();
+            if (saved.has("entityUuid") && uuid.equals(saved.get("entityUuid").getAsString())) {
+                conversations.remove(key);
+                timedWaits.remove(key);
+                setDirty();
+            }
+        }
+    }
+
     public boolean hasMigratedCheshireLegacy(UUID playerId) {
         return cheshireLegacyMigrated.contains(playerId);
     }

@@ -28,7 +28,12 @@ import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRenderStateProvider {
+public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRenderStateProvider,
+        com.shiroha.mmdskin.render.entity.CustomEntityPoseProvider {
+    private static final EntityDataAccessor<CompoundTag> MODEL_OFFSET = SynchedEntityData.defineId(
+            EntityOriginalNpc.class, EntityDataSerializers.COMPOUND_TAG);
+    private static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(
+            EntityOriginalNpc.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<String> NPC_ID = SynchedEntityData.defineId(
             EntityOriginalNpc.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<Integer> PAGE = SynchedEntityData.defineId(
@@ -53,8 +58,26 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     }
 
     @Override
+    public net.minecraft.world.phys.Vec3 getMmdModelOffset() {
+        CompoundTag offset = entityData.get(MODEL_OFFSET);
+        return new net.minecraft.world.phys.Vec3(offset.getDouble("X"), offset.getDouble("Y"), offset.getDouble("Z"));
+    }
+
+    @Override
+    public void setMmdModelOffset(net.minecraft.world.phys.Vec3 offset) {
+        if (!com.shiroha.mmdskin.render.entity.CustomEntityModelOffsetProvider.isValidOffset(offset)) return;
+        CompoundTag value = new CompoundTag();
+        value.putDouble("X", offset.x);
+        value.putDouble("Y", offset.y);
+        value.putDouble("Z", offset.z);
+        entityData.set(MODEL_OFFSET, value);
+    }
+
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        entityData.define(MODEL_OFFSET, new CompoundTag());
+        entityData.define(SITTING, false);
         entityData.define(NPC_ID, "");
         entityData.define(PAGE, -1);
         entityData.define(ROUTE_STATE, initialRouteState());
@@ -62,6 +85,16 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
 
     public String getNpcId() {
         return entityData.get(NPC_ID);
+    }
+
+    @Override
+    public boolean isSitting() {
+        return entityData.get(SITTING);
+    }
+
+    @Override
+    public void setSitting(boolean sitting) {
+        entityData.set(SITTING, sitting);
     }
 
     public void setNpcId(String id) {
@@ -367,7 +400,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         }
         super.tick();
         setDeltaMovement(0.0D, onGround() ? 0.0D : getDeltaMovement().y, 0.0D);
-        if (!level().isClientSide() && forcedRouteTicket.isEmpty()) {
+        if (!level().isClientSide() && forcedRouteTicket.isEmpty() && !isSitting()) {
             if (!OriginalNpcMovementService.tickAutonomous(this)) {
                 for (int frame = 0; frame < 3; frame++) advanceOriginalAnimationFrame();
             } else {
@@ -396,6 +429,8 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     @Override
     public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
+        saveMmdModelOffset(tag);
+        tag.putBoolean("MmdSitting", isSitting());
         tag.putString("OriginalNpcId", getNpcId());
         tag.putInt("OriginalNpcPage", entityData.get(PAGE));
         tag.put("OriginalNpcRouteState", entityData.get(ROUTE_STATE).copy());
@@ -408,6 +443,8 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     @Override
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
+        loadMmdModelOffset(tag);
+        setSitting(tag.getBoolean("MmdSitting"));
         setNpcId(tag.getString("OriginalNpcId"));
         if (tag.contains("OriginalNpcRouteState")) {
             entityData.set(PAGE, tag.getInt("OriginalNpcPage"));
