@@ -197,6 +197,21 @@ public final class OriginalNpcInterpreter {
                     }
                     case 122 -> variables(p);
                     case 123 -> context.setSelfSwitch(text(p, 0), integer(p, 1) == 0);
+                    case 201 -> {
+                        if (p.size() != 6) throw new UnsupportedOperationException("transfer_parameters");
+                        for (var value : p) {
+                            if (!value.isJsonPrimitive() || !value.getAsJsonPrimitive().isNumber()) throw new UnsupportedOperationException("transfer_integer");
+                            value.getAsBigDecimal().intValueExact();
+                        }
+                        if (integer(p, 0) != 0) throw new UnsupportedOperationException("transfer_parameters");
+                        int direction = integer(p, 4), fade = integer(p, 5);
+                        if (integer(p, 1) < 1 || integer(p, 2) < 0 || integer(p, 3) < 0
+                                || direction != 0 && !cardinalDirection(direction) || fade < 0 || fade > 2) {
+                            throw new UnsupportedOperationException("transfer_destination");
+                        }
+                        int ticks = framesToTicks(context.transfer(integer(p, 1), integer(p, 2), integer(p, 3), direction, fade));
+                        if (ticks > 0) return waitPrompt(ticks);
+                    }
                     case 125 -> context.changeGold(Math.multiplyExact(operand(p, 1, 2), integer(p, 0) == 0 ? 1L : -1L));
                     case 132 -> context.changeBattleBgm(p.get(0).getAsJsonObject());
                     case 126, 127, 128 -> {
@@ -939,6 +954,10 @@ public final class OriginalNpcInterpreter {
     }
 
     public interface Context {
+        default int transfer(int map, int x, int y, int direction, int fade) {
+            throw new UnsupportedOperationException("original_transfer:" + map + ":" + x + ":" + y);
+        }
+
         default int characterDirection(int target) {
             throw new UnsupportedOperationException("condition_character:" + target);
         }

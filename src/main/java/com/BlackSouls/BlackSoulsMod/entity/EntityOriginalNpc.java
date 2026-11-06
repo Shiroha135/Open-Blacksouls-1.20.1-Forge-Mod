@@ -63,7 +63,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     }
 
     public void setNpcId(String id) {
-        entityData.set(NPC_ID, BSOriginalNpcData.get(id) == null ? "" : id);
+        entityData.set(NPC_ID, BSOriginalNpcData.getEvent(id) == null ? "" : id);
         entityData.set(PAGE, -2);
         entityData.set(ROUTE_STATE, initialRouteState());
         forcedRouteTicket = "";
@@ -94,7 +94,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     }
 
     public BSOriginalNpcData.Page currentPage() {
-        BSOriginalNpcData.Entry entry = BSOriginalNpcData.get(getNpcId());
+        BSOriginalNpcData.Entry entry = BSOriginalNpcData.getEvent(getNpcId());
         int index = entityData.get(PAGE);
         return entry == null || index < 0 || index >= entry.pages().size() ? null : entry.pages().get(index);
     }
@@ -145,7 +145,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
 
     @Override
     public float getMmdBodyYaw(float resolvedYaw) {
-        BSOriginalNpcData.Entry definition = BSOriginalNpcData.get(getNpcId());
+        BSOriginalNpcData.Entry definition = BSOriginalNpcData.getEvent(getNpcId());
         int base = getSpriteDirection();
         if (definition != null) {
             for (BSOriginalNpcData.Page page : definition.pages()) {
@@ -297,17 +297,23 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     }
 
     private void updateRouteVisibility() {
-        setInvisible(erased || entityData.get(ROUTE_STATE).getBoolean("Transparent") || getRouteCharacterName().isBlank());
+        setInvisible(erased || com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(getNpcId())
+                || entityData.get(ROUTE_STATE).getBoolean("Transparent") || getRouteCharacterName().isBlank());
     }
 
     @Override
     public Component getName() {
-        BSOriginalNpcData.Entry entry = BSOriginalNpcData.get(getNpcId());
-        return hasCustomName() ? getCustomName() : Component.literal(entry == null ? "" : entry.name());
+        BSOriginalNpcData.Entry entry = BSOriginalNpcData.getEvent(getNpcId());
+        return hasCustomName() ? getCustomName() : Component.literal(entry == null
+                || com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(getNpcId()) ? "" : entry.name());
     }
 
     @Override
     public void tick() {
+        if (com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(getNpcId())) {
+            noPhysics = true;
+            setNoGravity(true);
+        }
         super.tick();
         setDeltaMovement(0.0D, onGround() ? 0.0D : getDeltaMovement().y, 0.0D);
         if (!level().isClientSide() && forcedRouteTicket.isEmpty()) {
@@ -368,9 +374,15 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     }
 
     @Override
+    public boolean isPickable() {
+        return !com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(getNpcId()) && super.isPickable();
+    }
+
+    @Override
     public boolean canBeCollidedWith() {
         BSOriginalNpcData.Page page = currentPage();
-        if (erased || !isAlive() || page == null || entityData.get(ROUTE_STATE).getBoolean("Through")) return false;
+        if (erased || !isAlive() || page == null || com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(getNpcId())
+                || entityData.get(ROUTE_STATE).getBoolean("Through")) return false;
         JsonObject movement = page.movement();
         return !movement.has("priority_type") || movement.get("priority_type").getAsInt() == 1;
     }

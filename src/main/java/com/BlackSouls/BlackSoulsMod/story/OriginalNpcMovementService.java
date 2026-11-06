@@ -34,7 +34,7 @@ public final class OriginalNpcMovementService {
     public static String start(ServerPlayer player, EntityOriginalNpc npc, int target, JsonObject route) {
         OriginalNpcMoveRouteRunner runner = new OriginalNpcMoveRouteRunner(route);
         Entity subject = resolve(player, npc, target);
-        var source = BSOriginalNpcData.get(npc.getNpcId());
+        var source = BSOriginalNpcData.getEvent(npc.getNpcId());
         int sourceMap = source == null ? 0 : source.mapId();
         RouteContext context = new RouteContext(player, subject, sourceMap, null);
         runner.validate(context);
@@ -63,7 +63,7 @@ public final class OriginalNpcMovementService {
     }
 
     private static String enqueue(ServerPlayer player, Entity subject, String sourceId, OriginalNpcMoveRouteRunner runner) {
-        var source = BSOriginalNpcData.get(sourceId);
+        var source = BSOriginalNpcData.getEvent(sourceId);
         return enqueue(player, subject, sourceId, runner, source == null ? 0 : source.mapId());
     }
 
@@ -120,7 +120,7 @@ public final class OriginalNpcMovementService {
         if (owner != null && owner.serverLevel() == level && owner.isAlive()) {
             OriginalNpcService.refreshPage(npc, owner);
         } else {
-            BSOriginalNpcData.Entry entry = BSOriginalNpcData.get(npc.getNpcId());
+            BSOriginalNpcData.Entry entry = BSOriginalNpcData.getEvent(npc.getNpcId());
             if (entry != null) {
                 Integer selected = offlinePage(entry, OriginalNpcProgress.get(level.getServer()), level.getServer());
                 if (selected != null) npc.setPageIndex(selected);

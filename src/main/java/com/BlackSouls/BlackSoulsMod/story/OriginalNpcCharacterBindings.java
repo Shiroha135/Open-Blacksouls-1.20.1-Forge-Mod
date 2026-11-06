@@ -40,13 +40,13 @@ public final class OriginalNpcCharacterBindings {
         }
         if (eventId < 0) return player;
         if (eventId == 0) return subject;
-        var source = BSOriginalNpcData.get(subject.getNpcId());
+        var source = BSOriginalNpcData.getEvent(subject.getNpcId());
         if (source == null) throw new UnsupportedOperationException("event_character_source");
         if (eventId == source.eventId()) return subject;
         EntityOriginalNpc resolved = null;
         for (Entity entity : player.serverLevel().getAllEntities()) {
             if (!(entity instanceof EntityOriginalNpc candidate) || !candidate.isAlive() || candidate.isRemoved()) continue;
-            var definition = BSOriginalNpcData.get(candidate.getNpcId());
+            var definition = BSOriginalNpcData.getEvent(candidate.getNpcId());
             if (definition == null || definition.mapId() != source.mapId() || definition.eventId() != eventId) continue;
             if (resolved != null) throw new UnsupportedOperationException("event_character_ambiguous:" + eventId);
             resolved = candidate;

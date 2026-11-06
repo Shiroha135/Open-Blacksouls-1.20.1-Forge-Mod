@@ -6,6 +6,9 @@ public final class OriginalNpcPresentationState {
     private int brightness = 255;
     private int fadeOut;
     private int fadeIn;
+    private int transferBrightness = 255;
+    private int transferFadeFrames;
+    private boolean transferFadeOut;
     private final double[] tone = new double[4];
     private double[] toneTarget = new double[4];
     private int toneDuration;
@@ -20,12 +23,26 @@ public final class OriginalNpcPresentationState {
     public void apply(int code, List<Double> values) {
         switch (code) {
             case 221 -> {
-                fadeOut = 30;
-                fadeIn = 0;
+                if (transferFade(values)) {
+                    int elapsed = values.size() == 2 ? values.get(1).intValue() : 0;
+                    transferFadeFrames = 30 - elapsed;
+                    transferFadeOut = true;
+                    if (values.size() == 2) transferBrightness = 255 - 255 * elapsed / 30;
+                } else {
+                    fadeOut = 30;
+                    fadeIn = 0;
+                }
             }
             case 222 -> {
-                fadeIn = 30;
-                fadeOut = 0;
+                if (transferFade(values)) {
+                    int elapsed = values.size() == 2 ? values.get(1).intValue() : 0;
+                    transferFadeFrames = 30 - elapsed;
+                    transferFadeOut = false;
+                    if (values.size() == 2) transferBrightness = 255 * elapsed / 30;
+                } else {
+                    fadeIn = 30;
+                    fadeOut = 0;
+                }
             }
             case 223 -> {
                 toneTarget = new double[]{values.get(0), values.get(1), values.get(2), values.get(3)};
@@ -59,6 +76,11 @@ public final class OriginalNpcPresentationState {
                 brightness = (brightness * (fadeIn - 1) + 255) / fadeIn;
                 fadeIn--;
             }
+            if (transferFadeFrames > 0) {
+                int value = 255 * (31 - transferFadeFrames) / 30;
+                transferBrightness = transferFadeOut ? 255 - value : value;
+                transferFadeFrames--;
+            }
             if (toneDuration > 0) {
                 for (int index = 0; index < 4; index++) {
                     tone[index] = (tone[index] * (toneDuration - 1) + toneTarget[index]) / toneDuration;
@@ -88,7 +110,7 @@ public final class OriginalNpcPresentationState {
     }
 
     public int brightness() {
-        return brightness;
+        return brightness * transferBrightness / 255;
     }
 
     public double[] tone() {
@@ -104,8 +126,18 @@ public final class OriginalNpcPresentationState {
     }
 
     public boolean active() {
-        return brightness != 255 || flash[3] > 0.0D || shake != 0.0D
+        return brightness() != 255 || flash[3] > 0.0D || shake != 0.0D
                 || tone[0] != 0.0D || tone[1] != 0.0D || tone[2] != 0.0D || tone[3] != 0.0D;
+    }
+
+    private static boolean transferFade(List<Double> values) {
+        if (values == null) throw new IllegalArgumentException("Missing original fade values");
+        if (values.isEmpty()) return false;
+        if (values.equals(List.of(1.0D))) return true;
+        if (values.size() == 2 && values.get(0) != null && values.get(0) == 2.0D && values.get(1) != null
+                && Double.isFinite(values.get(1)) && values.get(1) == Math.rint(values.get(1))
+                && values.get(1) >= 0 && values.get(1) <= 30) return true;
+        throw new IllegalArgumentException("Invalid original transfer fade marker");
     }
 
     public static int balloonFrame(int remainingFrames) {

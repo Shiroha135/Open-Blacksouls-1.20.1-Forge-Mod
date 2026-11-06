@@ -70,8 +70,8 @@ public final class OriginalNpcService {
     }
 
     private static BSOriginalNpcData.Entry definition(String npcId) {
-        BSOriginalNpcData.Entry value = BSOriginalNpcData.get(npcId);
-        return value == null ? OriginalNpcLogicData.get(npcId) : value;
+        BSOriginalNpcData.Entry entry = BSOriginalNpcData.getEvent(npcId);
+        return entry == null ? OriginalNpcLogicData.get(npcId) : entry;
     }
 
     private static boolean matchesActor(PathfinderMob npc, String npcId) {
@@ -199,6 +199,10 @@ public final class OriginalNpcService {
                 && OriginalNpcProgress.get(player.server).hasSavedTimedWait(player.getUUID());
     }
 
+    public static boolean isConversing(ServerPlayer player) {
+        return SESSIONS.containsKey(player.getUUID());
+    }
+
     @SubscribeEvent
     public static void onLogout(PlayerEvent.PlayerLoggedOutEvent event) {
         suspend(event);
@@ -248,6 +252,7 @@ public final class OriginalNpcService {
         OriginalNpcMovementService.tick(event.getServer());
         OriginalNpcAnimationService.tick(event.getServer());
         OriginalNpcPictureService.tick(event.getServer());
+        OriginalWorldTransferService.tick(event.getServer());
         if (event.getServer().getTickCount() % 20 == 0) {
             resumeSavedCharacterWaits(event.getServer());
             resumeCheshireLegacyProgress(event.getServer());
@@ -280,6 +285,11 @@ public final class OriginalNpcService {
                 continue;
             }
             if (TurnBattleManager.isInBattle(player)) {
+                session.waitUntil++;
+                continue;
+            }
+            if (session.prompt.type() == OriginalNpcInterpreter.Type.WAIT && OriginalWorldTransferService.pending(player)
+                    && player.serverLevel().getGameTime() >= session.waitUntil) {
                 session.waitUntil++;
                 continue;
             }
@@ -336,7 +346,7 @@ public final class OriginalNpcService {
     }
 
     public static void refreshPage(EntityOriginalNpc npc, ServerPlayer player) {
-        BSOriginalNpcData.Entry definition = BSOriginalNpcData.get(npc.getNpcId());
+        BSOriginalNpcData.Entry definition = BSOriginalNpcData.getEvent(npc.getNpcId());
         if (definition == null || !(npc.level() instanceof ServerLevel)) {
             npc.setPageIndex(-1);
             return;
@@ -347,6 +357,8 @@ public final class OriginalNpcService {
 
     public static void interact(ServerPlayer player, EntityOriginalNpc npc) {
         if (!matchesActor(npc, npc.getNpcId())) return;
+        if (com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(npc.getNpcId())
+                && !OriginalAltarEntry.isBound(player, npc)) return;
         if (com.BlackSouls.BlackSoulsMod.compat.scene.OriginalBillPlacement.INITIAL_NPC.equals(npc.getNpcId())
                 && OriginalBillInteraction.tryInteract(player)) return;
         interact(player, npc, npc.getNpcId(), false);
@@ -427,6 +439,7 @@ public final class OriginalNpcService {
                             prompt.battle(), Math.max(0, saved.get("waitRemaining").getAsInt()));
                 }
                 present(player, npc, session, prompt);
+                OriginalWorldTransferService.restorePresentation(player);
             } catch (RuntimeException exception) {
                 SESSIONS.remove(player.getUUID());
                 BlackSouls.LOGGER.error("Failed to resume original NPC {} for {}", npcId, player.getUUID(), exception);
@@ -894,6 +907,7 @@ public final class OriginalNpcService {
         public void setSwitch(int id, boolean value) {
             if (player != null) {
                 OriginalNpcProgress.writeSwitch(player, id, value);
+                if (id == 41) OriginalAltarEntry.synchronize(player.serverLevel());
                 return;
             }
             progress.setSwitch(id, value);
@@ -929,6 +943,12 @@ public final class OriginalNpcService {
                         Math.min(Integer.MAX_VALUE, value)));
             }
             progress.setVariable(id, value);
+        }
+
+        @Override
+        public int transfer(int map, int x, int y, int direction, int fade) {
+            if (!(npc instanceof EntityOriginalNpc original) || player == null) throw new UnsupportedOperationException("transfer_source");
+            return OriginalAltarEntry.transfer(player, original, map, x, y, direction, fade);
         }
 
         @Override

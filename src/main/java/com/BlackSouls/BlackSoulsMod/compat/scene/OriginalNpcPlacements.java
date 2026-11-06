@@ -128,6 +128,8 @@ public final class OriginalNpcPlacements {
     public static Outcome install(ServerPlayer player, String npcId) {
         if (OriginalReceptionistPlacement.NPC_ID.equals(npcId)) return OriginalReceptionistPlacement.install(player);
         Site site = sites().stream().filter(value -> value.npcId().equals(npcId)).findFirst().orElse(null);
+        if (site == null) site = com.BlackSouls.BlackSoulsMod.story.OriginalAltarEntry.sites().stream()
+                .filter(value -> value.npcId().equals(npcId)).findFirst().orElse(null);
         if (site == null) {
             return Outcome.UNKNOWN_SITE;
         }
@@ -171,7 +173,8 @@ public final class OriginalNpcPlacements {
         AABB bounds = npc.getBoundingBox();
         if (!level.noCollision(npc, bounds) || site.shapedSupport() && level.noCollision(npc, bounds.move(0.0D, -0.02D, 0.0D))
                 || level.containsAnyLiquid(bounds) && !OriginalBillPlacement.allowsFootWater(level, site, bounds)
-                || !level.getEntitiesOfClass(LivingEntity.class, bounds,
+                || !com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(npcId)
+                && !level.getEntitiesOfClass(LivingEntity.class, bounds,
                 entity -> entity.isAlive() && !entity.isSpectator()).isEmpty()) {
             npc.discard();
             return Outcome.COLLISION;
