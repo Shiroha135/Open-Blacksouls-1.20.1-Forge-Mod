@@ -16,14 +16,29 @@ import net.minecraft.client.renderer.ShaderInstance;
 import org.joml.Matrix4f;
 
 public final class DevGlassRenderer {
-    private static final TextureTarget[] TARGETS = new TextureTarget[3];
+    private static final TextureTarget[] TARGETS = new TextureTarget[4];
     private static TextureTarget captureTarget;
     private static boolean captured;
 
     private DevGlassRenderer() {
     }
 
-    public static void beginFrame() {
+    public static void beginFrame(GuiGraphics graphics) {
+        captured = false;
+        capture(graphics);
+    }
+
+    public static void release() {
+        if (captureTarget != null) {
+            captureTarget.destroyBuffers();
+            captureTarget = null;
+        }
+        for (int i = 0; i < TARGETS.length; i++) {
+            if (TARGETS[i] != null) {
+                TARGETS[i].destroyBuffers();
+                TARGETS[i] = null;
+            }
+        }
         captured = false;
     }
 
@@ -72,22 +87,25 @@ public final class DevGlassRenderer {
         if (downShader == null || upShader == null || mainTarget.width <= 0 || mainTarget.height <= 0) {
             return null;
         }
-        ensureTargets(mainTarget.width, mainTarget.height);
         if (captured) {
             return TARGETS[0];
         }
         graphics.flush();
         try {
+            ensureTargets(mainTarget.width, mainTarget.height);
             RenderSystem.disableDepthTest();
             RenderSystem.depthMask(false);
             RenderSystem.disableBlend();
             RenderSystem.disableCull();
             blit(mainTarget, captureTarget);
-            renderPass(downShader, captureTarget, TARGETS[0], 4.25F);
-            renderPass(downShader, TARGETS[0], TARGETS[1], 4.25F);
-            renderPass(downShader, TARGETS[1], TARGETS[2], 4.25F);
-            renderPass(upShader, TARGETS[2], TARGETS[1], 4.25F);
-            renderPass(upShader, TARGETS[1], TARGETS[0], 4.25F);
+            float offset = (float) Math.max(1.0D, minecraft.getWindow().getGuiScale() * 1.25D);
+            renderPass(downShader, captureTarget, TARGETS[0], offset);
+            for (int i = 1; i < TARGETS.length; i++) {
+                renderPass(downShader, TARGETS[i - 1], TARGETS[i], offset);
+            }
+            for (int i = TARGETS.length - 1; i > 0; i--) {
+                renderPass(upShader, TARGETS[i], TARGETS[i - 1], offset);
+            }
             captured = true;
             return TARGETS[0];
         } finally {
@@ -102,6 +120,8 @@ public final class DevGlassRenderer {
     }
 
     private static void ensureTargets(int width, int height) {
+        width = Math.max(1, width / 2);
+        height = Math.max(1, height / 2);
         if (captureTarget == null) {
             captureTarget = createTarget(width, height);
         } else if (captureTarget.width != width || captureTarget.height != height) {
@@ -109,9 +129,8 @@ public final class DevGlassRenderer {
             captureTarget.setFilterMode(9729);
         }
         for (int i = 0; i < TARGETS.length; i++) {
-            int divisor = 1 << i;
-            int targetWidth = Math.max(1, width / divisor);
-            int targetHeight = Math.max(1, height / divisor);
+            int targetWidth = Math.max(1, width >> i);
+            int targetHeight = Math.max(1, height >> i);
             if (TARGETS[i] == null) {
                 TARGETS[i] = createTarget(targetWidth, targetHeight);
             } else if (TARGETS[i].width != targetWidth || TARGETS[i].height != targetHeight) {
@@ -134,13 +153,13 @@ public final class DevGlassRenderer {
         GlStateManager._glBlitFrameBuffer(
                 0, 0, source.width, source.height,
                 0, 0, target.width, target.height,
-                16384, 9728
+                16384, 9729
         );
     }
 
     private static void renderPass(ShaderInstance shader, RenderTarget source, RenderTarget target, float offset) {
-        target.bindWrite(true);
         target.clear(Minecraft.ON_OSX);
+        target.bindWrite(true);
         RenderSystem.setShader(() -> shader);
         RenderSystem.setShaderTexture(0, source.getColorTextureId());
         shader.setSampler("Sampler0", source);
@@ -165,7 +184,7 @@ public final class DevGlassRenderer {
         if (shader == null) {
             return;
         }
-        prepare();
+        prepare(graphics);
         RenderSystem.setShader(() -> shader);
         RenderSystem.setShaderTexture(0, blurred.getColorTextureId());
         shader.setSampler("Sampler0", blurred);
@@ -183,22 +202,9 @@ public final class DevGlassRenderer {
 
     private static boolean renderGlass(GuiGraphics graphics, float x, float y, float width, float height,
                                        float radius, float alpha, boolean highlighted) {
-        ShaderInstance shader = ShaderHelper.noraSkijaGlassShader;
-        if (shader == null) {
-            return false;
-        }
-        prepare();
-        RenderSystem.setShader(() -> shader);
-        if (shader.getUniform("Alpha") != null) {
-            shader.getUniform("Alpha").set(Math.max(0.0F, Math.min(1.0F, alpha)));
-        }
-        if (shader.getUniform("Highlighted") != null) {
-            shader.getUniform("Highlighted").set(highlighted ? 1.0F : 0.0F);
-        }
-        setRoundedUniforms(shader, width, height, radius);
-        drawQuad(graphics.pose().last().pose(), x, y, width, height, 0xFFFFFFFF);
-        finish();
-        return true;
+        int opacity = Math.round(Math.max(0.0F, Math.min(1.0F, alpha)) * 168.0F);
+        return renderRounded(graphics, x, y, width, height, radius, 0.0F, false,
+                opacity << 24 | 0x142333);
     }
 
     private static boolean renderRounded(GuiGraphics graphics, float x, float y, float width, float height,
@@ -207,7 +213,7 @@ public final class DevGlassRenderer {
         if (shader == null || width <= 0.0F || height <= 0.0F || (color >>> 24) == 0) {
             return false;
         }
-        prepare();
+        prepare(graphics);
         RenderSystem.setShader(() -> shader);
         setRoundedUniforms(shader, width, height, radius);
         if (shader.getUniform("StrokeWidth") != null) {
@@ -230,7 +236,8 @@ public final class DevGlassRenderer {
         }
     }
 
-    private static void prepare() {
+    private static void prepare(GuiGraphics graphics) {
+        graphics.flush();
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.disableDepthTest();

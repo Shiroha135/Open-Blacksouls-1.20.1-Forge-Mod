@@ -6,23 +6,30 @@ import com.BlackSouls.BlackSoulsMod.client.render.DevGlassRenderer;
 import com.BlackSouls.BlackSoulsMod.network.NetworkHandler;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketDevAction;
 import com.BlackSouls.BlackSoulsMod.network.packets.PacketDevSetStats;
+import com.BlackSouls.BlackSoulsMod.network.packets.ClientboundDevBonfiresPacket;
+import com.BlackSouls.BlackSoulsMod.network.packets.ServerboundDevBonfirePacket;
 import com.BlackSouls.BlackSoulsMod.util.skill.SkillRegistry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Comparator;
+import java.util.Locale;
 
 public class GuiDevPanel extends Screen {
     private enum Tab {
         ATTRIBUTES("gui.blacksouls.dev_panel.tab.attributes"),
         SWITCHES("gui.blacksouls.dev_panel.tab.switches"),
-        SKILLS("gui.blacksouls.dev_panel.tab.skills");
+        SKILLS("gui.blacksouls.dev_panel.tab.skills"),
+        BONFIRES("gui.blacksouls.dev_panel.tab.bonfires");
 
         private final String key;
 
@@ -56,6 +63,13 @@ public class GuiDevPanel extends Screen {
     private float limitBreakAnimation;
     private Component status = Component.empty();
     private long statusUntil;
+    private EditBox bonfireSearch;
+    private List<ClientboundDevBonfiresPacket.Entry> bonfires = List.of();
+    private List<ClientboundDevBonfiresPacket.Entry> filteredBonfires = List.of();
+    private GlobalPos selectedBonfire;
+    private int bonfireScroll;
+    private boolean bonfiresLoading;
+    private boolean bonfiresRequested;
 
     public GuiDevPanel() {
         super(Component.translatable("gui.blacksouls.dev_panel.title"));
@@ -98,6 +112,15 @@ public class GuiDevPanel extends Screen {
         this.fields.add(new FieldSpec(fieldSpeed, Component.translatable("gui.blacksouls.dev_panel.bonus_speed"), 0xFF8EEA9C));
         this.fields.add(new FieldSpec(fieldSouls, Component.translatable("gui.blacksouls.dev_panel.souls"), 0xFFFFD56A));
         this.fields.add(new FieldSpec(fieldSen, Component.translatable("gui.blacksouls.dev_panel.sen"), 0xFFFF82C8));
+        String search = this.bonfireSearch == null ? "" : this.bonfireSearch.getValue();
+        this.bonfireSearch = createField("");
+        this.bonfireSearch.setMaxLength(128);
+        this.bonfireSearch.setValue(search);
+        this.bonfireSearch.setHint(Component.translatable("gui.blacksouls.dev_panel.bonfires.search"));
+        this.bonfireSearch.setX(panelX + navWidth + 18);
+        this.bonfireSearch.setY(panelY + 63);
+        this.bonfireSearch.setWidth(panelWidth - navWidth - 110);
+        this.bonfireSearch.setResponder(value -> filterBonfires());
         layoutFields();
         updateFieldVisibility();
         this.noCooldownAnimation = stats != null && stats.developerNoCooldown ? 1.0F : 0.0F;
@@ -141,6 +164,7 @@ public class GuiDevPanel extends Screen {
         for (FieldSpec field : this.fields) {
             field.box().visible = visible;
         }
+        this.bonfireSearch.visible = this.activeTab == Tab.BONFIRES;
     }
 
     private BSPlayerStats getStats() {
@@ -192,29 +216,27 @@ public class GuiDevPanel extends Screen {
 
     @Override
     public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        this.renderBackground(graphics);
+        DevGlassRenderer.beginFrame(graphics);
         graphics.fill(0, 0, this.width, this.height, 0x2A07101C);
-        DevGlassRenderer.beginFrame();
         DevGlassRenderer.panel(graphics, panelX, panelY, panelWidth, panelHeight, 16.0F, 0.94F, true);
-        DevGlassRenderer.stroke(graphics, panelX, panelY, panelWidth, panelHeight, 16.0F, 1.0F, 0x66CBEAFF);
         DevGlassRenderer.fill(graphics, panelX + 8, panelY + 8, navWidth - 12, panelHeight - 16, 12.0F, 0x45101D2D);
 
         graphics.drawString(this.font, Component.literal("BLACKSOULS"), panelX + 18, panelY + 18, 0xFFEAF7FF, false);
         graphics.drawString(this.font, Component.translatable("gui.blacksouls.dev_panel.subtitle"), panelX + 18, panelY + 32, 0xFF77D9FF, false);
-        graphics.fill(panelX + navWidth + 4, panelY + 16, panelX + navWidth + 5, panelY + panelHeight - 16, 0x527EDBFF);
         renderTabs(graphics, mouseX, mouseY);
 
         int contentX = panelX + navWidth + 14;
         graphics.drawString(this.font, Component.translatable(activeTab.key), contentX, panelY + 18, 0xFFF7FBFF, false);
         graphics.drawString(this.font, Component.translatable("gui.blacksouls.dev_panel.tab_hint." + activeTab.name().toLowerCase()), contentX, panelY + 32, 0xFFA9B9CC, false);
-        graphics.fill(contentX, panelY + 48, panelX + panelWidth - 16, panelY + 49, 0x366FC8F2);
 
         if (activeTab == Tab.ATTRIBUTES) {
             renderAttributes(graphics, mouseX, mouseY);
         } else if (activeTab == Tab.SWITCHES) {
             renderSwitches(graphics, mouseX, mouseY);
-        } else {
+        } else if (activeTab == Tab.SKILLS) {
             renderSkills(graphics, mouseX, mouseY);
+        } else {
+            renderBonfires(graphics, mouseX, mouseY);
         }
 
         if (System.currentTimeMillis() < statusUntil && !status.getString().isEmpty()) {
@@ -233,9 +255,6 @@ public class GuiDevPanel extends Screen {
             boolean hovered = inside(mouseX, mouseY, x, y, width, 28);
             DevGlassRenderer.fill(graphics, x, y, width, 28, 8.0F,
                     selected ? 0x704C91BA : hovered ? 0x493A6684 : 0x251A2B3C);
-            if (selected) {
-                DevGlassRenderer.fill(graphics, x, y + 5, 2, 18, 1.0F, 0xFF72D8FF);
-            }
             graphics.drawString(this.font, Component.translatable(tab.key), x + 10, y + 10,
                     selected ? 0xFFFFFFFF : 0xFFC0CDDB, false);
         }
@@ -251,8 +270,6 @@ public class GuiDevPanel extends Screen {
             boolean hovered = inside(mouseX, mouseY, x - 4, y - 2, box.getWidth() + 8, box.getHeight() + 4);
             DevGlassRenderer.fill(graphics, x - 4, y - 2, box.getWidth() + 8, box.getHeight() + 4, 6.0F,
                     focused ? 0x6D315B78 : hovered ? 0x4B29475D : 0x35162534);
-            DevGlassRenderer.stroke(graphics, x - 4, y - 2, box.getWidth() + 8, box.getHeight() + 4, 6.0F, 0.8F,
-                    focused ? 0xCC75DDFF : 0x487E9AB4);
             graphics.drawString(this.font, field.label(), labelX, y + 4, field.color(), false);
         }
         int contentX = panelX + navWidth + 14;
@@ -289,7 +306,6 @@ public class GuiDevPanel extends Screen {
                                   Component title, Component description, float progress, int mouseX, int mouseY) {
         boolean hovered = inside(mouseX, mouseY, x, y, width, height);
         DevGlassRenderer.fill(graphics, x, y, width, height, 10.0F, hovered ? 0x4D223B50 : 0x3517283A);
-        DevGlassRenderer.stroke(graphics, x, y, width, height, 10.0F, 0.8F, hovered ? 0x7778D9FF : 0x3A7FA4BC);
         graphics.drawString(this.font, title, x + 12, y + 12, 0xFFF5FAFF, false);
         int descriptionWidth = Math.max(80, width - 76);
         List<net.minecraft.util.FormattedCharSequence> lines = this.font.split(description, descriptionWidth);
@@ -319,7 +335,6 @@ public class GuiDevPanel extends Screen {
         int contentWidth = panelWidth - navWidth - 30;
         int cardY = panelY + 66;
         DevGlassRenderer.fill(graphics, contentX, cardY, contentWidth, 52, 10.0F, 0x3517283A);
-        DevGlassRenderer.stroke(graphics, contentX, cardY, contentWidth, 52, 10.0F, 0.8F, 0x4A75D7F5);
         graphics.drawString(this.font, Component.translatable("gui.blacksouls.dev_panel.skills.progress"), contentX + 12, cardY + 11, 0xFFF4FAFF, false);
         graphics.drawString(this.font, Component.literal(learned + " / " + total), contentX + 12, cardY + 29, 0xFF75DEFF, false);
         int buttonY = cardY + 66;
@@ -335,7 +350,6 @@ public class GuiDevPanel extends Screen {
                             Component label, int mouseX, int mouseY, int accent) {
         boolean hovered = inside(mouseX, mouseY, x, y, width, height);
         DevGlassRenderer.fill(graphics, x, y, width, height, 8.0F, hovered ? 0x5E31546D : 0x3B1C3042);
-        DevGlassRenderer.stroke(graphics, x, y, width, height, 8.0F, 0.9F, hovered ? accent : 0x537DA2BA);
         graphics.drawCenteredString(this.font, label, x + width / 2, y + (height - this.font.lineHeight) / 2, hovered ? 0xFFFFFFFF : 0xFFD8E3ED);
     }
 
@@ -347,7 +361,11 @@ public class GuiDevPanel extends Screen {
                 int y = panelY + 64 + i * 36;
                 if (inside(mouseX, mouseY, x, y, navWidth - 28, 28)) {
                     this.activeTab = Tab.values()[i];
+                    this.setFocused(null);
                     updateFieldVisibility();
+                    if (this.activeTab == Tab.BONFIRES && !bonfiresRequested) {
+                        requestBonfires(false);
+                    }
                     playClick();
                     return true;
                 }
@@ -391,7 +409,7 @@ public class GuiDevPanel extends Screen {
                     playClick();
                     return true;
                 }
-            } else {
+            } else if (activeTab == Tab.SKILLS) {
                 int cardY = panelY + 66;
                 int buttonY = cardY + 66;
                 if (inside(mouseX, mouseY, contentX, buttonY, contentWidth, 32)) {
@@ -410,9 +428,132 @@ public class GuiDevPanel extends Screen {
                     playClick();
                     return true;
                 }
+            } else if (activeTab == Tab.BONFIRES) {
+                if (inside(mouseX, mouseY, contentX + contentWidth - 64, panelY + 58, 64, 22)) {
+                    if (!bonfiresLoading) {
+                        requestBonfires(true);
+                        playClick();
+                    }
+                    return true;
+                }
+                if (inside(mouseX, mouseY, contentX, panelY + panelHeight - 38, contentWidth, 22)) {
+                    if (selectedBonfire != null && !bonfiresLoading) {
+                        NetworkHandler.sendToServer(new ServerboundDevBonfirePacket(selectedBonfire));
+                        playClick();
+                        this.onClose();
+                    }
+                    return true;
+                }
+                int rows = visibleBonfireRows();
+                if (inside(mouseX, mouseY, contentX, panelY + 92, contentWidth, rows * 34)) {
+                    int index = bonfireScroll + ((int) mouseY - panelY - 92) / 34;
+                    if (index >= 0 && index < filteredBonfires.size()) {
+                        selectedBonfire = filteredBonfires.get(index).pos();
+                        playClick();
+                    }
+                    return true;
+                }
             }
         }
         return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    private void requestBonfires(boolean refresh) {
+        bonfiresLoading = true;
+        bonfiresRequested = true;
+        NetworkHandler.sendToServer(new ServerboundDevBonfirePacket(refresh));
+    }
+
+    public void receiveBonfires(List<ClientboundDevBonfiresPacket.Entry> entries, boolean successful) {
+        bonfiresLoading = false;
+        bonfires = entries.stream().sorted(Comparator.comparing(entry -> bonfireName(entry.name()))).toList();
+        filterBonfires();
+        if (!successful) {
+            setStatus(Component.translatable("gui.blacksouls.dev_panel.bonfires.failed"));
+        }
+    }
+
+    private void filterBonfires() {
+        String search = bonfireSearch == null ? "" : bonfireSearch.getValue().strip().toLowerCase(Locale.ROOT);
+        filteredBonfires = bonfires.stream().filter(entry -> {
+            var pos = entry.pos().pos();
+            String text = bonfireName(entry.name()) + " " + entry.pos().dimension().location() + " "
+                    + pos.getX() + " " + pos.getY() + " " + pos.getZ();
+            return text.toLowerCase(Locale.ROOT).contains(search);
+        }).toList();
+        bonfireScroll = 0;
+        if (filteredBonfires.stream().noneMatch(entry -> entry.pos().equals(selectedBonfire))) {
+            selectedBonfire = filteredBonfires.isEmpty() ? null : filteredBonfires.get(0).pos();
+        }
+    }
+
+    private static String bonfireName(String name) {
+        return I18n.exists(name) ? I18n.get(name) : name;
+    }
+
+    private int visibleBonfireRows() {
+        return Math.max(1, (panelHeight - 140) / 34);
+    }
+
+    private void renderBonfires(GuiGraphics graphics, int mouseX, int mouseY) {
+        int x = panelX + navWidth + 14;
+        int width = panelWidth - navWidth - 30;
+        DevGlassRenderer.fill(graphics, x, panelY + 58, width - 74, 22, 6.0F,
+                bonfireSearch.isFocused() ? 0x70315B78 : 0x45162534);
+        drawButton(graphics, x + width - 64, panelY + 58, 64, 22,
+                Component.translatable("gui.blacksouls.dev_panel.bonfires.refresh"), mouseX, mouseY, 0xFF70D8FF);
+        int rows = visibleBonfireRows();
+        int y = panelY + 92;
+        if (bonfiresLoading || filteredBonfires.isEmpty()) {
+            graphics.drawString(font, Component.translatable(bonfiresLoading
+                    ? "gui.blacksouls.dev_panel.bonfires.loading" : "gui.blacksouls.dev_panel.bonfires.empty"),
+                    x + 4, y + 10, 0xFFB6C7D8, false);
+        }
+        if (!bonfiresLoading) {
+            graphics.enableScissor(x, y, x + width, y + rows * 34);
+            for (int row = 0; row < rows && row + bonfireScroll < filteredBonfires.size(); row++) {
+                var entry = filteredBonfires.get(row + bonfireScroll);
+                int rowY = y + row * 34;
+                boolean selected = entry.pos().equals(selectedBonfire);
+                boolean hovered = inside(mouseX, mouseY, x, rowY, width, 30);
+                DevGlassRenderer.fill(graphics, x, rowY, width - 6, 30, 7.0F,
+                        selected ? 0x704C91BA : hovered ? 0x493A6684 : 0x251A2B3C);
+                String state = I18n.get(entry.activated() ? "gui.blacksouls.dev_panel.bonfires.activated" : "gui.blacksouls.dev_panel.bonfires.inactive");
+                graphics.drawString(font, font.plainSubstrByWidth(bonfireName(entry.name()), Math.max(20, width - font.width(state) - 32)),
+                        x + 8, rowY + 5, 0xFFF4FAFF, false);
+                graphics.drawString(font, state, x + width - font.width(state) - 14, rowY + 5,
+                        entry.activated() ? 0xFF92E8C5 : 0xFFB5C5D6, false);
+                var pos = entry.pos().pos();
+                String location = entry.pos().dimension().location() + "  " + pos.getX() + ", " + pos.getY() + ", " + pos.getZ();
+                graphics.drawString(font, font.plainSubstrByWidth(location, width - 24), x + 8, rowY + 17, 0xFFA9BDD0, false);
+            }
+            graphics.disableScissor();
+            if (filteredBonfires.size() > rows) {
+                float trackHeight = rows * 34.0F;
+                float thumbHeight = Math.max(12.0F, trackHeight * rows / filteredBonfires.size());
+                float thumbY = y + (trackHeight - thumbHeight) * bonfireScroll / (filteredBonfires.size() - rows);
+                DevGlassRenderer.fill(graphics, x + width - 3, thumbY, 2, thumbHeight, 1.0F, 0xA877C6E8);
+            }
+        }
+        drawButton(graphics, x, panelY + panelHeight - 38, width, 22,
+                Component.translatable("gui.blacksouls.dev_panel.bonfires.teleport"), mouseX, mouseY, 0xFF70D8FF);
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+        if (activeTab == Tab.BONFIRES && inside(mouseX, mouseY, panelX + navWidth + 14, panelY + 92,
+                panelWidth - navWidth - 30, visibleBonfireRows() * 34)) {
+            bonfireScroll = Mth.clamp(bonfireScroll - (int) Math.signum(delta), 0,
+                    Math.max(0, filteredBonfires.size() - visibleBonfireRows()));
+            return true;
+        }
+        return super.mouseScrolled(mouseX, mouseY, delta);
+    }
+
+    @Override
+    public void removed() {
+        DevGlassRenderer.release();
+        super.removed();
     }
 
     private void playClick() {
@@ -471,6 +612,9 @@ public class GuiDevPanel extends Screen {
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (super.keyPressed(keyCode, scanCode, modifiers)) {
             return true;
+        }
+        if (this.getFocused() instanceof EditBox box && box.visible) {
+            return false;
         }
         if (this.minecraft != null && this.minecraft.options.keyInventory.matches(keyCode, scanCode)) {
             this.onClose();
