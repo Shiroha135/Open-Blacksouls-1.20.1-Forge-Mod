@@ -80,6 +80,8 @@ public final class OriginalNpcPlacements {
             new Site("map053_ev066", new Vec3(43.5D, -58.0D, 216.5D), 90.0F,
                     "minecraft:grass_block", forestLandmarks()),
             OriginalSnowmanPlacement.site(),
+            new Site("map031_ev005", new Vec3(1114.5D, -21.9375D, -2.5D), 90.0F,
+                    "minecraft:moss_carpet", carolFisherLandmarks(), true),
             new Site("map009_ev047", new Vec3(180.5D, -42.0D, -1314.5D), 180.0F,
                     "minecraft:grass_block", academyLandmarks()),
             new Site("map101_ev009", new Vec3(-49.5D, -42.25937497615814D, 41.5D), 270.0F,
@@ -281,6 +283,16 @@ public final class OriginalNpcPlacements {
                 landmark(-40, -43, 43, "blacksouls2:bai_xiong_mao_shop", Map.of("facing", "north")),
                 landmark(-49, -43, 47, "minecraft:campfire", Map.of("facing", "south")),
                 landmark(-49, -40, 56, "minecraft:birch_door", Map.of("facing", "south", "half", "lower")));
+    }
+
+    private static List<Landmark> carolFisherLandmarks() {
+        return List.of(
+                landmark(1114, -22, -4, "dustydecorations:cod_barrel", Map.of("facing", "north")),
+                landmark(1113, -21, -3, "minecraft:barrier", Map.of()),
+                landmark(1114, -21, -4, "minecraft:barrier", Map.of()),
+                landmark(1146, -22, -3, "blacksouls2:l_lu_deng_1", Map.of("facing", "north")),
+                landmark(1146, -19, -3, "blacksouls2:l_lu_deng_3", Map.of("facing", "north")),
+                landmark(1146, -28, -17, "minecraft:command_block", Map.of("facing", "north", "conditional", "false")));
     }
 
     private static List<Landmark> forestLandmarks() {
