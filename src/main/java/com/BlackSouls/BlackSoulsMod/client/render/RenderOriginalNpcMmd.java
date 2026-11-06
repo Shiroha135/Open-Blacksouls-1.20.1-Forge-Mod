@@ -42,9 +42,9 @@ public final class RenderOriginalNpcMmd extends EntityRenderer<EntityOriginalNpc
         var tile = OriginalNpcTileGraphics.get(entity.getNpcId(), entity.getRouteTileId());
         boolean graphic = tile != null || entity.getRouteTileId() == 0 && !character.isBlank();
         shadowStrength = entity.isInvisible() || !graphic ? 0.0F : opacity / 255.0F;
-        if (entity.getRouteTileId() > 0) {
+        if (entity.getRouteTileId() > 0 || OriginalPoolCrowdSprite.applies(entity.getNpcId())) {
             releaseChoice(entity);
-            if (!entity.isInvisible() && tile != null && opacity > 0) fallback.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
+            if (!entity.isInvisible() && graphic && opacity > 0) fallback.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
             return;
         }
         if (entity.isInvisible() || character.isBlank() || opacity == 0) {
@@ -70,7 +70,7 @@ public final class RenderOriginalNpcMmd extends EntityRenderer<EntityOriginalNpc
 
     @Override
     public ResourceLocation getTextureLocation(EntityOriginalNpc entity) {
-        if (entity.getRouteTileId() > 0) {
+        if (entity.getRouteTileId() > 0 || OriginalPoolCrowdSprite.applies(entity.getNpcId())) {
             releaseChoice(entity);
             return fallback.getTextureLocation(entity);
         }
