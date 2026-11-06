@@ -35,6 +35,7 @@ public final class OriginalNpcPlacements {
     public static final BlockPos MARKET_ROOM_BONFIRE = new BlockPos(341, -59, -12);
     public static final BlockPos MARKET_ROOM_ROASTER_BONFIRE = new BlockPos(336, -59, -11);
     public static final BlockPos ACADEMY_BONFIRE = new BlockPos(183, -42, -1317);
+    public static final BlockPos FOREST_BONFIRE = new BlockPos(41, -58, 216);
     private static final double NEARBY_DISTANCE_SQUARED = 64.0D * 64.0D;
     private static final List<Site> SITES = List.of(
             new Site("map002_ev059", new Vec3(615.5D, 13.0D, -531.5D), 180.0F,
@@ -76,6 +77,8 @@ public final class OriginalNpcPlacements {
                     "minecraft:blue_ice", marketRoomLandmarks()),
             new Site("map091_ev022", new Vec3(344.5D, -58.984375D, -13.5D), 180.0F,
                     "minecraft:blue_ice", marketRoomLandmarks(), true),
+            new Site("map053_ev066", new Vec3(43.5D, -58.0D, 216.5D), 90.0F,
+                    "minecraft:grass_block", forestLandmarks()),
             new Site("map009_ev047", new Vec3(180.5D, -42.0D, -1314.5D), 180.0F,
                     "minecraft:grass_block", academyLandmarks()),
             new Site("map101_ev009", new Vec3(-49.5D, -42.25937497615814D, 41.5D), 270.0F,
@@ -123,6 +126,7 @@ public final class OriginalNpcPlacements {
         if (!hasDeployedMap(level)) return null;
         if (CEMETERY_BONFIRE.equals(position)) return "map033_ev023";
         if (ACADEMY_BONFIRE.equals(position)) return "map009_ev047";
+        if (FOREST_BONFIRE.equals(position)) return "map053_ev066";
         return MARKET_ROOM_BONFIRE.equals(position) || MARKET_ROOM_ROASTER_BONFIRE.equals(position) ? "map091_ev022" : null;
     }
 
@@ -275,6 +279,15 @@ public final class OriginalNpcPlacements {
                 landmark(-40, -43, 43, "blacksouls2:bai_xiong_mao_shop", Map.of("facing", "north")),
                 landmark(-49, -43, 47, "minecraft:campfire", Map.of("facing", "south")),
                 landmark(-49, -40, 56, "minecraft:birch_door", Map.of("facing", "south", "half", "lower")));
+    }
+
+    private static List<Landmark> forestLandmarks() {
+        return List.of(
+                landmark(41, -58, 216, "minecraft:campfire", Map.of("facing", "south")),
+                landmark(43, -58, 217, "adchimneys:stone_chimney", Map.of()),
+                landmark(42, -58, 217, "adchimneys:stone_chimney", Map.of()),
+                landmark(43, -59, 217, "minecraft:water", Map.of()),
+                landmark(43, -56, 217, "minecraft:oak_fence", Map.of()));
     }
 
     private static List<Landmark> academyLandmarks() {
