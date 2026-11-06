@@ -46,7 +46,7 @@ public final class OriginalWorldEventData {
                         commands.add(new BSOriginalNpcData.Command(command.get("code").getAsInt(), command.get("indent").getAsInt(), parameters));
                     }
                     JsonObject movement = new JsonObject();
-                    for (String key : List.of("move_speed", "move_frequency", "walk_anime", "step_anime", "direction_fix", "through", "priority_type")) {
+                    for (String key : List.of("move_type", "move_speed", "move_frequency", "move_route", "walk_anime", "step_anime", "direction_fix", "through", "priority_type")) {
                         if (page.has(key)) movement.add(key, page.get(key).deepCopy());
                     }
                     pages.add(new BSOriginalNpcData.Page(page.getAsJsonObject("condition"), page.getAsJsonObject("graphic"),
