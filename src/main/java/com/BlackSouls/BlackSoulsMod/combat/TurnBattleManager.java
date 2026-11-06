@@ -2764,6 +2764,12 @@ public final class TurnBattleManager {
             if (effect.code() != 44 || effect.dataId() == 44) {
                 continue;
             }
+            if (effect.dataId() == 72 && (session.partyMembers.stream()
+                    .map(id -> observer.server.getPlayerList().getPlayer(id))
+                    .noneMatch(member -> member != null && battleAlive(member, session))
+                    || allEnemiesDefeated(observer, session))) {
+                continue;
+            }
             session.commonEvents.execute(effect.dataId(), new EnemyCommonEvents.Context() {
                 @Override
                 public boolean hasEnemyState(int enemyIndex, int stateId) {
@@ -2786,6 +2792,20 @@ public final class TurnBattleManager {
                             }
                         }
                         refreshOriginalParameters(target, session);
+                    }
+                }
+
+                @Override
+                public void changeEnemyHealth(int enemyIndex, long amount, boolean allowDeath) {
+                    List<EntityTurnBattleMonster> targets = enemyIndex == -1 ? enemies
+                            : enemyIndex >= 0 && enemyIndex < enemies.size() ? List.of(enemies.get(enemyIndex)) : List.of();
+                    for (EntityTurnBattleMonster target : targets) {
+                        if (target.isTurnBattleDefeated()) continue;
+                        double hp = target.getTurnBattleHealth() + amount;
+                        target.setTurnBattleHealth(allowDeath ? hp : Math.max(1.0D, hp));
+                        if (target.isTurnBattleDefeated()) {
+                            session.enemyStates.computeIfAbsent(target.getUUID(), ignored -> new HashSet<>()).add(1);
+                        }
                     }
                 }
             });

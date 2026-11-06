@@ -53,6 +53,10 @@ public final class EnemyCommonEvents {
                 for (int id = integer(parameters, 0); id <= integer(parameters, 1); id++) {
                     switches.put(id, integer(parameters, 2) == 0);
                 }
+            } else if (enabled && command.code() == 331) {
+                long value = integer(parameters, 3);
+                context.changeEnemyHealth(integer(parameters, 0), integer(parameters, 1) == 0 ? value : -value,
+                        parameters.get(4).getAsBoolean());
             } else if (enabled && command.code() == 333) {
                 context.changeEnemyState(integer(parameters, 0), integer(parameters, 1) == 1,
                         integer(parameters, 2));
@@ -106,6 +110,15 @@ public final class EnemyCommonEvents {
                                 || !id(integer(parameters, 1)) || integer(parameters, 1) < integer(parameters, 0)
                                 || integer(parameters, 1) - integer(parameters, 0) > 4096
                                 || !operation(integer(parameters, 2))) {
+                            return false;
+                        }
+                    }
+                    case 331 -> {
+                        if (parameters.size() != 5 || integer(parameters, 0) < -1
+                                || integer(parameters, 0) > 999 || !operation(integer(parameters, 1))
+                                || integer(parameters, 2) != 0 || integer(parameters, 3) < 0
+                                || !parameters.get(4).isJsonPrimitive()
+                                || !parameters.get(4).getAsJsonPrimitive().isBoolean()) {
                             return false;
                         }
                     }
@@ -192,5 +205,9 @@ public final class EnemyCommonEvents {
         boolean hasEnemyState(int enemyIndex, int stateId);
 
         void changeEnemyState(int enemyIndex, boolean remove, int stateId);
+
+        default void changeEnemyHealth(int enemyIndex, long amount, boolean allowDeath) {
+            throw new UnsupportedOperationException("enemy_hp_command");
+        }
     }
 }
