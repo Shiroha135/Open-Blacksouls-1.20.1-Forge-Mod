@@ -29,6 +29,11 @@ public final class EnemyCommonEvents {
         return switches.getOrDefault(switchId, false);
     }
 
+    public void setSwitchValue(int switchId, boolean value) {
+        if (!id(switchId)) throw new IllegalArgumentException("enemy_switch_id");
+        switches.put(switchId, value);
+    }
+
     public boolean supports(int eventId) {
         return eventId != 44 && valid(events.get(eventId));
     }
