@@ -2,6 +2,7 @@ package com.BlackSouls.BlackSoulsMod.client.render;
 
 import com.BlackSouls.BlackSoulsMod.BlackSouls;
 import com.BlackSouls.BlackSoulsMod.entity.EntityOriginalNpc;
+import com.BlackSouls.BlackSoulsMod.util.OriginalNpcTileGraphics;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -35,7 +36,8 @@ public final class RenderOriginalNpc extends EntityRenderer<EntityOriginalNpc> {
     @Override
     public void render(EntityOriginalNpc entity, float entityYaw, float partialTicks,
                        PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
-        ResourceLocation texture = entity.getCharacterTexture();
+        var tile = OriginalNpcTileGraphics.get(entity.getNpcId(), entity.getRouteTileId());
+        ResourceLocation texture = tile != null ? tile.texture() : entity.getRouteTileId() == 0 ? entity.getCharacterTexture() : null;
         int opacity = Math.max(0, Math.min(255, entity.getSpriteOpacity()));
         if (entity.isInvisible() || texture == null || opacity == 0) {
             return;
@@ -54,12 +56,12 @@ public final class RenderOriginalNpc extends EntityRenderer<EntityOriginalNpc> {
                 single ? new SheetSize(96, 128) : new SheetSize(384, 256));
         int frameWidth = Math.max(1, size.width() / columns);
         int frameHeight = Math.max(1, size.height() / rows);
-        float u0 = column * frameWidth / (float) size.width();
-        float u1 = (column + 1) * frameWidth / (float) size.width();
-        float v0 = row * frameHeight / (float) size.height();
-        float v1 = (row + 1) * frameHeight / (float) size.height();
-        float height = 1.9F;
-        float halfWidth = height * frameWidth / frameHeight * 0.5F;
+        float u0 = tile != null ? 0 : column * frameWidth / (float) size.width();
+        float u1 = tile != null ? 1 : (column + 1) * frameWidth / (float) size.width();
+        float v0 = tile != null ? 0 : row * frameHeight / (float) size.height();
+        float v1 = tile != null ? 1 : (row + 1) * frameHeight / (float) size.height();
+        float height = tile != null ? tile.blockHeight() : 1.9F;
+        float halfWidth = tile != null ? tile.blockWidth() * 0.5F : height * frameWidth / frameHeight * 0.5F;
 
         poseStack.pushPose();
         poseStack.mulPose(entityRenderDispatcher.cameraOrientation());
@@ -111,7 +113,8 @@ public final class RenderOriginalNpc extends EntityRenderer<EntityOriginalNpc> {
 
     @Override
     public ResourceLocation getTextureLocation(EntityOriginalNpc entity) {
-        ResourceLocation texture = entity.getCharacterTexture();
+        var tile = OriginalNpcTileGraphics.get(entity.getNpcId(), entity.getRouteTileId());
+        ResourceLocation texture = tile != null ? tile.texture() : entity.getRouteTileId() == 0 ? entity.getCharacterTexture() : null;
         return texture == null ? MissingTextureAtlasSprite.getLocation() : texture;
     }
 
