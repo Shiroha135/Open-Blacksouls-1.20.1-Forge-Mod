@@ -1252,6 +1252,10 @@
     }
   },
   "se": {
+    "gucha004a": {
+      "sound": "blacksouls:gucha004a",
+      "sourceFile": "gucha004a.wav"
+    },
     "Absorb1": {
       "sound": "blacksouls:absorb1",
       "sourceFile": "Absorb1.ogg"

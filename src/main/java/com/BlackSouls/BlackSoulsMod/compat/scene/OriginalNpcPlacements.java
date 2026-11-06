@@ -79,6 +79,7 @@ public final class OriginalNpcPlacements {
                     "minecraft:blue_ice", marketRoomLandmarks(), true),
             new Site("map053_ev066", new Vec3(43.5D, -58.0D, 216.5D), 90.0F,
                     "minecraft:grass_block", forestLandmarks()),
+            OriginalSnowmanPlacement.site(),
             new Site("map009_ev047", new Vec3(180.5D, -42.0D, -1314.5D), 180.0F,
                     "minecraft:grass_block", academyLandmarks()),
             new Site("map101_ev009", new Vec3(-49.5D, -42.25937497615814D, 41.5D), 270.0F,
@@ -132,6 +133,7 @@ public final class OriginalNpcPlacements {
 
     public static Outcome install(ServerPlayer player, String npcId) {
         if (OriginalPoolCheshirePlacement.isPair(npcId)) return OriginalPoolCheshirePlacement.install(player, npcId);
+        if (OriginalSnowmanPlacement.NPC_ID.equals(npcId)) return OriginalSnowmanPlacement.install(player);
         if (OriginalReceptionistPlacement.NPC_ID.equals(npcId)) return OriginalReceptionistPlacement.install(player);
         Site site = sites().stream().filter(value -> value.npcId().equals(npcId)).findFirst().orElse(null);
         if (site == null) site = com.BlackSouls.BlackSoulsMod.story.OriginalWorldEventBindings.sites().stream()
