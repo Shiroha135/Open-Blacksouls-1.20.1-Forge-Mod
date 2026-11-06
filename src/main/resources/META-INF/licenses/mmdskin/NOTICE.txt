@@ -1,5 +1,8 @@
 MC-MMD-rust source integrated from release v1.0.5-1.20.1-1.
 Upstream repository: https://github.com/shiroha-233/MC-MMD-rust
+The Windows native library is built from the BlackSouls stage-runtime fork in native/mmd-stage.
+Stage scene collision and JNI integration are maintained in this project. PMX/VMD and model runtime code retains upstream attribution.
+Bullet uses the zlib license included as BULLET_LICENSE.txt; the bundled parser retains its BSD-2-Clause license.
 Upstream commit: 74b53ff52ad3b26bd6afcbdc017ae296983caf9f
 
 The bundled Red Hood model was supplied by the BLACKSOULS project owner under

@@ -78,7 +78,9 @@ public final class LivingEntityModelStateHelper {
         float bodyYaw = entity instanceof Player player
                 ? resolveBodyYaw(player, tickDelta)
                 : Mth.rotLerp(tickDelta, entity.yBodyRotO, entity.yBodyRot) * ((float) Math.PI / 180F);
-        scenePort.setModelPositionAndYaw(modelHandle, posX, posY, posZ, bodyYaw);
+        if (!com.BlackSouls.BlackSoulsMod.client.stage.StagePhysicsRuntime.ownsRoot(modelHandle, entity)) {
+            scenePort.setModelPositionAndYaw(modelHandle, posX, posY, posZ, bodyYaw);
+        }
     }
 
     private static Vec3 resolveRenderOrigin(Player player, float tickDelta) {

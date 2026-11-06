@@ -1,0 +1,57 @@
+//! MMD Engine - Rust 实现的 MMD 运行时引擎
+
+pub mod animation;
+pub mod jni_bridge;
+pub mod model;
+pub mod morph;
+pub mod physics;
+pub mod stage;
+pub mod skeleton;
+pub mod skinning;
+pub mod texture;
+pub mod vr;
+pub mod vrm_runtime;
+
+pub use animation::{VmdAnimation, VmdFile};
+pub use model::MmdModel;
+pub use morph::{Morph, MorphManager};
+pub use physics::{MMDPhysics, MmdJointData, MmdRigidBodyData, PhysicsMode};
+pub use skeleton::{Bone, BoneManager, IkSolver};
+pub use texture::Texture;
+pub use vr::VrIkSolver;
+pub use vrm_runtime::{
+    ArmIkCalibration, ArmIkHandCalibration, BodyTrackingCalibration, ExpressionKey,
+    ExpressionPreset, HandGripOffset, HandTrackingCalibration, LookAtInput, VrmRuntime,
+    VrmRuntimeInput, VrmRuntimeOutput,
+};
+
+use thiserror::Error;
+
+#[derive(Error, Debug)]
+pub enum MmdError {
+    #[error("IO error: {0}")]
+    Io(#[from] std::io::Error),
+
+    #[error("PMX parse error: {0}")]
+    PmxParse(String),
+
+    #[error("VMD parse error: {0}")]
+    VmdParse(String),
+
+    #[error("Animation error: {0}")]
+    Animation(String),
+
+    #[error("Texture error: {0}")]
+    Texture(String),
+
+    #[error("VPD parse error: {0}")]
+    VpdParse(String),
+
+    #[error("VRM parse error: {0}")]
+    VrmParse(String),
+
+    #[error("FBX parse error: {0}")]
+    FbxParse(String),
+}
+
+pub type Result<T> = std::result::Result<T, MmdError>;

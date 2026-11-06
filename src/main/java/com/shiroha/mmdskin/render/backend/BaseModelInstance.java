@@ -230,6 +230,7 @@ public abstract class BaseModelInstance implements ModelInstance {
     }
 
     protected void disposeModelHandle() {
+        com.BlackSouls.BlackSoulsMod.client.stage.StagePhysicsRuntime.release(model);
         if (model != 0) {
             backendPort().deleteModel(model);
             model = 0;

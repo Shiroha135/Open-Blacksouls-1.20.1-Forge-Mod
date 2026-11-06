@@ -162,7 +162,7 @@ public final class RenderPriorityService {
         for (Entity entity : minecraft.level.entitiesForRendering()) {
             if (entity instanceof LivingEntity living && !(entity instanceof AbstractClientPlayer)) {
                 String replacementModel = MobReplacementService.getReplacementModelName(living);
-                if (replacementModel != null) {
+                if (replacementModel != null || living instanceof com.shiroha.mmdskin.render.entity.CustomEntityPoseProvider) {
                     candidates.add(new PrioritizedEntity(living, distanceSqToCamera(living, false), false));
                 }
             }

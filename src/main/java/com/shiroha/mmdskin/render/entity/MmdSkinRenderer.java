@@ -79,6 +79,9 @@ public class MmdSkinRenderer<T extends Entity> extends EntityRenderer<T> {
         if (entityIn instanceof CustomEntityRenderStateProvider provider) {
             reusablePose.bodyYaw = provider.getMmdBodyYaw(reusablePose.bodyYaw);
         }
+        if (!InventoryRenderHelper.isInventoryScreen()) {
+            com.BlackSouls.BlackSoulsMod.client.stage.StagePhysicsRuntime.prepare(entityIn, model, reusablePose.bodyYaw, tickDelta);
+        }
 
         matrixStackIn.pushPose();
         DrawState previousState = entityIn instanceof CustomEntityRenderStateProvider ? DrawState.capture() : null;
