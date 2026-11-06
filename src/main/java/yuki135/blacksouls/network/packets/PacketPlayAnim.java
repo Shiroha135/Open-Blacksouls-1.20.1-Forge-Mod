@@ -1,0 +1,54 @@
+package yuki135.blacksouls.network.packets;
+
+import yuki135.blacksouls.client.render.ClientVFXHandler;
+import yuki135.blacksouls.client.gui.GuiTurnBattle;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.network.NetworkEvent;
+
+import java.util.function.Supplier;
+
+public class PacketPlayAnim {
+    private final int animId;
+    private final double x, y, z;
+
+    public PacketPlayAnim(int animId, double x, double y, double z) {
+        this.animId = animId;
+        this.x = x; this.y = y; this.z = z;
+    }
+
+    public PacketPlayAnim(FriendlyByteBuf buf) {
+        this.animId = buf.readInt();
+        this.x = buf.readDouble();
+        this.y = buf.readDouble();
+        this.z = buf.readDouble();
+    }
+
+    public void toBytes(FriendlyByteBuf buf) {
+        buf.writeInt(this.animId);
+        buf.writeDouble(this.x);
+        buf.writeDouble(this.y);
+        buf.writeDouble(this.z);
+    }
+
+    public boolean handle(Supplier<NetworkEvent.Context> ctx) {
+        ctx.get().enqueueWork(() -> {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> ClientHandler.handle(this));
+        });
+        ctx.get().setPacketHandled(true);
+        return true;
+    }
+
+    private static class ClientHandler {
+        public static void handle(PacketPlayAnim msg) {
+            Minecraft minecraft = Minecraft.getInstance();
+            if (minecraft.screen instanceof GuiTurnBattle battle) {
+                battle.queueExternalAnimation(msg.animId, msg.x, msg.y, msg.z);
+                return;
+            }
+            ClientVFXHandler.playAnim(msg.animId, msg.x, msg.y, msg.z);
+        }
+    }
+}

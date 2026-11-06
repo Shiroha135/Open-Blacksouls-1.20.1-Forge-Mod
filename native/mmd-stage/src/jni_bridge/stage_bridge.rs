@@ -7,7 +7,7 @@ use super::MODELS;
 use crate::stage::{SceneBox, MAX_SCENE_BOXES};
 
 #[no_mangle]
-pub extern "system" fn Java_com_BlackSouls_BlackSoulsMod_client_stage_StageNativeBridge_GetApiVersion(
+pub extern "system" fn Java_yuki135_blacksouls_client_stage_StageNativeBridge_GetApiVersion(
     _env: JNIEnv,
     _class: JClass,
 ) -> jint {
@@ -15,7 +15,7 @@ pub extern "system" fn Java_com_BlackSouls_BlackSoulsMod_client_stage_StageNativ
 }
 
 #[no_mangle]
-pub extern "system" fn Java_com_BlackSouls_BlackSoulsMod_client_stage_StageNativeBridge_SyncScene(
+pub extern "system" fn Java_yuki135_blacksouls_client_stage_StageNativeBridge_SyncScene(
     env: JNIEnv,
     _class: JClass,
     handle: jlong,
@@ -45,7 +45,7 @@ pub extern "system" fn Java_com_BlackSouls_BlackSoulsMod_client_stage_StageNativ
 }
 
 #[no_mangle]
-pub extern "system" fn Java_com_BlackSouls_BlackSoulsMod_client_stage_StageNativeBridge_GetSceneColliderCount(
+pub extern "system" fn Java_yuki135_blacksouls_client_stage_StageNativeBridge_GetSceneColliderCount(
     _env: JNIEnv,
     _class: JClass,
     handle: jlong,

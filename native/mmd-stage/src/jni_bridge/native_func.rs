@@ -19,7 +19,7 @@ const VERSION: &str = "v1.0.5-stage.1";
 
 /// 获取版本号
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetVersion(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetVersion(
     env: JNIEnv,
     _class: JClass,
 ) -> jstring {
@@ -33,7 +33,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetVersion(
 /// # Safety
 /// Java 侧必须保证 data 为有效的 Rust 堆指针，pos 在数据范围内
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ReadByte(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_ReadByte(
     _env: JNIEnv,
     _class: JClass,
     data: jlong,
@@ -52,7 +52,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ReadByte(
 /// # Safety
 /// Java 侧必须保证 data 为有效指针且 len 不超过实际数据长度
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyDataToByteBuffer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_CopyDataToByteBuffer(
     env: JNIEnv,
     _class: JClass,
     buffer: JByteBuffer,
@@ -92,7 +92,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyDataToByteBuffer(
 
 /// 加载 PMX 模型
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_LoadModelPMX(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_LoadModelPMX(
     mut env: JNIEnv,
     _class: JClass,
     filename: JString,
@@ -126,7 +126,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_LoadModelPMX(
 
 /// 加载 PMD 模型（暂不支持）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_LoadModelPMD(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_LoadModelPMD(
     _env: JNIEnv,
     _class: JClass,
     _filename: JString,
@@ -139,7 +139,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_LoadModelPMD(
 
 /// 删除模型
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_DeleteModel(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_DeleteModel(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -150,7 +150,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_DeleteModel(
 
 /// 更新模型
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_UpdateModel(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_UpdateModel(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -170,7 +170,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_UpdateModel(
 
 /// 获取顶点数量
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetVertexCount(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetVertexCount(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -186,7 +186,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetVertexCount(
 /// # Safety
 /// 返回的裸指针仅在当前帧内有效，Java 侧必须在同一帧内完成读取
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetPoss(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetPoss(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -207,7 +207,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetPoss(
 
 /// 获取法线数据指针
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetNormals(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetNormals(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -228,7 +228,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetNormals(
 
 /// 获取 UV 数据指针
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetUVs(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetUVs(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -253,7 +253,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetUVs(
 
 /// 获取索引元素大小
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetIndexElementSize(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetIndexElementSize(
     _env: JNIEnv,
     _class: JClass,
     _model: jlong,
@@ -263,7 +263,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetIndexElementSize(
 
 /// 获取索引数量
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetIndexCount(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetIndexCount(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -277,7 +277,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetIndexCount(
 
 /// 获取索引数据指针
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetIndices(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetIndices(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -295,7 +295,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetIndices(
 
 /// 获取材质数量
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialCount(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialCount(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -309,7 +309,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialCount(
 
 /// 获取材质纹理路径
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialTex(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialTex(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -335,7 +335,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialTex(
 
 /// 获取材质 Sphere 纹理路径
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialSpTex(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialSpTex(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -361,7 +361,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialSpTex(
 
 /// 获取材质 Toon 纹理路径
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialToonTex(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialToonTex(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -394,7 +394,7 @@ thread_local! {
 
 /// 获取材质环境光颜色指针
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialAmbient(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialAmbient(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -424,7 +424,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialAmbient(
 
 /// 获取材质漫反射颜色指针
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialDiffuse(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialDiffuse(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -454,7 +454,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialDiffuse(
 
 /// 获取材质高光颜色指针
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialSpecular(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialSpecular(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -484,7 +484,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialSpecular(
 
 /// 获取材质高光强度
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialSpecularPower(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialSpecularPower(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -505,7 +505,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialSpecularPo
 
 /// 获取材质透明度
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialAlpha(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialAlpha(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -523,7 +523,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialAlpha(
 
 /// 获取纹理乘法因子指针
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialTextureMulFactor(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialTextureMulFactor(
     _env: JNIEnv,
     _class: JClass,
     _model: jlong,
@@ -536,7 +536,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialTextureMul
 
 /// 获取纹理加法因子指针
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialTextureAddFactor(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialTextureAddFactor(
     _env: JNIEnv,
     _class: JClass,
     _model: jlong,
@@ -548,7 +548,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialTextureAdd
 
 /// 获取 Sphere 纹理模式
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialSpTextureMode(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialSpTextureMode(
     _env: JNIEnv,
     _class: JClass,
     _model: jlong,
@@ -559,7 +559,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialSpTextureM
 
 /// 获取 Sphere 纹理乘法因子
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialSpTextureMulFactor(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialSpTextureMulFactor(
     _env: JNIEnv,
     _class: JClass,
     _model: jlong,
@@ -571,7 +571,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialSpTextureM
 
 /// 获取 Sphere 纹理加法因子
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialSpTextureAddFactor(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialSpTextureAddFactor(
     _env: JNIEnv,
     _class: JClass,
     _model: jlong,
@@ -583,7 +583,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialSpTextureA
 
 /// 获取 Toon 纹理乘法因子
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialToonTextureMulFactor(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialToonTextureMulFactor(
     _env: JNIEnv,
     _class: JClass,
     _model: jlong,
@@ -595,7 +595,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialToonTextur
 
 /// 获取 Toon 纹理加法因子
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialToonTextureAddFactor(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialToonTextureAddFactor(
     _env: JNIEnv,
     _class: JClass,
     _model: jlong,
@@ -607,7 +607,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialToonTextur
 
 /// 获取材质双面标志
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialBothFace(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialBothFace(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -633,7 +633,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialBothFace(
 
 /// 获取子网格数量
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetSubMeshCount(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetSubMeshCount(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -647,7 +647,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetSubMeshCount(
 
 /// 获取子网格材质 ID
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetSubMeshMaterialID(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetSubMeshMaterialID(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -666,7 +666,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetSubMeshMaterialID(
 
 /// 获取子网格起始索引
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetSubMeshBeginIndex(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetSubMeshBeginIndex(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -685,7 +685,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetSubMeshBeginIndex(
 
 /// 获取子网格索引数量
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetSubMeshVertexCount(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetSubMeshVertexCount(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -709,7 +709,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetSubMeshVertexCount
 /// 切换动画（支持多动画层）
 /// layer: 动画层ID（0-3），0为基础层，1-3为叠加层
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ChangeModelAnim(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_ChangeModelAnim(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -732,7 +732,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ChangeModelAnim(
 
 /// 重置物理
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ResetModelPhysics(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_ResetModelPhysics(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -746,7 +746,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ResetModelPhysics(
 
 /// 加载动画
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_LoadAnimation(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_LoadAnimation(
     mut env: JNIEnv,
     _class: JClass,
     model_handle: jlong,
@@ -846,7 +846,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_LoadAnimation(
 
 /// 预加载 FBX 文件到缓存（避免首次加载动画时阻塞）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_PreloadFbxFile(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_PreloadFbxFile(
     mut env: JNIEnv,
     _class: JClass,
     filename: JString,
@@ -876,7 +876,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_PreloadFbxFile(
 
 /// 列出 FBX 文件中所有 AnimationStack 名称（JSON 数组）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ListFbxStacks(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_ListFbxStacks(
     mut env: JNIEnv,
     _class: JClass,
     filename: JString,
@@ -909,7 +909,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ListFbxStacks(
 
 /// 清除 FBX 文件缓存
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ClearFbxCache(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_ClearFbxCache(
     _env: JNIEnv,
     _class: JClass,
 ) {
@@ -919,7 +919,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ClearFbxCache(
 
 /// 删除动画
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_DeleteAnimation(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_DeleteAnimation(
     _env: JNIEnv,
     _class: JClass,
     anim: jlong,
@@ -930,7 +930,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_DeleteAnimation(
 
 /// 查询动画是否包含相机数据
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_HasCameraData(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_HasCameraData(
     _env: JNIEnv,
     _class: JClass,
     anim: jlong,
@@ -949,7 +949,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_HasCameraData(
 
 /// 获取动画最大帧数（包含相机轨道）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetAnimMaxFrame(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetAnimMaxFrame(
     _env: JNIEnv,
     _class: JClass,
     anim: jlong,
@@ -965,7 +965,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetAnimMaxFrame(
 /// 获取相机变换数据，写入 ByteBuffer
 /// 布局: pos_x, pos_y, pos_z (3×f32) + rot_x, rot_y, rot_z (3×f32) + fov (f32) + is_perspective (i32) = 32 字节
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetCameraTransform(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetCameraTransform(
     env: JNIEnv,
     _class: JClass,
     anim: jlong,
@@ -1006,7 +1006,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetCameraTransform(
 
 /// 查询动画是否包含骨骼关键帧
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_HasBoneData(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_HasBoneData(
     _env: JNIEnv,
     _class: JClass,
     anim: jlong,
@@ -1025,7 +1025,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_HasBoneData(
 
 /// 查询动画是否包含表情关键帧
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_HasMorphData(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_HasMorphData(
     _env: JNIEnv,
     _class: JClass,
     anim: jlong,
@@ -1045,7 +1045,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_HasMorphData(
 /// 将 source 动画的骨骼和 Morph 数据合并到 target 动画中
 /// 实现方式：克隆 target → 合并 source → 替换回 HashMap
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_MergeAnimation(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_MergeAnimation(
     _env: JNIEnv,
     _class: JClass,
     target: jlong,
@@ -1071,7 +1071,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_MergeAnimation(
 /// 设置模型全局变换（用于人物移动时传递位置给物理系统）
 /// 传入 4x4 矩阵的 16 个 float 值（列主序）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetModelTransform(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetModelTransform(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1106,7 +1106,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetModelTransform(
 /// pos_x, pos_y, pos_z: 模型位置（已缩放）
 /// yaw: 人物朝向角度（弧度）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetModelPositionAndYaw(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetModelPositionAndYaw(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1124,7 +1124,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetModelPositionAndYa
 
 /// 设置头部角度
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetHeadAngle(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetHeadAngle(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1144,7 +1144,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetHeadAngle(
 /// eye_x: 上下看的角度（弧度，正值向上）
 /// eye_y: 左右看的角度（弧度，正值向左）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetEyeAngle(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetEyeAngle(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1161,7 +1161,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetEyeAngle(
 /// 设置眼球最大转动角度
 /// max_angle: 最大角度（弧度），默认 0.35（约 20 度）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetEyeMaxAngle(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetEyeMaxAngle(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1176,7 +1176,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetEyeMaxAngle(
 
 /// 启用/禁用眼球追踪
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetEyeTrackingEnabled(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetEyeTrackingEnabled(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1191,7 +1191,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetEyeTrackingEnabled
 
 /// 获取眼球追踪是否启用
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_IsEyeTrackingEnabled(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_IsEyeTrackingEnabled(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1212,7 +1212,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_IsEyeTrackingEnabled(
 
 /// 启用/禁用自动眨眼
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetAutoBlinkEnabled(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetAutoBlinkEnabled(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1227,7 +1227,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetAutoBlinkEnabled(
 
 /// 获取自动眨眼是否启用
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_IsAutoBlinkEnabled(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_IsAutoBlinkEnabled(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1250,7 +1250,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_IsAutoBlinkEnabled(
 /// interval: 眨眼间隔（秒），默认 4.0
 /// duration: 眨眼持续时间（秒），默认 0.15
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetBlinkParams(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetBlinkParams(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1271,7 +1271,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetBlinkParams(
 /// 播放指定层的动画
 /// layer: 动画层ID（0-3）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_PlayLayer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_PlayLayer(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1287,7 +1287,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_PlayLayer(
 /// 停止指定层的动画
 /// layer: 动画层ID（0-3）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_StopLayer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_StopLayer(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1303,7 +1303,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_StopLayer(
 /// 暂停指定层的动画
 /// layer: 动画层ID（0-3）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_PauseLayer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_PauseLayer(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1319,7 +1319,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_PauseLayer(
 /// 恢复指定层的动画
 /// layer: 动画层ID（0-3）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ResumeLayer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_ResumeLayer(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1336,7 +1336,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ResumeLayer(
 /// layer: 动画层ID（0-3）
 /// weight: 权重值（0.0 - 1.0）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetLayerWeight(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetLayerWeight(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1354,7 +1354,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetLayerWeight(
 /// layer: 动画层ID（0-3）
 /// speed: 速度倍率（0.0+，1.0为正常速度）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetLayerSpeed(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetLayerSpeed(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1372,7 +1372,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetLayerSpeed(
 /// layer: 动画层ID（0-3）
 /// frame: 目标帧号
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SeekLayer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SeekLayer(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1391,7 +1391,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SeekLayer(
 /// fadeIn: 淡入时间（秒）
 /// fadeOut: 淡出时间（秒）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetLayerFadeTimes(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetLayerFadeTimes(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1416,7 +1416,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetLayerFadeTimes(
 /// - animation: 动画句柄（0表示清除动画）
 /// - transition_time: 过渡时间（秒），推荐 0.2 ~ 0.5 秒
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_TransitionLayerTo(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_TransitionLayerTo(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1440,7 +1440,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_TransitionLayerTo(
 /// 获取动画层最大帧数
 /// layer: 动画层ID（0-3）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetLayerMaxFrame(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetLayerMaxFrame(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1456,7 +1456,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetLayerMaxFrame(
 
 /// 检测层动画是否播放完毕（非循环动画到达末帧）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_IsLayerAnimationFinished(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_IsLayerAnimationFinished(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1478,7 +1478,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_IsLayerAnimationFinis
 /// 设置层骨骼遮罩（按根骨骼名，仅影响该骨骼及其子孙）
 /// bone_name 为 null 时清除遮罩
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetLayerBoneMask(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetLayerBoneMask(
     mut env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1511,7 +1511,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetLayerBoneMask(
 /// 设置层骨骼排除集（按根骨骼名，该骨骼及其子孙不受动画影响）
 /// bone_name 为 null 时清除排除
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetLayerBoneExclude(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetLayerBoneExclude(
     mut env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1544,7 +1544,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetLayerBoneExclude(
 /// 设置动画层是否循环播放
 /// loop_play: true=循环，false=播放到尾帧后停留
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetLayerLoop(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetLayerLoop(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1564,7 +1564,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetLayerLoop(
 
 /// 加载纹理
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_LoadTexture(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_LoadTexture(
     mut env: JNIEnv,
     _class: JClass,
     filename: JString,
@@ -1585,7 +1585,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_LoadTexture(
 
 /// 删除纹理
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_DeleteTexture(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_DeleteTexture(
     _env: JNIEnv,
     _class: JClass,
     tex: jlong,
@@ -1596,7 +1596,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_DeleteTexture(
 
 /// 获取纹理宽度
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetTextureX(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetTextureX(
     _env: JNIEnv,
     _class: JClass,
     tex: jlong,
@@ -1607,7 +1607,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetTextureX(
 
 /// 获取纹理高度
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetTextureY(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetTextureY(
     _env: JNIEnv,
     _class: JClass,
     tex: jlong,
@@ -1618,7 +1618,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetTextureY(
 
 /// 获取纹理数据指针
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetTextureData(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetTextureData(
     _env: JNIEnv,
     _class: JClass,
     tex: jlong,
@@ -1632,7 +1632,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetTextureData(
 
 /// 检查纹理是否有透明通道
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_TextureHasAlpha(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_TextureHasAlpha(
     _env: JNIEnv,
     _class: JClass,
     tex: jlong,
@@ -1664,7 +1664,7 @@ fn next_matrix_id() -> i64 {
 
 /// 创建矩阵
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CreateMat(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_CreateMat(
     _env: JNIEnv,
     _class: JClass,
 ) -> jlong {
@@ -1676,7 +1676,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CreateMat(
 
 /// 删除矩阵
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_DeleteMat(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_DeleteMat(
     _env: JNIEnv,
     _class: JClass,
     mat: jlong,
@@ -1687,7 +1687,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_DeleteMat(
 
 /// 将矩阵数据复制到 ByteBuffer（64 字节 = 16 floats）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyMatToBuffer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_CopyMatToBuffer(
     env: JNIEnv,
     _class: JClass,
     mat: jlong,
@@ -1715,7 +1715,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyMatToBuffer(
 
 /// 获取右手矩阵
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetRightHandMat(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetRightHandMat(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1736,7 +1736,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetRightHandMat(
 
 /// 获取左手矩阵
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetLeftHandMat(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetLeftHandMat(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1761,7 +1761,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetLeftHandMat(
 
 /// 初始化模型物理系统
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_InitPhysics(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_InitPhysics(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1778,7 +1778,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_InitPhysics(
 
 /// 重置物理系统
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ResetPhysics(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_ResetPhysics(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1792,7 +1792,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ResetPhysics(
 
 /// 启用/禁用物理
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetPhysicsEnabled(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetPhysicsEnabled(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1807,7 +1807,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetPhysicsEnabled(
 
 /// 获取物理是否启用
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_IsPhysicsEnabled(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_IsPhysicsEnabled(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1824,7 +1824,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_IsPhysicsEnabled(
 
 /// 获取物理是否已初始化
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_HasPhysics(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_HasPhysics(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1841,7 +1841,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_HasPhysics(
 
 /// 获取物理调试信息（返回 JSON 字符串）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetPhysicsDebugInfo(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetPhysicsDebugInfo(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1865,7 +1865,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetPhysicsDebugInfo(
 
 /// 获取材质是否可见
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_IsMaterialVisible(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_IsMaterialVisible(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1886,7 +1886,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_IsMaterialVisible(
 
 /// 设置材质可见性
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetMaterialVisible(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetMaterialVisible(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1902,7 +1902,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetMaterialVisible(
 
 /// 根据材质名称设置可见性（支持部分匹配，返回匹配的材质数量）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetMaterialVisibleByName(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetMaterialVisibleByName(
     mut env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1924,7 +1924,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetMaterialVisibleByN
 
 /// 设置所有材质可见性
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetAllMaterialsVisible(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetAllMaterialsVisible(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1939,7 +1939,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetAllMaterialsVisibl
 
 /// 获取材质名称
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialName(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialName(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1961,7 +1961,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialName(
 
 /// 获取所有材质名称（JSON 数组格式）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialNames(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialNames(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -1994,7 +1994,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialNames(
 
 /// 获取骨骼数量
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetBoneCount(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetBoneCount(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2009,7 +2009,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetBoneCount(
 /// 获取蒙皮矩阵数据指针（用于 GPU 蒙皮）
 /// 返回所有骨骼的蒙皮矩阵（skinning matrix = global * inverse_bind）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetSkinningMatrices(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetSkinningMatrices(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2027,7 +2027,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetSkinningMatrices(
 
 /// 复制蒙皮矩阵到 ByteBuffer（线程安全，用于 GPU 蒙皮）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopySkinningMatricesToBuffer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_CopySkinningMatricesToBuffer(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2067,7 +2067,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopySkinningMatricesT
 
 /// 获取顶点骨骼索引数据指针（ivec4 格式，用于 GPU 蒙皮）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetBoneIndices(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetBoneIndices(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2086,7 +2086,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetBoneIndices(
 
 /// 复制骨骼索引到 ByteBuffer（线程安全）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyBoneIndicesToBuffer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_CopyBoneIndicesToBuffer(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2126,7 +2126,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyBoneIndicesToBuff
 
 /// 获取顶点骨骼权重数据指针（vec4 格式，用于 GPU 蒙皮）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetBoneWeights(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetBoneWeights(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2145,7 +2145,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetBoneWeights(
 
 /// 复制骨骼权重到 ByteBuffer（线程安全）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyBoneWeightsToBuffer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_CopyBoneWeightsToBuffer(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2185,7 +2185,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyBoneWeightsToBuff
 
 /// 获取原始顶点位置数据指针（未蒙皮，用于 GPU 蒙皮）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetOriginalPositions(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetOriginalPositions(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2204,7 +2204,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetOriginalPositions(
 
 /// 复制原始顶点位置到 ByteBuffer（线程安全）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyOriginalPositionsToBuffer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_CopyOriginalPositionsToBuffer(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2244,7 +2244,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyOriginalPositions
 
 /// 获取原始法线数据指针（未蒙皮，用于 GPU 蒙皮）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetOriginalNormals(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetOriginalNormals(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2263,7 +2263,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetOriginalNormals(
 
 /// 复制原始法线到 ByteBuffer（线程安全）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyOriginalNormalsToBuffer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_CopyOriginalNormalsToBuffer(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2303,7 +2303,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyOriginalNormalsTo
 
 /// 获取 GPU 蒙皮调试信息（返回 JSON 字符串）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetGpuSkinningDebugInfo<'a>(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetGpuSkinningDebugInfo<'a>(
     env: JNIEnv<'a>,
     _class: JClass,
     model: jlong,
@@ -2381,7 +2381,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetGpuSkinningDebugIn
 
 /// 仅更新动画（不执行 CPU 蒙皮，用于 GPU 蒙皮模式）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_UpdateAnimationOnly(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_UpdateAnimationOnly(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2396,7 +2396,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_UpdateAnimationOnly(
 
 /// 初始化 GPU 蒙皮数据
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_InitGpuSkinningData(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_InitGpuSkinningData(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2414,7 +2414,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_InitGpuSkinningData(
 
 /// 初始化 GPU Morph 数据
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_InitGpuMorphData(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_InitGpuMorphData(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2428,7 +2428,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_InitGpuMorphData(
 
 /// 获取顶点 Morph 数量
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetVertexMorphCount(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetVertexMorphCount(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2442,7 +2442,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetVertexMorphCount(
 
 /// 获取 GPU Morph 偏移数据指针
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetGpuMorphOffsets(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetGpuMorphOffsets(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2457,7 +2457,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetGpuMorphOffsets(
 
 /// 获取 GPU Morph 偏移数据大小（字节）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetGpuMorphOffsetsSize(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetGpuMorphOffsetsSize(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2471,7 +2471,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetGpuMorphOffsetsSiz
 
 /// 获取 GPU Morph 权重数据指针
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetGpuMorphWeights(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetGpuMorphWeights(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2486,7 +2486,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetGpuMorphWeights(
 
 /// 同步 GPU Morph 权重（从 MorphManager 更新到 GPU 缓冲区）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SyncGpuMorphWeights(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SyncGpuMorphWeights(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2500,7 +2500,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SyncGpuMorphWeights(
 
 /// 复制 GPU Morph 偏移数据到 ByteBuffer
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyGpuMorphOffsetsToBuffer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_CopyGpuMorphOffsetsToBuffer(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2538,7 +2538,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyGpuMorphOffsetsTo
 
 /// 复制 GPU Morph 权重数据到 ByteBuffer
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyGpuMorphWeightsToBuffer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_CopyGpuMorphWeightsToBuffer(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2577,7 +2577,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyGpuMorphWeightsTo
 
 /// 获取 GPU Morph 是否已初始化
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_IsGpuMorphInitialized(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_IsGpuMorphInitialized(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2605,7 +2605,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_IsGpuMorphInitialized
 /// - -1: 文件加载失败
 /// - -2: 模型不存在
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ApplyVpdMorph(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_ApplyVpdMorph(
     mut env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2660,7 +2660,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ApplyVpdMorph(
 
 /// 重置所有 Morph 权重和 VPD 骨骼姿势覆盖
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ResetAllMorphs(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_ResetAllMorphs(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2676,7 +2676,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ResetAllMorphs(
 
 /// 设置单个 Morph 权重（通过名称）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetMorphWeightByName(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetMorphWeightByName(
     mut env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2702,7 +2702,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetMorphWeightByName(
 
 /// 获取 Morph 数量
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMorphCount(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMorphCount(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2717,7 +2717,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMorphCount(
 
 /// 获取 Morph 名称（通过索引）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMorphName(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMorphName(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2739,7 +2739,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMorphName(
 
 /// 获取 Morph 权重（通过索引）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMorphWeight(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMorphWeight(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2757,7 +2757,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMorphWeight(
 
 /// 设置 Morph 权重（通过索引）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetMorphWeight(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetMorphWeight(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2777,7 +2777,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetMorphWeight(
 
 /// 初始化 GPU UV Morph 数据
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_InitGpuUvMorphData(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_InitGpuUvMorphData(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2791,7 +2791,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_InitGpuUvMorphData(
 
 /// 获取 UV Morph 数量
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetUvMorphCount(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetUvMorphCount(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2805,7 +2805,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetUvMorphCount(
 
 /// 获取 GPU UV Morph 偏移数据大小（字节）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetGpuUvMorphOffsetsSize(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetGpuUvMorphOffsetsSize(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2819,7 +2819,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetGpuUvMorphOffsetsS
 
 /// 复制 GPU UV Morph 偏移数据到 ByteBuffer
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyGpuUvMorphOffsetsToBuffer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_CopyGpuUvMorphOffsetsToBuffer(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2857,7 +2857,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyGpuUvMorphOffsets
 
 /// 复制 GPU UV Morph 权重数据到 ByteBuffer
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyGpuUvMorphWeightsToBuffer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_CopyGpuUvMorphWeightsToBuffer(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2900,7 +2900,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyGpuUvMorphWeights
 
 /// 获取材质 Morph 结果数量
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialMorphResultCount(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetMaterialMorphResultCount(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2920,7 +2920,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetMaterialMorphResul
 /// + add[同上布局] = 28
 /// 渲染时：final = base * mul + add
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyMaterialMorphResultsToBuffer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_CopyMaterialMorphResultsToBuffer(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -2962,7 +2962,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyMaterialMorphResu
 
 /// 设置全局物理配置（Bullet3，实时调整）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetPhysicsConfig(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetPhysicsConfig(
     _env: JNIEnv,
     _class: JClass,
     enabled: jboolean,
@@ -3007,7 +3007,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetPhysicsConfig(
 
 /// 设置第一人称模式（启用时自动隐藏头部子网格，禁用时恢复）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetFirstPersonMode(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetFirstPersonMode(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -3022,7 +3022,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetFirstPersonMode(
 
 /// 获取第一人称模式是否启用
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_IsFirstPersonMode(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_IsFirstPersonMode(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -3042,7 +3042,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_IsFirstPersonMode(
 
 /// 获取头部骨骼的静态 Y 坐标（模型局部空间，用于相机高度计算）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetHeadBonePositionY(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetHeadBonePositionY(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -3061,7 +3061,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetHeadBonePositionY(
 /// 如果传入的 out 数组长度 < 3 则不写入
 #[no_mangle]
 #[allow(unused_mut)]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetEyeBonePosition(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetEyeBonePosition(
     mut env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -3083,7 +3083,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetEyeBonePosition(
 /// 批量获取所有子网格的渲染元数据，消除 Java 侧逐子网格 JNI 调用
 /// 每子网格 20 字节：materialID(i32) + beginIndex(i32) + vertexCount(i32) + alpha(f32) + isVisible(u8) + bothFace(u8) + hasEdge(u8) + pad(1)
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_BatchGetSubMeshData(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_BatchGetSubMeshData(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -3114,7 +3114,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_BatchGetSubMeshData(
 
 /// 获取所有骨骼名称（JSON 数组格式）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetBoneNames(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetBoneNames(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -3142,7 +3142,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetBoneNames(
 /// 复制所有骨骼的实时世界位置到 ByteBuffer
 /// 每个骨骼 3 个 float (x, y, z)，共 boneCount * 12 字节
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyBonePositionsToBuffer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_CopyBonePositionsToBuffer(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -3189,7 +3189,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyBonePositionsToBu
 /// 复制实时 UV 数据到 ByteBuffer（经过 UV Morph 变形后）
 /// 每个顶点 2 个 float (u, v)，共 vertexCount * 8 字节
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyRealtimeUVsToBuffer(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_CopyRealtimeUVsToBuffer(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -3234,7 +3234,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_CopyRealtimeUVsToBuff
 
 /// 获取模型在 Rust 堆上的内存占用（字节）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetModelMemoryUsage(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetModelMemoryUsage(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -3254,7 +3254,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_GetModelMemoryUsage(
 
 /// 批量设置 VR 追踪数据（3 追踪点 × 7 float = 21）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetVRTrackingData(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetVRTrackingData(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -3276,7 +3276,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetVRTrackingData(
 
 /// 启用/禁用 VR 模式
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ApplyVRTrackingInput(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_ApplyVRTrackingInput(
     env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -3298,7 +3298,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_ApplyVRTrackingInput(
 }
 
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetVREnabled(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetVREnabled(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -3313,7 +3313,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetVREnabled(
 
 /// 设置 VR IK 参数
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetVRIKParams(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetVRIKParams(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -3330,7 +3330,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetVRIKParams(
 #[no_mangle]
 /// 设置 VR 手部渲染模式（0=全身, 1=仅左手, 2=仅右手）
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetVRHandMode(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetVRHandMode(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,
@@ -3345,7 +3345,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_SetVRHandMode(
 
 /// 加载 VRM 模型
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_LoadModelVRM(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_LoadModelVRM(
     mut env: JNIEnv,
     _class: JClass,
     filename: JString,
@@ -3368,7 +3368,7 @@ pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_LoadModelVRM(
 
 /// 查询模型是否为 VRM 格式
 #[no_mangle]
-pub extern "system" fn Java_com_shiroha_mmdskin_NativeFunc_IsVrmModel(
+pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_IsVrmModel(
     _env: JNIEnv,
     _class: JClass,
     model: jlong,

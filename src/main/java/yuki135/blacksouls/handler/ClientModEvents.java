@@ -1,0 +1,110 @@
+package yuki135.blacksouls.handler;
+
+import yuki135.blacksouls.BlackSouls;
+import yuki135.blacksouls.BSConfig;
+import yuki135.blacksouls.client.WindowBranding;
+import yuki135.blacksouls.client.gui.GuiBSConfig;
+import yuki135.blacksouls.client.render.*;
+import yuki135.blacksouls.entity.EntityOriginalTurnBattleEnemy;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.entity.RabbitRenderer;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.ConfigScreenHandler;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+@SuppressWarnings("removal")
+@Mod.EventBusSubscriber(modid = BlackSouls.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+public class ClientModEvents {
+
+    @SubscribeEvent
+    public static void onClientSetup(FMLClientSetupEvent event) {
+        event.enqueueWork(() -> {
+            WindowBranding.apply(BSConfig.ENABLE_ORIGINAL_WINDOW_BRANDING.get());
+            ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
+                    () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, parent) -> new GuiBSConfig(parent)));
+        });
+    }
+
+    @SubscribeEvent
+    public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(BSEntityRegistry.NODEN.get(),
+                context -> new SwitchableMmdRenderer<>(context, "诺登", RenderNoden::new));
+        event.registerEntityRenderer(BSEntityRegistry.RED_HOOD.get(),
+                context -> new SwitchableMmdRenderer<>(context, "小红帽", RenderRedHoodFallback::new));
+        event.registerEntityRenderer(BSEntityRegistry.RABBIT_HOLE_NPC.get(), RabbitRenderer::new);
+        event.registerEntityRenderer(BSEntityRegistry.RABBIT_KNIGHT.get(), RenderSourceRabbitKnight::new);
+        event.registerEntityRenderer(BSEntityRegistry.CHESHIRE_CAT.get(),
+                context -> new SwitchableMmdRenderer<>(context, "柴郡猫", RenderCheshireCat::new, 0.25F));
+        event.registerEntityRenderer(BSEntityRegistry.HOLMES.get(), EntityHolmesRenderer::new);
+        event.registerEntityRenderer(BSEntityRegistry.ORIGINAL_NPC.get(), RenderOriginalNpcMmd::new);
+        event.registerEntityRenderer(BSEntityRegistry.ORIGINAL_RECEPTIONIST.get(), RenderOriginalReceptionist::new);
+        event.registerEntityRenderer(BSEntityRegistry.ORIGINAL_WHITE_BEAR.get(), RenderOriginalWhiteBear::new);
+        event.registerEntityRenderer(BSEntityRegistry.ORIGINAL_CEMETERY_CAT.get(), RenderOriginalCemeteryCat::new);
+        event.registerEntityRenderer(BSEntityRegistry.ORIGINAL_MARKET_CAT.get(), RenderOriginalMarketCat::new);
+        event.registerEntityRenderer(BSEntityRegistry.HAIL_CAESAR.get(), RenderHailCaesar::new);
+        event.registerEntityRenderer(BSEntityRegistry.TEST_DUMMY.get(), RenderTestDummy::new);
+        event.registerEntityRenderer(BSEntityRegistry.THROWN_BLADE.get(), ThrownItemRenderer::new);
+        event.registerEntityRenderer(BSEntityRegistry.HELL_PRINCE.get(), RenderHellPrince::new);
+        event.registerEntityRenderer(BSEntityRegistry.MEAT_WALL.get(), RenderMeatWall::new);
+        event.registerEntityRenderer(BSEntityRegistry.CORPSE_EATING_RABBIT.get(), RenderCorpseEatingRabbit::new);
+        event.registerEntityRenderer(BSEntityRegistry.ORIGINAL_ENEMY.get(), RenderOriginalDatabaseEnemy::new);
+        event.registerEntityRenderer(BSEntityRegistry.HEADLESS_UNDEAD.get(),
+                context -> new RenderOriginalTurnBattleEnemy(
+                        context, EntityOriginalTurnBattleEnemy.Profile.HEADLESS_UNDEAD));
+        event.registerEntityRenderer(BSEntityRegistry.CORRUPT_DOG.get(),
+                context -> new RenderOriginalTurnBattleEnemy(
+                        context, EntityOriginalTurnBattleEnemy.Profile.CORRUPT_DOG));
+        event.registerEntityRenderer(BSEntityRegistry.WEREWOLF.get(),
+                context -> new RenderOriginalTurnBattleEnemy(
+                        context, EntityOriginalTurnBattleEnemy.Profile.WEREWOLF));
+    }
+
+    @SubscribeEvent
+    public static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(RenderMeatWall.LAYER_LOCATION, RenderMeatWall.MeatWallModel::createBodyLayer);
+    }
+
+    @SubscribeEvent
+    public static void onRegisterParticleProviders(RegisterParticleProvidersEvent event) {
+        event.registerSpriteSet(ParticleTypes.DAMAGE_INDICATOR, NoOpParticleProvider::new);
+    }
+
+    @SubscribeEvent
+    public static void onRegisterReloadListeners(RegisterClientReloadListenersEvent event) {
+        event.registerReloadListener((net.minecraft.server.packs.resources.ResourceManagerReloadListener) resourceManager ->
+                AnimationRegistry.loadAnimations());
+    }
+
+    public static class NoOpParticleProvider implements ParticleProvider<SimpleParticleType> {
+        public NoOpParticleProvider(SpriteSet spriteSet) {}
+
+        @Nullable
+        @Override
+        public Particle createParticle(@NotNull SimpleParticleType type, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+            return new Particle(level, x, y, z) {
+                @Override
+                public void render(com.mojang.blaze3d.vertex.@NotNull VertexConsumer buffer, net.minecraft.client.@NotNull Camera camera, float partialTicks) {}
+
+                @Override
+                public @NotNull ParticleRenderType getRenderType() {
+                    return ParticleRenderType.NO_RENDER;
+                }
+            };
+        }
+    }
+}

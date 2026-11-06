@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.shiroha.mmdskin.mixin.forge",
+  "package": "yuki135.mmdskin.mixin.forge",
   "compatibilityLevel": "JAVA_17",
   "refmap": "mixins.blacksouls.refmap.json",
   "mixins": [],

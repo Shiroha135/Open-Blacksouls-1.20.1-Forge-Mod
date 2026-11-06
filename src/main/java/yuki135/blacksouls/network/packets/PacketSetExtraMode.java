@@ -1,0 +1,124 @@
+package yuki135.blacksouls.network.packets;
+
+import yuki135.blacksouls.BSConfig;
+import yuki135.blacksouls.capability.BSWorldData;
+import yuki135.blacksouls.network.NetworkHandler;
+import yuki135.blacksouls.util.DifficultyManager;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.network.PacketDistributor;
+
+import java.util.function.Supplier;
+
+public class PacketSetExtraMode {
+
+    private static final ItemMode[] ITEM_MODES = ItemMode.values();
+
+    private final int modeOrdinal;
+    private final boolean enabled;
+
+    public PacketSetExtraMode(ItemMode mode, boolean enabled) {
+        this.modeOrdinal = mode.ordinal();
+        this.enabled = enabled;
+    }
+
+    public PacketSetExtraMode(FriendlyByteBuf buf) {
+        this.modeOrdinal = buf.readInt();
+        this.enabled = buf.readBoolean();
+    }
+
+    public void toBytes(FriendlyByteBuf buf) {
+        buf.writeInt(this.modeOrdinal);
+        buf.writeBoolean(this.enabled);
+    }
+
+    public boolean handle(Supplier<NetworkEvent.Context> supplier) {
+        NetworkEvent.Context ctx = supplier.get();
+        ctx.enqueueWork(() -> {
+            ServerPlayer serverPlayer = ctx.getSender();
+            if (serverPlayer == null) {
+                return;
+            }
+            if (!BSConfig.ALLOW_PLAYER_EXTRA_MODES.get() && !serverPlayer.hasPermissions(4)) {
+                serverPlayer.sendSystemMessage(Component.translatable("message.blacksouls.difficulty.no_permission").withStyle(ChatFormatting.RED));
+                return;
+            }
+            if (modeOrdinal < 0 || modeOrdinal >= ITEM_MODES.length) {
+                return;
+            }
+
+            ItemMode mode = ITEM_MODES[modeOrdinal];
+            ServerLevel overworld = serverPlayer.server.overworld();
+            BSWorldData data = BSWorldData.get(overworld);
+
+            if (!mode.isUnlocked(data)) {
+                serverPlayer.sendSystemMessage(Component.translatable("message.blacksouls.dev_mode.locked").withStyle(ChatFormatting.RED));
+                return;
+            }
+            if (mode.isEnabled(data) == enabled) {
+                return;
+            }
+
+            mode.setEnabled(data, enabled);
+            DifficultyManager.currentDifficulty = data.difficulty;
+            for (ServerLevel level : serverPlayer.server.getAllLevels()) {
+                DifficultyManager.updateAllMonstersInstant(level);
+            }
+
+            NetworkHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new PacketSyncDifficulty(data));
+        });
+        ctx.setPacketHandled(true);
+        return true;
+    }
+
+    public enum ItemMode {
+        REVENGE {
+            @Override
+            public boolean isUnlocked(BSWorldData data) { return data.isRevengeUnlocked(); }
+            @Override
+            public boolean isEnabled(BSWorldData data) { return data.isRevengeMode(); }
+            @Override
+            public void setEnabled(BSWorldData data, boolean enabled) { data.setRevengeMode(enabled); }
+        },
+        DEATH {
+            @Override
+            public boolean isUnlocked(BSWorldData data) { return data.isDeathUnlocked(); }
+            @Override
+            public boolean isEnabled(BSWorldData data) { return data.isDeathMode(); }
+            @Override
+            public void setEnabled(BSWorldData data, boolean enabled) { data.setDeathMode(enabled); }
+        },
+        LEGENDARY {
+            @Override
+            public boolean isUnlocked(BSWorldData data) { return data.isLegendaryUnlocked(); }
+            @Override
+            public boolean isEnabled(BSWorldData data) { return data.isLegendaryMode(); }
+            @Override
+            public void setEnabled(BSWorldData data, boolean enabled) { data.setLegendaryMode(enabled); }
+        },
+        MALICE {
+            @Override
+            public boolean isUnlocked(BSWorldData data) { return data.isMaliceUnlocked(); }
+            @Override
+            public boolean isEnabled(BSWorldData data) { return data.isMaliceMode(); }
+            @Override
+            public void setEnabled(BSWorldData data, boolean enabled) { data.setMaliceMode(enabled); }
+        },
+        ETERNITY {
+            @Override
+            public boolean isUnlocked(BSWorldData data) { return data.isEternityUnlocked(); }
+            @Override
+            public boolean isEnabled(BSWorldData data) { return data.isEternityMode(); }
+            @Override
+            public void setEnabled(BSWorldData data, boolean enabled) { data.setEternityMode(enabled); }
+        };
+
+        public abstract boolean isUnlocked(BSWorldData data);
+        public abstract boolean isEnabled(BSWorldData data);
+        public abstract void setEnabled(BSWorldData data, boolean enabled);
+    }
+}

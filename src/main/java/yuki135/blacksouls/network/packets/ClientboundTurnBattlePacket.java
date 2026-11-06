@@ -1,0 +1,279 @@
+package yuki135.blacksouls.network.packets;
+
+import yuki135.blacksouls.combat.OriginalTroopPresentation;
+import yuki135.blacksouls.story.OriginalBattleMusic;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Supplier;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.network.NetworkEvent;
+
+public class ClientboundTurnBattlePacket {
+    private OriginalTroopPresentation troopPresentation;
+    private OriginalBattleMusic battleMusic = OriginalBattleMusic.UNSET;
+    private final boolean active;
+    private final boolean canEscape;
+    private final int originalTroopId;
+    private final List<Integer> originalMemberIndices;
+    private final int rootEntityId;
+    private final int battleProfileId;
+    private final List<EnemySnapshot> enemies;
+    private final int actingEnemyIndex;
+    private final int enemyAnimationId;
+    private final boolean phaseChanged;
+    private final boolean awaitingPresentation;
+    private final List<DamageHit> playerHits;
+    private final List<IncomingHit> incomingHits;
+    private final Component message;
+    private final boolean canAct;
+    private final Outcome outcome;
+    private final long soulReward;
+    private final List<ItemStack> rewardItems;
+    private final Map<String, Integer> skillCooldowns;
+
+    public ClientboundTurnBattlePacket(boolean active, int rootEntityId, int battleProfileId,
+                                       List<EnemySnapshot> enemies, int actingEnemyIndex,
+                                       int enemyAnimationId, boolean phaseChanged,
+                                       boolean awaitingPresentation, List<DamageHit> playerHits,
+                                       List<IncomingHit> incomingHits,
+                                       Component message, boolean canAct, Outcome outcome,
+                                       long soulReward, List<ItemStack> rewardItems,
+                                       Map<String, Integer> skillCooldowns) {
+        this(active, rootEntityId, battleProfileId, enemies, actingEnemyIndex, enemyAnimationId,
+                phaseChanged, awaitingPresentation, playerHits, incomingHits, message, canAct, outcome,
+                soulReward, rewardItems, skillCooldowns, true, 0, List.of());
+    }
+
+    public ClientboundTurnBattlePacket(boolean active, int rootEntityId, int battleProfileId,
+                                       List<EnemySnapshot> enemies, int actingEnemyIndex,
+                                       int enemyAnimationId, boolean phaseChanged,
+                                       boolean awaitingPresentation, List<DamageHit> playerHits,
+                                       List<IncomingHit> incomingHits,
+                                       Component message, boolean canAct, Outcome outcome,
+                                       long soulReward, List<ItemStack> rewardItems,
+                                       Map<String, Integer> skillCooldowns, boolean canEscape,
+                                       int originalTroopId, List<Integer> originalMemberIndices) {
+        this.active = active;
+        this.canEscape = canEscape;
+        this.originalTroopId = originalTroopId;
+        this.originalMemberIndices = List.copyOf(originalMemberIndices);
+        this.rootEntityId = rootEntityId;
+        this.battleProfileId = battleProfileId;
+        this.enemies = List.copyOf(enemies);
+        this.actingEnemyIndex = actingEnemyIndex;
+        this.enemyAnimationId = enemyAnimationId;
+        this.phaseChanged = phaseChanged;
+        this.awaitingPresentation = awaitingPresentation;
+        this.playerHits = List.copyOf(playerHits);
+        this.incomingHits = List.copyOf(incomingHits);
+        this.message = message;
+        this.canAct = canAct;
+        this.outcome = outcome;
+        this.soulReward = soulReward;
+        this.rewardItems = rewardItems.stream().map(ItemStack::copy).toList();
+        this.skillCooldowns = Map.copyOf(skillCooldowns);
+    }
+
+    public ClientboundTurnBattlePacket withTroopPresentation(OriginalTroopPresentation presentation) {
+        this.troopPresentation = presentation;
+        return this;
+    }
+
+    public ClientboundTurnBattlePacket withBattleMusic(OriginalBattleMusic music) {
+        this.battleMusic = java.util.Objects.requireNonNull(music);
+        return this;
+    }
+
+    public ClientboundTurnBattlePacket(FriendlyByteBuf buffer) {
+        this.active = buffer.readBoolean();
+        this.rootEntityId = buffer.readVarInt();
+        this.battleProfileId = buffer.readVarInt();
+        int enemyCount = buffer.readVarInt();
+        List<EnemySnapshot> snapshots = new ArrayList<>(enemyCount);
+        for (int i = 0; i < enemyCount; i++) {
+            snapshots.add(EnemySnapshot.read(buffer));
+        }
+        this.enemies = List.copyOf(snapshots);
+        this.actingEnemyIndex = buffer.readVarInt();
+        this.enemyAnimationId = buffer.readVarInt();
+        this.phaseChanged = buffer.readBoolean();
+        this.awaitingPresentation = buffer.readBoolean();
+        int playerHitCount = buffer.readVarInt();
+        List<DamageHit> hits = new ArrayList<>(playerHitCount);
+        for (int i = 0; i < playerHitCount; i++) {
+            hits.add(DamageHit.read(buffer));
+        }
+        this.playerHits = List.copyOf(hits);
+        int incomingHitCount = buffer.readVarInt();
+        List<IncomingHit> incoming = new ArrayList<>(incomingHitCount);
+        for (int i = 0; i < incomingHitCount; i++) {
+            incoming.add(IncomingHit.read(buffer));
+        }
+        this.incomingHits = List.copyOf(incoming);
+        this.message = buffer.readComponent();
+        this.canAct = buffer.readBoolean();
+        this.outcome = PacketHandlers.readEnum(buffer, Outcome.values());
+        this.soulReward = buffer.readVarLong();
+        int rewardCount = buffer.readVarInt();
+        List<ItemStack> rewards = new ArrayList<>(rewardCount);
+        for (int i = 0; i < rewardCount; i++) {
+            rewards.add(buffer.readItem());
+        }
+        this.rewardItems = List.copyOf(rewards);
+        int cooldownCount = buffer.readVarInt();
+        Map<String, Integer> cooldowns = new HashMap<>();
+        for (int i = 0; i < cooldownCount; i++) {
+            cooldowns.put(buffer.readUtf(), buffer.readVarInt());
+        }
+        this.skillCooldowns = Map.copyOf(cooldowns);
+        this.canEscape = buffer.readableBytes() <= 0 || buffer.readBoolean();
+        this.originalTroopId = buffer.readableBytes() > 0 ? buffer.readVarInt() : 0;
+        List<Integer> memberIndices = new ArrayList<>();
+        if (buffer.readableBytes() > 0) {
+            int count = buffer.readVarInt();
+            for (int index = 0; index < count; index++) {
+                memberIndices.add(buffer.readVarInt());
+            }
+        }
+        this.originalMemberIndices = List.copyOf(memberIndices);
+        this.troopPresentation = buffer.readableBytes() > 0 && buffer.readBoolean()
+                ? OriginalTroopPresentation.read(buffer) : null;
+        this.battleMusic = buffer.readableBytes() > 0 ? OriginalBattleMusic.read(buffer) : OriginalBattleMusic.UNSET;
+    }
+
+    public void toBytes(FriendlyByteBuf buffer) {
+        buffer.writeBoolean(this.active);
+        buffer.writeVarInt(this.rootEntityId);
+        buffer.writeVarInt(this.battleProfileId);
+        buffer.writeVarInt(this.enemies.size());
+        this.enemies.forEach(enemy -> enemy.write(buffer));
+        buffer.writeVarInt(this.actingEnemyIndex);
+        buffer.writeVarInt(this.enemyAnimationId);
+        buffer.writeBoolean(this.phaseChanged);
+        buffer.writeBoolean(this.awaitingPresentation);
+        buffer.writeVarInt(this.playerHits.size());
+        this.playerHits.forEach(hit -> hit.write(buffer));
+        buffer.writeVarInt(this.incomingHits.size());
+        this.incomingHits.forEach(hit -> hit.write(buffer));
+        buffer.writeComponent(this.message);
+        buffer.writeBoolean(this.canAct);
+        PacketHandlers.writeEnum(buffer, this.outcome);
+        buffer.writeVarLong(this.soulReward);
+        buffer.writeVarInt(this.rewardItems.size());
+        this.rewardItems.forEach(buffer::writeItem);
+        buffer.writeVarInt(this.skillCooldowns.size());
+        this.skillCooldowns.forEach((skillId, rounds) -> {
+            buffer.writeUtf(skillId);
+            buffer.writeVarInt(rounds);
+        });
+        buffer.writeBoolean(this.canEscape);
+        buffer.writeVarInt(this.originalTroopId);
+        buffer.writeVarInt(this.originalMemberIndices.size());
+        this.originalMemberIndices.forEach(buffer::writeVarInt);
+        buffer.writeBoolean(this.troopPresentation != null);
+        if (this.troopPresentation != null) this.troopPresentation.write(buffer);
+        this.battleMusic.write(buffer);
+    }
+
+    public void handle(Supplier<NetworkEvent.Context> supplier) {
+        PacketHandlers.handleClient(supplier, () -> ClientHandler.apply(this));
+    }
+
+    private static final class ClientHandler {
+        private static void apply(ClientboundTurnBattlePacket packet) {
+            net.minecraft.client.Minecraft minecraft = net.minecraft.client.Minecraft.getInstance();
+            if (minecraft.screen instanceof yuki135.blacksouls.client.gui.GuiTurnBattle battle
+                    && (battle.matches(packet.rootEntityId) || !packet.active)) {
+                battle.setOriginalTroop(packet.originalTroopId, packet.originalMemberIndices, packet.canEscape);
+                if (packet.active) battle.setOriginalBattleMusic(packet.battleMusic);
+                if (packet.troopPresentation != null && packet.troopPresentation.animationsOnly()) {
+                    battle.applyTroopPresentation(packet.troopPresentation, packet.message);
+                    return;
+                }
+                battle.applyState(packet.active, packet.battleProfileId, packet.enemies,
+                        packet.actingEnemyIndex, packet.phaseChanged,
+                        packet.awaitingPresentation, packet.playerHits, packet.incomingHits, packet.message,
+                        packet.canAct, packet.outcome, packet.soulReward,
+                        packet.rewardItems, packet.skillCooldowns, packet.enemyAnimationId);
+                battle.applyTroopPresentation(packet.troopPresentation, packet.message);
+            } else if (packet.active) {
+                yuki135.blacksouls.client.gui.GuiTurnBattle battle = new yuki135.blacksouls.client.gui.GuiTurnBattle(
+                        packet.rootEntityId, packet.battleProfileId, packet.enemies, packet.message,
+                        packet.canAct, packet.skillCooldowns, packet.enemyAnimationId, packet.battleMusic);
+                battle.setOriginalTroop(packet.originalTroopId, packet.originalMemberIndices, packet.canEscape);
+                minecraft.setScreen(battle);
+                battle.applyTroopPresentation(packet.troopPresentation, packet.message);
+            }
+        }
+    }
+
+    public record DamageHit(int targetEntityId, int damage, boolean critical, int wave) {
+        private static DamageHit read(FriendlyByteBuf buffer) {
+            return new DamageHit(buffer.readVarInt(), buffer.readVarInt(),
+                    buffer.readBoolean(), buffer.readVarInt());
+        }
+
+        private void write(FriendlyByteBuf buffer) {
+            buffer.writeVarInt(this.targetEntityId);
+            buffer.writeVarInt(this.damage);
+            buffer.writeBoolean(this.critical);
+            buffer.writeVarInt(this.wave);
+        }
+    }
+
+    public record IncomingHit(int damage, boolean critical, boolean knockedDown,
+                              boolean revived, int reviveHealth) {
+        private static IncomingHit read(FriendlyByteBuf buffer) {
+            return new IncomingHit(buffer.readVarInt(), buffer.readBoolean(),
+                    buffer.readBoolean(), buffer.readBoolean(), buffer.readVarInt());
+        }
+
+        private void write(FriendlyByteBuf buffer) {
+            buffer.writeVarInt(this.damage);
+            buffer.writeBoolean(this.critical);
+            buffer.writeBoolean(this.knockedDown);
+            buffer.writeBoolean(this.revived);
+            buffer.writeVarInt(this.reviveHealth);
+        }
+    }
+
+    public record EnemySnapshot(int entityId, Component name, float health,
+                                float maxHealth, int profileId, List<Integer> states) {
+        private static EnemySnapshot read(FriendlyByteBuf buffer) {
+            int entityId = buffer.readVarInt();
+            Component name = buffer.readComponent();
+            float health = buffer.readFloat();
+            float maxHealth = buffer.readFloat();
+            int profileId = buffer.readVarInt();
+            int stateCount = buffer.readVarInt();
+            List<Integer> states = new ArrayList<>(stateCount);
+            for (int i = 0; i < stateCount; i++) {
+                states.add(buffer.readVarInt());
+            }
+            return new EnemySnapshot(entityId, name, health, maxHealth,
+                    profileId, List.copyOf(states));
+        }
+
+        private void write(FriendlyByteBuf buffer) {
+            buffer.writeVarInt(this.entityId);
+            buffer.writeComponent(this.name);
+            buffer.writeFloat(this.health);
+            buffer.writeFloat(this.maxHealth);
+            buffer.writeVarInt(this.profileId);
+            buffer.writeVarInt(this.states.size());
+            this.states.forEach(buffer::writeVarInt);
+        }
+    }
+
+    public enum Outcome {
+        NONE,
+        VICTORY,
+        DEFEAT,
+        ESCAPED
+    }
+}

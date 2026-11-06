@@ -1,0 +1,664 @@
+package yuki135.blacksouls.capability;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
+import net.minecraftforge.common.util.LazyOptional;
+
+public class BSPlayerStats {
+    public static final Capability<BSPlayerStats> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
+
+    public static final int NORMAL_MAX_LEVEL = 999;
+    public static final int DEVELOPER_MAX_LEVEL = Integer.MAX_VALUE - 2;
+    private static final long[] EXP_THRESHOLDS = createExpThresholds();
+
+    public static final double HARD_CAP_HP = 1099998;
+    public static final double HARD_CAP_MP = 109998;
+    public static final double HARD_CAP_OTHER = 109998;
+
+    public boolean developerNoCooldown = false;
+    public boolean developerLimitBreak = false;
+
+    public boolean hasVisitedLibrary = false;
+    public boolean whiteBearIntroduced = false;
+    public boolean whiteBearFreeSoulsClaimed = false;
+    public int whiteBearProgress = 0;
+
+    public double hp = 638, mp = 100, maxMp = 100;
+    public double attack = 16, defense = 16, magicAttack = 10, magicDefense = 10, luck = 10, speed = 40;
+    public double critRate = 5.0, bonusCritRate = 0.0, evasion = 0, magicEvasion = 0;
+    public int level = 1;
+    public long currentExp = 0, maxExp = 31;
+    public double bonusHp = 0, bonusMp = 0, bonusAtk = 0, bonusDef = 0, bonusMatk = 0, bonusMdef = 0, bonusLuc = 0, bonusSpeed = 0;
+
+    public double mpCostRate = 1.0;
+    public double extraActionRate = 0.0;
+    public double currentActionPoints = 1.0;
+
+    public int sen = 100;
+
+    public double burnRate = 0.0;
+    public double hpRegenRate = 0.0;
+    public double instantDeathRate = 0.0;
+    public double stunRate = 0.0;
+    public double mpRegenRate = 0.0;
+    public double physicalDamageRate = 1.0;
+    public double magicDamageRate = 1.0;
+    public double poisonResistRate = 0.0;
+    public double severePoisonResistRate = 0.0;
+    public double bleedResistRate = 0.0;
+    public double sleepResistRate = 0.0;
+    public double fearRate = 0.0;
+    public double fearResistRate = 0.0;
+    public double targetingRate = 1.0;
+    public List<String> weaponEnchantments = new ArrayList<>();
+
+    public long souls = 0;
+    public long lastTradeTime = 0;
+    public long lostSouls = 0;
+    public double lostX = 0, lostY = 0, lostZ = 0;
+    public String lostDim = "";
+    public long purgeRefreshCycle = -1L;
+    public long purgeRefreshDay = -1L;
+    public int purgeRefreshesUsedToday = 0;
+    public int purgeMobKills = 0;
+    public int purgeOreBreaks = 0;
+    public int purgeTrashEarned = 0;
+    public List<PurgeCommissionTask> purgeTasks = new ArrayList<>();
+
+    public String activeCovenant = "", skillZ = "", skillX = "", skillC = "", skillV = "";
+    public int nodenCovenantLevel = 0;
+    public List<String> unlockedCovenants = new ArrayList<>();
+    public boolean originalSpiritsInitialized;
+    public List<Integer> originalSpirits = new ArrayList<>();
+    public int originalSpiritPartner;
+    public boolean originalNodenProgressKnown;
+    public boolean originalNodenPledged;
+    public long originalNodenStage;
+    public java.util.Map<Integer, CovenantProgress> originalCovenants = new java.util.HashMap<>();
+    public List<String> unlockedSkills = new ArrayList<>();
+    public List<BonfireEntry> unlockedBonfires = new ArrayList<>();
+
+    public long vorpalLastTime = 0;
+    public int vorpalComboStage = 0;
+
+    public float getMana() {
+        return (float) this.mp;
+    }
+
+    public float getMaxMana() {
+        return (float) this.maxMp;
+    }
+
+    public double getCurrentActionPoints() {
+        return this.currentActionPoints;
+    }
+
+    public double getMaxActionPoints() {
+        return Math.max(1.0, 1.0 + this.extraActionRate);
+    }
+
+    public boolean consumeActionPoints(double amount) {
+        if (amount <= 0.0) {
+            return true;
+        }
+        if (this.currentActionPoints + 1.0E-6 >= amount) {
+            this.currentActionPoints -= amount;
+            if (this.currentActionPoints < 1.0E-4) {
+                this.currentActionPoints = 0.0;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public void restoreActionPoints(double amount) {
+        if (amount <= 0.0) {
+            return;
+        }
+        this.currentActionPoints += amount;
+    }
+
+    public void restoreActionPoints(double amount, double maxActionPoints) {
+        if (amount <= 0.0) {
+            return;
+        }
+        this.currentActionPoints = Math.min(maxActionPoints, this.currentActionPoints + amount);
+    }
+
+    public void clampActionPoints() {
+        this.currentActionPoints = Math.max(0.0, this.currentActionPoints);
+    }
+
+    public void clampActionPoints(double maxActionPoints) {
+        this.currentActionPoints = Math.max(0.0, Math.min(this.currentActionPoints, maxActionPoints));
+    }
+
+    public CompoundTag serializeNBT() {
+        CompoundTag nbt = new CompoundTag();
+        nbt.putInt("Level", level);
+        nbt.putBoolean("DeveloperNoCooldown", developerNoCooldown);
+        nbt.putBoolean("DeveloperLimitBreak", developerLimitBreak);
+        nbt.putLong("Exp", currentExp);
+        nbt.putDouble("MP", mp);
+        nbt.putDouble("CurrentActionPoints", currentActionPoints);
+        nbt.putDouble("BonusHP", bonusHp);
+        nbt.putDouble("BonusMP", bonusMp);
+        nbt.putDouble("BonusATK", bonusAtk);
+        nbt.putDouble("BonusDEF", bonusDef);
+        nbt.putDouble("BonusMATK", bonusMatk);
+        nbt.putDouble("BonusMDEF", bonusMdef);
+        nbt.putDouble("BonusLUC", bonusLuc);
+        nbt.putDouble("BonusSPEED", bonusSpeed);
+        nbt.putInt("Sen", sen);
+        nbt.putBoolean("HasVisitedLibrary", this.hasVisitedLibrary);
+        nbt.putBoolean("WhiteBearIntroduced", this.whiteBearIntroduced);
+        nbt.putBoolean("WhiteBearFreeSoulsClaimed", this.whiteBearFreeSoulsClaimed);
+        nbt.putInt("WhiteBearProgress", this.whiteBearProgress);
+        nbt.putDouble("BurnRate", burnRate);
+        nbt.putDouble("InstantDeathRate", instantDeathRate);
+        nbt.putDouble("StunRate", stunRate);
+        nbt.putDouble("MpRegenRate", mpRegenRate);
+        nbt.putString("SkillZ", skillZ);
+        nbt.putString("SkillX", skillX);
+        nbt.putString("SkillC", skillC);
+        nbt.putString("SkillV", skillV);
+        nbt.putString("ActiveCovenant", activeCovenant);
+        nbt.putInt("NodenCovenantLevel", nodenCovenantLevel);
+        nbt.putLong("VorpalLastTime", vorpalLastTime);
+        nbt.putInt("VorpalComboStage", vorpalComboStage);
+        nbt.putLong("Souls", this.souls);
+        nbt.putLong("LostSouls", this.lostSouls);
+        nbt.putDouble("LostX", this.lostX);
+        nbt.putDouble("LostY", this.lostY);
+        nbt.putDouble("LostZ", this.lostZ);
+        nbt.putString("LostDim", this.lostDim);
+        nbt.putLong("PurgeRefreshCycle", this.purgeRefreshCycle);
+        nbt.putLong("PurgeRefreshDay", this.purgeRefreshDay);
+        nbt.putInt("PurgeRefreshesUsedToday", this.purgeRefreshesUsedToday);
+        nbt.putInt("PurgeMobKills", this.purgeMobKills);
+        nbt.putInt("PurgeOreBreaks", this.purgeOreBreaks);
+        nbt.putInt("PurgeTrashEarned", this.purgeTrashEarned);
+
+        ListTag purgeTaskList = new ListTag();
+        for (PurgeCommissionTask task : this.purgeTasks) {
+            purgeTaskList.add(task.save());
+        }
+        nbt.put("PurgeTasks", purgeTaskList);
+
+        ListTag listBonfires = new ListTag();
+        for (BonfireEntry entry : unlockedBonfires) {
+            CompoundTag tag = new CompoundTag();
+            tag.putString("Dim", entry.pos.dimension().location().toString());
+            tag.putInt("X", entry.pos.pos().getX());
+            tag.putInt("Y", entry.pos.pos().getY());
+            tag.putInt("Z", entry.pos.pos().getZ());
+            tag.putString("Name", entry.name);
+            tag.putString("Desc", entry.description);
+            listBonfires.add(tag);
+        }
+        nbt.put("UnlockedBonfires", listBonfires);
+
+        ListTag listCov = new ListTag();
+        for (String s : unlockedCovenants) {
+            listCov.add(StringTag.valueOf(s));
+        }
+        nbt.put("UnlockedCovenants", listCov);
+        if (originalSpiritsInitialized || originalNodenProgressKnown || !originalCovenants.isEmpty()) {
+            CompoundTag spirits = new CompoundTag();
+            spirits.putInt("Version", 1);
+            spirits.putBoolean("Initialized", originalSpiritsInitialized);
+            spirits.putIntArray("Owned", originalSpirits.stream().mapToInt(Integer::intValue).toArray());
+            spirits.putInt("Partner", originalSpiritPartner);
+            spirits.putBoolean("NodenProgressKnown", originalNodenProgressKnown);
+            spirits.putBoolean("NodenPledged", originalNodenPledged);
+            spirits.putLong("NodenStage", originalNodenStage);
+            if (!originalCovenants.isEmpty()) {
+                ListTag covenants = new ListTag();
+                originalCovenants.entrySet().stream().sorted(java.util.Map.Entry.comparingByKey()).forEach(entry -> {
+                    CompoundTag covenant = new CompoundTag();
+                    covenant.putInt("CommonEvent", entry.getKey());
+                    covenant.putBoolean("Pledged", entry.getValue().pledged());
+                    covenant.putLong("Stage", entry.getValue().stage());
+                    covenants.add(covenant);
+                });
+                spirits.put("Covenants", covenants);
+            }
+            nbt.put("OriginalSpiritState", spirits);
+        }
+
+        ListTag listSkill = new ListTag();
+        for (String s : unlockedSkills) {
+            listSkill.add(StringTag.valueOf(s));
+        }
+        nbt.put("UnlockedSkills", listSkill);
+
+        return nbt;
+    }
+
+    @SuppressWarnings("removal")
+    public void deserializeNBT(CompoundTag nbt) {
+        if (nbt.contains("OriginalSpiritState") && !nbt.contains("OriginalSpiritState", Tag.TAG_COMPOUND)) {
+            throw new IllegalArgumentException("Invalid original spirit state type");
+        }
+        CompoundTag spirits = nbt.getCompound("OriginalSpiritState");
+        List<Integer> owned = new ArrayList<>();
+        java.util.Map<Integer, CovenantProgress> covenantProgress = new java.util.HashMap<>();
+        if (nbt.contains("OriginalSpiritState")) {
+            if (spirits.getInt("Version") != 1 || !spirits.contains("Initialized", Tag.TAG_BYTE)
+                    || !spirits.contains("Owned", Tag.TAG_INT_ARRAY) || !spirits.contains("Partner", Tag.TAG_INT)
+                    || !spirits.contains("NodenProgressKnown", Tag.TAG_BYTE) || !spirits.contains("NodenPledged", Tag.TAG_BYTE)
+                    || !spirits.contains("NodenStage", Tag.TAG_LONG)) {
+                throw new IllegalArgumentException("Invalid original spirit state");
+            }
+            for (int id : spirits.getIntArray("Owned")) {
+                if (id < 1 || id > 68 || owned.contains(id)) throw new IllegalArgumentException("Invalid original spirit ownership");
+                owned.add(id);
+            }
+            if (spirits.getInt("Partner") != 0 && !owned.contains(spirits.getInt("Partner"))) {
+                throw new IllegalArgumentException("Unowned original spirit partner");
+            }
+            if (spirits.contains("Covenants")) {
+                if (!spirits.contains("Covenants", Tag.TAG_LIST)) throw new IllegalArgumentException("Invalid original covenant progress type");
+                ListTag covenants = (ListTag) spirits.get("Covenants");
+                if (!covenants.isEmpty() && covenants.getElementType() != Tag.TAG_COMPOUND) throw new IllegalArgumentException("Invalid original covenant progress list");
+                for (Tag value : covenants) {
+                    CompoundTag covenant = (CompoundTag) value;
+                    if (!covenant.contains("CommonEvent", Tag.TAG_INT) || !covenant.contains("Pledged", Tag.TAG_BYTE)
+                            || !covenant.contains("Stage", Tag.TAG_LONG)) throw new IllegalArgumentException("Invalid original covenant progress");
+                    int common = covenant.getInt("CommonEvent");
+                    if (common == 80 || yuki135.blacksouls.util.OriginalCovenantData.get(common) == null
+                            || covenantProgress.put(common, new CovenantProgress(covenant.getBoolean("Pledged"), covenant.getLong("Stage"))) != null) {
+                        throw new IllegalArgumentException("Unknown or duplicate original covenant progress");
+                    }
+                }
+            }
+        }
+        originalSpiritsInitialized = spirits.getBoolean("Initialized");
+        originalSpirits = owned;
+        originalSpiritPartner = spirits.getInt("Partner");
+        originalNodenProgressKnown = spirits.getBoolean("NodenProgressKnown");
+        originalNodenPledged = spirits.getBoolean("NodenPledged");
+        originalNodenStage = spirits.getLong("NodenStage");
+        originalCovenants = covenantProgress;
+        this.level = Math.max(1, nbt.getInt("Level"));
+        this.developerNoCooldown = nbt.getBoolean("DeveloperNoCooldown");
+        this.developerLimitBreak = nbt.getBoolean("DeveloperLimitBreak");
+        this.currentExp = nbt.getLong("Exp");
+        this.mp = nbt.getDouble("MP");
+        this.currentActionPoints = nbt.contains("CurrentActionPoints") ? nbt.getDouble("CurrentActionPoints") : 1.0;
+        this.bonusHp = nbt.getDouble("BonusHP");
+        this.bonusMp = nbt.getDouble("BonusMP");
+        this.bonusAtk = nbt.getDouble("BonusATK");
+        this.bonusDef = nbt.getDouble("BonusDEF");
+        this.bonusMatk = nbt.getDouble("BonusMATK");
+        this.bonusMdef = nbt.getDouble("BonusMDEF");
+        this.bonusLuc = nbt.getDouble("BonusLUC");
+        this.bonusSpeed = nbt.getDouble("BonusSPEED");
+        this.sen = nbt.getInt("Sen");
+        this.hasVisitedLibrary = nbt.getBoolean("HasVisitedLibrary");
+        this.whiteBearIntroduced = nbt.getBoolean("WhiteBearIntroduced");
+        this.whiteBearFreeSoulsClaimed = nbt.getBoolean("WhiteBearFreeSoulsClaimed");
+        this.whiteBearProgress = Math.max(0, Math.min(12, nbt.getInt("WhiteBearProgress")));
+        this.burnRate = nbt.getDouble("BurnRate");
+        this.instantDeathRate = nbt.getDouble("InstantDeathRate");
+        this.stunRate = nbt.getDouble("StunRate");
+        this.mpRegenRate = nbt.getDouble("MpRegenRate");
+        this.skillZ = nbt.getString("SkillZ");
+        this.skillX = nbt.getString("SkillX");
+        this.skillC = nbt.getString("SkillC");
+        this.skillV = nbt.getString("SkillV");
+        this.activeCovenant = nbt.getString("ActiveCovenant");
+        this.nodenCovenantLevel = nbt.getInt("NodenCovenantLevel");
+        this.souls = nbt.getLong("Souls");
+        this.lostSouls = nbt.getLong("LostSouls");
+        this.lostX = nbt.getDouble("LostX");
+        this.lostY = nbt.getDouble("LostY");
+        this.lostZ = nbt.getDouble("LostZ");
+        this.lostDim = nbt.getString("LostDim");
+        this.purgeRefreshCycle = nbt.contains("PurgeRefreshCycle") ? nbt.getLong("PurgeRefreshCycle") : -1L;
+        this.purgeRefreshDay = nbt.contains("PurgeRefreshDay") ? nbt.getLong("PurgeRefreshDay") : -1L;
+        this.purgeRefreshesUsedToday = nbt.getInt("PurgeRefreshesUsedToday");
+        this.purgeMobKills = nbt.getInt("PurgeMobKills");
+        this.purgeOreBreaks = nbt.getInt("PurgeOreBreaks");
+        this.purgeTrashEarned = nbt.getInt("PurgeTrashEarned");
+        this.purgeTasks.clear();
+        if (nbt.contains("PurgeTasks", Tag.TAG_LIST)) {
+            ListTag purgeTaskList = nbt.getList("PurgeTasks", Tag.TAG_COMPOUND);
+            for (int i = 0; i < purgeTaskList.size(); i++) {
+                this.purgeTasks.add(PurgeCommissionTask.load(purgeTaskList.getCompound(i)));
+            }
+        }
+        this.vorpalLastTime = nbt.getLong("VorpalLastTime");
+        this.vorpalComboStage = nbt.getInt("VorpalComboStage");
+
+        this.unlockedBonfires.clear();
+        if (nbt.contains("UnlockedBonfires")) {
+            ListTag listBonfires = nbt.getList("UnlockedBonfires", Tag.TAG_COMPOUND);
+            for (int i = 0; i < listBonfires.size(); i++) {
+                CompoundTag tag = listBonfires.getCompound(i);
+                net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> dim =
+                        net.minecraft.resources.ResourceKey.create(
+                                net.minecraft.core.registries.Registries.DIMENSION,
+                                new net.minecraft.resources.ResourceLocation(tag.getString("Dim"))
+                        );
+                net.minecraft.core.BlockPos pos = new net.minecraft.core.BlockPos(tag.getInt("X"), tag.getInt("Y"), tag.getInt("Z"));
+                this.unlockedBonfires.add(new BonfireEntry(
+                        net.minecraft.core.GlobalPos.of(dim, pos),
+                        tag.getString("Name"),
+                        tag.getString("Desc")
+                ));
+            }
+        }
+
+        this.unlockedCovenants.clear();
+        ListTag listCov = nbt.getList("UnlockedCovenants", Tag.TAG_STRING);
+        for (int i = 0; i < listCov.size(); i++) {
+            this.unlockedCovenants.add(listCov.getString(i));
+        }
+
+        this.unlockedSkills.clear();
+        ListTag listSkill = nbt.getList("UnlockedSkills", Tag.TAG_STRING);
+        for (int i = 0; i < listSkill.size(); i++) {
+            this.unlockedSkills.add(listSkill.getString(i));
+        }
+
+        recalculateStats();
+        clampActionPoints();
+    }
+
+    public void addPermanentStat(String type, double amount) {
+        switch (type) {
+            case "HP": bonusHp += amount; break;
+            case "MP": bonusMp += amount; break;
+            case "ATK": bonusAtk += amount; break;
+            case "DEF": bonusDef += amount; break;
+            case "MATK": bonusMatk += amount; break;
+            case "MDEF": bonusMdef += amount; break;
+            case "LUC": bonusLuc += amount; break;
+            case "SPEED": bonusSpeed += amount; break;
+            default: break;
+        }
+        recalculateStats();
+    }
+
+    public void addExp(long amount) {
+        int levelLimit = getLevelLimit();
+        if (this.level >= levelLimit || amount <= 0L) {
+            return;
+        }
+        this.currentExp = amount > Long.MAX_VALUE - this.currentExp ? Long.MAX_VALUE : this.currentExp + amount;
+        if (this.currentExp >= getExpToReachLevel(this.level + 1)) {
+            int low = this.level + 1;
+            int high = levelLimit;
+            int reached = this.level;
+            while (low <= high) {
+                int middle = low + (high - low) / 2;
+                if (getExpToReachLevel(middle) <= this.currentExp) {
+                    reached = middle;
+                    low = middle + 1;
+                } else {
+                    high = middle - 1;
+                }
+            }
+            this.level = reached;
+        }
+        recalculateStats();
+    }
+
+    public int getLevelLimit() {
+        return this.developerLimitBreak ? DEVELOPER_MAX_LEVEL : NORMAL_MAX_LEVEL;
+    }
+
+    public void changeExp(long total) {
+        currentExp = Math.max(0L, total);
+        int low = 1, high = getLevelLimit(), reached = 1;
+        while (low <= high) {
+            int middle = low + (high - low) / 2;
+            if (getExpToReachLevel(middle) <= currentExp) {
+                reached = middle;
+                low = middle + 1;
+            } else {
+                high = middle - 1;
+            }
+        }
+        level = reached;
+        recalculateStats();
+    }
+
+    public boolean consumeMP(float amount) {
+        if (this.mp >= amount) {
+            this.mp -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    public void restoreMP(double amount) {
+        this.mp = Math.min(this.maxMp, this.mp + amount);
+    }
+
+    public void recalculateStats() {
+        recalculateBaseStats();
+        applyOriginalSpiritParameters();
+        var spirit = getOriginalSpirit();
+        if (spirit != null) critRate = Math.min(100.0D, critRate + spirit.sum(22, 2) * 100.0D);
+    }
+
+    public void recalculateBaseStats() {
+        int l = Math.max(1, Math.min(getLevelLimit(), this.level));
+
+        double baseHp = getRMStat(l, 638, 6680, 61);
+        double baseMp = getRMStat(l, 100, 205, 1);
+        double baseAtk = getRMStat(l, 16, 180, 1);
+        double baseDef = getRMStat(l, 16, 122, 1);
+        double baseMatk = getRMStat(l, 10, 160, 1);
+        double baseMdef = getRMStat(l, 10, 112, 1);
+        double baseLuc = getRMStat(l, 10, 248, 2);
+        double baseSpeed = getRMStat(l, 40, 318, 2);
+
+        double finalHp = baseHp + this.bonusHp;
+
+        if (this.developerLimitBreak) {
+            this.hp = Math.max(1.0D, finalHp);
+            this.maxMp = Math.max(0.0D, baseMp + this.bonusMp);
+            this.attack = Math.max(0.0D, baseAtk + this.bonusAtk);
+            this.defense = Math.max(0.0D, baseDef + this.bonusDef);
+            this.magicAttack = Math.max(0.0D, baseMatk + this.bonusMatk);
+            this.magicDefense = Math.max(0.0D, baseMdef + this.bonusMdef);
+            this.luck = Math.max(0.0D, baseLuc + this.bonusLuc);
+            this.speed = Math.max(0.0D, baseSpeed + this.bonusSpeed);
+        } else {
+            this.hp = Math.min(HARD_CAP_HP, finalHp);
+            this.maxMp = Math.min(HARD_CAP_MP, baseMp + this.bonusMp);
+            this.attack = Math.min(HARD_CAP_OTHER, baseAtk + this.bonusAtk);
+            this.defense = Math.min(HARD_CAP_OTHER, baseDef + this.bonusDef);
+            this.magicAttack = Math.min(HARD_CAP_OTHER, baseMatk + this.bonusMatk);
+            this.magicDefense = Math.min(HARD_CAP_OTHER, baseMdef + this.bonusMdef);
+            this.luck = Math.min(HARD_CAP_OTHER, baseLuc + this.bonusLuc);
+            this.speed = Math.min(HARD_CAP_OTHER, baseSpeed + this.bonusSpeed);
+        }
+
+        this.critRate = Math.min(100.0, 5.0 + this.bonusCritRate);
+        this.evasion = Math.min(100.0, Math.max(0.0, this.evasion));
+        this.magicEvasion = Math.min(100.0, Math.max(0.0, this.magicEvasion));
+        this.maxExp = getExpToReachLevel(this.level + 1);
+    }
+
+    private double getRMStat(int level, double val1, double val99, double delta99) {
+        if (level <= 99) {
+            return Math.ceil(val1 + (val99 - val1) * (level - 1) / 98.0);
+        }
+        double limitBreakBonus = Math.floor(delta99 * (level - 99) * 1.05);
+        return val99 + limitBreakBonus;
+    }
+
+    public double getBaseHpBeforeCovenant() {
+        return getRMStat(Math.max(1, Math.min(getLevelLimit(), level)), 638, 6680, 61) + bonusHp;
+    }
+
+    public double getNodenHpMultiplier() {
+        return getOriginalSpiritRate(21, 0);
+    }
+
+    public double getNodenItemRecoveryMultiplier() {
+        return getOriginalSpiritRate(23, 3);
+    }
+
+    public yuki135.blacksouls.util.OriginalSpiritData.Entry getOriginalSpirit() {
+        int id = originalSpiritsInitialized ? originalSpirits.contains(originalSpiritPartner) ? originalSpiritPartner : 0
+                : "noden".equals(activeCovenant) && nodenCovenantLevel >= 0 && nodenCovenantLevel <= 3 ? nodenCovenantLevel + 1 : 0;
+        return yuki135.blacksouls.util.OriginalSpiritData.get(id);
+    }
+
+    public double getOriginalSpiritRate(int code, int dataId) {
+        var spirit = getOriginalSpirit();
+        return spirit == null ? 1.0D : spirit.rate(code, dataId);
+    }
+
+    public void applyOriginalSpiritParameters() {
+        var spirit = getOriginalSpirit();
+        if (spirit == null) return;
+        hp = applyOriginalSpiritParameter(hp, spirit.rate(21, 0), spirit.parameterAddition(0), 1.0D, HARD_CAP_HP);
+        maxMp = applyOriginalSpiritParameter(maxMp, spirit.rate(21, 1), spirit.parameterAddition(1), 0.0D, HARD_CAP_MP);
+        attack = applyOriginalSpiritParameter(attack, spirit.rate(21, 2), spirit.parameterAddition(2), 1.0D, HARD_CAP_OTHER);
+        defense = applyOriginalSpiritParameter(defense, spirit.rate(21, 3), spirit.parameterAddition(3), 1.0D, HARD_CAP_OTHER);
+        magicAttack = applyOriginalSpiritParameter(magicAttack, spirit.rate(21, 4), spirit.parameterAddition(4), 1.0D, HARD_CAP_OTHER);
+        magicDefense = applyOriginalSpiritParameter(magicDefense, spirit.rate(21, 5), spirit.parameterAddition(5), 1.0D, HARD_CAP_OTHER);
+        speed = applyOriginalSpiritParameter(speed, spirit.rate(21, 6), spirit.parameterAddition(6), 1.0D, HARD_CAP_OTHER);
+        luck = applyOriginalSpiritParameter(luck, spirit.rate(21, 7), spirit.parameterAddition(7), 1.0D, HARD_CAP_OTHER);
+    }
+
+    private double applyOriginalSpiritParameter(double value, double rate, int addition, double minimum, double maximum) {
+        if (rate == 1.0D && addition == 0) return value;
+        double result = Math.max(minimum, Math.floor(value * rate) + addition);
+        return developerLimitBreak ? result : Math.min(maximum, result);
+    }
+
+    public void applyOriginalSpiritDerivedStats() {
+        var spirit = getOriginalSpirit();
+        if (spirit == null) return;
+        evasion += spirit.sum(22, 1) * 100.0D;
+        critRate += spirit.sum(22, 2) * 100.0D;
+        magicEvasion += spirit.sum(22, 4) * 100.0D;
+        hpRegenRate += spirit.sum(22, 7);
+        mpRegenRate += spirit.sum(22, 8);
+        targetingRate *= spirit.rate(23, 0);
+        mpCostRate *= spirit.rate(23, 4);
+    }
+
+    public record CovenantProgress(boolean pledged, long stage) {
+    }
+
+    public static class PurgeCommissionTask {
+        public String category;
+        public String targetId;
+        public int required;
+        public int progress;
+        public String rewardItemId;
+        public int rewardCount;
+        public boolean rewarded;
+
+        public PurgeCommissionTask(String category, String targetId, int required, int progress, String rewardItemId, int rewardCount, boolean rewarded) {
+            this.category = category;
+            this.targetId = targetId;
+            this.required = required;
+            this.progress = progress;
+            this.rewardItemId = rewardItemId;
+            this.rewardCount = rewardCount;
+            this.rewarded = rewarded;
+        }
+
+        public boolean isComplete() {
+            return this.progress >= this.required;
+        }
+
+        public CompoundTag save() {
+            CompoundTag tag = new CompoundTag();
+            tag.putString("Category", this.category);
+            tag.putString("TargetId", this.targetId);
+            tag.putInt("Required", this.required);
+            tag.putInt("Progress", this.progress);
+            tag.putString("RewardItemId", this.rewardItemId);
+            tag.putInt("RewardCount", this.rewardCount);
+            tag.putBoolean("Rewarded", this.rewarded);
+            return tag;
+        }
+
+        public static PurgeCommissionTask load(CompoundTag tag) {
+            return new PurgeCommissionTask(
+                    tag.getString("Category"),
+                    tag.getString("TargetId"),
+                    tag.getInt("Required"),
+                    tag.getInt("Progress"),
+                    tag.getString("RewardItemId"),
+                    tag.getInt("RewardCount"),
+                    tag.getBoolean("Rewarded")
+            );
+        }
+    }
+
+    public long getExpToReachLevel(int targetLevel) {
+        if (targetLevel <= 1) {
+            return 0;
+        }
+
+        if (targetLevel < EXP_THRESHOLDS.length) {
+            return EXP_THRESHOLDS[targetLevel];
+        }
+
+        return calculateExpThreshold(targetLevel);
+    }
+
+    private static long[] createExpThresholds() {
+        long[] thresholds = new long[NORMAL_MAX_LEVEL + 2];
+        for (int level = 2; level < thresholds.length; level++) {
+            thresholds[level] = calculateExpThreshold(level);
+        }
+        return thresholds;
+    }
+
+    private static long calculateExpThreshold(int targetLevel) {
+        double basis = 30.0;
+        double extra = 0.0;
+        double accA = 10.0;
+        double accB = 10.0;
+        double lv = targetLevel;
+        double val = basis * Math.pow(lv - 1, 0.9 + accA / 250.0) * lv * (lv + 1) /
+                (6.0 + Math.pow(lv, 2) / 50.0 / accB) + (lv - 1) * extra;
+
+        return Math.round(val);
+    }
+
+    public static class Provider implements net.minecraftforge.common.capabilities.ICapabilitySerializable<CompoundTag> {
+        private final BSPlayerStats instance = new BSPlayerStats();
+        private final LazyOptional<BSPlayerStats> optional = LazyOptional.of(() -> instance);
+
+        @NotNull
+        @Override
+        public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
+            return CAPABILITY.orEmpty(cap, optional);
+        }
+
+        @Override
+        public CompoundTag serializeNBT() {
+            return instance.serializeNBT();
+        }
+
+        @Override
+        public void deserializeNBT(CompoundTag nbt) {
+            instance.deserializeNBT(nbt);
+        }
+    }
+}
