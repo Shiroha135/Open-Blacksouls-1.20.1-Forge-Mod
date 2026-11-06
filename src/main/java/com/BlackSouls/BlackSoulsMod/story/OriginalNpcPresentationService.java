@@ -47,7 +47,7 @@ public final class OriginalNpcPresentationService {
         List<Double> values = new ArrayList<>();
         String sound = "";
         switch (code) {
-            case 221, 222, 243, 244 -> {
+            case 221, 222, 243, 244, OriginalNonExplicitScenes.FADE_COMMAND -> {
             }
             case 223, 224 -> {
                 double[] channels = decodeChannels(object(parameters, 0), code == 223);
@@ -106,6 +106,7 @@ public final class OriginalNpcPresentationService {
     public static int waitTicks(int code, List<JsonElement> parameters) {
         return switch (code) {
             case 221, 222 -> 10;
+            case OriginalNonExplicitScenes.FADE_COMMAND -> OriginalNonExplicitScenes.FADE_TICKS;
             case 223, 224 -> bool(parameters, 2) ? framesToTicks(integer(parameters, 1, 0, 360000)) : 0;
             case 225 -> bool(parameters, 3) ? framesToTicks(integer(parameters, 2, 0, 360000)) : 0;
             case 213 -> bool(parameters, 2) ? framesToTicks(76) : 0;

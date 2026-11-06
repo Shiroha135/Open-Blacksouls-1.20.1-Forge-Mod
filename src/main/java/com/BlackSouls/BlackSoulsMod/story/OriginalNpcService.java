@@ -460,6 +460,11 @@ public final class OriginalNpcService {
                 session.lastText = saved.has("lastText") ? saved.get("lastText").getAsString() : "";
                 session.lastPortrait = saved.has("lastPortrait") ? saved.get("lastPortrait").getAsString() : "";
                 session.lastPortraitIndex = saved.has("lastPortraitIndex") ? saved.get("lastPortraitIndex").getAsInt() : 0;
+                if (interpreter.omittedOnRestore()) {
+                    session.lastText = "";
+                    session.lastPortrait = "";
+                    session.lastPortraitIndex = 0;
+                }
                 session.restoringPresentation = true;
                 if (saved.has("synthesisRecipes")) {
                     List<Integer> recipes = new ArrayList<>();
@@ -476,6 +481,7 @@ public final class OriginalNpcService {
                 SESSIONS.put(player.getUUID(), session);
                 OriginalNpcConversationMovement.start(player, npc);
                 OriginalNpcInterpreter.Prompt prompt = interpreter.pendingPrompt();
+                boolean restoredWait = prompt != null && prompt.type() == OriginalNpcInterpreter.Type.WAIT;
                 if (prompt == null) {
                     prompt = interpreter.advance(-1);
                 } else if (prompt.type() == OriginalNpcInterpreter.Type.BLOCKED) {
@@ -483,7 +489,7 @@ public final class OriginalNpcService {
                 } else if (prompt.type() == OriginalNpcInterpreter.Type.NUMBER_INPUT) {
                     prompt = interpreter.refreshNumberInput();
                 }
-                if (prompt.type() == OriginalNpcInterpreter.Type.WAIT && saved.has("waitRemaining")) {
+                if (restoredWait && prompt.type() == OriginalNpcInterpreter.Type.WAIT && saved.has("waitRemaining")) {
                     prompt = new OriginalNpcInterpreter.Prompt(prompt.revision(), prompt.type(), prompt.text(),
                             prompt.portrait(), prompt.portraitIndex(), prompt.choices(), prompt.goods(), prompt.reason(),
                             prompt.battle(), Math.max(0, saved.get("waitRemaining").getAsInt()));
@@ -606,6 +612,7 @@ public final class OriginalNpcService {
             return;
         }
         if (npc instanceof EntityCheshireCat && CHESHIRE_LOGIC.equals(session.npcId)
+                && !session.interpreter.omitsSelectedScene(selection)
                 && unsupportedCheshireChoice(session, selection)) {
             checkpoint(player, session);
             SESSIONS.remove(player.getUUID(), session);
@@ -926,8 +933,14 @@ public final class OriginalNpcService {
 
         @Override
         public boolean switchValue(int id) {
+            if (id == 20) return true;
             if (player != null && (id == 11 || id == 12)) return OriginalPlayerMoveSpeed.switchValue(player, id);
             return player != null ? OriginalNpcProgress.readSwitch(player, id) : progress.switchValue(id);
+        }
+
+        @Override
+        public boolean nonExplicitScenes() {
+            return true;
         }
 
         @Override

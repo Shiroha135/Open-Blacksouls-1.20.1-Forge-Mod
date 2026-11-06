@@ -28,10 +28,11 @@ public final class OriginalNpcInterpreter {
     private Long numberMaximum;
     private final Deque<String> experienceMessages = new ArrayDeque<>();
     private boolean experienceDisplay;
+    private boolean omittedOnRestore;
 
     public OriginalNpcInterpreter(List<BSOriginalNpcData.Command> commands, Context context) {
         this.context = Objects.requireNonNull(context);
-        frames.push(new Frame(commands));
+        frames.push(new Frame(commands, context.nonExplicitScenes(), false));
     }
 
     public Prompt advance(int selection) {
@@ -58,6 +59,7 @@ public final class OriginalNpcInterpreter {
                 return pending;
             }
             frames.peek().choices.put(pendingIndent, selected);
+            frames.peek().omissionFadeShown = false;
         } else if (pending != null && pending.type() == Type.SHOP) {
             if (selection >= 0 && selection < pending.goods().size()) {
                 context.buy(pending.goods().get(selection));
@@ -92,6 +94,18 @@ public final class OriginalNpcInterpreter {
             }
             int commandPosition = frame.position;
             BSOriginalNpcData.Command command = frame.commands.get(frame.position++);
+            boolean omitted = frame.omitted[commandPosition];
+            if (omitted && frame.entireScene && (command.code() == 118 || command.code() == 119)) continue;
+            if (omitted && command.code() == 355 && command.parameters().size() == 1
+                    && List.of("brain_noise_start", "brain_noise_end").contains(text(command.parameters(), 0))) continue;
+            if (omitted && OriginalNonExplicitScenes.presentation(command.code())) {
+                if (command.code() == 221 && !frame.omissionFadeShown) {
+                    frame.omissionFadeShown = true;
+                    context.presentation(OriginalNonExplicitScenes.FADE_COMMAND, List.of());
+                    return waitPrompt(OriginalNonExplicitScenes.FADE_TICKS);
+                }
+                continue;
+            }
             if (!experienceMessages.isEmpty() && (command.code() == 101 || command.code() == 102 || command.code() == 103)) {
                 frame.position--;
                 context.closeMessage();
@@ -133,6 +147,10 @@ public final class OriginalNpcInterpreter {
                         return emit(Type.TEXT, String.join("\n", lines), text(p, 0), integer(p, 1), List.of(), List.of(), "");
                     }
                     case 102 -> {
+                        if (omitted) {
+                            frame.choices.put(command.indent(), 0);
+                            break;
+                        }
                         List<String> choices = new ArrayList<>();
                         p.get(0).getAsJsonArray().forEach(value -> choices.add(value.getAsString()));
                         pendingIndent = command.indent();
@@ -171,7 +189,16 @@ public final class OriginalNpcInterpreter {
                         if (common == null || frames.size() >= 32) {
                             throw new UnsupportedOperationException("common_event:" + integer(p, 0));
                         }
-                        frames.push(new Frame(common));
+                        boolean scene = context.nonExplicitScenes() && OriginalNonExplicitScenes.isScene(integer(p, 0));
+                        Frame child = new Frame(common, context.nonExplicitScenes(), omitted || scene);
+                        frames.push(child);
+                        if ((scene || omitted) && !frame.omissionFadeShown) {
+                            frame.omissionFadeShown = true;
+                            child.omissionFadeShown = true;
+                            context.presentation(OriginalNonExplicitScenes.FADE_COMMAND, List.of());
+                            return waitPrompt(OriginalNonExplicitScenes.FADE_TICKS);
+                        }
+                        if (scene || omitted) child.omissionFadeShown = true;
                     }
                     case 118 -> {
                         String label = text(p, 0);
@@ -514,6 +541,8 @@ public final class OriginalNpcInterpreter {
             }
             saved.add("commands", commands);
             saved.addProperty("position", frame.position);
+            saved.addProperty("omittedScene", frame.entireScene);
+            saved.addProperty("omissionFadeShown", frame.omissionFadeShown);
             saved.add("choices", saveMap(frame.choices));
             saved.add("loops", saveMap(frame.loops));
             saved.add("battles", saveMap(frame.battles));
@@ -587,7 +616,8 @@ public final class OriginalNpcInterpreter {
                 }
                 commands.add(new BSOriginalNpcData.Command(savedInt(command, "code"), indent, parameters));
             }
-            Frame frame = new Frame(commands);
+            Frame frame = new Frame(commands, context.nonExplicitScenes(), saved.has("omittedScene") && saved.get("omittedScene").getAsBoolean());
+            frame.omissionFadeShown = saved.has("omissionFadeShown") && saved.get("omissionFadeShown").getAsBoolean();
             frame.position = savedInt(saved, "position");
             if (frame.position < 0 || frame.position > commands.size()) {
                 throw new IllegalArgumentException("Invalid original NPC snapshot position");
@@ -608,7 +638,35 @@ public final class OriginalNpcInterpreter {
                 && !(result.pending.type() == Type.TEXT && result.experienceDisplay))) {
             throw new IllegalArgumentException("Inconsistent original NPC snapshot prompt");
         }
+        if (context.nonExplicitScenes() && !result.frames.isEmpty() && result.pending != null) {
+            Frame current = result.frames.peek();
+            int cursor = current.position;
+            boolean currentOmitted = cursor < current.omitted.length && current.omitted[cursor];
+            boolean previousOmitted = cursor > 0 && current.omitted[cursor - 1];
+            result.omittedOnRestore = currentOmitted || previousOmitted;
+            if (result.omittedOnRestore && (result.pending.type() == Type.TEXT || result.pending.type() == Type.ROUTE_WAIT
+                    || result.pending.type() == Type.ANIMATION_WAIT
+                    || result.pending.type() == Type.WAIT && !current.omissionFadeShown)) result.pending = null;
+        }
         return result;
+    }
+
+    public boolean omittedOnRestore() {
+        return omittedOnRestore;
+    }
+
+    public boolean omitsSelectedScene(int selection) {
+        if (pending == null || pending.type() != Type.CHOICE || selection < 0 || frames.isEmpty()) return false;
+        Frame frame = frames.peek();
+        for (int index = frame.position; index < frame.commands.size(); index++) {
+            var command = frame.commands.get(index);
+            if (command.indent() != pendingIndent) continue;
+            if (command.code() == 404) return false;
+            if (command.code() == 402 && integer(command.parameters(), 0) == selection) {
+                return index + 1 < frame.omitted.length && frame.omitted[index + 1];
+            }
+        }
+        return false;
     }
 
     private static boolean presentationCommand(int code) {
@@ -916,13 +974,18 @@ public final class OriginalNpcInterpreter {
 
     private static final class Frame {
         private final List<BSOriginalNpcData.Command> commands;
+        private final boolean entireScene;
+        private final boolean[] omitted;
+        private boolean omissionFadeShown;
         private final Map<Integer, Integer> choices = new HashMap<>();
         private final Map<Integer, Integer> loops = new HashMap<>();
         private final Map<Integer, Integer> battles = new HashMap<>();
         private int position;
 
-        private Frame(List<BSOriginalNpcData.Command> commands) {
+        private Frame(List<BSOriginalNpcData.Command> commands, boolean nonExplicit, boolean inheritedScene) {
             this.commands = List.copyOf(commands);
+            this.entireScene = nonExplicit && (inheritedScene || OriginalNonExplicitScenes.isScene(commands));
+            this.omitted = nonExplicit ? OriginalNonExplicitScenes.omittedCommands(commands, entireScene) : new boolean[commands.size()];
         }
     }
 
@@ -967,6 +1030,9 @@ public final class OriginalNpcInterpreter {
     }
 
     public interface Context {
+        default boolean nonExplicitScenes() {
+            return false;
+        }
         default void changeSkill(int actorId, int skillId, boolean learn) {
             throw new UnsupportedOperationException("unmapped_actor_skill:" + actorId + ":" + skillId);
         }
