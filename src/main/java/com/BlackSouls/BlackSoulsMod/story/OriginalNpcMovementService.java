@@ -75,12 +75,56 @@ public final class OriginalNpcMovementService {
                 sourceId, runner);
         ticket.sourceMap = sourceMap;
         ticket.validated = true;
+        if (subject instanceof EntityOriginalNpc original && original.hasOriginalAutonomy()) {
+            var autonomous = original.originalAutonomousRoute();
+            if (autonomous.motion != null) {
+                ticket.motion = autonomous.motion;
+                ticket.gravityCaptured = autonomous.gravityCaptured;
+                ticket.originalNoGravity = autonomous.originalNoGravity;
+                autonomous.motion = null;
+                autonomous.gravityCaptured = false;
+            }
+        }
         data.add(ticket);
         if (subject instanceof EntityOriginalNpc original) original.beginForcedRoute(id);
         else if (subject instanceof EntityCheshireCat cat) cat.beginForcedRoute(id);
         else if (subject instanceof EntityRabbitKnight rabbit) rabbit.beginForcedRoute(id);
         data.setDirty();
         return id;
+    }
+
+    public static void clearAutonomousMotion(EntityOriginalNpc npc) {
+        var autonomous = npc.originalAutonomousRoute();
+        if (autonomous == null) return;
+        if (autonomous.gravityCaptured) npc.setNoGravity(autonomous.originalNoGravity);
+        autonomous.motion = null;
+        autonomous.gravityCaptured = false;
+    }
+
+    public static boolean tickAutonomous(EntityOriginalNpc npc) {
+        if (!npc.hasOriginalAutonomy() || !(npc.level() instanceof ServerLevel level)) return false;
+        if (!level.dimension().equals(com.BlackSouls.BlackSoulsMod.util.HokoniwaDestination.DIMENSION)) return false;
+        ServerPlayer owner = level.getServer().getPlayerList().getPlayers().stream()
+                .filter(player -> player.serverLevel() == level && player.isAlive() && !player.isSpectator() && player.distanceToSqr(npc) <= 1024.0D)
+                .min(java.util.Comparator.comparingDouble(player -> player.distanceToSqr(npc))).orElse(null);
+        var context = new RouteContext(owner, npc, npc.originalAutonomousRoute());
+        for (int frame = 0; frame < 3; frame++) npc.originalAutonomousRoute().advanceFrame(context);
+        return true;
+    }
+
+    public static boolean isDodoLocalPosition(double x, double z) {
+        return x >= 821.0D && x < 886.0D && z >= -613.0D && z < -583.0D;
+    }
+
+    public static void validateAutonomousState(EntityOriginalNpc npc) {
+        var motion = npc.originalAutonomousRoute().motion;
+        if (motion == null) return;
+        if (!npc.level().dimension().equals(com.BlackSouls.BlackSoulsMod.util.HokoniwaDestination.DIMENSION)
+                || !isDodoLocalPosition(motion.x(), motion.z())
+                || !isDodoLocalPosition(motion.snapshot().get("startX").getAsDouble(), motion.snapshot().get("startZ").getAsDouble())
+                || !isDodoLocalPosition(motion.snapshot().get("targetX").getAsDouble(), motion.snapshot().get("targetZ").getAsDouble())) {
+            throw new IllegalArgumentException("Invalid original autonomous movement map");
+        }
     }
 
     public static boolean waitRequested(JsonObject route) {
@@ -181,7 +225,7 @@ public final class OriginalNpcMovementService {
                 if (!npc.getNpcId().equals(ticket.npcId)) continue;
                 refreshPageWhileForcing(npc);
                 if (!npc.forcedRouteTicket().equals(ticket.id)) {
-                    stopMotion(subject, ticket);
+                    stopCancelledMotion(npc, ticket);
                     data.finish(ticket);
                     collect = true;
                     continue;
@@ -218,9 +262,9 @@ public final class OriginalNpcMovementService {
                 for (int frame = 0; frame < 3; frame++) {
                     if (subject instanceof EntityOriginalNpc npc) {
                         refreshPageWhileForcing(npc);
-                        npc.advanceOriginalAnimationFrame();
+                        npc.advanceOriginalForcedAnimationFrame(ticket.motion != null);
                         if (!npc.forcedRouteTicket().equals(ticket.id)) {
-                            stopMotion(subject, ticket);
+                            stopCancelledMotion(npc, ticket);
                             data.finish(ticket);
                             collect = true;
                             break;
@@ -244,8 +288,18 @@ public final class OriginalNpcMovementService {
                         }
                     }
                     if (!ticket.runner.isComplete()) ticket.runner.advanceFrame(context);
+                    if (ticket.runner.isComplete() && subject instanceof EntityOriginalNpc npc && npc.hasOriginalAutonomy()) {
+                        stopMotion(subject, ticket);
+                        data.finish(ticket);
+                        collect = true;
+                        npc.endForcedRoute(ticket.id);
+                        RouteContext autonomous = new RouteContext(owner, npc, npc.originalAutonomousRoute());
+                        npc.originalAutonomousRoute().advanceAfterForcedFrame(autonomous);
+                        for (int remainder = frame + 1; remainder < 3; remainder++) npc.originalAutonomousRoute().advanceFrame(autonomous);
+                        break;
+                    }
                 }
-                if (ticket.runner.isComplete()) {
+                if (ticket.runner.isComplete() && !ticket.complete) {
                     stopMotion(subject, ticket);
                     data.finish(ticket);
                     collect = true;
@@ -277,11 +331,25 @@ public final class OriginalNpcMovementService {
         ticket.motion = null;
     }
 
-    private static final class RouteContext implements OriginalNpcMoveRouteRunner.Context {
+    private static void stopCancelledMotion(EntityOriginalNpc subject, OriginalNpcMovementData.Ticket ticket) {
+        if (subject.hasOriginalAutonomy() && ticket.motion != null) {
+            var autonomous = subject.originalAutonomousRoute();
+            autonomous.motion = ticket.motion;
+            autonomous.gravityCaptured = ticket.gravityCaptured;
+            autonomous.originalNoGravity = ticket.originalNoGravity;
+            ticket.motion = null;
+            ticket.gravityCaptured = false;
+        } else {
+            stopMotion(subject, ticket);
+        }
+    }
+
+    private static final class RouteContext implements OriginalNpcAutonomousRoute.Context {
         private final ServerPlayer owner;
         private final Entity subject;
         private final int sourceMap;
         private final OriginalNpcMovementData.Ticket ticket;
+        private final OriginalNpcAutonomousRoute autonomous;
         private boolean succeeded = true;
 
         private RouteContext(ServerPlayer owner, Entity subject) {
@@ -293,12 +361,40 @@ public final class OriginalNpcMovementService {
             this.subject = subject;
             this.sourceMap = sourceMap;
             this.ticket = ticket;
+            this.autonomous = null;
+        }
+
+        private RouteContext(ServerPlayer owner, EntityOriginalNpc subject, OriginalNpcAutonomousRoute autonomous) {
+            this.owner = owner;
+            this.subject = subject;
+            this.sourceMap = 37;
+            this.ticket = null;
+            this.autonomous = autonomous;
+        }
+
+        @Override
+        public boolean nearScreen() {
+            return owner != null && Math.abs(owner.getX() - subject.getX()) <= 12.0D
+                    && Math.abs(owner.getZ() - subject.getZ()) <= 8.0D;
+        }
+
+        @Override
+        public int moveFrequency() {
+            return state().getInt("MoveFrequency");
+        }
+
+        @Override
+        public void animate(int stopCount) {
+            ((EntityOriginalNpc) subject).advanceOriginalAutonomousAnimationFrame(stopCount);
         }
 
         @Override
         public void validate(int code, List<JsonElement> parameters) {
             if (code >= 1 && code <= 14) {
-                if (sourceMap != 62 || !(subject instanceof EntityOriginalNpc || subject instanceof ServerPlayer)) throw new UnsupportedOperationException("physical_route_map:" + sourceMap);
+                if (sourceMap != 62 && !(sourceMap == 37 && subject instanceof EntityOriginalNpc npc
+                        && npc.hasOriginalAutonomy() && subject.level().dimension().equals(com.BlackSouls.BlackSoulsMod.util.HokoniwaDestination.DIMENSION)
+                        && isDodoLocalPosition(subject.getX(), subject.getZ()))
+                        || !(subject instanceof EntityOriginalNpc || subject instanceof ServerPlayer)) throw new UnsupportedOperationException("physical_route_map:" + sourceMap);
                 return;
             }
             if (subject instanceof EntityCheshireCat || subject instanceof EntityRabbitKnight) {
@@ -307,7 +403,8 @@ public final class OriginalNpcMovementService {
                 }
                 return;
             }
-            if (subject instanceof ServerPlayer && sourceMap == 62 && (code >= 16 && code <= 30 || code >= 35 && code <= 38)) return;
+            if (subject instanceof ServerPlayer && (code == 29 || code == 30
+                    || (sourceMap == 62 || sourceMap == 37) && (code >= 16 && code <= 28 || code >= 35 && code <= 38))) return;
             if (!(subject instanceof EntityOriginalNpc) && code != 0 && code != 15 && code != 27 && code != 28 && code != 44) {
                 throw new UnsupportedOperationException("player_route_sprite:" + code);
             }
@@ -359,10 +456,11 @@ public final class OriginalNpcMovementService {
                 cat.applyOriginalMoveCommand(code, parameters);
             } else if (subject instanceof EntityRabbitKnight rabbit) {
                 rabbit.applyOriginalMoveCommand(code, parameters);
-            } else if (subject instanceof ServerPlayer && sourceMap == 62) {
+            } else if (subject instanceof ServerPlayer) {
                 var state = playerState();
                 if (code >= 16 && code <= 19) face(code == 16 ? 2 : code == 17 ? 4 : code == 18 ? 6 : 8);
-                else if (code == 29 || code == 30) state.putInt(code == 29 ? "MoveSpeed" : "MoveFrequency", parameters.get(0).getAsInt());
+                else if (code == 29) OriginalPlayerMoveSpeed.set(owner, parameters.get(0).getAsInt());
+                else if (code == 30) state.putInt("MoveFrequency", parameters.get(0).getAsInt());
                 else if (code == 35 || code == 36) state.putBoolean("DirectionFixed", code == 35);
                 else if (code == 37 || code == 38) state.putBoolean("Through", code == 37);
                 else if (code >= 20 && code <= 26) {
@@ -383,14 +481,21 @@ public final class OriginalNpcMovementService {
 
         @Override
         public boolean advanceMovementFrame() {
-            if (ticket == null || ticket.motion == null) return false;
-            var motion = ticket.motion;
+            var motion = ticket == null ? autonomous == null ? null : autonomous.motion : ticket.motion;
+            if (motion == null) return false;
             subject.setNoGravity(true);
             motion.advanceFrame();
             subject.setPos(motion.x(), motion.y(), motion.z());
             subject.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
             subject.fallDistance = 0;
-            if (motion.complete()) stopMotion(subject, ticket);
+            if (motion.complete()) {
+                if (ticket != null) stopMotion(subject, ticket);
+                else {
+                    subject.setNoGravity(autonomous.originalNoGravity);
+                    autonomous.motion = null;
+                    autonomous.gravityCaptured = false;
+                }
+            }
             return true;
         }
 
@@ -430,7 +535,7 @@ public final class OriginalNpcMovementService {
         }
 
         private void move(int code, List<JsonElement> parameters) {
-            if (ticket == null) throw new IllegalStateException("Missing physical movement ticket");
+            if (ticket == null && autonomous == null) throw new IllegalStateException("Missing physical movement ticket");
             int dx = 0, dy = 0;
             if (code == 14) {
                 dx = parameters.get(0).getAsInt();dy = parameters.get(1).getAsInt();
@@ -474,14 +579,25 @@ public final class OriginalNpcMovementService {
 
         private boolean startMotion(int dx, int dy, boolean jump) {
             double tx = subject.getX() - dx, tz = subject.getZ() - dy;
+            if (sourceMap == 37 && (!isDodoLocalPosition(subject.getX(), subject.getZ()) || !isDodoLocalPosition(tx, tz))) {
+                throw new UnsupportedOperationException("physical_route_map37_local_bounds");
+            }
             if (!jump && !state().getBoolean("Through") && !clear(dx, dy)) {succeeded = false;return false;}
             int speed = state().getInt("MoveSpeed");
             if (speed < 1 || speed > 6) throw new UnsupportedOperationException("physical_move_speed:" + speed);
             if (!jump && subject instanceof ServerPlayer player && player.isSprinting()) speed++;
-            if (!ticket.gravityCaptured) {ticket.originalNoGravity = subject.isNoGravity();ticket.gravityCaptured = true;}
+            if (ticket != null) {
+                if (!ticket.gravityCaptured) {ticket.originalNoGravity = subject.isNoGravity();ticket.gravityCaptured = true;}
+            } else if (!autonomous.gravityCaptured) {
+                autonomous.originalNoGravity = subject.isNoGravity();
+                autonomous.gravityCaptured = true;
+            }
             subject.setNoGravity(true);
-            ticket.motion = jump ? OriginalNpcMotion.jump(subject.getX(), subject.getY(), subject.getZ(), tx, subject.getY(), tz, speed, dx, dy)
+            OriginalNpcMotion motion = jump ? OriginalNpcMotion.jump(subject.getX(), subject.getY(), subject.getZ(), tx, subject.getY(), tz, speed, dx, dy)
                     : OriginalNpcMotion.walk(subject.getX(), subject.getY(), subject.getZ(), tx, subject.getY(), tz, speed);
+            if (ticket != null) ticket.motion = motion;
+            else autonomous.motion = motion;
+            if (subject instanceof EntityOriginalNpc npc && npc.hasOriginalAutonomy()) npc.originalAutonomousRoute().resetStopCount();
             succeeded = true;
             return true;
         }

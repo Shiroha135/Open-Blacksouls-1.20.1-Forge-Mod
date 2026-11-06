@@ -283,6 +283,19 @@ public final class OriginalNpcInterpreter {
                         if (purchase) frame.position++;
                         if (message != null && !message.isEmpty()) experienceMessages.addLast(message);
                     }
+                    case 318 -> {
+                        if (p.size() != 4) throw new UnsupportedOperationException("actor_skill_parameters");
+                        for (var value : p) {
+                            if (!value.isJsonPrimitive() || !value.getAsJsonPrimitive().isNumber()) throw new UnsupportedOperationException("actor_skill_integer");
+                            value.getAsBigDecimal().intValueExact();
+                        }
+                        int mode = integer(p, 0), actor = integer(p, 1), operation = integer(p, 2), skill = integer(p, 3);
+                        if (mode < 0 || mode > 1 || actor < 0
+                                || operation < 0 || operation > 1 || skill < 1) throw new UnsupportedOperationException("actor_skill_parameters");
+                        int resolved = mode == 0 ? actor : Math.toIntExact(context.variable(actor));
+                        if (resolved < 0) throw new UnsupportedOperationException("actor_skill_actor");
+                        context.changeSkill(resolved, skill, operation == 0);
+                    }
                     case 355 -> {
                         StringBuilder script = new StringBuilder(text(p, 0));
                         while (frame.position < frame.commands.size() && frame.commands.get(frame.position).code() == 655) {
@@ -954,6 +967,10 @@ public final class OriginalNpcInterpreter {
     }
 
     public interface Context {
+        default void changeSkill(int actorId, int skillId, boolean learn) {
+            throw new UnsupportedOperationException("unmapped_actor_skill:" + actorId + ":" + skillId);
+        }
+
         default int transfer(int map, int x, int y, int direction, int fade) {
             throw new UnsupportedOperationException("original_transfer:" + map + ":" + x + ":" + y);
         }

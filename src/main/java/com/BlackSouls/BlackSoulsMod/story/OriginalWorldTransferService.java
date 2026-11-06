@@ -98,10 +98,12 @@ public final class OriginalWorldTransferService {
                 || !OriginalWorldTransferData.coordinate(destination.y) || !OriginalWorldTransferData.coordinate(destination.z)) return false;
         ServerLevel level = player.serverLevel();
         BlockPos feet = BlockPos.containing(destination), floor = BlockPos.containing(destination.add(0, -0.02D, 0));
+        var bounds = player.getBoundingBox().move(destination.subtract(player.position()));
         return feet.getY() >= level.getMinBuildHeight() && feet.getY() + 2 < level.getMaxBuildHeight()
                 && level.getWorldBorder().isWithinBounds(feet) && level.hasChunkAt(feet) && level.hasChunkAt(feet.above(2))
-                && level.getBlockState(floor).isFaceSturdy(level, floor, Direction.UP)
-                && level.noCollision(player, player.getBoundingBox().move(destination.subtract(player.position())));
+                && (level.getBlockState(floor).isFaceSturdy(level, floor, Direction.UP)
+                || OriginalDodoEntry.supportsShapedArrival(player, destination, bounds))
+                && level.noCollision(player, bounds);
     }
 
     private static void transfer(ServerPlayer player, Vec3 destination, float yaw) {

@@ -200,7 +200,16 @@ public final class OriginalNpcService {
     }
 
     public static boolean isConversing(ServerPlayer player) {
+        return SESSIONS.containsKey(player.getUUID()) || OriginalDodoRunService.pending(player);
+    }
+
+    static boolean hasNpcConversation(ServerPlayer player) {
         return SESSIONS.containsKey(player.getUUID());
+    }
+
+    static boolean isConversationActor(UUID owner, EntityOriginalNpc actor) {
+        Session session = SESSIONS.get(owner);
+        return session != null && actor.getUUID().equals(session.npcUuid);
     }
 
     @SubscribeEvent
@@ -358,13 +367,14 @@ public final class OriginalNpcService {
     public static void interact(ServerPlayer player, EntityOriginalNpc npc) {
         if (!matchesActor(npc, npc.getNpcId())) return;
         if (com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(npc.getNpcId())
-                && !OriginalAltarEntry.isBound(player, npc)) return;
+                && !OriginalWorldEventBindings.isBound(player, npc)) return;
         if (com.BlackSouls.BlackSoulsMod.compat.scene.OriginalBillPlacement.INITIAL_NPC.equals(npc.getNpcId())
                 && OriginalBillInteraction.tryInteract(player)) return;
         interact(player, npc, npc.getNpcId(), false);
     }
 
     private static void interact(ServerPlayer player, PathfinderMob npc, String npcId, boolean savedContinuation) {
+        if (OriginalDodoRunService.pending(player)) return;
         boolean available = savedContinuation
                 ? player.isAlive() && npc.isAlive() && !npc.isRemoved() && player.level() == npc.level()
                 : canInteract(player, npc);
@@ -425,6 +435,7 @@ public final class OriginalNpcService {
                 }
                 progress.claimConversation(player.getUUID(), npcId);
                 SESSIONS.put(player.getUUID(), session);
+                OriginalNpcConversationMovement.start(player, npc);
                 OriginalNpcInterpreter.Prompt prompt = interpreter.pendingPrompt();
                 if (prompt == null) {
                     prompt = interpreter.advance(-1);
@@ -456,6 +467,7 @@ public final class OriginalNpcService {
         Session session = new Session(player.getUUID(), npc.getId(), npcId,
                 player.level().dimension().location(), new OriginalNpcInterpreter(page.commands(), context));
         SESSIONS.put(player.getUUID(), session);
+        OriginalNpcConversationMovement.start(player, npc);
         present(player, npc, session, session.interpreter.advance(-1));
     }
 
@@ -500,6 +512,10 @@ public final class OriginalNpcService {
     }
 
     public static void respond(ServerPlayer player, int entityId, UUID sessionId, long revision, int selection) {
+        if (entityId == player.getId()) {
+            OriginalDodoRunService.respond(player, entityId, sessionId, revision, selection);
+            return;
+        }
         Session session = SESSIONS.get(player.getUUID());
         if (session == null || session.entityId != entityId || !session.token.equals(sessionId)
                 || session.prompt == null || session.prompt.revision() != revision) {
@@ -588,7 +604,7 @@ public final class OriginalNpcService {
     private static boolean canInteract(ServerPlayer player, PathfinderMob npc) {
         return (!(npc instanceof EntityOriginalReceptionist receptionist)
                 || OriginalReceptionistPlacement.matches(receptionist) && !receptionist.isInvisible())
-                && player.isAlive() && npc.isAlive() && !npc.isRemoved() && player.level() == npc.level()
+                && player.isAlive() && !OriginalDodoRunService.pending(player) && npc.isAlive() && !npc.isRemoved() && player.level() == npc.level()
                 && player.distanceToSqr(npc) <= 64.0D;
     }
 
@@ -677,6 +693,7 @@ public final class OriginalNpcService {
         } else if (prompt.type() == OriginalNpcInterpreter.Type.END) {
             SESSIONS.remove(player.getUUID());
         }
+        if (!SESSIONS.containsKey(player.getUUID())) OriginalNpcConversationMovement.release(player.getUUID());
         OriginalNpcInterpreter.Prompt display = prompt;
         if (session.restoringPresentation && prompt.text().isEmpty()
                 && (prompt.type() == OriginalNpcInterpreter.Type.CHOICE || prompt.type() == OriginalNpcInterpreter.Type.SHOP
@@ -870,6 +887,7 @@ public final class OriginalNpcService {
 
         @Override
         public boolean switchValue(int id) {
+            if (player != null && (id == 11 || id == 12)) return OriginalPlayerMoveSpeed.switchValue(player, id);
             return player != null ? OriginalNpcProgress.readSwitch(player, id) : progress.switchValue(id);
         }
 
@@ -905,6 +923,10 @@ public final class OriginalNpcService {
 
         @Override
         public void setSwitch(int id, boolean value) {
+            if (player != null && (id == 11 || id == 12)) {
+                OriginalPlayerMoveSpeed.setSwitch(player, id, value);
+                return;
+            }
             if (player != null) {
                 OriginalNpcProgress.writeSwitch(player, id, value);
                 if (id == 41) OriginalAltarEntry.synchronize(player.serverLevel());
@@ -948,7 +970,7 @@ public final class OriginalNpcService {
         @Override
         public int transfer(int map, int x, int y, int direction, int fade) {
             if (!(npc instanceof EntityOriginalNpc original) || player == null) throw new UnsupportedOperationException("transfer_source");
-            return OriginalAltarEntry.transfer(player, original, map, x, y, direction, fade);
+            return OriginalWorldEventBindings.transfer(player, original, map, x, y, direction, fade);
         }
 
         @Override
@@ -1015,6 +1037,10 @@ public final class OriginalNpcService {
             return switch (condition) {
                 case 1 -> StoryNameData.get(player).equals(value.getAsString());
                 case 2 -> value.getAsInt() == 1;
+                case 3 -> {
+                    if (value.getAsInt() != 340) throw new UnsupportedOperationException("actor_condition:3");
+                    yield stats().unlockedSkills.contains(com.BlackSouls.BlackSoulsMod.util.OriginalActorSkills.mapped(340));
+                }
                 case 4, 5 -> OriginalActorBridge.equipped(player, actorId, condition == 4 ? 1 : 2, value.getAsInt());
                 default -> throw new UnsupportedOperationException("actor_condition:" + condition);
             };
@@ -1067,6 +1093,11 @@ public final class OriginalNpcService {
         @Override
         public String convertExperience(int actorId, long amount, boolean show) {
             return OriginalActorBridge.convertExperience(player, actorId, amount, show);
+        }
+
+        @Override
+        public void changeSkill(int actorId, int skillId, boolean learn) {
+            com.BlackSouls.BlackSoulsMod.util.OriginalActorSkills.change(player, actorId, skillId, learn);
         }
 
         @Override

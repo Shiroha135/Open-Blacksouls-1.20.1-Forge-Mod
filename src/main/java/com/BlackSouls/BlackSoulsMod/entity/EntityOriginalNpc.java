@@ -3,6 +3,7 @@ package com.BlackSouls.BlackSoulsMod.entity;
 import com.BlackSouls.BlackSoulsMod.story.OriginalNpcService;
 import com.shiroha.mmdskin.render.entity.CustomEntityRenderStateProvider;
 import com.BlackSouls.BlackSoulsMod.story.OriginalNpcMovementService;
+import com.BlackSouls.BlackSoulsMod.story.OriginalNpcAutonomousRoute;
 import com.BlackSouls.BlackSoulsMod.util.BSOriginalNpcData;
 import com.BlackSouls.BlackSoulsMod.util.OriginalNpcTextures;
 import com.google.gson.JsonObject;
@@ -38,6 +39,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     private String forcedRouteTicket = "";
     private int routeAnimationCount;
     private int routeStopCount;
+    private OriginalNpcAutonomousRoute autonomousRoute = new OriginalNpcAutonomousRoute();
 
     public EntityOriginalNpc(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -63,6 +65,8 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     }
 
     public void setNpcId(String id) {
+        OriginalNpcMovementService.clearAutonomousMotion(this);
+        autonomousRoute = new OriginalNpcAutonomousRoute();
         entityData.set(NPC_ID, BSOriginalNpcData.getEvent(id) == null ? "" : id);
         entityData.set(PAGE, -2);
         entityData.set(ROUTE_STATE, initialRouteState());
@@ -181,11 +185,38 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     }
 
     public void beginForcedRoute(String ticket) {
+        if (hasOriginalAutonomy()) autonomousRoute.beforeForcedRoute();
         forcedRouteTicket = ticket;
     }
 
     public void endForcedRoute(String ticket) {
-        if (forcedRouteTicket.equals(ticket)) forcedRouteTicket = "";
+        if (forcedRouteTicket.equals(ticket)) {
+            forcedRouteTicket = "";
+            if (hasOriginalAutonomy()) autonomousRoute.afterForcedRoute();
+        }
+    }
+
+    public boolean hasOriginalAutonomy() {
+        return getNpcId().equals("map037_ev053");
+    }
+
+    public OriginalNpcAutonomousRoute originalAutonomousRoute() {
+        return autonomousRoute;
+    }
+
+    public void lockOriginalMovement(ServerPlayer player) {
+        if (!hasOriginalAutonomy() || !autonomousRoute.lock(getSpriteDirection())) return;
+        double dx = player.getX() - getX(), dz = player.getZ() - getZ();
+        if (dx != 0 || dz != 0) {
+            int direction = Math.abs(dx) > Math.abs(dz) ? dx > 0 ? 4 : 6 : dz > 0 ? 8 : 2;
+            applyOriginalMoveCommand(direction == 2 ? 16 : direction == 4 ? 17 : direction == 6 ? 18 : 19, List.of());
+        }
+    }
+
+    public void unlockOriginalMovement() {
+        if (!hasOriginalAutonomy()) return;
+        int direction = autonomousRoute.unlock();
+        if (direction != 0) applyOriginalMoveCommand(direction == 2 ? 16 : direction == 4 ? 17 : direction == 6 ? 18 : 19, List.of());
     }
 
     private static CompoundTag initialRouteState() {
@@ -216,6 +247,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         BSOriginalNpcData.Page page = currentPage();
         if (page == null) {
             state.putBoolean("Through", true);
+            if (hasOriginalAutonomy()) forcedRouteTicket = "";
         } else {
             forcedRouteTicket = "";
             int direction = graphic.has("direction") ? graphic.get("direction").getAsInt() : 2;
@@ -223,6 +255,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
             if (state.getInt("OriginalDirection") != direction) {
                 state.putInt("Direction", direction);
                 state.putInt("OriginalDirection", direction);
+                if (hasOriginalAutonomy()) autonomousRoute.clearPrelockDirection();
             }
             if (state.getInt("OriginalPattern") != pattern) {
                 state.putInt("Pattern", pattern);
@@ -237,6 +270,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
             state.putBoolean("Through", movement.has("through") && movement.get("through").getAsBoolean());
         }
         entityData.set(ROUTE_STATE, state);
+        if (hasOriginalAutonomy()) autonomousRoute.configure(page == null ? new JsonObject() : page.movement());
     }
 
     public void applyOriginalMoveCommand(int code, List<JsonElement> parameters) {
@@ -279,6 +313,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     private void setRouteDirection(CompoundTag state, int direction) {
         if (!state.getBoolean("DirectionFixed")) state.putInt("Direction", direction);
         routeStopCount = 0;
+        if (hasOriginalAutonomy()) autonomousRoute.resetStopCount();
     }
 
     public void advanceOriginalAnimationFrame() {
@@ -294,6 +329,22 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
             routeAnimationCount = 0;
         }
         if (routeStopCount < Integer.MAX_VALUE) routeStopCount++;
+    }
+
+    public void advanceOriginalAutonomousAnimationFrame(int stopCount) {
+        routeStopCount = stopCount;
+        advanceOriginalAnimationFrame();
+        routeStopCount = stopCount;
+    }
+
+    public void advanceOriginalForcedAnimationFrame(boolean moving) {
+        if (!hasOriginalAutonomy()) {
+            advanceOriginalAnimationFrame();
+            return;
+        }
+        advanceOriginalAutonomousAnimationFrame(autonomousRoute.stopCount());
+        if (!moving) autonomousRoute.advanceStopFrame();
+        routeStopCount = autonomousRoute.stopCount();
     }
 
     private void updateRouteVisibility() {
@@ -317,7 +368,11 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         super.tick();
         setDeltaMovement(0.0D, onGround() ? 0.0D : getDeltaMovement().y, 0.0D);
         if (!level().isClientSide() && forcedRouteTicket.isEmpty()) {
-            for (int frame = 0; frame < 3; frame++) advanceOriginalAnimationFrame();
+            if (!OriginalNpcMovementService.tickAutonomous(this)) {
+                for (int frame = 0; frame < 3; frame++) advanceOriginalAnimationFrame();
+            } else {
+                routeStopCount = autonomousRoute.stopCount();
+            }
         }
         if (!level().isClientSide() && tickCount % 20 == 0) {
             if (!OriginalNpcMovementService.refreshPageWhileForcing(this)) {
@@ -347,6 +402,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         tag.putString("OriginalNpcRouteTicket", forcedRouteTicket);
         tag.putInt("OriginalNpcAnimeCount", routeAnimationCount);
         tag.putInt("OriginalNpcStopCount", routeStopCount);
+        if (hasOriginalAutonomy()) tag.putByteArray("OriginalNpcAutonomousState", autonomousRoute.snapshot().toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
     }
 
     @Override
@@ -359,6 +415,14 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
             forcedRouteTicket = tag.getString("OriginalNpcRouteTicket");
             routeAnimationCount = tag.getInt("OriginalNpcAnimeCount");
             routeStopCount = tag.getInt("OriginalNpcStopCount");
+            if (hasOriginalAutonomy()) {
+                autonomousRoute.configure(currentPage() == null ? new JsonObject() : currentPage().movement());
+                if (tag.contains("OriginalNpcAutonomousState", net.minecraft.nbt.Tag.TAG_BYTE_ARRAY)) {
+                    autonomousRoute.restore(com.google.gson.JsonParser.parseString(new String(tag.getByteArray("OriginalNpcAutonomousState"),
+                            java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject());
+                    OriginalNpcMovementService.validateAutonomousState(this);
+                }
+            }
             updateRouteVisibility();
         }
     }

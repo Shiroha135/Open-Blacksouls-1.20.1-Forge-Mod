@@ -93,7 +93,8 @@ public final class OriginalNpcPlacements {
     }
 
     public static List<Site> sites() {
-        return java.util.stream.Stream.concat(SITES.stream(), OriginalBillPlacement.sites().stream()).toList();
+        return java.util.stream.Stream.of(SITES, OriginalBillPlacement.sites(), OriginalDodoPlacement.sites())
+                .flatMap(List::stream).toList();
     }
 
     public static Map<String, Outcome> installNearby(ServerPlayer player) {
@@ -128,7 +129,7 @@ public final class OriginalNpcPlacements {
     public static Outcome install(ServerPlayer player, String npcId) {
         if (OriginalReceptionistPlacement.NPC_ID.equals(npcId)) return OriginalReceptionistPlacement.install(player);
         Site site = sites().stream().filter(value -> value.npcId().equals(npcId)).findFirst().orElse(null);
-        if (site == null) site = com.BlackSouls.BlackSoulsMod.story.OriginalAltarEntry.sites().stream()
+        if (site == null) site = com.BlackSouls.BlackSoulsMod.story.OriginalWorldEventBindings.sites().stream()
                 .filter(value -> value.npcId().equals(npcId)).findFirst().orElse(null);
         if (site == null) {
             return Outcome.UNKNOWN_SITE;
