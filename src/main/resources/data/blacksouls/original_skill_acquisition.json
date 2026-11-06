@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "displaySwitch": 22,
+  "sourceWidth": 640,
+  "sourceHeight": 480,
+  "windowX": -16,
+  "windowWidth": 672,
+  "windowHeight": 70,
+  "padding": 12,
+  "firstWindowY": 422,
+  "slotSpacing": 40,
+  "holdFrames": 180,
+  "opacityStep": 32,
+  "backgroundAlpha": 160,
+  "titleFontSize": 14,
+  "bodyFontSize": 22,
+  "learnText": "习得技能！",
+  "forgetText": "忘却技能…",
+  "sound": "blacksouls:magic1",
+  "soundVolume": 80,
+  "soundPitch": 80,
+  "actorNames": {
+    "2": "",
+    "14": ""
+  },
+  "skill": {
+    "id": 340,
+    "name": "渡渡快跑",
+    "description": "可以调整移动速度。",
+    "iconIndex": 474
+  },
+  "sourceFiles": [
+    {
+      "path": "D:/BLACK SOULS II/Data/Scripts.rvdata2",
+      "sha256": "ba3e506e47c31acfc5ff30572b94677c2cd309bfd79b22e0fb9f01dd5adb5a24"
+    },
+    {
+      "path": "D:/BLACK SOULS II/Data/Actors.rvdata2",
+      "sha256": "3cdc3af09ebee61fc3868e42d02b0e8f6e04162691c490ffd2a983c8cf514036"
+    },
+    {
+      "path": "D:/BLACK SOULS II/Data/Skills.rvdata2",
+      "sha256": "6ef1434b2247c465a3526b86905bae8d4ac9af3bdb93c7be48081e634fe0e77b"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ package com.BlackSouls.BlackSoulsMod.util;
 
 import com.BlackSouls.BlackSoulsMod.capability.BSPlayerStats;
 import com.BlackSouls.BlackSoulsMod.handler.StatEventHandler;
+import com.BlackSouls.BlackSoulsMod.story.OriginalSkillAcquisitionService;
 import com.BlackSouls.BlackSoulsMod.util.skill.SkillDodoRun;
 import com.BlackSouls.BlackSoulsMod.util.skill.SkillRegistry;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,12 +19,17 @@ public final class OriginalActorSkills {
     }
 
     public static void change(ServerPlayer player, int actorId, int sourceSkill, boolean learn) {
+        change(player, actorId, sourceSkill, learn, actorId);
+    }
+
+    public static void change(ServerPlayer player, int actorId, int sourceSkill, boolean learn, int sourceActorOperand) {
         String skill = mapped(sourceSkill);
         if (actorId != 0 && !OriginalActorBridge.isPlayerActor(player, actorId) || player == null) {
             throw new UnsupportedOperationException("unmapped_actor_skill:" + actorId);
         }
         BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY)
                 .orElseThrow(() -> new IllegalStateException("Missing original actor skills"));
+        var presentation = OriginalSkillAcquisitionService.prepare(player, sourceSkill, sourceActorOperand, learn);
         if (learn) {
             if (!stats.unlockedSkills.contains(skill)) stats.unlockedSkills.add(skill);
         } else {
@@ -34,5 +40,6 @@ public final class OriginalActorSkills {
             if (skill.equals(stats.skillV)) stats.skillV = "";
         }
         StatEventHandler.syncToClient(player);
+        OriginalSkillAcquisitionService.publish(player, presentation);
     }
 }
