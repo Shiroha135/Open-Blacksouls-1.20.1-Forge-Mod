@@ -2,9 +2,6 @@
 
 mod animation_layer;
 mod bezier_curve;
-pub(crate) mod fbx_bone_mapping;
-pub mod fbx_loader;
-pub(crate) mod fbx_parser;
 mod interpolation;
 mod keyframe;
 mod motion;

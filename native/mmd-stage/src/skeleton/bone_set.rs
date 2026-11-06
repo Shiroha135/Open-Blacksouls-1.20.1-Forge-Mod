@@ -36,8 +36,6 @@ pub struct BoneSet {
     /// 更新标志
     needs_hierarchy_update: bool,
 
-    /// VRM 标志（VMD 旋转/平移需要额外坐标系转换）
-    is_vrm: bool,
 }
 
 impl BoneSet {
@@ -52,7 +50,6 @@ impl BoneSet {
             physics_bone_indices: HashSet::new(),
             children_cache: Vec::new(),
             needs_hierarchy_update: true,
-            is_vrm: false,
         }
     }
 
@@ -570,7 +567,6 @@ impl BoneSet {
         self.links[index].animation_translate = translation - self.links[index].body_shift;
     }
 
-    /// 更新单个骨骼的全局变换（VR IK 用：头部旋转后刷新子骨骼链）
     pub fn update_single_bone_global(&mut self, index: usize) {
         if index >= self.links.len() {
             return;
@@ -655,35 +651,12 @@ impl BoneSet {
             self.skinning_matrices[index] = matrix;
         }
     }
-
-    /// 覆盖指定骨骼的逆绑定矩阵（VRM 加载时用 glTF IBM 替换纯平移版本）
-    #[inline]
-    pub fn set_inverse_init(&mut self, index: usize, matrix: Mat4) {
-        if let Some(bone) = self.links.get_mut(index) {
-            bone.inverse_init = matrix;
-        }
-    }
-
-    /// 标记为 VRM 骨骼系统（VMD 动画旋转/平移自动做 Y 轴 180° 坐标系转换）
-    #[inline]
-    pub fn set_vrm(&mut self, is_vrm: bool) {
-        self.is_vrm = is_vrm;
-    }
-
-    #[inline]
-    pub fn is_vrm(&self) -> bool {
-        self.is_vrm
-    }
-
-    /// VMD→VRM 旋转转换
     ///
-    /// VRM 加载时已做 Z-flip，与 PMX 在同一坐标空间，无需额外转换
     #[inline]
     pub fn convert_vmd_rotation(&self, q: Quat) -> Quat {
         q
     }
 
-    /// VMD→VRM 平移转换
     #[inline]
     pub fn convert_vmd_translation(&self, v: Vec3) -> Vec3 {
         v

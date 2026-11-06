@@ -126,7 +126,6 @@ pub struct BoneLink {
     /// 本地 Z 轴
     pub local_axis_z: Vec3,
 
-    /// VRM T-pose → A-pose 静息旋转
     pub rest_rotation: Quat,
 
     /// 祖先累积 rest_rotation（共轭补偿用）

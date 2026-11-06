@@ -6,16 +6,15 @@ use jni::JNIEnv;
 use std::ptr;
 use std::sync::Arc;
 
-use crate::animation::fbx_loader;
 use crate::animation::{VmdAnimation, VmdFile};
-use crate::model::{load_pmx, load_vrm};
+use crate::model::load_pmx;
 use crate::texture::load_texture;
 
 use super::{
-    register_animation, register_model, register_texture, ANIMATIONS, FBX_CACHE, MODELS, TEXTURES,
+    register_animation, register_model, register_texture, ANIMATIONS, MODELS, TEXTURES,
 };
 
-const VERSION: &str = "v1.0.5-stage.1";
+const VERSION: &str = "blacksouls-npc-1";
 
 /// 获取版本号
 #[no_mangle]
@@ -123,20 +122,6 @@ pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_LoadModelPMX(
         }
     }
 }
-
-/// 加载 PMD 模型（暂不支持）
-#[no_mangle]
-pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_LoadModelPMD(
-    _env: JNIEnv,
-    _class: JClass,
-    _filename: JString,
-    _dir: JString,
-    _layer_count: jlong,
-) -> jlong {
-    log::warn!("PMD format not supported yet");
-    0
-}
-
 /// 删除模型
 #[no_mangle]
 pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_DeleteModel(
@@ -747,176 +732,16 @@ pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_ResetModelPhysics(
 /// 加载动画
 #[no_mangle]
 pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_LoadAnimation(
-    mut env: JNIEnv,
-    _class: JClass,
-    model_handle: jlong,
-    filename: JString,
+    mut env: JNIEnv, _class: JClass, model_handle: jlong, filename: JString,
 ) -> jlong {
-    let filename_str: String = match env.get_string(&filename) {
-        Ok(s) => s.into(),
-        Err(_) => return 0,
-    };
-
-    // 支持 "path.fbx#StackName" 语法选择指定 AnimationStack
-    let (file_path, stack_name) = if let Some(pos) = filename_str.rfind('#') {
-        let lower = filename_str[..pos].to_ascii_lowercase();
-        if lower.ends_with(".fbx") {
-            (&filename_str[..pos], Some(&filename_str[pos + 1..]))
-        } else {
-            (filename_str.as_str(), None)
-        }
-    } else {
-        (filename_str.as_str(), None)
-    };
-
-    let lower = file_path.to_ascii_lowercase();
-    let is_fbx = lower.ends_with(".fbx");
-
-    // FBX 手臂校正需要模型骨骼位置，先提取后释放 MODELS 锁
-    let arm_positions = if is_fbx {
-        let models = MODELS.read().unwrap();
-        if let Some(model_arc) = models.get(&model_handle) {
-            let model = model_arc.lock().unwrap();
-            let mut pos = std::collections::HashMap::new();
-            for name in &[
-                "左肩",
-                "左腕",
-                "左ひじ",
-                "左手首",
-                "右肩",
-                "右腕",
-                "右ひじ",
-                "右手首",
-            ] {
-                if let Some(idx) = model.bone_manager.find_bone_by_name(name) {
-                    if let Some(bone) = model.bone_manager.get_bone(idx) {
-                        pos.insert(name.to_string(), bone.initial_position);
-                    }
-                }
-            }
-            pos
-        } else {
-            std::collections::HashMap::new()
-        }
-    } else {
-        std::collections::HashMap::new()
-    };
-
-    let result = if is_fbx {
-        // 使用 FBX 缓存避免重复解析大文件
-        let cache = {
-            let cache_map = FBX_CACHE.read().unwrap();
-            cache_map.get(file_path).cloned()
-        };
-        let cache = match cache {
-            Some(c) => c,
-            None => match fbx_loader::FbxCache::load(file_path) {
-                Ok(c) => {
-                    let arc = Arc::new(c);
-                    let mut cache_map = FBX_CACHE.write().unwrap();
-                    cache_map.insert(file_path.to_string(), arc.clone());
-                    arc
-                }
-                Err(e) => {
-                    log::error!("FBX 解析失败: {}", e);
-                    return 0;
-                }
-            },
-        };
-        cache.load_animation(stack_name).map(|mut anim| {
-            fbx_loader::apply_arm_retarget_correction_with_reference(
-                &mut anim,
-                &arm_positions,
-                Some(cache.arm_reference_dirs()),
-            );
-            register_animation(anim)
-        })
-    } else {
-        VmdFile::load(file_path).map(|vmd| register_animation(VmdAnimation::from_vmd_file(vmd)))
-    };
-
-    match result {
-        Ok(handle) => handle,
-        Err(e) => {
-            log::error!("Failed to load animation: {}", e);
-            0
-        }
+    let path: String = match env.get_string(&filename) { Ok(value) => value.into(), Err(_) => return 0 };
+    if !path.to_ascii_lowercase().ends_with(".vmd") { return 0; }
+    if !MODELS.read().map_or(false, |models| models.contains_key(&model_handle)) { return 0; }
+    match VmdFile::load(&path) {
+        Ok(file) => register_animation(VmdAnimation::from_vmd_file(file)),
+        Err(error) => { log::error!("VMD load failed: {}", error); 0 }
     }
 }
-
-/// 预加载 FBX 文件到缓存（避免首次加载动画时阻塞）
-#[no_mangle]
-pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_PreloadFbxFile(
-    mut env: JNIEnv,
-    _class: JClass,
-    filename: JString,
-) -> jboolean {
-    let path: String = match env.get_string(&filename) {
-        Ok(s) => s.into(),
-        Err(_) => return 0,
-    };
-    {
-        let cache_map = FBX_CACHE.read().unwrap();
-        if cache_map.contains_key(&path) {
-            return 1; // 已缓存
-        }
-    }
-    match fbx_loader::FbxCache::load(&path) {
-        Ok(c) => {
-            let mut cache_map = FBX_CACHE.write().unwrap();
-            cache_map.insert(path, Arc::new(c));
-            1
-        }
-        Err(e) => {
-            log::error!("FBX 预加载失败: {}", e);
-            0
-        }
-    }
-}
-
-/// 列出 FBX 文件中所有 AnimationStack 名称（JSON 数组）
-#[no_mangle]
-pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_ListFbxStacks(
-    mut env: JNIEnv,
-    _class: JClass,
-    filename: JString,
-) -> jstring {
-    let path: String = match env.get_string(&filename) {
-        Ok(s) => s.into(),
-        Err(_) => return ptr::null_mut(),
-    };
-    // 优先从缓存获取
-    let stacks = {
-        let cache_map = FBX_CACHE.read().unwrap();
-        cache_map.get(&path).map(|c| c.stack_names().to_vec())
-    };
-    let stacks = match stacks {
-        Some(s) => s,
-        None => match fbx_loader::list_fbx_stacks(&path) {
-            Ok(s) => s,
-            Err(e) => {
-                log::error!("列出 FBX Stack 失败: {}", e);
-                return ptr::null_mut();
-            }
-        },
-    };
-    let json = serde_json::to_string(&stacks).unwrap_or_else(|_| "[]".to_string());
-    match env.new_string(&json) {
-        Ok(s) => s.into_raw(),
-        Err(_) => ptr::null_mut(),
-    }
-}
-
-/// 清除 FBX 文件缓存
-#[no_mangle]
-pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_ClearFbxCache(
-    _env: JNIEnv,
-    _class: JClass,
-) {
-    let mut cache_map = FBX_CACHE.write().unwrap();
-    cache_map.clear();
-}
-
 /// 删除动画
 #[no_mangle]
 pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_DeleteAnimation(
@@ -927,26 +752,6 @@ pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_DeleteAnimation(
     let mut animations = ANIMATIONS.write().unwrap_or_else(|e| e.into_inner());
     animations.remove(&anim);
 }
-
-/// 查询动画是否包含相机数据
-#[no_mangle]
-pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_HasCameraData(
-    _env: JNIEnv,
-    _class: JClass,
-    anim: jlong,
-) -> jboolean {
-    let animations = ANIMATIONS.read().unwrap();
-    if let Some(animation) = animations.get(&anim) {
-        if animation.has_camera() {
-            1u8
-        } else {
-            0u8
-        }
-    } else {
-        0u8
-    }
-}
-
 /// 获取动画最大帧数（包含相机轨道）
 #[no_mangle]
 pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetAnimMaxFrame(
@@ -961,49 +766,6 @@ pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetAnimMaxFrame(
         0.0
     }
 }
-
-/// 获取相机变换数据，写入 ByteBuffer
-/// 布局: pos_x, pos_y, pos_z (3×f32) + rot_x, rot_y, rot_z (3×f32) + fov (f32) + is_perspective (i32) = 32 字节
-#[no_mangle]
-pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetCameraTransform(
-    env: JNIEnv,
-    _class: JClass,
-    anim: jlong,
-    frame: jfloat,
-    buffer: JByteBuffer,
-) {
-    let animations = ANIMATIONS.read().unwrap();
-    if let Some(animation) = animations.get(&anim) {
-        let transform = animation.get_camera_transform(frame);
-
-        let dst = match env.get_direct_buffer_address(&buffer) {
-            Ok(p) => p,
-            Err(_) => return,
-        };
-        let capacity = env.get_direct_buffer_capacity(&buffer).unwrap_or(0);
-        if capacity < 32 {
-            log::error!("GetCameraTransform: 缓冲区容量 {} < 32 字节", capacity);
-            return;
-        }
-        unsafe {
-            let ptr = dst as *mut f32;
-            // position (3 × f32)
-            *ptr.add(0) = transform.position.x;
-            *ptr.add(1) = transform.position.y;
-            *ptr.add(2) = transform.position.z;
-            // rotation (3 × f32, 欧拉角弧度)
-            *ptr.add(3) = transform.rotation.x;
-            *ptr.add(4) = transform.rotation.y;
-            *ptr.add(5) = transform.rotation.z;
-            // fov (f32)
-            *ptr.add(6) = transform.fov;
-            // is_perspective (i32, 0/1)
-            let i_ptr = ptr.add(7) as *mut i32;
-            *i_ptr = if transform.is_perspective { 1 } else { 0 };
-        }
-    }
-}
-
 /// 查询动画是否包含骨骼关键帧
 #[no_mangle]
 pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_HasBoneData(
@@ -3002,80 +2764,6 @@ pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetPhysicsConfig(
         );
     }
 }
-
-// ========== 第一人称模式相关 ==========
-
-/// 设置第一人称模式（启用时自动隐藏头部子网格，禁用时恢复）
-#[no_mangle]
-pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetFirstPersonMode(
-    _env: JNIEnv,
-    _class: JClass,
-    model: jlong,
-    enabled: jboolean,
-) {
-    let models = MODELS.read().unwrap();
-    if let Some(model_arc) = models.get(&model) {
-        let mut model = model_arc.lock().unwrap();
-        model.set_first_person_mode(enabled != 0);
-    }
-}
-
-/// 获取第一人称模式是否启用
-#[no_mangle]
-pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_IsFirstPersonMode(
-    _env: JNIEnv,
-    _class: JClass,
-    model: jlong,
-) -> jboolean {
-    let models = MODELS.read().unwrap();
-    if let Some(model_arc) = models.get(&model) {
-        let model = model_arc.lock().unwrap();
-        if model.is_first_person_enabled() {
-            1
-        } else {
-            0
-        }
-    } else {
-        0
-    }
-}
-
-/// 获取头部骨骼的静态 Y 坐标（模型局部空间，用于相机高度计算）
-#[no_mangle]
-pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetHeadBonePositionY(
-    _env: JNIEnv,
-    _class: JClass,
-    model: jlong,
-) -> jfloat {
-    let models = MODELS.read().unwrap();
-    if let Some(model_arc) = models.get(&model) {
-        let mut model = model_arc.lock().unwrap();
-        model.get_head_bone_rest_position_y()
-    } else {
-        0.0
-    }
-}
-
-/// 获取眼睛骨骼的当前动画位置（模型局部空间）
-/// 每帧调用，返回经过动画/物理更新后的实时 [x, y, z]
-/// 如果传入的 out 数组长度 < 3 则不写入
-#[no_mangle]
-#[allow(unused_mut)]
-pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetEyeBonePosition(
-    mut env: JNIEnv,
-    _class: JClass,
-    model: jlong,
-    out: jni::objects::JFloatArray,
-) {
-    let models = MODELS.read().unwrap();
-    if let Some(model_arc) = models.get(&model) {
-        let mut model = model_arc.lock().unwrap();
-        let pos = model.get_eye_bone_animated_position();
-        let buf: [f32; 3] = [pos.x, pos.y, pos.z];
-        let _ = env.set_float_array_region(&out, 0, &buf);
-    }
-}
-
 // ============================================================================
 // 批量子网格元数据（G3 优化）
 // ============================================================================
@@ -3243,144 +2931,6 @@ pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_GetModelMemoryUsage(
     if let Some(model_arc) = models.get(&model) {
         let m = model_arc.lock().unwrap();
         m.memory_usage() as jlong
-    } else {
-        0
-    }
-}
-
-// ============================================================================
-// VR 联动
-// ============================================================================
-
-/// 批量设置 VR 追踪数据（3 追踪点 × 7 float = 21）
-#[no_mangle]
-pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetVRTrackingData(
-    env: JNIEnv,
-    _class: JClass,
-    model: jlong,
-    tracking_data: jni::objects::JFloatArray,
-) {
-    let mut buf = [0.0f32; 21];
-    if env
-        .get_float_array_region(&tracking_data, 0, &mut buf)
-        .is_err()
-    {
-        return;
-    }
-    let models = MODELS.read().unwrap();
-    if let Some(model_arc) = models.get(&model) {
-        let mut m = model_arc.lock().unwrap();
-        m.set_vr_tracking_data(&buf);
-    }
-}
-
-/// 启用/禁用 VR 模式
-#[no_mangle]
-pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_ApplyVRTrackingInput(
-    env: JNIEnv,
-    _class: JClass,
-    model: jlong,
-    tracking_data: jni::objects::JFloatArray,
-) {
-    let mut buf = [0.0f32; 21];
-    if env
-        .get_float_array_region(&tracking_data, 0, &mut buf)
-        .is_err()
-    {
-        return;
-    }
-
-    let models = MODELS.read().unwrap();
-    if let Some(model_arc) = models.get(&model) {
-        let mut m = model_arc.lock().unwrap();
-        m.apply_java_vr_tracking_input_packet(&buf);
-    }
-}
-
-#[no_mangle]
-pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetVREnabled(
-    _env: JNIEnv,
-    _class: JClass,
-    model: jlong,
-    enabled: jboolean,
-) {
-    let models = MODELS.read().unwrap();
-    if let Some(model_arc) = models.get(&model) {
-        let mut m = model_arc.lock().unwrap();
-        m.set_vr_enabled(enabled != 0);
-    }
-}
-
-/// 设置 VR IK 参数
-#[no_mangle]
-pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetVRIKParams(
-    _env: JNIEnv,
-    _class: JClass,
-    model: jlong,
-    arm_ik_strength: jfloat,
-) {
-    let models = MODELS.read().unwrap();
-    if let Some(model_arc) = models.get(&model) {
-        let mut m = model_arc.lock().unwrap();
-        m.set_vr_ik_strength(arm_ik_strength);
-    }
-}
-
-/// 设置舞台模式腿部 IK 是否启用。
-#[no_mangle]
-/// 设置 VR 手部渲染模式（0=全身, 1=仅左手, 2=仅右手）
-#[no_mangle]
-pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_SetVRHandMode(
-    _env: JNIEnv,
-    _class: JClass,
-    model: jlong,
-    mode: jint,
-) {
-    let models = MODELS.read().unwrap();
-    if let Some(model_arc) = models.get(&model) {
-        let mut m = model_arc.lock().unwrap();
-        m.set_vr_hand_mode(mode as u8);
-    }
-}
-
-/// 加载 VRM 模型
-#[no_mangle]
-pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_LoadModelVRM(
-    mut env: JNIEnv,
-    _class: JClass,
-    filename: JString,
-    _dir: JString,
-    _layer_count: jlong,
-) -> jlong {
-    let filename_str: String = match env.get_string(&filename) {
-        Ok(s) => s.into(),
-        Err(_) => return 0,
-    };
-
-    match load_vrm(&filename_str) {
-        Ok(model) => register_model(model),
-        Err(e) => {
-            log::error!("Failed to load VRM: {}", e);
-            0
-        }
-    }
-}
-
-/// 查询模型是否为 VRM 格式
-#[no_mangle]
-pub extern "system" fn Java_yuki135_mmdskin_NativeFunc_IsVrmModel(
-    _env: JNIEnv,
-    _class: JClass,
-    model: jlong,
-) -> jboolean {
-    let models = MODELS.read().unwrap();
-    if let Some(m) = models.get(&model) {
-        let m = m.lock().unwrap();
-        if m.is_vrm() {
-            1
-        } else {
-            0
-        }
     } else {
         0
     }

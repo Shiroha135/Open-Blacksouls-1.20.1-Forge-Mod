@@ -4,21 +4,12 @@ use crate::animation::{AnimationLayerManager, VmdAnimation};
 use crate::morph::MorphManager;
 use crate::physics::MMDPhysics;
 use crate::skeleton::BoneManager;
-use crate::vr::{VrDebugState, VrIkSolver, VrTrackingFrame};
-use crate::vrm_runtime::{
-    pmx_controller_hand_tracking_calibration, resolve_java_tracking_frame_for_model,
-    resolve_tracking_frame_for_model, vivecraft_body_tracking_calibration,
-    vrm_controller_hand_tracking_calibration, ArmIkCalibration, BodyTrackingCalibration,
-    HandTrackingCalibration, TrackedPose, VrmModelRuntimeState, VrmRuntimeInput, VrmRuntimeOutput,
-    VrmTrackingInput,
-};
 use glam::{Mat4, Quat, Vec2, Vec3, Vec4};
 use rayon::prelude::*;
-use std::collections::{HashMap, HashSet};
+use std::collections::HashMap;
 use std::sync::Arc;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use super::VrmExtensions;
 use super::{MmdMaterial, RuntimeVertex, SubMesh, VertexWeight};
 
 thread_local! {
@@ -26,19 +17,6 @@ thread_local! {
     static PRNG_STATE: std::cell::Cell<u32> = std::cell::Cell::new(0);
 }
 
-#[derive(Clone, Copy, Debug, Default)]
-pub struct ModelVrDebugSnapshot {
-    pub head_local_model: Vec3,
-    pub body_anchor_model: Vec3,
-    pub left_palm_target_model: Vec3,
-    pub right_palm_target_model: Vec3,
-    pub left_auto_wrist_offset_model: Vec3,
-    pub right_auto_wrist_offset_model: Vec3,
-    pub left_wrist_solved_model: Vec3,
-    pub right_wrist_solved_model: Vec3,
-    pub left_wrist_error_cm: f32,
-    pub right_wrist_error_cm: f32,
-}
 
 /// 线程安全的伪随机数生成（0.0 - 1.0），使用 xorshift32
 fn rand_float() -> f32 {
@@ -114,9 +92,6 @@ pub struct MmdModel {
 
     debug_logged: bool,
 
-    /// VRM 模型标志（影响坐标系处理）
-    is_vrm: bool,
-    vrm_runtime_state: Option<Box<VrmModelRuntimeState>>,
 
     // 模型全局变换
     model_transform: Mat4,
@@ -175,44 +150,6 @@ pub struct MmdModel {
     // VPD 骨骼姿势覆盖（骨骼索引 -> (位移, 旋转)）
     vpd_bone_overrides: HashMap<usize, (Vec3, Quat)>,
 
-    // ======== 第一人称模式 ========
-    /// 第一人称模式是否启用
-    first_person_enabled: bool,
-    /// 头部骨骼索引缓存（模型加载后计算一次）
-    head_bone_index: Option<usize>,
-    /// 每个子网格是否属于头部（基于顶点位置自动检测）
-    head_submesh_flags: Vec<bool>,
-    /// 头部检测是否已初始化
-    head_detection_initialized: bool,
-    /// 用户设置的材质可见性备份（进入第一人称前保存，退出时恢复）
-    /// 眼睛骨骼索引缓存（両目 > 目 > 左目/右目 > 头部 fallback）
-    eye_bone_index: Option<usize>,
-    /// 左/右目的索引（用于取中点）
-    eye_bone_pair: Option<(usize, usize)>,
-
-    // ======== VR 手部模式 ========
-    /// VR 手部渲染模式：0=全身, 1=仅左手, 2=仅右手
-    vr_hand_mode: u8,
-    /// 每个子网格的手部归属标记：0=身体, 1=左手, 2=右手
-    hand_submesh_flags: Vec<u8>,
-    /// 手部检测是否已初始化
-    hand_detection_initialized: bool,
-    /// 进入手部模式前的材质可见性备份
-
-    // ======== VR 联动 ========
-    /// VR 模式是否启用
-    vr_enabled: bool,
-    /// VR 追踪数据（3 追踪点 × 7 float = 21）
-    vr_tracking_data: [f32; 21],
-    /// 结构化 VR 追踪帧（共享 runtime 主通道）
-    vr_tracking_frame: Option<VrTrackingFrame>,
-    /// VR 手臂 IK 强度 (0.0~1.0)
-    vr_ik_strength: f32,
-    /// VR IK 求解器（缓存骨骼索引）
-    vr_ik_solver: VrIkSolver,
-    /// 最新一帧 VR 调试遥测
-    vr_debug_state: VrDebugState,
-
     // ======== 矩阵插值过渡 ========
     /// 缓存的蒙皮矩阵（过渡开始时的状态）
     transition_matrices: Vec<Mat4>,
@@ -265,8 +202,6 @@ impl MmdModel {
             is_blinking: false,
             blink_morph_index: None,
             debug_logged: false,
-            is_vrm: false,
-            vrm_runtime_state: None,
             model_transform: Mat4::IDENTITY,
             stage_anchor: None,
             physics: None,
@@ -291,25 +226,10 @@ impl MmdModel {
             effective_weights_buf: Vec::new(),
             material_morph_results_flat_cache: Vec::new(),
             vpd_bone_overrides: HashMap::new(),
-            vr_hand_mode: 0,
-            hand_submesh_flags: Vec::new(),
-            hand_detection_initialized: false,
-            vr_enabled: false,
-            vr_tracking_data: [0.0; 21],
-            vr_tracking_frame: None,
-            vr_ik_strength: 1.0,
-            vr_ik_solver: VrIkSolver::new(),
-            vr_debug_state: VrDebugState::default(),
             transition_matrices: Vec::new(),
             transition_progress: 0.0,
             transition_duration: 0.0,
             is_transitioning: false,
-            first_person_enabled: false,
-            head_bone_index: None,
-            head_submesh_flags: Vec::new(),
-            head_detection_initialized: false,
-            eye_bone_index: None,
-            eye_bone_pair: None,
         }
     }
 
@@ -333,212 +253,18 @@ impl MmdModel {
         self.submeshes.len()
     }
 
-    pub(crate) fn tracked_head_bone_index(&self) -> Option<usize> {
-        self.head_bone_index
-    }
-
-    pub(crate) fn replace_material_visibility(&mut self, visible: Vec<bool>) {
-        self.material_visible = visible;
-    }
-
     pub(crate) fn user_material_visibility_snapshot(&self) -> Vec<bool> {
         normalized_material_visibility(&self.user_material_visible, self.material_count())
     }
 
     fn refresh_effective_material_visibility(&mut self) {
-        let user_visible = self.user_material_visibility_snapshot();
-        self.replace_material_visibility(user_visible);
-
-        if self.first_person_enabled {
-            self.apply_first_person_material_mask();
-        }
-        if self.vr_hand_mode != 0 {
-            self.apply_vr_hand_material_mask();
-        }
+        self.material_visible = self.user_material_visibility_snapshot();
     }
 
     fn set_user_material_visibility(&mut self, visible: Vec<bool>) {
         self.user_material_visible =
             normalized_material_visibility(&visible, self.material_count());
         self.refresh_effective_material_visibility();
-    }
-
-    pub(crate) fn build_first_person_heuristic_masks(
-        &mut self,
-        baseline_visible: &[bool],
-    ) -> (Vec<bool>, Vec<bool>) {
-        let (head_materials, body_materials) = self.classify_head_materials();
-        let mut mirror_visible_materials = baseline_visible.to_vec();
-        if mirror_visible_materials.len() != self.material_count() {
-            mirror_visible_materials = vec![true; self.material_count()];
-        }
-
-        let mut hmd_visible_materials = mirror_visible_materials.clone();
-        for material_id in head_materials {
-            if !body_materials.contains(&material_id) && material_id < hmd_visible_materials.len() {
-                hmd_visible_materials[material_id] = false;
-            }
-        }
-
-        (hmd_visible_materials, mirror_visible_materials)
-    }
-
-    fn apply_first_person_material_mask(&mut self) {
-        let (head_materials, body_materials) = self.classify_head_materials();
-        let mut hidden_count = 0;
-        for material_id in head_materials {
-            if body_materials.contains(&material_id) || material_id >= self.material_visible.len() {
-                continue;
-            }
-            self.material_visible[material_id] = false;
-            hidden_count += 1;
-        }
-        log::info!(
-            "First person material mask applied: hidden_materials={}, head_submeshes={}",
-            hidden_count,
-            self.head_submesh_flags.iter().filter(|&&x| x).count()
-        );
-    }
-
-    fn apply_vr_hand_material_mask(&mut self) {
-        if self.vr_hand_mode == 0 {
-            return;
-        }
-
-        if !self.hand_detection_initialized {
-            self.init_hand_detection();
-        }
-
-        let mut hand_mat_ids = std::collections::HashSet::new();
-        for (i, &flag) in self.hand_submesh_flags.iter().enumerate() {
-            if flag == self.vr_hand_mode && i < self.submeshes.len() {
-                hand_mat_ids.insert(self.submeshes[i].material_id as usize);
-            }
-        }
-
-        for (i, vis) in self.material_visible.iter_mut().enumerate() {
-            *vis = *vis && hand_mat_ids.contains(&i);
-        }
-    }
-
-    pub(crate) fn classify_head_materials(&mut self) -> (HashSet<usize>, HashSet<usize>) {
-        if !self.head_detection_initialized {
-            self.init_head_detection();
-        }
-
-        let mut head_materials = HashSet::new();
-        let mut body_materials = HashSet::new();
-        for (index, submesh) in self.submeshes.iter().enumerate() {
-            let material_id = submesh.material_id.max(0) as usize;
-            if index < self.head_submesh_flags.len() && self.head_submesh_flags[index] {
-                head_materials.insert(material_id);
-            } else {
-                body_materials.insert(material_id);
-            }
-        }
-
-        (head_materials, body_materials)
-    }
-
-    pub fn initialize_vrm_runtime(&mut self, extensions: VrmExtensions) {
-        if !self.is_vrm {
-            return;
-        }
-
-        let mut runtime_state = VrmModelRuntimeState::new(self, extensions);
-        runtime_state.initialize_output(self);
-        self.vrm_runtime_state = Some(Box::new(runtime_state));
-    }
-
-    pub fn set_vrm_runtime_input(&mut self, input: VrmRuntimeInput) {
-        self.first_person_enabled = input.first_person;
-        if let Some(runtime_state) = self.vrm_runtime_state.as_mut() {
-            runtime_state.input = input;
-        }
-    }
-
-    pub fn vrm_runtime_output(&self) -> Option<&VrmRuntimeOutput> {
-        self.vrm_runtime_state
-            .as_deref()
-            .map(|runtime_state| &runtime_state.output)
-    }
-
-    fn with_vrm_runtime_state<R>(
-        &mut self,
-        f: impl FnOnce(&mut Self, &mut VrmModelRuntimeState) -> R,
-    ) -> Option<R> {
-        let mut runtime_state = self.vrm_runtime_state.take()?;
-        let result = f(self, &mut runtime_state);
-        self.vrm_runtime_state = Some(runtime_state);
-        Some(result)
-    }
-
-    pub fn apply_vr_tracking_input(
-        &mut self,
-        tracking: Option<VrmTrackingInput>,
-        hand_calibration: HandTrackingCalibration,
-        arm_ik_calibration: ArmIkCalibration,
-        body_calibration: BodyTrackingCalibration,
-    ) {
-        let Some(frame) = resolve_tracking_frame_for_model(
-            self,
-            tracking,
-            hand_calibration,
-            arm_ik_calibration,
-            body_calibration,
-        ) else {
-            self.set_vr_enabled(false);
-            self.set_vr_tracking_frame(None);
-            return;
-        };
-
-        self.set_vr_enabled(true);
-        self.set_vr_tracking_frame(Some(frame));
-    }
-
-    pub fn apply_java_vr_tracking_input_packet(&mut self, tracking_packet: &[f32]) {
-        if tracking_packet.len() != 21 {
-            return;
-        }
-
-        let mut packet = [0.0f32; 21];
-        packet.copy_from_slice(tracking_packet);
-
-        let current_strength = self.vr_ik_strength;
-        let hand_calibration = if self.is_vrm {
-            vrm_controller_hand_tracking_calibration()
-        } else {
-            pmx_controller_hand_tracking_calibration()
-        };
-        let tracking = java_tracking_input_from_packet(&packet);
-        let Some(mut frame) = resolve_java_tracking_frame_for_model(
-            self,
-            Some(tracking),
-            hand_calibration,
-            ArmIkCalibration::default(),
-            BodyTrackingCalibration::default(),
-        ) else {
-            self.set_vr_enabled(false);
-            self.set_vr_tracking_frame(None);
-            return;
-        };
-
-        let defaults = frame.body_calibration;
-        let calibration = vivecraft_body_tracking_calibration();
-        frame.body_calibration = BodyTrackingCalibration {
-            head_rest_anchor_model: defaults.head_rest_anchor_model,
-            shoulder_width_model: defaults.shoulder_width_model,
-            shoulder_depth_model: defaults.shoulder_depth_model,
-            body_yaw_follow_gain: calibration.body_yaw_follow_gain,
-            horizontal_translation_follow_gain: calibration.horizontal_translation_follow_gain,
-            vertical_translation_follow_gain: calibration.vertical_translation_follow_gain,
-            body_translation_clamp_model: calibration.body_translation_clamp_model,
-            shoulder_follow_gain: calibration.shoulder_follow_gain,
-        };
-
-        self.set_vr_enabled(true);
-        self.set_vr_tracking_frame(Some(frame));
-        self.set_vr_ik_strength(current_strength);
     }
 
     // ========== 材质可见性控制 ==========
@@ -598,267 +324,6 @@ impl MmdModel {
     pub fn get_material_names(&self) -> Vec<String> {
         self.materials.iter().map(|m| m.name.clone()).collect()
     }
-
-    // ========== 第一人称模式 ==========
-
-    /// 初始化头部检测（模型加载后调用一次）
-    /// 基于顶点位置判断：颈部骨骼 Y 坐标以上的子网格标记为头部
-    pub fn init_head_detection(&mut self) {
-        if self.head_detection_initialized {
-            return;
-        }
-        self.head_detection_initialized = true;
-
-        // 1. 查找头部骨骼（眼睛骨骼 fallback 用）
-        let head_names = ["頭", "head", "Head", "あたま"];
-        self.head_bone_index = None;
-        for name in &head_names {
-            if let Some(idx) = self.bone_manager.find_bone_by_name(name) {
-                self.head_bone_index = Some(idx);
-                break;
-            }
-        }
-
-        // 2. 确定颈部分界线 Y 坐标（优先颈部骨骼，fallback 到头部骨骼）
-        let neck_names = ["首", "neck", "Neck"];
-        let mut neck_y: Option<f32> = None;
-        for name in &neck_names {
-            if let Some(idx) = self.bone_manager.find_bone_by_name(name) {
-                if let Some(bone) = self.bone_manager.get_bone(idx) {
-                    neck_y = Some(bone.initial_position.y);
-                    log::info!(
-                        "第一人称分界线: 使用颈部骨骼 '{}' Y={:.2}",
-                        name,
-                        bone.initial_position.y
-                    );
-                }
-                break;
-            }
-        }
-        if neck_y.is_none() {
-            if let Some(idx) = self.head_bone_index {
-                if let Some(bone) = self.bone_manager.get_bone(idx) {
-                    neck_y = Some(bone.initial_position.y);
-                    log::info!(
-                        "第一人称分界线: 颈部骨骼未找到，fallback 到头部骨骼 Y={:.2}",
-                        bone.initial_position.y
-                    );
-                }
-            }
-        }
-
-        let cutoff_y = match neck_y {
-            Some(y) => y,
-            None => {
-                log::warn!("颈部/头部骨骼均未找到，第一人称头部隐藏不可用");
-                self.head_submesh_flags = vec![false; self.submeshes.len()];
-                return;
-            }
-        };
-
-        // 3. 对每个子网格，按顶点位置判断是否在脖子以上
-        self.head_submesh_flags = Vec::with_capacity(self.submeshes.len());
-
-        for submesh in &self.submeshes {
-            let begin = submesh.begin_index as usize;
-            let count = submesh.index_count as usize;
-
-            if count == 0 {
-                self.head_submesh_flags.push(false);
-                continue;
-            }
-
-            let mut above_count: usize = 0;
-            let mut total_count: usize = 0;
-
-            for idx_offset in 0..count {
-                let index_pos = begin + idx_offset;
-                if index_pos >= self.indices.len() {
-                    break;
-                }
-                let vertex_idx = self.indices[index_pos] as usize;
-                if vertex_idx >= self.vertices.len() {
-                    continue;
-                }
-
-                total_count += 1;
-                if self.vertices[vertex_idx].position.y >= cutoff_y {
-                    above_count += 1;
-                }
-            }
-
-            let ratio = if total_count > 0 {
-                above_count as f32 / total_count as f32
-            } else {
-                0.0
-            };
-            let is_head = ratio > 0.5;
-            self.head_submesh_flags.push(is_head);
-
-            let mat_name = self
-                .materials
-                .get(submesh.material_id as usize)
-                .map(|m| m.name.as_str())
-                .unwrap_or("?");
-            if is_head {
-                log::info!(
-                    "  [HEAD] submesh={}, material={}, 脖子以上顶点={:.1}%",
-                    self.head_submesh_flags.len() - 1,
-                    mat_name,
-                    ratio * 100.0
-                );
-            } else if ratio > 0.1 {
-                log::info!(
-                    "  [BODY] submesh={}, material={}, 脖子以上顶点={:.1}%",
-                    self.head_submesh_flags.len() - 1,
-                    mat_name,
-                    ratio * 100.0
-                );
-            }
-        }
-
-        // 4. 查找眼睛骨骼（用于第一人称相机位置）
-        //    优先级：両目 > 目 > 左目+右目中点
-        let single_eye_names = ["両目", "目", "eye", "Eye", "Eyes", "eyes"];
-        self.eye_bone_index = None;
-        self.eye_bone_pair = None;
-
-        for name in &single_eye_names {
-            if let Some(idx) = self.bone_manager.find_bone_by_name(name) {
-                self.eye_bone_index = Some(idx);
-                log::info!("眼睛骨骼检测: 使用 '{}' (索引={})", name, idx);
-                break;
-            }
-        }
-
-        if self.eye_bone_index.is_none() {
-            // 尝试左目+右目
-            let left_names = ["左目", "eye_L", "Eye_L", "LeftEye"];
-            let right_names = ["右目", "eye_R", "Eye_R", "RightEye"];
-            let mut left_idx = None;
-            let mut right_idx = None;
-            for name in &left_names {
-                if let Some(idx) = self.bone_manager.find_bone_by_name(name) {
-                    left_idx = Some(idx);
-                    break;
-                }
-            }
-            for name in &right_names {
-                if let Some(idx) = self.bone_manager.find_bone_by_name(name) {
-                    right_idx = Some(idx);
-                    break;
-                }
-            }
-            if let (Some(l), Some(r)) = (left_idx, right_idx) {
-                self.eye_bone_pair = Some((l, r));
-                log::info!("眼睛骨骼检测: 使用左目({})+右目({})中点", l, r);
-            } else if let Some(l) = left_idx {
-                self.eye_bone_index = Some(l);
-                log::info!("眼睛骨骼检测: 仅找到左目({})", l);
-            } else if let Some(r) = right_idx {
-                self.eye_bone_index = Some(r);
-                log::info!("眼睛骨骼检测: 仅找到右目({})", r);
-            } else {
-                log::info!("眼睛骨骼检测: 未找到可用眼睛骨骼");
-            }
-        }
-    }
-
-    /// 设置第一人称模式
-    /// 启用时只生成临时有效遮罩，用户材质配置不被覆盖。
-    pub fn set_first_person_mode(&mut self, enabled: bool) {
-        if self.first_person_enabled == enabled {
-            return;
-        }
-
-        self.first_person_enabled = enabled;
-        if let Some(mut runtime_state) = self.vrm_runtime_state.take() {
-            runtime_state.input.first_person = enabled;
-            runtime_state.refresh_output(self);
-            self.vrm_runtime_state = Some(runtime_state);
-            return;
-        }
-
-        self.refresh_effective_material_visibility();
-    }
-
-    /// 获取第一人称模式是否启用
-    pub fn is_first_person_enabled(&self) -> bool {
-        self.first_person_enabled
-    }
-
-    /// 获取头部骨骼的初始 Y 坐标（静态休息姿势，用于相机高度）
-    /// 返回值为模型局部空间的 Y 坐标
-    pub fn get_head_bone_rest_position_y(&mut self) -> f32 {
-        // 确保头部检测已初始化
-        if !self.head_detection_initialized {
-            self.init_head_detection();
-        }
-
-        match self.head_bone_index {
-            Some(idx) => {
-                if let Some(bone) = self.bone_manager.get_bone(idx) {
-                    bone.initial_position.y
-                } else {
-                    0.0
-                }
-            }
-            None => 0.0,
-        }
-    }
-
-    /// 获取眼睛骨骼的当前动画位置（模型局部空间）
-    /// 每帧调用，返回经过动画/物理更新后的实时位置 [x, y, z]
-    /// 用于第一人称模式下的相机跟踪
-    pub fn get_eye_bone_animated_position(&mut self) -> Vec3 {
-        if !self.head_detection_initialized {
-            self.init_head_detection();
-        }
-
-        // 优先使用左右眼中点
-        if let Some((left, right)) = self.eye_bone_pair {
-            let left_pos = self
-                .bone_manager
-                .get_bone(left)
-                .map(|b| b.position())
-                .unwrap_or(Vec3::ZERO);
-            let right_pos = self
-                .bone_manager
-                .get_bone(right)
-                .map(|b| b.position())
-                .unwrap_or(Vec3::ZERO);
-            return (left_pos + right_pos) * 0.5;
-        }
-
-        // 单一眼睛骨骼
-        if let Some(idx) = self.eye_bone_index {
-            return self
-                .bone_manager
-                .get_bone(idx)
-                .map(|b| b.position())
-                .unwrap_or(Vec3::ZERO);
-        }
-
-        Vec3::ZERO
-    }
-
-    pub fn current_head_rotation(&mut self) -> Quat {
-        if !self.head_detection_initialized {
-            self.init_head_detection();
-        }
-
-        self.head_bone_index
-            .map(|index| Quat::from_mat4(&self.bone_manager.get_global_transform(index)))
-            .map(|rotation| {
-                if rotation.length_squared() > 1e-6 {
-                    rotation.normalize()
-                } else {
-                    Quat::IDENTITY
-                }
-            })
-            .unwrap_or(Quat::IDENTITY)
-    }
-
     /// 初始化动画状态
     pub fn initialize_animation(&mut self) {
         self.bone_manager.reset_all_transforms();
@@ -1167,64 +632,6 @@ impl MmdModel {
     #[allow(unreachable_code)]
     pub fn tick_animation(&mut self, elapsed: f32) {
         self.tick_animation_internal(elapsed, true);
-        return;
-        // 更新所有动画层
-        self.animation_layer_manager.update(elapsed);
-
-        // 执行动画更新
-        self.begin_animation();
-
-        // 评估所有层并混合结果
-        self.animation_layer_manager
-            .evaluate_normalized(&mut self.bone_manager, &mut self.morph_manager);
-
-        // 应用 VPD 骨骼姿势覆盖（在动画评估后）
-        self.apply_vpd_bone_overrides();
-
-        // 自动眨眼
-        self.update_auto_blink(elapsed);
-
-        // VR 模式下跳过普通头部旋转，由 VR IK 接管
-        if !self.vr_enabled {
-            self.apply_head_rotation();
-        }
-        self.update_morph_animation();
-
-        // 骨骼更新（物理前）— 先计算当前帧全局变换
-        self.update_node_animation(false);
-
-        // VR IK 求解（在全局变换计算之后，确保用当前帧的骨骼位置）
-        if self.vr_enabled {
-            let strength = self.vr_ik_strength;
-            if let Some(frame) = self.vr_tracking_frame {
-                self.vr_debug_state = self.vr_ik_solver.solve_tracking_frame(
-                    &mut self.bone_manager,
-                    &frame,
-                    strength,
-                );
-            } else {
-                let tracking = self.vr_tracking_data;
-                self.vr_ik_solver
-                    .solve(&mut self.bone_manager, &tracking, strength);
-                self.vr_debug_state = VrDebugState::default();
-            }
-        }
-
-        // 物理更新
-        self.update_physics(elapsed);
-
-        // 骨骼更新（物理后）
-        self.update_node_animation(true);
-
-        // 清除物理骨骼保护（允许下一帧重新计算）
-        self.end_physics_update();
-
-        self.end_animation();
-
-        // 应用矩阵插值过渡
-        self.apply_transition_blend(elapsed);
-
-        self.update();
     }
 
     /// 应用矩阵插值过渡
@@ -1548,17 +955,6 @@ impl MmdModel {
     pub fn model_transform(&self) -> Mat4 {
         self.model_transform
     }
-
-    /// 设置 VRM 模型标志
-    pub fn set_vrm(&mut self, is_vrm: bool) {
-        self.is_vrm = is_vrm;
-    }
-
-    /// 是否为 VRM 模型
-    pub fn is_vrm(&self) -> bool {
-        self.is_vrm
-    }
-
     /// 获取右手矩阵
     pub fn get_right_hand_matrix(&self) -> Mat4 {
         let names = ["右手首", "右腕", "right_hand", "RightHand"];
@@ -2158,165 +1554,34 @@ impl MmdModel {
     #[allow(unreachable_code)]
     pub fn tick_animation_no_skinning(&mut self, elapsed: f32) {
         self.tick_animation_internal(elapsed, false);
-        return;
-        self.animation_layer_manager.update(elapsed);
-        self.begin_animation();
-
-        self.animation_layer_manager
-            .evaluate_normalized(&mut self.bone_manager, &mut self.morph_manager);
-
-        // 应用 VPD 骨骼姿势覆盖（在动画评估后）
-        self.apply_vpd_bone_overrides();
-
-        // 自动眨眼
-        self.update_auto_blink(elapsed);
-
-        // VR 模式下跳过普通头部旋转，由 VR IK 接管
-        if !self.vr_enabled {
-            self.apply_head_rotation();
-        }
-        self.update_morph_animation();
-
-        // 一次性计算所有 Morph 有效权重，供顶点和 UV Morph 同步使用
-        self.compute_and_cache_effective_weights();
-        self.sync_gpu_morph_weights_from_cache();
-        self.sync_gpu_uv_morph_weights_from_cache();
-
-        // 骨骼更新（物理前）— 先计算当前帧全局变换
-        self.update_node_animation(false);
-
-        // VR IK 求解（在全局变换计算之后，确保用当前帧的骨骼位置）
-        if self.vr_enabled {
-            let strength = self.vr_ik_strength;
-            if let Some(frame) = self.vr_tracking_frame {
-                self.vr_debug_state = self.vr_ik_solver.solve_tracking_frame(
-                    &mut self.bone_manager,
-                    &frame,
-                    strength,
-                );
-            } else {
-                let tracking = self.vr_tracking_data;
-                self.vr_ik_solver
-                    .solve(&mut self.bone_manager, &tracking, strength);
-                self.vr_debug_state = VrDebugState::default();
-            }
-        } else {
-            self.vr_debug_state = VrDebugState::default();
-        }
-
-        // 记录物理更新前的动态骨骼数量
-        let physics_enabled = self.physics_enabled && self.physics.is_some();
-
-        self.update_physics(elapsed);
-        self.update_node_animation(true);
-        self.end_physics_update();
-        self.end_animation();
-
-        // 应用矩阵插值过渡（GPU蒙皮模式也需要）
-        self.apply_transition_blend(elapsed);
-
-        // 调试日志（仅首次）
-        if !self.debug_logged && physics_enabled {
-            self.debug_logged = true;
-            if let Some(ref physics) = self.physics {
-                let dynamic_count = physics.get_dynamic_bone_indices().len();
-                log::info!("GPU蒙皮物理调试: 物理已启用, {} 个动态骨骼", dynamic_count);
-            }
-        }
-        // 注意：不调用 self.update()，跳过 CPU 蒙皮
     }
 
     // ========== 物理系统方法 ==========
 
     /// 初始化物理系统（Bullet3）
     fn tick_animation_internal(&mut self, elapsed: f32, cpu_skinning: bool) {
-        self.with_vrm_runtime_state(|model, runtime_state| {
-            runtime_state.apply_inputs(model);
-        });
-
         self.animation_layer_manager.update(elapsed);
         self.begin_animation();
         self.bone_manager.reset_all_ik_enabled();
-
-        self.animation_layer_manager
-            .evaluate_normalized(&mut self.bone_manager, &mut self.morph_manager);
-
+        self.animation_layer_manager.evaluate_normalized(&mut self.bone_manager, &mut self.morph_manager);
         self.apply_vpd_bone_overrides();
         self.update_auto_blink(elapsed);
-
-        if !self.vr_enabled {
-            self.apply_head_rotation();
-        }
-
-        self.with_vrm_runtime_state(|model, runtime_state| {
-            runtime_state.process_expressions(model);
-        });
-
+        self.apply_head_rotation();
         self.update_morph_animation();
-
         if !cpu_skinning {
             self.compute_and_cache_effective_weights();
             self.sync_gpu_morph_weights_from_cache();
             self.sync_gpu_uv_morph_weights_from_cache();
         }
-
         self.update_node_animation(false);
-
-        if self.vr_enabled {
-            let strength = self.vr_ik_strength;
-            if let Some(frame) = self.vr_tracking_frame {
-                self.vr_debug_state = self.vr_ik_solver.solve_tracking_frame(
-                    &mut self.bone_manager,
-                    &frame,
-                    strength,
-                );
-            } else {
-                let tracking = self.vr_tracking_data;
-                self.vr_ik_solver
-                    .solve(&mut self.bone_manager, &tracking, strength);
-                self.vr_debug_state = VrDebugState::default();
-            }
-        } else {
-            self.vr_debug_state = VrDebugState::default();
-        }
-
-        self.with_vrm_runtime_state(|model, runtime_state| {
-            runtime_state.process_post_ik(model, elapsed);
-        });
-
-        let physics_enabled = !self.is_vrm && self.physics_enabled && self.physics.is_some();
-        if physics_enabled {
+        if self.physics_enabled && self.physics.is_some() {
             self.update_physics(elapsed);
             self.update_node_animation(true);
             self.end_physics_update();
         }
-
         self.end_animation();
-
-        self.with_vrm_runtime_state(|model, runtime_state| {
-            runtime_state.refresh_output(model);
-        });
-
         self.apply_transition_blend(elapsed);
-
-        if cpu_skinning {
-            self.update();
-        } else if !self.debug_logged && physics_enabled {
-            self.debug_logged = true;
-            if let Some(ref physics) = self.physics {
-                let dynamic_count = physics.get_dynamic_bone_indices().len();
-                log::info!(
-                    "GPU skinning physics debug: {} dynamic bones",
-                    dynamic_count
-                );
-            }
-            /*
-            if let Some(ref physics) = self.physics {
-                let dynamic_count = physics.get_dynamic_bone_indices().len();
-                log::info!("GPU钂欑毊鐗╃悊璋冭瘯: 鐗╃悊宸插惎鐢? {} 涓姩鎬侀楠?, dynamic_count);
-            }
-            */
-        }
+        if cpu_skinning { self.update(); }
     }
 
     pub fn init_physics(&mut self) -> bool {
@@ -2492,251 +1757,6 @@ impl MmdModel {
             String::from("{\"error\": \"no physics\"}")
         }
     }
-
-    // ======== VR 联动 ========
-
-    pub fn set_vr_enabled(&mut self, enabled: bool) {
-        self.vr_enabled = enabled;
-    }
-
-    pub fn is_vr_enabled(&self) -> bool {
-        self.vr_enabled
-    }
-
-    pub(crate) fn set_vr_tracking_frame(&mut self, frame: Option<VrTrackingFrame>) {
-        self.vr_tracking_frame = frame;
-        if let Some(frame) = frame {
-            self.vr_tracking_data = frame.to_tracking_packet();
-        } else {
-            self.vr_tracking_data = [0.0; 21];
-        }
-    }
-
-    /// 设置 VR 追踪数据（长度必须为 21）
-    pub fn set_vr_tracking_data(&mut self, data: &[f32]) {
-        if data.len() == 21 {
-            self.vr_tracking_data.copy_from_slice(data);
-            let arm_ik_calibration = self
-                .vr_tracking_frame
-                .map(|frame| frame.arm_ik_calibration)
-                .unwrap_or_else(ArmIkCalibration::default);
-            let body_calibration = self
-                .vr_tracking_frame
-                .map(|frame| frame.body_calibration)
-                .unwrap_or_default();
-            self.vr_tracking_frame = Some(VrTrackingFrame::from_tracking_packet(
-                &self.vr_tracking_data,
-                arm_ik_calibration,
-                body_calibration,
-            ));
-        }
-    }
-
-    pub fn set_vr_ik_strength(&mut self, strength: f32) {
-        self.vr_ik_strength = strength.clamp(0.0, 1.0);
-    }
-
-    pub fn vr_tracking_data(&self) -> &[f32; 21] {
-        &self.vr_tracking_data
-    }
-
-    pub fn vr_ik_strength(&self) -> f32 {
-        self.vr_ik_strength
-    }
-
-    pub fn vr_debug_snapshot(&self) -> ModelVrDebugSnapshot {
-        ModelVrDebugSnapshot {
-            head_local_model: self.vr_debug_state.head_local_model,
-            body_anchor_model: self.vr_debug_state.body_anchor_model,
-            left_palm_target_model: self.vr_debug_state.left_palm_target_model,
-            right_palm_target_model: self.vr_debug_state.right_palm_target_model,
-            left_auto_wrist_offset_model: self.vr_debug_state.left_auto_wrist_offset_model,
-            right_auto_wrist_offset_model: self.vr_debug_state.right_auto_wrist_offset_model,
-            left_wrist_solved_model: self.vr_debug_state.left_wrist_solved_model,
-            right_wrist_solved_model: self.vr_debug_state.right_wrist_solved_model,
-            left_wrist_error_cm: self.vr_debug_state.left_wrist_error_cm,
-            right_wrist_error_cm: self.vr_debug_state.right_wrist_error_cm,
-        }
-    }
-
-    pub(crate) fn vr_debug_state(&self) -> VrDebugState {
-        self.vr_debug_state
-    }
-
-    // ======== VR 手部模式 ========
-
-    /// 初始化手部子网格检测（基于骨骼权重判断左/右手归属）
-    fn init_hand_detection(&mut self) {
-        if self.hand_detection_initialized {
-            return;
-        }
-        self.hand_detection_initialized = true;
-
-        // 收集左/右手骨骼索引
-        let left_names = [
-            "左腕",
-            "左手首",
-            "左親指０",
-            "左親指１",
-            "左親指２",
-            "左人指１",
-            "左人指２",
-            "左人指３",
-            "左中指１",
-            "左中指２",
-            "左中指３",
-            "左薬指１",
-            "左薬指２",
-            "左薬指３",
-            "左小指１",
-            "左小指２",
-            "左小指３",
-        ];
-        let right_names = [
-            "右腕",
-            "右手首",
-            "右親指０",
-            "右親指１",
-            "右親指２",
-            "右人指１",
-            "右人指２",
-            "右人指３",
-            "右中指１",
-            "右中指２",
-            "右中指３",
-            "右薬指１",
-            "右薬指２",
-            "右薬指３",
-            "右小指１",
-            "右小指２",
-            "右小指３",
-        ];
-
-        let mut left_bones = std::collections::HashSet::new();
-        let mut right_bones = std::collections::HashSet::new();
-
-        for name in &left_names {
-            if let Some(idx) = self.bone_manager.find_bone_by_name(name) {
-                left_bones.insert(idx as i32);
-            }
-        }
-        for name in &right_names {
-            if let Some(idx) = self.bone_manager.find_bone_by_name(name) {
-                right_bones.insert(idx as i32);
-            }
-        }
-
-        log::info!(
-            "VR 手部检测: 左手骨骼={}, 右手骨骼={}",
-            left_bones.len(),
-            right_bones.len()
-        );
-
-        if left_bones.is_empty() && right_bones.is_empty() {
-            self.hand_submesh_flags = vec![0u8; self.submeshes.len()];
-            log::warn!("未找到手部骨骼，手部模式不可用");
-            return;
-        }
-
-        // 对每个子网格，统计顶点的骨骼权重归属
-        self.hand_submesh_flags = Vec::with_capacity(self.submeshes.len());
-
-        for submesh in &self.submeshes {
-            let begin = submesh.begin_index as usize;
-            let count = submesh.index_count as usize;
-            let mut left_weight_sum = 0.0f32;
-            let mut right_weight_sum = 0.0f32;
-            let mut total_weight_sum = 0.0f32;
-
-            for idx_offset in 0..count {
-                let index_pos = begin + idx_offset;
-                if index_pos >= self.indices.len() {
-                    break;
-                }
-                let vi = self.indices[index_pos] as usize;
-                if vi >= self.weights.len() {
-                    continue;
-                }
-
-                // 提取该顶点的骨骼索引和权重
-                let pairs: Vec<(i32, f32)> = match &self.weights[vi] {
-                    VertexWeight::Bdef1 { bone } => vec![(*bone, 1.0)],
-                    VertexWeight::Bdef2 { bones, weight } => {
-                        vec![(bones[0], *weight), (bones[1], 1.0 - *weight)]
-                    }
-                    VertexWeight::Bdef4 { bones, weights } => {
-                        (0..4).map(|j| (bones[j], weights[j])).collect()
-                    }
-                    VertexWeight::Sdef { bones, weight, .. } => {
-                        vec![(bones[0], *weight), (bones[1], 1.0 - *weight)]
-                    }
-                    VertexWeight::Qdef { bones, weights } => {
-                        (0..4).map(|j| (bones[j], weights[j])).collect()
-                    }
-                };
-
-                for (bone_id, w) in &pairs {
-                    total_weight_sum += w;
-                    if left_bones.contains(bone_id) {
-                        left_weight_sum += w;
-                    }
-                    if right_bones.contains(bone_id) {
-                        right_weight_sum += w;
-                    }
-                }
-            }
-
-            // 阈值：超过 60% 权重属于某只手则标记
-            let flag = if total_weight_sum > 0.0 {
-                let left_ratio = left_weight_sum / total_weight_sum;
-                let right_ratio = right_weight_sum / total_weight_sum;
-                if left_ratio > 0.6 {
-                    1u8
-                } else if right_ratio > 0.6 {
-                    2u8
-                } else {
-                    0u8
-                }
-            } else {
-                0u8
-            };
-
-            self.hand_submesh_flags.push(flag);
-
-            if flag != 0 {
-                let mat_name = self
-                    .materials
-                    .get(submesh.material_id as usize)
-                    .map(|m| m.name.as_str())
-                    .unwrap_or("?");
-                let side = if flag == 1 { "左手" } else { "右手" };
-                log::info!(
-                    "  [{}] submesh={}, material={}",
-                    side,
-                    self.hand_submesh_flags.len() - 1,
-                    mat_name
-                );
-            }
-        }
-    }
-
-    /// 设置 VR 手部渲染模式
-    /// mode: 0=全身（恢复）, 1=仅左手, 2=仅右手
-    pub fn set_vr_hand_mode(&mut self, mode: u8) {
-        if !self.hand_detection_initialized {
-            self.init_hand_detection();
-        }
-
-        let old_mode = self.vr_hand_mode;
-        self.vr_hand_mode = mode;
-
-        if mode == old_mode {
-            return;
-        }
-
-        self.refresh_effective_material_visibility();
-    }
-
     pub fn memory_usage(&self) -> u64 {
         use std::mem::size_of;
         let mut total: u64 = 0;
@@ -2791,7 +1811,6 @@ impl MmdModel {
 
         // 材质可见性
         total += (self.material_visible.capacity() * size_of::<bool>()) as u64;
-        total += (self.head_submesh_flags.capacity() * size_of::<bool>()) as u64;
 
         // 子系统估算
         total += self.bone_manager.memory_usage();
@@ -2802,29 +1821,6 @@ impl MmdModel {
             * (size_of::<usize>() + size_of::<(Vec3, Quat)>())) as u64;
 
         total
-    }
-}
-
-fn java_tracking_input_from_packet(packet: &[f32; 21]) -> VrmTrackingInput {
-    VrmTrackingInput {
-        head: java_tracked_pose_from_slice(&packet[0..7]),
-        right_hand: java_tracked_pose_from_slice(&packet[7..14]),
-        left_hand: java_tracked_pose_from_slice(&packet[14..21]),
-    }
-}
-
-fn java_tracked_pose_from_slice(values: &[f32]) -> TrackedPose {
-    let rotation = Quat::from_xyzw(values[3], values[4], values[5], values[6]);
-    let valid = rotation.length_squared() > 1e-6;
-
-    TrackedPose {
-        position: Vec3::new(values[0], values[1], values[2]),
-        orientation: if valid {
-            rotation.normalize()
-        } else {
-            Quat::IDENTITY
-        },
-        valid,
     }
 }
 
@@ -2846,134 +1842,6 @@ fn normalized_material_visibility(source: &[bool], material_count: usize) -> Vec
     visible
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use crate::skeleton::BoneLink;
-    use crate::vr::{VrTrackedPose, XR_TO_MODEL_SCALE};
-    use crate::vrm_runtime::{ArmIkHandCalibration, BodyTrackingCalibration};
-
-    #[test]
-    fn set_first_person_mode_should_restore_user_material_visibility() {
-        let mut model = make_material_visibility_test_model();
-        model.set_material_visible(2, false);
-
-        model.set_first_person_mode(true);
-
-        assert!(model.is_material_visible(0));
-        assert!(!model.is_material_visible(1));
-        assert!(!model.is_material_visible(2));
-        assert_eq!(
-            model.user_material_visibility_snapshot(),
-            vec![true, true, false]
-        );
-
-        model.set_first_person_mode(false);
-
-        assert!(model.is_material_visible(0));
-        assert!(model.is_material_visible(1));
-        assert!(!model.is_material_visible(2));
-        assert_eq!(
-            model.user_material_visibility_snapshot(),
-            vec![true, true, false]
-        );
-    }
-
-    #[test]
-    fn set_vr_tracking_data_should_preserve_arm_and_body_calibration() {
-        let mut model = MmdModel::new();
-        let arm_ik_calibration = ArmIkCalibration {
-            left: ArmIkHandCalibration {
-                wrist_offset_model: Vec3::new(1.0, 2.0, 3.0),
-                wrist_rotation_offset_model: Quat::from_rotation_z(0.1),
-            },
-            right: ArmIkHandCalibration {
-                wrist_offset_model: Vec3::new(-1.0, -2.0, -3.0),
-                wrist_rotation_offset_model: Quat::from_rotation_z(-0.2),
-            },
-            forearm_twist_ratio: 0.75,
-            hand_face_flip: false,
-        };
-        let body_calibration = BodyTrackingCalibration {
-            head_rest_anchor_model: Vec3::new(0.0, 17.0, 0.0),
-            shoulder_width_model: XR_TO_MODEL_SCALE * 0.3,
-            shoulder_depth_model: XR_TO_MODEL_SCALE * 0.08,
-            body_yaw_follow_gain: 0.65,
-            horizontal_translation_follow_gain: 0.9,
-            vertical_translation_follow_gain: 0.95,
-            body_translation_clamp_model: 2.0,
-            shoulder_follow_gain: 0.45,
-        };
-        model.set_vr_tracking_frame(Some(VrTrackingFrame {
-            head: VrTrackedPose::default(),
-            right_palm: VrTrackedPose::default(),
-            left_palm: VrTrackedPose::default(),
-            arm_ik_calibration,
-            body_calibration,
-        }));
-
-        model.set_vr_tracking_data(&[0.0; 21]);
-
-        let frame = model
-            .vr_tracking_frame
-            .expect("tracking frame should exist");
-        assert_eq!(
-            frame.arm_ik_calibration.left.wrist_offset_model,
-            arm_ik_calibration.left.wrist_offset_model
-        );
-        assert_eq!(
-            frame.arm_ik_calibration.right.wrist_offset_model,
-            arm_ik_calibration.right.wrist_offset_model
-        );
-        let left_similarity = frame
-            .arm_ik_calibration
-            .left
-            .wrist_rotation_offset_model
-            .dot(arm_ik_calibration.left.wrist_rotation_offset_model)
-            .abs();
-        assert!(left_similarity > 1.0 - 1e-6);
-        let right_similarity = frame
-            .arm_ik_calibration
-            .right
-            .wrist_rotation_offset_model
-            .dot(arm_ik_calibration.right.wrist_rotation_offset_model)
-            .abs();
-        assert!(right_similarity > 1.0 - 1e-6);
-        assert_eq!(
-            frame.arm_ik_calibration.forearm_twist_ratio,
-            arm_ik_calibration.forearm_twist_ratio
-        );
-        assert_eq!(
-            frame.body_calibration.head_rest_anchor_model,
-            body_calibration.head_rest_anchor_model
-        );
-        assert_eq!(
-            frame.body_calibration.shoulder_width_model,
-            body_calibration.shoulder_width_model
-        );
-    }
-
-    fn make_material_visibility_test_model() -> MmdModel {
-        let mut model = MmdModel::new();
-        model.materials = vec![
-            MmdMaterial::default(),
-            MmdMaterial::default(),
-            MmdMaterial::default(),
-        ];
-        model.submeshes = vec![
-            SubMesh::new(0, 3, 0),
-            SubMesh::new(3, 3, 1),
-            SubMesh::new(6, 3, 2),
-        ];
-        model.head_submesh_flags = vec![false, true, false];
-        model.head_detection_initialized = true;
-        model
-            .bone_manager
-            .add_bone(BoneLink::new("Head".to_string()));
-        model.init_material_visibility();
-        model
-    }
-}
 
 /// 计算单个顶点的蒙皮
 fn compute_vertex_skinning(

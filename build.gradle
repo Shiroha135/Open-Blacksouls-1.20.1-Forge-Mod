@@ -123,7 +123,10 @@ minecraft.runs.all {
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
+    exclude 'natives/android-arm64/**', 'natives/linux-x64/**'
+}
 
 repositories {
     mavenCentral()

@@ -9,8 +9,6 @@ pub mod stage;
 pub mod skeleton;
 pub mod skinning;
 pub mod texture;
-pub mod vr;
-pub mod vrm_runtime;
 
 pub use animation::{VmdAnimation, VmdFile};
 pub use model::MmdModel;
@@ -18,12 +16,6 @@ pub use morph::{Morph, MorphManager};
 pub use physics::{MMDPhysics, MmdJointData, MmdRigidBodyData, PhysicsMode};
 pub use skeleton::{Bone, BoneManager, IkSolver};
 pub use texture::Texture;
-pub use vr::VrIkSolver;
-pub use vrm_runtime::{
-    ArmIkCalibration, ArmIkHandCalibration, BodyTrackingCalibration, ExpressionKey,
-    ExpressionPreset, HandGripOffset, HandTrackingCalibration, LookAtInput, VrmRuntime,
-    VrmRuntimeInput, VrmRuntimeOutput,
-};
 
 use thiserror::Error;
 
@@ -47,11 +39,7 @@ pub enum MmdError {
     #[error("VPD parse error: {0}")]
     VpdParse(String),
 
-    #[error("VRM parse error: {0}")]
-    VrmParse(String),
 
-    #[error("FBX parse error: {0}")]
-    FbxParse(String),
 }
 
 pub type Result<T> = std::result::Result<T, MmdError>;
