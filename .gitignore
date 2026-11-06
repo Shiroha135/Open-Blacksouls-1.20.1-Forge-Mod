@@ -23,6 +23,7 @@ bin/
 
 .codex-*/
 /tools/
+/docs/
 
 *.log
 hs_err_pid*
@@ -46,7 +47,38 @@ desktop.ini
 *.py
 *.ps1
 *.pyc
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 *.7z
 *.ri
 *.html
 *.gemspec
+target/
+/.native-deps/
+!/native/mmd-stage/build-stage.ps1
+/native/mmd-stage/README.md
+/native/mmd-stage/deps/mmd-rs/README.md
+/native/mmd-stage/UPSTREAM_ACKNOWLEDGMENTS.md
+
+node_modules/
+coverage/
+.coverage
+test-results/
+test-output/
+playwright-report/
+
+*.class
+*.o
+*.obj
+*.pdb
+*.ilk
+*.exp
+*.lib
+*.rlib
+*.rmeta
+*.profraw
+*.profdata
+*.gcda
+*.gcno
