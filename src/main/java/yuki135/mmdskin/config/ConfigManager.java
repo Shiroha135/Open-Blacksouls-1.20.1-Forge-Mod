@@ -211,18 +211,6 @@ public class ConfigManager {
         return provider != null ? provider.getPhysicsLodMaxDistance() : 24.0f;
     }
 
-    public static boolean isFirstPersonModelEnabled() {
-        return provider != null ? provider.isFirstPersonModelEnabled() : false;
-    }
-
-    public static float getFirstPersonCameraForwardOffset() {
-        return provider != null ? provider.getFirstPersonCameraForwardOffset() : 0.0f;
-    }
-
-    public static float getFirstPersonCameraVerticalOffset() {
-        return provider != null ? provider.getFirstPersonCameraVerticalOffset() : 0.0f;
-    }
-
     public static int getTextureCacheBudgetMB() {
         return provider != null ? provider.getTextureCacheBudgetMB() : 256;
     }
@@ -231,19 +219,6 @@ public class ConfigManager {
         return provider != null ? provider.isDebugHudEnabled() : false;
     }
 
-    public static boolean isVREnabled() {
-        return provider != null ? provider.isVREnabled() : false;
-    }
-
-    public static float getVRArmIKStrength() {
-        return provider != null ? provider.getVRArmIKStrength() : 1.0f;
-    }
-
-    public static String getMobModelReplacement(String entityTypeId) {
-        return provider != null ? provider.getMobModelReplacement(entityTypeId) : "";
-    }
-
-    public interface IConfigProvider extends IRenderConfig, IToonConfig, IMmeConfig, IPhysicsConfig, IVRConfig {
-        String getMobModelReplacement(String entityTypeId);
+    public interface IConfigProvider extends IRenderConfig, IToonConfig, IMmeConfig, IPhysicsConfig {
     }
 }

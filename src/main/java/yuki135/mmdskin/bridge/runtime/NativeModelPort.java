@@ -10,15 +10,6 @@ public interface NativeModelPort {
 
     long getModelMemoryUsage(long modelHandle);
 
-    void setFirstPersonMode(long modelHandle, boolean enabled);
-
-    void getEyeBonePosition(long modelHandle, float[] output);
-
-    void applyVrTrackingInput(long modelHandle, float[] trackingData);
-
-    void setVrEnabled(long modelHandle, boolean enabled);
-
-    void setVrIkParams(long modelHandle, float armIkStrength);
 
     int getMaterialCount(long modelHandle);
 

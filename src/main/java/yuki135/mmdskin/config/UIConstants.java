@@ -84,7 +84,6 @@ public final class UIConstants {
 
     public static final int COLOR_FORMAT_PMX = 0xFF6699FF;
 
-    public static final int COLOR_FORMAT_PMD = 0xFFFF9966;
 
     public static final int COLOR_MATERIAL_BG = 0xE0101820;
 

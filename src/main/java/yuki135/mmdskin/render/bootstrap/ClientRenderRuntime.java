@@ -11,27 +11,19 @@ import yuki135.mmdskin.bridge.runtime.NativeRuntimePort;
 import yuki135.mmdskin.bridge.runtime.NativeScenePort;
 import yuki135.mmdskin.bridge.runtime.NativeTextureBridgeHolder;
 import yuki135.mmdskin.bridge.runtime.PlatformCapabilityPort;
-import yuki135.mmdskin.compat.vr.DefaultVrRuntimePort;
 import yuki135.mmdskin.config.PhysicsConfigSnapshot;
 import yuki135.mmdskin.config.RuntimeConfigPort;
 import yuki135.mmdskin.config.RuntimeConfigPortHolder;
-import yuki135.mmdskin.expression.ExpressionApplicationService;
 import yuki135.mmdskin.expression.ModelMorphCatalog;
-import yuki135.mmdskin.compat.maid.model.MaidModelRepositoryExtension;
 import yuki135.mmdskin.model.port.ModelDiagnosticsPort;
 import yuki135.mmdskin.model.port.ModelRepositoryPort;
 import yuki135.mmdskin.model.runtime.DefaultModelRuntimeAccessPort;
 import yuki135.mmdskin.model.runtime.ManagedModel;
 import yuki135.mmdskin.model.runtime.ModelRepository;
-import yuki135.mmdskin.player.render.ItemRenderHelper;
-import yuki135.mmdskin.player.runtime.FirstPersonManager;
-import yuki135.mmdskin.api.MmdSkinApi;
-import yuki135.mmdskin.compat.vr.VRBoneDriver;
 import yuki135.mmdskin.debug.client.PerformanceHud;
 import yuki135.mmdskin.render.backend.RenderBackendRegistry;
 import yuki135.mmdskin.render.pipeline.LivingEntityModelStateHelper;
 import yuki135.mmdskin.render.port.RenderBackendSettingsPort;
-import yuki135.mmdskin.scene.client.SceneModelManager;
 import yuki135.mmdskin.texture.runtime.TextureRepository;
 
 /** 文件职责：作为客户端渲染运行时的唯一组合根，统一持有仓储与后端服务。 */
@@ -59,19 +51,12 @@ public final class ClientRenderRuntime {
         NativeMorphPort morphPort = (NativeMorphPort) nativeRuntimePort;
         this.modelRepository = new ModelRepository(
                 new DefaultModelRuntimeAccessPort(renderBackendRegistry, modelLoadPort, modelPort),
-                MaidModelRepositoryExtension.INSTANCE);
+                null);
         ManagedModel.configureRuntimeCollaborators(NativeAnimationBridgeHolder.get(), nativeRuntimePort);
-        ItemRenderHelper.configureRuntimeCollaborators(nativeRuntimePort);
         TextureRepository.configureRuntimeCollaborators(NativeTextureBridgeHolder.get());
-        VRBoneDriver.configureRuntimeCollaborators(modelPort);
         PerformanceHud.configureRuntimeCollaborators(modelQueryPort);
-        FirstPersonManager.configureRuntimeCollaborators(modelPort);
-        FirstPersonManager.configureVrRuntime(new DefaultVrRuntimePort());
         LivingEntityModelStateHelper.configureRuntimeCollaborators(scenePort);
-        SceneModelManager.getInstance().configureRuntimeCollaborators(scenePort);
-        ExpressionApplicationService.configureRuntimeCollaborators(morphPort);
         ModelMorphCatalog.configureRuntimeCollaborators(modelQueryPort);
-        MmdSkinApi.configureRuntimeCollaborators(modelPort, modelQueryPort);
     }
 
     public static synchronized void initialize() {

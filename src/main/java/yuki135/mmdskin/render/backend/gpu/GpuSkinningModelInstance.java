@@ -139,21 +139,19 @@ public class GpuSkinningModelInstance extends BaseModelInstance {
     public static GpuSkinningModelInstance create(NativeRenderBackendPort nativeBackend,
                                                   String modelFilename,
                                                   String modelDir,
-                                                  boolean isPMD,
+
                                                   long layerCount) {
         if (!ensureComputeShaderInitialized()) {
             return null;
         }
 
-        long model = isPMD
-                ? nativeBackend.loadPmdModel(modelFilename, modelDir, layerCount)
-                : nativeBackend.loadPmxModel(modelFilename, modelDir, layerCount);
+        long model = nativeBackend.loadPmxModel(modelFilename, modelDir, layerCount);
         if (model == 0) {
             logger.warn("Cannot open model: '{}'", modelFilename);
             return null;
         }
 
-        GpuSkinningModelInstance result = createFromHandle(nativeBackend, model, modelDir, isPMD ? null : modelFilename);
+        GpuSkinningModelInstance result = createFromHandle(nativeBackend, model, modelDir, modelFilename);
         if (result == null) {
             nativeBackend.deleteModel(model);
         }

@@ -1,8 +1,6 @@
 package yuki135.mmdskin.render.policy;
 
 import yuki135.mmdskin.config.UIConstants;
-import yuki135.mmdskin.player.sync.PlayerModelSyncService;
-import yuki135.mmdskin.render.entity.MobReplacementService;
 import yuki135.mmdskin.render.pipeline.RenderPerformanceProfiler;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -13,7 +11,6 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -51,24 +48,6 @@ public final class RenderPriorityService {
         currentFrameKey = nextFrameKey;
         currentFrameIndex++;
         rebuildPrioritySets();
-    }
-
-    public synchronized boolean shouldUsePlayerModel(AbstractClientPlayer player) {
-        beginWorldFrame();
-        if (player == null) {
-            return false;
-        }
-
-        Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.player != null && minecraft.player.getUUID().equals(player.getUUID())) {
-            return true;
-        }
-        return prioritizedVisibleEntities.contains(player.getUUID());
-    }
-
-    public synchronized boolean shouldUseMobReplacement(LivingEntity entity) {
-        beginWorldFrame();
-        return entity != null && prioritizedVisibleEntities.contains(entity.getUUID());
     }
 
     public boolean shouldUpdateAnimation(long modelHandle, double distanceSq, boolean localPlayer) {
@@ -152,19 +131,10 @@ public final class RenderPriorityService {
 
         List<PrioritizedEntity> candidates = new ArrayList<>();
 
-        for (AbstractClientPlayer player : minecraft.level.players()) {
-            if (shouldConsiderPlayer(player)) {
-                boolean localPlayer = minecraft.player != null && minecraft.player.getUUID().equals(player.getUUID());
-                candidates.add(new PrioritizedEntity(player, distanceSqToCamera(player, localPlayer), localPlayer));
-            }
-        }
-
         for (Entity entity : minecraft.level.entitiesForRendering()) {
-            if (entity instanceof LivingEntity living && !(entity instanceof AbstractClientPlayer)) {
-                String replacementModel = MobReplacementService.getReplacementModelName(living);
-                if (replacementModel != null || living instanceof yuki135.mmdskin.render.entity.CustomEntityPoseProvider) {
-                    candidates.add(new PrioritizedEntity(living, distanceSqToCamera(living, false), false));
-                }
+            if (entity instanceof yuki135.mmdskin.render.entity.CustomEntityPoseProvider
+                    && !entity.isInvisible() && entity.isAlive()) {
+                candidates.add(new PrioritizedEntity(entity, distanceSqToCamera(entity, false), false));
             }
         }
 
@@ -201,19 +171,6 @@ public final class RenderPriorityService {
 
         visibleModelsThisFrame = prioritizedVisibleEntities.size();
         physicsModelsThisFrame = prioritizedPhysicsEntities.size();
-    }
-
-    private boolean shouldConsiderPlayer(AbstractClientPlayer player) {
-        if (player == null || player.isSpectator()) {
-            return false;
-        }
-
-        Minecraft minecraft = Minecraft.getInstance();
-        boolean localPlayer = minecraft.player != null && minecraft.player.getUUID().equals(player.getUUID());
-        String selectedModel = PlayerModelSyncService.getPlayerModel(player.getUUID(), player.getName().getString(), localPlayer);
-        return selectedModel != null
-                && !selectedModel.isBlank()
-                && !UIConstants.DEFAULT_MODEL_NAME.equals(selectedModel);
     }
 
     private record PrioritizedEntity(Entity entity, double distanceSq, boolean localPlayer) {

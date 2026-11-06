@@ -112,16 +112,6 @@ public final class NativeRuntimeBridge implements
     }
 
     @Override
-    public long loadPmdModel(String modelFilePath, String modelDir, long layerCount) {
-        return nativeFunc().LoadModelPMD(modelFilePath, modelDir, layerCount);
-    }
-
-    @Override
-    public long loadVrmModel(String modelFilePath, String modelDir, long layerCount) {
-        return nativeFunc().LoadModelVRM(modelFilePath, modelDir, layerCount);
-    }
-
-    @Override
     public void populateHandMatrix(long modelHandle, long handMatrixHandle, boolean mainHand) {
         if (mainHand) {
             nativeFunc().GetRightHandMat(modelHandle, handMatrixHandle);
@@ -133,31 +123,6 @@ public final class NativeRuntimeBridge implements
     @Override
     public boolean copyMatrixToBuffer(long matrixHandle, ByteBuffer targetBuffer) {
         return nativeFunc().CopyMatToBuffer(matrixHandle, targetBuffer);
-    }
-
-    @Override
-    public void setFirstPersonMode(long modelHandle, boolean enabled) {
-        nativeFunc().SetFirstPersonMode(modelHandle, enabled);
-    }
-
-    @Override
-    public void getEyeBonePosition(long modelHandle, float[] output) {
-        nativeFunc().GetEyeBonePosition(modelHandle, output);
-    }
-
-    @Override
-    public void applyVrTrackingInput(long modelHandle, float[] trackingData) {
-        nativeFunc().ApplyVRTrackingInput(modelHandle, trackingData);
-    }
-
-    @Override
-    public void setVrEnabled(long modelHandle, boolean enabled) {
-        nativeFunc().SetVREnabled(modelHandle, enabled);
-    }
-
-    @Override
-    public void setVrIkParams(long modelHandle, float armIkStrength) {
-        nativeFunc().SetVRIKParams(modelHandle, armIkStrength);
     }
 
     @Override

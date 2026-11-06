@@ -29,12 +29,6 @@ public interface IRenderConfig {
 
     default int getAnimationLodFarUpdateInterval() { return 4; }
 
-    default boolean isFirstPersonModelEnabled() { return false; }
-
-    default float getFirstPersonCameraForwardOffset() { return 0.0f; }
-
-    default float getFirstPersonCameraVerticalOffset() { return 0.0f; }
-
     default boolean isDebugHudEnabled() { return false; }
 
     default int getTextureCacheBudgetMB() { return 256; }

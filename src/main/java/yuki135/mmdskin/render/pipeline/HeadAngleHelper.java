@@ -35,9 +35,6 @@ public final class HeadAngleHelper {
 
         float pitchRad = headAngleX * ((float) Math.PI / 180F);
         float yawRad = headAngleY * ((float) Math.PI / 180F);
-        if (context.isInventoryScene()) {
-            yawRad = -yawRad;
-        }
 
         scenePort.setHeadAngle(modelHandle, pitchRad, yawRad, 0.0f, context.isWorldScene());
     }

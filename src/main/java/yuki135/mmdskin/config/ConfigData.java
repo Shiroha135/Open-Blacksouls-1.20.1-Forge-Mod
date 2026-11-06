@@ -75,18 +75,11 @@ public class ConfigData {
     public int maxPhysicsModelsPerFrame = 10;
     public float physicsLodMaxDistance = 24.0f;
 
-    public boolean firstPersonModelEnabled = false;
-    public float firstPersonCameraForwardOffset = 0.0f;
-    public float firstPersonCameraVerticalOffset = 0.0f;
 
     public int textureCacheBudgetMB = 256;
 
     public boolean debugHudEnabled = false;
 
-    public boolean vrEnabled = false;
-    public float vrArmIKStrength = 1.0f;
-
-    public Map<String, String> mobModelReplacements = new LinkedHashMap<>();
 
     public static ConfigData load(Path configPath) {
         Path configFile = configPath.resolve("config.json");
@@ -128,9 +121,6 @@ public class ConfigData {
     }
 
     private void normalize() {
-        if (mobModelReplacements == null) {
-            mobModelReplacements = new LinkedHashMap<>();
-        }
 
         performanceLogIntervalSeconds = Math.max(1, performanceLogIntervalSeconds);
         maxVisibleModelsPerFrame = Math.max(1, maxVisibleModelsPerFrame);

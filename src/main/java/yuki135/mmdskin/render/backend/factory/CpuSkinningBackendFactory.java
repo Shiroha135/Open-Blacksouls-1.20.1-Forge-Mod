@@ -52,9 +52,9 @@ public class CpuSkinningBackendFactory implements ModelInstanceFactory {
     }
 
     @Override
-    public ModelInstance createModel(String modelFilename, String modelDir, boolean isPMD, long layerCount) {
+    public ModelInstance createModel(String modelFilename, String modelDir, long layerCount) {
         try {
-            return OpenGlModelInstance.create(nativeRenderBackendPort, modelFilename, modelDir, isPMD, layerCount);
+            return OpenGlModelInstance.create(nativeRenderBackendPort, modelFilename, modelDir, layerCount);
         } catch (Throwable e) {
             logger.error("CPU ????????: {}", modelFilename, e);
             return null;

@@ -62,14 +62,14 @@ public class GpuSkinningBackendFactory implements ModelInstanceFactory {
     }
 
     @Override
-    public ModelInstance createModel(String modelFilename, String modelDir, boolean isPMD, long layerCount) {
+    public ModelInstance createModel(String modelFilename, String modelDir, long layerCount) {
         if (!isAvailable()) {
             logger.warn("GPU 蒙皮不可用，无法创建模型");
             return null;
         }
 
         try {
-            return GpuSkinningModelInstance.create(nativeRenderBackendPort, modelFilename, modelDir, isPMD, layerCount);
+            return GpuSkinningModelInstance.create(nativeRenderBackendPort, modelFilename, modelDir, layerCount);
         } catch (Exception e) {
             logger.error("GPU 蒙皮模型创建失败: {}", modelFilename, e);
             return null;

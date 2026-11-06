@@ -1,7 +1,6 @@
 package yuki135.mmdskin;
 
 import yuki135.mmdskin.render.bootstrap.ClientRenderRuntime;
-import yuki135.mmdskin.stage.client.bootstrap.StageClientBootstrap;
 import yuki135.mmdskin.util.VectorParseUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,7 +10,6 @@ public class MmdSkinClient {
     public static final Logger logger = LogManager.getLogger();
 
     public static void initClient() {
-        StageClientBootstrap.initialize();
         MmdClientResourceBootstrap.initialize();
         ClientRenderRuntime.initialize();
     }

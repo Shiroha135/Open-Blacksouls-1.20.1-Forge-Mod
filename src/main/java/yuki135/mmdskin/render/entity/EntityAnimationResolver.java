@@ -1,7 +1,7 @@
 package yuki135.mmdskin.render.entity;
 
 import yuki135.mmdskin.model.runtime.ManagedModel;
-import yuki135.mmdskin.player.runtime.EntityAnimState;
+import yuki135.mmdskin.model.runtime.EntityAnimState;
 import yuki135.mmdskin.render.scene.MutableRenderPose;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -38,7 +38,6 @@ public final class EntityAnimationResolver {
             }
             if (model.entityState().playCustomAnim) {
                 model.entityState().playCustomAnim = false;
-                model.entityState().playStageAnim = false;
                 model.entityState().invalidateStateLayers();
                 model.modelInstance().resetPhysics();
             }
@@ -84,7 +83,6 @@ public final class EntityAnimationResolver {
             return false;
         }
         model.entityState().playCustomAnim = true;
-        model.entityState().playStageAnim = false;
         model.entityState().invalidateStateLayers();
         model.entityState().layerAnimationKeys[layer] = animation;
         model.modelInstance().setLayerLoop(layer, true);

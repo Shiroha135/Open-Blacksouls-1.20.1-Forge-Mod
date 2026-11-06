@@ -63,15 +63,7 @@ public abstract class AbstractMmdSkinConfig implements ConfigManager.IConfigProv
     @Override public int getMaxPhysicsModelsPerFrame() { return data.maxPhysicsModelsPerFrame; }
     @Override public float getPhysicsLodMaxDistance() { return data.physicsLodMaxDistance; }
 
-    @Override public boolean isFirstPersonModelEnabled() { return data.firstPersonModelEnabled; }
-    @Override public float getFirstPersonCameraForwardOffset() { return data.firstPersonCameraForwardOffset; }
-    @Override public float getFirstPersonCameraVerticalOffset() { return data.firstPersonCameraVerticalOffset; }
     @Override public boolean isDebugHudEnabled() { return data.debugHudEnabled; }
     @Override public int getTextureCacheBudgetMB() { return data.textureCacheBudgetMB; }
-    @Override public String getMobModelReplacement(String entityTypeId) {
-        return data.mobModelReplacements.getOrDefault(entityTypeId, "");
-    }
 
-    @Override public boolean isVREnabled() { return data.vrEnabled; }
-    @Override public float getVRArmIKStrength() { return data.vrArmIKStrength; }
 }

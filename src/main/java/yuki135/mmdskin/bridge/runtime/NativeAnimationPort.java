@@ -11,7 +11,6 @@ public interface NativeAnimationPort {
 
     void mergeAnimation(long mergedAnimationHandle, long sourceAnimationHandle);
 
-    boolean hasCameraData(long animationHandle);
 
     boolean hasBoneData(long animationHandle);
 
@@ -21,5 +20,4 @@ public interface NativeAnimationPort {
 
     void seekLayer(long modelHandle, long layer, float frame);
 
-    void getCameraTransform(long animationHandle, float frame, ByteBuffer targetBuffer);
 }

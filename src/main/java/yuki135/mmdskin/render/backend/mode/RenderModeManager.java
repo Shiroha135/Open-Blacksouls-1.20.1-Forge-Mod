@@ -74,14 +74,14 @@ public class RenderModeManager {
     }
 
     public static String getCurrentModeDescription() {
-        List<ModelInstanceFactory> candidates = getOrderedFactories(false, false);
+        List<ModelInstanceFactory> candidates = getOrderedFactories(false);
         if (!candidates.isEmpty()) {
             return candidates.get(0).getModeName();
         }
         return "无可用渲染模式";
     }
 
-    private static List<ModelInstanceFactory> getOrderedFactories(boolean isPMD, boolean includeDisabled) {
+    private static List<ModelInstanceFactory> getOrderedFactories(boolean includeDisabled) {
         List<ModelInstanceFactory> result = new ArrayList<>();
 
         List<ModelInstanceFactory> sorted = new ArrayList<>(factories);
@@ -89,23 +89,22 @@ public class RenderModeManager {
 
         for (ModelInstanceFactory factory : sorted) {
             if (!factory.isAvailable()) continue;
-            if (isPMD && !factory.supportsPMD()) continue;
             if (!includeDisabled && !isEnabled(factory.getCategory())) continue;
             result.add(factory);
         }
         return result;
     }
 
-    public static ModelInstance createModel(String modelFilename, String modelDir, boolean isPMD, long layerCount) {
+    public static ModelInstance createModel(String modelFilename, String modelDir, long layerCount) {
         syncFactoryStates();
 
-        List<ModelInstanceFactory> enabled = getOrderedFactories(isPMD, false);
-        ModelInstance model = tryCreateWithFactories(enabled, modelFilename, modelDir, isPMD, layerCount);
+        List<ModelInstanceFactory> enabled = getOrderedFactories(false);
+        ModelInstance model = tryCreateWithFactories(enabled, modelFilename, modelDir, layerCount);
         if (model != null) return model;
 
-        List<ModelInstanceFactory> all = getOrderedFactories(isPMD, true);
+        List<ModelInstanceFactory> all = getOrderedFactories(true);
         all.removeAll(enabled);
-        model = tryCreateWithFactories(all, modelFilename, modelDir, isPMD, layerCount);
+        model = tryCreateWithFactories(all, modelFilename, modelDir, layerCount);
         if (model != null) return model;
 
         logger.error("所有工厂都无法创建模型: {}", modelFilename);
@@ -116,17 +115,17 @@ public class RenderModeManager {
         if (modelInfo == null) return null;
         return createModel(
             modelInfo.getModelFilePath(), modelInfo.getFolderPath(),
-            modelInfo.isPMD(), layerCount);
+            layerCount);
     }
 
-    public static ModelInstance createModelFromHandle(long modelHandle, String modelDir, boolean isPMD) {
+    public static ModelInstance createModelFromHandle(long modelHandle, String modelDir) {
         syncFactoryStates();
 
-        List<ModelInstanceFactory> enabled = getOrderedFactories(isPMD, false);
+        List<ModelInstanceFactory> enabled = getOrderedFactories(false);
         ModelInstance model = tryCreateFromHandle(enabled, modelHandle, modelDir);
         if (model != null) return model;
 
-        List<ModelInstanceFactory> all = getOrderedFactories(isPMD, true);
+        List<ModelInstanceFactory> all = getOrderedFactories(true);
         all.removeAll(enabled);
         model = tryCreateFromHandle(all, modelHandle, modelDir);
         if (model != null) return model;
@@ -136,10 +135,10 @@ public class RenderModeManager {
     }
 
     private static ModelInstance tryCreateWithFactories(List<ModelInstanceFactory> candidates,
-            String modelFilename, String modelDir, boolean isPMD, long layerCount) {
+            String modelFilename, String modelDir, long layerCount) {
         for (ModelInstanceFactory factory : candidates) {
             try {
-                ModelInstance model = factory.createModel(modelFilename, modelDir, isPMD, layerCount);
+                ModelInstance model = factory.createModel(modelFilename, modelDir, layerCount);
                 if (model != null) return model;
                 logger.warn("{} 创建失败，尝试下一个工厂", factory.getModeName());
             } catch (Exception e) {

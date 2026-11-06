@@ -21,17 +21,13 @@ public class ModelCatalogEntry {
     private final String folderPath;
     private final String modelFilePath;
     private final String modelFileName;
-    private final boolean isPMD;
-    private final boolean isVRM;
     private final long fileSize;
 
-    public ModelCatalogEntry(String folderName, String folderPath, String modelFilePath, String modelFileName, boolean isPMD, boolean isVRM, long fileSize) {
+    public ModelCatalogEntry(String folderName, String folderPath, String modelFilePath, String modelFileName, long fileSize) {
         this.folderName = folderName;
         this.folderPath = folderPath;
         this.modelFilePath = modelFilePath;
         this.modelFileName = modelFileName;
-        this.isPMD = isPMD;
-        this.isVRM = isVRM;
         this.fileSize = fileSize;
     }
 
@@ -40,8 +36,6 @@ public class ModelCatalogEntry {
     public String getFolderPath() { return folderPath; }
     public String getModelFilePath() { return modelFilePath; }
     public String getModelFileName() { return modelFileName; }
-    public boolean isPMD() { return isPMD; }
-    public boolean isVRM() { return isVRM; }
     public long getFileSize() { return fileSize; }
     public String getCatalogKey() { return folderName; }
 
@@ -53,11 +47,6 @@ public class ModelCatalogEntry {
         } else {
             return String.format("%.1f MB", fileSize / (1024.0 * 1024.0));
         }
-    }
-
-    public String getFormatDescription() {
-        if (isVRM) return "VRM";
-        return isPMD ? "PMD" : "PMX";
     }
 
     public static List<ModelCatalogEntry> scanModels() {
@@ -97,33 +86,13 @@ public class ModelCatalogEntry {
         cache = null;
     }
 
-    private static ModelCatalogEntry scanModelFolder(File modelDir) {
-        FileFilter pmxFilter = file -> file.isFile() && file.getName().toLowerCase().endsWith(".pmx");
-        FileFilter pmdFilter = file -> file.isFile() && file.getName().toLowerCase().endsWith(".pmd");
-        FileFilter vrmFilter = file -> file.isFile() && file.getName().toLowerCase().endsWith(".vrm");
+    public String getFormatDescription() { return "PMX"; }
 
-        File[] pmxFiles = modelDir.listFiles(pmxFilter);
-        if (pmxFiles != null && pmxFiles.length > 0) {
-            File selected = findPreferredModel(pmxFiles);
-            return new ModelCatalogEntry(modelDir.getName(), modelDir.getAbsolutePath(),
-                    selected.getAbsolutePath(), selected.getName(), false, false, selected.length());
-        }
-
-        File[] pmdFiles = modelDir.listFiles(pmdFilter);
-        if (pmdFiles != null && pmdFiles.length > 0) {
-            File selected = findPreferredModel(pmdFiles);
-            return new ModelCatalogEntry(modelDir.getName(), modelDir.getAbsolutePath(),
-                    selected.getAbsolutePath(), selected.getName(), true, false, selected.length());
-        }
-
-        File[] vrmFiles = modelDir.listFiles(vrmFilter);
-        if (vrmFiles != null && vrmFiles.length > 0) {
-            File selected = findPreferredModel(vrmFiles);
-            return new ModelCatalogEntry(modelDir.getName(), modelDir.getAbsolutePath(),
-                    selected.getAbsolutePath(), selected.getName(), false, true, selected.length());
-        }
-
-        return null;
+    private static ModelCatalogEntry scanModelFolder(File directory) {
+        File[] models = directory.listFiles(file -> file.isFile() && file.getName().toLowerCase(java.util.Locale.ROOT).endsWith(".pmx"));
+        if (models == null || models.length == 0) return null;
+        File model = findPreferredModel(models);
+        return new ModelCatalogEntry(directory.getName(), directory.getAbsolutePath(), model.getAbsolutePath(), model.getName(), model.length());
     }
 
     private static File findPreferredModel(File[] files) {
@@ -132,7 +101,7 @@ public class ModelCatalogEntry {
         }
         for (File file : files) {
             String name = file.getName().toLowerCase();
-            if (name.equals("model.pmx") || name.equals("model.pmd")) {
+            if (name.equals("model.pmx")) {
                 return file;
             }
         }

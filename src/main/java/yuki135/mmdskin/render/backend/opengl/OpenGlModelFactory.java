@@ -43,22 +43,17 @@ final class OpenGlModelFactory {
     static OpenGlModelInstance create(NativeRenderBackendPort nativeBackend,
                                       String modelFilename,
                                       String modelDir,
-                                      boolean isPMD,
+
                                       long layerCount) {
         ensureShaderInitialized();
 
-        long model;
-        if (isPMD) {
-            model = nativeBackend.loadPmdModel(modelFilename, modelDir, layerCount);
-        } else {
-            model = nativeBackend.loadPmxModel(modelFilename, modelDir, layerCount);
-        }
+        long model = nativeBackend.loadPmxModel(modelFilename, modelDir, layerCount);
         if (model == 0) {
             logger.warn("Cannot open model: '{}'.", modelFilename);
             return null;
         }
 
-        OpenGlModelInstance result = createFromHandle(nativeBackend, model, modelDir, isPMD ? null : modelFilename);
+        OpenGlModelInstance result = createFromHandle(nativeBackend, model, modelDir, modelFilename);
         if (result == null) {
             nativeBackend.deleteModel(model);
         }

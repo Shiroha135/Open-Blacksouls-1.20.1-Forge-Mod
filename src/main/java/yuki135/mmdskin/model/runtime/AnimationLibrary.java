@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 /** 文件职责：为单个模型实例管理动画句柄缓存与释放。 */
 public final class AnimationLibrary {
     private static final Logger logger = LogManager.getLogger();
-    private static final String[] ANIMATION_EXTENSIONS = {".vmd", ".fbx"};
+    private static final String[] ANIMATION_EXTENSIONS = {".vmd"};
     private static final Set<String> warnedAnimations = ConcurrentHashMap.newKeySet();
     private static volatile String defaultAnimDir;
     private static volatile String customAnimDir;
@@ -103,18 +103,6 @@ public final class AnimationLibrary {
             }
         }
 
-        File dirFile = new File(directory);
-        if (dirFile.isDirectory()) {
-            File[] fbxFiles = dirFile.listFiles((dir, name) -> name.toLowerCase().endsWith(".fbx"));
-            if (fbxFiles != null) {
-                for (File fbx : fbxFiles) {
-                    long handle = nativeAnimationPort.loadAnimation(modelInstance.modelHandle(), fbx.getAbsolutePath() + "#" + animationName);
-                    if (handle != 0L) {
-                        return handle;
-                    }
-                }
-            }
-        }
         return 0L;
     }
 

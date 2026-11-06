@@ -5,9 +5,6 @@ public interface NativeModelLoadPort {
 
     long loadPmxModel(String modelFilePath, String modelDir, long layerCount);
 
-    long loadPmdModel(String modelFilePath, String modelDir, long layerCount);
-
-    long loadVrmModel(String modelFilePath, String modelDir, long layerCount);
 
     String getMaterialTexturePath(long modelHandle, int materialIndex);
 }

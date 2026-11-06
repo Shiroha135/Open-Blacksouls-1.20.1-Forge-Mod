@@ -5,19 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "mixins.blacksouls.refmap.json",
   "mixins": [],
-  "client": [
-    "ForgePlayerRendererMixin",
-    "compat.VivecraftVRArmHelperMixin",
-    "compat.VivecraftVRPlayerRendererMixin",
-    "CameraMixin",
-    "GameRendererMixin",
-    "LevelRendererMixin",
-    "ItemInHandRendererMixin",
-    "MinecraftMixin",
-    "MouseHandlerMixin",
-    "KeyboardInputMixin",
-    "EntityMixin"
-  ],
+  "client": [],
   "injectors": {
     "defaultRequire": 1
   }

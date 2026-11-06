@@ -24,11 +24,8 @@ public interface ModelInstanceFactory {
         return isEnabledByDefault();
     }
 
-    default boolean supportsPMD() {
-        return true;
-    }
 
-    ModelInstance createModel(String modelFilename, String modelDir, boolean isPMD, long layerCount);
+    ModelInstance createModel(String modelFilename, String modelDir, long layerCount);
 
     ModelInstance createModelFromHandle(long modelHandle, String modelDir);
 
@@ -39,7 +36,7 @@ public interface ModelInstanceFactory {
         return createModel(
             modelInfo.getModelFilePath(),
             modelInfo.getFolderPath(),
-            modelInfo.isPMD(),
+
             layerCount
         );
     }

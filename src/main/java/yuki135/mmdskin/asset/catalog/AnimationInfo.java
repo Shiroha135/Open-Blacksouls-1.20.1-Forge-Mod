@@ -10,13 +10,12 @@ import java.util.LinkedHashSet;
 import java.util.List;
 
 /**
- * 动画信息类（VMD / FBX 文件）
+ * 动画信息类（VMD 文件）
  */
 
 public class AnimationInfo extends AbstractAssetInfo<AnimationInfo.AnimSource> {
     private static final Logger logger = LogManager.getLogger();
     private static final String EXTENSION = ".vmd";
-    private static final String FBX_EXTENSION = ".fbx";
 
     public enum AnimSource {
         DEFAULT("默认动画"),
@@ -46,7 +45,7 @@ public class AnimationInfo extends AbstractAssetInfo<AnimationInfo.AnimSource> {
 
     public static List<AnimationInfo> scanAllAnimations() {
         List<AnimationInfo> list = new ArrayList<>();
-        for (String ext : new String[]{EXTENSION, FBX_EXTENSION}) {
+        for (String ext : new String[]{EXTENSION}) {
             list.addAll(scanDirectory(PathConstants.getDefaultAnimDir(), ext, AnimSource.DEFAULT, null, FACTORY));
             list.addAll(scanDirectory(PathConstants.getCustomAnimDir(), ext, AnimSource.CUSTOM, null, FACTORY));
         }
@@ -57,7 +56,7 @@ public class AnimationInfo extends AbstractAssetInfo<AnimationInfo.AnimSource> {
             if (modelDirs != null) {
                 for (File modelDir : modelDirs) {
                     File animsSubDir = new File(modelDir, PathConstants.MODEL_ANIMS_DIR);
-                    for (String ext : new String[]{EXTENSION, FBX_EXTENSION}) {
+                    for (String ext : new String[]{EXTENSION}) {
                         list.addAll(scanDirectory(animsSubDir, ext, AnimSource.MODEL, modelDir.getName(), FACTORY));
                         list.addAll(scanDirectory(modelDir, ext, AnimSource.MODEL, modelDir.getName(), FACTORY));
                     }
@@ -74,7 +73,6 @@ public class AnimationInfo extends AbstractAssetInfo<AnimationInfo.AnimSource> {
     public static List<AnimationInfo> scanCustomAnimations() {
         List<AnimationInfo> list = new ArrayList<>();
         list.addAll(scanDirectory(PathConstants.getCustomAnimDir(), EXTENSION, AnimSource.CUSTOM, null, FACTORY));
-        list.addAll(scanDirectory(PathConstants.getCustomAnimDir(), FBX_EXTENSION, AnimSource.CUSTOM, null, FACTORY));
         list.sort(Comparator.comparing(AnimationInfo::getAnimName, String.CASE_INSENSITIVE_ORDER));
         logger.info("共扫描到 {} 个自定义动画", list.size());
         return list;
@@ -83,12 +81,12 @@ public class AnimationInfo extends AbstractAssetInfo<AnimationInfo.AnimSource> {
     public static List<AnimationInfo> scanAnimationsForModel(String modelName) {
         List<AnimationInfo> list = new ArrayList<>();
         if (modelName != null && !modelName.isEmpty()) {
-            for (String ext : new String[]{EXTENSION, FBX_EXTENSION}) {
+            for (String ext : new String[]{EXTENSION}) {
                 list.addAll(scanDirectory(PathConstants.getModelAnimsDir(modelName), ext, AnimSource.MODEL, modelName, FACTORY));
                 list.addAll(scanDirectory(PathConstants.getModelDir(modelName), ext, AnimSource.MODEL, modelName, FACTORY));
             }
         }
-        for (String ext : new String[]{EXTENSION, FBX_EXTENSION}) {
+        for (String ext : new String[]{EXTENSION}) {
             list.addAll(scanDirectory(PathConstants.getCustomAnimDir(), ext, AnimSource.CUSTOM, null, FACTORY));
             list.addAll(scanDirectory(PathConstants.getDefaultAnimDir(), ext, AnimSource.DEFAULT, null, FACTORY));
         }

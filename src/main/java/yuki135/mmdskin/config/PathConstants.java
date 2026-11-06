@@ -15,11 +15,9 @@ public final class PathConstants {
     public static final String CONFIG_ROOT_DIR = "config/mmdskin";
 
     public static final String ENTITY_PLAYER_DIR = "EntityPlayer";
-    public static final String SCENE_MODEL_DIR = "SceneModel";
 
     public static final String DEFAULT_ANIM_DIR = "DefaultAnim";
     public static final String CUSTOM_ANIM_DIR = "CustomAnim";
-    public static final String STAGE_ANIM_DIR = "StageAnim";
     public static final String MODEL_ANIMS_DIR = "anims";
     public static final String MODEL_ANIM_CONFIG = "animations.json";
 
@@ -28,21 +26,12 @@ public final class PathConstants {
 
     public static final String SHADER_DIR = "shader";
 
-    public static final String ACTION_WHEEL_CONFIG = "action_wheel.json";
-    public static final String MODEL_SELECTOR_CONFIG = "model_selector.json";
-    public static final String MORPH_WHEEL_CONFIG = "morph_wheel.json";
     public static final String MAIN_CONFIG = "config.json";
-    public static final String STAGE_CONFIG = "stage_config.json";
 
     public static final String VMD_EXTENSION = ".vmd";
     public static final String VPD_EXTENSION = ".vpd";
     public static final String PMX_EXTENSION = ".pmx";
-    public static final String PMD_EXTENSION = ".pmd";
-    public static final String[] AUDIO_EXTENSIONS = {".mp3", ".ogg", ".wav"};
 
-    public static final String RESOURCE_DOWNLOAD_URL =
-        "https://github.com/Gengorou-C/3d-skin-C/releases/download/requiredFiles/3d-skin.zip";
-    public static final String RESOURCE_ZIP_NAME = "3d-skin.zip";
 
     private PathConstants() {}
 
@@ -70,20 +59,12 @@ public final class PathConstants {
         return new File(getSkinRootDir(), ENTITY_PLAYER_DIR);
     }
 
-    public static File getSceneModelDir() {
-        return new File(getSkinRootDir(), SCENE_MODEL_DIR);
-    }
-
     public static File getDefaultAnimDir() {
         return new File(getSkinRootDir(), DEFAULT_ANIM_DIR);
     }
 
     public static File getCustomAnimDir() {
         return new File(getSkinRootDir(), CUSTOM_ANIM_DIR);
-    }
-
-    public static File getStageAnimDir() {
-        return new File(getSkinRootDir(), STAGE_ANIM_DIR);
     }
 
     public static File getDefaultMorphDir() {
@@ -104,18 +85,6 @@ public final class PathConstants {
 
     public static File getConfigFile(String configFileName) {
         return new File(getConfigRootDir(), configFileName);
-    }
-
-    public static File getActionWheelConfigFile() {
-        return getConfigFile(ACTION_WHEEL_CONFIG);
-    }
-
-    public static File getModelSelectorConfigFile() {
-        return getConfigFile(MODEL_SELECTOR_CONFIG);
-    }
-
-    public static File getMorphWheelConfigFile() {
-        return getConfigFile(MORPH_WHEEL_CONFIG);
     }
 
     public static File getModelAnimsDir(String modelName) {
@@ -159,20 +128,6 @@ public final class PathConstants {
             return dir.mkdirs();
         }
         return false;
-    }
-
-    public static void ensureStageAnimDir() {
-        File stageDir = getStageAnimDir();
-        if (!stageDir.exists()) {
-            stageDir.mkdirs();
-        }
-    }
-
-    public static void ensureSceneModelDir() {
-        File sceneDir = getSceneModelDir();
-        if (!sceneDir.exists()) {
-            sceneDir.mkdirs();
-        }
     }
 
 }

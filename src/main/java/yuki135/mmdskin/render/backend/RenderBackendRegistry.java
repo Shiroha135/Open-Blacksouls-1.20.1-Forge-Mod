@@ -39,12 +39,12 @@ public final class RenderBackendRegistry implements RenderBackendSettingsPort {
         applyConfig();
     }
 
-    public ModelInstance createModelFromHandle(long modelHandle, String modelDir, boolean isPmd) {
-        return RenderModeManager.createModelFromHandle(modelHandle, modelDir, isPmd);
+    public ModelInstance createModelFromHandle(long modelHandle, String modelDir) {
+        return RenderModeManager.createModelFromHandle(modelHandle, modelDir);
     }
 
-    public ModelInstance createModel(String modelFilename, String modelDir, boolean isPmd, long layerCount) {
-        return RenderModeManager.createModel(modelFilename, modelDir, isPmd, layerCount);
+    public ModelInstance createModel(String modelFilename, String modelDir, long layerCount) {
+        return RenderModeManager.createModel(modelFilename, modelDir, layerCount);
     }
 
     @Override

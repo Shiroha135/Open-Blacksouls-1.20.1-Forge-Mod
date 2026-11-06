@@ -30,11 +30,6 @@ public class NativeFunc {
 
     public native long LoadModelPMX(String filename, String dir, long layerCount);
 
-    public native long LoadModelPMD(String filename, String dir, long layerCount);
-
-    public native long LoadModelVRM(String filename, String dir, long layerCount);
-
-    public native boolean IsVrmModel(long model);
 
     public native void DeleteModel(long model);
 
@@ -138,17 +133,9 @@ public class NativeFunc {
 
     public native void DeleteAnimation(long anim);
 
-    public native boolean PreloadFbxFile(String path);
-
-    public native String ListFbxStacks(String path);
-
-    public native void ClearFbxCache();
-
-    public native boolean HasCameraData(long anim);
 
     public native float GetAnimMaxFrame(long anim);
 
-    public native void GetCameraTransform(long anim, float frame, ByteBuffer buffer);
 
     public native boolean HasBoneData(long anim);
 
@@ -293,13 +280,6 @@ public class NativeFunc {
         boolean debugLog
     );
 
-    public native void SetFirstPersonMode(long model, boolean enabled);
-
-    public native boolean IsFirstPersonMode(long model);
-
-    public native float GetHeadBonePositionY(long model);
-
-    public native void GetEyeBonePosition(long model, float[] out);
 
     public native String GetBoneNames(long model);
 
@@ -309,13 +289,5 @@ public class NativeFunc {
 
     public native long GetModelMemoryUsage(long model);
 
-    public native void SetVRTrackingData(long model, float[] trackingData);
 
-    public native void ApplyVRTrackingInput(long model, float[] trackingData);
-
-    public native void SetVREnabled(long model, boolean enabled);
-
-    public native void SetVRIKParams(long model, float armIKStrength);
-
-    public native void SetVRHandMode(long model, int mode);
 }

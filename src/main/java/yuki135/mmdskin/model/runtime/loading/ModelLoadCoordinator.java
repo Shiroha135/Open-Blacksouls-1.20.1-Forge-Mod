@@ -254,12 +254,6 @@ public final class ModelLoadCoordinator {
     }
 
     private long loadNativeModel(ModelCatalogEntry modelInfo) {
-        if (modelInfo.isVRM()) {
-            return runtimeAccessPort.loadVrmModel(modelInfo.getModelFilePath(), modelInfo.getFolderPath(), 3);
-        }
-        if (modelInfo.isPMD()) {
-            return runtimeAccessPort.loadPmdModel(modelInfo.getModelFilePath(), modelInfo.getFolderPath(), 3);
-        }
         return runtimeAccessPort.loadPmxModel(modelInfo.getModelFilePath(), modelInfo.getFolderPath(), 3);
     }
 

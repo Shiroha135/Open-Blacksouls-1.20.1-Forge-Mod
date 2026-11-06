@@ -140,7 +140,7 @@ public final class ModelRepository implements ModelRepositoryPort, ModelDiagnost
         boolean transferred = false;
         try {
             modelInstance = runtimeAccessPort.createModelFromHandle(
-                    result.modelHandle, result.modelInfo.getFolderPath(), result.modelInfo.isPMD());
+                    result.modelHandle, result.modelInfo.getFolderPath());
             if (modelInstance == null) return null;
             ManagedModel model = createManagedModel(requestKey, modelInstance);
             transferred = true;

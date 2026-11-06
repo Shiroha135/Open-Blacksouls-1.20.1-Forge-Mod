@@ -105,7 +105,7 @@ public class OpenGlModelInstance extends BaseModelInstance {
         isShaderInited = true;
     }
 
-    public static OpenGlModelInstance create(String modelFilename, String modelDir, boolean isPMD, long layerCount) {
+    public static OpenGlModelInstance create(String modelFilename, String modelDir, long layerCount) {
         throw new UnsupportedOperationException("Native render backend port is required");
     }
 
@@ -116,9 +116,9 @@ public class OpenGlModelInstance extends BaseModelInstance {
     public static OpenGlModelInstance create(NativeRenderBackendPort nativeBackendPort,
                                              String modelFilename,
                                              String modelDir,
-                                             boolean isPMD,
+
                                              long layerCount) {
-        return OpenGlModelFactory.create(nativeBackendPort, modelFilename, modelDir, isPMD, layerCount);
+        return OpenGlModelFactory.create(nativeBackendPort, modelFilename, modelDir, layerCount);
     }
 
     public static OpenGlModelInstance createFromHandle(NativeRenderBackendPort nativeBackendPort,

@@ -1,4 +1,4 @@
-package yuki135.mmdskin.player.runtime;
+package yuki135.mmdskin.model.runtime;
 
 import yuki135.mmdskin.bridge.runtime.NativeMatrixPort;
 import java.nio.ByteBuffer;
@@ -44,7 +44,6 @@ public class EntityAnimState {
     public enum AnimPhase { NONE, ENTERING, LOOPING, EXITING }
 
     public boolean playCustomAnim;
-    public boolean playStageAnim;
     public long rightHandMat;
     public long leftHandMat;
     public State[] stateLayers;

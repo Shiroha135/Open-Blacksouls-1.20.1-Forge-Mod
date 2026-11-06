@@ -36,23 +36,13 @@ public final class DefaultModelRuntimeAccessPort implements ModelRuntimeAccessPo
     }
 
     @Override
-    public ModelInstance createModelFromHandle(long modelHandle, String modelDir, boolean isPmd) {
-        return renderBackendRegistry.createModelFromHandle(modelHandle, modelDir, isPmd);
+    public ModelInstance createModelFromHandle(long modelHandle, String modelDir) {
+        return renderBackendRegistry.createModelFromHandle(modelHandle, modelDir);
     }
 
     @Override
     public long loadPmxModel(String modelFilePath, String modelDir, long layerCount) {
         return nativeModelLoadPort.loadPmxModel(modelFilePath, modelDir, layerCount);
-    }
-
-    @Override
-    public long loadPmdModel(String modelFilePath, String modelDir, long layerCount) {
-        return nativeModelLoadPort.loadPmdModel(modelFilePath, modelDir, layerCount);
-    }
-
-    @Override
-    public long loadVrmModel(String modelFilePath, String modelDir, long layerCount) {
-        return nativeModelLoadPort.loadVrmModel(modelFilePath, modelDir, layerCount);
     }
 
     @Override

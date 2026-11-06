@@ -7,13 +7,10 @@ public interface ModelRuntimeAccessPort {
 
     boolean isRenderingShadows();
 
-    ModelInstance createModelFromHandle(long modelHandle, String modelDir, boolean isPmd);
+    ModelInstance createModelFromHandle(long modelHandle, String modelDir);
 
     long loadPmxModel(String modelFilePath, String modelDir, long layerCount);
 
-    long loadPmdModel(String modelFilePath, String modelDir, long layerCount);
-
-    long loadVrmModel(String modelFilePath, String modelDir, long layerCount);
 
     int getMaterialCount(long modelHandle);
 

@@ -3,7 +3,7 @@ package yuki135.mmdskin.model.runtime;
 import yuki135.mmdskin.model.runtime.AnimationLibrary;
 import yuki135.mmdskin.bridge.runtime.NativeAnimationPort;
 import yuki135.mmdskin.bridge.runtime.NativeMatrixPort;
-import yuki135.mmdskin.player.runtime.EntityAnimState;
+import yuki135.mmdskin.model.runtime.EntityAnimState;
 import java.util.Properties;
 import java.util.Objects;
 
@@ -23,10 +23,6 @@ public final class ManagedModel {
         public void mergeAnimation(long mergedAnimationHandle, long sourceAnimationHandle) {
         }
 
-        @Override
-        public boolean hasCameraData(long animationHandle) {
-            return false;
-        }
 
         @Override
         public boolean hasBoneData(long animationHandle) {
@@ -47,9 +43,6 @@ public final class ManagedModel {
         public void seekLayer(long modelHandle, long layer, float frame) {
         }
 
-        @Override
-        public void getCameraTransform(long animationHandle, float frame, java.nio.ByteBuffer targetBuffer) {
-        }
     };
     private static final NativeMatrixPort NOOP_MATRIX_PORT = new NativeMatrixPort() {
         @Override

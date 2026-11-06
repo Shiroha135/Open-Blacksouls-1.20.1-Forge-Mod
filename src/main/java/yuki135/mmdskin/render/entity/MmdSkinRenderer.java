@@ -1,6 +1,5 @@
 package yuki135.mmdskin.render.entity;
 
-import yuki135.mmdskin.player.render.InventoryRenderHelper;
 
 import yuki135.mmdskin.MmdSkin;
 import yuki135.mmdskin.config.ModelConfigManager;
@@ -50,6 +49,8 @@ public class MmdSkinRenderer<T extends Entity> extends EntityRenderer<T> {
     @Override
     public void render(T entityIn, float entityYaw, float tickDelta, PoseStack matrixStackIn,
                        MultiBufferSource bufferIn, int packedLightIn) {
+        var typeId = net.minecraftforge.registries.ForgeRegistries.ENTITY_TYPES.getKey(entityIn.getType());
+        if (typeId == null || !"blacksouls".equals(typeId.getNamespace()) || !(entityIn instanceof CustomEntityPoseProvider)) return;
         float opacity = entityIn instanceof CustomEntityRenderStateProvider provider
                 ? EntityRenderOpacity.clamp(provider.getMmdRenderOpacity()) : 1.0F;
         if (entityIn.isInvisible() || opacity <= 0.0F) return;
@@ -79,9 +80,7 @@ public class MmdSkinRenderer<T extends Entity> extends EntityRenderer<T> {
         if (entityIn instanceof CustomEntityRenderStateProvider provider) {
             reusablePose.bodyYaw = provider.getMmdBodyYaw(reusablePose.bodyYaw);
         }
-        if (!InventoryRenderHelper.isInventoryScreen()) {
-            yuki135.blacksouls.client.stage.StagePhysicsRuntime.prepare(entityIn, model, reusablePose.bodyYaw, tickDelta);
-        }
+        yuki135.blacksouls.client.stage.StagePhysicsRuntime.prepare(entityIn, model, reusablePose.bodyYaw, tickDelta);
 
         matrixStackIn.pushPose();
         DrawState previousState = entityIn instanceof CustomEntityRenderStateProvider ? DrawState.capture() : null;
@@ -90,9 +89,7 @@ public class MmdSkinRenderer<T extends Entity> extends EntityRenderer<T> {
             if (entityIn instanceof LivingEntity living && living.isBaby()) {
                 matrixStackIn.scale(0.5f, 0.5f, 0.5f);
             }
-            if (InventoryRenderHelper.isInventoryScreen()) {
-                renderInInventory(entityIn, model, entityYaw, tickDelta, matrixStackIn, packedLightIn, size);
-            } else {
+            {
                 if (entityIn instanceof CustomEntityModelOffsetProvider provider) {
                     var offset = provider.getMmdModelOffset();
                     matrixStackIn.translate(offset.x, offset.y, offset.z);
@@ -137,38 +134,6 @@ public class MmdSkinRenderer<T extends Entity> extends EntityRenderer<T> {
             RenderSystem.setShader(() -> shader);
             GL46C.glUseProgram(program);
             GlStateManager._glUseProgram(program);
-        }
-    }
-
-    private void renderInInventory(T entityIn, ManagedModel model, float entityYaw,
-                                    float tickDelta, PoseStack matrixStack, int packedLight, float[] size) {
-        Minecraft mc = Minecraft.getInstance();
-        if (mc.screen == null) return;
-
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        PoseStack modelViewStack = RenderSystem.getModelViewStack();
-
-        int posX = (mc.screen.width - 176) / 2;
-        int posY = (mc.screen.height - 166) / 2;
-        modelViewStack.pushPose();
-        try {
-            modelViewStack.translate(posX + 51, posY + 60, 50.0);
-            modelViewStack.scale(20.0f, 20.0f, -20.0f);
-            modelViewStack.scale(size[1], size[1], size[1]);
-
-            reusableQuat.identity()
-                    .rotateZ((float) Math.PI)
-                    .rotateX(-entityIn.getXRot() * ((float) Math.PI / 180F))
-                    .rotateY(-entityIn.getYRot() * ((float) Math.PI / 180F));
-            modelViewStack.mulPose(reusableQuat);
-
-            RenderSystem.setShader(entityIn instanceof CustomEntityRenderStateProvider
-                            ? GameRenderer::getRendertypeEntityTranslucentShader : GameRenderer::getRendertypeEntityCutoutNoCullShader);
-            reusableVec.set(0.0f);
-            model.modelInstance().render(entityIn, entityYaw, 0.0f, reusableVec,
-                              tickDelta, modelViewStack, packedLight, RenderScene.INVENTORY);
-        } finally {
-            modelViewStack.popPose();
         }
     }
 

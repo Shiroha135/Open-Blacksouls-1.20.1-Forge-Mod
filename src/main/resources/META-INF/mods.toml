@@ -21,7 +21,7 @@ version="1.0.5-1.20.1-blacksouls"
 displayName="MMD Skin for BLACKSOULS"
 authors="shiroha233, kjkjkAIStudio, asuka-mio, Gengorou-C"
 description='''
-将 MMD 模型渲染、动作、物理和舞台功能直接集成到 BLACKSOULS 主模组中。
+为 BLACKSOULS 自有 NPC 提供 PMX 模型、VMD 动作、表情与场景物理。
 '''
 
 # ====================================================

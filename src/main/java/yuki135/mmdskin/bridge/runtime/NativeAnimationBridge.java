@@ -22,11 +22,6 @@ public final class NativeAnimationBridge implements NativeAnimationPort {
     }
 
     @Override
-    public boolean hasCameraData(long animationHandle) {
-        return NativeFunc.GetInst().HasCameraData(animationHandle);
-    }
-
-    @Override
     public boolean hasBoneData(long animationHandle) {
         return NativeFunc.GetInst().HasBoneData(animationHandle);
     }
@@ -46,8 +41,4 @@ public final class NativeAnimationBridge implements NativeAnimationPort {
         NativeFunc.GetInst().SeekLayer(modelHandle, layer, frame);
     }
 
-    @Override
-    public void getCameraTransform(long animationHandle, float frame, ByteBuffer targetBuffer) {
-        NativeFunc.GetInst().GetCameraTransform(animationHandle, frame, targetBuffer);
-    }
 }

@@ -7,7 +7,6 @@ import yuki135.mmdskin.render.scene.RenderScene;
 import yuki135.mmdskin.render.pipeline.LivingEntityModelStateHelper;
 import yuki135.mmdskin.render.pipeline.RenderPerformanceProfiler;
 import yuki135.mmdskin.render.policy.WorldRenderPolicy;
-import yuki135.mmdskin.stage.client.camera.MMDCameraController;
 import yuki135.mmdskin.texture.runtime.TextureRepository;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -48,14 +47,10 @@ public abstract class BaseModelInstance implements ModelInstance {
 
     protected List<String> textureKeys;
 
-    private volatile boolean vrActive;
     protected final AtomicLong nativeUpdateRevision = new AtomicLong(0L);
     private boolean physicsStateInitialized = false;
     private boolean physicsEnabled = true;
 
-    public void setVrActive(boolean active) { this.vrActive = active; }
-
-    public boolean isVrActive() { return vrActive; }
 
     protected final NativeRenderBackendPort backendPort() {
         if (nativeRenderBackendPort == null) {
@@ -149,7 +144,6 @@ public abstract class BaseModelInstance implements ModelInstance {
     private void handleLivingEntity(LivingEntity entityIn, float entityYaw, float entityPitch,
                                      Vector3f entityTrans, float tickDelta, PoseStack mat,
                                      int packedLight, RenderScene context, WorldRenderPolicy.Decision worldDecision) {
-        boolean stagePlaying = MMDCameraController.getInstance().isStagePlayingModel(model);
 
         applyPhysicsState(worldDecision.physicsEnabled());
 
@@ -161,9 +155,7 @@ public abstract class BaseModelInstance implements ModelInstance {
                     entityYaw,
                     tickDelta,
                     context,
-                    getModelName(),
-                    stagePlaying,
-                    vrActive);
+                    getModelName());
             RenderPerformanceProfiler.get().endTimer(RenderPerformanceProfiler.SECTION_LIVING_STATE_SYNC, syncTimer);
 
             update();
