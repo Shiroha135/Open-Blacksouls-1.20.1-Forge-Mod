@@ -1409,6 +1409,12 @@
       "blacksouls:cheshire_cat3"
     ]
   },
+  "original_cheshire_cat": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:original_cheshire_cat"
+    ]
+  },
   "original_cheshire_cat_2": {
     "category": "neutral",
     "sounds": [

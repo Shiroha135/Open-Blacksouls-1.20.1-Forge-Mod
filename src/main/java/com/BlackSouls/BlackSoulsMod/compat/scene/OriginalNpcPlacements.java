@@ -93,7 +93,7 @@ public final class OriginalNpcPlacements {
     }
 
     public static List<Site> sites() {
-        return java.util.stream.Stream.of(SITES, OriginalBillPlacement.sites(), OriginalDodoPlacement.sites(), OriginalPoolCrowdPlacement.sites())
+        return java.util.stream.Stream.of(SITES, OriginalBillPlacement.sites(), OriginalDodoPlacement.sites(), OriginalPoolCrowdPlacement.sites(), OriginalPoolCheshirePlacement.sites())
                 .flatMap(List::stream).toList();
     }
 
@@ -127,6 +127,7 @@ public final class OriginalNpcPlacements {
     }
 
     public static Outcome install(ServerPlayer player, String npcId) {
+        if (OriginalPoolCheshirePlacement.isPair(npcId)) return OriginalPoolCheshirePlacement.install(player, npcId);
         if (OriginalReceptionistPlacement.NPC_ID.equals(npcId)) return OriginalReceptionistPlacement.install(player);
         Site site = sites().stream().filter(value -> value.npcId().equals(npcId)).findFirst().orElse(null);
         if (site == null) site = com.BlackSouls.BlackSoulsMod.story.OriginalWorldEventBindings.sites().stream()

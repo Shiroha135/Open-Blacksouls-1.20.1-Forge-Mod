@@ -100,6 +100,17 @@ public final class OriginalSenService {
         return cachedPageThresholds(actor, actor.getNpcId()) != null;
     }
 
+    public static void copyPageOwner(PathfinderMob source, String sourceIdentity, PathfinderMob target, String targetIdentity) {
+        Integer mask = cachedPageThresholds(source, sourceIdentity);
+        if (mask != null) {
+            target.getPersistentData().putString(PAGE_OWNER, targetIdentity);
+            target.getPersistentData().putInt(PAGE_THRESHOLDS, mask);
+        } else if (targetIdentity.equals(target.getPersistentData().getString(PAGE_OWNER))) {
+            target.getPersistentData().remove(PAGE_OWNER);
+            target.getPersistentData().remove(PAGE_THRESHOLDS);
+        }
+    }
+
     public static Integer cachedPageThresholds(PathfinderMob actor, String identity) {
         var data = actor.getPersistentData();
         if (identity.isEmpty() || !identity.equals(data.getString(PAGE_OWNER)) || !data.contains(PAGE_THRESHOLDS, Tag.TAG_INT)) return null;

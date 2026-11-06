@@ -218,6 +218,7 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> GUCHA004A_EVENT = registerSound("gucha004a");
     public static final RegistryObject<SoundEvent> CHESHIRE_CAT2_EVENT = registerSound("cheshire_cat2");
     public static final RegistryObject<SoundEvent> CHESHIRE_CAT3_EVENT = registerSound("cheshire_cat3");
+    public static final RegistryObject<SoundEvent> ORIGINAL_CHESHIRE_CAT_EVENT = registerSound("original_cheshire_cat");
     public static final RegistryObject<SoundEvent> ORIGINAL_CHESHIRE_CAT_2_EVENT = registerSound("original_cheshire_cat_2");
     public static final RegistryObject<SoundEvent> ORIGINAL_CHESHIRE_CAT_3_EVENT = registerSound("original_cheshire_cat_3");
     public static final RegistryObject<SoundEvent> ORIGINAL_CHESHIRE_CAT_4_EVENT = registerSound("original_cheshire_cat_4");

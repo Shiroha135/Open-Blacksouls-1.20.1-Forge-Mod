@@ -363,6 +363,7 @@ public final class OriginalNpcService {
     }
 
     public static void refreshPage(EntityOriginalNpc npc, ServerPlayer player) {
+        if (com.BlackSouls.BlackSoulsMod.compat.scene.OriginalPoolCheshirePlacement.refreshPage(npc, player)) return;
         BSOriginalNpcData.Entry definition = BSOriginalNpcData.getEvent(npc.getNpcId());
         if (definition == null || !(npc.level() instanceof ServerLevel)) {
             npc.setPageIndex(-1);
@@ -399,6 +400,14 @@ public final class OriginalNpcService {
     }
 
     public static void interact(ServerPlayer player, EntityOriginalNpc npc) {
+        if (com.BlackSouls.BlackSoulsMod.compat.scene.OriginalPoolCheshirePlacement.isManaged(npc)) {
+            EntityOriginalNpc proxy = com.BlackSouls.BlackSoulsMod.compat.scene.OriginalPoolCheshirePlacement.interactionProxy(player, npc);
+            if (proxy == null) return;
+            if (proxy != npc) {
+                interact(player, proxy);
+                return;
+            }
+        }
         if (!matchesActor(npc, npc.getNpcId())) return;
         OriginalNpcProgress progress = OriginalNpcProgress.get(player.server);
         if (progress.hasOtherConversation(player.getUUID(), java.util.Set.of(npc.getNpcId()))

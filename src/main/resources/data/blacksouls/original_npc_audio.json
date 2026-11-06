@@ -1776,6 +1776,10 @@
       "sound": "blacksouls:heartbeat",
       "sourceFile": "心音.ogg"
     },
+    "猫": {
+      "sound": "blacksouls:original_cheshire_cat",
+      "sourceFile": "猫.mp3"
+    },
     "猫２": {
       "sound": "blacksouls:original_cheshire_cat_2",
       "sourceFile": "猫２.mp3"

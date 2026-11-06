@@ -453,7 +453,10 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
             noPhysics = true;
             setNoGravity(true);
         }
-        if (!level().isClientSide()) OriginalPoolCrowdMovementService.beforeEntityTick(this);
+        if (!level().isClientSide()) {
+            OriginalPoolCrowdMovementService.beforeEntityTick(this);
+            com.BlackSouls.BlackSoulsMod.compat.scene.OriginalPoolCheshirePlacement.beforeEntityTick(this);
+        }
         super.tick();
         setDeltaMovement(0.0D, onGround() ? 0.0D : getDeltaMovement().y, 0.0D);
         if (!level().isClientSide() && forcedRouteTicket.isEmpty()) {
@@ -465,7 +468,8 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         }
         if (!level().isClientSide() && tickCount % 20 == 0) {
             if (!OriginalNpcMovementService.refreshPageWhileForcing(this)) {
-                Player nearby = level().getNearestPlayer(this, 32.0D);
+                Player nearby = com.BlackSouls.BlackSoulsMod.compat.scene.OriginalPoolCheshirePlacement.isManaged(this)
+                        ? null : level().getNearestPlayer(this, 32.0D);
                 OriginalNpcService.refreshPage(this, nearby instanceof ServerPlayer player ? player : null);
             }
         }
