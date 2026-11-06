@@ -41,6 +41,12 @@ public final class OriginalNpcPictureData extends SavedData {
                 if (screen.pictures.put(state.number(), state) != null) {
                     throw new IllegalArgumentException("Duplicate original picture number");
                 }
+                if (picture.contains("SourceNpc")) {
+                    if (!picture.contains("SourceNpc", Tag.TAG_STRING)) throw new IllegalArgumentException("Invalid original picture source type");
+                    String source = picture.getString("SourceNpc");
+                    if (!source.matches("map[0-9]{3}_ev[0-9]{3}")) throw new IllegalArgumentException("Invalid original picture source");
+                    screen.sources.put(state.number(), source);
+                }
             }
             if (data.screens.put(owner, screen) != null) throw new IllegalArgumentException("Duplicate original picture owner");
         }
@@ -61,6 +67,8 @@ public final class OriginalNpcPictureData extends SavedData {
             for (OriginalNpcPictureState state : screen.pictures.values()) {
                 CompoundTag picture = new CompoundTag();
                 picture.putByteArray("State", state.snapshot().toString().getBytes(StandardCharsets.UTF_8));
+                String source = screen.sources.get(state.number());
+                if (source != null) picture.putString("SourceNpc", source);
                 pictures.add(picture);
             }
             value.put("Pictures", pictures);
@@ -72,6 +80,7 @@ public final class OriginalNpcPictureData extends SavedData {
 
     static final class Screen {
         final Map<Integer, OriginalNpcPictureState> pictures = new TreeMap<>();
+        final Map<Integer, String> sources = new TreeMap<>();
         long revision;
         boolean paused;
         boolean visible = true;

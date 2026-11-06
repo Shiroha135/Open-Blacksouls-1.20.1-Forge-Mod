@@ -199,6 +199,21 @@ public final class OriginalNpcService {
                 && OriginalNpcProgress.get(player.server).hasSavedTimedWait(player.getUUID());
     }
 
+    public static boolean hasOmittedCheckpoint(ServerPlayer player) {
+        return !omittedCheckpointIds(player).isEmpty();
+    }
+
+    static java.util.Set<String> omittedCheckpointIds(ServerPlayer player) {
+        OriginalNpcProgress progress = OriginalNpcProgress.get(player.server);
+        java.util.Set<String> result = new java.util.HashSet<>();
+        for (String id : progress.conversationIds(player.getUUID())) {
+            JsonObject saved = progress.conversation(player.getUUID(), id);
+            if (saved != null && saved.has("interpreter") && saved.get("interpreter").isJsonObject()
+                    && OriginalNonExplicitScenes.isOmittedCheckpoint(saved.getAsJsonObject("interpreter"))) result.add(id);
+        }
+        return java.util.Set.copyOf(result);
+    }
+
     public static boolean isConversing(ServerPlayer player) {
         return SESSIONS.containsKey(player.getUUID()) || OriginalDodoRunService.pending(player);
     }
@@ -485,6 +500,12 @@ public final class OriginalNpcService {
                 session.lastText = saved.has("lastText") ? saved.get("lastText").getAsString() : "";
                 session.lastPortrait = saved.has("lastPortrait") ? saved.get("lastPortrait").getAsString() : "";
                 session.lastPortraitIndex = saved.has("lastPortraitIndex") ? saved.get("lastPortraitIndex").getAsInt() : 0;
+                if (interpreter.omittedOnRestore()) {
+                    session.lastText = "";
+                    session.lastPortrait = "";
+                    session.lastPortraitIndex = 0;
+                    OriginalNpcPictureService.clear(player);
+                }
                 session.restoringPresentation = true;
                 if (saved.has("synthesisRecipes")) {
                     List<Integer> recipes = new ArrayList<>();
@@ -501,6 +522,7 @@ public final class OriginalNpcService {
                 SESSIONS.put(player.getUUID(), session);
                 OriginalNpcConversationMovement.start(player, npc);
                 OriginalNpcInterpreter.Prompt prompt = interpreter.pendingPrompt();
+                boolean restoredWait = prompt != null && prompt.type() == OriginalNpcInterpreter.Type.WAIT;
                 if (prompt == null) {
                     prompt = interpreter.advance(-1);
                 } else if (prompt.type() == OriginalNpcInterpreter.Type.BLOCKED) {
@@ -508,7 +530,7 @@ public final class OriginalNpcService {
                 } else if (prompt.type() == OriginalNpcInterpreter.Type.NUMBER_INPUT) {
                     prompt = interpreter.refreshNumberInput();
                 }
-                if (prompt.type() == OriginalNpcInterpreter.Type.WAIT && saved.has("waitRemaining")) {
+                if (restoredWait && prompt.type() == OriginalNpcInterpreter.Type.WAIT && saved.has("waitRemaining")) {
                     prompt = new OriginalNpcInterpreter.Prompt(prompt.revision(), prompt.type(), prompt.text(),
                             prompt.portrait(), prompt.portraitIndex(), prompt.choices(), prompt.goods(), prompt.reason(),
                             prompt.battle(), Math.max(0, saved.get("waitRemaining").getAsInt()));
@@ -634,6 +656,7 @@ public final class OriginalNpcService {
             return;
         }
         if (npc instanceof EntityCheshireCat && CHESHIRE_LOGIC.equals(session.npcId)
+                && !session.interpreter.omitsSelectedScene(selection)
                 && unsupportedCheshireChoice(session, selection)) {
             checkpoint(player, session);
             SESSIONS.remove(player.getUUID(), session);
@@ -955,12 +978,18 @@ public final class OriginalNpcService {
 
         @Override
         public boolean switchValue(int id) {
+            if (id == 20) return true;
             if (player != null && (id == 11 || id == 12)) return OriginalPlayerMoveSpeed.switchValue(player, id);
             if (player == null && OriginalSenService.isThresholdSwitch(id)) {
                 Integer mask = OriginalSenService.cachedPageThresholds(npc, npcId);
                 if (mask != null) return (mask & 1 << (id - 14)) != 0;
             }
             return player != null ? OriginalNpcProgress.readSwitch(player, id) : progress.switchValue(id);
+        }
+
+        @Override
+        public boolean nonExplicitScenes() {
+            return true;
         }
 
         @Override
@@ -1242,7 +1271,7 @@ public final class OriginalNpcService {
         @Override
         public int presentation(int command, List<JsonElement> parameters) {
             if (command == 231 || command == 232 || command == 235) {
-                return OriginalNpcPictureService.apply(player, command, parameters);
+                return OriginalNpcPictureService.apply(player, npcId, command, parameters);
             }
             OriginalNpcPresentationService.apply(player, npc, command, parameters);
             return OriginalNpcPresentationService.waitTicks(command, parameters);

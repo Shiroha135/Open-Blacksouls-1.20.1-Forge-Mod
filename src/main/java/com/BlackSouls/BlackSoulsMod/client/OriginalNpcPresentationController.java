@@ -73,6 +73,11 @@ public final class OriginalNpcPresentationController {
         }
         dimension = packet.dimension();
         switch (packet.commandCode()) {
+            case com.BlackSouls.BlackSoulsMod.story.OriginalNonExplicitScenes.FADE_COMMAND -> {
+                state = new OriginalNpcPresentationState();
+                OriginalNpcPictureController.clear();
+                OriginalSceneOmissionController.begin();
+            }
             case 221, 222, 223, 224, 225 -> state.apply(packet.commandCode(), packet.values());
             case 213 -> balloons.put(packet.entityId(), new Balloon(packet.values().get(0).intValue(), 76));
             case 241, 242, 243, 244 -> OriginalNpcMusicController.apply(packet.commandCode(), packet.sound(), packet.values());
