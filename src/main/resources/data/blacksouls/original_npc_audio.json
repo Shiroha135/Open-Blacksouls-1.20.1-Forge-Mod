@@ -1827,6 +1827,21 @@
     "猫１１": {
       "sound": "blacksouls:original_cheshire_cat_11",
       "sourceFile": "猫１１.mp3"
+    },
+    "Switch3": {
+      "sound": "blacksouls:original_altar_switch3",
+      "sourceFile": "Switch3.ogg",
+      "sourceSha256": "58e95f06dccd6e994fbdfde15b9da25223c8d067497502b6985eb1482400b949"
+    },
+    "Earth4": {
+      "sound": "blacksouls:original_altar_earth4",
+      "sourceFile": "Earth4.ogg",
+      "sourceSha256": "86c5d8e3868dcc3b9ee13964dd415ef2a172287cadee75b93e44c5d2bb78b973"
+    },
+    "Move": {
+      "sound": "blacksouls:original_world_move",
+      "sourceFile": "Move.ogg",
+      "sourceSha256": "f6d73ccc648a325201918697553bed06929593ddb1bf4d4b62c1a2564c7ada44"
     }
   }
 }

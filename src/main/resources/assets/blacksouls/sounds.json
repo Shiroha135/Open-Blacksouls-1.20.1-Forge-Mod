@@ -1476,22 +1476,50 @@
   },
   "original_sword_stab": {
     "category": "neutral",
-    "sounds": ["blacksouls:original_sword_stab"]
+    "sounds": [
+      "blacksouls:original_sword_stab"
+    ]
   },
   "original_sheep": {
     "category": "neutral",
-    "sounds": ["blacksouls:original_sheep"]
+    "sounds": [
+      "blacksouls:original_sheep"
+    ]
   },
   "original_crow": {
     "category": "neutral",
-    "sounds": ["blacksouls:original_crow"]
+    "sounds": [
+      "blacksouls:original_crow"
+    ]
   },
   "original_cat9": {
     "category": "neutral",
-    "sounds": ["blacksouls:original_cat9"]
+    "sounds": [
+      "blacksouls:original_cat9"
+    ]
   },
   "original_cheshire_cat_11": {
     "category": "neutral",
-    "sounds": ["blacksouls:original_cheshire_cat_11"]
+    "sounds": [
+      "blacksouls:original_cheshire_cat_11"
+    ]
+  },
+  "original_altar_switch3": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:original_altar_switch3"
+    ]
+  },
+  "original_altar_earth4": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:original_altar_earth4"
+    ]
+  },
+  "original_world_move": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:original_world_move"
+    ]
   }
 }

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "part=0": {
+      "model": "blacksouls:block/original_altar_gate_0"
+    },
+    "part=1": {
+      "model": "blacksouls:block/original_altar_gate_1"
+    },
+    "part=2": {
+      "model": "blacksouls:block/original_altar_gate_2"
+    },
+    "part=3": {
+      "model": "blacksouls:block/original_altar_gate_3"
+    },
+    "part=4": {
+      "model": "blacksouls:block/original_altar_gate_4"
+    }
+  }
+}

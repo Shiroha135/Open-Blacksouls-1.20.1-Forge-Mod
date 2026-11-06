@@ -1,0 +1,1632 @@
+{
+  "sourceFiles": [
+    {
+      "path": "D:/BLACK SOULS II/Data/Map061.rvdata2",
+      "sha256": "01d824ea85cf9ebe19c77d25085743364d5784d78edf0104d268cdaf0bb79980"
+    },
+    {
+      "path": "D:/BLACK SOULS II/Data/Map034.rvdata2",
+      "sha256": "4ef8ed7a9ffc0aa250701360b500da19e8b6b8e926090f61c0885e60d0636614"
+    },
+    {
+      "path": "D:/BLACK SOULS II/Data/Map062.rvdata2",
+      "sha256": "2958223249d0aed227f719b0abc49183ec30a106f6633985c004e875b279ca91"
+    }
+  ],
+  "events": [
+    {
+      "id": "map061_ev006",
+      "mapId": 61,
+      "eventId": 6,
+      "name": "EV006",
+      "x": 22,
+      "y": 5,
+      "role": "native_block",
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 0,
+            "character_name": "!_switches",
+            "character_index": 0,
+            "direction": 4,
+            "pattern": 0,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": true,
+          "step_anime": false,
+          "direction_fix": true,
+          "through": false,
+          "priority_type": 1,
+          "trigger": 0,
+          "commands": [
+            {
+              "code": 101,
+              "indent": 0,
+              "parameters": [
+                "",
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "code": 401,
+              "indent": 0,
+              "parameters": [
+                "要拉下拉杆么？"
+              ]
+            },
+            {
+              "code": 102,
+              "indent": 0,
+              "parameters": [
+                [
+                  "是",
+                  "否"
+                ],
+                2
+              ]
+            },
+            {
+              "code": 402,
+              "indent": 0,
+              "parameters": [
+                0
+              ]
+            },
+            {
+              "code": 250,
+              "indent": 1,
+              "parameters": [
+                {
+                  "name": "Switch3",
+                  "volume": 80,
+                  "pitch": 60,
+                  "_class": "RPG::SE"
+                }
+              ]
+            },
+            {
+              "code": 121,
+              "indent": 1,
+              "parameters": [
+                41,
+                41,
+                0
+              ]
+            },
+            {
+              "code": 230,
+              "indent": 1,
+              "parameters": [
+                120
+              ]
+            },
+            {
+              "code": 250,
+              "indent": 1,
+              "parameters": [
+                {
+                  "name": "Earth4",
+                  "volume": 50,
+                  "pitch": 75,
+                  "_class": "RPG::SE"
+                }
+              ]
+            },
+            {
+              "code": 122,
+              "indent": 1,
+              "parameters": [
+                11,
+                11,
+                1,
+                0,
+                1
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 1,
+              "parameters": []
+            },
+            {
+              "code": 402,
+              "indent": 0,
+              "parameters": [
+                1
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 1,
+              "parameters": []
+            },
+            {
+              "code": 404,
+              "indent": 0,
+              "parameters": []
+            },
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 41,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 0,
+            "character_name": "!_switches",
+            "character_index": 0,
+            "direction": 4,
+            "pattern": 1,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": true,
+          "step_anime": false,
+          "direction_fix": true,
+          "through": false,
+          "priority_type": 1,
+          "trigger": 0,
+          "commands": [
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "map034_ev096",
+      "mapId": 34,
+      "eventId": 96,
+      "name": "EV096",
+      "x": 25,
+      "y": 27,
+      "role": "native_block",
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 160,
+            "character_name": "",
+            "character_index": 0,
+            "direction": 2,
+            "pattern": 0,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": true,
+          "step_anime": false,
+          "direction_fix": false,
+          "through": false,
+          "priority_type": 0,
+          "trigger": 0,
+          "commands": [
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 41,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 0,
+            "character_name": "",
+            "character_index": 0,
+            "direction": 2,
+            "pattern": 0,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": true,
+          "step_anime": false,
+          "direction_fix": false,
+          "through": false,
+          "priority_type": 0,
+          "trigger": 1,
+          "commands": [
+            {
+              "code": 250,
+              "indent": 0,
+              "parameters": [
+                {
+                  "name": "Move",
+                  "volume": 80,
+                  "pitch": 100,
+                  "_class": "RPG::SE"
+                }
+              ]
+            },
+            {
+              "code": 201,
+              "indent": 0,
+              "parameters": [
+                0,
+                62,
+                24,
+                30,
+                8,
+                0
+              ]
+            },
+            {
+              "code": 117,
+              "indent": 0,
+              "parameters": [
+                6
+              ]
+            },
+            {
+              "code": 111,
+              "indent": 0,
+              "parameters": [
+                0,
+                191,
+                0
+              ]
+            },
+            {
+              "code": 121,
+              "indent": 1,
+              "parameters": [
+                192,
+                192,
+                0
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 1,
+              "parameters": []
+            },
+            {
+              "code": 412,
+              "indent": 0,
+              "parameters": []
+            },
+            {
+              "code": 117,
+              "indent": 0,
+              "parameters": [
+                34
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "map034_ev110",
+      "mapId": 34,
+      "eventId": 110,
+      "name": "EV110",
+      "x": 26,
+      "y": 27,
+      "role": "native_block",
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 161,
+            "character_name": "",
+            "character_index": 0,
+            "direction": 2,
+            "pattern": 0,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": true,
+          "step_anime": false,
+          "direction_fix": false,
+          "through": false,
+          "priority_type": 0,
+          "trigger": 0,
+          "commands": [
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 41,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 0,
+            "character_name": "",
+            "character_index": 0,
+            "direction": 2,
+            "pattern": 0,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": true,
+          "step_anime": false,
+          "direction_fix": false,
+          "through": false,
+          "priority_type": 0,
+          "trigger": 1,
+          "commands": [
+            {
+              "code": 250,
+              "indent": 0,
+              "parameters": [
+                {
+                  "name": "Move",
+                  "volume": 80,
+                  "pitch": 100,
+                  "_class": "RPG::SE"
+                }
+              ]
+            },
+            {
+              "code": 201,
+              "indent": 0,
+              "parameters": [
+                0,
+                62,
+                24,
+                30,
+                8,
+                0
+              ]
+            },
+            {
+              "code": 117,
+              "indent": 0,
+              "parameters": [
+                6
+              ]
+            },
+            {
+              "code": 111,
+              "indent": 0,
+              "parameters": [
+                0,
+                191,
+                0
+              ]
+            },
+            {
+              "code": 121,
+              "indent": 1,
+              "parameters": [
+                192,
+                192,
+                0
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 1,
+              "parameters": []
+            },
+            {
+              "code": 412,
+              "indent": 0,
+              "parameters": []
+            },
+            {
+              "code": 117,
+              "indent": 0,
+              "parameters": [
+                34
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "map034_ev111",
+      "mapId": 34,
+      "eventId": 111,
+      "name": "EV111",
+      "x": 27,
+      "y": 27,
+      "role": "native_block",
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 162,
+            "character_name": "",
+            "character_index": 0,
+            "direction": 2,
+            "pattern": 0,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": true,
+          "step_anime": false,
+          "direction_fix": false,
+          "through": false,
+          "priority_type": 0,
+          "trigger": 0,
+          "commands": [
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 41,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 0,
+            "character_name": "",
+            "character_index": 0,
+            "direction": 2,
+            "pattern": 0,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": true,
+          "step_anime": false,
+          "direction_fix": false,
+          "through": false,
+          "priority_type": 0,
+          "trigger": 1,
+          "commands": [
+            {
+              "code": 250,
+              "indent": 0,
+              "parameters": [
+                {
+                  "name": "Move",
+                  "volume": 80,
+                  "pitch": 100,
+                  "_class": "RPG::SE"
+                }
+              ]
+            },
+            {
+              "code": 201,
+              "indent": 0,
+              "parameters": [
+                0,
+                62,
+                24,
+                30,
+                8,
+                0
+              ]
+            },
+            {
+              "code": 117,
+              "indent": 0,
+              "parameters": [
+                6
+              ]
+            },
+            {
+              "code": 111,
+              "indent": 0,
+              "parameters": [
+                0,
+                191,
+                0
+              ]
+            },
+            {
+              "code": 121,
+              "indent": 1,
+              "parameters": [
+                192,
+                192,
+                0
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 1,
+              "parameters": []
+            },
+            {
+              "code": 412,
+              "indent": 0,
+              "parameters": []
+            },
+            {
+              "code": 117,
+              "indent": 0,
+              "parameters": [
+                34
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "map034_ev112",
+      "mapId": 34,
+      "eventId": 112,
+      "name": "EV112",
+      "x": 28,
+      "y": 27,
+      "role": "native_block",
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 163,
+            "character_name": "",
+            "character_index": 0,
+            "direction": 2,
+            "pattern": 0,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": true,
+          "step_anime": false,
+          "direction_fix": false,
+          "through": false,
+          "priority_type": 0,
+          "trigger": 0,
+          "commands": [
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 41,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 0,
+            "character_name": "",
+            "character_index": 0,
+            "direction": 2,
+            "pattern": 0,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": true,
+          "step_anime": false,
+          "direction_fix": false,
+          "through": false,
+          "priority_type": 0,
+          "trigger": 1,
+          "commands": [
+            {
+              "code": 250,
+              "indent": 0,
+              "parameters": [
+                {
+                  "name": "Move",
+                  "volume": 80,
+                  "pitch": 100,
+                  "_class": "RPG::SE"
+                }
+              ]
+            },
+            {
+              "code": 201,
+              "indent": 0,
+              "parameters": [
+                0,
+                62,
+                24,
+                30,
+                8,
+                0
+              ]
+            },
+            {
+              "code": 117,
+              "indent": 0,
+              "parameters": [
+                6
+              ]
+            },
+            {
+              "code": 111,
+              "indent": 0,
+              "parameters": [
+                0,
+                191,
+                0
+              ]
+            },
+            {
+              "code": 121,
+              "indent": 1,
+              "parameters": [
+                192,
+                192,
+                0
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 1,
+              "parameters": []
+            },
+            {
+              "code": 412,
+              "indent": 0,
+              "parameters": []
+            },
+            {
+              "code": 117,
+              "indent": 0,
+              "parameters": [
+                34
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "map034_ev113",
+      "mapId": 34,
+      "eventId": 113,
+      "name": "EV113",
+      "x": 29,
+      "y": 27,
+      "role": "native_block",
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 164,
+            "character_name": "",
+            "character_index": 0,
+            "direction": 2,
+            "pattern": 0,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": true,
+          "step_anime": false,
+          "direction_fix": false,
+          "through": false,
+          "priority_type": 0,
+          "trigger": 0,
+          "commands": [
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 41,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 0,
+            "character_name": "",
+            "character_index": 0,
+            "direction": 2,
+            "pattern": 0,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": true,
+          "step_anime": false,
+          "direction_fix": false,
+          "through": false,
+          "priority_type": 0,
+          "trigger": 1,
+          "commands": [
+            {
+              "code": 250,
+              "indent": 0,
+              "parameters": [
+                {
+                  "name": "Move",
+                  "volume": 80,
+                  "pitch": 100,
+                  "_class": "RPG::SE"
+                }
+              ]
+            },
+            {
+              "code": 201,
+              "indent": 0,
+              "parameters": [
+                0,
+                62,
+                24,
+                30,
+                8,
+                0
+              ]
+            },
+            {
+              "code": 117,
+              "indent": 0,
+              "parameters": [
+                6
+              ]
+            },
+            {
+              "code": 111,
+              "indent": 0,
+              "parameters": [
+                0,
+                191,
+                0
+              ]
+            },
+            {
+              "code": 121,
+              "indent": 1,
+              "parameters": [
+                192,
+                192,
+                0
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 1,
+              "parameters": []
+            },
+            {
+              "code": 412,
+              "indent": 0,
+              "parameters": []
+            },
+            {
+              "code": 117,
+              "indent": 0,
+              "parameters": [
+                34
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "map062_ev032",
+      "mapId": 62,
+      "eventId": 32,
+      "name": "EV032",
+      "x": 24,
+      "y": 31,
+      "role": "native_block",
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 0,
+            "character_name": "",
+            "character_index": 0,
+            "direction": 2,
+            "pattern": 0,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": true,
+          "step_anime": false,
+          "direction_fix": false,
+          "through": false,
+          "priority_type": 0,
+          "trigger": 1,
+          "commands": [
+            {
+              "code": 250,
+              "indent": 0,
+              "parameters": [
+                {
+                  "name": "Move",
+                  "volume": 80,
+                  "pitch": 100,
+                  "_class": "RPG::SE"
+                }
+              ]
+            },
+            {
+              "code": 201,
+              "indent": 0,
+              "parameters": [
+                0,
+                34,
+                27,
+                28,
+                0,
+                0
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "map062_ev033",
+      "mapId": 62,
+      "eventId": 33,
+      "name": "EV033",
+      "x": 26,
+      "y": 31,
+      "role": "native_block",
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 0,
+            "character_name": "",
+            "character_index": 0,
+            "direction": 2,
+            "pattern": 0,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": true,
+          "step_anime": false,
+          "direction_fix": false,
+          "through": false,
+          "priority_type": 0,
+          "trigger": 1,
+          "commands": [
+            {
+              "code": 250,
+              "indent": 0,
+              "parameters": [
+                {
+                  "name": "Move",
+                  "volume": 80,
+                  "pitch": 100,
+                  "_class": "RPG::SE"
+                }
+              ]
+            },
+            {
+              "code": 201,
+              "indent": 0,
+              "parameters": [
+                0,
+                34,
+                27,
+                28,
+                0,
+                0
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "map062_ev034",
+      "mapId": 62,
+      "eventId": 34,
+      "name": "EV034",
+      "x": 25,
+      "y": 31,
+      "role": "native_block",
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 0,
+            "character_name": "",
+            "character_index": 0,
+            "direction": 2,
+            "pattern": 0,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": true,
+          "step_anime": false,
+          "direction_fix": false,
+          "through": false,
+          "priority_type": 0,
+          "trigger": 1,
+          "commands": [
+            {
+              "code": 250,
+              "indent": 0,
+              "parameters": [
+                {
+                  "name": "Move",
+                  "volume": 80,
+                  "pitch": 100,
+                  "_class": "RPG::SE"
+                }
+              ]
+            },
+            {
+              "code": 201,
+              "indent": 0,
+              "parameters": [
+                0,
+                34,
+                27,
+                28,
+                0,
+                0
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "map062_ev035",
+      "mapId": 62,
+      "eventId": 35,
+      "name": "EV035",
+      "x": 23,
+      "y": 31,
+      "role": "native_block",
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 0,
+            "character_name": "",
+            "character_index": 0,
+            "direction": 2,
+            "pattern": 0,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": true,
+          "step_anime": false,
+          "direction_fix": false,
+          "through": false,
+          "priority_type": 0,
+          "trigger": 1,
+          "commands": [
+            {
+              "code": 250,
+              "indent": 0,
+              "parameters": [
+                {
+                  "name": "Move",
+                  "volume": 80,
+                  "pitch": 100,
+                  "_class": "RPG::SE"
+                }
+              ]
+            },
+            {
+              "code": 201,
+              "indent": 0,
+              "parameters": [
+                0,
+                34,
+                27,
+                28,
+                0,
+                0
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "map062_ev036",
+      "mapId": 62,
+      "eventId": 36,
+      "name": "EV036",
+      "x": 22,
+      "y": 31,
+      "role": "native_block",
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 0,
+            "character_name": "",
+            "character_index": 0,
+            "direction": 2,
+            "pattern": 0,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": true,
+          "step_anime": false,
+          "direction_fix": false,
+          "through": false,
+          "priority_type": 0,
+          "trigger": 1,
+          "commands": [
+            {
+              "code": 250,
+              "indent": 0,
+              "parameters": [
+                {
+                  "name": "Move",
+                  "volume": 80,
+                  "pitch": 100,
+                  "_class": "RPG::SE"
+                }
+              ]
+            },
+            {
+              "code": 201,
+              "indent": 0,
+              "parameters": [
+                0,
+                34,
+                27,
+                28,
+                0,
+                0
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

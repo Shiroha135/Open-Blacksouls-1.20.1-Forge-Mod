@@ -23,6 +23,11 @@ public final class BSOriginalNpcData {
         return ENTRIES.get(id);
     }
 
+    public static Entry getEvent(String id) {
+        Entry entry = get(id);
+        return entry == null ? OriginalWorldEventData.get(id) : entry;
+    }
+
     public static List<Entry> values() {
         return List.copyOf(ENTRIES.values());
     }
