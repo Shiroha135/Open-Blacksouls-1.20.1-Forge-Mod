@@ -117,7 +117,7 @@ public final class OriginalWhiteBearVisuals {
     public static final class Models {
         @SubscribeEvent
         public static void onModels(ModelEvent.ModifyBakingResult event) {
-            var location = new ModelResourceLocation(new net.minecraft.resources.ResourceLocation("blacksouls2:bai_xiong_mao_shop"), "facing=north");
+            var location = new ModelResourceLocation(net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("blacksouls2", "bai_xiong_mao_shop"), "facing=north");
             event.getModels().computeIfPresent(location, (key, model) -> model instanceof NativeModel ? model : new NativeModel(model));
         }
     }
