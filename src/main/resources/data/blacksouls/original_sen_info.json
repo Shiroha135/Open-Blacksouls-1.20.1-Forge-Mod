@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "windowType": 7,
+  "iconIndex": 103,
+  "upText": "SEN上升",
+  "downText": "SEN下降！",
+  "notePrefix": "当前值: ",
+  "gainSound": "blacksouls:original_sen_heal7",
+  "lossSound": "blacksouls:down2",
+  "soundVolume": 80,
+  "soundPitch": 100,
+  "colors": {
+    "0": [
+      255,
+      255,
+      255,
+      255
+    ],
+    "2": [
+      255,
+      120,
+      76,
+      255
+    ],
+    "3": [
+      102,
+      204,
+      64,
+      255
+    ],
+    "6": [
+      255,
+      255,
+      160,
+      255
+    ],
+    "14": [
+      255,
+      204,
+      32,
+      255
+    ]
+  },
+  "sourceFiles": [
+    {
+      "path": "D:\\BLACK SOULS II\\Data\\Scripts.rvdata2",
+      "sha256": "ba3e506e47c31acfc5ff30572b94677c2cd309bfd79b22e0fb9f01dd5adb5a24"
+    },
+    {
+      "path": "D:\\BLACK SOULS II\\Graphics\\System\\Window.png",
+      "sha256": "68cbcd4deccc72d5c4126c50bb8c0cadca138da6f49024cd750a57c8810adff5"
+    },
+    {
+      "path": "D:\\BLACK SOULS II\\Audio\\SE\\Heal7.ogg",
+      "sha256": "07eeaf35cc19cfa4aa6b83945765debbf58339d63de04368496f5bf1f2c29bc9"
+    },
+    {
+      "path": "D:\\BLACK SOULS II\\Audio\\SE\\Down2.ogg",
+      "sha256": "3c75b5e93cfd59042add69b59690e006d9173ae96947c2a08672e5fc75eb0574"
+    }
+  ]
+}

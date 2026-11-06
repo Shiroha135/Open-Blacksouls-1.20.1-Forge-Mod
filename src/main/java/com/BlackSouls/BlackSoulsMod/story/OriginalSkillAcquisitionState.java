@@ -11,6 +11,7 @@ public final class OriginalSkillAcquisitionState {
     private final List<Entry> entries = new ArrayList<>();
     private final List<Boolean> occupied = new ArrayList<>();
     private long revision = -1;
+    private long senRevision = -1;
     private long lastNanos;
     private long remainder;
     private boolean clockReady;
@@ -26,6 +27,25 @@ public final class OriginalSkillAcquisitionState {
             clearEntries();
             return true;
         }
+        entries.add(new Entry(nextSlot(now), actorOperand, learned));
+        return true;
+    }
+
+    public boolean acceptSen(long incomingRevision, int current, long delta, boolean clear, long now) {
+        if (incomingRevision < 1 || (clear ? current != 0 || delta != 0 : delta == 0)) {
+            throw new IllegalArgumentException("Invalid original SEN info state");
+        }
+        if (incomingRevision <= senRevision) return false;
+        senRevision = incomingRevision;
+        if (clear) {
+            clearEntries();
+            return true;
+        }
+        entries.add(new Entry(nextSlot(now), current, delta));
+        return true;
+    }
+
+    private int nextSlot(long now) {
         if (entries.isEmpty()) {
             lastNanos = now;
             remainder = 0;
@@ -38,8 +58,7 @@ public final class OriginalSkillAcquisitionState {
         } else {
             occupied.set(slot, true);
         }
-        entries.add(new Entry(slot, actorOperand, learned));
-        return true;
+        return slot;
     }
 
     public void advanceFrame() {
@@ -79,12 +98,19 @@ public final class OriginalSkillAcquisitionState {
     }
 
     public List<View> views() {
-        return entries.stream().map(entry -> new View(entry.slot, entry.actorOperand, entry.learned, entry.age,
-                entry.y, entry.opacity)).toList();
+        return entries.stream().filter(entry -> entry.type == 3).map(Entry::view).toList();
+    }
+
+    public List<Notification> notifications() {
+        return entries.stream().map(entry -> new Notification(entry.view(), entry.type, entry.current, entry.delta)).toList();
     }
 
     public long revision() {
         return revision;
+    }
+
+    public long senRevision() {
+        return senRevision;
     }
 
     public void clearEntries() {
@@ -97,6 +123,7 @@ public final class OriginalSkillAcquisitionState {
     public void reset() {
         clearEntries();
         revision = -1;
+        senRevision = -1;
     }
 
     public static Canvas canvas(int width, int height) {
@@ -114,10 +141,16 @@ public final class OriginalSkillAcquisitionState {
         public int backgroundAlpha() { return opacity * 160 / 255; }
     }
 
+    public record Notification(View window, int type, int current, long delta) {
+    }
+
     private static final class Entry {
         private final int slot;
         private final int actorOperand;
         private final boolean learned;
+        private final int type;
+        private final int current;
+        private final long delta;
         private int age;
         private int y;
         private int opacity;
@@ -126,7 +159,24 @@ public final class OriginalSkillAcquisitionState {
             this.slot = slot;
             this.actorOperand = actorOperand;
             this.learned = learned;
+            type = 3;
+            current = 0;
+            delta = 0;
             y = 422 - Math.multiplyExact(slot, 40);
+        }
+
+        private Entry(int slot, int current, long delta) {
+            this.slot = slot;
+            actorOperand = 0;
+            learned = false;
+            type = 7;
+            this.current = current;
+            this.delta = delta;
+            y = 422 - Math.multiplyExact(slot, 40);
+        }
+
+        private View view() {
+            return new View(slot, actorOperand, learned, age, y, opacity);
         }
     }
 }

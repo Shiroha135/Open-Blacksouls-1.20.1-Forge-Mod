@@ -1527,5 +1527,11 @@
     "sounds": [
       "blacksouls:original_decision1"
     ]
+  },
+  "original_sen_heal7": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:original_sen_heal7"
+    ]
   }
 }
