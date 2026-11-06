@@ -203,6 +203,13 @@ public final class OriginalNpcService {
         return SESSIONS.containsKey(player.getUUID()) || OriginalDodoRunService.pending(player);
     }
 
+    static boolean hasPoolMapConversation(ServerLevel level) {
+        return SESSIONS.values().stream().anyMatch(session -> session.npcId.startsWith("map037_ev")
+                && session.dimension.equals(level.dimension().location()))
+                || OriginalNpcProgress.get(level.getServer()).hasConversation(BSOriginalNpcData.values().stream()
+                .filter(entry -> entry.mapId() == 37).map(BSOriginalNpcData.Entry::id).collect(java.util.stream.Collectors.toSet()));
+    }
+
     static boolean hasNpcConversation(ServerPlayer player) {
         return SESSIONS.containsKey(player.getUUID());
     }
@@ -258,6 +265,7 @@ public final class OriginalNpcService {
         if (event.phase != TickEvent.Phase.END) {
             return;
         }
+        OriginalPoolCrowdVisitService.tick(event.getServer());
         OriginalNpcMovementService.tick(event.getServer());
         OriginalNpcAnimationService.tick(event.getServer());
         OriginalNpcPictureService.tick(event.getServer());

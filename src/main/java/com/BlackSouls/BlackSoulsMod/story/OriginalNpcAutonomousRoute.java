@@ -7,6 +7,7 @@ import java.util.Set;
 
 public final class OriginalNpcAutonomousRoute {
     private OriginalNpcMoveRouteRunner runner;
+    private int moveType;
     private int stopCount;
     private boolean locked;
     private int prelockDirection;
@@ -26,7 +27,8 @@ public final class OriginalNpcAutonomousRoute {
         forcedSuspended = false;
         pastEnd = false;
         symbol = null;
-        if (!movement.has("move_type") || movement.get("move_type").getAsInt() != 3) return;
+        moveType = movement.has("move_type") ? movement.get("move_type").getAsInt() : 0;
+        if (moveType != 3) return;
         try {
             if (OriginalNpcSymbolState.recognizes(movement)) symbol = new OriginalNpcSymbolState();
             else runner = new OriginalNpcMoveRouteRunner(movement.getAsJsonObject("move_route"));
@@ -53,6 +55,18 @@ public final class OriginalNpcAutonomousRoute {
                     || !symbol.enabled() && locked) return;
             try { symbol.move(context); }
             catch (RuntimeException exception) { failure = exception.getClass().getSimpleName() + ":" + exception.getMessage(); }
+            return;
+        }
+        if (moveType == 1) {
+            if (locked || !failure.isEmpty() || !context.nearScreen() || stopCount <= 30 * (5 - context.moveFrequency())) return;
+            try {
+                int choice = context.symbolRandom(6);
+                if (choice <= 1) context.apply(9, List.of());
+                else if (choice <= 4) context.apply(12, List.of());
+                else resetStopCount();
+            } catch (RuntimeException exception) {
+                failure = exception.getClass().getSimpleName() + ":" + exception.getMessage();
+            }
             return;
         }
         if (locked || runner == null || !failure.isEmpty() || !context.nearScreen()
@@ -157,6 +171,7 @@ public final class OriginalNpcAutonomousRoute {
     public JsonObject snapshot() {
         JsonObject state = new JsonObject();
         state.addProperty("version", 1);
+        state.addProperty("moveType", moveType);
         state.addProperty("stopCount", stopCount);
         state.addProperty("locked", locked);
         state.addProperty("prelockDirection", prelockDirection);
@@ -174,7 +189,8 @@ public final class OriginalNpcAutonomousRoute {
     public void restore(JsonObject state) {
         Set<String> required = Set.of("version", "stopCount", "locked", "prelockDirection", "failure", "gravityCaptured", "originalNoGravity", "forcedSuspended", "pastEnd");
         require(state.keySet().containsAll(required) && state.keySet().stream().allMatch(key -> required.contains(key)
-                || key.equals("runner") || key.equals("motion") || key.equals("symbol")), "state_fields");
+                || key.equals("runner") || key.equals("motion") || key.equals("symbol") || key.equals("moveType")), "state_fields");
+        require(!state.has("moveType") || integer(state, "moveType") == moveType, "move_type_page");
         require(integer(state, "version") == 1 && integer(state, "stopCount") >= 0, "state_version");
         int direction = integer(state, "prelockDirection");
         require(direction == 0 || direction == 2 || direction == 4 || direction == 6 || direction == 8, "prelock_direction");

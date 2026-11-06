@@ -104,12 +104,102 @@ public final class OriginalNpcMovementService {
     public static boolean tickAutonomous(EntityOriginalNpc npc) {
         if (!npc.hasOriginalAutonomy() || !(npc.level() instanceof ServerLevel level)) return false;
         if (!level.dimension().equals(com.BlackSouls.BlackSoulsMod.util.HokoniwaDestination.DIMENSION)) return false;
+        if (OriginalPoolCrowdSurface.isCrowd(npc.getNpcId())) return OriginalPoolCrowdMovementService.usesSharedScheduler(npc);
         ServerPlayer owner = level.getServer().getPlayerList().getPlayers().stream()
                 .filter(player -> player.serverLevel() == level && player.isAlive() && !player.isSpectator() && player.distanceToSqr(npc) <= 1024.0D)
                 .min(java.util.Comparator.comparingDouble(player -> player.distanceToSqr(npc))).orElse(null);
         var context = new RouteContext(owner, npc, npc.originalAutonomousRoute());
         for (int frame = 0; frame < 3; frame++) npc.originalAutonomousRoute().advanceFrame(context);
         return true;
+    }
+
+    public static OriginalNpcMotion originalMotion(EntityOriginalNpc npc) {
+        if (npc.level() instanceof ServerLevel level && !npc.forcedRouteTicket().isEmpty()) {
+            var ticket = OriginalNpcMovementData.get(level.getServer()).tickets.get(npc.forcedRouteTicket());
+            if (ticket != null && ticket.target.equals(npc.getUUID()) && !ticket.complete) return ticket.motion;
+        }
+        return npc.originalAutonomousRoute().motion;
+    }
+
+    public static net.minecraft.world.phys.Vec3 logicalPosition(EntityOriginalNpc npc) {
+        var motion = originalMotion(npc);
+        if (motion == null) return npc.position();
+        var state = motion.snapshot();
+        return new net.minecraft.world.phys.Vec3(state.get("targetX").getAsDouble(), state.get("targetY").getAsDouble(), state.get("targetZ").getAsDouble());
+    }
+
+    public static boolean isOriginalWalking(EntityOriginalNpc npc) {
+        var motion = originalMotion(npc);
+        return motion != null && !motion.snapshot().get("jump").getAsBoolean();
+    }
+
+    public static void refreshAutonomousPage(EntityOriginalNpc npc) {
+        if (!(npc.level() instanceof ServerLevel level)) return;
+        ServerPlayer owner = OriginalPoolCrowdMovementService.nearestContext(npc);
+        if (owner != null) OriginalNpcService.refreshPage(npc, owner);
+        else {
+            var entry = BSOriginalNpcData.getEvent(npc.getNpcId());
+            Integer page = entry == null ? -1 : offlinePage(entry, OriginalNpcProgress.get(level.getServer()), level.getServer());
+            if (page != null) npc.setPageIndex(page);
+        }
+    }
+
+    public static void cancelForVisitReset(EntityOriginalNpc npc, String id) {
+        if (id.isEmpty() || !(npc.level() instanceof ServerLevel level)) return;
+        var data = OriginalNpcMovementData.get(level.getServer());
+        var ticket = data.tickets.get(id);
+        if (ticket == null || !ticket.target.equals(npc.getUUID())) return;
+        stopMotion(npc, ticket);
+        ticket.gravityCaptured = false;
+        ticket.failure = "visit_reset";
+        ticket.released = true;
+        data.finish(ticket);
+        data.collect();
+    }
+
+    static void advanceCrowdFrame(EntityOriginalNpc npc, ServerPlayer nearest, OriginalNpcMovementData data) {
+        String previous = npc.forcedRouteTicket();
+        refreshAutonomousPage(npc);
+        if (!previous.isEmpty() && !previous.equals(npc.forcedRouteTicket())) {
+            var cancelled = data.tickets.get(previous);
+            if (cancelled != null && cancelled.target.equals(npc.getUUID())) {
+                stopCancelledMotion(npc, cancelled);
+                data.finish(cancelled);
+            }
+        }
+        if (npc.forcedRouteTicket().isEmpty()) {
+            npc.originalAutonomousRoute().advanceFrame(new RouteContext(nearest, npc, npc.originalAutonomousRoute()));
+            return;
+        }
+        var ticket = data.tickets.get(npc.forcedRouteTicket());
+        if (ticket == null || !ticket.target.equals(npc.getUUID()) || !ticket.npcId.equals(npc.getNpcId())
+                || ticket.complete || !ticket.failure.isEmpty() || !ticket.replacement.isEmpty()) return;
+        var level = (ServerLevel) npc.level();
+        ServerPlayer owner = level.getServer().getPlayerList().getPlayer(ticket.owner);
+        if (owner != null && (owner.serverLevel() != level || !owner.isAlive())) owner = null;
+        RouteContext context = new RouteContext(owner, npc, ticket.sourceMap, ticket);
+        try {
+            if (!ticket.validated) { ticket.runner.validate(context); ticket.validated = true; }
+            npc.advanceOriginalForcedAnimationFrame(ticket.motion != null);
+            if (!ticket.runner.isComplete()) ticket.runner.advanceFrame(context);
+            if (ticket.runner.isComplete()) {
+                stopMotion(npc, ticket);
+                data.finish(ticket);
+                npc.endForcedRoute(ticket.id);
+                npc.originalAutonomousRoute().advanceAfterForcedFrame(new RouteContext(nearest, npc, npc.originalAutonomousRoute()));
+            }
+            data.setDirty();
+        } catch (RuntimeException exception) {
+            ticket.failure = exception.getClass().getSimpleName() + ":" + exception.getMessage();
+            data.setDirty();
+            BlackSouls.LOGGER.error("Original pool crowd route {} paused at source frame {}", ticket.id, ticket.runner.elapsedFrames(), exception);
+            if (owner != null) owner.sendSystemMessage(Component.literal("原作移动路线已暂停：" + ticket.failure));
+        }
+    }
+
+    public static boolean isOriginalMap37Position(String identity, double x, double z) {
+        return OriginalPoolCrowdSurface.isCrowd(identity) ? OriginalPoolCrowdSurface.isLowerPoolPosition(x, z)
+                : identity.equals("map037_ev053") && isDodoLocalPosition(x, z);
     }
 
     public static boolean isDodoLocalPosition(double x, double z) {
@@ -120,9 +210,9 @@ public final class OriginalNpcMovementService {
         var motion = npc.originalAutonomousRoute().motion;
         if (motion == null) return;
         if (!npc.level().dimension().equals(com.BlackSouls.BlackSoulsMod.util.HokoniwaDestination.DIMENSION)
-                || !isDodoLocalPosition(motion.x(), motion.z())
-                || !isDodoLocalPosition(motion.snapshot().get("startX").getAsDouble(), motion.snapshot().get("startZ").getAsDouble())
-                || !isDodoLocalPosition(motion.snapshot().get("targetX").getAsDouble(), motion.snapshot().get("targetZ").getAsDouble())) {
+                || !isOriginalMap37Position(npc.getNpcId(), motion.x(), motion.z())
+                || !isOriginalMap37Position(npc.getNpcId(), motion.snapshot().get("startX").getAsDouble(), motion.snapshot().get("startZ").getAsDouble())
+                || !isOriginalMap37Position(npc.getNpcId(), motion.snapshot().get("targetX").getAsDouble(), motion.snapshot().get("targetZ").getAsDouble())) {
             throw new IllegalArgumentException("Invalid original autonomous movement map");
         }
     }
@@ -222,6 +312,7 @@ public final class OriginalNpcMovementService {
             Entity subject = owner != null && ticket.target.equals(owner.getUUID()) ? owner : level.getEntity(ticket.target);
             if (subject == null || subject.isRemoved() || !subject.isAlive()) continue;
             if (subject instanceof EntityOriginalNpc npc) {
+                if (OriginalPoolCrowdMovementService.usesSharedScheduler(npc)) continue;
                 if (!npc.getNpcId().equals(ticket.npcId)) continue;
                 refreshPageWhileForcing(npc);
                 if (!npc.forcedRouteTicket().equals(ticket.id)) {
@@ -288,7 +379,8 @@ public final class OriginalNpcMovementService {
                         }
                     }
                     if (!ticket.runner.isComplete()) ticket.runner.advanceFrame(context);
-                    if (ticket.runner.isComplete() && subject instanceof EntityOriginalNpc npc && npc.hasOriginalAutonomy()) {
+                    if (ticket.runner.isComplete() && subject instanceof EntityOriginalNpc npc && npc.hasOriginalAutonomy()
+                            && (!OriginalPoolCrowdSurface.isCrowd(npc.getNpcId()) || OriginalPoolCrowdMovementService.usesSharedScheduler(npc))) {
                         stopMotion(subject, ticket);
                         data.finish(ticket);
                         collect = true;
@@ -319,6 +411,7 @@ public final class OriginalNpcMovementService {
                 owner.sendSystemMessage(Component.literal("原作移动路线已暂停：" + ticket.failure));
             }
         }
+        OriginalPoolCrowdMovementService.tick(server, data);
         if (collect) data.collect();
     }
 
@@ -375,6 +468,10 @@ public final class OriginalNpcMovementService {
 
         @Override
         public boolean nearScreen() {
+            if (subject instanceof EntityOriginalNpc npc && OriginalPoolCrowdSurface.isCrowd(npc.getNpcId())) {
+                var source = BSOriginalNpcData.getEvent(npc.getNpcId());
+                if (source != null && source.name().contains("<uninhibited>")) return true;
+            }
             return owner != null && Math.abs(owner.getX() - subject.getX()) <= 12.0D
                     && Math.abs(owner.getZ() - subject.getZ()) <= 8.0D;
         }
@@ -405,8 +502,9 @@ public final class OriginalNpcMovementService {
         @Override
         public boolean symbolBattlePaused() { return owner != null && com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager.isInBattle(owner); }
 
-        private double logicalX() { return autonomous != null && autonomous.motion != null ? autonomous.motion.snapshot().get("targetX").getAsDouble() : subject.getX(); }
-        private double logicalZ() { return autonomous != null && autonomous.motion != null ? autonomous.motion.snapshot().get("targetZ").getAsDouble() : subject.getZ(); }
+        private OriginalNpcMotion currentMotion() { return ticket != null ? ticket.motion : autonomous == null ? null : autonomous.motion; }
+        private double logicalX() { var motion = currentMotion(); return motion == null ? subject.getX() : motion.snapshot().get("targetX").getAsDouble(); }
+        private double logicalZ() { var motion = currentMotion(); return motion == null ? subject.getZ() : motion.snapshot().get("targetZ").getAsDouble(); }
 
         @Override
         public int symbolX() { return 885 - net.minecraft.util.Mth.floor(logicalX()); }
@@ -460,7 +558,9 @@ public final class OriginalNpcMovementService {
 
         @Override
         public void animate(int stopCount) {
-            ((EntityOriginalNpc) subject).advanceOriginalAutonomousAnimationFrame(stopCount);
+            var npc = (EntityOriginalNpc) subject;
+            if (OriginalPoolCrowdSurface.isCrowd(npc.getNpcId())) npc.advanceOriginalAutonomousAnimationFrame(stopCount, isOriginalWalking(npc));
+            else npc.advanceOriginalAutonomousAnimationFrame(stopCount);
         }
 
         @Override
@@ -468,7 +568,8 @@ public final class OriginalNpcMovementService {
             if (code >= 1 && code <= 14) {
                 if (sourceMap != 62 && !(sourceMap == 37 && subject instanceof EntityOriginalNpc npc
                         && npc.hasOriginalAutonomy() && subject.level().dimension().equals(com.BlackSouls.BlackSoulsMod.util.HokoniwaDestination.DIMENSION)
-                        && isDodoLocalPosition(subject.getX(), subject.getZ()))
+                        && isOriginalMap37Position(npc.getNpcId(), subject.getX(), subject.getZ())
+                        && (!OriginalPoolCrowdSurface.isCrowd(npc.getNpcId()) || OriginalPoolCrowdMovementService.usesSharedScheduler(npc)))
                         || !(subject instanceof EntityOriginalNpc || subject instanceof ServerPlayer)) throw new UnsupportedOperationException("physical_route_map:" + sourceMap);
                 return;
             }
@@ -558,6 +659,11 @@ public final class OriginalNpcMovementService {
         public boolean advanceMovementFrame() {
             var motion = ticket == null ? autonomous == null ? null : autonomous.motion : ticket.motion;
             if (motion == null) return false;
+            if (subject instanceof EntityOriginalNpc npc && OriginalPoolCrowdSurface.isCrowd(npc.getNpcId())) {
+                motion = OriginalPoolCrowdMotion.retimeWalk(motion, state().getInt("MoveSpeed"));
+                if (ticket != null) ticket.motion = motion;
+                else autonomous.motion = motion;
+            }
             subject.setNoGravity(true);
             motion.advanceFrame();
             subject.setPos(motion.x(), motion.y(), motion.z());
@@ -619,7 +725,7 @@ public final class OriginalNpcMovementService {
                 else if (dy != 0) face(dy < 0 ? 8 : 2);
             }
             else {
-                int direction = code == 9 ? 2 + owner.getRandom().nextInt(4) * 2 : direction();
+                int direction = code == 9 ? 2 + (subject instanceof EntityOriginalNpc npc ? npc.getRandom() : owner.getRandom()).nextInt(4) * 2 : direction();
                 if (code >= 1 && code <= 4) direction = code == 1 ? 2 : code == 2 ? 4 : code == 3 ? 6 : 8;
                 if (code == 10 || code == 11) {
                     double wx = owner.getX() - subject.getX(), wz = owner.getZ() - subject.getZ();
@@ -639,7 +745,11 @@ public final class OriginalNpcMovementService {
                     if (direction() == 10 - horizontal) face(horizontal);
                     if (direction() == 10 - vertical) face(vertical);
                     if (!state().getBoolean("Through") && !clear(dx, 0) && !clear(0, dy)) {succeeded = false;return;}
-                } else {tryStraight(direction, code != 13 && code != 9);return;}
+                } else {
+                    boolean success = tryStraight(direction, code != 13 && code != 9);
+                    if (success && code == 9) face(direction);
+                    return;
+                }
             }
             startMotion(dx, dy, code == 14);
         }
@@ -655,7 +765,8 @@ public final class OriginalNpcMovementService {
 
         private boolean startMotion(int dx, int dy, boolean jump) {
             double tx = subject.getX() - dx, tz = subject.getZ() - dy;
-            if (sourceMap == 37 && (!isDodoLocalPosition(subject.getX(), subject.getZ()) || !isDodoLocalPosition(tx, tz))) {
+            if (sourceMap == 37 && (!(subject instanceof EntityOriginalNpc npc)
+                    || !isOriginalMap37Position(npc.getNpcId(), subject.getX(), subject.getZ()) || !isOriginalMap37Position(npc.getNpcId(), tx, tz))) {
                 throw new UnsupportedOperationException("physical_route_map37_local_bounds");
             }
             if (!jump && subject instanceof EntityOriginalNpc npc && npc.originalAutonomousRoute().symbol() != null
@@ -674,7 +785,14 @@ public final class OriginalNpcMovementService {
             double targetY = subject.getY();
             boolean symbolMoving = !jump && subject instanceof EntityOriginalNpc npc && npc.originalAutonomousRoute().symbol() != null
                     && npc.originalAutonomousRoute().symbol().enabled() && !state().getBoolean("Through");
-            if (symbolMoving) {
+            if (subject instanceof EntityOriginalNpc npc && OriginalPoolCrowdSurface.isCrowd(npc.getNpcId())) {
+                if (!jump) {
+                    int direction = dx < 0 ? 4 : dx > 0 ? 6 : dy < 0 ? 8 : 2;
+                    if (!OriginalPoolCrowdMovementService.allowsSourceStep(npc, owner, symbolX(), symbolY(), direction)) { succeeded = false; return false; }
+                }
+                targetY = OriginalPoolCrowdMovementService.supportHeight(npc, tx, tz);
+                if (!Double.isFinite(targetY)) { succeeded = false; return false; }
+            } else if (symbolMoving) {
                 int direction = dx < 0 ? 4 : dx > 0 ? 6 : dy < 0 ? 8 : 2;
                 if (!OriginalSymbolMap37.allows(owner, (EntityOriginalNpc) subject, symbolX(), symbolY(), direction)) {
                     succeeded = false;
@@ -693,7 +811,7 @@ public final class OriginalNpcMovementService {
                 autonomous.gravityCaptured = true;
             }
             subject.setNoGravity(true);
-            OriginalNpcMotion motion = jump ? OriginalNpcMotion.jump(subject.getX(), subject.getY(), subject.getZ(), tx, subject.getY(), tz, speed, dx, dy)
+            OriginalNpcMotion motion = jump ? OriginalNpcMotion.jump(subject.getX(), subject.getY(), subject.getZ(), tx, targetY, tz, speed, dx, dy)
                     : OriginalNpcMotion.walk(subject.getX(), subject.getY(), subject.getZ(), tx, targetY, tz, speed);
             if (ticket != null) ticket.motion = motion;
             else autonomous.motion = motion;

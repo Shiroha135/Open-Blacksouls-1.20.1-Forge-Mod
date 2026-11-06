@@ -93,7 +93,7 @@ public final class OriginalNpcPlacements {
     }
 
     public static List<Site> sites() {
-        return java.util.stream.Stream.of(SITES, OriginalBillPlacement.sites(), OriginalDodoPlacement.sites())
+        return java.util.stream.Stream.of(SITES, OriginalBillPlacement.sites(), OriginalDodoPlacement.sites(), OriginalPoolCrowdPlacement.sites())
                 .flatMap(List::stream).toList();
     }
 
@@ -158,7 +158,10 @@ public final class OriginalNpcPlacements {
         }
         BlockPos floor = BlockPos.containing(site.position().add(0.0D, -0.02D, 0.0D));
         BlockState support = level.getBlockState(floor);
-        if (!blockId(support).equals(site.supportBlock()) || !site.shapedSupport() && !support.isFaceSturdy(level, floor, Direction.UP)
+        boolean crowd = com.BlackSouls.BlackSoulsMod.story.OriginalPoolCrowdSurface.isCrowd(npcId);
+        if (crowd && !com.BlackSouls.BlackSoulsMod.story.OriginalPoolCrowdSurface.matchesSite(level, site)
+                || !crowd && (!blockId(support).equals(site.supportBlock())
+                || !site.shapedSupport() && !support.isFaceSturdy(level, floor, Direction.UP))
                 || site.landmarks().stream().anyMatch(landmark -> !landmark.matches(level))) {
             return Outcome.TERRAIN_MISMATCH;
         }
@@ -172,7 +175,8 @@ public final class OriginalNpcPlacements {
         npc.yBodyRot = site.yaw();
         npc.setNpcId(npcId);
         AABB bounds = npc.getBoundingBox();
-        if (!level.noCollision(npc, bounds) || site.shapedSupport() && level.noCollision(npc, bounds.move(0.0D, -0.02D, 0.0D))
+        if (!level.noCollision(npc, bounds) || crowd && !com.BlackSouls.BlackSoulsMod.story.OriginalPoolCrowdSurface.allowsPlacement(level, site, bounds)
+                || !crowd && site.shapedSupport() && level.noCollision(npc, bounds.move(0.0D, -0.02D, 0.0D))
                 || level.containsAnyLiquid(bounds) && !OriginalBillPlacement.allowsFootWater(level, site, bounds)
                 || !com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(npcId)
                 && !level.getEntitiesOfClass(LivingEntity.class, bounds,
@@ -180,6 +184,7 @@ public final class OriginalNpcPlacements {
             npc.discard();
             return Outcome.COLLISION;
         }
+        if (crowd) npc.applyOriginalPoolSurfaceSupport(true);
         if (!level.addFreshEntity(npc)) {
             npc.discard();
             return Outcome.SPAWN_FAILED;

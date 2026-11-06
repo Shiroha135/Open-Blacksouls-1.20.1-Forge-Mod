@@ -40,19 +40,7 @@ public final class OriginalSymbolMap37 {
                 || x+dx < 0 || x+dx > 64 || y+dy < 34 || y+dy > 64) return false;
         var context = new OriginalNpcService.EventContext(player, npc);
         if (!passage(player, npc, context, x, y, direction) || !passage(player, npc, context, x+dx, y+dy, 10-direction)) return false;
-        for (var element : DATA.getAsJsonArray("events")) {
-            var event = element.getAsJsonObject();
-            if (event.get("id").getAsInt() == 53 || event.get("x").getAsInt() != x+dx || event.get("y").getAsInt() != y+dy) continue;
-            var page = selected(player, context, event);
-            if (page != null && !page.get("through").getAsBoolean() && page.get("priority").getAsInt() == 1) {
-                String identity = "map037_ev%03d".formatted(event.get("id").getAsInt());
-                var actual = npc.level().getEntitiesOfClass(EntityOriginalNpc.class, npc.getBoundingBox().inflate(64),
-                        actor -> actor != npc && actor.getNpcId().equals(identity) && !actor.isRemoved());
-                if (actual.isEmpty()) return false;
-                if (actual.stream().anyMatch(actor -> !actor.isErasedForCurrentVisit() && !actor.originalMovementState().getBoolean("Through")
-                        && actor.blockPosition().getX() == 885-(x+dx) && actor.blockPosition().getZ() == -549-(y+dy))) return false;
-            }
-        }
+        if (OriginalPoolCrowdMovementService.blocksSourceTile(npc, player, x+dx, y+dy)) return false;
         return true;
     }
 

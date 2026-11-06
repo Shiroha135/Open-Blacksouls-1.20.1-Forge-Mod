@@ -230,6 +230,10 @@ public final class OriginalNpcProgress extends SavedData {
         }
     }
 
+    public boolean hasConversation(Set<String> eventIds) {
+        return conversations.keySet().stream().anyMatch(key -> eventIds.stream().anyMatch(id -> key.endsWith(":" + id)));
+    }
+
     public boolean hasOtherConversation(UUID playerId, Set<String> eventIds) {
         String ownPrefix = playerId + ":";
         for (String key : conversations.keySet()) {
