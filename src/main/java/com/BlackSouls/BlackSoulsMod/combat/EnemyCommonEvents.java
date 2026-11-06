@@ -51,8 +51,12 @@ public final class EnemyCommonEvents {
                 enabled = branches.pop().parentEnabled();
             } else if (enabled && command.code() == 121) {
                 for (int id = integer(parameters, 0); id <= integer(parameters, 1); id++) {
-                    switches.put(id, integer(parameters, 2) == 0);
+                    boolean enabledValue = integer(parameters, 2) == 0;
+                    switches.put(id, enabledValue);
+                    if (id == 22) context.setInformationEnabled(enabledValue);
                 }
+            } else if (enabled && command.code() == 122) {
+                context.operatePlayerVariable(integer(parameters, 0), integer(parameters, 2), integer(parameters, 4));
             } else if (enabled && command.code() == 331) {
                 long value = integer(parameters, 3);
                 context.changeEnemyHealth(integer(parameters, 0), integer(parameters, 1) == 0 ? value : -value,
@@ -110,6 +114,12 @@ public final class EnemyCommonEvents {
                                 || !id(integer(parameters, 1)) || integer(parameters, 1) < integer(parameters, 0)
                                 || integer(parameters, 1) - integer(parameters, 0) > 4096
                                 || !operation(integer(parameters, 2))) {
+                            return false;
+                        }
+                    }
+                    case 122 -> {
+                        if (parameters.size() != 5 || integer(parameters, 0) != 38 || integer(parameters, 1) != 38
+                                || integer(parameters, 2) != 0 || integer(parameters, 3) != 0 || integer(parameters, 4) != 100) {
                             return false;
                         }
                     }
@@ -205,6 +215,14 @@ public final class EnemyCommonEvents {
         boolean hasEnemyState(int enemyIndex, int stateId);
 
         void changeEnemyState(int enemyIndex, boolean remove, int stateId);
+
+        default void setInformationEnabled(boolean enabled) {
+            throw new UnsupportedOperationException("enemy_information_switch");
+        }
+
+        default void operatePlayerVariable(int variableId, int operation, long operand) {
+            throw new UnsupportedOperationException("enemy_player_variable");
+        }
 
         default void changeEnemyHealth(int enemyIndex, long amount, boolean allowDeath) {
             throw new UnsupportedOperationException("enemy_hp_command");

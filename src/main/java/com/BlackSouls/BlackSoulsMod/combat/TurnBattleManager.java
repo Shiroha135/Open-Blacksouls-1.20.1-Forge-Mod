@@ -2314,18 +2314,18 @@ public final class TurnBattleManager {
         Component recovered = session.headSearch.onActionEnd(battleEnemy);
         if (action != null) {
             session.headSearch.onSkillUsed(action.skillId(), getAllEnemies(player, session), player.getRandom());
-            applyEnemyCommonEvents(player, action, session);
+            applyEnemyCommonEvents(player, action, session, result.selectedPlayerTargets());
         }
         if (!stateEnd.getString().isEmpty()) {
             result = new EnemyActionResult(Component.literal(result.message().getString() + "\n" + stateEnd.getString()),
-                    result.followUpSkillId());
+                    result.followUpSkillId(), result.selectedPlayerTargets());
         }
         if (searching && !recovered.getString().isEmpty()) {
             return new EnemyActionResult(recovered, 0);
         }
         return recovered.getString().isEmpty() ? result
                 : new EnemyActionResult(Component.literal(result.message().getString() + "\n" + recovered.getString()),
-                result.followUpSkillId());
+                result.followUpSkillId(), result.selectedPlayerTargets());
     }
 
     private static EnemyActionResult resolveEnemyAction(ServerPlayer player,
@@ -2414,7 +2414,10 @@ public final class TurnBattleManager {
         }
         List<LivingEntity> targets = EnemyTargetSelector.select(action.scope(), caster, allies, opponents,
                 entity -> battleAlive(entity, session), entity -> battleTargetRate(entity, session), observer.getRandom());
-        return executeOriginalSkillTargets(observer, caster, action, targets, guard, session, true);
+        List<UUID> selectedPlayers = targets.stream().filter(ServerPlayer.class::isInstance)
+                .map(LivingEntity::getUUID).distinct().toList();
+        EnemyActionResult result = executeOriginalSkillTargets(observer, caster, action, targets, guard, session, true);
+        return new EnemyActionResult(result.message(), result.followUpSkillId(), selectedPlayers);
     }
 
     private static EnemyActionResult executeOriginalSkillTargets(ServerPlayer observer, LivingEntity caster,
@@ -2754,7 +2757,8 @@ public final class TurnBattleManager {
         }
     }
 
-    private static void applyEnemyCommonEvents(ServerPlayer observer, BSOriginalEnemyData.Action action, Session session) {
+    private static void applyEnemyCommonEvents(ServerPlayer observer, BSOriginalEnemyData.Action action, Session session,
+                                               List<UUID> selectedPlayerTargets) {
         BSOriginalSkillData.Entry skill = BSOriginalSkillData.get(action.skillId());
         if (skill == null) {
             return;
@@ -2764,13 +2768,36 @@ public final class TurnBattleManager {
             if (effect.code() != 44 || effect.dataId() == 44) {
                 continue;
             }
-            if (effect.dataId() == 72 && (session.partyMembers.stream()
+            if ((effect.dataId() == 72 || effect.dataId() == 344) && (session.partyMembers.stream()
                     .map(id -> observer.server.getPlayerList().getPlayer(id))
                     .noneMatch(member -> member != null && battleAlive(member, session))
                     || allEnemiesDefeated(observer, session))) {
                 continue;
             }
+            List<ServerPlayer> affectedPlayers = selectedPlayerTargets.stream()
+                    .map(id -> observer.server.getPlayerList().getPlayer(id))
+                    .filter(member -> member != null && session.partyMembers.contains(member.getUUID())
+                            && member.serverLevel() == observer.serverLevel() && !member.isSpectator()).toList();
             session.commonEvents.execute(effect.dataId(), new EnemyCommonEvents.Context() {
+                @Override
+                public void setInformationEnabled(boolean enabled) {
+                    OriginalNpcProgress.get(observer.server).setSwitch(22, enabled);
+                }
+
+                @Override
+                public void operatePlayerVariable(int variableId, int operation, long operand) {
+                    if (variableId != 38 || operation != 0 || operand != 100) {
+                        throw new UnsupportedOperationException("enemy_sen_assignment");
+                    }
+                    for (ServerPlayer member : affectedPlayers) {
+                        long before = OriginalNpcProgress.readVariable(member, variableId);
+                        long value = com.BlackSouls.BlackSoulsMod.story.OriginalVariableOperation.apply(before, operation, operand);
+                        OriginalNpcProgress.writeVariable(member, variableId, value);
+                        com.BlackSouls.BlackSoulsMod.story.OriginalSenService.afterVariableOperation(member, operation, operand,
+                                before, OriginalNpcProgress.readVariable(member, variableId));
+                    }
+                }
+
                 @Override
                 public boolean hasEnemyState(int enemyIndex, int stateId) {
                     return enemyIndex >= 0 && enemyIndex < enemies.size()
@@ -4059,7 +4086,14 @@ public final class TurnBattleManager {
                                       int selection, int targetIndex) {
     }
 
-    private record EnemyActionResult(Component message, int followUpSkillId) {
+    private record EnemyActionResult(Component message, int followUpSkillId, List<UUID> selectedPlayerTargets) {
+        private EnemyActionResult {
+            selectedPlayerTargets = List.copyOf(selectedPlayerTargets);
+        }
+
+        private EnemyActionResult(Component message, int followUpSkillId) {
+            this(message, followUpSkillId, List.of());
+        }
     }
 
     private record HitValue(double damage, boolean critical) {
