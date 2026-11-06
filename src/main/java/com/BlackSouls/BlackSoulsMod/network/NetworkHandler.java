@@ -20,7 +20,7 @@ import java.util.Optional;
 @SuppressWarnings("removal")
 public class NetworkHandler {
 
-    private static final String PROTOCOL_VERSION = "19";
+    private static final String PROTOCOL_VERSION = "20";
 
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(BlackSouls.MODID, "main"),
@@ -101,6 +101,7 @@ public class NetworkHandler {
         register(ClientboundOriginalNpcAnimationPacket.class, ClientboundOriginalNpcAnimationPacket::toBytes, ClientboundOriginalNpcAnimationPacket::new, ClientboundOriginalNpcAnimationPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(ClientboundOriginalNpcPicturesPacket.class, ClientboundOriginalNpcPicturesPacket::toBytes, ClientboundOriginalNpcPicturesPacket::new, ClientboundOriginalNpcPicturesPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(ServerboundOriginalSpiritPacket.class, ServerboundOriginalSpiritPacket::toBytes, ServerboundOriginalSpiritPacket::new, ServerboundOriginalSpiritPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ClientboundOriginalSkillInfoPacket.class, ClientboundOriginalSkillInfoPacket::toBytes, ClientboundOriginalSkillInfoPacket::new, ClientboundOriginalSkillInfoPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
 
     }
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {

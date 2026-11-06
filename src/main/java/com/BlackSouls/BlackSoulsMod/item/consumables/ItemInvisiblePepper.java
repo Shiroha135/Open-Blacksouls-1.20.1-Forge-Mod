@@ -31,6 +31,9 @@ public class ItemInvisiblePepper extends Item {
         }
 
         if (!level.isClientSide) {
+            if (player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
+                com.BlackSouls.BlackSoulsMod.story.OriginalNpcSymbolService.setStealthSteps(serverPlayer, 150);
+            }
             player.addEffect(new MobEffectInstance(BlackSouls.BUFF_INVISIBLE_BODY.get(), 800, 0));
 
             if (!player.getAbilities().instabuild) {

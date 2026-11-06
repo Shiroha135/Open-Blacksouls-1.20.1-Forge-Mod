@@ -108,7 +108,9 @@ public final class OriginalWorldTransferService {
 
     private static void transfer(ServerPlayer player, Vec3 destination, float yaw) {
         player.stopRiding();
+        OriginalSkillAcquisitionService.clear(player);
         player.connection.teleport(destination.x, destination.y, destination.z, yaw, player.getXRot());
+        OriginalNpcSymbolService.synchronizeStealthAnchor(player);
         player.setDeltaMovement(Vec3.ZERO);
         player.fallDistance = 0;
         player.setOnGround(true);

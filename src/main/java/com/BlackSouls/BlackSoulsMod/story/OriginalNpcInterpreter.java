@@ -294,7 +294,7 @@ public final class OriginalNpcInterpreter {
                                 || operation < 0 || operation > 1 || skill < 1) throw new UnsupportedOperationException("actor_skill_parameters");
                         int resolved = mode == 0 ? actor : Math.toIntExact(context.variable(actor));
                         if (resolved < 0) throw new UnsupportedOperationException("actor_skill_actor");
-                        context.changeSkill(resolved, skill, operation == 0);
+                        context.changeSkill(resolved, skill, operation == 0, actor);
                     }
                     case 355 -> {
                         StringBuilder script = new StringBuilder(text(p, 0));
@@ -318,6 +318,10 @@ public final class OriginalNpcInterpreter {
                         if (script.toString().equals("call_keep")) {
                             context.openItemKeep();
                             return emit(Type.ITEM_KEEP, "", "", 0, List.of(), List.of(), "");
+                        }
+                        if (script.toString().equals("reset_stealth")) {
+                            context.resetStealth();
+                            break;
                         }
                         if (script.toString().equals("SceneManager.call(Scene_ItemSynthesis)")) {
                             context.openSynthesis();
@@ -969,6 +973,14 @@ public final class OriginalNpcInterpreter {
     public interface Context {
         default void changeSkill(int actorId, int skillId, boolean learn) {
             throw new UnsupportedOperationException("unmapped_actor_skill:" + actorId + ":" + skillId);
+        }
+
+        default void changeSkill(int actorId, int skillId, boolean learn, int sourceActorOperand) {
+            changeSkill(actorId, skillId, learn);
+        }
+
+        default void resetStealth() {
+            throw new UnsupportedOperationException("original_stealth_reset");
         }
 
         default int transfer(int map, int x, int y, int direction, int fade) {

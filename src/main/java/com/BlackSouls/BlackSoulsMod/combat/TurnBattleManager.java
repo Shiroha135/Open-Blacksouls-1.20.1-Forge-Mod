@@ -79,7 +79,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID)
 public final class TurnBattleManager {
-    private static final Set<Integer> RUNNER_TROOPS = Set.of(35, 343, 629);
+    private static final Set<Integer> RUNNER_TROOPS = Set.of(35, 191, 343, 629);
     private static final int ESCAPE_GRACE_TICKS = 160;
     private static final int EFFECT_TICKS_PER_ACTION = 200;
     private static final Pattern COUNTER_SKILL = Pattern.compile("<\\s*反撃スキル\\s*(\\d+)\\s*>");
@@ -206,6 +206,14 @@ public final class TurnBattleManager {
                                                  int troopId, boolean canEscape, boolean canLose,
                                                  Consumer<ClientboundTurnBattlePacket.Outcome> onFinished,
                                                  boolean scripted) {
+        return tryStartOriginalTroop(player, rootEnemy, troopId, canEscape, canLose, onFinished, scripted, 0);
+    }
+
+    public static boolean tryStartOriginalTroop(ServerPlayer player, EntityTurnBattleMonster rootEnemy,
+                                                 int troopId, boolean canEscape, boolean canLose,
+                                                 Consumer<ClientboundTurnBattlePacket.Outcome> onFinished,
+                                                 boolean scripted, int openingCondition) {
+        if (openingCondition < 0 || openingCondition > 2 || !scripted && openingCondition != 0) return false;
         BSOriginalTroopData.Entry troop = BSOriginalTroopData.get(troopId);
         if (troop == null || troop.members().isEmpty() || troop.members().stream().allMatch(BSOriginalTroopData.Member::hidden)) {
             BlackSouls.LOGGER.warn("Rejected original battle troop {}: missing or no visible members", troopId);
@@ -257,6 +265,10 @@ public final class TurnBattleManager {
             return false;
         }
         initializeOriginalEncounter(player, session, scripted);
+        if (scripted) {
+            session.preemptive = openingCondition == 1;
+            session.surprisePending = openingCondition == 2;
+        }
         session.remainingPlayerActions = rollPlayerActionCount(player, battlePlayerStats(player));
         session.presentationDriver = player.getUUID();
         if (RUNNER_TROOPS.contains(troopId)) {

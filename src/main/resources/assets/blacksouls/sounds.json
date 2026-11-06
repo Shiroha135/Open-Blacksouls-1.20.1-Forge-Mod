@@ -1521,5 +1521,11 @@
     "sounds": [
       "blacksouls:original_world_move"
     ]
+  },
+  "original_decision1": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:original_decision1"
+    ]
   }
 }

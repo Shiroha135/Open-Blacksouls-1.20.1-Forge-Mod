@@ -52,6 +52,7 @@ public class SkillInvisibleBody extends AbstractSkill {
 
     @Override
     public void execute(ServerPlayer player, BSPlayerStats stats) {
+        com.BlackSouls.BlackSoulsMod.story.OriginalNpcSymbolService.setStealthSteps(player, 150);
         if (BlackSouls.BUFF_INVISIBLE_BODY.isPresent()) {
             player.addEffect(new MobEffectInstance(BlackSouls.BUFF_INVISIBLE_BODY.get(), DURATION_TICKS, 0, false, false, true));
         }

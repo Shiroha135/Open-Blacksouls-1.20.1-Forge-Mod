@@ -176,6 +176,10 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         return entityData.get(ROUTE_STATE).getString("CharacterName");
     }
 
+    public int getRouteTileId() {
+        return entityData.get(ROUTE_STATE).getInt("TileId");
+    }
+
     public CompoundTag originalRouteState() {
         return entityData.get(ROUTE_STATE).copy();
     }
@@ -207,7 +211,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     public void lockOriginalMovement(ServerPlayer player) {
         if (!hasOriginalAutonomy() || !autonomousRoute.lock(getSpriteDirection())) return;
         double dx = player.getX() - getX(), dz = player.getZ() - getZ();
-        if (dx != 0 || dz != 0) {
+        if ((autonomousRoute.symbol() == null || !autonomousRoute.symbol().enabled()) && (dx != 0 || dz != 0)) {
             int direction = Math.abs(dx) > Math.abs(dz) ? dx > 0 ? 4 : 6 : dz > 0 ? 8 : 2;
             applyOriginalMoveCommand(direction == 2 ? 16 : direction == 4 ? 17 : direction == 6 ? 18 : 19, List.of());
         }
@@ -222,6 +226,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     private static CompoundTag initialRouteState() {
         CompoundTag state = new CompoundTag();
         state.putString("CharacterName", "");
+        state.putInt("TileId", 0);
         state.putInt("CharacterIndex", 0);
         state.putInt("Direction", 2);
         state.putInt("OriginalDirection", 2);
@@ -243,6 +248,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         CompoundTag state = entityData.get(ROUTE_STATE).copy();
         JsonObject graphic = graphic();
         state.putString("CharacterName", graphic.get("character_name").getAsString());
+        state.putInt("TileId", graphic.has("tile_id") ? graphic.get("tile_id").getAsInt() : 0);
         state.putInt("CharacterIndex", graphic.has("character_index") ? graphic.get("character_index").getAsInt() : 0);
         BSOriginalNpcData.Page page = currentPage();
         if (page == null) {
@@ -299,6 +305,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
             case 39, 40 -> state.putBoolean("Transparent", code == 39);
             case 41 -> {
                 state.putString("CharacterName", parameters.get(0).getAsString());
+                state.putInt("TileId", 0);
                 state.putInt("CharacterIndex", parameters.get(1).getAsInt());
                 state.putInt("OriginalPattern", 1);
             }
@@ -349,7 +356,8 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
 
     private void updateRouteVisibility() {
         setInvisible(erased || com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(getNpcId())
-                || entityData.get(ROUTE_STATE).getBoolean("Transparent") || getRouteCharacterName().isBlank());
+                || entityData.get(ROUTE_STATE).getBoolean("Transparent") || getRouteCharacterName().isBlank()
+                && com.BlackSouls.BlackSoulsMod.util.OriginalNpcTileGraphics.get(getNpcId(), getRouteTileId()) == null);
     }
 
     @Override
@@ -388,7 +396,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
             return InteractionResult.PASS;
         }
         if (player instanceof ServerPlayer serverPlayer) {
-            OriginalNpcService.interact(serverPlayer, this);
+            if (!hasOriginalAutonomy() || currentPage() == null || currentPage().trigger() != 2) OriginalNpcService.interact(serverPlayer, this);
         }
         return InteractionResult.sidedSuccess(level().isClientSide());
     }
@@ -411,7 +419,19 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         setNpcId(tag.getString("OriginalNpcId"));
         if (tag.contains("OriginalNpcRouteState")) {
             entityData.set(PAGE, tag.getInt("OriginalNpcPage"));
-            entityData.set(ROUTE_STATE, tag.getCompound("OriginalNpcRouteState").copy());
+            CompoundTag state = tag.getCompound("OriginalNpcRouteState").copy();
+            if (!state.contains("TileId")) {
+                JsonObject graphic = graphic();
+                int tileId = graphic.has("tile_id") ? graphic.get("tile_id").getAsInt() : 0;
+                boolean unchanged = state.getString("CharacterName").equals(graphic.get("character_name").getAsString())
+                        && state.getInt("CharacterIndex") == (graphic.has("character_index") ? graphic.get("character_index").getAsInt() : 0)
+                        && tag.getString("OriginalNpcRouteTicket").isEmpty();
+                state.putInt("TileId", unchanged && com.BlackSouls.BlackSoulsMod.util.OriginalNpcTileGraphics.get(getNpcId(), tileId) != null ? tileId : 0);
+            }
+            if (!state.contains("TileId", net.minecraft.nbt.Tag.TAG_INT) || state.getInt("TileId") < 0) {
+                throw new IllegalArgumentException("Invalid original NPC route tile graphic");
+            }
+            entityData.set(ROUTE_STATE, state);
             forcedRouteTicket = tag.getString("OriginalNpcRouteTicket");
             routeAnimationCount = tag.getInt("OriginalNpcAnimeCount");
             routeStopCount = tag.getInt("OriginalNpcStopCount");

@@ -351,6 +351,7 @@ public final class OriginalNpcMovementService {
         private final OriginalNpcMovementData.Ticket ticket;
         private final OriginalNpcAutonomousRoute autonomous;
         private boolean succeeded = true;
+        private boolean symbolTouchAttempt = true;
 
         private RouteContext(ServerPlayer owner, Entity subject) {
             this(owner, subject, 0, null);
@@ -381,6 +382,80 @@ public final class OriginalNpcMovementService {
         @Override
         public int moveFrequency() {
             return state().getInt("MoveFrequency");
+        }
+
+        @Override
+        public boolean symbolHasPlayer() { return owner != null; }
+
+        @Override
+        public boolean symbolDashMoving() {
+            return owner != null && owner.isSprinting() && (owner.getDeltaMovement().horizontalDistanceSqr() > 1.0E-8D
+                    || Math.abs(owner.getX() - owner.xo) + Math.abs(owner.getZ() - owner.zo) > 1.0E-6D);
+        }
+
+        @Override
+        public boolean symbolInterpreterRunning() { return owner != null && OriginalNpcService.isConversing(owner); }
+
+        @Override
+        public boolean symbolErased() { return ((EntityOriginalNpc) subject).isErasedForCurrentVisit(); }
+
+        @Override
+        public boolean symbolStealth() { return owner != null && OriginalNpcSymbolService.stealthSteps(owner) > 0; }
+
+        @Override
+        public boolean symbolBattlePaused() { return owner != null && com.BlackSouls.BlackSoulsMod.combat.TurnBattleManager.isInBattle(owner); }
+
+        private double logicalX() { return autonomous != null && autonomous.motion != null ? autonomous.motion.snapshot().get("targetX").getAsDouble() : subject.getX(); }
+        private double logicalZ() { return autonomous != null && autonomous.motion != null ? autonomous.motion.snapshot().get("targetZ").getAsDouble() : subject.getZ(); }
+
+        @Override
+        public int symbolX() { return 885 - net.minecraft.util.Mth.floor(logicalX()); }
+
+        @Override
+        public int symbolY() { return -549 - net.minecraft.util.Mth.floor(logicalZ()); }
+
+        @Override
+        public int symbolPlayerX() { return owner == null ? Integer.MAX_VALUE / 4 : 885 - owner.blockPosition().getX(); }
+
+        @Override
+        public int symbolPlayerY() { return owner == null ? Integer.MAX_VALUE / 4 : -549 - owner.blockPosition().getZ(); }
+
+        @Override
+        public int symbolDirection() { return ((EntityOriginalNpc) subject).getSpriteDirection(); }
+
+        @Override
+        public int symbolRandom(int bound) { return ((EntityOriginalNpc) subject).getRandom().nextInt(bound); }
+
+        @Override
+        public void symbolRate(int speed, int frequency) {
+            var npc = (EntityOriginalNpc) subject;
+            npc.applyOriginalMoveCommand(29, List.of(new com.google.gson.JsonPrimitive(speed)));
+            npc.applyOriginalMoveCommand(30, List.of(new com.google.gson.JsonPrimitive(frequency)));
+        }
+
+        @Override
+        public void symbolAlert() {
+            var sound = new JsonObject();
+            sound.addProperty("name", "Decision1"); sound.addProperty("volume", 50); sound.addProperty("pitch", 150);
+            NetworkHandler.sendToPlayer(OriginalNpcPresentationService.createPacket(owner, subject, 250, List.of(sound)), owner);
+            NetworkHandler.sendToPlayer(OriginalNpcPresentationService.createPacket(owner, subject, 213,
+                    List.of(new com.google.gson.JsonPrimitive(0), new com.google.gson.JsonPrimitive(1), new com.google.gson.JsonPrimitive(false))), owner);
+        }
+
+        @Override
+        public boolean symbolStep(int direction) {
+            return symbolStep(direction, true);
+        }
+
+        @Override
+        public boolean symbolStep(int direction, boolean turnOnFailure) {
+            if (!List.of(2,4,6,8).contains(direction)) throw new IllegalArgumentException("symbol_direction");
+            symbolTouchAttempt = turnOnFailure;
+            try {
+                boolean success = tryStraight(direction, false);
+                if (success || turnOnFailure) { face(direction); autonomous.resetStopCount(); }
+                return success;
+            } finally { symbolTouchAttempt = true; }
         }
 
         @Override
@@ -489,6 +564,7 @@ public final class OriginalNpcMovementService {
             subject.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
             subject.fallDistance = 0;
             if (motion.complete()) {
+                if (subject instanceof ServerPlayer player) OriginalNpcSymbolService.synchronizeStealthAnchor(player);
                 if (ticket != null) stopMotion(subject, ticket);
                 else {
                     subject.setNoGravity(autonomous.originalNoGravity);
@@ -582,7 +658,31 @@ public final class OriginalNpcMovementService {
             if (sourceMap == 37 && (!isDodoLocalPosition(subject.getX(), subject.getZ()) || !isDodoLocalPosition(tx, tz))) {
                 throw new UnsupportedOperationException("physical_route_map37_local_bounds");
             }
-            if (!jump && !state().getBoolean("Through") && !clear(dx, dy)) {succeeded = false;return false;}
+            if (!jump && subject instanceof EntityOriginalNpc npc && npc.originalAutonomousRoute().symbol() != null
+                    && npc.originalAutonomousRoute().symbol().enabled() && !state().getBoolean("Through") && owner != null
+                    && owner.blockPosition().getX() == net.minecraft.util.Mth.floor(tx)
+                    && owner.blockPosition().getZ() == net.minecraft.util.Mth.floor(tz)
+                    && Math.abs(owner.getY() - subject.getY()) < 1.0D) {
+                succeeded = false;
+                if (symbolTouchAttempt) {
+                    face(dx < 0 ? 4 : dx > 0 ? 6 : dy < 0 ? 8 : 2);
+                    npc.originalAutonomousRoute().resetStopCount();
+                    OriginalNpcSymbolService.tryContact(owner, npc);
+                }
+                return false;
+            }
+            double targetY = subject.getY();
+            boolean symbolMoving = !jump && subject instanceof EntityOriginalNpc npc && npc.originalAutonomousRoute().symbol() != null
+                    && npc.originalAutonomousRoute().symbol().enabled() && !state().getBoolean("Through");
+            if (symbolMoving) {
+                int direction = dx < 0 ? 4 : dx > 0 ? 6 : dy < 0 ? 8 : 2;
+                if (!OriginalSymbolMap37.allows(owner, (EntityOriginalNpc) subject, symbolX(), symbolY(), direction)) {
+                    succeeded = false;
+                    return false;
+                }
+                targetY = symbolSupportY(tx, tz);
+                if (!Double.isFinite(targetY)) { succeeded = false; return false; }
+            } else if (!jump && !state().getBoolean("Through") && !clear(dx, dy)) {succeeded = false;return false;}
             int speed = state().getInt("MoveSpeed");
             if (speed < 1 || speed > 6) throw new UnsupportedOperationException("physical_move_speed:" + speed);
             if (!jump && subject instanceof ServerPlayer player && player.isSprinting()) speed++;
@@ -594,12 +694,31 @@ public final class OriginalNpcMovementService {
             }
             subject.setNoGravity(true);
             OriginalNpcMotion motion = jump ? OriginalNpcMotion.jump(subject.getX(), subject.getY(), subject.getZ(), tx, subject.getY(), tz, speed, dx, dy)
-                    : OriginalNpcMotion.walk(subject.getX(), subject.getY(), subject.getZ(), tx, subject.getY(), tz, speed);
+                    : OriginalNpcMotion.walk(subject.getX(), subject.getY(), subject.getZ(), tx, targetY, tz, speed);
             if (ticket != null) ticket.motion = motion;
             else autonomous.motion = motion;
             if (subject instanceof EntityOriginalNpc npc && npc.hasOriginalAutonomy()) npc.originalAutonomousRoute().resetStopCount();
+            if (!jump && subject instanceof ServerPlayer player) OriginalNpcSymbolService.consumeSourceStep(player);
             succeeded = true;
             return true;
+        }
+
+        private double symbolSupportY(double x, double z) {
+            var level = (ServerLevel) subject.level();
+            var bounds = subject.getBoundingBox().move(x-subject.getX(),0,z-subject.getZ());
+            var scan = new net.minecraft.world.phys.AABB(bounds.minX,subject.getY()-1.05D,bounds.minZ,
+                    bounds.maxX,subject.getY()+0.75D,bounds.maxZ);
+            double selected = Double.NaN, distance = Double.MAX_VALUE;
+            for (var shape : level.getBlockCollisions(subject,scan)) for (var box : shape.toAabbs()) {
+                double y = box.maxY;
+                if (y < subject.getY()-1.0D || y > subject.getY()+0.75D) continue;
+                var candidate = bounds.move(0,y-subject.getY(),0);
+                if (!level.noCollision(subject,candidate) || level.containsAnyLiquid(candidate)
+                        || level.noCollision(subject,candidate.move(0,-0.02D,0))) continue;
+                double delta = Math.abs(y-subject.getY());
+                if (delta < distance) { selected = y; distance = delta; }
+            }
+            return selected;
         }
     }
 }

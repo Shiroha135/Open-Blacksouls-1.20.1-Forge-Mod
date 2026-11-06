@@ -366,10 +366,21 @@ public final class OriginalNpcService {
 
     public static void interact(ServerPlayer player, EntityOriginalNpc npc) {
         if (!matchesActor(npc, npc.getNpcId())) return;
+        refreshPage(npc, player);
+        if (npc.currentPage() != null && npc.currentPage().trigger() == 2) return;
         if (com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(npc.getNpcId())
                 && !OriginalWorldEventBindings.isBound(player, npc)) return;
         if (com.BlackSouls.BlackSoulsMod.compat.scene.OriginalBillPlacement.INITIAL_NPC.equals(npc.getNpcId())
                 && OriginalBillInteraction.tryInteract(player)) return;
+        interact(player, npc, npc.getNpcId(), false);
+    }
+
+    public static void interactContact(ServerPlayer player, EntityOriginalNpc npc) {
+        if (!matchesActor(npc, npc.getNpcId()) || OriginalNpcService.isConversing(player)
+                || !OriginalNpcSymbolService.active(npc) || player.level() != npc.level()
+                || Math.abs(player.getY() - npc.getY()) >= 1.0D
+                || Math.abs(player.blockPosition().getX() - npc.blockPosition().getX())
+                + Math.abs(player.blockPosition().getZ() - npc.blockPosition().getZ()) > 1) return;
         interact(player, npc, npc.getNpcId(), false);
     }
 
@@ -418,6 +429,13 @@ public final class OriginalNpcService {
                 OriginalSpiritService.restoreLegacyCovenantProgress(player, saved.getAsJsonObject("interpreter"));
                 Session session = new Session(player.getUUID(), npc.getId(), npcId,
                         player.level().dimension().location(), interpreter);
+                if (saved.has("encounterCondition")) {
+                    var value = saved.get("encounterCondition");
+                    if (!value.isJsonPrimitive() || !value.getAsJsonPrimitive().isNumber()) throw new IllegalArgumentException("Invalid encounter condition");
+                    int condition = value.getAsBigDecimal().intValueExact();
+                    if (condition < 0 || condition > 2 || !npcId.equals("map037_ev053")) throw new IllegalArgumentException("Invalid encounter condition");
+                    session.encounterCondition = condition;
+                }
                 session.lastText = saved.has("lastText") ? saved.get("lastText").getAsString() : "";
                 session.lastPortrait = saved.has("lastPortrait") ? saved.get("lastPortrait").getAsString() : "";
                 session.lastPortraitIndex = saved.has("lastPortraitIndex") ? saved.get("lastPortraitIndex").getAsInt() : 0;
@@ -466,6 +484,9 @@ public final class OriginalNpcService {
         }
         Session session = new Session(player.getUUID(), npc.getId(), npcId,
                 player.level().dimension().location(), new OriginalNpcInterpreter(page.commands(), context));
+        if (npc instanceof EntityOriginalNpc original && OriginalNpcSymbolService.active(original)) {
+            session.encounterCondition = OriginalNpcSymbolService.contactCondition(player, original);
+        }
         SESSIONS.put(player.getUUID(), session);
         OriginalNpcConversationMovement.start(player, npc);
         present(player, npc, session, session.interpreter.advance(-1));
@@ -632,6 +653,7 @@ public final class OriginalNpcService {
         saved.addProperty("lastText", session.lastText);
         saved.addProperty("lastPortrait", session.lastPortrait);
         saved.addProperty("lastPortraitIndex", session.lastPortraitIndex);
+        if (session.encounterCondition != 0) saved.addProperty("encounterCondition", session.encounterCondition);
         if (effective.type() == OriginalNpcInterpreter.Type.SYNTHESIS && session.synthesisRecipes != null) {
             com.google.gson.JsonArray recipes = new com.google.gson.JsonArray();
             session.synthesisRecipes.forEach(recipes::add);
@@ -767,7 +789,7 @@ public final class OriginalNpcService {
                         checkpoint(player, session);
                         StatEventHandler.syncToClient(player);
                     }
-                });
+                }, true, session.encounterCondition);
         if (!started) {
             enemy.discard();
             blockBattle(player, npc, session, "original_troop_unavailable:" + request.troopId());
@@ -1101,6 +1123,17 @@ public final class OriginalNpcService {
         }
 
         @Override
+        public void changeSkill(int actorId, int skillId, boolean learn, int sourceActorOperand) {
+            com.BlackSouls.BlackSoulsMod.util.OriginalActorSkills.change(player, actorId, skillId, learn, sourceActorOperand);
+        }
+
+        @Override
+        public void resetStealth() {
+            if (player == null) throw new UnsupportedOperationException("requires_player");
+            OriginalNpcSymbolService.setStealthSteps(player, 0);
+        }
+
+        @Override
         public long random(int first, int last) {
             if (last < first || (long) last - first >= Integer.MAX_VALUE) {
                 throw new UnsupportedOperationException("random_range");
@@ -1226,6 +1259,7 @@ public final class OriginalNpcService {
         private boolean restoringPresentation;
         private boolean shopStorage;
         private List<Integer> synthesisRecipes;
+        private int encounterCondition;
 
         private Session(UUID playerId, int entityId, String npcId, ResourceLocation dimension,
                         OriginalNpcInterpreter interpreter) {

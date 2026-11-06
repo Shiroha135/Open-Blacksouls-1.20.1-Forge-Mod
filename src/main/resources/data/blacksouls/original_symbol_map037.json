@@ -1,0 +1,2552 @@
+{
+  "version": 1,
+  "mapId": 37,
+  "minX": 0,
+  "maxX": 64,
+  "minY": 34,
+  "maxY": 64,
+  "sourceMap": {
+    "path": "D:/BLACK SOULS II/Data/Map037.rvdata2",
+    "sha256": "489bcb45286f020c119ac427dc4addca3663fa504b17dfd2868d3f349bad0030"
+  },
+  "sourceTilesets": {
+    "path": "D:/BLACK SOULS II/Data/Tilesets.rvdata2",
+    "sha256": "a7d2cc89d68b7e0012ec8569fc7301d65cc3ab717b464cf2a705d7a4ef5f0205"
+  },
+  "basePassageMasks": "DwAADw8PAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPDwAPDw8ADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AAA8PDwAAAAAADw8PAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADw8ADw8PAA8AAAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAPDw8AAAAPAA8PDwAPDwAAAAAAAAAAAAAPDwAAAAAAAAAADwAAAAAPDw8PDw8PAAAPDw8PDw8PDw8PAAAPAA8PAA8PDwAPAA8PDw8PDw8PDwAADwAAAAAADw8PDwAAAAAAAA8PDw8PDw8PDw8PDw8PDwAADw8PDw8ADw8PDwAADwAADw8PAAAAAA8PDw8PDw8PDw8PDw8PDw8PDw8ADw8PDw8PDw8PDw8PAA8PDw8PDw8PDw8PDw8AAA8PAA8AAAAPDwAPDw8ADwAPDw8PDw8PAA8PDwAADw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8AAA8AAA8PDwAAAA8ADw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PAAAPDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PAAAADw8ADw8PAA8ADw8PDw8PDw8PDw8PDw8PAA8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDwAPDw8PAA8AAA8PAAAPAAAPDw8AAAAPDw8PDw8PDw8PDw8PDw8PDwAADw8PDwAPDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDwAAAA8PAA8PDwAPAA8PDw8PDw8ADw8PDw8PDw8PDw8PDw8PDw8PDw8ADw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDwAADwAADw8PAAAADw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDwUHAw8PDw8PDw8PDw8PDwAADw8AAAAPDwAPDw8ADwAPDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PAAAAAA8AAA8PDwAAAAAPDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDwAAAAAADw8ADw8PAA8ADw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDwAADw8AAAAAAAAPAAAPDw8AAAAPDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PAAAAAAAAAA8PAA8PDwAPAA8PDw8ADw8AAA8PDw8PDw8PDw8PDw8PDw8PAA8PDw8PDw8PDw8PDw8PDw8PDw8PDwAAAAAAAAAADwAADw8PAAAADw8PDw8PDw8PDw8PDw8PDwAPDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8AAAAAAAAAAAAPDwAPDw8ADwAPDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8ADw8PDw8PDw8AAAAAAAAAAA8AAA8PDwAAAAAADw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDwAPDw8PDw8PDw8PDw8PDw8PAAAAAAAAAAAADw8ADw8PAA8ADw8PDw8PAAAAAAAAAAAPDw8AAA8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PAAAPDw8PAAAPAAAPDw8AAAAPDw8PDwAAAAAAAAAADw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PAA8PDwAPAA8PDwAPDwAAAAAAAAAADw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDwAADw8PAAAADw8PDw8PDw8PDw8PDw8PAAAPDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDwAAAAAPDw8PAAAPDwAPDw8ADwAPDw8PDw8PAA8PDw8PDw8PDwAPDw8PDw8PDw8PDw8PDw8ADw8PDw8PDw8PDw8AAAAAAAAAAAAAAA8AAA8PDwAAAA8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8AAA8PDw8AAAAAAAAAAAAADw8ADw8PAA8ADwAADw8PDw8PDw8PDw8PDw8PDw8AAA8PAA8PDw8PDw8PDw8PDw8PDw8PDw8PDwAAAAAAAAAAAAAPAAAPDw8AAAAAAAAADw8PDwAAAAAAAAAADw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8PDw8AAAAAAAAAAA8PAA8PDwAPAA8AAAAAAAAAAAAAAAAAAAAAAAAPDw8PAAAAAAAAAAAAAAAAAAAAAAAAAAAPDw8PDw8AAAAAAAAADwAADw8PAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+  "events": [
+    {
+      "id": 4,
+      "x": 41,
+      "y": 48,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 14,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 669,
+          "tileFlag": 1551,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 484,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 199,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "x": 41,
+      "y": 47,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 14,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 669,
+          "tileFlag": 1551,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 484,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 199,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "x": 44,
+      "y": 49,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 14,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 669,
+          "tileFlag": 1551,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 199,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 205,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "D",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 484,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "x": 47,
+      "y": 49,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 14,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 669,
+          "tileFlag": 1551,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 484,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 199,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "x": 47,
+      "y": 46,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 14,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 669,
+          "tileFlag": 1551,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 484,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 199,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "x": 43,
+      "y": 44,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 14,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 669,
+          "tileFlag": 1551,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 484,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 199,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "x": 46,
+      "y": 44,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 14,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 669,
+          "tileFlag": 1551,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 484,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 199,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "x": 42,
+      "y": 44,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 14,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 669,
+          "tileFlag": 1551,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 484,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 199,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "x": 41,
+      "y": 45,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 14,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 669,
+          "tileFlag": 1551,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 484,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 199,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "x": 64,
+      "y": 56,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "x": 64,
+      "y": 57,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "x": 12,
+      "y": 37,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "x": 4,
+      "y": 64,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "x": 5,
+      "y": 64,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "x": 3,
+      "y": 64,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "x": 46,
+      "y": 34,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "x": 13,
+      "y": 59,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": true,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 38,
+            "variable_value": 1,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 14,
+            "switch2_id": 1,
+            "variable_id": 38,
+            "variable_value": 1,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "B",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": true
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "D",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": true
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "x": 44,
+      "y": 46,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 198,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "B",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 199,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 199,
+            "switch2_id": 1,
+            "variable_id": 11,
+            "variable_value": 1,
+            "self_switch_ch": "B",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 15,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": true,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 58,
+            "variable_value": 10,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 14,
+            "switch2_id": 1,
+            "variable_id": 11,
+            "variable_value": 1,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": true,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 14,
+            "switch2_id": 200,
+            "variable_id": 11,
+            "variable_value": 1,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 194,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 579,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 476,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 41,
+          "tileFlag": 1551,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 195,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "x": 43,
+      "y": 49,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 14,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 669,
+          "tileFlag": 1551,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 484,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 199,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "x": 60,
+      "y": 40,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 34,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "x": 55,
+      "y": 61,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 34,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "x": 25,
+      "y": 52,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 34,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "x": 16,
+      "y": 59,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 34,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "x": 12,
+      "y": 57,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 34,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "x": 21,
+      "y": 39,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 34,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "x": 42,
+      "y": 40,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 34,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 78,
+      "x": 51,
+      "y": 57,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 19,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 79,
+      "x": 5,
+      "y": 61,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 19,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 82,
+      "x": 28,
+      "y": 38,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "B",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": true
+        },
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 14,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 83,
+      "x": 28,
+      "y": 37,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "x": 3,
+      "y": 59,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 19,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "x": 58,
+      "y": 41,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 19,
+            "switch2_id": 29,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "x": 3,
+      "y": 62,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 19,
+            "switch2_id": 29,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 81,
+      "x": 44,
+      "y": 56,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 19,
+            "switch2_id": 29,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 0,
+          "through": false
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "x": 15,
+      "y": 48,
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": true,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 618,
+            "switch2_id": 1,
+            "variable_id": 64,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": false
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "B",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": true
+        },
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": true,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "D",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "tileId": 0,
+          "tileFlag": 16,
+          "priority": 1,
+          "through": true
+        }
+      ]
+    }
+  ]
+}
