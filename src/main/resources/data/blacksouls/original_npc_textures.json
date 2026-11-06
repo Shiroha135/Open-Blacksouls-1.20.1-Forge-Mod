@@ -1199,6 +1199,16 @@
       "rows": 8,
       "frameWidth": 32,
       "frameHeight": 48
+    },
+    "!smallbirds": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_036bf0ae8b828986.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
     }
   },
   "portraits": {
