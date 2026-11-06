@@ -13,6 +13,7 @@ import java.util.Map;
 public final class EnemyCommonEvents {
     private static final int MAX_COMMANDS = 512;
     private static final int MAX_BRANCH_DEPTH = 32;
+    private static final String ACTOR_COOLDOWN_SCRIPT = "$game_temp.actor_loss_cool_time(99)";
     private final Map<Integer, BSOriginalCommonEventData.Entry> events;
     private final Map<Integer, Boolean> switches = new HashMap<>();
 
@@ -61,6 +62,8 @@ public final class EnemyCommonEvents {
                 long value = integer(parameters, 3);
                 context.changeEnemyHealth(integer(parameters, 0), integer(parameters, 1) == 0 ? value : -value,
                         parameters.get(4).getAsBoolean());
+            } else if (enabled && command.code() == 355) {
+                context.reduceActorSkillCooldowns(99);
             } else if (enabled && command.code() == 333) {
                 context.changeEnemyState(integer(parameters, 0), integer(parameters, 1) == 1,
                         integer(parameters, 2));
@@ -136,6 +139,13 @@ public final class EnemyCommonEvents {
                         if (parameters.size() != 3 || integer(parameters, 0) < -1
                                 || integer(parameters, 0) > 999 || !operation(integer(parameters, 1))
                                 || !id(integer(parameters, 2))) {
+                            return false;
+                        }
+                    }
+                    case 355 -> {
+                        if (parameters.size() != 1 || !parameters.get(0).isJsonPrimitive()
+                                || !parameters.get(0).getAsJsonPrimitive().isString()
+                                || !ACTOR_COOLDOWN_SCRIPT.equals(parameters.get(0).getAsString())) {
                             return false;
                         }
                     }
@@ -222,6 +232,10 @@ public final class EnemyCommonEvents {
 
         default void operatePlayerVariable(int variableId, int operation, long operand) {
             throw new UnsupportedOperationException("enemy_player_variable");
+        }
+
+        default void reduceActorSkillCooldowns(int rounds) {
+            throw new UnsupportedOperationException("enemy_actor_cooldown");
         }
 
         default void changeEnemyHealth(int enemyIndex, long amount, boolean allowDeath) {

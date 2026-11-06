@@ -2768,7 +2768,7 @@ public final class TurnBattleManager {
             if (effect.code() != 44 || effect.dataId() == 44) {
                 continue;
             }
-            if ((effect.dataId() == 72 || effect.dataId() == 344) && (session.partyMembers.stream()
+            if ((effect.dataId() == 72 || effect.dataId() == 218 || effect.dataId() == 344) && (session.partyMembers.stream()
                     .map(id -> observer.server.getPlayerList().getPlayer(id))
                     .noneMatch(member -> member != null && battleAlive(member, session))
                     || allEnemiesDefeated(observer, session))) {
@@ -2795,6 +2795,16 @@ public final class TurnBattleManager {
                         OriginalNpcProgress.writeVariable(member, variableId, value);
                         com.BlackSouls.BlackSoulsMod.story.OriginalSenService.afterVariableOperation(member, operation, operand,
                                 before, OriginalNpcProgress.readVariable(member, variableId));
+                    }
+                }
+
+                @Override
+                public void reduceActorSkillCooldowns(int rounds) {
+                    if (rounds != 99) {
+                        throw new UnsupportedOperationException("enemy_actor_cooldown_amount");
+                    }
+                    for (Map<String, Integer> cooldowns : session.playerSkillCooldowns.values()) {
+                        cooldowns.replaceAll((skillId, remaining) -> remaining - rounds);
                     }
                 }
 
