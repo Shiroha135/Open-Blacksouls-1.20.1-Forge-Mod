@@ -97,7 +97,7 @@ public final class CheshireSourceEncounter {
                 || !level.noCollision(player, bounds.minmax(previous.bounds()))) return Outcome.DISCONTINUOUS;
         if (contact == 0 || previous.contact() == contact) return Outcome.NO_ENTRY;
         OriginalNpcProgress progress = OriginalNpcProgress.get(player.server);
-        if (progress.switchValue(14)
+        if (OriginalNpcProgress.readSwitch(player, 14)
                 || SceneSpawnerBossData.get(player.server).getStoryProgress() >= 1) return Outcome.SOURCE_DISABLED;
         if (contact == 96 || contact == 97) {
             if (!progress.switchValue(108) || progress.switchValue(109)) return Outcome.SOURCE_DISABLED;

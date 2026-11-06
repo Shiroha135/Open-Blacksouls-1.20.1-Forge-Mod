@@ -192,7 +192,7 @@ public final class OriginalPoolCrowdMovementService {
 
     private static JsonObject selected(EntityOriginalNpc actor, ServerPlayer owner, JsonObject event) {
         var progress = OriginalNpcProgress.get(actor.level().getServer());
-        var context = owner == null ? null : new OriginalNpcService.EventContext(owner, actor);
+        var context = new OriginalNpcService.EventContext(owner, actor);
         var pages = event.getAsJsonArray("pages");
         String identity = "map037_ev%03d".formatted(event.get("id").getAsInt());
         for (int index = pages.size() - 1; index >= 0; index--) {

@@ -35,6 +35,7 @@ public final class OriginalSkillAcquisitionService {
     }
 
     public static void clear(ServerPlayer player) {
+        OriginalSenService.clear(player);
         if (!REVISIONS.containsKey(player.getUUID())) return;
         NetworkHandler.sendToPlayer(new ClientboundOriginalSkillInfoPacket(next(player), player.level().dimension().location(),
                 0, 0, false, true), player);

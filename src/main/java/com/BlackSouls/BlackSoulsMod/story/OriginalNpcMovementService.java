@@ -135,13 +135,23 @@ public final class OriginalNpcMovementService {
 
     public static void refreshAutonomousPage(EntityOriginalNpc npc) {
         if (!(npc.level() instanceof ServerLevel level)) return;
-        ServerPlayer owner = OriginalPoolCrowdMovementService.nearestContext(npc);
+        ServerPlayer owner = OriginalNpcService.choosePageOwner(npc, npc.getNpcId(), npc.forcedRouteTicket(),
+                OriginalPoolCrowdMovementService.nearestContext(npc));
         if (owner != null) OriginalNpcService.refreshPage(npc, owner);
         else {
             var entry = BSOriginalNpcData.getEvent(npc.getNpcId());
-            Integer page = entry == null ? -1 : offlinePage(entry, OriginalNpcProgress.get(level.getServer()), level.getServer());
+            Integer page = entry == null ? -1 : offlinePage(entry, OriginalNpcProgress.get(level.getServer()), level.getServer(), OriginalSenService.cachedPageThresholds(npc, npc.getNpcId()));
             if (page != null) npc.setPageIndex(page);
         }
+    }
+
+    public static boolean refreshPersonalOfflinePage(EntityOriginalNpc npc) {
+        if (!(npc.level() instanceof ServerLevel level) || !OriginalSenService.hasPersonalPage(npc)) return false;
+        var entry = BSOriginalNpcData.getEvent(npc.getNpcId());
+        if (entry == null) return false;
+        Integer selected = offlinePage(entry, OriginalNpcProgress.get(level.getServer()), level.getServer(), OriginalSenService.cachedPageThresholds(npc, npc.getNpcId()));
+        if (selected != null) npc.setPageIndex(selected);
+        return true;
     }
 
     public static void cancelForVisitReset(EntityOriginalNpc npc, String id) {
@@ -256,20 +266,20 @@ public final class OriginalNpcMovementService {
         } else {
             BSOriginalNpcData.Entry entry = BSOriginalNpcData.getEvent(npc.getNpcId());
             if (entry != null) {
-                Integer selected = offlinePage(entry, OriginalNpcProgress.get(level.getServer()), level.getServer());
+                Integer selected = offlinePage(entry, OriginalNpcProgress.get(level.getServer()), level.getServer(), OriginalSenService.cachedPageThresholds(npc, npc.getNpcId()));
                 if (selected != null) npc.setPageIndex(selected);
             }
         }
         return true;
     }
 
-    private static Integer offlinePage(BSOriginalNpcData.Entry entry, OriginalNpcProgress progress, MinecraftServer server) {
+    private static Integer offlinePage(BSOriginalNpcData.Entry entry, OriginalNpcProgress progress, MinecraftServer server, Integer senMask) {
         for (int index = entry.pages().size() - 1; index >= 0; index--) {
             JsonObject condition = entry.pages().get(index).condition();
             if (flag(condition, "switch1_valid") && com.BlackSouls.BlackSoulsMod.util.OriginalCovenantData.forSwitch(condition.get("switch1_id").getAsInt()) != null
                     || flag(condition, "switch2_valid") && com.BlackSouls.BlackSoulsMod.util.OriginalCovenantData.forSwitch(condition.get("switch2_id").getAsInt()) != null) return null;
-            if (flag(condition, "switch1_valid") && !progress.switchValue(condition.get("switch1_id").getAsInt())) continue;
-            if (flag(condition, "switch2_valid") && !progress.switchValue(condition.get("switch2_id").getAsInt())) continue;
+            if (flag(condition, "switch1_valid") && !offlineSwitch(progress, condition.get("switch1_id").getAsInt(), senMask)) continue;
+            if (flag(condition, "switch2_valid") && !offlineSwitch(progress, condition.get("switch2_id").getAsInt(), senMask)) continue;
             if (flag(condition, "self_switch_valid")
                     && !progress.selfSwitch(entry.id(), condition.get("self_switch_ch").getAsString())) continue;
             boolean unknown = flag(condition, "actor_valid") || flag(condition, "item_valid");
@@ -286,6 +296,11 @@ public final class OriginalNpcMovementService {
             return index;
         }
         return -1;
+    }
+
+    private static boolean offlineSwitch(OriginalNpcProgress progress, int id, Integer senMask) {
+        return senMask != null && OriginalSenService.isThresholdSwitch(id)
+                ? (senMask & 1 << (id - 14)) != 0 : progress.switchValue(id);
     }
 
     private static boolean flag(JsonObject object, String key) {

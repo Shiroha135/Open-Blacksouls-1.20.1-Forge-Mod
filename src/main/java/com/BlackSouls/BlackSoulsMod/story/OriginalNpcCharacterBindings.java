@@ -111,8 +111,13 @@ public final class OriginalNpcCharacterBindings {
         if (!isCuratedCheshire(entity)) return true;
         ServerLevel level = (ServerLevel) entity.level();
         OriginalNpcProgress progress = OriginalNpcProgress.get(level.getServer());
+        ServerPlayer owner = OriginalNpcService.choosePageOwner(entity, CHESHIRE_RABBIT_HOLE, entity.forcedRouteTicket(),
+                OriginalSenService.nearestPageOwner(entity));
+        Integer cached = OriginalSenService.cachedPageThresholds(entity, CHESHIRE_RABBIT_HOLE);
+        boolean zeroSen = owner != null ? OriginalNpcProgress.readSwitch(owner, 14)
+                : cached == null ? progress.switchValue(14) : (cached & 1) != 0;
         return (progress.switchValue(109) || progress.switchValue(107) && !progress.switchValue(108))
-                && !progress.switchValue(14) && SceneSpawnerBossData.get(level.getServer()).getStoryProgress() < 1;
+                && !zeroSen && SceneSpawnerBossData.get(level.getServer()).getStoryProgress() < 1;
     }
 
     private static boolean isCuratedCheshire(EntityCheshireCat entity) {

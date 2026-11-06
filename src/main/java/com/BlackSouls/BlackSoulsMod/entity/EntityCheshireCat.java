@@ -131,8 +131,12 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
             waitingStartZ = 0.0D;
         }
         BSOriginalNpcData.Entry definition = OriginalNpcLogicData.get(OriginalNpcCharacterBindings.CHESHIRE_RABBIT_HOLE);
+        ServerPlayer pageOwner = OriginalNpcService.choosePageOwner(this, OriginalNpcCharacterBindings.CHESHIRE_RABBIT_HOLE,
+                forcedRouteTicket(), com.BlackSouls.BlackSoulsMod.story.OriginalSenService.nearestPageOwner(this));
         BSOriginalNpcData.Page page = OriginalNpcInterpreter.selectPage(definition,
-                new OriginalNpcService.EventContext(null, this, OriginalNpcCharacterBindings.CHESHIRE_RABBIT_HOLE));
+                new OriginalNpcService.EventContext(pageOwner, this, OriginalNpcCharacterBindings.CHESHIRE_RABBIT_HOLE));
+        if (pageOwner != null) com.BlackSouls.BlackSoulsMod.story.OriginalSenService.rememberPageOwner(this,
+                OriginalNpcCharacterBindings.CHESHIRE_RABBIT_HOLE, pageOwner);
         int index = page == null ? -1 : definition.pages().indexOf(page);
         if (entityData.get(ORIGINAL_ROUTE_PAGE) != index) {
             CompoundTag state = originalRouteState();

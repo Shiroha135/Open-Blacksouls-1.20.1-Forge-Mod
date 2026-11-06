@@ -121,7 +121,7 @@ public final class OriginalNpcService {
         if (!matchesActor(cat, npcId) || !canInteract(player, cat) || TurnBattleManager.isInBattle(player)
                 || SESSIONS.containsKey(player.getUUID()) || !cat.forcedRouteTicket().isEmpty()) return false;
         OriginalNpcProgress progress = OriginalNpcProgress.get(player.server);
-        if (!progress.switchValue(108) || progress.switchValue(109) || progress.switchValue(14)
+        if (!progress.switchValue(108) || progress.switchValue(109) || OriginalNpcProgress.readSwitch(player, 14)
                 || SceneSpawnerBossData.get(player.server).getStoryProgress() >= 1
                 || progress.hasOtherConversation(player.getUUID(), CHESHIRE_EVENTS)
                 || progress.conversationIds(player.getUUID()).stream().anyMatch(CHESHIRE_EVENTS::contains)) return false;
@@ -158,7 +158,7 @@ public final class OriginalNpcService {
             progress.setSelfSwitch(CHESHIRE_LOGIC, "A", true);
         } else if ((stage == 1 || stage == 2 || asked) && !progress.switchValue(108)
                 && !progress.switchValue(109) && !progress.selfSwitch(CHESHIRE_LOGIC, "A")) {
-            if (!progress.switchValue(107) || progress.switchValue(14)
+            if (!progress.switchValue(107) || OriginalNpcProgress.readSwitch(player, 14)
                     || SceneSpawnerBossData.get(player.server).getStoryProgress() >= 1) return true;
             for (Session current : SESSIONS.values()) {
                 if (cat.getUUID().equals(current.npcUuid)) return true;
@@ -368,12 +368,41 @@ public final class OriginalNpcService {
             npc.setPageIndex(-1);
             return;
         }
+        player = choosePageOwner(npc, npc.getNpcId(), npc.forcedRouteTicket(), player);
+        if (player == null && OriginalNpcMovementService.refreshPersonalOfflinePage(npc)) return;
         BSOriginalNpcData.Page page = OriginalNpcInterpreter.selectPage(definition, new EventContext(player, npc));
         npc.setPageIndex(page == null ? -1 : definition.pages().indexOf(page));
+        if (player != null) OriginalSenService.rememberPageOwner(npc, player);
+    }
+
+    public static ServerPlayer choosePageOwner(PathfinderMob actor, String sourceId, String ticketId, ServerPlayer fallback) {
+        if (!(actor.level() instanceof ServerLevel level)) return fallback;
+        for (Session session : SESSIONS.values()) {
+            if (!actor.getUUID().equals(session.npcUuid) || !level.dimension().location().equals(session.dimension)) continue;
+            ServerPlayer owner = level.getServer().getPlayerList().getPlayer(session.playerId);
+            return owner != null && owner.level() == level && owner.isAlive() ? owner : null;
+        }
+        if (!ticketId.isEmpty()) {
+            var ticket = OriginalNpcMovementData.get(level.getServer()).tickets.get(ticketId);
+            if (ticket != null && ticket.target.equals(actor.getUUID()) && !ticket.complete) {
+                ServerPlayer owner = level.getServer().getPlayerList().getPlayer(ticket.owner);
+                return owner != null && owner.level() == level && owner.isAlive() ? owner : null;
+            }
+        }
+        var ids = actor instanceof EntityCheshireCat ? CHESHIRE_EVENTS : java.util.Set.of(sourceId);
+        var progress = OriginalNpcProgress.get(level.getServer());
+        if (progress.hasConversation(ids)) {
+            if (fallback != null && ids.stream().anyMatch(id -> progress.conversation(fallback.getUUID(), id) != null)) return fallback;
+            return null;
+        }
+        return fallback;
     }
 
     public static void interact(ServerPlayer player, EntityOriginalNpc npc) {
         if (!matchesActor(npc, npc.getNpcId())) return;
+        OriginalNpcProgress progress = OriginalNpcProgress.get(player.server);
+        if (progress.hasOtherConversation(player.getUUID(), java.util.Set.of(npc.getNpcId()))
+                && progress.conversation(player.getUUID(), npc.getNpcId()) == null) return;
         refreshPage(npc, player);
         if (npc.currentPage() != null && npc.currentPage().trigger() == 2) return;
         if (com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(npc.getNpcId())
@@ -918,6 +947,10 @@ public final class OriginalNpcService {
         @Override
         public boolean switchValue(int id) {
             if (player != null && (id == 11 || id == 12)) return OriginalPlayerMoveSpeed.switchValue(player, id);
+            if (player == null && OriginalSenService.isThresholdSwitch(id)) {
+                Integer mask = OriginalSenService.cachedPageThresholds(npc, npcId);
+                if (mask != null) return (mask & 1 << (id - 14)) != 0;
+            }
             return player != null ? OriginalNpcProgress.readSwitch(player, id) : progress.switchValue(id);
         }
 
@@ -995,6 +1028,14 @@ public final class OriginalNpcService {
                         Math.min(Integer.MAX_VALUE, value)));
             }
             progress.setVariable(id, value);
+        }
+
+        @Override
+        public void afterVariableOperation(int id, int operation, long operand, long before, long after) {
+            if (id == 38) {
+                if (player == null) throw new UnsupportedOperationException("requires_player");
+                OriginalSenService.afterVariableOperation(player, operation, operand, before, after);
+            }
         }
 
         @Override

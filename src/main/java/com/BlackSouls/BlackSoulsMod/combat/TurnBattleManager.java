@@ -440,16 +440,27 @@ public final class TurnBattleManager {
         }
 
         @Override
-        public boolean switchValue(int id) { return progress.switchValue(id); }
+        public boolean switchValue(int id) {
+            return com.BlackSouls.BlackSoulsMod.story.OriginalSenService.isThresholdSwitch(id)
+                    ? OriginalNpcProgress.readSwitch(player, id) : progress.switchValue(id);
+        }
 
         @Override
-        public void setSwitch(int id, boolean value) { progress.setSwitch(id, value); }
+        public void setSwitch(int id, boolean value) {
+            if (com.BlackSouls.BlackSoulsMod.story.OriginalSenService.isThresholdSwitch(id)) OriginalNpcProgress.writeSwitch(player, id, value);
+            else progress.setSwitch(id, value);
+        }
 
         @Override
         public long variable(int id) { return OriginalNpcProgress.readVariable(player, id); }
 
         @Override
         public void setVariable(int id, long value) { OriginalNpcProgress.writeVariable(player, id, value); }
+
+        @Override
+        public void afterVariableOperation(int id, int operation, long operand, long before, long after) {
+            if (id == 38) com.BlackSouls.BlackSoulsMod.story.OriginalSenService.afterVariableOperation(player, operation, operand, before, after);
+        }
 
         @Override
         public List<BSOriginalNpcData.Command> commonEvent(int id) { return BSOriginalNpcData.commonEvent(id); }

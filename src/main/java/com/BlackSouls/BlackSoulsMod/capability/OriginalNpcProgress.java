@@ -3,7 +3,6 @@ package com.BlackSouls.BlackSoulsMod.capability;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.BlackSouls.BlackSoulsMod.compat.scene.SceneSpawnerBossData;
-import com.BlackSouls.BlackSoulsMod.util.PlayerStatService;
 import com.BlackSouls.BlackSoulsMod.story.OriginalBattleMusic;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -143,11 +142,7 @@ public final class OriginalNpcProgress extends SavedData {
             }
         }
         if (id == 38) {
-            BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY)
-                    .orElseThrow(() -> new IllegalStateException("Missing original player stats"));
-            long target = Math.max(Integer.MIN_VALUE, Math.min(Integer.MAX_VALUE, value));
-            PlayerStatService.addSen(player, (int) Math.max(Integer.MIN_VALUE,
-                    Math.min(Integer.MAX_VALUE, target - stats.sen)));
+            com.BlackSouls.BlackSoulsMod.story.OriginalSenService.writeValue(player, value);
         } else if (id == 11) {
             SceneSpawnerBossData.get(player.server).setStoryProgress((int) Math.max(0L,
                     Math.min(Integer.MAX_VALUE, value)));
@@ -160,6 +155,9 @@ public final class OriginalNpcProgress extends SavedData {
     }
 
     public static boolean readSwitch(ServerPlayer player, int id) {
+        if (com.BlackSouls.BlackSoulsMod.story.OriginalSenService.isThresholdSwitch(id)) {
+            return com.BlackSouls.BlackSoulsMod.story.OriginalSenService.thresholdValue(player, id);
+        }
         var covenant = com.BlackSouls.BlackSoulsMod.util.OriginalCovenantData.forSwitch(id);
         if (covenant != null && covenant.commonEvent() != 80) {
             BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original covenant stats"));
@@ -173,6 +171,10 @@ public final class OriginalNpcProgress extends SavedData {
     }
 
     public static void writeSwitch(ServerPlayer player, int id, boolean value) {
+        if (com.BlackSouls.BlackSoulsMod.story.OriginalSenService.isThresholdSwitch(id)) {
+            com.BlackSouls.BlackSoulsMod.story.OriginalSenService.writeThreshold(player, id, value);
+            return;
+        }
         var covenant = com.BlackSouls.BlackSoulsMod.util.OriginalCovenantData.forSwitch(id);
         BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original covenant stats"));
         if (covenant != null && covenant.commonEvent() != 80) {
