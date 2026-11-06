@@ -844,17 +844,7 @@ public final class OriginalNpcInterpreter {
         };
         range(integer(p, 0), integer(p, 1));
         for (int id = integer(p, 0); id <= integer(p, 1); id++) {
-            long previous = context.variable(id);
-            long result = switch (integer(p, 2)) {
-                case 0 -> value;
-                case 1 -> Math.addExact(previous, value);
-                case 2 -> Math.subtractExact(previous, value);
-                case 3 -> Math.multiplyExact(previous, value);
-                case 4 -> value == 0 ? 0 : Math.floorDiv(previous, value);
-                case 5 -> value == 0 ? 0 : Math.floorMod(previous, value);
-                default -> throw new UnsupportedOperationException("variable_operation:" + integer(p, 2));
-            };
-            context.setVariable(id, result);
+            context.operateVariable(id, integer(p, 2), value);
         }
     }
 
@@ -1028,6 +1018,15 @@ public final class OriginalNpcInterpreter {
         void setSwitch(int id, boolean value);
         long variable(int id);
         void setVariable(int id, long value);
+        default void operateVariable(int id, int operation, long resolvedOperand) {
+            long before = variable(id);
+            long result = OriginalVariableOperation.apply(before, operation, resolvedOperand);
+            setVariable(id, result);
+            afterVariableOperation(id, operation, resolvedOperand, before, variable(id));
+        }
+
+        default void afterVariableOperation(int id, int operation, long resolvedOperand, long before, long after) {
+        }
         boolean selfSwitch(String key);
         void setSelfSwitch(String key, boolean value);
         long gold();
