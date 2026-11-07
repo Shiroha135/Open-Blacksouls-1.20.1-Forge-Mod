@@ -36,3 +36,7 @@ gradlew text eol=lf
 
 src/generated/**/.cache/cache text eol=lf
 src/generated/**/*.json text eol=lf
+
+src/main/resources/data/blacksouls/original_opening_visual_blocks.json -text
+src/main/resources/data/blacksouls/original_opening_visual_assembly.json -text
+src/main/resources/data/blacksouls/original_opening_presentation.json -text
