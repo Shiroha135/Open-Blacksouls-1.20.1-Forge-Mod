@@ -214,6 +214,44 @@ public final class OriginalNpcService {
         return java.util.Set.copyOf(result);
     }
 
+    static int chickenRouteCommand(ServerPlayer player,EntityOriginalNpc actor,int target,JsonObject requested) {
+        Session session=SESSIONS.get(player.getUUID());
+        if(session==null||!OriginalNpcAutorunService.CHICKEN.equals(session.npcId)||session.entityId!=actor.getId()
+                ||session.npcUuid!=null&&!actor.getUUID().equals(session.npcUuid))return -1;
+        var frames=session.interpreter.snapshot().getAsJsonArray("frames");
+        if(frames.size()!=1)return -1;
+        var frame=frames.get(0).getAsJsonObject();var commands=BSOriginalNpcData.getEvent(OriginalNpcAutorunService.CHICKEN).pages().get(0).commands();
+        int index=frame.get("position").getAsInt()-1;
+        if(index<0||index>=commands.size()||!chickenSourceCommands(frame.getAsJsonArray("commands"),commands))return -1;
+        var command=commands.get(index);
+        return command.code()==205&&command.parameters().get(0).getAsInt()==target&&command.parameters().get(1).equals(requested)?index:-1;
+    }
+
+    static boolean authorizesChickenKillFade(ServerPlayer player,EntityOriginalNpc actor) {
+        Session session=SESSIONS.get(player.getUUID());
+        if(session==null||!OriginalNpcAutorunService.CHICKEN.equals(session.npcId)||!actor.getUUID().equals(session.npcUuid)
+                ||!session.dimension.equals(player.level().dimension().location()))return false;
+        var frames=session.interpreter.snapshot().getAsJsonArray("frames");
+        if(frames.size()!=2)return false;
+        var child=frames.get(0).getAsJsonObject();var parent=frames.get(1).getAsJsonObject();
+        var choices=parent.getAsJsonObject("choices");
+        return child.get("position").getAsInt()==1&&parent.get("position").getAsInt()==38&&choices.has("0")&&choices.get("0").getAsInt()==0
+                &&chickenSourceCommands(child.getAsJsonArray("commands"),BSOriginalNpcData.commonEvent(40))
+                &&chickenSourceCommands(parent.getAsJsonArray("commands"),BSOriginalNpcData.getEvent(OriginalNpcAutorunService.CHICKEN).pages().get(0).commands());
+    }
+
+    private static boolean chickenSourceCommands(com.google.gson.JsonArray actual,List<BSOriginalNpcData.Command> expected) {
+        if(expected==null||actual.size()!=expected.size())return false;
+        for(int index=0;index<expected.size();index++) {
+            var command=actual.get(index).getAsJsonObject();var source=expected.get(index);
+            if(command.get("code").getAsInt()!=source.code()||command.get("indent").getAsInt()!=source.indent())return false;
+            var parameters=command.getAsJsonArray("parameters");
+            if(parameters.size()!=source.parameters().size())return false;
+            for(int argument=0;argument<parameters.size();argument++)if(!parameters.get(argument).equals(source.parameters().get(argument)))return false;
+        }
+        return true;
+    }
+
     public static boolean isConversing(ServerPlayer player) {
         return SESSIONS.containsKey(player.getUUID()) || OriginalDodoRunService.pending(player);
     }

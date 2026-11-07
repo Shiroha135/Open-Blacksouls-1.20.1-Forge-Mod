@@ -49,11 +49,12 @@ public final class OriginalNpcMovementService {
         Entity subject = resolve(player, npc, target);
         var source = BSOriginalNpcData.getEvent(npc.getNpcId());
         int sourceMap = source == null ? 0 : source.mapId();
-        RouteContext context = new RouteContext(player, subject, sourceMap, null);
+        var chicken=sourceMap==31 && OriginalChickenRoutes.SOURCE.equals(npc.getNpcId())?OriginalChickenRoutes.authorize(player,npc,subject,target,route):null;
+        RouteContext context = new RouteContext(player, subject, sourceMap, null, chicken);
         runner.validate(context);
         OriginalNpcService.refreshPage(npc, player);
         if (subject instanceof EntityOriginalNpc original && subject != npc) OriginalNpcService.refreshPage(original, player);
-        return enqueue(player, subject, subject instanceof EntityOriginalNpc original ? original.getNpcId() : "", runner, sourceMap);
+        return enqueue(player, subject, subject instanceof EntityOriginalNpc original ? original.getNpcId() : "", runner, sourceMap, chicken);
     }
 
     public static String startBoundCharacter(ServerPlayer player, String sourceId, JsonObject route) {
@@ -81,12 +82,17 @@ public final class OriginalNpcMovementService {
     }
 
     private static String enqueue(ServerPlayer player, Entity subject, String sourceId, OriginalNpcMoveRouteRunner runner, int sourceMap) {
+        return enqueue(player,subject,sourceId,runner,sourceMap,null);
+    }
+
+    private static String enqueue(ServerPlayer player, Entity subject, String sourceId, OriginalNpcMoveRouteRunner runner, int sourceMap, OriginalChickenRoutes.Authority chicken) {
         OriginalNpcMovementData data = OriginalNpcMovementData.get(player.server);
         String id = UUID.randomUUID().toString();
         OriginalNpcMovementData.Ticket ticket = new OriginalNpcMovementData.Ticket(id, player.getUUID(),
                 subject.getUUID(), subject.level().dimension().location().toString(),
                 sourceId, runner);
         ticket.sourceMap = sourceMap;
+        ticket.chicken = chicken;
         ticket.validated = true;
         if (subject instanceof EntityOriginalNpc original && original.hasOriginalAutonomy()) {
             var autonomous = original.originalAutonomousRoute();
@@ -472,6 +478,7 @@ public final class OriginalNpcMovementService {
         private final int sourceMap;
         private final OriginalNpcMovementData.Ticket ticket;
         private final OriginalNpcAutonomousRoute autonomous;
+        private final OriginalChickenRoutes.Authority chicken;
         private boolean succeeded = true;
         private boolean symbolTouchAttempt = true;
 
@@ -480,6 +487,11 @@ public final class OriginalNpcMovementService {
         }
 
         private RouteContext(ServerPlayer owner, Entity subject, int sourceMap, OriginalNpcMovementData.Ticket ticket) {
+            this(owner,subject,sourceMap,ticket,ticket==null?null:ticket.chicken);
+        }
+
+        private RouteContext(ServerPlayer owner, Entity subject, int sourceMap, OriginalNpcMovementData.Ticket ticket, OriginalChickenRoutes.Authority chicken) {
+            this.chicken=chicken;
             this.owner = owner;
             this.subject = subject;
             this.sourceMap = sourceMap;
@@ -491,6 +503,7 @@ public final class OriginalNpcMovementService {
             this.owner = owner;
             this.subject = subject;
             this.sourceMap = 37;
+            this.chicken = null;
             this.ticket = null;
             this.autonomous = autonomous;
         }
@@ -594,6 +607,10 @@ public final class OriginalNpcMovementService {
 
         @Override
         public void validate(int code, List<JsonElement> parameters) {
+            if (sourceMap==31 && chicken!=null) {
+                if (!OriginalChickenRoutes.live(chicken,owner,subject)) throw new UnsupportedOperationException("chicken_route_context_unavailable");
+                return;
+            }
             if (code >= 1 && code <= 14) {
                 if (sourceMap != 62 && !(sourceMap == 37 && subject instanceof EntityOriginalNpc npc
                         && npc.hasOriginalAutonomy() && subject.level().dimension().equals(yuki135.blacksouls.util.HokoniwaDestination.DIMENSION)
@@ -693,9 +710,11 @@ public final class OriginalNpcMovementService {
                 if (ticket != null) ticket.motion = motion;
                 else autonomous.motion = motion;
             }
+            double chickenFeet=chicken==null?Double.NaN:OriginalChickenRoutes.nextFeetY(chicken,owner,subject,motion);
+            if (chicken!=null && !Double.isFinite(chickenFeet)) return true;
             subject.setNoGravity(true);
             motion.advanceFrame();
-            subject.setPos(motion.x(), motion.y(), motion.z());
+            subject.setPos(motion.x(), chicken==null?motion.y():chickenFeet, motion.z());
             subject.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
             subject.fallDistance = 0;
             if (motion.complete()) {
@@ -829,10 +848,14 @@ public final class OriginalNpcMovementService {
                 }
                 targetY = symbolSupportY(tx, tz);
                 if (!Double.isFinite(targetY)) { succeeded = false; return false; }
+            } else if (chicken!=null) {
+                targetY=OriginalChickenRoutes.targetY(chicken,owner,subject,tx,tz,jump);
+                if(!Double.isFinite(targetY)) {succeeded=false;return false;}
             } else if (!jump && !state().getBoolean("Through") && !clear(dx, dy)) {succeeded = false;return false;}
             int speed = state().getInt("MoveSpeed");
             if (speed < 1 || speed > 6) throw new UnsupportedOperationException("physical_move_speed:" + speed);
             if (!jump && subject instanceof ServerPlayer player && player.isSprinting()) speed++;
+            if (chicken!=null && !OriginalChickenRoutes.startClear(chicken,owner,subject,tx,targetY,tz,jump,speed)) {succeeded=false;return false;}
             if (ticket != null) {
                 if (!ticket.gravityCaptured) {ticket.originalNoGravity = subject.isNoGravity();ticket.gravityCaptured = true;}
             } else if (!autonomous.gravityCaptured) {

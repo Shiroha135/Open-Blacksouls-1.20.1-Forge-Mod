@@ -80,6 +80,7 @@ public final class OriginalNpcPlacements {
             new Site("map053_ev066", new Vec3(43.5D, -58.0D, 216.5D), 90.0F,
                     "minecraft:grass_block", forestLandmarks()),
             OriginalSnowmanPlacement.site(),
+            OriginalChickenPlacement.site(),
             new Site("map031_ev005", new Vec3(1114.5D, -21.9375D, -2.5D), 90.0F,
                     "minecraft:moss_carpet", carolFisherLandmarks(), true),
             new Site("map009_ev047", new Vec3(180.5D, -42.0D, -1314.5D), 180.0F,
@@ -149,6 +150,17 @@ public final class OriginalNpcPlacements {
         }
         if (!hasDeployedMap(level)) {
             return Outcome.MAP_NOT_DEPLOYED;
+        }
+        if (OriginalChickenPlacement.SOURCE.equals(npcId)) {
+            if (!OriginalChickenPlacement.terrain(level)) return Outcome.TERRAIN_MISMATCH;
+            int count = 0;
+            for (var entity : level.getAllEntities()) if (entity instanceof EntityOriginalNpc candidate
+                    && npcId.equals(candidate.getNpcId()) && !candidate.isRemoved()) {
+                count++;
+                if (!OriginalNpcPlacementData.get(level).isInstalled(npcId)
+                        && (candidate.isStaticMapProxy() || candidate.position().distanceToSqr(site.position()) > 1E-8D)) return Outcome.COLLISION;
+            }
+            if (count > 1) return Outcome.COLLISION;
         }
         OriginalNpcPlacementData data = OriginalNpcPlacementData.get(level);
         if (data.isInstalled(npcId)) {

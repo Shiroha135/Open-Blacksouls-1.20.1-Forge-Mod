@@ -46,11 +46,16 @@ public final class OriginalNpcMovementData extends SavedData {
             if (ticket.sourceMap < 0 || ticket.sourceMap > 999) throw new IllegalArgumentException("Invalid original movement source map");
             ticket.gravityCaptured = value.getBoolean("GravityCaptured");
             ticket.originalNoGravity = value.getBoolean("OriginalNoGravity");
+            if (value.contains("ChickenRoute")) {
+                if (!value.contains("ChickenRoute",Tag.TAG_COMPOUND)) throw new IllegalArgumentException("Invalid chicken route authority tag");
+                ticket.chicken=OriginalChickenRoutes.Authority.load(value.getCompound("ChickenRoute"));
+                OriginalChickenRoutes.validateTicket(ticket);
+            }
             if (value.contains("Motion")) {
                 if (!value.contains("Motion", Tag.TAG_BYTE_ARRAY)) throw new IllegalArgumentException("Invalid original movement motion");
                 ticket.motion = OriginalNpcMotion.restore(JsonParser.parseString(new String(value.getByteArray("Motion"), StandardCharsets.UTF_8)).getAsJsonObject());
                 if (!ticket.gravityCaptured || ticket.complete || ticket.motion.complete()
-                        || ticket.sourceMap != 62 && !(ticket.sourceMap == 37 && (ticket.npcId.equals("map037_ev053") || OriginalPoolCrowdSurface.isCrowd(ticket.npcId))
+                        || ticket.chicken==null && ticket.sourceMap != 62 && !(ticket.sourceMap == 37 && (ticket.npcId.equals("map037_ev053") || OriginalPoolCrowdSurface.isCrowd(ticket.npcId))
                         && ticket.dimension.equals(yuki135.blacksouls.util.HokoniwaDestination.DIMENSION.location().toString())
                         && OriginalNpcMovementService.isOriginalMap37Position(ticket.npcId, ticket.motion.x(), ticket.motion.z())
                         && OriginalNpcMovementService.isOriginalMap37Position(ticket.npcId, ticket.motion.snapshot().get("startX").getAsDouble(),
@@ -58,6 +63,7 @@ public final class OriginalNpcMovementData extends SavedData {
                         && OriginalNpcMovementService.isOriginalMap37Position(ticket.npcId, ticket.motion.snapshot().get("targetX").getAsDouble(),
                         ticket.motion.snapshot().get("targetZ").getAsDouble()))) throw new IllegalArgumentException("Invalid active original motion phase");
             }
+            if (ticket.chicken!=null) OriginalChickenRoutes.validateTicket(ticket);
             if (!ticket.replacement.isEmpty()) UUID.fromString(ticket.replacement);
             if (data.tickets.put(id, ticket) != null) throw new IllegalArgumentException("Duplicate movement ticket");
             data.latestByTarget.put(ticket.target, id);
@@ -133,6 +139,7 @@ public final class OriginalNpcMovementData extends SavedData {
             value.putInt("SourceMap", ticket.sourceMap);
             value.putBoolean("GravityCaptured", ticket.gravityCaptured);
             value.putBoolean("OriginalNoGravity", ticket.originalNoGravity);
+            if (ticket.chicken!=null) value.put("ChickenRoute",ticket.chicken.save());
             if (ticket.motion != null) value.putByteArray("Motion", ticket.motion.snapshot().toString().getBytes(StandardCharsets.UTF_8));
             entries.add(value);
         }
@@ -155,6 +162,7 @@ public final class OriginalNpcMovementData extends SavedData {
         boolean gravityCaptured;
         boolean originalNoGravity;
         OriginalNpcMotion motion;
+        OriginalChickenRoutes.Authority chicken;
         String replacement = "";
         String failure = "";
 
