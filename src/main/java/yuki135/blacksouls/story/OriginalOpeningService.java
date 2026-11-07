@@ -701,7 +701,17 @@ public final class OriginalOpeningService {
         var cinematic=finalPacket?session.completedCinematic:flow.cinematic().orElse(null);
         if(cinematic==null) {
             if(!finalPacket)return;
-            cinematic=OriginalOpeningCinematic.start("arrival");cinematic.destinationReady();
+            cinematic=OriginalOpeningCinematic.start("arrival");
+        }
+        if(finalPacket) {
+            cinematic=cinematic.copy();
+            if(!cinematic.finished() || !cinematic.program().equals("arrival")&&!cinematic.program().equals("finale99")) {
+                cinematic.changeProgram("arrival");
+                cinematic.destinationReady();
+                for(int tick=0;tick<31&&!cinematic.finished();tick++)cinematic.tick();
+                if(!cinematic.finished())throw new IllegalStateException("Opening terminal bridge did not finish");
+            }
+            cinematic.touch();
         }
         boolean finished=finalPacket||flow.stage()==Stage.COMPLETE&&cinematic.finished();
         boolean preview=finalPacket?session.completedPreview:flow.preview();

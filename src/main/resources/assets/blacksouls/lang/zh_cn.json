@@ -3345,5 +3345,7 @@
   "item.blacksouls.silver_pistol.effect": "将技能击溃变为枪火击溃。命中率＋5%　",
   "item.blacksouls.silver_pistol.desc": "猎人用来狩猎野兽的，注入了银之力的枪。",
   "skill.blacksouls.bs2_skill_gun_fire_break.name": "枪火击溃【短铳】",
-  "message.blacksouls.skill.gun_fire_break.use": "%s释放了枪火击溃！"
+  "message.blacksouls.skill.gun_fire_break.use": "%s释放了枪火击溃！",
+  "subtitle.blacksouls.original_chicken_call": "鸡叫声",
+  "subtitle.blacksouls.original_chicken_voice": "鸡肉君的声音"
 }

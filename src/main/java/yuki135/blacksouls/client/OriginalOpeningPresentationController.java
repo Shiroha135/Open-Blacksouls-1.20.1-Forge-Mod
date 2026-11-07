@@ -61,6 +61,7 @@ public final class OriginalOpeningPresentationController {
     private static String ambientKey="";
     private static boolean ownsSceneMusic;
     private static boolean silentArrival;
+    private static boolean pendingRoomTone;
     private static boolean previewPolicyCaptured,previewWasSilent;
     private static boolean lastWorldReady;
     private static Consumer<Integer> advanceRequest=ignored->{};
@@ -75,6 +76,11 @@ public final class OriginalOpeningPresentationController {
     }
 
     public static void capturePreviewAudioPolicy() { if(!previewPolicyCaptured) { previewWasSilent=silentArrival;previewPolicyCaptured=true;OriginalOpeningAmbientController.capturePreview(); } }
+
+    public static void restoreInitialRoomPolicy(boolean quiet) {
+        pendingRoomTone=quiet;
+        if(!quiet)restoreInitialRoomSilence(false);
+    }
 
     public static void restoreInitialRoomSilence(boolean quiet) {
         silentArrival=quiet;
@@ -145,6 +151,14 @@ public final class OriginalOpeningPresentationController {
     public static void onTick(TickEvent.ClientTickEvent event) {
         if(event.phase!=TickEvent.Phase.END)return;
         var minecraft=Minecraft.getInstance();
+        if(pendingRoomTone&&minecraft.level!=null&&minecraft.player!=null
+                &&minecraft.level.dimension().location().toString().equals("blacksouls:hokoniwa")&&ClientSceneState.getSceneId().equals("map_001")
+                &&minecraft.level.hasChunkAt(minecraft.player.blockPosition())) {
+            OriginalNpcPresentationController.apply(new ClientboundOriginalNpcPresentationPacket(223,minecraft.player.getId(),minecraft.level.dimension().location(),
+                    List.of(-34.0D,-34.0D,-34.0D,0.0D,0.0D),""));
+            restoreInitialRoomSilence(true);
+            pendingRoomTone=false;
+        }
         if(silentArrival&&minecraft.level!=null&&minecraft.level.dimension().location().toString().equals("blacksouls:hokoniwa")&&ClientSceneState.getSceneId().equals("map_001")) {
             ClientSceneMusic.suspendForPresentation();ownsSceneMusic=true;
         }
@@ -334,7 +348,7 @@ public final class OriginalOpeningPresentationController {
         ENGINE.clear();stopAmbient();
         OriginalOpeningAmbientController.clear();
         if(ownsSceneMusic)ClientSceneMusic.resumeAfterPresentation();
-        ownsSceneMusic=false;silentArrival=false;previewPolicyCaptured=false;previewWasSilent=false;lastWorldReady=false;fogRequest.accept(false);
+        ownsSceneMusic=false;silentArrival=false;pendingRoomTone=false;previewPolicyCaptured=false;previewWasSilent=false;lastWorldReady=false;fogRequest.accept(false);
         if(capture!=null) { capture.destroyBuffers();capture=null; }
     }
 

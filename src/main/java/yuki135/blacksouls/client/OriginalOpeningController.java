@@ -50,7 +50,7 @@ public final class OriginalOpeningController {
         if(packet.policyOnly()) {
             var player=Minecraft.getInstance().player;
             if(player==null)pendingPolicy=packet;
-            else if(player.getUUID().equals(packet.session()))OriginalOpeningPresentationController.restoreInitialRoomSilence(packet.silentRoom());
+            else if(player.getUUID().equals(packet.session()))OriginalOpeningPresentationController.restoreInitialRoomPolicy(packet.silentRoom());
             return;
         }
         if(state!=null&&state.session().equals(packet.session())&&state.revision()==packet.revision()&&packet.preview()!=state.preview()&&!packet.finished())return;
@@ -86,7 +86,7 @@ public final class OriginalOpeningController {
         if (event.phase!=TickEvent.Phase.END) return;
         var minecraft=Minecraft.getInstance();
         if (minecraft.level==null || minecraft.player==null) return;
-        if(pendingPolicy!=null) { var policy=pendingPolicy;pendingPolicy=null;if(minecraft.player.getUUID().equals(policy.session()))OriginalOpeningPresentationController.restoreInitialRoomSilence(policy.silentRoom()); }
+        if(pendingPolicy!=null) { var policy=pendingPolicy;pendingPolicy=null;if(minecraft.player.getUUID().equals(policy.session()))OriginalOpeningPresentationController.restoreInitialRoomPolicy(policy.silentRoom()); }
         if (minecraft.isPaused()) return;
         ticks++;
         if (state==null) return;

@@ -289,6 +289,7 @@ public final class OriginalNpcService {
             resumeSavedCharacterWaits(event.getServer());
             resumeCheshireLegacyProgress(event.getServer());
         }
+        OriginalNpcAutorunService.tick(event.getServer());
         for (Session session : List.copyOf(SESSIONS.values())) {
             ServerPlayer player = event.getServer().getPlayerList().getPlayer(session.playerId);
             if (session.stagedPrompt != null && player != null
@@ -368,7 +369,9 @@ public final class OriginalNpcService {
                 Entity entity = player.serverLevel().getEntity(UUID.fromString(saved.get("entityUuid").getAsString()));
                 if (entity instanceof PathfinderMob npc && matchesActor(npc, npcId)
                         && npc.isAlive() && !npc.isRemoved() && npc.level() == player.level()) {
-                    interact(player, npc, npcId, true);
+                    if (OriginalNpcAutorunService.isManaged(npcId)) {
+                        if (npc instanceof EntityOriginalNpc original) startAutorun(player, original);
+                    } else interact(player, npc, npcId, true);
                     if (SESSIONS.containsKey(player.getUUID())) {
                         break;
                     }
@@ -428,7 +431,8 @@ public final class OriginalNpcService {
         if (progress.hasOtherConversation(player.getUUID(), java.util.Set.of(npc.getNpcId()))
                 && progress.conversation(player.getUUID(), npc.getNpcId()) == null) return;
         refreshPage(npc, player);
-        if (npc.currentPage() != null && npc.currentPage().trigger() == 2) return;
+        if (npc.currentPage() != null && (npc.currentPage().trigger() == 2 || npc.currentPage().trigger() == 3)
+                || OriginalNpcAutorunService.isManaged(npc.getNpcId()) && progress.conversation(player.getUUID(), npc.getNpcId()) != null) return;
         if (yuki135.blacksouls.util.OriginalWorldEventData.isNativeBlock(npc.getNpcId())
                 && !OriginalWorldEventBindings.isBound(player, npc)) return;
         if (yuki135.blacksouls.compat.scene.OriginalBillPlacement.INITIAL_NPC.equals(npc.getNpcId())
@@ -484,9 +488,42 @@ public final class OriginalNpcService {
         interact(player, npc, npc.getNpcId(), false);
     }
 
+    public static boolean startAutorun(ServerPlayer player, EntityOriginalNpc npc) {
+        if (!OriginalNpcAutorunService.eligible(player, npc) || SESSIONS.containsKey(player.getUUID())) return false;
+        if (!OriginalNpcAutorunService.unique(npc)) return false;
+        String npcId=npc.getNpcId();
+        var progress=OriginalNpcProgress.get(player.server);
+        var ids=java.util.Set.of(npcId);
+        if (progress.hasOtherConversation(player.getUUID(), ids)
+                || progress.conversationIds(player.getUUID()).stream().anyMatch(id->!id.equals(npcId))) return false;
+        for (var session:SESSIONS.values()) if (session.npcId.equals(npcId) || npc.getUUID().equals(session.npcUuid)) return false;
+        var saved=progress.conversation(player.getUUID(), npcId);
+        if (OriginalNpcAutorunService.movementReserved(player,npc,saved!=null)) return false;
+        if (saved!=null) {
+            if (!saved.has("entityUuid") || !npc.getUUID().toString().equals(saved.get("entityUuid").getAsString())
+                    || !saved.has("dimension") || !player.level().dimension().location().toString().equals(saved.get("dimension").getAsString())
+                    || !saved.has("interpreter") || !saved.get("interpreter").isJsonObject()) return false;
+            var pending=saved.getAsJsonObject("interpreter").get("pending");
+            if (pending!=null && pending.isJsonObject() && pending.getAsJsonObject().has("type")
+                    && "BLOCKED".equals(pending.getAsJsonObject().get("type").getAsString())) return false;
+        } else {
+            if (!npc.forcedRouteTicket().isEmpty() || npc.isErasedForCurrentVisit()) return false;
+            var definition=definition(npcId);
+            var page=definition==null?null:OriginalNpcInterpreter.selectPage(definition, new EventContext(player,npc));
+            if (page==null || page.trigger()!=3 || page.commands().stream().noneMatch(command->command.code()!=0)) return false;
+        }
+        interact(player,npc,npcId,saved!=null,true);
+        var session=SESSIONS.get(player.getUUID());
+        return session!=null && npcId.equals(session.npcId) && npc.getUUID().equals(session.npcUuid);
+    }
+
     private static void interact(ServerPlayer player, PathfinderMob npc, String npcId, boolean savedContinuation) {
+        interact(player,npc,npcId,savedContinuation,false);
+    }
+
+    private static void interact(ServerPlayer player, PathfinderMob npc, String npcId, boolean savedContinuation, boolean autorun) {
         if (OriginalOpeningService.managed(player) || OriginalDodoRunService.pending(player)) return;
-        boolean available = savedContinuation
+        boolean available = savedContinuation || autorun
                 ? player.isAlive() && npc.isAlive() && !npc.isRemoved() && player.level() == npc.level()
                 : canInteract(player, npc);
         if (!available || TurnBattleManager.isInBattle(player)) {
@@ -661,7 +698,8 @@ public final class OriginalNpcService {
         Entity entity = player.serverLevel().getEntity(entityId);
         if (!(entity instanceof PathfinderMob npc) || !matchesActor(npc, session.npcId)
                     || session.npcUuid != null && !session.npcUuid.equals(npc.getUUID())
-                || !canInteract(player, npc) || (!isSuspended(session)
+                || !(OriginalNpcAutorunService.isManaged(session.npcId) && npc instanceof EntityOriginalNpc original
+                    ? OriginalNpcAutorunService.context(player,original) : canInteract(player,npc)) || (!isSuspended(session)
                 && player.serverLevel().getGameTime() - session.updated > 2400L)) {
             SESSIONS.remove(player.getUUID());
             return;

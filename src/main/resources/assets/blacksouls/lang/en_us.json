@@ -2902,5 +2902,7 @@
   "item.blacksouls.silver_pistol.effect": "Replaces Crush with Gunfire Crush. Hit +5%.",
   "item.blacksouls.silver_pistol.desc": "A hunter's gun imbued with the power of silver to hunt beasts.",
   "skill.blacksouls.bs2_skill_gun_fire_break.name": "Gunfire Crush [Pistol]",
-  "message.blacksouls.skill.gun_fire_break.use": "%s used Gunfire Crush!"
+  "message.blacksouls.skill.gun_fire_break.use": "%s used Gunfire Crush!",
+  "subtitle.blacksouls.original_chicken_call": "Chicken clucks",
+  "subtitle.blacksouls.original_chicken_voice": "Torinikun speaks"
 }

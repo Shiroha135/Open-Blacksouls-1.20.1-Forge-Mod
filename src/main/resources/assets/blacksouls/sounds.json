@@ -1555,5 +1555,17 @@
         "stream": true
       }
     ]
+  },
+  "original_chicken_call": {
+    "subtitle": "subtitle.blacksouls.original_chicken_call",
+    "sounds": [
+      "blacksouls:original_chicken_call"
+    ]
+  },
+  "original_chicken_voice": {
+    "subtitle": "subtitle.blacksouls.original_chicken_voice",
+    "sounds": [
+      "blacksouls:original_chicken_voice"
+    ]
   }
 }

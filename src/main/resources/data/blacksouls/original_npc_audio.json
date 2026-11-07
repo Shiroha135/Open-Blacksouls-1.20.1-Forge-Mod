@@ -1855,6 +1855,14 @@
       "sound": "blacksouls:original_decision1",
       "sourceFile": "Decision1.ogg",
       "sourceSha256": "bb7ba5f298b46e45abbe13e3912c00be61da1fc2f970dffd51a286c02a956f2d"
+    },
+    "にわとり": {
+      "sound": "blacksouls:original_chicken_call",
+      "sourceFile": "にわとり.wav"
+    },
+    "Chicken": {
+      "sound": "blacksouls:original_chicken_voice",
+      "sourceFile": "Chicken.ogg"
     }
   }
 }
