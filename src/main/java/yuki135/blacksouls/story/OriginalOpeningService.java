@@ -175,16 +175,17 @@ public final class OriginalOpeningService {
         if (now == session.lastActionTick) return;
         session.lastActionTick = now;
         if (packet.action() == ServerboundOpeningPacket.Action.RETRY) {
-            stabilize(flow(player));
+            var flow=flow(player);
+            stabilize(flow);
             session.error = false;
             session.notice = "";
-            session.entering = !session.cleanup;
+            session.entering = !session.cleanup && flow.stage()!=Stage.COMPLETE;
             session.awaitingReady = false;
             session.sceneReady = false;
             session.motion = null;
             session.fallReady=false;
             stopFall(player);
-            save(player, session);
+            if(save(player, session) && flow.stage()==Stage.COMPLETE)session.cleanup=true;
             changed(player, session);
             return;
         }
@@ -846,7 +847,7 @@ public final class OriginalOpeningService {
         }
         boolean finished=finalPacket||flow.stage()==Stage.COMPLETE&&cinematic.finished();
         boolean preview=finalPacket?session.completedPreview:flow.preview();
-        if(flow.slot().isPresent())session.cinematicOrigin=origin(new OriginalOpeningSceneData.Lease(preview?previewIdentity(player.getUUID()):player.getUUID(),(int)flow.slot().getAsLong()),SceneKind.ISLAND_110);
+        if(!finalPacket&&flow.slot().isPresent())session.cinematicOrigin=origin(new OriginalOpeningSceneData.Lease(preview?previewIdentity(player.getUUID()):player.getUUID(),(int)flow.slot().getAsLong()),SceneKind.ISLAND_110);
         if(!cinematic.episode().equals(session.sentEpisode)||cinematic.sequence()!=session.sentSequence) {
             session.sentEpisode=cinematic.episode();session.sentSequence=cinematic.sequence();session.sentRestoring=session.presentationRestoring;
             session.presentationRestoring=false;
