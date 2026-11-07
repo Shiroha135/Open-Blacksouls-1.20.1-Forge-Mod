@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "sourceMap": "D:/BLACK SOULS II/Data/Map037.rvdata2",
+  "sourceMapSha256": "489bcb45286f020c119ac427dc4addca3663fa504b17dfd2868d3f349bad0030",
+  "entries": [
+    {
+      "mapId": 37,
+      "tileId": 41,
+      "texture": "blacksouls:textures/entity/original_npc/tile_map037_41.png",
+      "width": 32,
+      "height": 32,
+      "source": "D:\\BLACK SOULS II\\Graphics\\Tilesets\\VXTileB.png",
+      "sourceSha256": "fcdbc40f14e7068f74ff7b4fbb999518683476acd0e56a5a55bc4105f96fc918",
+      "sourcePixelBox": [
+        32,
+        160,
+        64,
+        192
+      ],
+      "pngSha256": "ea6352e5344bffcea9708a743db9064ecbd4259185940a88c1b7ccd1342de034",
+      "rgbaSha256": "84d70b17af708e0595520da71ee1b45495ba6451ee45225e80b1df1e8e8caf58"
+    },
+    {
+      "mapId": 37,
+      "tileId": 669,
+      "texture": "blacksouls:textures/entity/original_npc/tile_map037_669.png",
+      "width": 32,
+      "height": 32,
+      "source": "D:\\BLACK SOULS II\\Graphics\\Tilesets\\FW_Horror_Tile-C.png",
+      "sourceSha256": "b913b93e2ea203573bb71281109cc89c8794fa8f2bc7e3410271df8641849330",
+      "sourcePixelBox": [
+        416,
+        96,
+        448,
+        128
+      ],
+      "pngSha256": "ed01d2a2ce6075974def7caf89f7691880c7a3b873fddbe23a235fb5913b6de9",
+      "rgbaSha256": "f64ca4990e8ee99986cfc80ada18a4a350492d4447ebbed4aefad375e945217a"
+    }
+  ]
+}

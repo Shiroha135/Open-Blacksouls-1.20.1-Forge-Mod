@@ -1199,6 +1199,26 @@
       "rows": 8,
       "frameWidth": 32,
       "frameHeight": 48
+    },
+    "!smallbirds": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_036bf0ae8b828986.png",
+      "width": 384,
+      "height": 256,
+      "single": false,
+      "columns": 12,
+      "rows": 8,
+      "frameWidth": 32,
+      "frameHeight": 32
+    },
+    "$釣竿": {
+      "texture": "blacksouls:textures/entity/original_npc/sheet_dd524a14b2755bc5.png",
+      "width": 192,
+      "height": 256,
+      "single": true,
+      "columns": 3,
+      "rows": 4,
+      "frameWidth": 64,
+      "frameHeight": 64
     }
   },
   "portraits": {

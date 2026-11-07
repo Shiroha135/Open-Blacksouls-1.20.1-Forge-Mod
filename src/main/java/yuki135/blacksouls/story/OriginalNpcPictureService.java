@@ -20,12 +20,20 @@ public final class OriginalNpcPictureService {
     }
 
     public static int apply(ServerPlayer player, int code, List<JsonElement> parameters) {
+        return apply(player, "", code, parameters);
+    }
+
+    public static int apply(ServerPlayer player, String sourceNpc, int code, List<JsonElement> parameters) {
+        if (!sourceNpc.isEmpty() && !sourceNpc.matches("map[0-9]{3}_ev[0-9]{3}")) {
+            throw new IllegalArgumentException("Invalid original picture source");
+        }
         if (battle(player)) throw new UnsupportedOperationException("picture_battle_scope");
         if (!player.isAlive()) throw new UnsupportedOperationException("picture_owner_dead");
         if (OriginalNpcService.isPictureClockSuspended(player)) throw new UnsupportedOperationException("picture_waiter_suspended");
         Command command = parse(player, code, parameters);
         OriginalNpcPictureData data = OriginalNpcPictureData.get(player.server);
         OriginalNpcPictureData.Screen previous = data.screens.get(player.getUUID());
+        if (previous != null) discardOmittedPictures(player, previous);
         OriginalNpcPictureState current = previous == null ? null : previous.pictures.get(command.number());
         if (code == 232 && current != null) validatePicture(current.name());
         OriginalNpcPictureState next = current == null ? new OriginalNpcPictureState(command.number())
@@ -41,6 +49,8 @@ public final class OriginalNpcPictureService {
         }
         OriginalNpcPictureData.Screen screen = data.screens.computeIfAbsent(player.getUUID(), ignored -> new OriginalNpcPictureData.Screen());
         screen.pictures.put(next.number(), next);
+        if (code == 235 || code == 231 && sourceNpc.isEmpty()) screen.sources.remove(next.number());
+        else if (!sourceNpc.isEmpty()) screen.sources.put(next.number(), sourceNpc);
         screen.paused = false;
         screen.visible = true;
         publish(player, data, screen);
@@ -67,8 +77,9 @@ public final class OriginalNpcPictureService {
                     }
                 }
             }
-            if (changed || screen.connection != player.connection
-                    || !player.level().dimension().location().equals(screen.dimension)) {
+            boolean reconnecting = screen.connection != player.connection
+                    || !player.level().dimension().location().equals(screen.dimension);
+            if (changed || reconnecting) {
                 publish(player, data, screen);
             }
         }
@@ -79,7 +90,34 @@ public final class OriginalNpcPictureService {
         OriginalNpcPictureData.Screen screen = data.screens.computeIfAbsent(player.getUUID(), ignored -> new OriginalNpcPictureData.Screen());
         screen.visible = visible(player);
         screen.paused = !screen.visible || OriginalNpcService.isPictureClockSuspended(player);
+        discardOmittedPictures(player, screen);
         publish(player, data, screen);
+    }
+
+    public static void clear(ServerPlayer player) {
+        OriginalNpcPictureData data = OriginalNpcPictureData.get(player.server);
+        OriginalNpcPictureData.Screen screen = data.screens.get(player.getUUID());
+        if (screen == null) return;
+        screen.pictures.clear();
+        screen.sources.clear();
+        screen.visible = visible(player);
+        screen.paused = !screen.visible || OriginalNpcService.isPictureClockSuspended(player);
+        publish(player, data, screen);
+    }
+
+    private static void discardOmittedPictures(ServerPlayer player, OriginalNpcPictureData.Screen screen) {
+        if (screen.pictures.isEmpty()) return;
+        var omitted = OriginalNpcService.omittedCheckpointIds(player);
+        if (omitted.isEmpty()) return;
+        var iterator = screen.pictures.entrySet().iterator();
+        while (iterator.hasNext()) {
+            var entry = iterator.next();
+            String source = screen.sources.get(entry.getKey());
+            if (source == null || omitted.contains(source)) {
+                iterator.remove();
+                screen.sources.remove(entry.getKey());
+            }
+        }
     }
 
     public static void forgetObserver(MinecraftServer server, UUID player) {
@@ -99,6 +137,7 @@ public final class OriginalNpcPictureService {
     }
 
     private static void publish(ServerPlayer player, OriginalNpcPictureData data, OriginalNpcPictureData.Screen screen) {
+        discardOmittedPictures(player, screen);
         screen.revision = Math.addExact(screen.revision, 1L);
         data.setDirty();
         if (player.connection == null) return;

@@ -79,7 +79,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = BlackSouls.MODID)
 public final class TurnBattleManager {
-    private static final Set<Integer> RUNNER_TROOPS = Set.of(35, 343, 629);
+    private static final Set<Integer> RUNNER_TROOPS = Set.of(35, 116, 191, 343, 506, 629);
     private static final int ESCAPE_GRACE_TICKS = 160;
     private static final int EFFECT_TICKS_PER_ACTION = 200;
     private static final Pattern COUNTER_SKILL = Pattern.compile("<\\s*反撃スキル\\s*(\\d+)\\s*>");
@@ -165,6 +165,8 @@ public final class TurnBattleManager {
                 ? originalEnemy.getProfileId() : -1;
         int originalTroop = switch (profileId) {
             case 88 -> 35;
+            case 97 -> 116;
+            case 434 -> 506;
             case 303 -> 343;
             case 594 -> 629;
             default -> 0;
@@ -206,6 +208,14 @@ public final class TurnBattleManager {
                                                  int troopId, boolean canEscape, boolean canLose,
                                                  Consumer<ClientboundTurnBattlePacket.Outcome> onFinished,
                                                  boolean scripted) {
+        return tryStartOriginalTroop(player, rootEnemy, troopId, canEscape, canLose, onFinished, scripted, 0);
+    }
+
+    public static boolean tryStartOriginalTroop(ServerPlayer player, EntityTurnBattleMonster rootEnemy,
+                                                 int troopId, boolean canEscape, boolean canLose,
+                                                 Consumer<ClientboundTurnBattlePacket.Outcome> onFinished,
+                                                 boolean scripted, int openingCondition) {
+        if (openingCondition < 0 || openingCondition > 2 || !scripted && openingCondition != 0) return false;
         BSOriginalTroopData.Entry troop = BSOriginalTroopData.get(troopId);
         if (troop == null || troop.members().isEmpty() || troop.members().stream().allMatch(BSOriginalTroopData.Member::hidden)) {
             BlackSouls.LOGGER.warn("Rejected original battle troop {}: missing or no visible members", troopId);
@@ -257,6 +267,10 @@ public final class TurnBattleManager {
             return false;
         }
         initializeOriginalEncounter(player, session, scripted);
+        if (scripted) {
+            session.preemptive = openingCondition == 1;
+            session.surprisePending = openingCondition == 2;
+        }
         session.remainingPlayerActions = rollPlayerActionCount(player, battlePlayerStats(player));
         session.presentationDriver = player.getUUID();
         if (RUNNER_TROOPS.contains(troopId)) {
@@ -285,6 +299,10 @@ public final class TurnBattleManager {
         if (session.finished) return;
         if (session.troopRunner == null) {
             resume.run();
+            return;
+        }
+        if (session.troopRunner.hasReservedCommonEvent() && chooseEnemyTarget(player, session) == null) {
+            defeatParty(player, session, Component.literal("队伍已经无法继续战斗。"));
             return;
         }
         if (!session.troopRunner.hasPending() && allEnemiesDefeated(player, session)) {
@@ -428,16 +446,29 @@ public final class TurnBattleManager {
         }
 
         @Override
-        public boolean switchValue(int id) { return progress.switchValue(id); }
+        public boolean switchValue(int id) {
+            if (id == 24) return session.commonEvents.switchValue(id);
+            return yuki135.blacksouls.story.OriginalSenService.isThresholdSwitch(id)
+                    ? OriginalNpcProgress.readSwitch(player, id) : progress.switchValue(id);
+        }
 
         @Override
-        public void setSwitch(int id, boolean value) { progress.setSwitch(id, value); }
+        public void setSwitch(int id, boolean value) {
+            if (id == 24) session.commonEvents.setSwitchValue(id, value);
+            else if (yuki135.blacksouls.story.OriginalSenService.isThresholdSwitch(id)) OriginalNpcProgress.writeSwitch(player, id, value);
+            else progress.setSwitch(id, value);
+        }
 
         @Override
         public long variable(int id) { return OriginalNpcProgress.readVariable(player, id); }
 
         @Override
         public void setVariable(int id, long value) { OriginalNpcProgress.writeVariable(player, id, value); }
+
+        @Override
+        public void afterVariableOperation(int id, int operation, long operand, long before, long after) {
+            if (id == 38) yuki135.blacksouls.story.OriginalSenService.afterVariableOperation(player, operation, operand, before, after);
+        }
 
         @Override
         public List<BSOriginalNpcData.Command> commonEvent(int id) { return BSOriginalNpcData.commonEvent(id); }
@@ -547,6 +578,18 @@ public final class TurnBattleManager {
                 }
                 return 0;
             }
+            if (command == 334) {
+                for (EntityTurnBattleMonster enemy : enemies(slot)) {
+                    session.originalState.clearRecoverableStates(enemy);
+                    refreshOriginalParametersPreservingResources(enemy, session);
+                    if (!session.hiddenEnemyIds.contains(enemy.getUUID())
+                            && !session.originalState.hasState(enemy, 1)) {
+                        enemy.setTurnBattleHealth(enemy.getTurnBattleMaxHealth());
+                        enemy.setTurnBattleMana(enemy.getTurnBattleMaxMana());
+                    }
+                }
+                return 0;
+            }
             if (command == 333) {
                 int operation = parameters.get(1).getAsInt();
                 int state = parameters.get(2).getAsInt();
@@ -555,6 +598,8 @@ public final class TurnBattleManager {
                 }
                 for (EntityTurnBattleMonster enemy : enemies(slot)) {
                     if (operation == 0) {
+                        if (session.hiddenEnemyIds.contains(enemy.getUUID())
+                                || session.originalState.hasState(enemy, 1)) continue;
                         if (session.originalState.addStateDirect(enemy, state, player.getRandom()) && state == 1) {
                             enemy.setTurnBattleHealth(0.0D);
                         }
@@ -634,7 +679,7 @@ public final class TurnBattleManager {
             return false;
         }
         enemy.setInvisible(!id.equals(session.rootEnemyId));
-        refreshOriginalParameters(enemy, session);
+        refreshOriginalParametersPreservingResources(enemy, session);
         if (!session.resolving) {
             broadcastState(session, true, Component.literal(enemy.getDisplayName().getString() + "出现了！"),
                     true, ClientboundTurnBattlePacket.Outcome.NONE, 0L);
@@ -2291,18 +2336,18 @@ public final class TurnBattleManager {
         Component recovered = session.headSearch.onActionEnd(battleEnemy);
         if (action != null) {
             session.headSearch.onSkillUsed(action.skillId(), getAllEnemies(player, session), player.getRandom());
-            applyEnemyCommonEvents(player, action, session);
+            applyEnemyCommonEvents(player, action, session, result.selectedPlayerTargets());
         }
         if (!stateEnd.getString().isEmpty()) {
             result = new EnemyActionResult(Component.literal(result.message().getString() + "\n" + stateEnd.getString()),
-                    result.followUpSkillId());
+                    result.followUpSkillId(), result.selectedPlayerTargets());
         }
         if (searching && !recovered.getString().isEmpty()) {
             return new EnemyActionResult(recovered, 0);
         }
         return recovered.getString().isEmpty() ? result
                 : new EnemyActionResult(Component.literal(result.message().getString() + "\n" + recovered.getString()),
-                result.followUpSkillId());
+                result.followUpSkillId(), result.selectedPlayerTargets());
     }
 
     private static EnemyActionResult resolveEnemyAction(ServerPlayer player,
@@ -2391,7 +2436,10 @@ public final class TurnBattleManager {
         }
         List<LivingEntity> targets = EnemyTargetSelector.select(action.scope(), caster, allies, opponents,
                 entity -> battleAlive(entity, session), entity -> battleTargetRate(entity, session), observer.getRandom());
-        return executeOriginalSkillTargets(observer, caster, action, targets, guard, session, true);
+        List<UUID> selectedPlayers = targets.stream().filter(ServerPlayer.class::isInstance)
+                .map(LivingEntity::getUUID).distinct().toList();
+        EnemyActionResult result = executeOriginalSkillTargets(observer, caster, action, targets, guard, session, true);
+        return new EnemyActionResult(result.message(), result.followUpSkillId(), selectedPlayers);
     }
 
     private static EnemyActionResult executeOriginalSkillTargets(ServerPlayer observer, LivingEntity caster,
@@ -2731,7 +2779,8 @@ public final class TurnBattleManager {
         }
     }
 
-    private static void applyEnemyCommonEvents(ServerPlayer observer, BSOriginalEnemyData.Action action, Session session) {
+    private static void applyEnemyCommonEvents(ServerPlayer observer, BSOriginalEnemyData.Action action, Session session,
+                                               List<UUID> selectedPlayerTargets) {
         BSOriginalSkillData.Entry skill = BSOriginalSkillData.get(action.skillId());
         if (skill == null) {
             return;
@@ -2741,7 +2790,52 @@ public final class TurnBattleManager {
             if (effect.code() != 44 || effect.dataId() == 44) {
                 continue;
             }
+            if ((effect.dataId() == 65 || effect.dataId() == 72 || effect.dataId() == 218 || effect.dataId() == 344) && (session.partyMembers.stream()
+                    .map(id -> observer.server.getPlayerList().getPlayer(id))
+                    .noneMatch(member -> member != null && battleAlive(member, session))
+                    || allEnemiesDefeated(observer, session))) {
+                continue;
+            }
+            if (effect.dataId() == 65) {
+                if (session.troopRunner != null && !session.troopRunner.reserveCommonEvent(65)) {
+                    BlackSouls.LOGGER.warn("Rejected complete original enemy common event65 for troop {}", session.originalTroopId);
+                }
+                continue;
+            }
+            List<ServerPlayer> affectedPlayers = selectedPlayerTargets.stream()
+                    .map(id -> observer.server.getPlayerList().getPlayer(id))
+                    .filter(member -> member != null && session.partyMembers.contains(member.getUUID())
+                            && member.serverLevel() == observer.serverLevel() && !member.isSpectator()).toList();
             session.commonEvents.execute(effect.dataId(), new EnemyCommonEvents.Context() {
+                @Override
+                public void setInformationEnabled(boolean enabled) {
+                    OriginalNpcProgress.get(observer.server).setSwitch(22, enabled);
+                }
+
+                @Override
+                public void operatePlayerVariable(int variableId, int operation, long operand) {
+                    if (variableId != 38 || operation != 0 || operand != 100) {
+                        throw new UnsupportedOperationException("enemy_sen_assignment");
+                    }
+                    for (ServerPlayer member : affectedPlayers) {
+                        long before = OriginalNpcProgress.readVariable(member, variableId);
+                        long value = yuki135.blacksouls.story.OriginalVariableOperation.apply(before, operation, operand);
+                        OriginalNpcProgress.writeVariable(member, variableId, value);
+                        yuki135.blacksouls.story.OriginalSenService.afterVariableOperation(member, operation, operand,
+                                before, OriginalNpcProgress.readVariable(member, variableId));
+                    }
+                }
+
+                @Override
+                public void reduceActorSkillCooldowns(int rounds) {
+                    if (rounds != 99) {
+                        throw new UnsupportedOperationException("enemy_actor_cooldown_amount");
+                    }
+                    for (Map<String, Integer> cooldowns : session.playerSkillCooldowns.values()) {
+                        cooldowns.replaceAll((skillId, remaining) -> remaining - rounds);
+                    }
+                }
+
                 @Override
                 public boolean hasEnemyState(int enemyIndex, int stateId) {
                     return enemyIndex >= 0 && enemyIndex < enemies.size()
@@ -2763,6 +2857,20 @@ public final class TurnBattleManager {
                             }
                         }
                         refreshOriginalParameters(target, session);
+                    }
+                }
+
+                @Override
+                public void changeEnemyHealth(int enemyIndex, long amount, boolean allowDeath) {
+                    List<EntityTurnBattleMonster> targets = enemyIndex == -1 ? enemies
+                            : enemyIndex >= 0 && enemyIndex < enemies.size() ? List.of(enemies.get(enemyIndex)) : List.of();
+                    for (EntityTurnBattleMonster target : targets) {
+                        if (target.isTurnBattleDefeated()) continue;
+                        double hp = target.getTurnBattleHealth() + amount;
+                        target.setTurnBattleHealth(allowDeath ? hp : Math.max(1.0D, hp));
+                        if (target.isTurnBattleDefeated()) {
+                            session.enemyStates.computeIfAbsent(target.getUUID(), ignored -> new HashSet<>()).add(1);
+                        }
                     }
                 }
             });
@@ -2824,6 +2932,15 @@ public final class TurnBattleManager {
         }
         return Math.max(parameter == 1 ? 0.0D : 1.0D,
                 Math.floor(value * (parameter <= 1 ? 1.0D : session.originalState.parameterRate(entity, parameter))));
+    }
+
+    private static void refreshOriginalParametersPreservingResources(EntityTurnBattleMonster enemy, Session session) {
+        if (enemy instanceof EntityOriginalDatabaseEnemy original) {
+            original.setTurnBattleParameterRatesPreservingResources(
+                    session.originalState.parameterRate(enemy, 0), session.originalState.parameterRate(enemy, 1));
+        } else {
+            refreshOriginalParameters(enemy, session);
+        }
     }
 
     private static void refreshOriginalParameters(LivingEntity entity, Session session) {
@@ -4016,7 +4133,14 @@ public final class TurnBattleManager {
                                       int selection, int targetIndex) {
     }
 
-    private record EnemyActionResult(Component message, int followUpSkillId) {
+    private record EnemyActionResult(Component message, int followUpSkillId, List<UUID> selectedPlayerTargets) {
+        private EnemyActionResult {
+            selectedPlayerTargets = List.copyOf(selectedPlayerTargets);
+        }
+
+        private EnemyActionResult(Component message, int followUpSkillId) {
+            this(message, followUpSkillId, List.of());
+        }
     }
 
     private record HitValue(double damage, boolean critical) {

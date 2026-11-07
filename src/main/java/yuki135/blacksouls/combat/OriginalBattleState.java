@@ -73,6 +73,19 @@ public final class OriginalBattleState {
         return removed;
     }
 
+    public void clearRecoverableStates(LivingEntity entity) {
+        Set<Integer> states = activeStates.get(entity.getUUID());
+        if (states == null) return;
+        Map<Integer, StateDuration> durations = stateDurations.get(entity.getUUID());
+        for (int stateId : List.copyOf(states)) {
+            BSOriginalCombatData.State state = BSOriginalCombatData.state(stateId);
+            if (state != null && !state.note().contains("[全回復無効ステート]")) {
+                states.remove(stateId);
+                if (durations != null) durations.remove(stateId);
+            }
+        }
+    }
+
     public boolean hasState(LivingEntity entity, int stateId) {
         return activeStates.getOrDefault(entity.getUUID(), Set.of()).contains(stateId);
     }

@@ -17,6 +17,7 @@ public final class OriginalTroopEventRunner {
     private final Context context;
     private final boolean[] executed;
     private OriginalNpcInterpreter interpreter;
+    private List<BSOriginalNpcData.Command> reservedCommonCommands;
     private Step pending;
     private int pageIndex = -1;
     private int turnCount;
@@ -30,6 +31,22 @@ public final class OriginalTroopEventRunner {
         executed = new boolean[troop.pages().size()];
     }
 
+    public boolean reserveCommonEvent(int commonId) {
+        List<BSOriginalNpcData.Command> commands = context.commonEvent(commonId);
+        if (commands == null) return false;
+        try {
+            validateCommands(commands, new HashSet<>(), 0, "common:" + commonId + ":");
+        } catch (UnsupportedOperationException | IllegalArgumentException | IllegalStateException exception) {
+            return false;
+        }
+        reservedCommonCommands = List.copyOf(commands);
+        return true;
+    }
+
+    public boolean hasReservedCommonEvent() {
+        return reservedCommonCommands != null;
+    }
+
     public Step pump() {
         if (pending != null) {
             return pending;
@@ -37,22 +54,29 @@ public final class OriginalTroopEventRunner {
         for (int pages = 0; pages < PAGE_BUDGET; pages++) {
             if (interpreter == null) {
                 try {
-                    pageIndex = selectPage();
-                    if (pageIndex < 0) {
-                        return idle();
+                    if (reservedCommonCommands != null) {
+                        List<BSOriginalNpcData.Command> commands = reservedCommonCommands;
+                        reservedCommonCommands = null;
+                        pageIndex = -1;
+                        interpreter = new OriginalNpcInterpreter(commands, context);
+                    } else {
+                        pageIndex = selectPage();
+                        if (pageIndex < 0) {
+                            return idle();
+                        }
+                        BSOriginalTroopData.Page page = troop.pages().get(pageIndex);
+                        if (page.span() < 0 || page.span() > 2) {
+                            throw new UnsupportedOperationException("span:" + page.span());
+                        }
+                        if (page.span() <= 1) {
+                            executed[pageIndex] = true;
+                        }
+                        List<BSOriginalNpcData.Command> commands = page.commands().stream()
+                                .map(command -> new BSOriginalNpcData.Command(command.code(), command.indent(), command.parameters()))
+                                .toList();
+                        validateCommands(commands, new HashSet<>(), 0, "");
+                        interpreter = new OriginalNpcInterpreter(commands, context);
                     }
-                    BSOriginalTroopData.Page page = troop.pages().get(pageIndex);
-                    if (page.span() < 0 || page.span() > 2) {
-                        throw new UnsupportedOperationException("span:" + page.span());
-                    }
-                    if (page.span() <= 1) {
-                        executed[pageIndex] = true;
-                    }
-                    List<BSOriginalNpcData.Command> commands = page.commands().stream()
-                            .map(command -> new BSOriginalNpcData.Command(command.code(), command.indent(), command.parameters()))
-                            .toList();
-                    validateCommands(commands, new HashSet<>(), 0, "");
-                    interpreter = new OriginalNpcInterpreter(commands, context);
                 } catch (UnsupportedOperationException | IllegalArgumentException | IllegalStateException exception) {
                     return blocked(exception.getMessage());
                 }

@@ -118,6 +118,13 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
         setTurnBattleMana(getTurnBattleMana());
     }
 
+    public void setTurnBattleParameterRatesPreservingResources(double healthRate, double manaRate) {
+        this.turnBattleHealthRate = Math.max(0.000001D, healthRate);
+        this.turnBattleManaRate = Math.max(0.0D, manaRate);
+        setAttributeBase(Attributes.MAX_HEALTH, getTurnBattleMaxHealth());
+        syncVanillaHealth(TurnBattleManager.isInBattle(this));
+    }
+
     private void syncVanillaHealth(boolean keepAlive) {
         super.setHealth(this.turnBattleHealth <= 0.0D && !keepAlive ? 0.0F
                 : (float) Math.max(1.0D, Math.min(getMaxHealth(), this.turnBattleHealth)));

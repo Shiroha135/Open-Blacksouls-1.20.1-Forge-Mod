@@ -50,12 +50,12 @@ public final class OriginalNpcMovementData extends SavedData {
                 if (!value.contains("Motion", Tag.TAG_BYTE_ARRAY)) throw new IllegalArgumentException("Invalid original movement motion");
                 ticket.motion = OriginalNpcMotion.restore(JsonParser.parseString(new String(value.getByteArray("Motion"), StandardCharsets.UTF_8)).getAsJsonObject());
                 if (!ticket.gravityCaptured || ticket.complete || ticket.motion.complete()
-                        || ticket.sourceMap != 62 && !(ticket.sourceMap == 37 && ticket.npcId.equals("map037_ev053")
+                        || ticket.sourceMap != 62 && !(ticket.sourceMap == 37 && (ticket.npcId.equals("map037_ev053") || OriginalPoolCrowdSurface.isCrowd(ticket.npcId))
                         && ticket.dimension.equals(yuki135.blacksouls.util.HokoniwaDestination.DIMENSION.location().toString())
-                        && OriginalNpcMovementService.isDodoLocalPosition(ticket.motion.x(), ticket.motion.z())
-                        && OriginalNpcMovementService.isDodoLocalPosition(ticket.motion.snapshot().get("startX").getAsDouble(),
+                        && OriginalNpcMovementService.isOriginalMap37Position(ticket.npcId, ticket.motion.x(), ticket.motion.z())
+                        && OriginalNpcMovementService.isOriginalMap37Position(ticket.npcId, ticket.motion.snapshot().get("startX").getAsDouble(),
                         ticket.motion.snapshot().get("startZ").getAsDouble())
-                        && OriginalNpcMovementService.isDodoLocalPosition(ticket.motion.snapshot().get("targetX").getAsDouble(),
+                        && OriginalNpcMovementService.isOriginalMap37Position(ticket.npcId, ticket.motion.snapshot().get("targetX").getAsDouble(),
                         ticket.motion.snapshot().get("targetZ").getAsDouble()))) throw new IllegalArgumentException("Invalid active original motion phase");
             }
             if (!ticket.replacement.isEmpty()) UUID.fromString(ticket.replacement);

@@ -80,6 +80,12 @@
       "model": "愚鸟渡渡"
     },
     {
+      "npcId": "map037_ev076",
+      "characterName": "$チェシャ",
+      "characterIndex": 0,
+      "model": "柴郡猫"
+    },
+    {
       "npcId": "map039_ev153",
       "characterName": "$紅",
       "characterIndex": 0,

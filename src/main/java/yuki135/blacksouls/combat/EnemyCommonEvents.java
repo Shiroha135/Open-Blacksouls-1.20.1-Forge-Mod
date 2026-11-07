@@ -13,6 +13,7 @@ import java.util.Map;
 public final class EnemyCommonEvents {
     private static final int MAX_COMMANDS = 512;
     private static final int MAX_BRANCH_DEPTH = 32;
+    private static final String ACTOR_COOLDOWN_SCRIPT = "$game_temp.actor_loss_cool_time(99)";
     private final Map<Integer, BSOriginalCommonEventData.Entry> events;
     private final Map<Integer, Boolean> switches = new HashMap<>();
 
@@ -26,6 +27,11 @@ public final class EnemyCommonEvents {
 
     public boolean switchValue(int switchId) {
         return switches.getOrDefault(switchId, false);
+    }
+
+    public void setSwitchValue(int switchId, boolean value) {
+        if (!id(switchId)) throw new IllegalArgumentException("enemy_switch_id");
+        switches.put(switchId, value);
     }
 
     public boolean supports(int eventId) {
@@ -51,8 +57,18 @@ public final class EnemyCommonEvents {
                 enabled = branches.pop().parentEnabled();
             } else if (enabled && command.code() == 121) {
                 for (int id = integer(parameters, 0); id <= integer(parameters, 1); id++) {
-                    switches.put(id, integer(parameters, 2) == 0);
+                    boolean enabledValue = integer(parameters, 2) == 0;
+                    switches.put(id, enabledValue);
+                    if (id == 22) context.setInformationEnabled(enabledValue);
                 }
+            } else if (enabled && command.code() == 122) {
+                context.operatePlayerVariable(integer(parameters, 0), integer(parameters, 2), integer(parameters, 4));
+            } else if (enabled && command.code() == 331) {
+                long value = integer(parameters, 3);
+                context.changeEnemyHealth(integer(parameters, 0), integer(parameters, 1) == 0 ? value : -value,
+                        parameters.get(4).getAsBoolean());
+            } else if (enabled && command.code() == 355) {
+                context.reduceActorSkillCooldowns(99);
             } else if (enabled && command.code() == 333) {
                 context.changeEnemyState(integer(parameters, 0), integer(parameters, 1) == 1,
                         integer(parameters, 2));
@@ -109,10 +125,32 @@ public final class EnemyCommonEvents {
                             return false;
                         }
                     }
+                    case 122 -> {
+                        if (parameters.size() != 5 || integer(parameters, 0) != 38 || integer(parameters, 1) != 38
+                                || integer(parameters, 2) != 0 || integer(parameters, 3) != 0 || integer(parameters, 4) != 100) {
+                            return false;
+                        }
+                    }
+                    case 331 -> {
+                        if (parameters.size() != 5 || integer(parameters, 0) < -1
+                                || integer(parameters, 0) > 999 || !operation(integer(parameters, 1))
+                                || integer(parameters, 2) != 0 || integer(parameters, 3) < 0
+                                || !parameters.get(4).isJsonPrimitive()
+                                || !parameters.get(4).getAsJsonPrimitive().isBoolean()) {
+                            return false;
+                        }
+                    }
                     case 333 -> {
                         if (parameters.size() != 3 || integer(parameters, 0) < -1
                                 || integer(parameters, 0) > 999 || !operation(integer(parameters, 1))
                                 || !id(integer(parameters, 2))) {
+                            return false;
+                        }
+                    }
+                    case 355 -> {
+                        if (parameters.size() != 1 || !parameters.get(0).isJsonPrimitive()
+                                || !parameters.get(0).getAsJsonPrimitive().isString()
+                                || !ACTOR_COOLDOWN_SCRIPT.equals(parameters.get(0).getAsString())) {
                             return false;
                         }
                     }
@@ -192,5 +230,21 @@ public final class EnemyCommonEvents {
         boolean hasEnemyState(int enemyIndex, int stateId);
 
         void changeEnemyState(int enemyIndex, boolean remove, int stateId);
+
+        default void setInformationEnabled(boolean enabled) {
+            throw new UnsupportedOperationException("enemy_information_switch");
+        }
+
+        default void operatePlayerVariable(int variableId, int operation, long operand) {
+            throw new UnsupportedOperationException("enemy_player_variable");
+        }
+
+        default void reduceActorSkillCooldowns(int rounds) {
+            throw new UnsupportedOperationException("enemy_actor_cooldown");
+        }
+
+        default void changeEnemyHealth(int enemyIndex, long amount, boolean allowDeath) {
+            throw new UnsupportedOperationException("enemy_hp_command");
+        }
     }
 }

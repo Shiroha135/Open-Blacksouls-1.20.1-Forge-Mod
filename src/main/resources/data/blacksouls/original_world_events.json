@@ -23,6 +23,10 @@
     {
       "path": "D:/BLACK SOULS II/Data/Map063.rvdata2",
       "sha256": "4fba078983fadc9ff2864778ac01e45e36f41227c6e960f7b0c6aab64a087627"
+    },
+    {
+      "path": "D:/BLACK SOULS II/Data/Map031.rvdata2",
+      "sha256": "4217495f9958f52af1566465b270d9a8f0beb601f851fe40e43906ed51758648"
     }
   ],
   "events": [
@@ -2351,6 +2355,96 @@
               "indent": 0,
               "parameters": [
                 6
+              ]
+            },
+            {
+              "code": 0,
+              "indent": 0,
+              "parameters": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "map031_ev023",
+      "mapId": 31,
+      "eventId": 23,
+      "name": "EV023",
+      "x": 63,
+      "y": 25,
+      "role": "native_block",
+      "pages": [
+        {
+          "condition": {
+            "switch1_valid": false,
+            "switch2_valid": false,
+            "variable_valid": false,
+            "self_switch_valid": false,
+            "item_valid": false,
+            "actor_valid": false,
+            "switch1_id": 1,
+            "switch2_id": 1,
+            "variable_id": 1,
+            "variable_value": 0,
+            "self_switch_ch": "A",
+            "item_id": 1,
+            "actor_id": 1,
+            "_class": "RPG::Event::Page::Condition"
+          },
+          "graphic": {
+            "tile_id": 0,
+            "character_name": "$釣竿",
+            "character_index": 0,
+            "direction": 6,
+            "pattern": 0,
+            "_class": "RPG::Event::Page::Graphic"
+          },
+          "move_type": 0,
+          "move_speed": 3,
+          "move_frequency": 3,
+          "move_route": {
+            "repeat": true,
+            "skippable": false,
+            "wait": false,
+            "list": [
+              {
+                "code": 0,
+                "parameters": [],
+                "_class": "RPG::MoveCommand"
+              }
+            ],
+            "_class": "RPG::MoveRoute"
+          },
+          "walk_anime": false,
+          "step_anime": true,
+          "direction_fix": true,
+          "through": false,
+          "priority_type": 1,
+          "trigger": 0,
+          "commands": [
+            {
+              "code": 101,
+              "indent": 0,
+              "parameters": [
+                "",
+                0,
+                1,
+                2
+              ]
+            },
+            {
+              "code": 401,
+              "indent": 0,
+              "parameters": [
+                "是钓竿。"
+              ]
+            },
+            {
+              "code": 401,
+              "indent": 0,
+              "parameters": [
+                "上面的线怎么拉都一动不动。"
               ]
             },
             {

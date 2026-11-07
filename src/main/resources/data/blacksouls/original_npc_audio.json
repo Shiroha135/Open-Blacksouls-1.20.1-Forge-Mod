@@ -1252,6 +1252,10 @@
     }
   },
   "se": {
+    "gucha004a": {
+      "sound": "blacksouls:gucha004a",
+      "sourceFile": "gucha004a.wav"
+    },
     "Absorb1": {
       "sound": "blacksouls:absorb1",
       "sourceFile": "Absorb1.ogg"
@@ -1776,6 +1780,10 @@
       "sound": "blacksouls:heartbeat",
       "sourceFile": "心音.ogg"
     },
+    "猫": {
+      "sound": "blacksouls:original_cheshire_cat",
+      "sourceFile": "猫.mp3"
+    },
     "猫２": {
       "sound": "blacksouls:original_cheshire_cat_2",
       "sourceFile": "猫２.mp3"
@@ -1842,6 +1850,11 @@
       "sound": "blacksouls:original_world_move",
       "sourceFile": "Move.ogg",
       "sourceSha256": "f6d73ccc648a325201918697553bed06929593ddb1bf4d4b62c1a2564c7ada44"
+    },
+    "Decision1": {
+      "sound": "blacksouls:original_decision1",
+      "sourceFile": "Decision1.ogg",
+      "sourceSha256": "bb7ba5f298b46e45abbe13e3912c00be61da1fc2f970dffd51a286c02a956f2d"
     }
   }
 }

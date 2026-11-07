@@ -3,7 +3,6 @@ package yuki135.blacksouls.capability;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import yuki135.blacksouls.compat.scene.SceneSpawnerBossData;
-import yuki135.blacksouls.util.PlayerStatService;
 import yuki135.blacksouls.story.OriginalBattleMusic;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -143,11 +142,7 @@ public final class OriginalNpcProgress extends SavedData {
             }
         }
         if (id == 38) {
-            BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY)
-                    .orElseThrow(() -> new IllegalStateException("Missing original player stats"));
-            long target = Math.max(Integer.MIN_VALUE, Math.min(Integer.MAX_VALUE, value));
-            PlayerStatService.addSen(player, (int) Math.max(Integer.MIN_VALUE,
-                    Math.min(Integer.MAX_VALUE, target - stats.sen)));
+            yuki135.blacksouls.story.OriginalSenService.writeValue(player, value);
         } else if (id == 11) {
             SceneSpawnerBossData.get(player.server).setStoryProgress((int) Math.max(0L,
                     Math.min(Integer.MAX_VALUE, value)));
@@ -160,6 +155,9 @@ public final class OriginalNpcProgress extends SavedData {
     }
 
     public static boolean readSwitch(ServerPlayer player, int id) {
+        if (yuki135.blacksouls.story.OriginalSenService.isThresholdSwitch(id)) {
+            return yuki135.blacksouls.story.OriginalSenService.thresholdValue(player, id);
+        }
         var covenant = yuki135.blacksouls.util.OriginalCovenantData.forSwitch(id);
         if (covenant != null && covenant.commonEvent() != 80) {
             BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original covenant stats"));
@@ -173,6 +171,10 @@ public final class OriginalNpcProgress extends SavedData {
     }
 
     public static void writeSwitch(ServerPlayer player, int id, boolean value) {
+        if (yuki135.blacksouls.story.OriginalSenService.isThresholdSwitch(id)) {
+            yuki135.blacksouls.story.OriginalSenService.writeThreshold(player, id, value);
+            return;
+        }
         var covenant = yuki135.blacksouls.util.OriginalCovenantData.forSwitch(id);
         BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original covenant stats"));
         if (covenant != null && covenant.commonEvent() != 80) {
@@ -228,6 +230,10 @@ public final class OriginalNpcProgress extends SavedData {
             timedWaits.put(key, timedWait(snapshot));
             setDirty();
         }
+    }
+
+    public boolean hasConversation(Set<String> eventIds) {
+        return conversations.keySet().stream().anyMatch(key -> eventIds.stream().anyMatch(id -> key.endsWith(":" + id)));
     }
 
     public boolean hasOtherConversation(UUID playerId, Set<String> eventIds) {

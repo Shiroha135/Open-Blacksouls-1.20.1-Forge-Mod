@@ -26,6 +26,7 @@ public final class OriginalWorldTransferService {
                 || pending(player) || !validDestination(player, destination)) throw new UnsupportedOperationException("original_world_transfer_context");
         if (fade == 2) {
             transfer(player, destination, yaw);
+            OriginalPoolCrowdVisitService.transferred(player, source.getNpcId(), destination);
             return 0;
         }
         var data = OriginalWorldTransferData.get(player.server);
@@ -70,6 +71,7 @@ public final class OriginalWorldTransferService {
                 ticket.elapsed++;
                 if (!ticket.transferred && ticket.elapsed == OUT_FRAMES) {
                     transfer(player, ticket.destination, ticket.yaw);
+                    OriginalPoolCrowdVisitService.transferred(player, ticket.sourceEvent, ticket.destination);
                     ticket.transferred = true;
                 }
                 if (!ticket.fadeInSent && ticket.elapsed == IN_START_FRAME) {
@@ -108,7 +110,9 @@ public final class OriginalWorldTransferService {
 
     private static void transfer(ServerPlayer player, Vec3 destination, float yaw) {
         player.stopRiding();
+        OriginalSkillAcquisitionService.clear(player);
         player.connection.teleport(destination.x, destination.y, destination.z, yaw, player.getXRot());
+        OriginalNpcSymbolService.synchronizeStealthAnchor(player);
         player.setDeltaMovement(Vec3.ZERO);
         player.fallDistance = 0;
         player.setOnGround(true);

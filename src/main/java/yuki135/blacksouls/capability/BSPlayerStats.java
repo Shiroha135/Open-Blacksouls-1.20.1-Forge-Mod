@@ -47,6 +47,8 @@ public class BSPlayerStats {
     public double currentActionPoints = 1.0;
 
     public int sen = 100;
+    public boolean originalSenThresholdsKnown = true;
+    public int originalSenThresholdMask;
 
     public double burnRate = 0.0;
     public double hpRegenRate = 0.0;
@@ -162,6 +164,12 @@ public class BSPlayerStats {
         nbt.putDouble("BonusLUC", bonusLuc);
         nbt.putDouble("BonusSPEED", bonusSpeed);
         nbt.putInt("Sen", sen);
+        if (originalSenThresholdsKnown) {
+            CompoundTag originalSen = new CompoundTag();
+            originalSen.putInt("Version", 1);
+            originalSen.putInt("ThresholdMask", originalSenThresholdMask);
+            nbt.put("OriginalSen", originalSen);
+        }
         nbt.putBoolean("HasVisitedLibrary", this.hasVisitedLibrary);
         nbt.putBoolean("WhiteBearIntroduced", this.whiteBearIntroduced);
         nbt.putBoolean("WhiteBearFreeSoulsClaimed", this.whiteBearFreeSoulsClaimed);
@@ -249,6 +257,16 @@ public class BSPlayerStats {
 
     @SuppressWarnings("removal")
     public void deserializeNBT(CompoundTag nbt) {
+        if (nbt.contains("OriginalSen") && !nbt.contains("OriginalSen", Tag.TAG_COMPOUND)) {
+            throw new IllegalArgumentException("Invalid original SEN state type");
+        }
+        CompoundTag originalSen = nbt.getCompound("OriginalSen");
+        if (nbt.contains("OriginalSen") && (!originalSen.getAllKeys().equals(java.util.Set.of("Version", "ThresholdMask"))
+                || !originalSen.contains("Version", Tag.TAG_INT) || originalSen.getInt("Version") != 1
+                || !originalSen.contains("ThresholdMask", Tag.TAG_INT) || originalSen.getInt("ThresholdMask") < 0
+                || originalSen.getInt("ThresholdMask") > 7)) {
+            throw new IllegalArgumentException("Invalid original SEN state");
+        }
         if (nbt.contains("OriginalSpiritState") && !nbt.contains("OriginalSpiritState", Tag.TAG_COMPOUND)) {
             throw new IllegalArgumentException("Invalid original spirit state type");
         }
@@ -307,6 +325,8 @@ public class BSPlayerStats {
         this.bonusLuc = nbt.getDouble("BonusLUC");
         this.bonusSpeed = nbt.getDouble("BonusSPEED");
         this.sen = nbt.getInt("Sen");
+        this.originalSenThresholdsKnown = nbt.contains("OriginalSen");
+        this.originalSenThresholdMask = originalSen.getInt("ThresholdMask");
         this.hasVisitedLibrary = nbt.getBoolean("HasVisitedLibrary");
         this.whiteBearIntroduced = nbt.getBoolean("WhiteBearIntroduced");
         this.whiteBearFreeSoulsClaimed = nbt.getBoolean("WhiteBearFreeSoulsClaimed");

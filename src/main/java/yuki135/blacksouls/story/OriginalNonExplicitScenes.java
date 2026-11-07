@@ -2,6 +2,7 @@ package yuki135.blacksouls.story;
 
 import yuki135.blacksouls.util.BSOriginalNpcData;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.InputStreamReader;
@@ -46,6 +47,27 @@ public final class OriginalNonExplicitScenes {
 
     public static boolean isScene(List<BSOriginalNpcData.Command> commands) {
         return SCENE_COMMANDS.contains(commands);
+    }
+
+    public static boolean isOmittedCheckpoint(JsonObject snapshot) {
+        try {
+            var frames = snapshot.getAsJsonArray("frames");
+            if (frames == null || frames.isEmpty()) return false;
+            var frame = frames.get(0).getAsJsonObject();
+            List<BSOriginalNpcData.Command> commands = new ArrayList<>();
+            for (var element : frame.getAsJsonArray("commands")) {
+                var command = element.getAsJsonObject();
+                commands.add(new BSOriginalNpcData.Command(command.get("code").getAsInt(),
+                        command.get("indent").getAsInt(), command.getAsJsonArray("parameters").asList()));
+            }
+            int position = frame.get("position").getAsInt();
+            if (position < 0 || position > commands.size()) return false;
+            boolean entireScene = frame.has("omittedScene") && frame.get("omittedScene").getAsBoolean() || isScene(commands);
+            boolean[] omitted = omittedCommands(commands, entireScene);
+            return position < omitted.length && omitted[position] || position > 0 && omitted[position - 1];
+        } catch (RuntimeException invalid) {
+            return false;
+        }
     }
 
     public static boolean[] omittedCommands(List<BSOriginalNpcData.Command> commands, boolean entireScene) {

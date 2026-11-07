@@ -321,7 +321,7 @@ public final class OriginalNpcInterpreter {
                                 || operation < 0 || operation > 1 || skill < 1) throw new UnsupportedOperationException("actor_skill_parameters");
                         int resolved = mode == 0 ? actor : Math.toIntExact(context.variable(actor));
                         if (resolved < 0) throw new UnsupportedOperationException("actor_skill_actor");
-                        context.changeSkill(resolved, skill, operation == 0);
+                        context.changeSkill(resolved, skill, operation == 0, actor);
                     }
                     case 355 -> {
                         StringBuilder script = new StringBuilder(text(p, 0));
@@ -345,6 +345,10 @@ public final class OriginalNpcInterpreter {
                         if (script.toString().equals("call_keep")) {
                             context.openItemKeep();
                             return emit(Type.ITEM_KEEP, "", "", 0, List.of(), List.of(), "");
+                        }
+                        if (script.toString().equals("reset_stealth")) {
+                            context.resetStealth();
+                            break;
                         }
                         if (script.toString().equals("SceneManager.call(Scene_ItemSynthesis)")) {
                             context.openSynthesis();
@@ -898,17 +902,7 @@ public final class OriginalNpcInterpreter {
         };
         range(integer(p, 0), integer(p, 1));
         for (int id = integer(p, 0); id <= integer(p, 1); id++) {
-            long previous = context.variable(id);
-            long result = switch (integer(p, 2)) {
-                case 0 -> value;
-                case 1 -> Math.addExact(previous, value);
-                case 2 -> Math.subtractExact(previous, value);
-                case 3 -> Math.multiplyExact(previous, value);
-                case 4 -> value == 0 ? 0 : Math.floorDiv(previous, value);
-                case 5 -> value == 0 ? 0 : Math.floorMod(previous, value);
-                default -> throw new UnsupportedOperationException("variable_operation:" + integer(p, 2));
-            };
-            context.setVariable(id, result);
+            context.operateVariable(id, integer(p, 2), value);
         }
     }
 
@@ -1037,6 +1031,14 @@ public final class OriginalNpcInterpreter {
             throw new UnsupportedOperationException("unmapped_actor_skill:" + actorId + ":" + skillId);
         }
 
+        default void changeSkill(int actorId, int skillId, boolean learn, int sourceActorOperand) {
+            changeSkill(actorId, skillId, learn);
+        }
+
+        default void resetStealth() {
+            throw new UnsupportedOperationException("original_stealth_reset");
+        }
+
         default int transfer(int map, int x, int y, int direction, int fade) {
             throw new UnsupportedOperationException("original_transfer:" + map + ":" + x + ":" + y);
         }
@@ -1082,6 +1084,15 @@ public final class OriginalNpcInterpreter {
         void setSwitch(int id, boolean value);
         long variable(int id);
         void setVariable(int id, long value);
+        default void operateVariable(int id, int operation, long resolvedOperand) {
+            long before = variable(id);
+            long result = OriginalVariableOperation.apply(before, operation, resolvedOperand);
+            setVariable(id, result);
+            afterVariableOperation(id, operation, resolvedOperand, before, variable(id));
+        }
+
+        default void afterVariableOperation(int id, int operation, long resolvedOperand, long before, long after) {
+        }
         boolean selfSwitch(String key);
         void setSelfSwitch(String key, boolean value);
         long gold();

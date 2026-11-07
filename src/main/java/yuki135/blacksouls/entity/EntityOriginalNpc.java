@@ -4,6 +4,8 @@ import yuki135.blacksouls.story.OriginalNpcService;
 import yuki135.mmdskin.render.entity.CustomEntityRenderStateProvider;
 import yuki135.blacksouls.story.OriginalNpcMovementService;
 import yuki135.blacksouls.story.OriginalNpcAutonomousRoute;
+import yuki135.blacksouls.story.OriginalPoolCrowdMovementService;
+import yuki135.blacksouls.story.OriginalPoolCrowdSurface;
 import yuki135.blacksouls.util.BSOriginalNpcData;
 import yuki135.blacksouls.util.OriginalNpcTextures;
 import com.google.gson.JsonObject;
@@ -40,9 +42,11 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
             EntityOriginalNpc.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<CompoundTag> ROUTE_STATE = SynchedEntityData.defineId(
             EntityOriginalNpc.class, EntityDataSerializers.COMPOUND_TAG);
+    private static final EntityDataAccessor<Boolean> STATIC_MAP_PROXY = SynchedEntityData.defineId(
+            EntityOriginalNpc.class, EntityDataSerializers.BOOLEAN);
     private boolean erased;
     private String forcedRouteTicket = "";
-    private int routeAnimationCount;
+    private double routeAnimationCount;
     private int routeStopCount;
     private OriginalNpcAutonomousRoute autonomousRoute = new OriginalNpcAutonomousRoute();
 
@@ -81,6 +85,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         entityData.define(NPC_ID, "");
         entityData.define(PAGE, -1);
         entityData.define(ROUTE_STATE, initialRouteState());
+        entityData.define(STATIC_MAP_PROXY, false);
     }
 
     public String getNpcId() {
@@ -97,8 +102,31 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         entityData.set(SITTING, sitting);
     }
 
+    public boolean isStaticMapProxy() {
+        return entityData.get(STATIC_MAP_PROXY);
+    }
+
+    public void setStaticMapProxy(boolean enabled) {
+        if (enabled && !yuki135.blacksouls.compat.scene.OriginalPoolCheshirePlacement.PROXY_ID.equals(getNpcId())) {
+            throw new IllegalArgumentException("Unsupported original static map proxy");
+        }
+        if (!enabled && isStaticMapProxy()) noPhysics = false;
+        entityData.set(STATIC_MAP_PROXY, enabled);
+        if (enabled) {
+            noPhysics = true;
+            setNoGravity(true);
+        }
+        updateRouteVisibility();
+    }
+
+    private boolean isNativeInteractionProxy() {
+        return isStaticMapProxy() || yuki135.blacksouls.util.OriginalWorldEventData.isNativeBlock(getNpcId());
+    }
+
     public void setNpcId(String id) {
+        setStaticMapProxy(false);
         OriginalNpcMovementService.clearAutonomousMotion(this);
+        applyOriginalPoolSurfaceSupport(false);
         autonomousRoute = new OriginalNpcAutonomousRoute();
         entityData.set(NPC_ID, BSOriginalNpcData.getEvent(id) == null ? "" : id);
         entityData.set(PAGE, -2);
@@ -209,8 +237,69 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         return entityData.get(ROUTE_STATE).getString("CharacterName");
     }
 
+    public int getRouteTileId() {
+        return entityData.get(ROUTE_STATE).getInt("TileId");
+    }
+
     public CompoundTag originalRouteState() {
         return entityData.get(ROUTE_STATE).copy();
+    }
+
+    public int getOriginalBushDepth() {
+        return entityData.get(ROUTE_STATE).getInt("OriginalBushDepth");
+    }
+
+    public int getOriginalShiftY() {
+        return entityData.get(ROUTE_STATE).getInt("OriginalShiftY");
+    }
+
+    public void setOriginalBushState(int depth, int shift) {
+        if (depth != 0 && depth != 8 || shift != 0 && shift != 4) throw new IllegalArgumentException("original_bush_state");
+        CompoundTag current = entityData.get(ROUTE_STATE);
+        if (current.getInt("OriginalBushDepth") == depth && current.getInt("OriginalShiftY") == shift) return;
+        CompoundTag state = current.copy();
+        state.putInt("OriginalBushDepth", depth);
+        state.putInt("OriginalShiftY", shift);
+        entityData.set(ROUTE_STATE, state);
+    }
+
+    public void applyOriginalPoolSurfaceSupport(boolean supported) {
+        CompoundTag current = entityData.get(ROUTE_STATE);
+        boolean captured = current.getBoolean("PoolSurfaceGravityCaptured");
+        if (supported) {
+            if (!captured || !current.getBoolean("PoolSurfaceWasActive")) {
+                CompoundTag state = current.copy();
+                if (!captured) state.putBoolean("PoolSurfaceOriginalNoGravity", isNoGravity());
+                state.putBoolean("PoolSurfaceGravityCaptured", true);
+                state.putBoolean("PoolSurfaceWasActive", true);
+                entityData.set(ROUTE_STATE, state);
+            }
+            setNoGravity(true);
+            setDeltaMovement(0.0D, 0.0D, 0.0D);
+            fallDistance = 0;
+        } else if (captured) {
+            setNoGravity(current.getBoolean("PoolSurfaceOriginalNoGravity"));
+            CompoundTag state = current.copy();
+            state.remove("PoolSurfaceGravityCaptured");
+            state.remove("PoolSurfaceOriginalNoGravity");
+            entityData.set(ROUTE_STATE, state);
+        }
+    }
+
+    public void resetOriginalVisitState() {
+        String ticket = forcedRouteTicket;
+        forcedRouteTicket = "";
+        OriginalNpcMovementService.clearAutonomousMotion(this);
+        OriginalNpcMovementService.cancelForVisitReset(this, ticket);
+        applyOriginalPoolSurfaceSupport(false);
+        autonomousRoute = new OriginalNpcAutonomousRoute();
+        erased = false;
+        routeAnimationCount = 0;
+        routeStopCount = 0;
+        entityData.set(ROUTE_STATE, initialRouteState());
+        entityData.set(PAGE, -2);
+        OriginalNpcMovementService.refreshAutonomousPage(this);
+        OriginalPoolCrowdMovementService.refreshBush(this);
     }
 
     public String forcedRouteTicket() {
@@ -230,7 +319,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     }
 
     public boolean hasOriginalAutonomy() {
-        return getNpcId().equals("map037_ev053");
+        return getNpcId().equals("map037_ev053") || OriginalPoolCrowdSurface.isCrowd(getNpcId());
     }
 
     public OriginalNpcAutonomousRoute originalAutonomousRoute() {
@@ -239,8 +328,12 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
 
     public void lockOriginalMovement(ServerPlayer player) {
         if (!hasOriginalAutonomy() || !autonomousRoute.lock(getSpriteDirection())) return;
-        double dx = player.getX() - getX(), dz = player.getZ() - getZ();
-        if (dx != 0 || dz != 0) {
+        boolean crowd = OriginalPoolCrowdSurface.isCrowd(getNpcId());
+        var anchor = crowd ? OriginalNpcMovementService.logicalPosition(this) : position();
+        double playerX = crowd ? player.blockPosition().getX() + 0.5D : player.getX();
+        double playerZ = crowd ? player.blockPosition().getZ() + 0.5D : player.getZ();
+        double dx = playerX - anchor.x, dz = playerZ - anchor.z;
+        if ((autonomousRoute.symbol() == null || !autonomousRoute.symbol().enabled()) && (dx != 0 || dz != 0)) {
             int direction = Math.abs(dx) > Math.abs(dz) ? dx > 0 ? 4 : 6 : dz > 0 ? 8 : 2;
             applyOriginalMoveCommand(direction == 2 ? 16 : direction == 4 ? 17 : direction == 6 ? 18 : 19, List.of());
         }
@@ -255,6 +348,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     private static CompoundTag initialRouteState() {
         CompoundTag state = new CompoundTag();
         state.putString("CharacterName", "");
+        state.putInt("TileId", 0);
         state.putInt("CharacterIndex", 0);
         state.putInt("Direction", 2);
         state.putInt("OriginalDirection", 2);
@@ -269,6 +363,8 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         state.putBoolean("Transparent", false);
         state.putInt("Opacity", 255);
         state.putInt("Blend", 0);
+        state.putInt("OriginalBushDepth", 0);
+        state.putInt("OriginalShiftY", 0);
         return state;
     }
 
@@ -276,6 +372,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         CompoundTag state = entityData.get(ROUTE_STATE).copy();
         JsonObject graphic = graphic();
         state.putString("CharacterName", graphic.get("character_name").getAsString());
+        state.putInt("TileId", graphic.has("tile_id") ? graphic.get("tile_id").getAsInt() : 0);
         state.putInt("CharacterIndex", graphic.has("character_index") ? graphic.get("character_index").getAsInt() : 0);
         BSOriginalNpcData.Page page = currentPage();
         if (page == null) {
@@ -304,6 +401,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         }
         entityData.set(ROUTE_STATE, state);
         if (hasOriginalAutonomy()) autonomousRoute.configure(page == null ? new JsonObject() : page.movement());
+        if (OriginalPoolCrowdSurface.isCrowd(getNpcId())) OriginalPoolCrowdMovementService.refreshBush(this);
     }
 
     public void applyOriginalMoveCommand(int code, List<JsonElement> parameters) {
@@ -332,6 +430,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
             case 39, 40 -> state.putBoolean("Transparent", code == 39);
             case 41 -> {
                 state.putString("CharacterName", parameters.get(0).getAsString());
+                state.putInt("TileId", 0);
                 state.putInt("CharacterIndex", parameters.get(1).getAsInt());
                 state.putInt("OriginalPattern", 1);
             }
@@ -350,8 +449,13 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     }
 
     public void advanceOriginalAnimationFrame() {
+        advanceOriginalAnimationFrame(false);
+    }
+
+    private void advanceOriginalAnimationFrame(boolean moving) {
         CompoundTag state = entityData.get(ROUTE_STATE);
-        if (state.getBoolean("StepAnimation") || state.getInt("Pattern") != state.getInt("OriginalPattern")) {
+        if (moving && state.getBoolean("WalkAnimation")) routeAnimationCount += 1.5D;
+        else if (state.getBoolean("StepAnimation") || state.getInt("Pattern") != state.getInt("OriginalPattern")) {
             routeAnimationCount++;
         }
         if (routeAnimationCount > 18 - state.getInt("MoveSpeed") * 2) {
@@ -370,33 +474,46 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         routeStopCount = stopCount;
     }
 
+    public void advanceOriginalAutonomousAnimationFrame(int stopCount, boolean moving) {
+        routeStopCount = stopCount;
+        advanceOriginalAnimationFrame(moving);
+        routeStopCount = stopCount;
+    }
+
     public void advanceOriginalForcedAnimationFrame(boolean moving) {
         if (!hasOriginalAutonomy()) {
             advanceOriginalAnimationFrame();
             return;
         }
-        advanceOriginalAutonomousAnimationFrame(autonomousRoute.stopCount());
+        if (OriginalPoolCrowdSurface.isCrowd(getNpcId())) advanceOriginalAutonomousAnimationFrame(autonomousRoute.stopCount(),
+                OriginalNpcMovementService.isOriginalWalking(this));
+        else advanceOriginalAutonomousAnimationFrame(autonomousRoute.stopCount());
         if (!moving) autonomousRoute.advanceStopFrame();
         routeStopCount = autonomousRoute.stopCount();
     }
 
     private void updateRouteVisibility() {
-        setInvisible(erased || yuki135.blacksouls.util.OriginalWorldEventData.isNativeBlock(getNpcId())
-                || entityData.get(ROUTE_STATE).getBoolean("Transparent") || getRouteCharacterName().isBlank());
+        setInvisible(erased || isNativeInteractionProxy()
+                || entityData.get(ROUTE_STATE).getBoolean("Transparent") || getRouteCharacterName().isBlank()
+                && yuki135.blacksouls.util.OriginalNpcTileGraphics.get(getNpcId(), getRouteTileId()) == null);
     }
 
     @Override
     public Component getName() {
         BSOriginalNpcData.Entry entry = BSOriginalNpcData.getEvent(getNpcId());
         return hasCustomName() ? getCustomName() : Component.literal(entry == null
-                || yuki135.blacksouls.util.OriginalWorldEventData.isNativeBlock(getNpcId()) ? "" : entry.name());
+                || isNativeInteractionProxy() ? "" : entry.name());
     }
 
     @Override
     public void tick() {
-        if (yuki135.blacksouls.util.OriginalWorldEventData.isNativeBlock(getNpcId())) {
+        if (isNativeInteractionProxy()) {
             noPhysics = true;
             setNoGravity(true);
+        }
+        if (!level().isClientSide()) {
+            OriginalPoolCrowdMovementService.beforeEntityTick(this);
+            yuki135.blacksouls.compat.scene.OriginalPoolCheshirePlacement.beforeEntityTick(this);
         }
         super.tick();
         setDeltaMovement(0.0D, onGround() ? 0.0D : getDeltaMovement().y, 0.0D);
@@ -409,7 +526,8 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         }
         if (!level().isClientSide() && tickCount % 20 == 0) {
             if (!OriginalNpcMovementService.refreshPageWhileForcing(this)) {
-                Player nearby = level().getNearestPlayer(this, 32.0D);
+                Player nearby = yuki135.blacksouls.compat.scene.OriginalPoolCheshirePlacement.isManaged(this)
+                        ? null : level().getNearestPlayer(this, 32.0D);
                 OriginalNpcService.refreshPage(this, nearby instanceof ServerPlayer player ? player : null);
             }
         }
@@ -421,7 +539,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
             return InteractionResult.PASS;
         }
         if (player instanceof ServerPlayer serverPlayer) {
-            OriginalNpcService.interact(serverPlayer, this);
+            if (!hasOriginalAutonomy() || currentPage() == null || currentPage().trigger() != 2) OriginalNpcService.interact(serverPlayer, this);
         }
         return InteractionResult.sidedSuccess(level().isClientSide());
     }
@@ -433,9 +551,10 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         tag.putBoolean("MmdSitting", isSitting());
         tag.putString("OriginalNpcId", getNpcId());
         tag.putInt("OriginalNpcPage", entityData.get(PAGE));
+        tag.putBoolean("OriginalNpcStaticMapProxy", isStaticMapProxy());
         tag.put("OriginalNpcRouteState", entityData.get(ROUTE_STATE).copy());
         tag.putString("OriginalNpcRouteTicket", forcedRouteTicket);
-        tag.putInt("OriginalNpcAnimeCount", routeAnimationCount);
+        tag.putDouble("OriginalNpcAnimeCount", routeAnimationCount);
         tag.putInt("OriginalNpcStopCount", routeStopCount);
         if (hasOriginalAutonomy()) tag.putByteArray("OriginalNpcAutonomousState", autonomousRoute.snapshot().toString().getBytes(java.nio.charset.StandardCharsets.UTF_8));
     }
@@ -446,11 +565,24 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         loadMmdModelOffset(tag);
         setSitting(tag.getBoolean("MmdSitting"));
         setNpcId(tag.getString("OriginalNpcId"));
+        if (tag.getBoolean("OriginalNpcStaticMapProxy")) setStaticMapProxy(true);
         if (tag.contains("OriginalNpcRouteState")) {
             entityData.set(PAGE, tag.getInt("OriginalNpcPage"));
-            entityData.set(ROUTE_STATE, tag.getCompound("OriginalNpcRouteState").copy());
+            CompoundTag state = tag.getCompound("OriginalNpcRouteState").copy();
+            if (!state.contains("TileId")) {
+                JsonObject graphic = graphic();
+                int tileId = graphic.has("tile_id") ? graphic.get("tile_id").getAsInt() : 0;
+                boolean unchanged = state.getString("CharacterName").equals(graphic.get("character_name").getAsString())
+                        && state.getInt("CharacterIndex") == (graphic.has("character_index") ? graphic.get("character_index").getAsInt() : 0)
+                        && tag.getString("OriginalNpcRouteTicket").isEmpty();
+                state.putInt("TileId", unchanged && yuki135.blacksouls.util.OriginalNpcTileGraphics.get(getNpcId(), tileId) != null ? tileId : 0);
+            }
+            if (!state.contains("TileId", net.minecraft.nbt.Tag.TAG_INT) || state.getInt("TileId") < 0) {
+                throw new IllegalArgumentException("Invalid original NPC route tile graphic");
+            }
+            entityData.set(ROUTE_STATE, state);
             forcedRouteTicket = tag.getString("OriginalNpcRouteTicket");
-            routeAnimationCount = tag.getInt("OriginalNpcAnimeCount");
+            routeAnimationCount = tag.getDouble("OriginalNpcAnimeCount");
             routeStopCount = tag.getInt("OriginalNpcStopCount");
             if (hasOriginalAutonomy()) {
                 autonomousRoute.configure(currentPage() == null ? new JsonObject() : currentPage().movement());
@@ -459,6 +591,12 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
                             java.nio.charset.StandardCharsets.UTF_8)).getAsJsonObject());
                     OriginalNpcMovementService.validateAutonomousState(this);
                 }
+            }
+            if (OriginalPoolCrowdSurface.isCrowd(getNpcId())
+                    && !tag.contains("OriginalNpcAutonomousState", net.minecraft.nbt.Tag.TAG_BYTE_ARRAY)
+                    && (!state.contains("OriginalBushDepth", net.minecraft.nbt.Tag.TAG_INT)
+                    || !state.contains("OriginalShiftY", net.minecraft.nbt.Tag.TAG_INT))) {
+                OriginalPoolCrowdMovementService.refreshBush(this);
             }
             updateRouteVisibility();
         }
@@ -476,13 +614,13 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
 
     @Override
     public boolean isPickable() {
-        return !yuki135.blacksouls.util.OriginalWorldEventData.isNativeBlock(getNpcId()) && super.isPickable();
+        return !isNativeInteractionProxy() && super.isPickable();
     }
 
     @Override
     public boolean canBeCollidedWith() {
         BSOriginalNpcData.Page page = currentPage();
-        if (erased || !isAlive() || page == null || yuki135.blacksouls.util.OriginalWorldEventData.isNativeBlock(getNpcId())
+        if (erased || !isAlive() || page == null || isNativeInteractionProxy()
                 || entityData.get(ROUTE_STATE).getBoolean("Through")) return false;
         JsonObject movement = page.movement();
         return !movement.has("priority_type") || movement.get("priority_type").getAsInt() == 1;

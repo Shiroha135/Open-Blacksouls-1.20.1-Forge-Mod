@@ -29,11 +29,13 @@ public final class OriginalNpcPresentationService {
     }
 
     public static void apply(ServerPlayer player, EntityOriginalNpc npc, int code, List<JsonElement> parameters) {
-        NetworkHandler.sendToPlayer(createPacket(player, npc, code, parameters), player);
+        apply(player, (Entity) npc, code, parameters);
     }
 
     public static void apply(ServerPlayer player, Entity npc, int code, List<JsonElement> parameters) {
-        NetworkHandler.sendToPlayer(createPacket(player, npc, code, parameters), player);
+        var packet = createPacket(player, npc, code, parameters);
+        if (code == OriginalNonExplicitScenes.FADE_COMMAND) OriginalNpcPictureService.clear(player);
+        NetworkHandler.sendToPlayer(packet, player);
     }
 
     public static ClientboundOriginalNpcPresentationPacket createPacket(ServerPlayer player, EntityOriginalNpc npc,

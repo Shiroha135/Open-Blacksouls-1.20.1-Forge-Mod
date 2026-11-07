@@ -35,6 +35,7 @@ public final class OriginalNpcPlacements {
     public static final BlockPos MARKET_ROOM_BONFIRE = new BlockPos(341, -59, -12);
     public static final BlockPos MARKET_ROOM_ROASTER_BONFIRE = new BlockPos(336, -59, -11);
     public static final BlockPos ACADEMY_BONFIRE = new BlockPos(183, -42, -1317);
+    public static final BlockPos FOREST_BONFIRE = new BlockPos(41, -58, 216);
     private static final double NEARBY_DISTANCE_SQUARED = 64.0D * 64.0D;
     private static final List<Site> SITES = List.of(
             new Site("map002_ev059", new Vec3(615.5D, 13.0D, -531.5D), 180.0F,
@@ -76,6 +77,11 @@ public final class OriginalNpcPlacements {
                     "minecraft:blue_ice", marketRoomLandmarks()),
             new Site("map091_ev022", new Vec3(344.5D, -58.984375D, -13.5D), 180.0F,
                     "minecraft:blue_ice", marketRoomLandmarks(), true),
+            new Site("map053_ev066", new Vec3(43.5D, -58.0D, 216.5D), 90.0F,
+                    "minecraft:grass_block", forestLandmarks()),
+            OriginalSnowmanPlacement.site(),
+            new Site("map031_ev005", new Vec3(1114.5D, -21.9375D, -2.5D), 90.0F,
+                    "minecraft:moss_carpet", carolFisherLandmarks(), true),
             new Site("map009_ev047", new Vec3(180.5D, -42.0D, -1314.5D), 180.0F,
                     "minecraft:grass_block", academyLandmarks()),
             new Site("map101_ev009", new Vec3(-49.5D, -42.25937497615814D, 41.5D), 270.0F,
@@ -93,7 +99,7 @@ public final class OriginalNpcPlacements {
     }
 
     public static List<Site> sites() {
-        return java.util.stream.Stream.of(SITES, OriginalBillPlacement.sites(), OriginalDodoPlacement.sites())
+        return java.util.stream.Stream.of(SITES, OriginalBillPlacement.sites(), OriginalDodoPlacement.sites(), OriginalPoolCrowdPlacement.sites(), OriginalPoolCheshirePlacement.sites())
                 .flatMap(List::stream).toList();
     }
 
@@ -123,10 +129,13 @@ public final class OriginalNpcPlacements {
         if (!hasDeployedMap(level)) return null;
         if (CEMETERY_BONFIRE.equals(position)) return "map033_ev023";
         if (ACADEMY_BONFIRE.equals(position)) return "map009_ev047";
+        if (FOREST_BONFIRE.equals(position)) return "map053_ev066";
         return MARKET_ROOM_BONFIRE.equals(position) || MARKET_ROOM_ROASTER_BONFIRE.equals(position) ? "map091_ev022" : null;
     }
 
     public static Outcome install(ServerPlayer player, String npcId) {
+        if (OriginalPoolCheshirePlacement.isPair(npcId)) return OriginalPoolCheshirePlacement.install(player, npcId);
+        if (OriginalSnowmanPlacement.NPC_ID.equals(npcId)) return OriginalSnowmanPlacement.install(player);
         if (OriginalReceptionistPlacement.NPC_ID.equals(npcId)) return OriginalReceptionistPlacement.install(player);
         Site site = sites().stream().filter(value -> value.npcId().equals(npcId)).findFirst().orElse(null);
         if (site == null) site = yuki135.blacksouls.story.OriginalWorldEventBindings.sites().stream()
@@ -158,7 +167,10 @@ public final class OriginalNpcPlacements {
         }
         BlockPos floor = BlockPos.containing(site.position().add(0.0D, -0.02D, 0.0D));
         BlockState support = level.getBlockState(floor);
-        if (!blockId(support).equals(site.supportBlock()) || !site.shapedSupport() && !support.isFaceSturdy(level, floor, Direction.UP)
+        boolean crowd = yuki135.blacksouls.story.OriginalPoolCrowdSurface.isCrowd(npcId);
+        if (crowd && !yuki135.blacksouls.story.OriginalPoolCrowdSurface.matchesSite(level, site)
+                || !crowd && (!blockId(support).equals(site.supportBlock())
+                || !site.shapedSupport() && !support.isFaceSturdy(level, floor, Direction.UP))
                 || site.landmarks().stream().anyMatch(landmark -> !landmark.matches(level))) {
             return Outcome.TERRAIN_MISMATCH;
         }
@@ -172,7 +184,8 @@ public final class OriginalNpcPlacements {
         npc.yBodyRot = site.yaw();
         npc.setNpcId(npcId);
         AABB bounds = npc.getBoundingBox();
-        if (!level.noCollision(npc, bounds) || site.shapedSupport() && level.noCollision(npc, bounds.move(0.0D, -0.02D, 0.0D))
+        if (!level.noCollision(npc, bounds) || crowd && !yuki135.blacksouls.story.OriginalPoolCrowdSurface.allowsPlacement(level, site, bounds)
+                || !crowd && site.shapedSupport() && level.noCollision(npc, bounds.move(0.0D, -0.02D, 0.0D))
                 || level.containsAnyLiquid(bounds) && !OriginalBillPlacement.allowsFootWater(level, site, bounds)
                 || !yuki135.blacksouls.util.OriginalWorldEventData.isNativeBlock(npcId)
                 && !level.getEntitiesOfClass(LivingEntity.class, bounds,
@@ -180,6 +193,7 @@ public final class OriginalNpcPlacements {
             npc.discard();
             return Outcome.COLLISION;
         }
+        if (crowd) npc.applyOriginalPoolSurfaceSupport(true);
         if (!level.addFreshEntity(npc)) {
             npc.discard();
             return Outcome.SPAWN_FAILED;
@@ -269,6 +283,25 @@ public final class OriginalNpcPlacements {
                 landmark(-40, -43, 43, "blacksouls2:bai_xiong_mao_shop", Map.of("facing", "north")),
                 landmark(-49, -43, 47, "minecraft:campfire", Map.of("facing", "south")),
                 landmark(-49, -40, 56, "minecraft:birch_door", Map.of("facing", "south", "half", "lower")));
+    }
+
+    private static List<Landmark> carolFisherLandmarks() {
+        return List.of(
+                landmark(1114, -22, -4, "dustydecorations:cod_barrel", Map.of("facing", "north")),
+                landmark(1113, -21, -3, "minecraft:barrier", Map.of()),
+                landmark(1114, -21, -4, "minecraft:barrier", Map.of()),
+                landmark(1146, -22, -3, "blacksouls2:l_lu_deng_1", Map.of("facing", "north")),
+                landmark(1146, -19, -3, "blacksouls2:l_lu_deng_3", Map.of("facing", "north")),
+                landmark(1146, -28, -17, "minecraft:command_block", Map.of("facing", "north", "conditional", "false")));
+    }
+
+    private static List<Landmark> forestLandmarks() {
+        return List.of(
+                landmark(41, -58, 216, "minecraft:campfire", Map.of("facing", "south")),
+                landmark(43, -58, 217, "adchimneys:stone_chimney", Map.of()),
+                landmark(42, -58, 217, "adchimneys:stone_chimney", Map.of()),
+                landmark(43, -59, 217, "minecraft:water", Map.of()),
+                landmark(43, -56, 217, "minecraft:oak_fence", Map.of()));
     }
 
     private static List<Landmark> academyLandmarks() {

@@ -181,6 +181,7 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> ORIGINAL_ALTAR_SWITCH_EVENT = registerSound("original_altar_switch3");
     public static final RegistryObject<SoundEvent> ORIGINAL_ALTAR_EARTH_EVENT = registerSound("original_altar_earth4");
     public static final RegistryObject<SoundEvent> ORIGINAL_WORLD_MOVE_EVENT = registerSound("original_world_move");
+    public static final RegistryObject<SoundEvent> ORIGINAL_DECISION1_EVENT = registerSound("original_decision1");
     public static final RegistryObject<SoundEvent> ORIGINAL_LAUGHTER_BOY4_EVENT = registerSound("mbjh_se_laughter_boy4");
     public static final RegistryObject<SoundEvent> DAO_EVENT = registerSound("dao");
     public static final RegistryObject<SoundEvent> BLOOD_SPLATTER_EVENT = registerSound("blood_splatter");
@@ -217,6 +218,7 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> GUCHA004A_EVENT = registerSound("gucha004a");
     public static final RegistryObject<SoundEvent> CHESHIRE_CAT2_EVENT = registerSound("cheshire_cat2");
     public static final RegistryObject<SoundEvent> CHESHIRE_CAT3_EVENT = registerSound("cheshire_cat3");
+    public static final RegistryObject<SoundEvent> ORIGINAL_CHESHIRE_CAT_EVENT = registerSound("original_cheshire_cat");
     public static final RegistryObject<SoundEvent> ORIGINAL_CHESHIRE_CAT_2_EVENT = registerSound("original_cheshire_cat_2");
     public static final RegistryObject<SoundEvent> ORIGINAL_CHESHIRE_CAT_3_EVENT = registerSound("original_cheshire_cat_3");
     public static final RegistryObject<SoundEvent> ORIGINAL_CHESHIRE_CAT_4_EVENT = registerSound("original_cheshire_cat_4");

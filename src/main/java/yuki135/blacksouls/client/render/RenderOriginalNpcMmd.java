@@ -3,6 +3,7 @@ package yuki135.blacksouls.client.render;
 import yuki135.blacksouls.BSConfig;
 import yuki135.blacksouls.entity.EntityOriginalNpc;
 import yuki135.blacksouls.util.OriginalNpcMmdBindings;
+import yuki135.blacksouls.util.OriginalNpcTileGraphics;
 import com.mojang.blaze3d.vertex.PoseStack;
 import yuki135.mmdskin.asset.catalog.ModelCatalogEntry;
 import yuki135.mmdskin.model.runtime.ManagedModel;
@@ -38,7 +39,14 @@ public final class RenderOriginalNpcMmd extends EntityRenderer<EntityOriginalNpc
                        MultiBufferSource buffer, int packedLight) {
         int opacity = Math.max(0, Math.min(255, entity.getSpriteOpacity()));
         String character = entity.getRouteCharacterName();
-        shadowStrength = entity.isInvisible() || character.isBlank() ? 0.0F : opacity / 255.0F;
+        var tile = OriginalNpcTileGraphics.get(entity.getNpcId(), entity.getRouteTileId());
+        boolean graphic = tile != null || entity.getRouteTileId() == 0 && !character.isBlank();
+        shadowStrength = entity.isInvisible() || !graphic ? 0.0F : opacity / 255.0F;
+        if (entity.getRouteTileId() > 0 || OriginalPoolCrowdSprite.applies(entity.getNpcId())) {
+            releaseChoice(entity);
+            if (!entity.isInvisible() && graphic && opacity > 0) fallback.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
+            return;
+        }
         if (entity.isInvisible() || character.isBlank() || opacity == 0) {
             choices.remove(entity);
             return;
@@ -62,6 +70,10 @@ public final class RenderOriginalNpcMmd extends EntityRenderer<EntityOriginalNpc
 
     @Override
     public ResourceLocation getTextureLocation(EntityOriginalNpc entity) {
+        if (entity.getRouteTileId() > 0 || OriginalPoolCrowdSprite.applies(entity.getNpcId())) {
+            releaseChoice(entity);
+            return fallback.getTextureLocation(entity);
+        }
         if (entity.isInvisible() || entity.getRouteCharacterName().isBlank() || entity.getSpriteOpacity() <= 0
                 || !BSConfig.ENABLE_MMD_MODELS.get()) {
             choices.remove(entity);
@@ -74,6 +86,14 @@ public final class RenderOriginalNpcMmd extends EntityRenderer<EntityOriginalNpc
             else if (state.choice == Choice.MMD) return renderer(model).getTextureLocation(entity);
         }
         return fallback.getTextureLocation(entity);
+    }
+
+    private void releaseChoice(EntityOriginalNpc entity) {
+        BindingChoice choice = choices.remove(entity);
+        if (choice != null && choice.model != null) {
+            ClientRenderRuntime.get().modelRepository().reloadSubject(ModelRequestKey.mob(entity, choice.model));
+            choice.clear();
+        }
     }
 
     private MmdSkinRenderer<EntityOriginalNpc> renderer(String model) {

@@ -1409,6 +1409,12 @@
       "blacksouls:cheshire_cat3"
     ]
   },
+  "original_cheshire_cat": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:original_cheshire_cat"
+    ]
+  },
   "original_cheshire_cat_2": {
     "category": "neutral",
     "sounds": [
@@ -1520,6 +1526,18 @@
     "category": "neutral",
     "sounds": [
       "blacksouls:original_world_move"
+    ]
+  },
+  "original_decision1": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:original_decision1"
+    ]
+  },
+  "original_sen_heal7": {
+    "category": "neutral",
+    "sounds": [
+      "blacksouls:original_sen_heal7"
     ]
   }
 }

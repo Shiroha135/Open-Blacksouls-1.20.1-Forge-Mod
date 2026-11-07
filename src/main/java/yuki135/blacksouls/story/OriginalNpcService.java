@@ -121,7 +121,7 @@ public final class OriginalNpcService {
         if (!matchesActor(cat, npcId) || !canInteract(player, cat) || TurnBattleManager.isInBattle(player)
                 || SESSIONS.containsKey(player.getUUID()) || !cat.forcedRouteTicket().isEmpty()) return false;
         OriginalNpcProgress progress = OriginalNpcProgress.get(player.server);
-        if (!progress.switchValue(108) || progress.switchValue(109) || progress.switchValue(14)
+        if (!progress.switchValue(108) || progress.switchValue(109) || OriginalNpcProgress.readSwitch(player, 14)
                 || SceneSpawnerBossData.get(player.server).getStoryProgress() >= 1
                 || progress.hasOtherConversation(player.getUUID(), CHESHIRE_EVENTS)
                 || progress.conversationIds(player.getUUID()).stream().anyMatch(CHESHIRE_EVENTS::contains)) return false;
@@ -158,7 +158,7 @@ public final class OriginalNpcService {
             progress.setSelfSwitch(CHESHIRE_LOGIC, "A", true);
         } else if ((stage == 1 || stage == 2 || asked) && !progress.switchValue(108)
                 && !progress.switchValue(109) && !progress.selfSwitch(CHESHIRE_LOGIC, "A")) {
-            if (!progress.switchValue(107) || progress.switchValue(14)
+            if (!progress.switchValue(107) || OriginalNpcProgress.readSwitch(player, 14)
                     || SceneSpawnerBossData.get(player.server).getStoryProgress() >= 1) return true;
             for (Session current : SESSIONS.values()) {
                 if (cat.getUUID().equals(current.npcUuid)) return true;
@@ -199,8 +199,30 @@ public final class OriginalNpcService {
                 && OriginalNpcProgress.get(player.server).hasSavedTimedWait(player.getUUID());
     }
 
+    public static boolean hasOmittedCheckpoint(ServerPlayer player) {
+        return !omittedCheckpointIds(player).isEmpty();
+    }
+
+    static java.util.Set<String> omittedCheckpointIds(ServerPlayer player) {
+        OriginalNpcProgress progress = OriginalNpcProgress.get(player.server);
+        java.util.Set<String> result = new java.util.HashSet<>();
+        for (String id : progress.conversationIds(player.getUUID())) {
+            JsonObject saved = progress.conversation(player.getUUID(), id);
+            if (saved != null && saved.has("interpreter") && saved.get("interpreter").isJsonObject()
+                    && OriginalNonExplicitScenes.isOmittedCheckpoint(saved.getAsJsonObject("interpreter"))) result.add(id);
+        }
+        return java.util.Set.copyOf(result);
+    }
+
     public static boolean isConversing(ServerPlayer player) {
         return SESSIONS.containsKey(player.getUUID()) || OriginalDodoRunService.pending(player);
+    }
+
+    static boolean hasPoolMapConversation(ServerLevel level) {
+        return SESSIONS.values().stream().anyMatch(session -> session.npcId.startsWith("map037_ev")
+                && session.dimension.equals(level.dimension().location()))
+                || OriginalNpcProgress.get(level.getServer()).hasConversation(BSOriginalNpcData.values().stream()
+                .filter(entry -> entry.mapId() == 37).map(BSOriginalNpcData.Entry::id).collect(java.util.stream.Collectors.toSet()));
     }
 
     static boolean hasNpcConversation(ServerPlayer player) {
@@ -258,6 +280,7 @@ public final class OriginalNpcService {
         if (event.phase != TickEvent.Phase.END) {
             return;
         }
+        OriginalPoolCrowdVisitService.tick(event.getServer());
         OriginalNpcMovementService.tick(event.getServer());
         OriginalNpcAnimationService.tick(event.getServer());
         OriginalNpcPictureService.tick(event.getServer());
@@ -355,17 +378,57 @@ public final class OriginalNpcService {
     }
 
     public static void refreshPage(EntityOriginalNpc npc, ServerPlayer player) {
+        if (yuki135.blacksouls.compat.scene.OriginalPoolCheshirePlacement.refreshPage(npc, player)) return;
         BSOriginalNpcData.Entry definition = BSOriginalNpcData.getEvent(npc.getNpcId());
         if (definition == null || !(npc.level() instanceof ServerLevel)) {
             npc.setPageIndex(-1);
             return;
         }
+        player = choosePageOwner(npc, npc.getNpcId(), npc.forcedRouteTicket(), player);
+        if (player == null && OriginalNpcMovementService.refreshPersonalOfflinePage(npc)) return;
         BSOriginalNpcData.Page page = OriginalNpcInterpreter.selectPage(definition, new EventContext(player, npc));
         npc.setPageIndex(page == null ? -1 : definition.pages().indexOf(page));
+        if (player != null) OriginalSenService.rememberPageOwner(npc, player);
+    }
+
+    public static ServerPlayer choosePageOwner(PathfinderMob actor, String sourceId, String ticketId, ServerPlayer fallback) {
+        if (!(actor.level() instanceof ServerLevel level)) return fallback;
+        for (Session session : SESSIONS.values()) {
+            if (!actor.getUUID().equals(session.npcUuid) || !level.dimension().location().equals(session.dimension)) continue;
+            ServerPlayer owner = level.getServer().getPlayerList().getPlayer(session.playerId);
+            return owner != null && owner.level() == level && owner.isAlive() ? owner : null;
+        }
+        if (!ticketId.isEmpty()) {
+            var ticket = OriginalNpcMovementData.get(level.getServer()).tickets.get(ticketId);
+            if (ticket != null && ticket.target.equals(actor.getUUID()) && !ticket.complete) {
+                ServerPlayer owner = level.getServer().getPlayerList().getPlayer(ticket.owner);
+                return owner != null && owner.level() == level && owner.isAlive() ? owner : null;
+            }
+        }
+        var ids = actor instanceof EntityCheshireCat ? CHESHIRE_EVENTS : java.util.Set.of(sourceId);
+        var progress = OriginalNpcProgress.get(level.getServer());
+        if (progress.hasConversation(ids)) {
+            if (fallback != null && ids.stream().anyMatch(id -> progress.conversation(fallback.getUUID(), id) != null)) return fallback;
+            return null;
+        }
+        return fallback;
     }
 
     public static void interact(ServerPlayer player, EntityOriginalNpc npc) {
+        if (yuki135.blacksouls.compat.scene.OriginalPoolCheshirePlacement.isManaged(npc)) {
+            EntityOriginalNpc proxy = yuki135.blacksouls.compat.scene.OriginalPoolCheshirePlacement.interactionProxy(player, npc);
+            if (proxy == null) return;
+            if (proxy != npc) {
+                interact(player, proxy);
+                return;
+            }
+        }
         if (!matchesActor(npc, npc.getNpcId())) return;
+        OriginalNpcProgress progress = OriginalNpcProgress.get(player.server);
+        if (progress.hasOtherConversation(player.getUUID(), java.util.Set.of(npc.getNpcId()))
+                && progress.conversation(player.getUUID(), npc.getNpcId()) == null) return;
+        refreshPage(npc, player);
+        if (npc.currentPage() != null && npc.currentPage().trigger() == 2) return;
         if (yuki135.blacksouls.util.OriginalWorldEventData.isNativeBlock(npc.getNpcId())
                 && !OriginalWorldEventBindings.isBound(player, npc)) return;
         if (yuki135.blacksouls.compat.scene.OriginalBillPlacement.INITIAL_NPC.equals(npc.getNpcId())
@@ -410,6 +473,15 @@ public final class OriginalNpcService {
         }
         saved.addProperty("entityUuid", replacement.getUUID().toString());
         progress.setConversation(player.getUUID(), replacement.getNpcId(), saved);
+    }
+
+    public static void interactContact(ServerPlayer player, EntityOriginalNpc npc) {
+        if (!matchesActor(npc, npc.getNpcId()) || OriginalNpcService.isConversing(player)
+                || !OriginalNpcSymbolService.active(npc) || player.level() != npc.level()
+                || Math.abs(player.getY() - npc.getY()) >= 1.0D
+                || Math.abs(player.blockPosition().getX() - npc.blockPosition().getX())
+                + Math.abs(player.blockPosition().getZ() - npc.blockPosition().getZ()) > 1) return;
+        interact(player, npc, npc.getNpcId(), false);
     }
 
     private static void interact(ServerPlayer player, PathfinderMob npc, String npcId, boolean savedContinuation) {
@@ -457,6 +529,13 @@ public final class OriginalNpcService {
                 OriginalSpiritService.restoreLegacyCovenantProgress(player, saved.getAsJsonObject("interpreter"));
                 Session session = new Session(player.getUUID(), npc.getId(), npcId,
                         player.level().dimension().location(), interpreter);
+                if (saved.has("encounterCondition")) {
+                    var value = saved.get("encounterCondition");
+                    if (!value.isJsonPrimitive() || !value.getAsJsonPrimitive().isNumber()) throw new IllegalArgumentException("Invalid encounter condition");
+                    int condition = value.getAsBigDecimal().intValueExact();
+                    if (condition < 0 || condition > 2 || !npcId.equals("map037_ev053")) throw new IllegalArgumentException("Invalid encounter condition");
+                    session.encounterCondition = condition;
+                }
                 session.lastText = saved.has("lastText") ? saved.get("lastText").getAsString() : "";
                 session.lastPortrait = saved.has("lastPortrait") ? saved.get("lastPortrait").getAsString() : "";
                 session.lastPortraitIndex = saved.has("lastPortraitIndex") ? saved.get("lastPortraitIndex").getAsInt() : 0;
@@ -464,6 +543,7 @@ public final class OriginalNpcService {
                     session.lastText = "";
                     session.lastPortrait = "";
                     session.lastPortraitIndex = 0;
+                    OriginalNpcPictureService.clear(player);
                 }
                 session.restoringPresentation = true;
                 if (saved.has("synthesisRecipes")) {
@@ -511,6 +591,9 @@ public final class OriginalNpcService {
         }
         Session session = new Session(player.getUUID(), npc.getId(), npcId,
                 player.level().dimension().location(), new OriginalNpcInterpreter(page.commands(), context));
+        if (npc instanceof EntityOriginalNpc original && OriginalNpcSymbolService.active(original)) {
+            session.encounterCondition = OriginalNpcSymbolService.contactCondition(player, original);
+        }
         SESSIONS.put(player.getUUID(), session);
         OriginalNpcConversationMovement.start(player, npc);
         present(player, npc, session, session.interpreter.advance(-1));
@@ -678,6 +761,7 @@ public final class OriginalNpcService {
         saved.addProperty("lastText", session.lastText);
         saved.addProperty("lastPortrait", session.lastPortrait);
         saved.addProperty("lastPortraitIndex", session.lastPortraitIndex);
+        if (session.encounterCondition != 0) saved.addProperty("encounterCondition", session.encounterCondition);
         if (effective.type() == OriginalNpcInterpreter.Type.SYNTHESIS && session.synthesisRecipes != null) {
             com.google.gson.JsonArray recipes = new com.google.gson.JsonArray();
             session.synthesisRecipes.forEach(recipes::add);
@@ -813,7 +897,7 @@ public final class OriginalNpcService {
                         checkpoint(player, session);
                         StatEventHandler.syncToClient(player);
                     }
-                });
+                }, true, session.encounterCondition);
         if (!started) {
             enemy.discard();
             blockBattle(player, npc, session, "original_troop_unavailable:" + request.troopId());
@@ -935,6 +1019,10 @@ public final class OriginalNpcService {
         public boolean switchValue(int id) {
             if (id == 20) return true;
             if (player != null && (id == 11 || id == 12)) return OriginalPlayerMoveSpeed.switchValue(player, id);
+            if (player == null && OriginalSenService.isThresholdSwitch(id)) {
+                Integer mask = OriginalSenService.cachedPageThresholds(npc, npcId);
+                if (mask != null) return (mask & 1 << (id - 14)) != 0;
+            }
             return player != null ? OriginalNpcProgress.readSwitch(player, id) : progress.switchValue(id);
         }
 
@@ -1017,6 +1105,14 @@ public final class OriginalNpcService {
                         Math.min(Integer.MAX_VALUE, value)));
             }
             progress.setVariable(id, value);
+        }
+
+        @Override
+        public void afterVariableOperation(int id, int operation, long operand, long before, long after) {
+            if (id == 38) {
+                if (player == null) throw new UnsupportedOperationException("requires_player");
+                OriginalSenService.afterVariableOperation(player, operation, operand, before, after);
+            }
         }
 
         @Override
@@ -1153,6 +1249,17 @@ public final class OriginalNpcService {
         }
 
         @Override
+        public void changeSkill(int actorId, int skillId, boolean learn, int sourceActorOperand) {
+            yuki135.blacksouls.util.OriginalActorSkills.change(player, actorId, skillId, learn, sourceActorOperand);
+        }
+
+        @Override
+        public void resetStealth() {
+            if (player == null) throw new UnsupportedOperationException("requires_player");
+            OriginalNpcSymbolService.setStealthSteps(player, 0);
+        }
+
+        @Override
         public long random(int first, int last) {
             if (last < first || (long) last - first >= Integer.MAX_VALUE) {
                 throw new UnsupportedOperationException("random_range");
@@ -1203,7 +1310,7 @@ public final class OriginalNpcService {
         @Override
         public int presentation(int command, List<JsonElement> parameters) {
             if (command == 231 || command == 232 || command == 235) {
-                return OriginalNpcPictureService.apply(player, command, parameters);
+                return OriginalNpcPictureService.apply(player, npcId, command, parameters);
             }
             OriginalNpcPresentationService.apply(player, npc, command, parameters);
             return OriginalNpcPresentationService.waitTicks(command, parameters);
@@ -1278,6 +1385,7 @@ public final class OriginalNpcService {
         private boolean restoringPresentation;
         private boolean shopStorage;
         private List<Integer> synthesisRecipes;
+        private int encounterCondition;
 
         private Session(UUID playerId, int entityId, String npcId, ResourceLocation dimension,
                         OriginalNpcInterpreter interpreter) {

@@ -2,6 +2,7 @@ package yuki135.blacksouls.client.render;
 
 import yuki135.blacksouls.BlackSouls;
 import yuki135.blacksouls.entity.EntityOriginalNpc;
+import yuki135.blacksouls.util.OriginalNpcTileGraphics;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -35,7 +36,8 @@ public final class RenderOriginalNpc extends EntityRenderer<EntityOriginalNpc> {
     @Override
     public void render(EntityOriginalNpc entity, float entityYaw, float partialTicks,
                        PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
-        ResourceLocation texture = entity.getCharacterTexture();
+        var tile = OriginalNpcTileGraphics.get(entity.getNpcId(), entity.getRouteTileId());
+        ResourceLocation texture = tile != null ? tile.texture() : entity.getRouteTileId() == 0 ? entity.getCharacterTexture() : null;
         int opacity = Math.max(0, Math.min(255, entity.getSpriteOpacity()));
         if (entity.isInvisible() || texture == null || opacity == 0) {
             return;
@@ -54,22 +56,32 @@ public final class RenderOriginalNpc extends EntityRenderer<EntityOriginalNpc> {
                 single ? new SheetSize(96, 128) : new SheetSize(384, 256));
         int frameWidth = Math.max(1, size.width() / columns);
         int frameHeight = Math.max(1, size.height() / rows);
-        float u0 = column * frameWidth / (float) size.width();
-        float u1 = (column + 1) * frameWidth / (float) size.width();
-        float v0 = row * frameHeight / (float) size.height();
-        float v1 = (row + 1) * frameHeight / (float) size.height();
-        float height = 1.9F;
-        float halfWidth = height * frameWidth / frameHeight * 0.5F;
+        float u0 = tile != null ? 0 : column * frameWidth / (float) size.width();
+        float u1 = tile != null ? 1 : (column + 1) * frameWidth / (float) size.width();
+        float v0 = tile != null ? 0 : row * frameHeight / (float) size.height();
+        float v1 = tile != null ? 1 : (row + 1) * frameHeight / (float) size.height();
+        boolean crowd = tile == null && OriginalPoolCrowdSprite.applies(entity.getNpcId());
+        float height = tile != null ? tile.blockHeight() : crowd ? frameHeight / 32.0F : 1.9F;
+        float halfWidth = tile != null ? tile.blockWidth() * 0.5F : height * frameWidth / frameHeight * 0.5F;
+        float bottom = crowd ? entity.getOriginalShiftY() / 32.0F : 0.0F;
+        int bushPixels = crowd ? Math.max(0, Math.min(frameHeight, entity.getOriginalBushDepth())) : 0;
 
         poseStack.pushPose();
         poseStack.mulPose(entityRenderDispatcher.cameraOrientation());
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
         VertexConsumer consumer = buffer.getBuffer(RenderType.entityTranslucent(texture));
         PoseStack.Pose pose = poseStack.last();
-        vertex(consumer, pose.pose(), pose.normal(), packedLight, opacity, -halfWidth, 0.0F, u0, v1);
-        vertex(consumer, pose.pose(), pose.normal(), packedLight, opacity, halfWidth, 0.0F, u1, v1);
-        vertex(consumer, pose.pose(), pose.normal(), packedLight, opacity, halfWidth, height, u1, v0);
-        vertex(consumer, pose.pose(), pose.normal(), packedLight, opacity, -halfWidth, height, u0, v0);
+        if (bushPixels > 0) {
+            float split = bottom + bushPixels / 32.0F;
+            float splitV = v1 - (v1 - v0) * bushPixels / frameHeight;
+            quad(consumer, pose, packedLight, OriginalPoolCrowdSprite.bushOpacity(opacity),
+                    halfWidth, bottom, split, u0, u1, splitV, v1);
+            if (bushPixels < frameHeight) {
+                quad(consumer, pose, packedLight, opacity, halfWidth, split, bottom + height, u0, u1, v0, splitV);
+            }
+        } else {
+            quad(consumer, pose, packedLight, opacity, halfWidth, bottom, bottom + height, u0, u1, v0, v1);
+        }
         poseStack.popPose();
         super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
@@ -98,6 +110,14 @@ public final class RenderOriginalNpc extends EntityRenderer<EntityOriginalNpc> {
         return Map.copyOf(sizes);
     }
 
+    private static void quad(VertexConsumer consumer, PoseStack.Pose pose, int light, int opacity,
+                             float halfWidth, float bottom, float top, float u0, float u1, float v0, float v1) {
+        vertex(consumer, pose.pose(), pose.normal(), light, opacity, -halfWidth, bottom, u0, v1);
+        vertex(consumer, pose.pose(), pose.normal(), light, opacity, halfWidth, bottom, u1, v1);
+        vertex(consumer, pose.pose(), pose.normal(), light, opacity, halfWidth, top, u1, v0);
+        vertex(consumer, pose.pose(), pose.normal(), light, opacity, -halfWidth, top, u0, v0);
+    }
+
     private static void vertex(VertexConsumer consumer, Matrix4f pose, Matrix3f normal,
                                int light, int opacity, float x, float y, float u, float v) {
         consumer.vertex(pose, x, y, 0.0F)
@@ -111,7 +131,8 @@ public final class RenderOriginalNpc extends EntityRenderer<EntityOriginalNpc> {
 
     @Override
     public ResourceLocation getTextureLocation(EntityOriginalNpc entity) {
-        ResourceLocation texture = entity.getCharacterTexture();
+        var tile = OriginalNpcTileGraphics.get(entity.getNpcId(), entity.getRouteTileId());
+        ResourceLocation texture = tile != null ? tile.texture() : entity.getRouteTileId() == 0 ? entity.getCharacterTexture() : null;
         return texture == null ? MissingTextureAtlasSprite.getLocation() : texture;
     }
 
