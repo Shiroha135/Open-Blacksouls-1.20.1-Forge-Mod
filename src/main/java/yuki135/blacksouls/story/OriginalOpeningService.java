@@ -61,6 +61,7 @@ public final class OriginalOpeningService {
     public static final int MAX_SESSIONS = 64;
     public static final int WORLD_WRITE_BUDGET = 256;
     private static final int REPLAY_RETURN_COMMAND = 1_000_000;
+    private static final String FALL_GRAVITY="BlacksoulsOpeningFallNoGravity";
     private static final TicketType<UUID> TICKET = TicketType.create("blacksouls_opening", Comparator.comparing(UUID::toString), 80);
     private static final Map<MinecraftServer, LinkedHashMap<UUID, Session>> SESSIONS = new WeakHashMap<>();
     private static final Map<MinecraftServer, Integer> ROUND_ROBIN = new WeakHashMap<>();
@@ -102,6 +103,7 @@ public final class OriginalOpeningService {
         }
         var flow = new Flow(profile);
         stabilize(flow);
+        stopFall(player);
         var session = new Session(player, profile);
         session.cleanup = cleanup || profile.previewActive() && flow.stage() == Stage.COMPLETE;
         sessions.put(player.getUUID(), session);
@@ -180,6 +182,8 @@ public final class OriginalOpeningService {
             session.awaitingReady = false;
             session.sceneReady = false;
             session.motion = null;
+            session.fallReady=false;
+            stopFall(player);
             save(player, session);
             changed(player, session);
             return;
@@ -197,6 +201,7 @@ public final class OriginalOpeningService {
         if (packet.action() == ServerboundOpeningPacket.Action.SKIP) {
             if (flow.stage() == Stage.NAME_PENDING) return;
             flow.requestSkip();
+            if (flow.stage()==Stage.FALLING) { player.setDeltaMovement(Vec3.ZERO);player.fallDistance=0; }
             changed(player, session);
             save(player, session);
             return;
@@ -331,6 +336,8 @@ public final class OriginalOpeningService {
                     session.awaitingReady=false;
                     session.sceneReady = false;
                     session.motion=null;
+                    session.fallReady=false;
+                    stopFall(player);
                     session.removeTemporaryAfterReady=false;
                     session.focus=0;
                     session.focusActor=null;
@@ -346,6 +353,7 @@ public final class OriginalOpeningService {
 
     private static int tickPlayer(ServerPlayer player, Session session, int budget) {
         var flow = flow(player);
+        int fallWrites=0;
         refreshTickets(session);
         if (session.cleanup) {
             if (session.error) { if(flow.preview())hold(player,session);periodic(player,session);return 0; }
@@ -445,11 +453,17 @@ public final class OriginalOpeningService {
                     flow.advance(Stage.FALLING);
                     cinematic.changeProgram("finale99");flow.cinematic(cinematic);
                     flow.cursor(new Cursor(99,2,0,0,0,0));
-                    changed(player,session);save(player,session);
+                    changed(player,session);
+                    if (!save(player,session)) return 0;
+                    fallWrites=prepareFall(player,session,flow,budget);
+                    if (!session.fallReady) {
+                        session.entering=true;session.sceneReady=false;
+                        periodic(player,session);return fallWrites;
+                    }
                 }
             }
             case FALLING -> {
-                hold(player,session);
+                if (!flow.skip()&&!moveFall(player,session,flow)) { periodic(player,session);return fallWrites; }
                 if(flow.cinematic().orElseThrow().awaitingDestination()) {
                     flow.advance(Stage.ARRIVAL_PENDING);
                     flow.cursor(new Cursor(1,0,0,0,0,0));
@@ -473,7 +487,7 @@ public final class OriginalOpeningService {
             save(player,session);
         }
         periodic(player, session);
-        return 0;
+        return fallWrites;
     }
 
     private static int enterScene(ServerPlayer player, Session session, Flow flow, int budget) {
@@ -489,6 +503,24 @@ public final class OriginalOpeningService {
         var kind = kind(flow.stage());
         tickets(session,level,OriginalOpeningSceneWorld.requiredChunks(lease));
         if (!loaded(level,OriginalOpeningSceneWorld.requiredChunks(lease))) { notice(player,session,"正在准备序章场景……"); return 0; }
+        if (flow.stage()==Stage.FALLING) {
+            int used=prepareFall(player,session,flow,budget);
+            if (!session.fallReady) return used;
+            var destination=fallPoint(flow,lease);
+            if (!fallDestinationSafe(level,player,destination,flow,session)) {
+                notice(player,session,"坠落路径暂时被占用，正在等待安全位置。");return used;
+            }
+            if (flow.pending().isPresent()&&!flow.pending().orElseThrow().destination().equals(destination)) {
+                var pending=flow.pending().orElseThrow();var anchor=fallAnchor(flow,lease);
+                if (pending.targetSourceMapId()!=99||pending.targetStage()!=Stage.FALLING||!pending.destination().equals(anchor)) throw new IllegalStateException("Opening fall transfer disagrees with persisted source progress");
+                flow.clearPending(pending);
+            }
+            transfer(player,session,flow,99,destination);
+            session.scene=SceneKind.ISLAND_99;
+            session.previousCell=sourceCell(lease,SceneKind.ISLAND_99,new Vec3(destination.x(),destination.y(),destination.z()));
+            session.entering=false;
+            return used;
+        }
         var view=data.view(identity,lease).orElseThrow();
         Set<Cell> temporary = Set.of();
         Cell landingCell = desiredCell(flow,lease,kind);
@@ -579,6 +611,7 @@ public final class OriginalOpeningService {
         var level=level(player.server,destination);
         if (level==null) return;
         player.stopRiding();
+        if (flow.stage()==Stage.FALLING) freezeFall(player);else stopFall(player);
         player.teleportTo(level,destination.x(),destination.y(),destination.z(),destination.yaw(),destination.pitch());
         if (player.level()!=level || player.position().distanceToSqr(new Vec3(destination.x(),destination.y(),destination.z()))>1.0E-6D) {
             fail(player,session,"暂时无法前往目的地，进度已保留，请重试。","opening_transfer_not_completed");
@@ -628,7 +661,7 @@ public final class OriginalOpeningService {
             ensureArrivalCinematic(player,session,flow);
             if(!flow.preview())flow.profile.setRealInitialRoomSilent(true);
             flow.cinematic().orElseThrow().destinationReady();
-        } else if (session.scene!=null && session.lease!=null && session.scene.island()) {
+        } else if (flow.stage()!=Stage.FALLING && session.scene!=null && session.lease!=null && session.scene.island()) {
             var data=OriginalOpeningSceneData.get(player.serverLevel());
             var view=data.view(session.lease.owner(),session.lease).orElseThrow();
             var cell=sourceCell(session.lease,session.scene,player.position());
@@ -675,8 +708,106 @@ public final class OriginalOpeningService {
         if(cinematic==null||cinematic.finished())return;
         int command=cinematic.command();
         if(!cinematic.tick())return;
-        if(command!=cinematic.command()||player.server.getTickCount()%20==0)if(!save(player,session))return;
+        if(flow.stage()!=Stage.FALLING&&(command!=cinematic.command()||player.server.getTickCount()%20==0))if(!save(player,session))return;
         if(flow.stage()!=Stage.ARRIVAL_PENDING||!cinematic.finished())sendCinematic(player,session,flow,false);
+    }
+
+    private static int prepareFall(ServerPlayer player, Session session, Flow flow, int budget) {
+        session.fallReady=false;
+        if (session.lease==null || !DIMENSION.equals(player.level().dimension())) return 0;
+        var anchor=fallAnchor(flow,session.lease);
+        var cell=sourceCell(session.lease,SceneKind.ISLAND_99,new Vec3(anchor.x(),anchor.y(),anchor.z()));
+        var level=player.serverLevel();var owner=session.lease.owner();
+        var view=OriginalOpeningSceneData.get(level).view(owner,session.lease).orElseThrow();
+        OriginalOpeningSceneWorld.Result result;
+        int used=0;
+        if (view.journal()!=null) {
+            if (budget==0) return 0;
+            var journal=view.journal();
+            result=OriginalOpeningSceneWorld.advanceFall(level,owner,session.lease,journal.id(),budget,player);
+            used=result.status()==OriginalOpeningSceneWorld.Status.WRITE_FAILED?budget:Math.max(0,result.cursor()-journal.cursor());
+        } else {
+            result=OriginalOpeningSceneWorld.beginFall(level,owner,session.lease,cell,player);
+            if (result.status()==OriginalOpeningSceneWorld.Status.PROGRESS && budget>0) {
+                result=OriginalOpeningSceneWorld.advanceFall(level,owner,session.lease,result.journal(),budget,player);
+                used=result.status()==OriginalOpeningSceneWorld.Status.WRITE_FAILED?budget:result.cursor();
+            }
+        }
+        if (result.status()==OriginalOpeningSceneWorld.Status.PROGRESS||result.status()==OriginalOpeningSceneWorld.Status.WAIT_CHUNKS||result.status()==OriginalOpeningSceneWorld.Status.OCCUPIED) {
+            notice(player,session,"正在准备安全的坠落路径……");return used;
+        }
+        if (result.status()!=OriginalOpeningSceneWorld.Status.COMPLETE&&result.status()!=OriginalOpeningSceneWorld.Status.ALREADY_READY) {
+            fail(player,session,"坠落路径暂时不能安全更新，请重试。",sceneFailure(level,result));return used;
+        }
+        session.fallReady=OriginalOpeningSceneWorld.fallReady(level,owner,session.lease,cell,player);
+        if (session.fallReady) freezeFall(player);
+        return used;
+    }
+
+    private static WorldPoint fallAnchor(Flow flow, OriginalOpeningSceneData.Lease lease) {
+        var stable=flow.checkpoint();var anchor=stable.position().orElseThrow(()->new IllegalStateException("Opening fall has no stable anchor"));
+        if (stable.stage()!=Stage.COLLAPSE3 || !anchor.dimension().equals(DIMENSION.location().toString()) || Math.abs(anchor.y()-FEET_Y)>1.0E-6D) throw new IllegalStateException("Opening fall anchor is not the final stable island");
+        var cell=sourceCell(lease,SceneKind.ISLAND_99,new Vec3(anchor.x(),anchor.y(),anchor.z()));
+        var center=feet(lease,SceneKind.ISLAND_99,cell);
+        if (Math.abs(anchor.x()-center.x)>.19D||Math.abs(anchor.z()-center.z)>.19D) throw new IllegalStateException("Opening fall body escapes its single owned shaft");
+        return anchor;
+    }
+
+    private static WorldPoint fallPoint(Flow flow, OriginalOpeningSceneData.Lease lease) {
+        var anchor=fallAnchor(flow,lease);
+        double distance=OriginalOpeningFall.distance(OriginalOpeningFall.frames(flow.cinematic().orElseThrow()));
+        return new WorldPoint(anchor.dimension(),anchor.x(),anchor.y()-distance,anchor.z(),anchor.yaw(),anchor.pitch());
+    }
+
+    private static boolean fallDestinationSafe(ServerLevel level, ServerPlayer player, WorldPoint destination, Flow flow, Session session) {
+        if (session==null||session.lease==null||!session.fallReady||!DIMENSION.equals(level.dimension())) return false;
+        var expected=fallPoint(flow,session.lease);
+        if (!expected.equals(destination)) return false;
+        var cell=sourceCell(session.lease,SceneKind.ISLAND_99,new Vec3(destination.x(),destination.y(),destination.z()));
+        if (!OriginalOpeningSceneWorld.fallReady(level,session.lease.owner(),session.lease,cell,player)) return false;
+        var body=new AABB(destination.x()-.3D,destination.y(),destination.z()-.3D,destination.x()+.3D,destination.y()+1.8D,destination.z()+.3D);
+        var bounds=bounds(session.lease,SceneKind.ISLAND_99);
+        return body.minX>=bounds.minX&&body.maxX<=bounds.maxX&&body.minZ>=bounds.minZ&&body.maxZ<=bounds.maxZ
+                && body.minY>=bounds.minY&&body.maxY<=bounds.maxY&&level.noCollision(player,body)&&!level.containsAnyLiquid(body)
+                && level.getEntities(player,body,entity->!entity.isRemoved()&&!entity.isSpectator()).isEmpty()
+                && level.getServer().getPlayerList().getPlayers().stream().noneMatch(other->other!=player&&other.level()==level&&other.isAlive()&&!other.isSpectator()&&other.getBoundingBox().intersects(body));
+    }
+
+    private static boolean moveFall(ServerPlayer player, Session session, Flow flow) {
+        var destination=fallPoint(flow,session.lease);
+        if (!fallDestinationSafe(player.serverLevel(),player,destination,flow,session)) {
+            hold(player,session);fail(player,session,"坠落路径暂时被占用，请重试。","opening_controlled_fall_obstructed");return false;
+        }
+        var target=new Vec3(destination.x(),destination.y(),destination.z());
+        var swept=player.getBoundingBox().minmax(new AABB(target.x-.3D,target.y,target.z-.3D,target.x+.3D,target.y+1.8D,target.z+.3D));
+        if (!player.serverLevel().noCollision(player,swept)||player.serverLevel().containsAnyLiquid(swept)) {
+            hold(player,session);fail(player,session,"坠落路径暂时被占用，请重试。","opening_controlled_fall_sweep_obstructed");return false;
+        }
+        freezeFall(player);
+        if (player.position().distanceToSqr(target)>1.0E-12D||player.getYRot()!=destination.yaw()||player.getXRot()!=destination.pitch()) {
+            player.connection.teleport(destination.x(),destination.y(),destination.z(),destination.yaw(),destination.pitch());
+        }
+        player.setDeltaMovement(Vec3.ZERO);player.fallDistance=0;
+        session.hold=destination;
+        int command=flow.cinematic().orElseThrow().command();
+        if (session.fallSavedCommand!=command||player.server.getTickCount()%20==0) {
+            session.fallSavedCommand=command;
+            if (!save(player,session)) return false;
+        }
+        return true;
+    }
+
+    private static void freezeFall(ServerPlayer player) {
+        var tag=player.getPersistentData();
+        if (!tag.contains(FALL_GRAVITY,net.minecraft.nbt.Tag.TAG_BYTE)) tag.putBoolean(FALL_GRAVITY,player.isNoGravity());
+        player.setNoGravity(true);player.setDeltaMovement(Vec3.ZERO);player.fallDistance=0;
+    }
+
+    private static void stopFall(ServerPlayer player) {
+        var tag=player.getPersistentData();
+        if (!tag.contains(FALL_GRAVITY,net.minecraft.nbt.Tag.TAG_BYTE)) return;
+        player.setNoGravity(tag.getBoolean(FALL_GRAVITY));tag.remove(FALL_GRAVITY);
+        player.setDeltaMovement(Vec3.ZERO);player.fallDistance=0;
     }
 
     private static void finishArrival(ServerPlayer player,Session session,Flow flow) {
@@ -844,6 +975,8 @@ public final class OriginalOpeningService {
         flow.cursor(new Cursor(185,0,0,REPLAY_RETURN_COMMAND,0,0));
         if (flow.pending().isPresent()) flow.clearPending(flow.pending().get());
         session.motion=null;
+        session.fallReady=false;
+        stopFall(player);
         session.removeTemporaryAfterReady=false;
         session.awaitingReady=false;
         session.entering=true;
@@ -902,6 +1035,7 @@ public final class OriginalOpeningService {
     }
 
     private static boolean destinationSafe(ServerLevel level, ServerPlayer player, WorldPoint destination, Flow flow) {
+        if (flow.stage()==Stage.FALLING) return fallDestinationSafe(level,player,destination,flow,session(player));
         return flow.stage()==Stage.ARRIVAL_PENDING && !flow.preview()
                 ? OriginalOpeningArrival.ready(level,player,destination) : safe(level,player,destination);
     }
@@ -934,6 +1068,8 @@ public final class OriginalOpeningService {
     }
 
     private static void release(Session session) {
+        var player=session.server.getPlayerList().getPlayer(session.owner);
+        if (player!=null) stopFall(player);
         session.tickets.forEach((level,chunks)->chunks.forEach(chunk->level.getChunkSource().removeRegionTicket(TICKET,chunk,2,session.owner)));
         session.tickets.clear();
     }
@@ -1038,7 +1174,8 @@ public final class OriginalOpeningService {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
         var sessions=SESSIONS.get(player.server);
         var session=sessions==null?null:sessions.remove(player.getUUID());
-        if (session!=null) release(session);
+        stopFall(player);
+        if (session!=null) { save(player,session);release(session); }
     }
 
     @SubscribeEvent
@@ -1152,9 +1289,9 @@ public final class OriginalOpeningService {
         Cell previousCell;
         Motion motion;
         UUID focusActor;
-        int revision=1,focus,lastActionTick=-1;
+        int revision=1,focus,lastActionTick=-1,fallSavedCommand=-1;
         boolean entering=true,awaitingReady,sceneReady,error,cleanup,nameSent,removeTemporaryAfterReady;
-        boolean presentationRestoring=true,completedPreview;
+        boolean presentationRestoring=true,completedPreview,fallReady;
         boolean sentRestoring;
         UUID sentEpisode;
         long sentSequence=-1;

@@ -91,19 +91,27 @@ public final class OriginalOpeningSceneData extends SavedData {
         Entry(Lease lease) { this.lease = lease; }
     }
 
-    record Layout(boolean op, SceneKind island, Set<Cell> temporary) {
+    record Layout(boolean op, SceneKind island, Set<Cell> temporary, Cell fallCell) {
+        Layout(boolean op, SceneKind island, Set<Cell> temporary) { this(op,island,temporary,null); }
         static final Layout EMPTY = new Layout(false,null,Set.of());
         Layout {
             if (island != null && !island.island() || temporary == null || island == null && !temporary.isEmpty()) throw new IllegalArgumentException("Invalid opening layout");
             temporary = Set.copyOf(temporary); if (island != null) requireTemporary(island,temporary);
+            if (fallCell!=null && (island!=SceneKind.ISLAND_99 || !validCell(island,fallCell)
+                    || !sourceSupport(island,fallCell)&&!temporary.contains(fallCell))) throw new IllegalArgumentException("Invalid opening fall shaft");
         }
-        Layout with(SceneKind kind, Set<Cell> supports) { return kind == SceneKind.OP ? new Layout(true,island,temporary) : new Layout(op,kind,supports); }
+        Layout with(SceneKind kind, Set<Cell> supports) { return kind == SceneKind.OP ? new Layout(true,island,temporary,fallCell) : new Layout(op,kind,supports); }
+        Layout falling(Cell cell) { return new Layout(op,island,temporary,cell); }
         CompoundTag save() {
             var tag = new CompoundTag(); tag.putBoolean("Op",op); tag.putInt("Island",island == null ? 0 : island.sourceMap());
-            tag.putIntArray("Temporary",temporary.stream().mapToInt(cell -> cell.y()*30+cell.x()).sorted().toArray()); return tag;
+            tag.putIntArray("Temporary",temporary.stream().mapToInt(cell -> cell.y()*30+cell.x()).sorted().toArray());
+            if (fallCell!=null) tag.putInt("FallCell",fallCell.y()*30+fallCell.x());
+            return tag;
         }
         static Layout load(CompoundTag tag) {
-            if (!tag.getAllKeys().equals(Set.of("Op","Island","Temporary")) || !bool(tag,"Op")
+            var fields=new HashSet<>(Set.of("Op","Island","Temporary"));
+            if (tag.contains("FallCell")) fields.add("FallCell");
+            if (!tag.getAllKeys().equals(fields) || !bool(tag,"Op") || tag.contains("FallCell")&&!tag.contains("FallCell",Tag.TAG_INT)
                     || !tag.contains("Island",Tag.TAG_INT) || !tag.contains("Temporary",Tag.TAG_INT_ARRAY)) throw new IllegalArgumentException("Invalid opening layout schema");
             int map = tag.getInt("Island"); SceneKind kind = map == 0 ? null : SceneKind.fromMap(map);
             int[] cells = tag.getIntArray("Temporary"); if (cells.length > MAX_TEMPORARY_SUPPORTS) throw new IllegalArgumentException("Too many temporary supports");
@@ -111,7 +119,9 @@ public final class OriginalOpeningSceneData extends SavedData {
             for (int value : cells) {
                 if (value < 0 || value >= 720 || !temporary.add(new Cell(value%30,value/30))) throw new IllegalArgumentException("Invalid or duplicate temporary support");
             }
-            return new Layout(tag.getBoolean("Op"),kind,temporary);
+            int fall=tag.contains("FallCell")?tag.getInt("FallCell"):-1;
+            if (tag.contains("FallCell")&&(fall<0||fall>=720)) throw new IllegalArgumentException("Invalid opening fall cell");
+            return new Layout(tag.getBoolean("Op"),kind,temporary,fall<0?null:new Cell(fall%30,fall/30));
         }
     }
 

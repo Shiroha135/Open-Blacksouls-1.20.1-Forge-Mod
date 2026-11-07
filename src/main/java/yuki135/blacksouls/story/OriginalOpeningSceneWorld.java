@@ -47,6 +47,62 @@ public final class OriginalOpeningSceneWorld {
         return beginRestore(new ServerAccess(level),get(level),owner,lease);
     }
 
+    public static Result beginFall(ServerLevel level, UUID owner, Lease lease, Cell cell, ServerPlayer visitor) {
+        if (!fallVisitor(level,owner,lease,visitor)) return result(Status.FOREIGN_OWNER,null,null);
+        var data=get(level); var entry=data.entry(owner,lease);
+        if (entry==null || entry.layout.island()!=SceneKind.ISLAND_99) return result(Status.NO_RECORD,entry,null);
+        if (entry.journal!=null) return result(Status.BUSY,entry,null);
+        if (entry.layout.fallCell()!=null) return result(entry.layout.fallCell().equals(cell)?Status.ALREADY_READY:Status.CONFLICT,entry,null);
+        var access=new ServerAccess(level);
+        if (!permitted(access,lease,SceneKind.ISLAND_99)) return result(Status.OUTSIDE_WORLD,entry,null);
+        if (!loaded(access,lease,SceneKind.ISLAND_99)) return result(Status.WAIT_CHUNKS,entry,null);
+        var conflict=scan(access,lease,SceneKind.ISLAND_99,owned(lease,entry.layout));
+        if (conflict!=null) return result(Status.CONFLICT,entry,conflict);
+        var target=entry.layout.falling(cell);
+        if (data.activeJournalCount()>=MAX_ACTIVE_JOURNALS) return result(Status.CAPACITY,entry,null);
+        entry.journal=new Journal(data.nextJournalId(),false,target,null,0,SceneKind.ISLAND_99);
+        validateJournal(entry); data.setDirty(); return result(Status.PROGRESS,entry,null);
+    }
+
+    public static Result advanceFall(ServerLevel level, UUID owner, Lease lease, UUID journal, int budget, ServerPlayer visitor) {
+        if (!fallVisitor(level,owner,lease,visitor)) return result(Status.FOREIGN_OWNER,null,null);
+        var data=get(level); var entry=data.entry(owner,lease);
+        if (entry==null || entry.journal==null || !fallApply(entry,entry.journal.target)) return result(Status.NO_RECORD,entry,null);
+        return advance(new ServerAccess(level,visitor),data,owner,lease,journal,budget);
+    }
+
+    public static boolean fallReady(ServerLevel level, UUID owner, Lease lease, Cell cell, ServerPlayer visitor) {
+        if (!fallVisitor(level,owner,lease,visitor)) return false;
+        var entry=get(level).entry(owner,lease);
+        if (entry==null || entry.journal!=null || !cell.equals(entry.layout.fallCell())) return false;
+        var position=BlockPos.containing(feet(lease,SceneKind.ISLAND_99,cell));
+        for (int y=MIN_Y;y<FEET_Y;y++) {
+            var block=new BlockPos(position.getX(),y,position.getZ());
+            if (!level.getBlockState(block).isAir() || level.getBlockEntity(block)!=null) return false;
+        }
+        return true;
+    }
+
+    private static boolean fallVisitor(ServerLevel level, UUID owner, Lease lease, ServerPlayer visitor) {
+        if (level==null || visitor==null || lease==null || owner==null || !DIMENSION.equals(level.dimension())
+                || visitor.getServer()!=level.getServer() || level.getServer().getPlayerList().getPlayer(visitor.getUUID())!=visitor
+                || !OriginalOpeningService.managed(visitor)) return false;
+        var stats=visitor.getCapability(yuki135.blacksouls.capability.BSPlayerStats.CAPABILITY).orElse(null);
+        if (stats==null) return false;
+        var profile=stats.openingProfile(); boolean preview=profile.previewActive();
+        var stage=preview?profile.previewStage():profile.realStage().orElse(null);
+        var slot=preview?profile.previewSlot():profile.realSlot();
+        var identity=preview?UUID.nameUUIDFromBytes(("blacksouls:opening-preview:"+visitor.getUUID()).getBytes(java.nio.charset.StandardCharsets.UTF_8)):visitor.getUUID();
+        return identity.equals(owner) && owner.equals(lease.owner()) && slot.isPresent() && slot.getAsLong()==lease.slot()
+                && stage==OriginalOpeningProfile.Stage.FALLING
+                && profile.activeCinematic().filter(cinematic->cinematic.program().equals("finale99")).isPresent();
+    }
+
+    private static boolean fallApply(Entry entry, Layout target) {
+        return entry.layout.fallCell()==null && entry.layout.island()==SceneKind.ISLAND_99 && target.fallCell()!=null
+                && target.equals(entry.layout.falling(target.fallCell()));
+    }
+
     public static Set<ChunkPos> requiredChunks(Lease lease) {
         var result = new LinkedHashSet<>(OriginalOpeningScenes.requiredChunks(lease,SceneKind.OP));
         result.addAll(OriginalOpeningScenes.requiredChunks(lease,SceneKind.ISLAND_110)); return Set.copyOf(result);
@@ -198,7 +254,7 @@ public final class OriginalOpeningSceneWorld {
         var journal = entry.journal; if (journal == null) return;
         if (journal.id.equals(entry.lease.owner())) throw new IllegalArgumentException("Opening owner cannot be its journal identity");
         if (!journal.restore) {
-            if (!entry.layout.with(journal.zone,journal.target.temporary()).equals(journal.target)) throw new IllegalArgumentException("Opening apply changes another scene zone");
+            if (!entry.layout.with(journal.zone,journal.target.temporary()).equals(journal.target) && !(journal.zone==SceneKind.ISLAND_99&&fallApply(entry,journal.target))) throw new IllegalArgumentException("Opening apply changes another scene zone");
         } else if (journal.partialTarget != null) {
             if (!validApplyTarget(entry.layout,journal.partialTarget)) throw new IllegalArgumentException("Invalid prior opening partial target");
             int count = delta(owned(entry.lease,entry.layout),owned(entry.lease,journal.partialTarget)).size();
@@ -222,6 +278,10 @@ public final class OriginalOpeningSceneWorld {
         var blocks = new LinkedHashMap<BlockPos,Material>();
         if (layout.op()) blocks.putAll(plan(lease,SceneKind.OP).blocks());
         if (layout.island() != null) blocks.putAll(plan(lease,layout.island(),layout.temporary()).blocks());
+        if (layout.fallCell()!=null) {
+            var position=BlockPos.containing(feet(lease,SceneKind.ISLAND_99,layout.fallCell()));
+            blocks.keySet().removeIf(block->block.getX()==position.getX()&&block.getZ()==position.getZ()&&block.getY()>=MIN_Y&&block.getY()<FEET_Y);
+        }
         if (blocks.size() > MAX_PLAN_BLOCKS) throw new IllegalArgumentException("Opening owned layout exceeds bound");
         return blocks;
     }
@@ -276,7 +336,8 @@ public final class OriginalOpeningSceneWorld {
                 entry == null || entry.journal == null ? 0 : changes(entry).size(),conflict);
     }
 
-    private record ServerAccess(ServerLevel level) implements Access {
+    private record ServerAccess(ServerLevel level, ServerPlayer fallingVisitor) implements Access {
+        ServerAccess(ServerLevel level) { this(level,null); }
         public boolean opening() { return DIMENSION.equals(level.dimension()); }
         public boolean loaded(ChunkPos chunk) { return level.getChunkSource().getChunkNow(chunk.x,chunk.z) != null && level.areEntitiesLoaded(chunk.toLong()); }
         public boolean permitted(AABB bounds) {
@@ -287,8 +348,8 @@ public final class OriginalOpeningSceneWorld {
         public BlockState state(BlockPos position) { return level.getBlockState(position); }
         public boolean blockEntity(BlockPos position) { return level.getBlockEntity(position) != null; }
         public boolean occupied(AABB bounds) {
-            if (!level.getEntities((Entity)null,bounds,entity -> !entity.isSpectator() && !entity.isRemoved()).isEmpty()) return true;
-            return level.getServer().getPlayerList().getPlayers().stream().anyMatch(player -> player.level() == level && player.isAlive() && !player.isSpectator() && player.getBoundingBox().intersects(bounds));
+            if (!level.getEntities((Entity)null,bounds,entity -> entity!=fallingVisitor && !entity.isSpectator() && !entity.isRemoved()).isEmpty()) return true;
+            return level.getServer().getPlayerList().getPlayers().stream().anyMatch(player -> player!=fallingVisitor && player.level() == level && player.isAlive() && !player.isSpectator() && player.getBoundingBox().intersects(bounds));
         }
         public boolean set(BlockPos position, BlockState state) { return level.setBlock(position,state,Block.UPDATE_CLIENTS | Block.UPDATE_KNOWN_SHAPE); }
     }
