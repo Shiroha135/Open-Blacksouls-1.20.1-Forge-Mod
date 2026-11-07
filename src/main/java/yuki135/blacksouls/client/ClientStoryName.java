@@ -76,9 +76,9 @@ public final class ClientStoryName {
             || minecraft.screen != null) {
             return;
         }
+        minecraft.setScreen(new GuiStoryNameIntro(pendingName));
         pendingOpening = false;
         startAmbience();
-        minecraft.setScreen(new GuiStoryNameIntro(pendingName));
     }
 
     private static void startAmbience() {

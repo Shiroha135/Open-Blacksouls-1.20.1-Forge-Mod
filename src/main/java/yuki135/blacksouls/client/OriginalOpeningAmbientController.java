@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 import net.minecraft.client.Minecraft;
@@ -32,6 +34,7 @@ import yuki135.blacksouls.BlackSouls;
 public final class OriginalOpeningAmbientController {
     private static final OriginalOpeningAmbientSnapshot LEDGER=new OriginalOpeningAmbientSnapshot();
     private static final Map<SoundInstance,Observed> OBSERVED=new IdentityHashMap<>();
+    private static final Set<SoundInstance> PENDING=Collections.newSetFromMap(new IdentityHashMap<>());
     private static long identity;
     private static List<Sound> capturedFiles;
     private OriginalOpeningAmbientController() {
@@ -50,31 +53,43 @@ public final class OriginalOpeningAmbientController {
         LEDGER.begin(preview);if(LEDGER.suspended())stopObserved();
     }
     public static synchronized void stopSourceBgs() { LEDGER.stopSource();stopObserved(); }
-    public static synchronized void finish(boolean replay) {
-        stopObserved();
-        var restore=LEDGER.finish(replay);OBSERVED.clear();
-        var minecraft=Minecraft.getInstance();
-        for(int index=0;index<restore.size();index++) {
-            var loop=restore.get(index);
-            var sound=new Resumed(loop,capturedFiles==null||index>=capturedFiles.size()?null:capturedFiles.get(index));observe(sound,false);
-            minecraft.getSoundManager().play(sound);
+    public static void finish(boolean replay) {
+        var restore=new ArrayList<Resumed>();
+        synchronized(OriginalOpeningAmbientController.class) {
+            stopObserved();
+            var loops=LEDGER.finish(replay);OBSERVED.clear();
+            for(int index=0;index<loops.size();index++) {
+                restore.add(new Resumed(loops.get(index),capturedFiles==null||index>=capturedFiles.size()?null:capturedFiles.get(index)));
+            }
+            capturedFiles=null;
         }
-        capturedFiles=null;
+        var manager=Minecraft.getInstance().getSoundManager();
+        for(var sound:restore)manager.play(sound);
     }
     public static synchronized void clear() { stopObserved();OBSERVED.clear();LEDGER.clear();capturedFiles=null;identity=0; }
 
     @SubscribeEvent(priority=EventPriority.LOWEST)
     public static synchronized void play(PlaySoundEvent event) {
         var sound=event.getSound();
-        if(sound==null||sound.getSource()!=SoundSource.AMBIENT||!sound.isLooping()||sound instanceof Resumed||sound.getLocation().getPath().equals("original_opening_gear"))return;
-        observe(sound,false);
+        if(!tracked(sound))return;
         if(LEDGER.suspended())event.setSound(null);
+        else PENDING.add(sound);
     }
     @SubscribeEvent public static synchronized void streaming(PlayStreamingSourceEvent event) {
-        var observed=OBSERVED.get(event.getSound());if(observed!=null) { observed.started=true;observed.streaming=true; }
+        var sound=event.getSound();
+        if(!tracked(sound))return;
+        boolean pending=PENDING.remove(sound);
+        if(!pending||LEDGER.suspended()) { event.getChannel().stop();return; }
+        observe(sound,true);
+        var observed=OBSERVED.get(sound);if(observed!=null) { observed.started=true;observed.streaming=true; }
     }
     @SubscribeEvent public static synchronized void buffered(PlaySoundSourceEvent event) {
-        var observed=OBSERVED.remove(event.getSound());if(observed!=null)LEDGER.remove(observed.id);
+        var sound=event.getSound();
+        if(tracked(sound)&&(!PENDING.remove(sound)||LEDGER.suspended()))event.getChannel().stop();
+        var observed=OBSERVED.remove(sound);if(observed!=null)LEDGER.remove(observed.id);
+    }
+    private static boolean tracked(SoundInstance sound) {
+        return sound!=null&&sound.getSource()==SoundSource.AMBIENT&&sound.isLooping()&&!sound.getLocation().getPath().equals("original_opening_gear");
     }
     private static void observe(SoundInstance sound,boolean started) {
         if(OBSERVED.containsKey(sound))return;
@@ -90,6 +105,7 @@ public final class OriginalOpeningAmbientController {
     private static void update(boolean advance) {
         var minecraft=Minecraft.getInstance();
         boolean paused=minecraft.isPaused();
+        PENDING.removeIf(sound->!minecraft.getSoundManager().isActive(sound));
         for(Iterator<Map.Entry<SoundInstance,Observed>> iterator=OBSERVED.entrySet().iterator();iterator.hasNext();) {
             var entry=iterator.next();var sound=entry.getKey();var value=entry.getValue();
             boolean active=minecraft.getSoundManager().isActive(sound);
@@ -97,7 +113,12 @@ public final class OriginalOpeningAmbientController {
             LEDGER.update(value.id,descriptor(sound,0,false),advance&&active&&value.started,paused);
         }
     }
-    private static void stopObserved() { var manager=Minecraft.getInstance().getSoundManager();for(var sound:OBSERVED.keySet())manager.stop(sound); }
+    private static void stopObserved() {
+        var manager=Minecraft.getInstance().getSoundManager();
+        for(var sound:OBSERVED.keySet())manager.stop(sound);
+        for(var sound:PENDING)manager.stop(sound);
+        PENDING.clear();
+    }
     @SubscribeEvent public static void logout(ClientPlayerNetworkEvent.LoggingOut event) { clear(); }
     private static final class Observed {
         final long id;boolean started,streaming;
@@ -112,6 +133,8 @@ public final class OriginalOpeningAmbientController {
             relative=captured.relative();attenuation=Attenuation.valueOf(captured.attenuation());looping=true;
         }
         @Override public boolean canStartSilent() { return true; }
+        @Override public float getVolume() { return volume; }
+        @Override public float getPitch() { return pitch; }
         @Override public net.minecraft.client.sounds.WeighedSoundEvents resolve(net.minecraft.client.sounds.SoundManager manager) {
             var event=super.resolve(manager);
             var value=capturedFile==null?this.sound:capturedFile;
