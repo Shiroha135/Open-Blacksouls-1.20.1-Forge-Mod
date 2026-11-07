@@ -1539,5 +1539,21 @@
     "sounds": [
       "blacksouls:original_sen_heal7"
     ]
+  },
+  "original_opening_collapse": {
+    "sounds": [
+      {
+        "name": "blacksouls:original_opening_collapse",
+        "stream": false
+      }
+    ]
+  },
+  "original_opening_gear": {
+    "sounds": [
+      {
+        "name": "blacksouls:original_opening_gear",
+        "stream": true
+      }
+    ]
   }
 }

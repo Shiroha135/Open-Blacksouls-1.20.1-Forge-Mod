@@ -1,0 +1,80 @@
+{
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": true,
+  "textures": {
+    "bark": "blacksouls:block/opening/bark",
+    "bark_dark": "blacksouls:block/opening/bark_dark",
+    "root_bark": "blacksouls:block/opening/root_bark",
+    "particle": "blacksouls:block/opening/bark"
+  },
+  "elements": [
+    {
+      "from": [
+        15.18,
+        0,
+        0.78
+      ],
+      "to": [
+        16,
+        2.62,
+        14.42
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#root_bark"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#root_bark"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#root_bark"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#root_bark"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#root_bark"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#root_bark"
+        }
+      }
+    }
+  ]
+}

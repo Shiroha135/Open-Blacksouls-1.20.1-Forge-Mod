@@ -35,6 +35,7 @@ public class PacketSetDifficulty {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             ServerPlayer serverPlayer = ctx.getSender();
+            if (yuki135.blacksouls.story.OriginalOpeningService.managed(serverPlayer)) return;
             if (serverPlayer != null) {
                 if (difficulty < MIN_DIFFICULTY || difficulty > MAX_DIFFICULTY) {
                     return;

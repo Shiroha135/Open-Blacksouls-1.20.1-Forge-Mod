@@ -46,7 +46,7 @@ public final class SkillCrush extends AbstractSkill {
 
     @Override
     public boolean isUnlockedForGUI(Player player) {
-        return SkillUtils.hasLearnedSkill(player, getSkillId());
+        return yuki135.blacksouls.util.OriginalOpeningSkills.available(player, getSkillId(), SkillUtils.hasLearnedSkill(player, getSkillId()));
     }
 
     @Override

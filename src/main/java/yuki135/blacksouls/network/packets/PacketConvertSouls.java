@@ -29,6 +29,7 @@ public class PacketConvertSouls {
     public void handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             ServerPlayer player = ctx.get().getSender();
+            if (yuki135.blacksouls.story.OriginalOpeningService.managed(player)) return;
             if (player != null) {
                 player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
                     if (amount > 0 && stats.souls >= amount && stats.currentExp <= Long.MAX_VALUE - amount) {

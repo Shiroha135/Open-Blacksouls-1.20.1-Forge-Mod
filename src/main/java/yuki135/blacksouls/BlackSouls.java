@@ -66,6 +66,8 @@ public class BlackSouls {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
     public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, MODID);
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, MODID);
+    public static final RegistryObject<SoundEvent> ORIGINAL_OPENING_COLLAPSE = SOUND_EVENTS.register("original_opening_collapse", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(MODID,"original_opening_collapse")));
+    public static final RegistryObject<SoundEvent> ORIGINAL_OPENING_GEAR = SOUND_EVENTS.register("original_opening_gear", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(MODID,"original_opening_gear")));
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
     // ==================================================================================================================================================
     // 状态效果(Buff/Debuff)
@@ -735,6 +737,12 @@ public class BlackSouls {
     public static final RegistryObject<Item> KNIGHT_SWORD = ITEMS.register("knight_sword", () -> new ItemKnightSword(new Item.Properties()));
     public static final RegistryObject<Item> KNIGHT_SHIELD = ITEMS.register("knight_shield", () -> new ItemKnightShield(new Item.Properties()));
     public static final RegistryObject<Item> PORCUPINE_SHIELD = ITEMS.register("porcupine_shield", () -> new ItemPorcupineShield(new Item.Properties()));
+    public static final RegistryObject<Item> TEMPLE_KNIGHT_SHIELD = ITEMS.register("temple_knight_shield", () -> new ItemOriginalOpeningShield(new Item.Properties(), 39));
+    public static final RegistryObject<Item> WOODEN_SHIELD = ITEMS.register("wooden_shield", () -> new ItemOriginalOpeningShield(new Item.Properties(), 42));
+    public static final RegistryObject<Item> BUCKLER = ITEMS.register("buckler", () -> new ItemOriginalOpeningShield(new Item.Properties(), 43));
+    public static final RegistryObject<Item> ROUND_SHIELD = ITEMS.register("round_shield", () -> new ItemOriginalOpeningShield(new Item.Properties(), 45));
+    public static final RegistryObject<Item> WARRIOR_ROUND_SHIELD = ITEMS.register("warrior_round_shield", () -> new ItemOriginalOpeningShield(new Item.Properties(), 47));
+    public static final RegistryObject<Item> SILVER_PISTOL = ITEMS.register("silver_pistol", () -> new ItemOriginalSilverPistol(new Item.Properties()));
     public static final RegistryObject<Item> MURDERERS_SHOTGUN = ITEMS.register("murderers_shotgun", () -> new ItemMurderersShotgun(new Item.Properties()));
     public static final RegistryObject<Item> VORPAL_BLADE = ITEMS.register("vorpal_blade", () -> new ItemVorpalBlade(new Item.Properties()));
     public static final RegistryObject<Item> BRAVE_SWORD_VORPAL = ITEMS.register("brave_sword_vorpal", () -> new ItemBraveSwordVorpal(new Item.Properties()));
@@ -1231,6 +1239,12 @@ public class BlackSouls {
                         // =============================================================
                         output.accept(KNIGHT_SHIELD.get());                 // 骑士盾
                         output.accept(PORCUPINE_SHIELD.get());              // 豪猪盾
+                        output.accept(TEMPLE_KNIGHT_SHIELD.get());
+                        output.accept(WOODEN_SHIELD.get());
+                        output.accept(BUCKLER.get());
+                        output.accept(ROUND_SHIELD.get());
+                        output.accept(WARRIOR_ROUND_SHIELD.get());
+                        output.accept(SILVER_PISTOL.get());
                         output.accept(MURDERERS_SHOTGUN.get());            // 杀人魔霰弹铳
                     })
                     .build());
@@ -1522,6 +1536,7 @@ public class BlackSouls {
         // 注册核心组件
         ITEMS.register(modEventBus);
         yuki135.blacksouls.handler.OriginalWorldBlocks.BLOCKS.register(modEventBus);
+        yuki135.blacksouls.handler.OriginalOpeningVisualBlocks.register(modEventBus);
         MOB_EFFECTS.register(modEventBus);
         SOUND_EVENTS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);

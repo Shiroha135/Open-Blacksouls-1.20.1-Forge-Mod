@@ -18,6 +18,7 @@ public record ServerboundOriginalSpiritPacket(int spiritId) {
         var context = supplier.get();
         context.enqueueWork(() -> {
             var player = context.getSender();
+            if (yuki135.blacksouls.story.OriginalOpeningService.managed(player)) return;
             if (player != null && spiritId >= 0 && spiritId <= 68) OriginalSpiritService.select(player, spiritId);
         });
         context.setPacketHandled(true);

@@ -32,6 +32,7 @@ public class ServerboundRedHoodDialogueCompletePacket {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
+            if (yuki135.blacksouls.story.OriginalOpeningService.managed(player)) return;
             if (player == null || this.storyStage < 0) {
                 return;
             }

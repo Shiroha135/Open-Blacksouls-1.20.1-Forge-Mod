@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "blacksouls:block/opening/original_opening_plain_grass"
+    },
+    "facing=east": {
+      "model": "blacksouls:block/opening/original_opening_plain_grass",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "blacksouls:block/opening/original_opening_plain_grass",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "blacksouls:block/opening/original_opening_plain_grass",
+      "y": 270
+    }
+  }
+}

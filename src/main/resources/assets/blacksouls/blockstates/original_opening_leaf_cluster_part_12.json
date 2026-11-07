@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "blacksouls:block/opening/original_opening_leaf_cluster_part_12"
+    },
+    "facing=east": {
+      "model": "blacksouls:block/opening/original_opening_leaf_cluster_part_12",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "blacksouls:block/opening/original_opening_leaf_cluster_part_12",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "blacksouls:block/opening/original_opening_leaf_cluster_part_12",
+      "y": 270
+    }
+  }
+}

@@ -202,11 +202,15 @@ public class DimensionRuleHandler {
                     player.setGameMode(GameType.ADVENTURE);
                 }
             }
-            if (player.getFoodData().getFoodLevel() != 20) {
-                player.getFoodData().setFoodLevel(20);
-            }
-            if (player.getFoodData().getSaturationLevel() != 20.0F) {
-                player.getFoodData().setSaturation(20.0F);
+            boolean preview = player.getCapability(yuki135.blacksouls.capability.BSPlayerStats.CAPABILITY)
+                    .map(stats -> stats.openingProfile().previewActive()).orElse(false);
+            if (!preview) {
+                if (player.getFoodData().getFoodLevel() != 20) {
+                    player.getFoodData().setFoodLevel(20);
+                }
+                if (player.getFoodData().getSaturationLevel() != 20.0F) {
+                    player.getFoodData().setSaturation(20.0F);
+                }
             }
             return;
         }

@@ -40,6 +40,7 @@ public class PacketSetExtraMode {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             ServerPlayer serverPlayer = ctx.getSender();
+            if (yuki135.blacksouls.story.OriginalOpeningService.managed(serverPlayer)) return;
             if (serverPlayer == null) {
                 return;
             }

@@ -1,0 +1,2971 @@
+{
+  "version": 1,
+  "sourceFiles": {
+    "Weapons.rvdata2": "489b93aa75ff5597ce15698a057bf27cb44d3a4d658adfb634340a80f14d2bc4",
+    "Armors.rvdata2": "0f185e88ec538611930745aa2a3d23abab21cb4cf824df8ba1e6885fc90f02b8"
+  },
+  "weaponFamilyBaseIds": [
+    101,
+    112,
+    156,
+    167,
+    200,
+    211,
+    222,
+    255
+  ],
+  "equipment": [
+    {
+      "kind": 1,
+      "id": 101,
+      "baseId": 101,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 105,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 106,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 102,
+      "baseId": 101,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 105,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 106,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 103,
+      "baseId": 101,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 105,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 106,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 104,
+      "baseId": 101,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 105,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 106,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 105,
+      "baseId": 101,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 105,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 106,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 106,
+      "baseId": 101,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 105,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 106,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 107,
+      "baseId": 101,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 105,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 106,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 108,
+      "baseId": 101,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 105,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 106,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 109,
+      "baseId": 101,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 105,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 106,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 110,
+      "baseId": 101,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 105,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 106,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 112,
+      "baseId": 112,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 151,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        },
+        {
+          "code": 43,
+          "id": 624,
+          "value": 0.0
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 113,
+      "baseId": 112,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 151,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        },
+        {
+          "code": 43,
+          "id": 624,
+          "value": 0.0
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 114,
+      "baseId": 112,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 151,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        },
+        {
+          "code": 43,
+          "id": 624,
+          "value": 0.0
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 115,
+      "baseId": 112,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 151,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        },
+        {
+          "code": 43,
+          "id": 624,
+          "value": 0.0
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 116,
+      "baseId": 112,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 151,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        },
+        {
+          "code": 43,
+          "id": 624,
+          "value": 0.0
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 117,
+      "baseId": 112,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 151,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        },
+        {
+          "code": 43,
+          "id": 624,
+          "value": 0.0
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 118,
+      "baseId": 112,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 151,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        },
+        {
+          "code": 43,
+          "id": 624,
+          "value": 0.0
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 119,
+      "baseId": 112,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 151,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        },
+        {
+          "code": 43,
+          "id": 624,
+          "value": 0.0
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 120,
+      "baseId": 112,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 151,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        },
+        {
+          "code": 43,
+          "id": 624,
+          "value": 0.0
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 121,
+      "baseId": 112,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 151,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        },
+        {
+          "code": 43,
+          "id": 624,
+          "value": 0.0
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 156,
+      "baseId": 156,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 32,
+          "id": 8,
+          "value": 1.0
+        },
+        {
+          "code": 43,
+          "id": 110,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 157,
+      "baseId": 156,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 32,
+          "id": 8,
+          "value": 1.0
+        },
+        {
+          "code": 43,
+          "id": 110,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 158,
+      "baseId": 156,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 32,
+          "id": 8,
+          "value": 1.0
+        },
+        {
+          "code": 43,
+          "id": 110,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 159,
+      "baseId": 156,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 32,
+          "id": 8,
+          "value": 1.0
+        },
+        {
+          "code": 43,
+          "id": 110,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 160,
+      "baseId": 156,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 32,
+          "id": 8,
+          "value": 1.0
+        },
+        {
+          "code": 43,
+          "id": 110,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 161,
+      "baseId": 156,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 32,
+          "id": 8,
+          "value": 1.0
+        },
+        {
+          "code": 43,
+          "id": 110,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 162,
+      "baseId": 156,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 32,
+          "id": 8,
+          "value": 1.0
+        },
+        {
+          "code": 43,
+          "id": 110,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 163,
+      "baseId": 156,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 32,
+          "id": 8,
+          "value": 1.0
+        },
+        {
+          "code": 43,
+          "id": 110,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 164,
+      "baseId": 156,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 32,
+          "id": 8,
+          "value": 1.0
+        },
+        {
+          "code": 43,
+          "id": 110,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 165,
+      "baseId": 156,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 32,
+          "id": 8,
+          "value": 1.0
+        },
+        {
+          "code": 43,
+          "id": 110,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 167,
+      "baseId": 167,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 23,
+          "id": 4,
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 168,
+      "baseId": 167,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 23,
+          "id": 4,
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 169,
+      "baseId": 167,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 23,
+          "id": 4,
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 170,
+      "baseId": 167,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 23,
+          "id": 4,
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 171,
+      "baseId": 167,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 23,
+          "id": 4,
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 172,
+      "baseId": 167,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 23,
+          "id": 4,
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 173,
+      "baseId": 167,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 23,
+          "id": 4,
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 174,
+      "baseId": 167,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 23,
+          "id": 4,
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 175,
+      "baseId": 167,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 23,
+          "id": 4,
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 176,
+      "baseId": 167,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 23,
+          "id": 4,
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 200,
+      "baseId": 200,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 43,
+          "id": 26,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.3
+        },
+        {
+          "code": 22,
+          "id": 7,
+          "value": 0.2
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 201,
+      "baseId": 200,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 7,
+          "value": 0.2
+        },
+        {
+          "code": 43,
+          "id": 26,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.3
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 202,
+      "baseId": 200,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 7,
+          "value": 0.2
+        },
+        {
+          "code": 43,
+          "id": 26,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.3
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 203,
+      "baseId": 200,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 7,
+          "value": 0.2
+        },
+        {
+          "code": 43,
+          "id": 26,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.3
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 204,
+      "baseId": 200,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 7,
+          "value": 0.3
+        },
+        {
+          "code": 43,
+          "id": 26,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.3
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 205,
+      "baseId": 200,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 7,
+          "value": 0.3
+        },
+        {
+          "code": 43,
+          "id": 26,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.3
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 206,
+      "baseId": 200,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 7,
+          "value": 0.3
+        },
+        {
+          "code": 43,
+          "id": 26,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.3
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 207,
+      "baseId": 200,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 7,
+          "value": 0.4
+        },
+        {
+          "code": 43,
+          "id": 26,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.3
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 208,
+      "baseId": 200,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 7,
+          "value": 0.4
+        },
+        {
+          "code": 43,
+          "id": 26,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.3
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 209,
+      "baseId": 200,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 7,
+          "value": 0.4
+        },
+        {
+          "code": 43,
+          "id": 26,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.3
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 211,
+      "baseId": 211,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 111,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 21,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 212,
+      "baseId": 211,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 111,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 21,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 213,
+      "baseId": 211,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 111,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 21,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 214,
+      "baseId": 211,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 111,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 21,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 215,
+      "baseId": 211,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 111,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 21,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 216,
+      "baseId": 211,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 111,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 21,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 217,
+      "baseId": 211,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 111,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 21,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 218,
+      "baseId": 211,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 111,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 21,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 219,
+      "baseId": 211,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 111,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 21,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 220,
+      "baseId": 211,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 111,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 21,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.25
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 222,
+      "baseId": 222,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 31,
+          "id": 13,
+          "value": 1.0
+        },
+        {
+          "code": 43,
+          "id": 117,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 118,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 223,
+      "baseId": 222,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 117,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 118,
+          "value": 0.0
+        },
+        {
+          "code": 31,
+          "id": 13,
+          "value": 1.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 224,
+      "baseId": 222,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 117,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 118,
+          "value": 0.0
+        },
+        {
+          "code": 31,
+          "id": 13,
+          "value": 1.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 225,
+      "baseId": 222,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 117,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 118,
+          "value": 0.0
+        },
+        {
+          "code": 31,
+          "id": 13,
+          "value": 1.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 226,
+      "baseId": 222,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 117,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 118,
+          "value": 0.0
+        },
+        {
+          "code": 31,
+          "id": 13,
+          "value": 1.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 227,
+      "baseId": 222,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 117,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 118,
+          "value": 0.0
+        },
+        {
+          "code": 31,
+          "id": 13,
+          "value": 1.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 228,
+      "baseId": 222,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 117,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 118,
+          "value": 0.0
+        },
+        {
+          "code": 31,
+          "id": 13,
+          "value": 1.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 229,
+      "baseId": 222,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 117,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 118,
+          "value": 0.0
+        },
+        {
+          "code": 31,
+          "id": 13,
+          "value": 1.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 230,
+      "baseId": 222,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 117,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 118,
+          "value": 0.0
+        },
+        {
+          "code": 31,
+          "id": 13,
+          "value": 1.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 231,
+      "baseId": 222,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 117,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 118,
+          "value": 0.0
+        },
+        {
+          "code": 31,
+          "id": 13,
+          "value": 1.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 255,
+      "baseId": 255,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 43,
+          "id": 308,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 256,
+      "baseId": 255,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 43,
+          "id": 308,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 257,
+      "baseId": 255,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 43,
+          "id": 308,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 258,
+      "baseId": 255,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 43,
+          "id": 308,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 259,
+      "baseId": 255,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 43,
+          "id": 308,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 260,
+      "baseId": 255,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 43,
+          "id": 308,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 261,
+      "baseId": 255,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 43,
+          "id": 308,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 262,
+      "baseId": 255,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 43,
+          "id": 308,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 263,
+      "baseId": 255,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 43,
+          "id": 308,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "kind": 1,
+      "id": 264,
+      "baseId": 255,
+      "features": [
+        {
+          "code": 31,
+          "id": 1,
+          "value": 0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0
+        },
+        {
+          "code": 43,
+          "id": 308,
+          "value": 0.0
+        },
+        {
+          "code": 32,
+          "id": 13,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 6,
+      "baseId": 6,
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.98
+        },
+        {
+          "code": 22,
+          "id": 1,
+          "value": 0.1
+        },
+        {
+          "code": 22,
+          "id": 4,
+          "value": 0.1
+        },
+        {
+          "code": 54,
+          "id": 2,
+          "value": 0.0
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 9,
+      "baseId": 9,
+      "features": [
+        {
+          "code": 21,
+          "id": 3,
+          "value": 1.03
+        },
+        {
+          "code": 22,
+          "id": 1,
+          "value": 0.05
+        },
+        {
+          "code": 22,
+          "id": 4,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 14,
+      "baseId": 14,
+      "features": [
+        {
+          "code": 21,
+          "id": 5,
+          "value": 1.07
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.96
+        },
+        {
+          "code": 21,
+          "id": 3,
+          "value": 1.05
+        },
+        {
+          "code": 22,
+          "id": 1,
+          "value": 0.05
+        },
+        {
+          "code": 22,
+          "id": 4,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 15,
+      "baseId": 15,
+      "features": [
+        {
+          "code": 21,
+          "id": 5,
+          "value": 1.1
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.96
+        },
+        {
+          "code": 21,
+          "id": 4,
+          "value": 1.05
+        },
+        {
+          "code": 22,
+          "id": 1,
+          "value": 0.05
+        },
+        {
+          "code": 22,
+          "id": 4,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 16,
+      "baseId": 16,
+      "features": [
+        {
+          "code": 21,
+          "id": 3,
+          "value": 1.08
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.98
+        },
+        {
+          "code": 22,
+          "id": 1,
+          "value": 0.05
+        },
+        {
+          "code": 22,
+          "id": 4,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 17,
+      "baseId": 17,
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.95
+        },
+        {
+          "code": 21,
+          "id": 3,
+          "value": 1.15
+        },
+        {
+          "code": 13,
+          "id": 13,
+          "value": 0.7
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 18,
+      "baseId": 18,
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.95
+        },
+        {
+          "code": 21,
+          "id": 3,
+          "value": 1.1
+        },
+        {
+          "code": 21,
+          "id": 2,
+          "value": 1.05
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 19,
+      "baseId": 19,
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.97
+        },
+        {
+          "code": 21,
+          "id": 3,
+          "value": 1.1
+        },
+        {
+          "code": 11,
+          "id": 3,
+          "value": 0.75
+        },
+        {
+          "code": 13,
+          "id": 29,
+          "value": 0.75
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 22,
+      "baseId": 22,
+      "features": [
+        {
+          "code": 21,
+          "id": 5,
+          "value": 1.03
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.99
+        },
+        {
+          "code": 21,
+          "id": 3,
+          "value": 1.02
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 23,
+      "baseId": 23,
+      "features": [
+        {
+          "code": 21,
+          "id": 5,
+          "value": 1.05
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.98
+        },
+        {
+          "code": 21,
+          "id": 4,
+          "value": 1.03
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 24,
+      "baseId": 24,
+      "features": [
+        {
+          "code": 21,
+          "id": 3,
+          "value": 1.04
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.99
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 25,
+      "baseId": 25,
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.97
+        },
+        {
+          "code": 21,
+          "id": 3,
+          "value": 1.08
+        },
+        {
+          "code": 13,
+          "id": 13,
+          "value": 0.8
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 26,
+      "baseId": 26,
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.97
+        },
+        {
+          "code": 21,
+          "id": 3,
+          "value": 1.04
+        },
+        {
+          "code": 21,
+          "id": 2,
+          "value": 1.04
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 27,
+      "baseId": 27,
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.97
+        },
+        {
+          "code": 21,
+          "id": 3,
+          "value": 1.06
+        },
+        {
+          "code": 11,
+          "id": 3,
+          "value": 0.75
+        },
+        {
+          "code": 13,
+          "id": 29,
+          "value": 0.75
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 39,
+      "baseId": 39,
+      "features": [
+        {
+          "code": 21,
+          "id": 4,
+          "value": 1.1
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.96
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 2.0
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 42,
+      "baseId": 42,
+      "features": [
+        {
+          "code": 23,
+          "id": 1,
+          "value": 1.5
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 43,
+      "baseId": 43,
+      "features": [
+        {
+          "code": 22,
+          "id": 1,
+          "value": 0.1
+        },
+        {
+          "code": 22,
+          "id": 4,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 45,
+      "baseId": 45,
+      "features": [
+        {
+          "code": 22,
+          "id": 1,
+          "value": 0.05
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.98
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 1.5
+        },
+        {
+          "code": 22,
+          "id": 4,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 47,
+      "baseId": 47,
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.98
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 1.5
+        },
+        {
+          "code": 21,
+          "id": 2,
+          "value": 1.02
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 51,
+      "baseId": 51,
+      "features": [
+        {
+          "code": 23,
+          "id": 1,
+          "value": 2.5
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.98
+        },
+        {
+          "code": 13,
+          "id": 13,
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "kind": 2,
+      "id": 65,
+      "baseId": 65,
+      "features": [
+        {
+          "code": 44,
+          "id": 13,
+          "value": 0.0
+        },
+        {
+          "code": 44,
+          "id": 16,
+          "value": 0.0
+        },
+        {
+          "code": 43,
+          "id": 20,
+          "value": 0.0
+        },
+        {
+          "code": 22,
+          "id": 0,
+          "value": 0.05
+        }
+      ]
+    }
+  ]
+}

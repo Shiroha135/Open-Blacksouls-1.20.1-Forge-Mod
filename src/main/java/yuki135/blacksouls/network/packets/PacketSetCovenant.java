@@ -38,6 +38,7 @@ public class PacketSetCovenant {
         NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
+            if (yuki135.blacksouls.story.OriginalOpeningService.managed(player)) return;
             if (player == null) return;
 
             player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {

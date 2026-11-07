@@ -15,6 +15,7 @@ import yuki135.blacksouls.network.NetworkHandler;
 import yuki135.blacksouls.network.packets.*;
 import yuki135.blacksouls.util.PlayerStatService;
 import yuki135.blacksouls.util.SkillUtils;
+import yuki135.blacksouls.util.OriginalOpeningEquipment;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -118,9 +119,20 @@ public class StatEventHandler {
         private final Map<Item, Integer> cache = new IdentityHashMap<>();
 
         private BaubleCounter(LivingEntity entity) {
+            this(entity, false);
+        }
+
+        private BaubleCounter(LivingEntity entity, boolean ignoreSourceInitial) {
             CuriosApi.getCuriosInventory(entity).ifPresent(handler -> {
                 for (var result : handler.findCurios(stack -> !stack.isEmpty())) {
                     ItemStack stack = result.stack();
+                    if (ignoreSourceInitial && entity instanceof Player player) {
+                        String identifier = result.slotContext().identifier();
+                        int index = result.slotContext().index();
+                        int sourceSlot = identifier.equals("head") && index == 0 ? 2 : identifier.equals("body") && index == 0 ? 3
+                                : identifier.equals("ring") && index >= 0 && index < 4 ? index + 4 : -1;
+                        if (OriginalOpeningEquipment.handled(player, stack, sourceSlot)) continue;
+                    }
                     Item item = stack.getItem();
                     cache.put(item, cache.getOrDefault(item, 0) + 1);
                 }
@@ -394,7 +406,13 @@ public class StatEventHandler {
                 * Math.pow(2.0D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_1))
                 * Math.pow(2.5D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_2))
                 * Math.pow(3.0D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_3));
-        if (entity instanceof Player player && hasKnightShield(player)) {
+        if (entity instanceof Player player && OriginalOpeningEquipment.active(player)) {
+            multiplier *= OriginalOpeningEquipment.rate(player, 23, 1);
+            if (!OriginalOpeningEquipment.handled(player, player.getOffhandItem(), 1)) {
+                if (hasKnightShield(player)) multiplier *= 2.5D;
+                else if (hasPorcupineShield(player)) multiplier *= 2.0D;
+            }
+        } else if (entity instanceof Player player && hasKnightShield(player)) {
             multiplier *= 2.5D;
         } else if (entity instanceof Player player && hasPorcupineShield(player)) {
             multiplier *= 2.0D;
@@ -1620,12 +1638,16 @@ public class StatEventHandler {
     private static void grantFirstJoinItems(ServerPlayer player) {
         CompoundTag persisted = SkillUtils.getPersistedData(player);
 
-        if (!persisted.getBoolean(TAG_FIRST_JOIN_BLACK_ASH)) {
+        boolean openingReserved = yuki135.blacksouls.story.OriginalOpeningEnrollment.shouldDeferLegacyInitialRewards(player);
+        boolean openingComplete = player.getCapability(BSPlayerStats.CAPABILITY).map(stats -> stats.openingProfile().readState() == yuki135.blacksouls.story.OriginalOpeningProfile.ReadState.REAL
+                && !stats.openingProfile().previewActive() && stats.openingProfile().realStage().orElse(null) == yuki135.blacksouls.story.OriginalOpeningProfile.Stage.COMPLETE
+                && stats.openingProfile().realOpCodaGrantCommitted()).orElse(false);
+        if (!openingReserved && !persisted.getBoolean(TAG_FIRST_JOIN_BLACK_ASH)) {
             giveItem(player, new ItemStack(BlackSouls.BLACK_ASH.get()));
             persisted.putBoolean(TAG_FIRST_JOIN_BLACK_ASH, true);
         }
 
-        if (BSConfig.ALLOW_PLAYER_EXTRA_MODES.get() && !persisted.getBoolean(TAG_FIRST_JOIN_DEV_MODE_ITEMS)) {
+        if ((!openingReserved || openingComplete) && BSConfig.ALLOW_PLAYER_EXTRA_MODES.get() && !persisted.getBoolean(TAG_FIRST_JOIN_DEV_MODE_ITEMS)) {
             giveItem(player, new ItemStack(BlackSouls.DEV_REVENGE_MODE.get()));
             giveItem(player, new ItemStack(BlackSouls.DEV_DEATH_MODE.get()));
             giveItem(player, new ItemStack(BlackSouls.DEV_LEGENDARY_MODE.get()));
@@ -1633,6 +1655,15 @@ public class StatEventHandler {
             giveItem(player, new ItemStack(BlackSouls.DEV_ETERNITY_MODE.get()));
             persisted.putBoolean(TAG_FIRST_JOIN_DEV_MODE_ITEMS, true);
         }
+    }
+
+    public static void finishOpeningLoginItems(ServerPlayer player) {
+        var stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+        if (stats == null || stats.openingProfile().previewActive() || stats.openingProfile().readState() != yuki135.blacksouls.story.OriginalOpeningProfile.ReadState.REAL
+                || stats.openingProfile().realStage().orElse(null) != yuki135.blacksouls.story.OriginalOpeningProfile.Stage.COMPLETE
+                || !stats.openingProfile().realOpCodaGrantCommitted()) return;
+        grantFirstJoinItems(player);
+        player.containerMenu.broadcastChanges();
     }
 
     private static void giveItem(ServerPlayer player, ItemStack stack) {
@@ -1730,8 +1761,11 @@ public class StatEventHandler {
 
     private static void applyStats(Player player, BaubleCounter counts, BSPlayerStats stats) {
         if (stats != null) {
+            if (OriginalOpeningEquipment.active(player)) counts = new BaubleCounter(player, true);
+            yuki135.blacksouls.util.OriginalOpeningStartingKit.learnCareerSkills(stats, stats.level);
             stats.recalculateBaseStats();
             resetDerivedStats(stats);
+            OriginalOpeningEquipment.apply(player, stats);
             applyCovenantBonuses(stats);
 
             // Accessory and armor section.
@@ -2164,6 +2198,7 @@ public class StatEventHandler {
                 stats.instantDeathRate += blackbeardCount * 20.0;
             }
             ItemStack mainHand = player.getMainHandItem();
+            if (OriginalOpeningEquipment.handled(player, mainHand, 0)) mainHand = ItemStack.EMPTY;
 
             int upgradeLevel = 0;
             if (!mainHand.isEmpty() && mainHand.hasTag() && mainHand.getTag().contains("bs2_upgrade_level")) {
@@ -2673,11 +2708,12 @@ public class StatEventHandler {
             stats.speed *= getSpeedShiftMultiplier(player);
 
             ItemStack offHand = player.getOffhandItem();
+            if (OriginalOpeningEquipment.handled(player, offHand, 1)) offHand = ItemStack.EMPTY;
             if (!offHand.isEmpty() && offHand.getItem() == BlackSouls.MURDERERS_SHOTGUN.get()) {
                 stats.attack += 50.0; stats.speed *= 0.95;
             }
             if (hasPorcupineShield(player)) stats.speed *= 0.97D;
-            if (hasKnightShield(player)) stats.speed *= 0.98D;
+            if (hasKnightShield(player) && !OriginalOpeningEquipment.handled(player, player.getOffhandItem(), 1)) stats.speed *= 0.98D;
 
             stats.weaponEnchantments.clear();
 
@@ -2714,7 +2750,7 @@ public class StatEventHandler {
             }
             stats.applyOriginalSpiritParameters();
             MinecraftForge.EVENT_BUS.post(new BSStatsRecalcEvent(player, stats));
-            stats.magicEvasion += stats.evasion;
+            stats.magicEvasion += stats.evasion - OriginalOpeningEquipment.sum(player, 22, 1) * 100.0D;
             stats.applyOriginalSpiritDerivedStats();
             clampCalculatedStats(player, stats);
             syncVanillaAttributes(player, stats);
@@ -3306,6 +3342,11 @@ public class StatEventHandler {
         }
 
         Player player = event.player;
+        var openingStats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+        if (openingStats != null && openingStats.openingProfile().previewActive()) {
+            applyStats(player);
+            return;
+        }
         if (player instanceof ServerPlayer serverPlayer) {
             yuki135.blacksouls.item.weapon.ItemOriginalBow.tickHansMachineGunBursts(serverPlayer);
             if (player.getMainHandItem().getItem() == BlackSouls.HOLY_GUNBLADE.get()) {

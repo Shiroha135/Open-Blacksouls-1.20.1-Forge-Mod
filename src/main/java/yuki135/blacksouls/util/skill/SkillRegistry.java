@@ -196,6 +196,7 @@ public class SkillRegistry {
         register(new SkillRingArt(SkillRingArt.Art.STRONG_CRUSH));
         register(new SkillRingArt(SkillRingArt.Art.JUGGLING_EVASION));
         register(new SkillDodoRun());
+        register(new SkillGunFireBreak());
     }
 
     public static void register(AbstractSkill skill) {

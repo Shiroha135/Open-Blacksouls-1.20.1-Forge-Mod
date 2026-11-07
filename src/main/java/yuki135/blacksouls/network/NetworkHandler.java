@@ -20,7 +20,7 @@ import java.util.Optional;
 @SuppressWarnings("removal")
 public class NetworkHandler {
 
-    private static final String PROTOCOL_VERSION = "restoration-26";
+    private static final String PROTOCOL_VERSION = "restoration-29";
 
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(BlackSouls.MODID, "main"),
@@ -107,6 +107,10 @@ public class NetworkHandler {
         register(ClientboundNpcModelOffsetPacket.class, ClientboundNpcModelOffsetPacket::toBytes, ClientboundNpcModelOffsetPacket::new, ClientboundNpcModelOffsetPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(ClientboundOriginalSkillInfoPacket.class, ClientboundOriginalSkillInfoPacket::toBytes, ClientboundOriginalSkillInfoPacket::new, ClientboundOriginalSkillInfoPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
         register(ClientboundOriginalSenInfoPacket.class, ClientboundOriginalSenInfoPacket::toBytes, ClientboundOriginalSenInfoPacket::new, ClientboundOriginalSenInfoPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+
+        register(ClientboundOpeningPacket.class, ClientboundOpeningPacket::toBytes, ClientboundOpeningPacket::new, ClientboundOpeningPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
+        register(ServerboundOpeningPacket.class, ServerboundOpeningPacket::toBytes, ServerboundOpeningPacket::new, ServerboundOpeningPacket::handle, NetworkDirection.PLAY_TO_SERVER);
+        register(ClientboundOpeningPresentationPacket.class, ClientboundOpeningPresentationPacket::toBytes, ClientboundOpeningPresentationPacket::new, ClientboundOpeningPresentationPacket::handle, NetworkDirection.PLAY_TO_CLIENT);
 
     }
     public static <MSG> void sendToPlayer(MSG message, ServerPlayer player) {

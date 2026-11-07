@@ -126,7 +126,7 @@ public class SkillEventHandler {
         }
 
         BSPlayerStats stats = event.player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
-        if (stats == null) {
+        if (stats == null || stats.openingProfile().previewActive()) {
             return;
         }
 

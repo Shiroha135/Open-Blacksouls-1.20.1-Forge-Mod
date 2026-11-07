@@ -22,6 +22,9 @@ public class BSEntityRegistry {
     public static final RegistryObject<EntityType<EntityOriginalReceptionist>> ORIGINAL_RECEPTIONIST = ENTITY_TYPES.register("original_receptionist",
             () -> EntityType.Builder.of(EntityOriginalReceptionist::new, MobCategory.CREATURE)
                     .sized(0.5F, 1.125F).clientTrackingRange(10).updateInterval(3).build("original_receptionist"));
+    public static final RegistryObject<EntityType<EntityOpeningActor>> OPENING_ACTOR = ENTITY_TYPES.register("opening_actor",
+            () -> EntityType.Builder.of(EntityOpeningActor::new, MobCategory.MISC)
+                    .sized(0.6F, 1.8F).clientTrackingRange(10).updateInterval(3).build("opening_actor"));
     public static final RegistryObject<EntityType<EntityOriginalNpc>> ORIGINAL_NPC = ENTITY_TYPES.register("original_npc",
             () -> EntityType.Builder.of(EntityOriginalNpc::new, MobCategory.CREATURE)
                     .sized(0.6F, 1.9F).clientTrackingRange(10).updateInterval(3).build("original_npc"));

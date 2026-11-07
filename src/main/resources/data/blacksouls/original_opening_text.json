@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "sleep": [
+    {
+      "command": 27,
+      "sources": [
+        "map007_ev001_p3_c027"
+      ],
+      "text": "「啊啦……差不多您也有点想睡觉了吧？」"
+    },
+    {
+      "command": 31,
+      "sources": [
+        "map007_ev001_p3_c031"
+      ],
+      "text": "「呵呵，我知道了，那么就…」"
+    },
+    {
+      "command": 35,
+      "sources": [
+        "map007_ev001_p3_c035",
+        "map007_ev001_p3_c036"
+      ],
+      "text": "「虽然您这么说着，但您的上眼皮和下眼皮开始打架了哟。\n还请您不要勉强自己」"
+    },
+    {
+      "command": 40,
+      "sources": [
+        "map007_ev001_p3_c040",
+        "map007_ev001_p3_c041"
+      ],
+      "text": "「这样提问就结束了。\n感谢您愿意坚持到最后」"
+    },
+    {
+      "command": 45,
+      "sources": [
+        "map007_ev001_p3_c045",
+        "map007_ev001_p3_c046"
+      ],
+      "text": "「那么在您的故事正式开始之前……\n请您先沉入安稳的梦乡吧，晚安」"
+    }
+  ],
+  "poem": [
+    "爱丽丝哟，请拿起这孩子气的故事\n轻柔地托放在手上，\n于那少女时代梦想荟萃的地方珍藏",
+    "系上回忆的神秘缎带，\n如同那巡礼者们的枯萎花环\n来自遥远的异国他乡"
+  ],
+  "title": "BLACK SOULSⅡ",
+  "sourceDialogueIndexSha256": "4e2ddefeedf1c3f5147cad1e5273f2e80352cf28a31df860cbd4f23c4b9e20b8",
+  "nonExplicitPolicy": "Family-memory presentation and preference questionnaire omitted; personal relationship and progression retained.",
+  "skillNames": {
+    "12": "闪避",
+    "13": "击溃",
+    "14": "魂之矢",
+    "15": "魂之光",
+    "20": "枪火击溃【短铳】",
+    "21": "反击",
+    "26": "法力恢复",
+    "105": "武器击溃",
+    "106": "护甲击溃",
+    "110": "奋斗",
+    "111": "精神破坏",
+    "117": "削肉",
+    "118": "血之追迹",
+    "151": "斩首",
+    "308": "自伤",
+    "341": "寻求助言",
+    "624": "捉迷藏"
+  }
+}

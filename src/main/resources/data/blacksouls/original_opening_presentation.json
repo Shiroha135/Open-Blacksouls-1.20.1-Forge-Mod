@@ -1,0 +1,569 @@
+{
+  "version": 1,
+  "sourceFramesPerSecond": 60,
+  "sourceCanvas": [
+    640,
+    480
+  ],
+  "sourceFontSize": 22,
+  "palette": [
+    4294967295,
+    4280328406,
+    4294932556,
+    4284927040,
+    4288269567,
+    4291608831,
+    4294967200,
+    4286611584,
+    4290822336,
+    4280320204,
+    4294916112,
+    4278231056,
+    4282292958,
+    4288715007,
+    4294954016,
+    4278190080,
+    4286884607,
+    4294967104,
+    4294909984,
+    4280295488,
+    4292902976,
+    4293967936,
+    4282417344,
+    4282433776,
+    4286644096,
+    4290805888,
+    4286611711,
+    4294934783,
+    4278231104,
+    4278247520,
+    4288700640,
+    4290806015
+  ],
+  "programs": [
+    {
+      "id": "collapse110",
+      "map": 110,
+      "event": 9,
+      "page": 0,
+      "cues": [
+        {
+          "command": 5,
+          "code": 250,
+          "args": [
+            100,
+            85
+          ],
+          "sound": "blacksouls:earth5",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 0,
+          "holdForInput": false,
+          "sourceIndices": [
+            5
+          ]
+        },
+        {
+          "command": 6,
+          "code": 213,
+          "args": [
+            1
+          ],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 0,
+          "holdForInput": false,
+          "sourceIndices": [
+            6
+          ]
+        },
+        {
+          "command": 9,
+          "code": 225,
+          "args": [
+            9,
+            9,
+            30
+          ],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 0,
+          "holdForInput": false,
+          "sourceIndices": [
+            9
+          ]
+        },
+        {
+          "command": 10,
+          "code": 201,
+          "args": [
+            97,
+            15,
+            13,
+            0,
+            2
+          ],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 0,
+          "holdForInput": false,
+          "sourceIndices": [
+            10
+          ]
+        }
+      ]
+    },
+    {
+      "id": "collapse97",
+      "map": 97,
+      "event": 2,
+      "page": 0,
+      "cues": [
+        {
+          "command": 6,
+          "code": 250,
+          "args": [
+            100,
+            90
+          ],
+          "sound": "blacksouls:earth5",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 0,
+          "holdForInput": false,
+          "sourceIndices": [
+            6
+          ]
+        },
+        {
+          "command": 7,
+          "code": 225,
+          "args": [
+            9,
+            9,
+            30
+          ],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 0,
+          "holdForInput": false,
+          "sourceIndices": [
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "collapse98",
+      "map": 98,
+      "event": 2,
+      "page": 0,
+      "cues": [
+        {
+          "command": 6,
+          "code": 250,
+          "args": [
+            100,
+            90
+          ],
+          "sound": "blacksouls:earth5",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 0,
+          "holdForInput": false,
+          "sourceIndices": [
+            6
+          ]
+        },
+        {
+          "command": 7,
+          "code": 225,
+          "args": [
+            9,
+            9,
+            30
+          ],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 0,
+          "holdForInput": false,
+          "sourceIndices": [
+            7
+          ]
+        }
+      ]
+    },
+    {
+      "id": "finale99",
+      "map": 99,
+      "event": 2,
+      "page": 0,
+      "cues": [
+        {
+          "command": 0,
+          "code": 213,
+          "args": [
+            8
+          ],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 76,
+          "holdForInput": false,
+          "sourceIndices": [
+            0
+          ]
+        },
+        {
+          "command": 1,
+          "code": 230,
+          "args": [],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 90,
+          "holdForInput": false,
+          "sourceIndices": [
+            1
+          ]
+        },
+        {
+          "command": 2,
+          "code": 250,
+          "args": [
+            100,
+            90
+          ],
+          "sound": "blacksouls:original_opening_collapse",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 0,
+          "holdForInput": false,
+          "sourceIndices": [
+            2
+          ]
+        },
+        {
+          "command": 3,
+          "code": 225,
+          "args": [
+            9,
+            9,
+            30
+          ],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 0,
+          "holdForInput": false,
+          "sourceIndices": [
+            3
+          ]
+        },
+        {
+          "command": 4,
+          "code": 223,
+          "args": [
+            -255.0,
+            -255.0,
+            -255.0,
+            0.0,
+            1
+          ],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 1,
+          "holdForInput": false,
+          "sourceIndices": [
+            4
+          ]
+        },
+        {
+          "command": 5,
+          "code": 245,
+          "args": [
+            80,
+            100
+          ],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 0,
+          "holdForInput": false,
+          "sourceIndices": [
+            5
+          ]
+        },
+        {
+          "command": 6,
+          "code": 355,
+          "args": [],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 0,
+          "holdForInput": false,
+          "sourceIndices": [
+            6
+          ]
+        },
+        {
+          "command": 7,
+          "code": 230,
+          "args": [],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 200,
+          "holdForInput": false,
+          "sourceIndices": [
+            7
+          ]
+        },
+        {
+          "command": 8,
+          "code": 245,
+          "args": [
+            100,
+            70
+          ],
+          "sound": "blacksouls:original_opening_gear",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 0,
+          "holdForInput": false,
+          "sourceIndices": [
+            8
+          ]
+        },
+        {
+          "command": 9,
+          "code": 101,
+          "args": [
+            1,
+            1
+          ],
+          "sound": "",
+          "lines": [
+            "\\c[3]爱丽丝哟，请拿起这孩子气的故事",
+            "轻柔地托放在手上，",
+            "于那少女时代梦想荟萃的地方珍藏\\c[0]"
+          ],
+          "style": "poem",
+          "blockingFrames": 0,
+          "holdForInput": true,
+          "sourceIndices": [
+            9,
+            10,
+            11,
+            12
+          ]
+        },
+        {
+          "command": 13,
+          "code": 101,
+          "args": [
+            1,
+            1
+          ],
+          "sound": "",
+          "lines": [
+            "\\c[3]系上回忆的神秘缎带，",
+            "如同那巡礼者们的枯萎花环",
+            "来自遥远的异国他乡\\c[0]"
+          ],
+          "style": "poem",
+          "blockingFrames": 0,
+          "holdForInput": true,
+          "sourceIndices": [
+            13,
+            14,
+            15,
+            16
+          ]
+        },
+        {
+          "command": 17,
+          "code": 101,
+          "args": [
+            1,
+            1
+          ],
+          "sound": "",
+          "lines": [
+            "",
+            "                                \\{\\{\\c[2]BLACK SOULSⅡ\\c[0]\\|\\|\\|"
+          ],
+          "style": "title",
+          "blockingFrames": 0,
+          "holdForInput": true,
+          "sourceIndices": [
+            17,
+            18,
+            19
+          ]
+        },
+        {
+          "command": 20,
+          "code": 246,
+          "args": [
+            2
+          ],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 0,
+          "holdForInput": false,
+          "sourceIndices": [
+            20
+          ]
+        },
+        {
+          "command": 21,
+          "code": 221,
+          "args": [],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 30,
+          "holdForInput": false,
+          "sourceIndices": [
+            21
+          ]
+        },
+        {
+          "command": 25,
+          "code": 201,
+          "args": [
+            1,
+            20,
+            60,
+            2,
+            0
+          ],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 75,
+          "holdForInput": false,
+          "sourceIndices": [
+            25
+          ]
+        },
+        {
+          "command": 26,
+          "code": 230,
+          "args": [],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 60,
+          "holdForInput": false,
+          "sourceIndices": [
+            26
+          ]
+        },
+        {
+          "command": 30,
+          "code": 355,
+          "args": [],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 0,
+          "holdForInput": false,
+          "sourceIndices": [
+            30
+          ]
+        },
+        {
+          "command": 51,
+          "code": 222,
+          "args": [],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 30,
+          "holdForInput": false,
+          "sourceIndices": [
+            51
+          ]
+        }
+      ]
+    },
+    {
+      "id": "arrival",
+      "map": 1,
+      "event": 0,
+      "page": 0,
+      "cues": [
+        {
+          "command": 0,
+          "code": 221,
+          "args": [
+            2,
+            30
+          ],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 0,
+          "holdForInput": false,
+          "sourceIndices": []
+        },
+        {
+          "command": 1,
+          "code": 223,
+          "args": [
+            -34,
+            -34,
+            -34,
+            0,
+            0
+          ],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 0,
+          "holdForInput": false,
+          "sourceIndices": []
+        },
+        {
+          "command": 2,
+          "code": 230,
+          "args": [],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 60,
+          "holdForInput": false,
+          "sourceIndices": [
+            26
+          ]
+        },
+        {
+          "command": 3,
+          "code": 222,
+          "args": [
+            2,
+            0
+          ],
+          "sound": "",
+          "lines": [],
+          "style": "none",
+          "blockingFrames": 30,
+          "holdForInput": false,
+          "sourceIndices": [
+            51
+          ]
+        }
+      ]
+    }
+  ]
+}

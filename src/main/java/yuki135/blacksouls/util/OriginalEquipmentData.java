@@ -25,7 +25,21 @@ public final class OriginalEquipmentData {
     }
 
     public static boolean playerEquippable(Equipment output, List<Equipment> equipped) {
-        List<Feature> features = new ArrayList<>(CATALOG.playerFeatures());
+        return equippable(output, equipped, CATALOG.playerFeatures());
+    }
+
+    public static boolean playerEquippable(int originId, Equipment output, List<Equipment> equipped) {
+        if (originId == 0) return playerEquippable(output, equipped);
+        var origin = OriginalOpeningData.get(originId);
+        if (origin == null) throw new IllegalArgumentException("Unknown original opening profession");
+        List<Feature> features = new ArrayList<>();
+        for (var feature : origin.actor().features()) features.add(new Feature(feature.code(), feature.dataId()));
+        for (var feature : origin.professionClass().features()) features.add(new Feature(feature.code(), feature.dataId()));
+        return equippable(output, equipped, features);
+    }
+
+    private static boolean equippable(Equipment output, List<Equipment> equipped, List<Feature> actorFeatures) {
+        List<Feature> features = new ArrayList<>(actorFeatures);
         for (Equipment item : equipped) if (item != null) features.addAll(item.features());
         if (features.stream().anyMatch(feature -> feature.code() == 54 && feature.id() == output.equipmentType())) return false;
         int code = output.kind() == 1 ? 51 : 52;

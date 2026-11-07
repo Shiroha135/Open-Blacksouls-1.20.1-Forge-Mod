@@ -2,14 +2,10 @@ package yuki135.blacksouls.network.packets;
 
 import yuki135.blacksouls.capability.BSPlayerStats;
 import yuki135.blacksouls.network.NetworkHandler;
-import yuki135.blacksouls.util.HokoniwaDestination;
-import yuki135.blacksouls.util.KnightStartingKit;
+import yuki135.blacksouls.story.OriginalOpeningService;
 import yuki135.blacksouls.util.StoryNameData;
-import yuki135.blacksouls.util.skill.SkillSeekAdvice;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
@@ -44,7 +40,7 @@ public final class ServerboundConfirmStoryNamePacket {
     }
 
     public void handle(Supplier<NetworkEvent.Context> supplier) {
-        PacketHandlers.handleServer(supplier, context -> {
+        PacketHandlers.handleOpeningServer(supplier, context -> {
             ServerPlayer player = context.getSender();
             if (player == null || !StoryNameData.hasStarted(player) || StoryNameData.isConfirmed(player)) {
                 return;
@@ -56,38 +52,25 @@ public final class ServerboundConfirmStoryNamePacket {
                 NetworkHandler.sendToPlayer(new ClientboundStoryNamePacket(true, ""), player);
                 return;
             }
+            var stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
+            if (stats == null || stats.openingProfile().hasRejectedData() || stats.openingProfile().previewActive()) return;
+            if (stats.openingProfile().readState() == yuki135.blacksouls.story.OriginalOpeningProfile.ReadState.REAL
+                    && stats.openingProfile().realStage().orElse(null) != yuki135.blacksouls.story.OriginalOpeningProfile.Stage.NAME_PENDING) return;
+            boolean legacyCompletion = yuki135.blacksouls.story.OriginalLegacyNameCompletion.eligible(player);
+            if (legacyCompletion && !yuki135.blacksouls.story.OriginalLegacyNameCompletion.reserve(player)) {
+                NetworkHandler.sendToPlayer(new ClientboundStoryNamePacket(true, ""), player);
+                return;
+            }
             if (useGameName) {
                 StoryNameData.confirmGameName(player);
             } else {
                 StoryNameData.confirm(player, normalized);
             }
-            KnightStartingKit.grant(player);
-            SkillSeekAdvice.resetVisibility(player);
-            player.setHealth(player.getMaxHealth());
+            if (OriginalOpeningService.managed(player)) OriginalOpeningService.nameConfirmed(player);
+            else if (legacyCompletion) yuki135.blacksouls.story.OriginalLegacyNameCompletion.confirmed(player);
             NetworkHandler.sendToPlayer(new ClientboundStoryNamePacket(false, normalized), player);
-            teleportToStoryStart(player);
+
         });
     }
 
-    private static void teleportToStoryStart(ServerPlayer player) {
-        if (player.getServer() == null) {
-            return;
-        }
-        ServerLevel targetLevel = player.getServer().getLevel(HokoniwaDestination.DIMENSION);
-        if (targetLevel == null) {
-            return;
-        }
-        player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> stats.hasVisitedLibrary = true);
-        player.stopRiding();
-        player.teleportTo(
-                targetLevel,
-                HokoniwaDestination.STORY_START_X,
-                HokoniwaDestination.STORY_START_Y,
-                HokoniwaDestination.STORY_START_Z,
-                player.getYRot(),
-                player.getXRot()
-        );
-        player.setDeltaMovement(Vec3.ZERO);
-        player.fallDistance = 0.0F;
-    }
 }

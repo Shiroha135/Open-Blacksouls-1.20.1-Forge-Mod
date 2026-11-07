@@ -12,12 +12,12 @@ public abstract class WeaponSkill extends AbstractSkill {
 
     @Override
     public boolean isUnlockedForGUI(Player player) {
-        return isWeaponEquipped(player);
+        return yuki135.blacksouls.util.OriginalOpeningSkills.available(player, getSkillId(), isWeaponEquipped(player));
     }
 
     @Override
     public boolean canCast(ServerPlayer player, BSPlayerStats stats) {
-        if (!isWeaponEquipped(player)) {
+        if (!yuki135.blacksouls.util.OriginalOpeningSkills.available(player, getSkillId(), isWeaponEquipped(player))) {
             player.sendSystemMessage(Component.translatable("message.blacksouls.skill.wrong_weapon").withStyle(ChatFormatting.RED));
             return false;
         }
@@ -26,7 +26,7 @@ public abstract class WeaponSkill extends AbstractSkill {
 
     @Override
     public boolean canCastInTurnBattle(ServerPlayer player, BSPlayerStats stats) {
-        if (!isWeaponEquipped(player)) {
+        if (!yuki135.blacksouls.util.OriginalOpeningSkills.available(player, getSkillId(), isWeaponEquipped(player))) {
             player.sendSystemMessage(Component.translatable("message.blacksouls.skill.wrong_weapon").withStyle(ChatFormatting.RED));
             return false;
         }

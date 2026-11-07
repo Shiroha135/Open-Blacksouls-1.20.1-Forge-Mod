@@ -107,6 +107,8 @@ public final class OriginalNpcProgress extends SavedData {
     }
 
     public static long readVariable(ServerPlayer player, int id) {
+        var opening = yuki135.blacksouls.util.OriginalOpeningCareers.variable(player, id);
+        if (opening.isPresent()) return opening.getAsLong();
         var covenant = yuki135.blacksouls.util.OriginalCovenantData.forVariable(id);
         if (covenant != null && covenant.commonEvent() != 80) {
             BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original covenant stats"));
@@ -127,6 +129,7 @@ public final class OriginalNpcProgress extends SavedData {
     }
 
     public static void writeVariable(ServerPlayer player, int id, long value) {
+        if (yuki135.blacksouls.util.OriginalOpeningCareers.writeVariable(player, id, value)) return;
         var covenant = yuki135.blacksouls.util.OriginalCovenantData.forVariable(id);
         if (covenant != null && covenant.commonEvent() != 80) {
             BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original covenant stats"));

@@ -15,7 +15,7 @@ public final class OriginalActorBridge {
     }
 
     public static boolean isPlayerActor(ServerPlayer player, int actorId) {
-        return player != null && actorId == 2;
+        return player != null && actorId == OriginalOpeningCareers.actorId(player);
     }
 
     public static String changeExperience(ServerPlayer player, int actorId, long amount, boolean show) {
@@ -28,7 +28,7 @@ public final class OriginalActorBridge {
     }
 
     private static String applyExperience(ServerPlayer player, int actorId, long amount, boolean show, long soulCost) {
-        if (actorId == 0) actorId = 2;
+        if (actorId == 0) actorId = OriginalOpeningCareers.actorId(player);
         if (!isPlayerActor(player, actorId)) throw new UnsupportedOperationException("unmapped_actor_experience:" + actorId);
         BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElseThrow(() -> new IllegalStateException("Missing original actor stats"));
         if (stats.currentExp < 0) throw new UnsupportedOperationException("invalid_actor_experience");

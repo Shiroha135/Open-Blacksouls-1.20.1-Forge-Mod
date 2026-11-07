@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "blacksouls:block/opening/original_opening_tree_chunk_12_0_8_part_8"
+    },
+    "facing=east": {
+      "model": "blacksouls:block/opening/original_opening_tree_chunk_12_0_8_part_8",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "blacksouls:block/opening/original_opening_tree_chunk_12_0_8_part_8",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "blacksouls:block/opening/original_opening_tree_chunk_12_0_8_part_8",
+      "y": 270
+    }
+  }
+}

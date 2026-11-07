@@ -20675,5 +20675,25 @@
       }
     ],
     "skillTypeId": 1
+  },
+  {
+    "id": 20,
+    "mpCost": 0,
+    "tpCost": 0,
+    "speed": 0,
+    "tpGain": 0,
+    "note": "[hzm]ターン消費無し:999\r\n<クールタイム:1>",
+    "cooldown": 2,
+    "guardIgnoreRate": 0.0,
+    "damageRatePiercing": false,
+    "effects": [
+      {
+        "code": 21,
+        "dataId": 8,
+        "value1": 1.0,
+        "value2": 0.0
+      }
+    ],
+    "skillTypeId": 1
   }
 ]

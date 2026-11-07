@@ -1,0 +1,11 @@
+{
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": true,
+  "textures": {
+    "bark": "blacksouls:block/opening/bark",
+    "bark_dark": "blacksouls:block/opening/bark_dark",
+    "root_bark": "blacksouls:block/opening/root_bark",
+    "particle": "blacksouls:block/opening/bark"
+  },
+  "elements": []
+}

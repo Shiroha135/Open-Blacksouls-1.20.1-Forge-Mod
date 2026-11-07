@@ -37,8 +37,8 @@ public final class OriginalNpcEquipmentService {
                 found = true;
             }
         }
-        var comparison = new ClientboundOriginalNpcPacket.SynthesisComparison(2, StoryNameData.get(player),
-                OriginalEquipmentData.playerEquippable(output, equipped), current == null ? "" : current.name(),
+        var comparison = new ClientboundOriginalNpcPacket.SynthesisComparison(yuki135.blacksouls.util.OriginalOpeningCareers.actorId(player), StoryNameData.get(player),
+                OriginalEquipmentData.playerEquippable(yuki135.blacksouls.util.OriginalOpeningCareers.selectedOrigin(player), output, equipped), current == null ? "" : current.name(),
                 output.parameters().get(parameter) - value(current, parameter));
         return new ClientboundOriginalNpcPacket.EquipmentView(parameter, output.description(), List.of(comparison));
     }

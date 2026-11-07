@@ -36,12 +36,23 @@ final class PacketHandlers {
     }
 
     static void handleServer(Supplier<NetworkEvent.Context> supplier, Consumer<NetworkEvent.Context> task) {
+        handleServer(supplier, task, false);
+    }
+
+    static void handleOpeningServer(Supplier<NetworkEvent.Context> supplier, Consumer<NetworkEvent.Context> task) {
+        handleServer(supplier, task, true);
+    }
+
+    private static void handleServer(Supplier<NetworkEvent.Context> supplier, Consumer<NetworkEvent.Context> task, boolean opening) {
         NetworkEvent.Context context = supplier.get();
         if (!context.getDirection().getReceptionSide().isServer()) {
             context.setPacketHandled(true);
             return;
         }
-        context.enqueueWork(() -> task.accept(context));
+        context.enqueueWork(() -> {
+            if (!opening && yuki135.blacksouls.story.OriginalOpeningService.managed(context.getSender())) return;
+            task.accept(context);
+        });
         context.setPacketHandled(true);
     }
 }

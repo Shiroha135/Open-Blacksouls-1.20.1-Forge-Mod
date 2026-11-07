@@ -192,6 +192,33 @@
           "value2": 0.0
         }
       ]
+    },
+    {
+      "id": 20,
+      "name": "枪火击溃【短铳】",
+      "text": "释放了枪火击溃！",
+      "animationId": 217,
+      "repeats": 1,
+      "damageType": 1,
+      "formula": "a.atk * 3 - b.def * 2",
+      "variance": 20,
+      "critical": true,
+      "hitType": 0,
+      "successRate": 100,
+      "elementId": 1,
+      "scope": 1,
+      "mpCost": 0,
+      "tpCost": 0,
+      "speed": 0,
+      "note": "[hzm]ターン消費無し:999\r\n<クールタイム:1>",
+      "effects": [
+        {
+          "code": 21,
+          "dataId": 8,
+          "value1": 1.0,
+          "value2": 0.0
+        }
+      ]
     }
   ],
   "playerSkillSources": {
@@ -1118,6 +1145,12 @@
       "hitType": 0,
       "sourceSkillIds": [
         341
+      ]
+    },
+    "bs2_skill_gun_fire_break": {
+      "hitType": 0,
+      "sourceSkillIds": [
+        20
       ]
     }
   }

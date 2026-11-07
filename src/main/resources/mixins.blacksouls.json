@@ -24,7 +24,13 @@
     "compat.MapCompatServiceBridgeMixin",
     "compat.SceneSpawnerBlockMixin",
     "compat.SceneSpawnerBlockEntityMixin",
-    "compat.SceneSpawnManagerMixin"
+    "compat.SceneSpawnManagerMixin",
+    "OpeningPlayerLoadMixin",
+    "OpeningInteractionMixin",
+    "OpeningFoodMixin",
+    "OpeningExhaustionMixin",
+    "compat.OpeningCuriosDestroyMixin",
+    "compat.OpeningCuriosOpenMixin"
   ],
   "client": [
     "AbstractContainerScreenAccessor",

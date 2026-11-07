@@ -155,6 +155,7 @@ public final class TurnBattleVfxResolver {
             case "bs2_skill_shadowless" -> new Cue(31, Target.PLAYER);
             case "bs2_skill_shield_slam" -> new Cue(161, Target.ENEMY);
             case "bs2_skill_shotgun_blast" -> new Cue(247, Target.ENEMY);
+            case "bs2_skill_gun_fire_break" -> new Cue(217, Target.ENEMY);
             case "bs2_skill_silver_moon_thunder_axe" -> new Cue(231, Target.ENEMY);
             case "bs2_skill_sin_burst" -> new Cue(168, Target.ENEMY);
             case "bs2_skill_sin_crush" -> new Cue(167, Target.ENEMY);

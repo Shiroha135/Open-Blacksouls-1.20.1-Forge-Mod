@@ -37,6 +37,7 @@ public class PacketBindSkill {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             ServerPlayer player = ctx.getSender();
+            if (yuki135.blacksouls.story.OriginalOpeningService.managed(player)) return;
             if (player != null) {
                 BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
                 if (stats != null) {

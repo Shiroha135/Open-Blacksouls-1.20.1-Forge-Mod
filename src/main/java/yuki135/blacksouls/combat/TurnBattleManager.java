@@ -43,6 +43,7 @@ import yuki135.blacksouls.util.skill.AbstractSkill;
 import yuki135.blacksouls.util.skill.SkillRegistry;
 import yuki135.blacksouls.util.skill.SkillOriginalMagic;
 import yuki135.blacksouls.util.skill.WeaponSkill;
+import yuki135.blacksouls.util.skill.SkillGunFireBreak;
 import java.util.ArrayList;
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -155,7 +156,7 @@ public final class TurnBattleManager {
     }
 
     public static void tryStart(ServerPlayer player, EntityTurnBattleMonster enemy) {
-        if (BSConfig.COMBAT_MODE.get() != BSConfig.CombatMode.BLACK_SOULS_TURN_BASED
+        if (yuki135.blacksouls.story.OriginalOpeningService.managed(player) || BSConfig.COMBAT_MODE.get() != BSConfig.CombatMode.BLACK_SOULS_TURN_BASED
                 || player.isCreative() || player.isSpectator() || !player.isAlive()
                 || enemy.isTurnBattleDefeated() || !enemy.canStartTurnBattle()
                 || PLAYER_SESSIONS.containsKey(player.getUUID()) || ENEMY_SESSIONS.containsKey(enemy.getUUID())) {
@@ -179,6 +180,7 @@ public final class TurnBattleManager {
         List<ServerPlayer> members = PartyManager.onlineMembers(player).stream()
                 .filter(member -> member.serverLevel() == player.serverLevel())
                 .filter(member -> !PLAYER_SESSIONS.containsKey(member.getUUID()))
+                .filter(member -> !yuki135.blacksouls.story.OriginalOpeningService.managed(member))
                 .toList();
         if (members.isEmpty()) members = List.of(player);
         for (ServerPlayer member : members) {
@@ -215,7 +217,7 @@ public final class TurnBattleManager {
                                                  int troopId, boolean canEscape, boolean canLose,
                                                  Consumer<ClientboundTurnBattlePacket.Outcome> onFinished,
                                                  boolean scripted, int openingCondition) {
-        if (openingCondition < 0 || openingCondition > 2 || !scripted && openingCondition != 0) return false;
+        if (yuki135.blacksouls.story.OriginalOpeningService.managed(player) || openingCondition < 0 || openingCondition > 2 || !scripted && openingCondition != 0) return false;
         BSOriginalTroopData.Entry troop = BSOriginalTroopData.get(troopId);
         if (troop == null || troop.members().isEmpty() || troop.members().stream().allMatch(BSOriginalTroopData.Member::hidden)) {
             BlackSouls.LOGGER.warn("Rejected original battle troop {}: missing or no visible members", troopId);
@@ -245,7 +247,8 @@ public final class TurnBattleManager {
         session.onFinished = onFinished;
         List<ServerPlayer> members = PartyManager.onlineMembers(player).stream()
                 .filter(member -> member.serverLevel() == player.serverLevel())
-                .filter(member -> !PLAYER_SESSIONS.containsKey(member.getUUID())).toList();
+                .filter(member -> !PLAYER_SESSIONS.containsKey(member.getUUID()))
+                .filter(member -> !yuki135.blacksouls.story.OriginalOpeningService.managed(member)).toList();
         if (members.isEmpty()) {
             members = List.of(player);
         }
@@ -876,6 +879,7 @@ public final class TurnBattleManager {
 
         Component playerMessage;
         boolean consumeTurn = true;
+        boolean immediateSkill = false;
         boolean guard = false;
         List<ClientboundTurnBattlePacket.DamageHit> playerHits = List.of();
         switch (action) {
@@ -895,6 +899,7 @@ public final class TurnBattleManager {
                 ActionResult result = performSkill(player, stats, session, selection, targetIndex);
                 playerMessage = result.message;
                 consumeTurn = result.consumeTurn;
+                immediateSkill = result.immediateSkill;
                 playerHits = result.hits;
             }
             case ITEM -> {
@@ -952,6 +957,10 @@ public final class TurnBattleManager {
         session.playerHits.addAll(playerHits);
 
         if (!consumeTurn) {
+            if (immediateSkill) {
+                completePlayerAction(player, stats, session, action, playerMessage, true);
+                return;
+            }
             session.resolving = false;
             sendState(player, true, playerMessage, true,
                     ClientboundTurnBattlePacket.Outcome.NONE, 0L);
@@ -990,6 +999,12 @@ public final class TurnBattleManager {
     private static void completePlayerAction(ServerPlayer player, BSPlayerStats stats, Session session,
                                               ServerboundTurnBattleActionPacket.Action action,
                                               Component playerMessage) {
+        completePlayerAction(player, stats, session, action, playerMessage, false);
+    }
+
+    private static void completePlayerAction(ServerPlayer player, BSPlayerStats stats, Session session,
+                                              ServerboundTurnBattleActionPacket.Action action,
+                                              Component playerMessage, boolean immediateSkill) {
         EntityTurnBattleMonster rootEnemy = getRootEnemy(player, session);
         if (!battleAlive(player, session)) {
             ServerPlayer survivor = chooseEnemyTarget(player, session);
@@ -1010,7 +1025,7 @@ public final class TurnBattleManager {
         }
         updateGranStage(player, session);
         if (canAdvanceEnemyPhase(player, rootEnemy, session)) {
-            advanceSkillCooldowns(player, session);
+            if (!immediateSkill) advanceSkillCooldowns(player, session);
             StatEventHandler.syncToClient(player);
             session.awaitingPhasePresentation = true;
             session.presentationDeadline = player.serverLevel().getGameTime() + 200L;
@@ -1283,6 +1298,14 @@ public final class TurnBattleManager {
         int cooldownRounds = skill.getTurnCooldownRounds();
         if (!infiniteCooldown && cooldownRounds > 0) {
             skillCooldowns.put(skill.getSkillId(), cooldownRounds);
+        }
+        if (skill instanceof SkillGunFireBreak gunfire) {
+            BSOriginalEnemyData.Action originalAction = BSOriginalReactionData.action(gunfire.getTurnBattleSourceSkillId());
+            if (originalAction == null || selectedTarget == null) throw new IllegalStateException("Missing original silver pistol action or target");
+            session.playerHits.clear();
+            EnemyActionResult result = executeOriginalSkillTargets(player, player, originalAction, List.of(selectedTarget), false, session, true);
+            StatEventHandler.syncToClient(player);
+            return new ActionResult(result.message(), false, List.copyOf(session.playerHits), true);
         }
         String skillName = Component.translatable(skill.getTranslationKey()).getString();
         String actor = player.getDisplayName().getString();
@@ -4111,9 +4134,12 @@ public final class TurnBattleManager {
     }
 
     private record ActionResult(Component message, boolean consumeTurn,
-                                List<ClientboundTurnBattlePacket.DamageHit> hits) {
+                                List<ClientboundTurnBattlePacket.DamageHit> hits, boolean immediateSkill) {
+        private ActionResult(Component message, boolean consumeTurn, List<ClientboundTurnBattlePacket.DamageHit> hits) {
+            this(message, consumeTurn, hits, false);
+        }
         private ActionResult(Component message, boolean consumeTurn) {
-            this(message, consumeTurn, List.of());
+            this(message, consumeTurn, List.of(), false);
         }
     }
 

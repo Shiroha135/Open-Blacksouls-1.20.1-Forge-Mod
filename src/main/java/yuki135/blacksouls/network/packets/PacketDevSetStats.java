@@ -67,6 +67,7 @@ public class PacketDevSetStats {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             ServerPlayer player = ctx.getSender();
+            if (yuki135.blacksouls.story.OriginalOpeningService.managed(player)) return;
             if (player != null) {
                 if (!player.isCreative() || !player.hasPermissions(4)) {
                     player.sendSystemMessage(Component.translatable("message.blacksouls.dev.no_permission").withStyle(ChatFormatting.RED));

@@ -40,7 +40,7 @@ public final class OriginalDodoRunService {
     }
 
     public static boolean canOpen(ServerPlayer player) {
-        return usable(player) && !OriginalNpcService.hasNpcConversation(player)
+        return usable(player) && !OriginalOpeningService.managed(player) && !OriginalNpcService.hasNpcConversation(player)
                 && OriginalNpcProgress.get(player.server).conversationIds(player.getUUID()).isEmpty();
     }
 

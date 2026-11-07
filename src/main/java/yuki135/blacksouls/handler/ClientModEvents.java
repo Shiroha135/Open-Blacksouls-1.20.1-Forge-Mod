@@ -52,6 +52,7 @@ public class ClientModEvents {
                 context -> new SwitchableMmdRenderer<>(context, "柴郡猫", RenderCheshireCat::new, 0.25F));
         event.registerEntityRenderer(BSEntityRegistry.HOLMES.get(), EntityHolmesRenderer::new);
         event.registerEntityRenderer(BSEntityRegistry.ORIGINAL_NPC.get(), RenderOriginalNpcMmd::new);
+        event.registerEntityRenderer(BSEntityRegistry.OPENING_ACTOR.get(), RenderOpeningActor::new);
         event.registerEntityRenderer(BSEntityRegistry.ORIGINAL_RECEPTIONIST.get(), RenderOriginalReceptionist::new);
         event.registerEntityRenderer(BSEntityRegistry.ORIGINAL_WHITE_BEAR.get(), RenderOriginalWhiteBear::new);
         event.registerEntityRenderer(BSEntityRegistry.ORIGINAL_CEMETERY_CAT.get(), RenderOriginalCemeteryCat::new);

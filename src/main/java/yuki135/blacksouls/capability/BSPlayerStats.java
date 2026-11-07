@@ -1,5 +1,7 @@
 package yuki135.blacksouls.capability;
 
+import yuki135.blacksouls.story.OriginalOpeningProfile;
+import yuki135.blacksouls.util.OriginalOpeningData;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,22 @@ public class BSPlayerStats {
     public static final double HARD_CAP_HP = 1099998;
     public static final double HARD_CAP_MP = 109998;
     public static final double HARD_CAP_OTHER = 109998;
+
+    private OriginalOpeningProfile openingProfile = OriginalOpeningProfile.legacy();
+
+    public OriginalOpeningProfile openingProfile() {
+        return openingProfile;
+    }
+
+    public boolean initializeOpeningProfile(OriginalOpeningProfile candidate) {
+        java.util.Objects.requireNonNull(candidate);
+        if (openingProfile.readState() != OriginalOpeningProfile.ReadState.ABSENT_LEGACY || openingProfile.hasStoredData()
+                || candidate.readState() != OriginalOpeningProfile.ReadState.REAL
+                || candidate.realStage().orElse(null) != OriginalOpeningProfile.Stage.NAME_PENDING
+                || candidate.realOriginId() != 0 || candidate.realRelationshipId() != 0 || candidate.previewActive()) return false;
+        openingProfile = candidate;
+        return true;
+    }
 
     public boolean developerNoCooldown = false;
     public boolean developerLimitBreak = false;
@@ -251,12 +269,14 @@ public class BSPlayerStats {
             listSkill.add(StringTag.valueOf(s));
         }
         nbt.put("UnlockedSkills", listSkill);
+        openingProfile.writeTo(nbt);
 
         return nbt;
     }
 
     @SuppressWarnings("removal")
     public void deserializeNBT(CompoundTag nbt) {
+        openingProfile = OriginalOpeningProfile.readFrom(nbt);
         if (nbt.contains("OriginalSen") && !nbt.contains("OriginalSen", Tag.TAG_COMPOUND)) {
             throw new IllegalArgumentException("Invalid original SEN state type");
         }
@@ -479,14 +499,14 @@ public class BSPlayerStats {
     public void recalculateBaseStats() {
         int l = Math.max(1, Math.min(getLevelLimit(), this.level));
 
-        double baseHp = getRMStat(l, 638, 6680, 61);
-        double baseMp = getRMStat(l, 100, 205, 1);
-        double baseAtk = getRMStat(l, 16, 180, 1);
-        double baseDef = getRMStat(l, 16, 122, 1);
-        double baseMatk = getRMStat(l, 10, 160, 1);
-        double baseMdef = getRMStat(l, 10, 112, 1);
-        double baseLuc = getRMStat(l, 10, 248, 2);
-        double baseSpeed = getRMStat(l, 40, 318, 2);
+        double baseHp = openingBaseParameter(l, 0, 638, 6680, 61);
+        double baseMp = openingBaseParameter(l, 1, 100, 205, 1);
+        double baseAtk = openingBaseParameter(l, 2, 16, 180, 1);
+        double baseDef = openingBaseParameter(l, 3, 16, 122, 1);
+        double baseMatk = openingBaseParameter(l, 4, 10, 160, 1);
+        double baseMdef = openingBaseParameter(l, 5, 10, 112, 1);
+        double baseLuc = openingBaseParameter(l, 7, 10, 248, 2);
+        double baseSpeed = openingBaseParameter(l, 6, 40, 318, 2);
 
         double finalHp = baseHp + this.bonusHp;
 
@@ -524,8 +544,21 @@ public class BSPlayerStats {
         return val99 + limitBreakBonus;
     }
 
+    private double openingBaseParameter(int currentLevel, int parameter, double legacyInitial, double legacyMaximum, double legacyDelta) {
+        int origin = openingProfile.realOriginId();
+        if (openingProfile.readState() != OriginalOpeningProfile.ReadState.REAL || origin == 0) {
+            return getRMStat(currentLevel, legacyInitial, legacyMaximum, legacyDelta);
+        }
+        var profession = OriginalOpeningData.get(origin);
+        if (currentLevel <= NORMAL_MAX_LEVEL) return profession.baseParameter(currentLevel, parameter);
+        var table = profession.professionClass().parameters().valuesByLevel();
+        double end = table.get(99).get(parameter);
+        double delta = end - table.get(98).get(parameter);
+        return end + Math.floor(delta * (currentLevel - 99.0D) * 1.05D);
+    }
+
     public double getBaseHpBeforeCovenant() {
-        return getRMStat(Math.max(1, Math.min(getLevelLimit(), level)), 638, 6680, 61) + bonusHp;
+        return openingBaseParameter(Math.max(1, Math.min(getLevelLimit(), level)), 0, 638, 6680, 61) + bonusHp;
     }
 
     public double getNodenHpMultiplier() {

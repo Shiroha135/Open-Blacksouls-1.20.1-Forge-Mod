@@ -1,0 +1,1810 @@
+{
+  "version": 1,
+  "sourceGoldenSha256": "1abef62f8198f8c13a4795f3659ef407dd6285431a2e4853f37e7bc5f99384e0",
+  "coordinateConvention": "Source x to MC x, source y to MC z, authoring y=0 is feet Y64",
+  "instances": [
+    {
+      "module": "tree_chunk_12_0_4",
+      "anchor": [
+        12,
+        0,
+        4
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_16_0_4",
+      "anchor": [
+        16,
+        0,
+        4
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_12_0_8",
+      "anchor": [
+        12,
+        0,
+        8
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_16_0_8",
+      "anchor": [
+        16,
+        0,
+        8
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_12_4_4",
+      "anchor": [
+        12,
+        4,
+        4
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_16_4_4",
+      "anchor": [
+        16,
+        4,
+        4
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_20_4_4",
+      "anchor": [
+        20,
+        4,
+        4
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_12_4_8",
+      "anchor": [
+        12,
+        4,
+        8
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_16_4_8",
+      "anchor": [
+        16,
+        4,
+        8
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_20_4_8",
+      "anchor": [
+        20,
+        4,
+        8
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_12_4_12",
+      "anchor": [
+        12,
+        4,
+        12
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_16_4_12",
+      "anchor": [
+        16,
+        4,
+        12
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_12_8_4",
+      "anchor": [
+        12,
+        8,
+        4
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_16_8_4",
+      "anchor": [
+        16,
+        8,
+        4
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_12_8_8",
+      "anchor": [
+        12,
+        8,
+        8
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_16_8_8",
+      "anchor": [
+        16,
+        8,
+        8
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        9,
+        0,
+        0
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        9,
+        0
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        13,
+        0,
+        1
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        13,
+        1
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        17,
+        0,
+        2
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        17,
+        2
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        12,
+        0,
+        3
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        12,
+        3
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        11,
+        0,
+        5
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        11,
+        5
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        20,
+        0,
+        5
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        20,
+        5
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        15,
+        0,
+        6
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        15,
+        6
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        10,
+        0,
+        7
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        10,
+        7
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        19,
+        0,
+        7
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        19,
+        7
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        9,
+        0,
+        9
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        9,
+        9
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        18,
+        0,
+        9
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        18,
+        9
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        13,
+        0,
+        10
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        13,
+        10
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        22,
+        0,
+        10
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        22,
+        10
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        8,
+        0,
+        11
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        8,
+        11
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        17,
+        0,
+        11
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        17,
+        11
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        12,
+        0,
+        12
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        12,
+        12
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        21,
+        0,
+        12
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        21,
+        12
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        7,
+        0,
+        13
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        7,
+        13
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        25,
+        0,
+        13
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        25,
+        13
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        2,
+        0,
+        14
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        2,
+        14
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        11,
+        0,
+        14
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        11,
+        14
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        20,
+        0,
+        14
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        20,
+        14
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        6,
+        0,
+        15
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        6,
+        15
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        15,
+        0,
+        15
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        15,
+        15
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        24,
+        0,
+        15
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        24,
+        15
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        1,
+        0,
+        16
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        1,
+        16
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        10,
+        0,
+        16
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        10,
+        16
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        19,
+        0,
+        16
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        19,
+        16
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        5,
+        0,
+        17
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        5,
+        17
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        14,
+        0,
+        17
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        14,
+        17
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        23,
+        0,
+        17
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        23,
+        17
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        0,
+        0,
+        18
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        0,
+        18
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        9,
+        0,
+        18
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        9,
+        18
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        18,
+        0,
+        18
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        18,
+        18
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        4,
+        0,
+        19
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        4,
+        19
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        13,
+        0,
+        19
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        13,
+        19
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        22,
+        0,
+        19
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        22,
+        19
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        8,
+        0,
+        20
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        8,
+        20
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        17,
+        0,
+        20
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        17,
+        20
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        26,
+        0,
+        20
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        26,
+        20
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        3,
+        0,
+        21
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        3,
+        21
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        12,
+        0,
+        21
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        12,
+        21
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        21,
+        0,
+        21
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        21,
+        21
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        7,
+        0,
+        22
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        7,
+        22
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        16,
+        0,
+        22
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        16,
+        22
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        25,
+        0,
+        22
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        25,
+        22
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        2,
+        0,
+        23
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        2,
+        23
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        11,
+        0,
+        23
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        11,
+        23
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        20,
+        0,
+        23
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        20,
+        23
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        29,
+        0,
+        23
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        29,
+        23
+      ]
+    }
+  ],
+  "treeInstances": [
+    {
+      "module": "tree_chunk_12_0_4",
+      "anchor": [
+        12,
+        0,
+        4
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_16_0_4",
+      "anchor": [
+        16,
+        0,
+        4
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_12_0_8",
+      "anchor": [
+        12,
+        0,
+        8
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_16_0_8",
+      "anchor": [
+        16,
+        0,
+        8
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_12_4_4",
+      "anchor": [
+        12,
+        4,
+        4
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_16_4_4",
+      "anchor": [
+        16,
+        4,
+        4
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_20_4_4",
+      "anchor": [
+        20,
+        4,
+        4
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_12_4_8",
+      "anchor": [
+        12,
+        4,
+        8
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_16_4_8",
+      "anchor": [
+        16,
+        4,
+        8
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_20_4_8",
+      "anchor": [
+        20,
+        4,
+        8
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_12_4_12",
+      "anchor": [
+        12,
+        4,
+        12
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_16_4_12",
+      "anchor": [
+        16,
+        4,
+        12
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_12_8_4",
+      "anchor": [
+        12,
+        8,
+        4
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_16_8_4",
+      "anchor": [
+        16,
+        8,
+        4
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_12_8_8",
+      "anchor": [
+        12,
+        8,
+        8
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "tree_chunk_16_8_8",
+      "anchor": [
+        16,
+        8,
+        8
+      ],
+      "facing": "north"
+    }
+  ],
+  "floraInstances": [
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        9,
+        0,
+        0
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        9,
+        0
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        13,
+        0,
+        1
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        13,
+        1
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        17,
+        0,
+        2
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        17,
+        2
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        12,
+        0,
+        3
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        12,
+        3
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        11,
+        0,
+        5
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        11,
+        5
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        20,
+        0,
+        5
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        20,
+        5
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        15,
+        0,
+        6
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        15,
+        6
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        10,
+        0,
+        7
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        10,
+        7
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        19,
+        0,
+        7
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        19,
+        7
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        9,
+        0,
+        9
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        9,
+        9
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        18,
+        0,
+        9
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        18,
+        9
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        13,
+        0,
+        10
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        13,
+        10
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        22,
+        0,
+        10
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        22,
+        10
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        8,
+        0,
+        11
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        8,
+        11
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        17,
+        0,
+        11
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        17,
+        11
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        12,
+        0,
+        12
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        12,
+        12
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        21,
+        0,
+        12
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        21,
+        12
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        7,
+        0,
+        13
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        7,
+        13
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        25,
+        0,
+        13
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        25,
+        13
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        2,
+        0,
+        14
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        2,
+        14
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        11,
+        0,
+        14
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        11,
+        14
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        20,
+        0,
+        14
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        20,
+        14
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        6,
+        0,
+        15
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        6,
+        15
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        15,
+        0,
+        15
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        15,
+        15
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        24,
+        0,
+        15
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        24,
+        15
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        1,
+        0,
+        16
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        1,
+        16
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        10,
+        0,
+        16
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        10,
+        16
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        19,
+        0,
+        16
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        19,
+        16
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        5,
+        0,
+        17
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        5,
+        17
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        14,
+        0,
+        17
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        14,
+        17
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        23,
+        0,
+        17
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        23,
+        17
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        0,
+        0,
+        18
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        0,
+        18
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        9,
+        0,
+        18
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        9,
+        18
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        18,
+        0,
+        18
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        18,
+        18
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        4,
+        0,
+        19
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        4,
+        19
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        13,
+        0,
+        19
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        13,
+        19
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        22,
+        0,
+        19
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        22,
+        19
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        8,
+        0,
+        20
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        8,
+        20
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        17,
+        0,
+        20
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        17,
+        20
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        26,
+        0,
+        20
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        26,
+        20
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        3,
+        0,
+        21
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        3,
+        21
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        12,
+        0,
+        21
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        12,
+        21
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        21,
+        0,
+        21
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        21,
+        21
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        7,
+        0,
+        22
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        7,
+        22
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        16,
+        0,
+        22
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        16,
+        22
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        25,
+        0,
+        22
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        25,
+        22
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        2,
+        0,
+        23
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        2,
+        23
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        11,
+        0,
+        23
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        11,
+        23
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        20,
+        0,
+        23
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        20,
+        23
+      ]
+    },
+    {
+      "module": "flower_cluster",
+      "anchor": [
+        29,
+        0,
+        23
+      ],
+      "facing": "north",
+      "requiresSupportCell": [
+        29,
+        23
+      ]
+    }
+  ],
+  "floraPhaseRule": "Remove decoration if requiresSupportCell is absent from target source support mask",
+  "authoringBlueprintInstancesDoNotPlaceDirectly": [
+    {
+      "module": "root_base",
+      "anchor": [
+        14,
+        0,
+        7
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "trunk_segment",
+      "anchor": [
+        15,
+        0,
+        8
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "trunk_segment",
+      "anchor": [
+        15,
+        4,
+        8
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "branch_fork",
+      "anchor": [
+        15,
+        3,
+        8
+      ],
+      "facing": "west"
+    },
+    {
+      "module": "branch_fork",
+      "anchor": [
+        16,
+        3,
+        8
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "branch_fork",
+      "anchor": [
+        15,
+        4,
+        8
+      ],
+      "facing": "south"
+    },
+    {
+      "module": "leaf_cluster",
+      "anchor": [
+        12,
+        6,
+        6
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "leaf_cluster",
+      "anchor": [
+        15,
+        6,
+        4
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "leaf_cluster",
+      "anchor": [
+        18,
+        6,
+        6
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "leaf_cluster",
+      "anchor": [
+        12,
+        6,
+        9
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "leaf_cluster",
+      "anchor": [
+        15,
+        6,
+        10
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "leaf_cluster",
+      "anchor": [
+        18,
+        6,
+        9
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "leaf_cluster",
+      "anchor": [
+        14,
+        8,
+        7
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "leaf_cluster",
+      "anchor": [
+        17,
+        8,
+        7
+      ],
+      "facing": "north"
+    },
+    {
+      "module": "leaf_cluster",
+      "anchor": [
+        15,
+        9,
+        5
+      ],
+      "facing": "north"
+    }
+  ],
+  "bakedChunksMergeOverlappingAuthoringModulesBeforePlacement": true,
+  "physicalRootFootprintIsAuthoredNotDerivedFromTreePixels": true,
+  "groundPalette": {
+    "sourceA2kind24": "original_opening_flower_grass",
+    "sourceA2kind32": "original_opening_plain_grass"
+  },
+  "sourceTopologyUnchanged": true,
+  "sourceSupportCounts": {
+    "110": {
+      "potentialSupport": 498,
+      "allDirectionPass": 492,
+      "water": 222,
+      "pit": 0,
+      "region10": 0
+    },
+    "97": {
+      "potentialSupport": 459,
+      "allDirectionPass": 453,
+      "water": 222,
+      "pit": 39,
+      "region10": 19
+    },
+    "98": {
+      "potentialSupport": 391,
+      "allDirectionPass": 385,
+      "water": 222,
+      "pit": 107,
+      "region10": 1
+    },
+    "99": {
+      "potentialSupport": 291,
+      "allDirectionPass": 285,
+      "water": 222,
+      "pit": 207,
+      "region10": 0
+    }
+  },
+  "clearancesMcRelativeFeet": {
+    "player_stand": [
+      15.2,
+      0,
+      12.2,
+      15.8,
+      1.8,
+      12.8
+    ],
+    "alice_stand": [
+      16.2,
+      0,
+      12.2,
+      16.8,
+      1.8,
+      12.8
+    ],
+    "first_step_sweep": [
+      15.2,
+      0,
+      12.2,
+      15.8,
+      1.8,
+      13.8
+    ],
+    "authored_entry_corridor": [
+      14,
+      0,
+      11,
+      17,
+      4,
+      15
+    ]
+  },
+  "requiresSceneFormatMigration": true,
+  "requiresSceneSafeNonCascadingBlock": true
+}

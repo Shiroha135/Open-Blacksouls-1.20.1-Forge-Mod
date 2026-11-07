@@ -22,7 +22,7 @@ public final class OriginalWorldTransferService {
     }
 
     public static int begin(ServerPlayer player, EntityOriginalNpc source, Vec3 destination, float yaw, int fade) {
-        if (!validSource(player, source) || !Float.isFinite(yaw) || fade != 0 && fade != 2
+        if (OriginalOpeningService.managed(player) || !validSource(player, source) || !Float.isFinite(yaw) || fade != 0 && fade != 2
                 || pending(player) || !validDestination(player, destination)) throw new UnsupportedOperationException("original_world_transfer_context");
         if (fade == 2) {
             transfer(player, destination, yaw);

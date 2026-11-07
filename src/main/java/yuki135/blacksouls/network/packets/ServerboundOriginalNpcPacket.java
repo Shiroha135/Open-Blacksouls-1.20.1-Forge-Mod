@@ -24,6 +24,7 @@ public record ServerboundOriginalNpcPacket(int entityId, UUID sessionId, long re
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
+            if (yuki135.blacksouls.story.OriginalOpeningService.managed(player)) return;
             if (player != null && selection >= -4 && revision >= 0L && (selection < 256
                     || OriginalNpcService.isNumberInputResponse(player, entityId, sessionId, revision, selection))) {
                 OriginalNpcService.respond(player, entityId, sessionId, revision, selection);

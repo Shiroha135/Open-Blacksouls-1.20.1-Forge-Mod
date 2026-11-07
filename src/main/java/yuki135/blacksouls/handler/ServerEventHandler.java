@@ -283,7 +283,7 @@ public class ServerEventHandler {
     public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
         if (!event.getEntity().level().isClientSide() && event.getEntity() instanceof ServerPlayer serverPlayer) {
             serverPlayer.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
-                if (!stats.hasVisitedLibrary) {
+                if (!stats.hasVisitedLibrary && !yuki135.blacksouls.story.OriginalOpeningService.ownsOpening(serverPlayer)) {
                     MinecraftServer server = serverPlayer.getServer();
                     if (server == null) {
                         return;

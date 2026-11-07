@@ -18,6 +18,7 @@ public class ModEntityEvents {
         event.put(BSEntityRegistry.CHESHIRE_CAT.get(), EntityCheshireCat.createAttributes().build());
         event.put(BSEntityRegistry.HOLMES.get(), EntityHolmes.createAttributes().build());
         event.put(BSEntityRegistry.ORIGINAL_NPC.get(), EntityOriginalNpc.createAttributes().build());
+        event.put(BSEntityRegistry.OPENING_ACTOR.get(), EntityOpeningActor.createAttributes().build());
         event.put(BSEntityRegistry.ORIGINAL_WHITE_BEAR.get(), EntityOriginalNpc.createAttributes().build());
         event.put(BSEntityRegistry.ORIGINAL_CEMETERY_CAT.get(), EntityOriginalNpc.createAttributes().build());
         event.put(BSEntityRegistry.ORIGINAL_MARKET_CAT.get(), EntityOriginalNpc.createAttributes().build());

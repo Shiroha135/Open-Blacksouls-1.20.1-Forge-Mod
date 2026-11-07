@@ -7428,8 +7428,8 @@
     "id": 39,
     "name": "神殿骑士的盾",
     "price": 1000,
-    "registry": null,
-    "source": "no_exact_registered_name_match"
+    "registry": "blacksouls:temple_knight_shield",
+    "source": "exact_original_opening_offhand"
   },
   {
     "kind": 2,
@@ -7452,16 +7452,16 @@
     "id": 42,
     "name": "木盾",
     "price": 50,
-    "registry": null,
-    "source": "no_exact_registered_name_match"
+    "registry": "blacksouls:wooden_shield",
+    "source": "exact_original_opening_offhand"
   },
   {
     "kind": 2,
     "id": 43,
     "name": "小圆盾",
     "price": 1000,
-    "registry": null,
-    "source": "no_exact_registered_name_match"
+    "registry": "blacksouls:buckler",
+    "source": "exact_original_opening_offhand"
   },
   {
     "kind": 2,
@@ -7476,8 +7476,8 @@
     "id": 45,
     "name": "圆盾",
     "price": 1000,
-    "registry": null,
-    "source": "no_exact_registered_name_match"
+    "registry": "blacksouls:round_shield",
+    "source": "exact_original_opening_offhand"
   },
   {
     "kind": 2,
@@ -7492,8 +7492,8 @@
     "id": 47,
     "name": "战士的圆盾",
     "price": 1000,
-    "registry": null,
-    "source": "no_exact_registered_name_match"
+    "registry": "blacksouls:warrior_round_shield",
+    "source": "exact_original_opening_offhand"
   },
   {
     "kind": 2,
@@ -7636,8 +7636,8 @@
     "id": 65,
     "name": "银色短铳",
     "price": 1000,
-    "registry": null,
-    "source": "no_exact_registered_name_match"
+    "registry": "blacksouls:silver_pistol",
+    "source": "exact_original_opening_offhand"
   },
   {
     "kind": 2,

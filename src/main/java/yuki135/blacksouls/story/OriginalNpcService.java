@@ -350,7 +350,7 @@ public final class OriginalNpcService {
     private static void resumeSavedCharacterWaits(net.minecraft.server.MinecraftServer server) {
         OriginalNpcProgress progress = OriginalNpcProgress.get(server);
         for (ServerPlayer player : server.getPlayerList().getPlayers()) {
-            if (SESSIONS.containsKey(player.getUUID()) || TurnBattleManager.isInBattle(player) || !player.isAlive()) {
+            if (OriginalOpeningService.managed(player) || SESSIONS.containsKey(player.getUUID()) || TurnBattleManager.isInBattle(player) || !player.isAlive()) {
                 continue;
             }
             for (String npcId : progress.conversationIds(player.getUUID())) {
@@ -485,7 +485,7 @@ public final class OriginalNpcService {
     }
 
     private static void interact(ServerPlayer player, PathfinderMob npc, String npcId, boolean savedContinuation) {
-        if (OriginalDodoRunService.pending(player)) return;
+        if (OriginalOpeningService.managed(player) || OriginalDodoRunService.pending(player)) return;
         boolean available = savedContinuation
                 ? player.isAlive() && npc.isAlive() && !npc.isRemoved() && player.level() == npc.level()
                 : canInteract(player, npc);
@@ -1156,7 +1156,7 @@ public final class OriginalNpcService {
         @Override
         public boolean itemPresent(int kind, int id, boolean includeEquipment) {
             return itemCount(kind, id) > 0 || includeEquipment && player != null
-                    && OriginalActorBridge.equipped(player, 2, kind, id);
+                    && OriginalActorBridge.equipped(player, yuki135.blacksouls.util.OriginalOpeningCareers.actorId(player), kind, id);
         }
 
         @Override
@@ -1184,7 +1184,7 @@ public final class OriginalNpcService {
             }
             return switch (condition) {
                 case 1 -> StoryNameData.get(player).equals(value.getAsString());
-                case 2 -> value.getAsInt() == 1;
+                case 2 -> value.getAsInt() == yuki135.blacksouls.util.OriginalOpeningCareers.classId(player);
                 case 3 -> {
                     if (value.getAsInt() != 340) throw new UnsupportedOperationException("actor_condition:3");
                     yield stats().unlockedSkills.contains(yuki135.blacksouls.util.OriginalActorSkills.mapped(340));
@@ -1347,7 +1347,7 @@ public final class OriginalNpcService {
         @Override
         public void recoverAll(int type, int id) {
             long actorId = type == 0 ? id : type == 1 ? variable(id) : -1L;
-            if (actorId == 0 || actorId == 2 && hasActor(2)) {
+            if (actorId == 0 || actorId >= 1 && actorId <= Integer.MAX_VALUE && hasActor((int) actorId)) {
                 PlayerStatService.recoverAll(player);
                 return;
             }

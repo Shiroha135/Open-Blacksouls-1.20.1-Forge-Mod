@@ -37,6 +37,7 @@ public class PacketCastSkill {
         NetworkEvent.Context context = supplier.get();
         context.enqueueWork(() -> {
             ServerPlayer player = context.getSender();
+            if (yuki135.blacksouls.story.OriginalOpeningService.managed(player)) return;
             if (player == null) return;
             if (TurnBattleManager.isInBattle(player)) {
                 return;

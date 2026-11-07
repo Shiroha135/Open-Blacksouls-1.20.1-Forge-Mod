@@ -1,0 +1,18 @@
+{
+  "type": "blacksouls:opening",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "structure_overrides": [],
+      "layers": [
+        {
+          "block": "minecraft:air",
+          "height": 1
+        }
+      ],
+      "biome": "minecraft:the_void",
+      "features": false,
+      "lakes": false
+    }
+  }
+}

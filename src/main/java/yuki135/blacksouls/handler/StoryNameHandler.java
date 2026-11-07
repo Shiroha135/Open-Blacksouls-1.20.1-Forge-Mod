@@ -18,6 +18,10 @@ public final class StoryNameHandler {
             return;
         }
 
+        var stats = player.getCapability(yuki135.blacksouls.capability.BSPlayerStats.CAPABILITY).orElse(null);
+        if (stats == null || stats.openingProfile().hasRejectedData()) return;
+        if (yuki135.blacksouls.story.OriginalOpeningService.resumePlayer(player)) return;
+
         OriginalNpcProgress.get(player.server).bootstrapNameWindow();
 
         if (!StoryNameData.hasStarted(player)) {
