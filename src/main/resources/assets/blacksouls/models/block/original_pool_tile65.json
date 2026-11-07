@@ -1,0 +1,28 @@
+{
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "blacksouls:block/original_pool_tile65",
+    "branch": "blacksouls:block/original_pool_tile65"
+  },
+  "elements": [
+    {
+      "from": [0, -16, 8],
+      "to": [16, 24, 8],
+      "shade": false,
+      "faces": {
+        "north": {"texture": "#branch", "uv": [0, 0, 16, 16]},
+        "south": {"texture": "#branch", "uv": [0, 0, 16, 16]}
+      }
+    },
+    {
+      "from": [8, -16, 0],
+      "to": [8, 24, 16],
+      "shade": false,
+      "faces": {
+        "west": {"texture": "#branch", "uv": [0, 0, 16, 16]},
+        "east": {"texture": "#branch", "uv": [0, 0, 16, 16]}
+      }
+    }
+  ]
+}

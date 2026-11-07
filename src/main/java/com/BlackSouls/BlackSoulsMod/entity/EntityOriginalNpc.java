@@ -37,6 +37,8 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
             EntityOriginalNpc.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<CompoundTag> ROUTE_STATE = SynchedEntityData.defineId(
             EntityOriginalNpc.class, EntityDataSerializers.COMPOUND_TAG);
+    private static final EntityDataAccessor<Boolean> STATIC_MAP_PROXY = SynchedEntityData.defineId(
+            EntityOriginalNpc.class, EntityDataSerializers.BOOLEAN);
     private boolean erased;
     private String forcedRouteTicket = "";
     private double routeAnimationCount;
@@ -60,13 +62,36 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         entityData.define(NPC_ID, "");
         entityData.define(PAGE, -1);
         entityData.define(ROUTE_STATE, initialRouteState());
+        entityData.define(STATIC_MAP_PROXY, false);
     }
 
     public String getNpcId() {
         return entityData.get(NPC_ID);
     }
 
+    public boolean isStaticMapProxy() {
+        return entityData.get(STATIC_MAP_PROXY);
+    }
+
+    public void setStaticMapProxy(boolean enabled) {
+        if (enabled && !com.BlackSouls.BlackSoulsMod.compat.scene.OriginalPoolCheshirePlacement.PROXY_ID.equals(getNpcId())) {
+            throw new IllegalArgumentException("Unsupported original static map proxy");
+        }
+        if (!enabled && isStaticMapProxy()) noPhysics = false;
+        entityData.set(STATIC_MAP_PROXY, enabled);
+        if (enabled) {
+            noPhysics = true;
+            setNoGravity(true);
+        }
+        updateRouteVisibility();
+    }
+
+    private boolean isNativeInteractionProxy() {
+        return isStaticMapProxy() || com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(getNpcId());
+    }
+
     public void setNpcId(String id) {
+        setStaticMapProxy(false);
         OriginalNpcMovementService.clearAutonomousMotion(this);
         applyOriginalPoolSurfaceSupport(false);
         autonomousRoute = new OriginalNpcAutonomousRoute();
@@ -435,7 +460,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     }
 
     private void updateRouteVisibility() {
-        setInvisible(erased || com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(getNpcId())
+        setInvisible(erased || isNativeInteractionProxy()
                 || entityData.get(ROUTE_STATE).getBoolean("Transparent") || getRouteCharacterName().isBlank()
                 && com.BlackSouls.BlackSoulsMod.util.OriginalNpcTileGraphics.get(getNpcId(), getRouteTileId()) == null);
     }
@@ -444,12 +469,12 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     public Component getName() {
         BSOriginalNpcData.Entry entry = BSOriginalNpcData.getEvent(getNpcId());
         return hasCustomName() ? getCustomName() : Component.literal(entry == null
-                || com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(getNpcId()) ? "" : entry.name());
+                || isNativeInteractionProxy() ? "" : entry.name());
     }
 
     @Override
     public void tick() {
-        if (com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(getNpcId())) {
+        if (isNativeInteractionProxy()) {
             noPhysics = true;
             setNoGravity(true);
         }
@@ -491,6 +516,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
         super.addAdditionalSaveData(tag);
         tag.putString("OriginalNpcId", getNpcId());
         tag.putInt("OriginalNpcPage", entityData.get(PAGE));
+        tag.putBoolean("OriginalNpcStaticMapProxy", isStaticMapProxy());
         tag.put("OriginalNpcRouteState", entityData.get(ROUTE_STATE).copy());
         tag.putString("OriginalNpcRouteTicket", forcedRouteTicket);
         tag.putDouble("OriginalNpcAnimeCount", routeAnimationCount);
@@ -502,6 +528,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
     public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         setNpcId(tag.getString("OriginalNpcId"));
+        if (tag.getBoolean("OriginalNpcStaticMapProxy")) setStaticMapProxy(true);
         if (tag.contains("OriginalNpcRouteState")) {
             entityData.set(PAGE, tag.getInt("OriginalNpcPage"));
             CompoundTag state = tag.getCompound("OriginalNpcRouteState").copy();
@@ -550,13 +577,13 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
 
     @Override
     public boolean isPickable() {
-        return !com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(getNpcId()) && super.isPickable();
+        return !isNativeInteractionProxy() && super.isPickable();
     }
 
     @Override
     public boolean canBeCollidedWith() {
         BSOriginalNpcData.Page page = currentPage();
-        if (erased || !isAlive() || page == null || com.BlackSouls.BlackSoulsMod.util.OriginalWorldEventData.isNativeBlock(getNpcId())
+        if (erased || !isAlive() || page == null || isNativeInteractionProxy()
                 || entityData.get(ROUTE_STATE).getBoolean("Through")) return false;
         JsonObject movement = page.movement();
         return !movement.has("priority_type") || movement.get("priority_type").getAsInt() == 1;

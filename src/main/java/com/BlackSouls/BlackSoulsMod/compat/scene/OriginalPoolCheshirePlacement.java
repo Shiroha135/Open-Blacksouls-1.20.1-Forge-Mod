@@ -54,6 +54,24 @@ public final class OriginalPoolCheshirePlacement {
         return isPair(actor.getNpcId()) && actor.getPersistentData().getBoolean(MANAGED);
     }
 
+    public static boolean isOwnedProxy(EntityOriginalNpc actor) {
+        if (!PROXY_ID.equals(actor.getNpcId()) || !isManaged(actor) || !actor.isAlive() || actor.isRemoved()
+                || !(actor.level() instanceof ServerLevel level) || !HokoniwaDestination.DIMENSION.equals(level.dimension())
+                || actor.position().distanceToSqr(SITES.get(0).position()) > 1.0E-8D) return false;
+        return actor.getUUID().equals(OriginalNpcPlacementData.get(level).entityId(PROXY_ID));
+    }
+
+    public static boolean interactStaticTile(ServerPlayer player, BlockPos position) {
+        if (!OriginalPoolTile65Placement.POSITION.equals(position) || !player.isAlive() || player.isSpectator()
+                || player.distanceToSqr(position.getCenter()) > 64.0D || !terrainMatches(player.serverLevel())
+                || !OriginalPoolTile65Placement.isInstalled(player.serverLevel())) return false;
+        install(player, PROXY_ID);
+        Pair pair = resolve(player.serverLevel());
+        if (pair == null || interactionProxy(player, pair.proxy()) == null) return false;
+        OriginalNpcService.interact(player, pair.proxy());
+        return true;
+    }
+
     public static List<OriginalNpcPlacements.Site> sites() {
         return SITES;
     }
@@ -125,8 +143,12 @@ public final class OriginalPoolCheshirePlacement {
     private static boolean clear(ServerLevel level, EntityOriginalNpc actor, boolean entities) {
         AABB bounds = actor.getBoundingBox();
         if (level.containsAnyLiquid(bounds)) return false;
-        for (var shape : level.getBlockCollisions(actor, bounds)) if (!shape.isEmpty()) return false;
-        return !entities || level.noCollision(actor, bounds) && level.getEntitiesOfClass(LivingEntity.class, bounds,
+        boolean ownTile = PROXY_ID.equals(actor.getNpcId()) && actor.isStaticMapProxy()
+                && OriginalPoolTile65Placement.isInstalled(level);
+        for (var shape : level.getBlockCollisions(actor, bounds)) {
+            if (!shape.isEmpty() && !(ownTile && shape.bounds().equals(OriginalPoolTile65Placement.VOLUME))) return false;
+        }
+        return !entities || level.getEntityCollisions(actor, bounds).isEmpty() && level.getEntitiesOfClass(LivingEntity.class, bounds,
                 entity -> entity != actor && entity.isAlive() && !entity.isSpectator()).isEmpty();
     }
 
@@ -138,10 +160,16 @@ public final class OriginalPoolCheshirePlacement {
         if (player.position().distanceToSqr(site(identity).position()) > 4096.0D) return OriginalNpcPlacements.Outcome.TOO_FAR;
         if (!chunksReady(level)) return OriginalNpcPlacements.Outcome.CHUNKS_UNAVAILABLE;
         if (!terrainMatches(level)) return OriginalNpcPlacements.Outcome.TERRAIN_MISMATCH;
+        var tile = OriginalPoolTile65Placement.install(player);
+        if (tile != OriginalPoolTile65Placement.Outcome.INSTALLED && tile != OriginalPoolTile65Placement.Outcome.ALREADY_RECORDED) {
+            return OriginalNpcPlacements.Outcome.COLLISION;
+        }
         OriginalNpcPlacementData data = OriginalNpcPlacementData.get(level);
         if (data.isInstalled(PROXY_ID) || data.isInstalled(BODY_ID)) {
             Pair pair = resolve(level);
-            return pair == null ? OriginalNpcPlacements.Outcome.COLLISION : OriginalNpcPlacements.Outcome.ALREADY_RECORDED;
+            if (pair == null) return OriginalNpcPlacements.Outcome.COLLISION;
+            pair.proxy().setStaticMapProxy(true);
+            return OriginalNpcPlacements.Outcome.ALREADY_RECORDED;
         }
         if (SITES.stream().anyMatch(site -> !candidates(level, site).isEmpty())) return OriginalNpcPlacements.Outcome.COLLISION;
         EntityOriginalNpc proxy = create(level, SITES.get(0));
@@ -181,6 +209,7 @@ public final class OriginalPoolCheshirePlacement {
         actor.yBodyRot = site.yaw();
         actor.setNpcId(site.npcId());
         actor.getPersistentData().putBoolean(MANAGED, true);
+        if (PROXY_ID.equals(site.npcId())) actor.setStaticMapProxy(true);
         return actor;
     }
 
