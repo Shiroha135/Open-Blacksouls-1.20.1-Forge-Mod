@@ -137,11 +137,9 @@ public class ServerEventHandler {
                 event.setCancellationResult(InteractionResult.SUCCESS);
 
                 if (!event.getLevel().isClientSide && event.getEntity() instanceof ServerPlayer serverPlayer) {
-                    yuki135.blacksouls.capability.BSWorldData data =
-                            yuki135.blacksouls.capability.BSWorldData.get(serverPlayer.server.overworld());
-
+                    if (!yuki135.blacksouls.story.OriginalOpeningBonfireFlow.canUseLibraryMenu(serverPlayer, event.getPos())) return;
                     yuki135.blacksouls.network.NetworkHandler.sendToPlayer(
-                            new yuki135.blacksouls.network.packets.PacketSyncBonfireList(data.activatedBonfires),
+                            new yuki135.blacksouls.network.packets.PacketSyncBonfireList(yuki135.blacksouls.story.OriginalOpeningBonfireFlow.bonfires(serverPlayer)),
                             serverPlayer
                     );
                 }
@@ -283,7 +281,8 @@ public class ServerEventHandler {
     public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
         if (!event.getEntity().level().isClientSide() && event.getEntity() instanceof ServerPlayer serverPlayer) {
             serverPlayer.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
-                if (!stats.hasVisitedLibrary && !yuki135.blacksouls.story.OriginalOpeningService.ownsOpening(serverPlayer)) {
+                if (!stats.hasVisitedLibrary && !yuki135.blacksouls.story.OriginalOpeningService.ownsOpening(serverPlayer)
+                        && !yuki135.blacksouls.story.OriginalOpeningBonfireFlow.ownsProgress(serverPlayer)) {
                     MinecraftServer server = serverPlayer.getServer();
                     if (server == null) {
                         return;

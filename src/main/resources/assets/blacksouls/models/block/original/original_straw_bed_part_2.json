@@ -1,0 +1,81 @@
+{
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": true,
+  "textures": {
+    "oak": "blacksouls:block/original/oak",
+    "pillow": "blacksouls:block/original/pillow",
+    "straw": "blacksouls:block/original/straw",
+    "particle": "blacksouls:block/original/oak"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        14
+      ],
+      "to": [
+        16,
+        3,
+        16
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            4.0
+          ],
+          "texture": "#oak"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            4.0
+          ],
+          "texture": "#oak"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            4.0
+          ],
+          "texture": "#oak"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            4.0
+          ],
+          "texture": "#oak"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#oak"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#oak"
+        }
+      }
+    }
+  ]
+}

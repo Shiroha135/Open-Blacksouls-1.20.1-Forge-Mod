@@ -105,7 +105,8 @@ public final class BonfireStateHandler {
                     || !state.hasProperty(CampfireBlock.WATERLOGGED)) {
                 continue;
             }
-            boolean shouldBeLit = data.isBonfireActivated(level, pos)
+            boolean shouldBeLit = (data.isBonfireActivated(level, pos)
+                    || yuki135.blacksouls.story.OriginalOpeningBonfireFlow.isFallingBonfire(level.dimension(), pos))
                     && !state.getValue(CampfireBlock.WATERLOGGED);
             if (state.getValue(CampfireBlock.LIT) != shouldBeLit) {
                 level.setBlock(pos, state.setValue(CampfireBlock.LIT, shouldBeLit), Block.UPDATE_ALL);

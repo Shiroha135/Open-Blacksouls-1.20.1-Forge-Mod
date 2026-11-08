@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "blacksouls:block/original/original_moss_stone"
+    },
+    "facing=east": {
+      "model": "blacksouls:block/original/original_moss_stone",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "blacksouls:block/original/original_moss_stone",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "blacksouls:block/original/original_moss_stone",
+      "y": 270
+    }
+  }
+}

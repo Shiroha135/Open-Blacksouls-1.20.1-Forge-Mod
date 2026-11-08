@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "blacksouls:block/original/original_library_fireplace"
+    },
+    "facing=east": {
+      "model": "blacksouls:block/original/original_library_fireplace",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "blacksouls:block/original/original_library_fireplace",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "blacksouls:block/original/original_library_fireplace",
+      "y": 270
+    }
+  }
+}

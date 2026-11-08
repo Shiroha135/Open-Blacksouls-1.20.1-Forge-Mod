@@ -13,6 +13,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import org.lwjgl.glfw.GLFW;
 
 public final class GuiOpeningChoice extends Screen {
     private ClientboundOpeningPacket state;
@@ -21,6 +22,7 @@ public final class GuiOpeningChoice extends Screen {
     private int contentHeight;
     private boolean cinematicActive;
     private int cinematicPage=-1;
+    private boolean advanceKeyDown;
 
     public GuiOpeningChoice(ClientboundOpeningPacket state) {
         super(Component.literal("故事的开端"));
@@ -47,8 +49,6 @@ public final class GuiOpeningChoice extends Screen {
             return;
         }
         if(cinematicActive) {
-            if(OriginalOpeningPresentationController.messageOpen())button("继续",left,top,180,Action.NEXT,Math.max(0,cinematicPage),true);
-            button("跳过演出",12,height-26,84,Action.SKIP,0,false);
             if(state.preview())button("返回原处",width-96,height-26,84,Action.EXIT_REPLAY,0,false);
             return;
         }
@@ -63,9 +63,8 @@ public final class GuiOpeningChoice extends Screen {
             if (state.command()==27) {
                 button("有点困了",left,top,86,Action.NEXT,1,true);
                 button("还不困",left+94,top,86,Action.NEXT,2,true);
-            } else button("继续",left,top,180,Action.NEXT,0,true);
+            }
         }
-        button("跳过演出",12,height-26,84,Action.SKIP,0,false);
         if (state.preview()) button("返回原处",width-96,height-26,84,Action.EXIT_REPLAY,0,false);
     }
 
@@ -129,6 +128,10 @@ public final class GuiOpeningChoice extends Screen {
             graphics.drawCenteredString(font,"在你身边的是……",width/2,Math.max(24,height/2-48),0xFFF5E6C5);
         } else if (state.stage()==Stage.ORIGIN_CONFIRMED) {
             paragraph(graphics,OriginalOpeningText.sleep(state.command()),left,Math.max(30,height/2-38),textWidth,0xFFF3F0E8);
+            if(canAdvanceDialogue()&&OriginalOpeningController.waitTicks()==0) {
+                int center=width/2,y=Math.max(50,height-98);
+                for(int row=0;row<4;row++)graphics.fill(center-3+row,y+row,center+4-row,y+row+1,0xFFFFFFFF);
+            }
         }
         super.render(graphics,mouseX,mouseY,partialTick);
     }
@@ -140,15 +143,37 @@ public final class GuiOpeningChoice extends Screen {
 
     @Override
     public boolean keyPressed(int key,int scanCode,int modifiers) {
-        if(OriginalOpeningPresentationController.locksInput()&&OriginalOpeningPresentationController.keyPressed(key,org.lwjgl.glfw.GLFW.GLFW_PRESS))return true;
+        if(key==GLFW.GLFW_KEY_ENTER||key==GLFW.GLFW_KEY_KP_ENTER||key==GLFW.GLFW_KEY_SPACE) {
+            boolean handled=OriginalOpeningPresentationController.locksInput()||canAdvanceDialogue();
+            if(!advanceKeyDown) {
+                if(OriginalOpeningPresentationController.locksInput())OriginalOpeningPresentationController.keyPressed(key,GLFW.GLFW_PRESS);
+                else if(canAdvanceDialogue()&&OriginalOpeningController.waitTicks()==0)OriginalOpeningController.act(Action.NEXT,0);
+            }
+            advanceKeyDown=true;
+            if(handled)return true;
+        }
+        if(OriginalOpeningPresentationController.locksInput()&&OriginalOpeningPresentationController.keyPressed(key,GLFW.GLFW_PRESS))return true;
         return super.keyPressed(key,scanCode,modifiers);
+    }
+
+    @Override
+    public boolean keyReleased(int key,int scanCode,int modifiers) {
+        if(key==GLFW.GLFW_KEY_ENTER||key==GLFW.GLFW_KEY_KP_ENTER||key==GLFW.GLFW_KEY_SPACE)advanceKeyDown=false;
+        return super.keyReleased(key,scanCode,modifiers);
     }
 
     @Override
     public boolean mouseClicked(double mouseX,double mouseY,int button) {
         if(super.mouseClicked(mouseX,mouseY,button))return true;
-        return OriginalOpeningPresentationController.locksInput()&&OriginalOpeningPresentationController.mousePressed(button,org.lwjgl.glfw.GLFW.GLFW_PRESS);
+        if(OriginalOpeningPresentationController.locksInput())return OriginalOpeningPresentationController.mousePressed(button,GLFW.GLFW_PRESS);
+        if(button==GLFW.GLFW_MOUSE_BUTTON_LEFT&&canAdvanceDialogue()) {
+            if(OriginalOpeningController.waitTicks()==0)OriginalOpeningController.act(Action.NEXT,0);
+            return true;
+        }
+        return false;
     }
+
+    private boolean canAdvanceDialogue() { return state.notice().isEmpty()&&state.stage()==Stage.ORIGIN_CONFIRMED&&state.command()!=27; }
 
     @Override
     public boolean mouseScrolled(double mouseX,double mouseY,double amount) {

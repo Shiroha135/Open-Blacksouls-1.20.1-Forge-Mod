@@ -82,3 +82,4 @@ playwright-report/
 *.profdata
 *.gcda
 *.gcno
+!/assetgen/original_blocks.py

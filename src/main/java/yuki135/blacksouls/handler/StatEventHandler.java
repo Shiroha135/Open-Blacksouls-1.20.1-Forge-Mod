@@ -1066,7 +1066,9 @@ public class StatEventHandler {
 
                 if (!level.isClientSide() && player instanceof net.minecraft.server.level.ServerPlayer serverPlayer) {
                     yuki135.blacksouls.capability.BSWorldData data = yuki135.blacksouls.capability.BSWorldData.get(level.getServer().overworld());
-                    boolean isFirstTime = data.addBonfire(level, pos, player);
+                    boolean isFirstTime = data.addBonfire(level, pos, player)
+                            && !yuki135.blacksouls.story.OriginalOpeningBonfireFlow.isFallingBonfire(level.dimension(), pos);
+                    yuki135.blacksouls.story.OriginalOpeningBonfireFlow.activateLibraryBonfire(serverPlayer, pos);
                     BonfireStateHandler.light(level, pos);
                     RedHoodStoryHandler.onBonfireRest(
                             serverPlayer,
@@ -1095,13 +1097,13 @@ public class StatEventHandler {
                         net.minecraft.server.MinecraftServer server = serverPlayer.server;
                         server.tell(new net.minecraft.server.TickTask(Math.max(1, (int) Math.round(2500 / 50.0)), () -> NetworkHandler.INSTANCE.send(
                                 PacketDistributor.PLAYER.with(() -> serverPlayer),
-                                new yuki135.blacksouls.network.packets.PacketSyncBonfireList(data.activatedBonfires)
+                                new yuki135.blacksouls.network.packets.PacketSyncBonfireList(yuki135.blacksouls.story.OriginalOpeningBonfireFlow.bonfires(serverPlayer))
                         )));
                     } else {
                         net.minecraft.server.MinecraftServer server = serverPlayer.server;
                         server.tell(new net.minecraft.server.TickTask(Math.max(1, (int) Math.round(1000 / 50.0)), () -> NetworkHandler.INSTANCE.send(
                                 PacketDistributor.PLAYER.with(() -> serverPlayer),
-                                new yuki135.blacksouls.network.packets.PacketSyncBonfireList(data.activatedBonfires)
+                                new yuki135.blacksouls.network.packets.PacketSyncBonfireList(yuki135.blacksouls.story.OriginalOpeningBonfireFlow.bonfires(serverPlayer))
                         )));
                     }
 
@@ -1606,13 +1608,7 @@ public class StatEventHandler {
     }
 
     private static void syncUnlockedAvatars(ServerPlayer player) {
-        CompoundTag data = player.getPersistentData();
-        ListTag list = data.getList("bs2_unlocked_dlc_avatars", 8);
-
-        NetworkHandler.INSTANCE.send(
-                PacketDistributor.PLAYER.with(() -> player),
-                new PacketSyncUnlockedAvatars(list)
-        );
+        AvatarUnlocks.sync(player);
     }
 
     @SubscribeEvent

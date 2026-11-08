@@ -252,7 +252,12 @@ public final class OriginalOpeningPresentationController {
                     graphics.drawString(minecraft.font,Component.literal(glyph.text()),0,0,glyph.color(),false);
                     graphics.pose().popPose();x+=minecraft.font.width(glyph.text())*scale;
                 }
-                lineTop+=Math.max(22,full.stream().mapToInt(OriginalOpeningPresentationMessage.Glyph::size).max().orElse(22));
+                lineTop+=Math.max(page.title()?22:24,full.stream().mapToInt(OriginalOpeningPresentationMessage.Glyph::size).max().orElse(22));
+            }
+            if(frame.canAdvance()) {
+                graphics.pose().pushPose();graphics.pose().translate(width*.5F,(height-120*canvas)*.5F+112*canvas,0);graphics.pose().scale(canvas,canvas,1);
+                for(int row=0;row<4;row++)graphics.fill(-3+row,row,4-row,row+1,0xFFFFFFFF);
+                graphics.pose().popPose();
             }
         }
         if(frame.balloon()>0&&!frame.awaitingDestination()) {

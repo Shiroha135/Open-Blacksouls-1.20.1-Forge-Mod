@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "blacksouls:block/original/original_library_brick"
+    },
+    "facing=east": {
+      "model": "blacksouls:block/original/original_library_brick",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "blacksouls:block/original/original_library_brick",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "blacksouls:block/original/original_library_brick",
+      "y": 270
+    }
+  }
+}

@@ -95,6 +95,8 @@ public final class GuiOriginalNpcDialogue extends Screen {
         return this.entityId == entityId && Objects.equals(sessionId, token);
     }
 
+    public int cameraEntityId() { return entityId; }
+
     public boolean isSilentWait() {
         return packet != null && (packet.type() == OriginalNpcInterpreter.Type.WAIT
                 || packet.type() == OriginalNpcInterpreter.Type.ROUTE_WAIT
@@ -771,9 +773,9 @@ public final class GuiOriginalNpcDialogue extends Screen {
         for (int row = 0; row < box.visible() && row + listOffset < labels.size(); row++) {
             int index = row + listOffset;
             int y = box.y() + PADDING + box.header() + row * ROW_HEIGHT;
-            boolean hovered = box.contains(mouseX, mouseY) && mouseY >= y && mouseY < y + ROW_HEIGHT;
-            if (!awaitingResponse && (hovered || index == selected)) {
-                graphics.fill(box.x() + 5, y + 1, box.x() + box.width() - 5, y + ROW_HEIGHT - 1, 0x55FFFFFF);
+            boolean hovered=box.contains(mouseX,mouseY)&&mouseY>=y&&mouseY<y+ROW_HEIGHT;
+            if (!awaitingResponse && index == selected) {
+                BSGuiUtils.drawRMSelection(graphics,box.x()+5,y+1,box.width()-10,ROW_HEIGHT-2);
             }
             int labelWidth = box.width() - PADDING * 2;
             int color = awaitingResponse ? 0xAAAAAA : 0xFFFFFF;
@@ -1101,6 +1103,22 @@ public final class GuiOriginalNpcDialogue extends Screen {
             return true;
         }
         return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    @Override
+    public void mouseMoved(double mouseX,double mouseY) {
+        super.mouseMoved(mouseX,mouseY);
+        if(awaitingResponse||labels.isEmpty()||isNumberInput()
+                ||isTradeShop()&&shopPage==ShopPage.QUANTITY
+                ||isItemKeep()&&keepPage==KeepPage.QUANTITY
+                ||isSynthesis()&&synthesisPage==SynthesisPage.QUANTITY)return;
+        var box=listBox();
+        double relative=mouseY-box.y()-PADDING-box.header();
+        int row=(int)Math.floor(relative/ROW_HEIGHT);
+        if(box.contains(mouseX,mouseY)&&row>=0&&row<box.visible()&&row+listOffset<labels.size()) {
+            if(selected!=row+listOffset&&isSynthesis())synthesisDetailOffset=0;
+            selected=row+listOffset;
+        }
     }
 
     @Override

@@ -1,0 +1,146 @@
+{
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": false,
+  "textures": {
+    "tree_leaves_lime_volume": "blacksouls:block/opening_source/tree_leaves_lime_volume",
+    "particle": "blacksouls:block/opening_source/tree_leaves_lime_volume"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        8,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            0,
+            8,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            0,
+            8,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            0,
+            8,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            0,
+            8,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        8,
+        0
+      ],
+      "to": [
+        16,
+        12,
+        12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            0,
+            4,
+            16,
+            8
+          ]
+        },
+        "south": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            0,
+            4,
+            16,
+            8
+          ]
+        },
+        "east": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            0,
+            4,
+            12,
+            8
+          ]
+        },
+        "west": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            0,
+            4,
+            12,
+            8
+          ]
+        },
+        "up": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            0,
+            0,
+            16,
+            12
+          ]
+        },
+        "down": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            0,
+            0,
+            16,
+            12
+          ]
+        }
+      }
+    }
+  ]
+}

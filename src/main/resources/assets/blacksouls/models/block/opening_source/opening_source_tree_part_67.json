@@ -1,0 +1,78 @@
+{
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": false,
+  "textures": {
+    "tree_leaves_lime_volume": "blacksouls:block/opening_source/tree_leaves_lime_volume",
+    "particle": "blacksouls:block/opening_source/tree_leaves_lime_volume"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        12
+      ],
+      "to": [
+        16,
+        8,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            0,
+            8,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            0,
+            8,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            12,
+            8,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            12,
+            8,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            0,
+            12,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#tree_leaves_lime_volume",
+          "uv": [
+            0,
+            12,
+            16,
+            16
+          ]
+        }
+      }
+    }
+  ]
+}

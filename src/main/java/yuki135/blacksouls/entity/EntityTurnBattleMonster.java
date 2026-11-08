@@ -64,8 +64,8 @@ public abstract class EntityTurnBattleMonster extends Monster {
                 && canStartTurnBattle()
                 && BSConfig.COMBAT_MODE.get() == BSConfig.CombatMode.BLACK_SOULS_TURN_BASED
                 && !TurnBattleManager.isInBattle(this)) {
-            this.level().getEntitiesOfClass(ServerPlayer.class, this.getBoundingBox().inflate(0.12D),
-                            player -> player.isAlive() && !player.isSpectator())
+            this.level().getEntitiesOfClass(ServerPlayer.class, this.getBoundingBox().inflate(0.025D,0,0.025D),
+                            player -> player.isAlive() && !player.isSpectator() && isBattleContact(player))
                     .stream().findFirst().ifPresent(player -> TurnBattleManager.tryStart(player, this));
         }
     }
@@ -74,7 +74,7 @@ public abstract class EntityTurnBattleMonster extends Monster {
     public void playerTouch(Player player) {
         super.playerTouch(player);
         if (!this.level().isClientSide() && this.battleCooldown == 0 && canStartTurnBattle()
-                && player instanceof ServerPlayer serverPlayer) {
+                && player instanceof ServerPlayer serverPlayer && isBattleContact(player)) {
             TurnBattleManager.tryStart(serverPlayer, this);
         }
     }
@@ -87,7 +87,7 @@ public abstract class EntityTurnBattleMonster extends Monster {
         }
         if (canStartTurnBattle() && target instanceof ServerPlayer player
                 && BSConfig.COMBAT_MODE.get() == BSConfig.CombatMode.BLACK_SOULS_TURN_BASED) {
-            TurnBattleManager.tryStart(player, this);
+            if(isBattleContact(player))TurnBattleManager.tryStart(player, this);
             return false;
         }
         return super.doHurtTarget(target);
@@ -100,6 +100,10 @@ public abstract class EntityTurnBattleMonster extends Monster {
             this.getNavigation().stop();
             this.setNoAi(true);
         }
+    }
+
+    public boolean isBattleContact(Player player) {
+        return player.level()==level()&&getBoundingBox().inflate(0.025D,0,0.025D).intersects(player.getBoundingBox());
     }
 
     public boolean canStartTurnBattle() {

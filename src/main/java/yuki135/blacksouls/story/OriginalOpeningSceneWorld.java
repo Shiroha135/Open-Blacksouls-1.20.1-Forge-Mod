@@ -47,6 +47,11 @@ public final class OriginalOpeningSceneWorld {
         return beginRestore(new ServerAccess(level),get(level),owner,lease);
     }
 
+    public static Result beginRetireOp(ServerLevel level, UUID owner, Lease lease) {
+        if (level == null || !DIMENSION.equals(level.dimension())) return result(Status.INVALID_DIMENSION,null,null);
+        return beginRetireOp(new ServerAccess(level),get(level),owner,lease);
+    }
+
     public static Result beginFall(ServerLevel level, UUID owner, Lease lease, Cell cell, ServerPlayer visitor) {
         if (!fallVisitor(level,owner,lease,visitor)) return result(Status.FOREIGN_OWNER,null,null);
         var data=get(level); var entry=data.entry(owner,lease);
@@ -212,6 +217,21 @@ public final class OriginalOpeningSceneWorld {
         validateJournal(entry); data.setDirty(); return result(Status.PROGRESS,entry,null);
     }
 
+    static Result beginRetireOp(Access access, OriginalOpeningSceneData data, UUID owner, Lease lease) {
+        if (!access.opening()) return result(Status.INVALID_DIMENSION,null,null);
+        var entry=data.entry(owner,lease);if(entry==null)return result(Status.FOREIGN_OWNER,null,null);
+        if(entry.journal!=null)return result(opRetirement(entry.layout,entry.journal.target)&&entry.journal.zone==SceneKind.OP&&!entry.journal.restore?Status.PROGRESS:Status.BUSY,entry,null);
+        if(!entry.layout.op())return result(Status.ALREADY_READY,entry,null);
+        if(entry.layout.island()==null)return result(Status.NO_RECORD,entry,null);
+        if(!permitted(access,lease,SceneKind.OP))return result(Status.OUTSIDE_WORLD,entry,null);
+        if(!loaded(access,lease,SceneKind.OP))return result(Status.WAIT_CHUNKS,entry,null);
+        var conflict=scan(access,lease,SceneKind.OP,owned(lease,entry.layout));
+        if(conflict!=null)return result(Status.CONFLICT,entry,conflict);
+        if(data.activeJournalCount()>=MAX_ACTIVE_JOURNALS)return result(Status.CAPACITY,entry,null);
+        entry.journal=new Journal(data.nextJournalId(),false,entry.layout.withoutOp(),null,0,SceneKind.OP);
+        validateJournal(entry);data.setDirty();return result(Status.PROGRESS,entry,null);
+    }
+
     static Result advance(Access access, OriginalOpeningSceneData data, UUID owner, Lease lease, UUID journal, int budget) {
         if (budget < 1 || budget > MAX_BATCH) throw new IllegalArgumentException("Opening batch budget outside bound");
         if (!access.opening()) return result(Status.INVALID_DIMENSION,null,null);
@@ -254,7 +274,8 @@ public final class OriginalOpeningSceneWorld {
         var journal = entry.journal; if (journal == null) return;
         if (journal.id.equals(entry.lease.owner())) throw new IllegalArgumentException("Opening owner cannot be its journal identity");
         if (!journal.restore) {
-            if (!entry.layout.with(journal.zone,journal.target.temporary()).equals(journal.target) && !(journal.zone==SceneKind.ISLAND_99&&fallApply(entry,journal.target))) throw new IllegalArgumentException("Opening apply changes another scene zone");
+            if (!entry.layout.with(journal.zone,journal.target.temporary()).equals(journal.target) && !(journal.zone==SceneKind.ISLAND_99&&fallApply(entry,journal.target))
+                    && !(journal.zone==SceneKind.OP&&opRetirement(entry.layout,journal.target))) throw new IllegalArgumentException("Opening apply changes another scene zone");
         } else if (journal.partialTarget != null) {
             if (!validApplyTarget(entry.layout,journal.partialTarget)) throw new IllegalArgumentException("Invalid prior opening partial target");
             int count = delta(owned(entry.lease,entry.layout),owned(entry.lease,journal.partialTarget)).size();
@@ -269,7 +290,11 @@ public final class OriginalOpeningSceneWorld {
 
     private static boolean validApplyTarget(Layout base, Layout target) {
         return target.op() && target.island() == base.island() && target.temporary().equals(base.temporary())
-                || target.op() == base.op() && target.island() != null;
+                || target.op() == base.op() && target.island() != null || opRetirement(base,target);
+    }
+
+    private static boolean opRetirement(Layout base,Layout target) {
+        return base.op()&&base.island()!=null&&base.withoutOp().equals(target);
     }
 
     private record Change(BlockPos position, Material before, Material after) { }

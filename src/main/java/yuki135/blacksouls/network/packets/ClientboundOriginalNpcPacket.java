@@ -491,6 +491,7 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
                 return;
             }
             if (packet.type() == OriginalNpcInterpreter.Type.END || packet.type() == OriginalNpcInterpreter.Type.BLOCKED) {
+                yuki135.blacksouls.client.OriginalNpcMusicController.finishDialogue(packet.entityId());
                 yuki135.blacksouls.client.OriginalNpcBattleContinuation.clear(packet);
                 if (minecraft.screen instanceof yuki135.blacksouls.client.gui.GuiOriginalNpcDialogue dialogue
                         && dialogue.isConversation(packet.entityId(), packet.sessionId())) {

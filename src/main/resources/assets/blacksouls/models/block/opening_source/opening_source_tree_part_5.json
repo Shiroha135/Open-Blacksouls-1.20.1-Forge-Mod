@@ -1,0 +1,146 @@
+{
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": false,
+  "textures": {
+    "tree_bark_volume": "blacksouls:block/opening_source/tree_bark_volume",
+    "particle": "blacksouls:block/opening_source/tree_bark_volume"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        12
+      ],
+      "to": [
+        2,
+        4,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            0,
+            12,
+            2,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            0,
+            12,
+            2,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            12,
+            12,
+            14,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            12,
+            12,
+            14,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            0,
+            12,
+            2,
+            14
+          ]
+        },
+        "down": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            0,
+            12,
+            2,
+            14
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        2,
+        0,
+        14
+      ],
+      "to": [
+        6,
+        4,
+        16
+      ],
+      "faces": {
+        "north": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            2,
+            12,
+            6,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            2,
+            12,
+            6,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            14,
+            12,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            14,
+            12,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            2,
+            14,
+            6,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            2,
+            14,
+            6,
+            16
+          ]
+        }
+      }
+    }
+  ]
+}

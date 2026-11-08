@@ -2,11 +2,16 @@ package yuki135.blacksouls.client;
 
 import yuki135.blacksouls.BlackSouls;
 import yuki135.blacksouls.client.gui.GuiOpeningChoice;
+import yuki135.blacksouls.client.gui.GuiOpeningGreeting;
+import yuki135.blacksouls.client.gui.GuiOpeningProfession;
+import yuki135.blacksouls.client.gui.GuiOpeningCoda;
 import yuki135.blacksouls.network.NetworkHandler;
 import yuki135.blacksouls.network.packets.ClientboundOpeningPacket;
 import yuki135.blacksouls.network.packets.ClientboundOpeningPresentationPacket;
 import yuki135.blacksouls.network.packets.ServerboundOpeningPacket;
 import yuki135.blacksouls.story.OriginalOpeningProfile.Stage;
+import yuki135.blacksouls.story.OriginalOpeningGreeting;
+import yuki135.blacksouls.story.OriginalOpeningCoda;
 import yuki135.blacksouls.story.OriginalOpeningText;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -21,7 +26,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid=BlackSouls.MODID,value=Dist.CLIENT)
 public final class OriginalOpeningController {
     private static ClientboundOpeningPacket state;
-    private static long ticks,receivedAt,lastReady,lastDown;
+    private static long ticks,receivedAt,lastReady;
     private static final OriginalOpeningPresentationMailbox PRESENTATIONS=new OriginalOpeningPresentationMailbox();
     private static ClientboundOpeningPresentationPacket pendingPolicy;
 
@@ -40,6 +45,7 @@ public final class OriginalOpeningController {
         if(packet.preview()&&(state==null||!state.preview()))OriginalOpeningPresentationController.capturePreviewAudioPolicy();
         if(!packet.equals(state))receivedAt=ticks;
         state=packet;
+        OriginalOpeningCodaEffects.accept(packet);
         var pending=PRESENTATIONS.drain();
         if(pending!=null)applyAcceptedPresentation(pending);
         finishIfReady();
@@ -72,11 +78,20 @@ public final class OriginalOpeningController {
     private static void finishIfReady() {
         if(!PRESENTATIONS.canClose())return;
         PRESENTATIONS.close();state=null;
-        if(Minecraft.getInstance().screen instanceof GuiOpeningChoice)Minecraft.getInstance().setScreen(null);
+        OriginalOpeningCodaEffects.clear();
+        if(Minecraft.getInstance().screen instanceof GuiOpeningChoice || Minecraft.getInstance().screen instanceof GuiOpeningGreeting
+                || Minecraft.getInstance().screen instanceof GuiOpeningProfession || Minecraft.getInstance().screen instanceof GuiOpeningCoda)Minecraft.getInstance().setScreen(null);
     }
 
     public static ClientboundOpeningPacket state() { return state; }
     public static int waitTicks() { return state==null?0:Math.max(0,state.waitTicks()-(int)(ticks-receivedAt)); }
+    public static boolean professionVisible(int origin) {
+        if(origin>0&&!OriginalOpeningGreeting.selectable(origin))return false;
+        if(origin>0&&state!=null&&OriginalOpeningCoda.active(state.command()))return OriginalOpeningCoda.professionsPresent(state.command());
+        if (origin<1 || origin>9 || state==null || state.stage()!=Stage.ORIGIN_SELECTION || !OriginalOpeningGreeting.active(state.command())) return true;
+        if (!OriginalOpeningGreeting.animation(state.command())) return state.command()==OriginalOpeningGreeting.LAST_COMMAND;
+        return OriginalOpeningGreeting.animationFrame(waitTicks(),origin)>=0;
+    }
     public static void act(ServerboundOpeningPacket.Action action,int value) {
         if (state!=null) NetworkHandler.INSTANCE.sendToServer(new ServerboundOpeningPacket(state.session(),state.revision(),action,value));
     }
@@ -95,23 +110,43 @@ public final class OriginalOpeningController {
             lastReady=ticks;
             act(ServerboundOpeningPacket.Action.READY,0);
         }
-        if (state.stage()==Stage.FIRST_STEP && !state.awaitingReady() && waitTicks()==0
-                && minecraft.screen==null && minecraft.options.keyDown.isDown() && ticks-lastDown>=10) {
-            lastDown=ticks;
-            act(ServerboundOpeningPacket.Action.DOWN,0);
-        }
         refreshScreen();
     }
 
     private static void refreshScreen() {
         if (state==null) return;
         var minecraft=Minecraft.getInstance();
+        if(state.awaitingReady()&&state.notice().isEmpty()) {
+            if(minecraft.screen instanceof GuiOpeningCoda screen&&OriginalOpeningCoda.active(state.command()))screen.accept(state);
+            else if(minecraft.screen instanceof GuiOpeningChoice||minecraft.screen instanceof GuiOpeningGreeting||minecraft.screen instanceof GuiOpeningProfession||minecraft.screen instanceof GuiOpeningCoda)minecraft.setScreen(null);
+            return;
+        }
+        boolean greeting=state.stage()==Stage.ORIGIN_SELECTION && OriginalOpeningGreeting.active(state.command())
+                && !state.awaitingReady() && state.notice().isEmpty() && !OriginalOpeningPresentationController.locksInput() && !PRESENTATIONS.terminalPending();
+        if (greeting) {
+            if (minecraft.screen instanceof GuiOpeningGreeting screen) screen.accept(state);
+            else if (minecraft.screen==null || minecraft.screen instanceof GuiOpeningChoice || minecraft.screen instanceof GuiOpeningCoda) minecraft.setScreen(new GuiOpeningGreeting(state));
+            return;
+        }
+        if(OriginalOpeningCoda.active(state.command())&&!state.awaitingReady()&&state.notice().isEmpty()&&!PRESENTATIONS.terminalPending()) {
+            if(minecraft.screen instanceof GuiOpeningCoda screen)screen.accept(state);
+            else if(minecraft.screen==null||minecraft.screen instanceof GuiOpeningChoice||minecraft.screen instanceof GuiOpeningProfession||minecraft.screen instanceof GuiOpeningGreeting)
+                minecraft.setScreen(new GuiOpeningCoda(state));
+            return;
+        }
+        if(state.stage()==Stage.ORIGIN_SELECTION && state.focusOrigin()>0 && state.notice().isEmpty()
+                && !state.awaitingReady() && !OriginalOpeningPresentationController.locksInput() && !PRESENTATIONS.terminalPending()) {
+            if(minecraft.screen instanceof GuiOpeningProfession screen)screen.accept(state);
+            else if(minecraft.screen==null || minecraft.screen instanceof GuiOpeningChoice || minecraft.screen instanceof GuiOpeningGreeting)
+                minecraft.setScreen(new GuiOpeningProfession(state));
+            return;
+        }
         boolean dialog=OriginalOpeningPresentationController.locksInput() || PRESENTATIONS.terminalPending() || !state.notice().isEmpty() || !state.awaitingReady()
                 && (state.stage()==Stage.ORIGIN_SELECTION&&state.focusOrigin()>0 || state.stage()==Stage.ORIGIN_CONFIRMED || state.stage()==Stage.ALICE_SELECTION);
         if (dialog) {
             if (minecraft.screen instanceof GuiOpeningChoice choice) choice.accept(state);
-            else if (minecraft.screen==null) minecraft.setScreen(new GuiOpeningChoice(state));
-        } else if (minecraft.screen instanceof GuiOpeningChoice) minecraft.setScreen(null);
+            else if (minecraft.screen==null || minecraft.screen instanceof GuiOpeningGreeting || minecraft.screen instanceof GuiOpeningProfession || minecraft.screen instanceof GuiOpeningCoda) minecraft.setScreen(new GuiOpeningChoice(state));
+        } else if (minecraft.screen instanceof GuiOpeningChoice || minecraft.screen instanceof GuiOpeningGreeting || minecraft.screen instanceof GuiOpeningProfession || minecraft.screen instanceof GuiOpeningCoda) minecraft.setScreen(null);
     }
 
     @SubscribeEvent
@@ -135,15 +170,18 @@ public final class OriginalOpeningController {
         if (minecraft.player==null) return;
         var graphics=event.getGuiGraphics();
         int width=graphics.guiWidth(),height=graphics.guiHeight();
+        if(OriginalOpeningCoda.active(state.command())&&state.notice().isEmpty()) {
+            if(state.awaitingReady())graphics.fill(0,0,width,height,0xFF000000);
+            return;
+        }
         if(PRESENTATIONS.terminalPending()) { graphics.fill(0,0,width,height,0xFF000000);return; }
         int alpha=state.awaitingReady()||!state.notice().isEmpty()?255:state.stage()==Stage.MEMORY_DIALOGUE?255:state.stage()==Stage.NAME_PENDING?255:0;
         if (state.stage()==Stage.FALLING) alpha=255;
         if (alpha>0) graphics.fill(0,0,width,height,alpha<<24);
         String text="";
         if (!state.notice().isEmpty()) text=state.notice();
-        else if (state.awaitingReady()) text="正在等待场景就绪……";
-        else if (state.stage()==Stage.ORIGIN_SELECTION&&state.focusOrigin()==0) text="走近人物并交谈，选择你的出身。";
-        else if (state.stage()==Stage.FIRST_STEP) text="按住「"+minecraft.options.keyDown.getTranslatedKeyMessage().getString()+"」，迈出一步。";
+        else if (state.awaitingReady()) text="";
+        else if (state.stage()==Stage.ORIGIN_SELECTION&&state.focusOrigin()==0&&!OriginalOpeningGreeting.active(state.command())) text="走近人物并交谈，选择你的出身。";
         else if (state.stage()==Stage.COLLAPSE1||state.stage()==Stage.COLLAPSE2) text="脚下的土地正在崩落……";
         else if (state.stage()==Stage.COMPLETE&&state.preview()) text="正在结束回放……";
         else if (state.stage()==Stage.FALLING) {
@@ -160,5 +198,5 @@ public final class OriginalOpeningController {
     }
 
     @SubscribeEvent
-    public static void onLogout(ClientPlayerNetworkEvent.LoggingOut event) { state=null;pendingPolicy=null;ticks=0;receivedAt=0;lastReady=0;lastDown=0;PRESENTATIONS.clear();OriginalOpeningPresentationController.clear();OriginalOpeningCinematicFog.setStopped(false); }
+    public static void onLogout(ClientPlayerNetworkEvent.LoggingOut event) { state=null;pendingPolicy=null;ticks=0;receivedAt=0;lastReady=0;PRESENTATIONS.clear();OriginalOpeningPresentationController.clear();OriginalOpeningCinematicFog.setStopped(false);OriginalOpeningCodaEffects.clear(); }
 }

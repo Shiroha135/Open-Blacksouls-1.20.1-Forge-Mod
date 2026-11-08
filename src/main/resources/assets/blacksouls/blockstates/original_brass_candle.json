@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "blacksouls:block/original/original_brass_candle"
+    },
+    "facing=east": {
+      "model": "blacksouls:block/original/original_brass_candle",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "blacksouls:block/original/original_brass_candle",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "blacksouls:block/original/original_brass_candle",
+      "y": 270
+    }
+  }
+}

@@ -150,7 +150,7 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
         BSOriginalEnemyData.Entry profile = BSOriginalEnemyData.get(
                 this.entityData == null ? 1 : getProfileId());
         float height = Math.max(0.75F, Math.min(1.95F, profile.worldRenderHeight()));
-        float width = Math.max(0.45F, Math.min(0.85F, height * profile.aspectRatio() * 0.35F));
+        float width = Math.max(0.35F, Math.min(0.6F, height * profile.aspectRatio() * 0.25F));
         return EntityDimensions.scalable(width, height);
     }
 

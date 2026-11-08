@@ -1,0 +1,151 @@
+{
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": true,
+  "textures": {
+    "dark_wood": "blacksouls:block/original/dark_wood",
+    "gold": "blacksouls:block/original/gold",
+    "keys": "blacksouls:block/original/keys",
+    "piano_front": "blacksouls:block/original/piano_front",
+    "particle": "blacksouls:block/original/dark_wood"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        7
+      ],
+      "to": [
+        16,
+        8,
+        16
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            8.0,
+            0.0,
+            16.0,
+            5.333333
+          ],
+          "texture": "#dark_wood"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            5.333333
+          ],
+          "texture": "#dark_wood"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            5.333333
+          ],
+          "texture": "#dark_wood"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            5.333333
+          ],
+          "texture": "#dark_wood"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            16.0
+          ],
+          "texture": "#dark_wood"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            16.0
+          ],
+          "texture": "#dark_wood"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        8,
+        6
+      ],
+      "to": [
+        16,
+        10,
+        16
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            8.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_wood"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            16.0
+          ],
+          "texture": "#dark_wood"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_wood"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_wood"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            16.0
+          ],
+          "texture": "#dark_wood"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            16.0
+          ],
+          "texture": "#dark_wood"
+        }
+      }
+    }
+  ]
+}

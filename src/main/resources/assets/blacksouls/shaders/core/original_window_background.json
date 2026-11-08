@@ -1,0 +1,14 @@
+{
+  "blend":{"func":"add","srcrgb":"srcalpha","dstrgb":"1-srcalpha"},
+  "vertex":"blacksouls:original_window_background",
+  "fragment":"blacksouls:original_window_background",
+  "attributes":["Position","UV0"],
+  "samplers":[{"name":"Sampler0"}],
+  "uniforms":[
+    {"name":"ModelViewMat","type":"matrix4x4","count":16,"values":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]},
+    {"name":"ProjMat","type":"matrix4x4","count":16,"values":[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]},
+    {"name":"WindowSize","type":"float","count":2,"values":[64,64]},
+    {"name":"TileSize","type":"float","count":1,"values":[64]},
+    {"name":"BackOpacity","type":"float","count":1,"values":[0.7529412]}
+  ]
+}

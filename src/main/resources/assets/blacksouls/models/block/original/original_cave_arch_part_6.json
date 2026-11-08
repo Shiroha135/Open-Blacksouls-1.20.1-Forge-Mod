@@ -1,0 +1,355 @@
+{
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": true,
+  "textures": {
+    "dark_stone": "blacksouls:block/original/dark_stone",
+    "particle": "blacksouls:block/original/dark_stone"
+  },
+  "elements": [
+    {
+      "from": [
+        9,
+        0,
+        2
+      ],
+      "to": [
+        15,
+        2,
+        14
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            1.066667
+          ],
+          "texture": "#dark_stone"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            1.066667
+          ],
+          "texture": "#dark_stone"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            1.066667
+          ],
+          "texture": "#dark_stone"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            1.066667
+          ],
+          "texture": "#dark_stone"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        }
+      }
+    },
+    {
+      "from": [
+        8,
+        2,
+        0
+      ],
+      "to": [
+        16,
+        6,
+        16
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        6,
+        0
+      ],
+      "to": [
+        16,
+        14,
+        16
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            5.333333,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "south": {
+          "uv": [
+            10.666667,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "up": {
+          "uv": [
+            10.666667,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "down": {
+          "uv": [
+            10.666667,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        14,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            5.333333,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "south": {
+          "uv": [
+            10.666667,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "up": {
+          "uv": [
+            10.666667,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "down": {
+          "uv": [
+            10.666667,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        }
+      }
+    },
+    {
+      "from": [
+        4,
+        2,
+        1
+      ],
+      "to": [
+        8,
+        6,
+        15
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        }
+      }
+    }
+  ]
+}

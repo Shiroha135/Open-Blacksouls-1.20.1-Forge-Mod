@@ -18,44 +18,6 @@ import java.util.List;
 @SuppressWarnings("removal")
 public class GuiAvatarSelect extends Screen {
 
-    private static final List<String> DEFAULT_AVATARS = List.of(
-            "knight_face", "march_hare", "edith", "mock_turtle", "duchess_margarita", "grangignol",
-            "alice_daughter", "alice_sister", "red_riding_hood", "jabberwock", "tweedle_dee", "tweedle_dum",
-            "queen_of_hearts", "dodo", "toya", "rangelina", "cheshire_cat", "alice_mother", "sea_predator",
-            "purple_night", "bandersnatch", "alice", "alice_daughter_alt", "jubjub_bird", "mary_ann",
-            "mad_hatter", "unicorn_eunice", "white_rabbit_noden", "white_lion_raiden", "dormouse",
-            "secret_princess", "lorina", "caterpillar", "mabel", "snake_god", "lizard_bill", "red_idol",
-            "chick", "gerda", "ghoul_meliphilia", "elizabeth", "succubus_victoria", "witch_dorothy",
-            "griffon", "florence", "unknown"
-    );
-
-    private static final List<String> DLC_AVATARS = List.of(
-            
-            "guine_sheet",
-            "guine_crest_sheet",
-            "guine_prisoner_sheet",
-            "guine_king_sheet",
-            "georuise_sheet",
-            "georuise_2_sheet",
-            "stiara_sheet",
-            "stiara_2_sheet",
-            "stiara_3_sheet",
-            "stiara_4_sheet",
-            "senpai_sheet",
-            "samidare_nin_sheet",
-            "samidare_spider_sheet",
-            
-            "anju_mz_sheet",
-            "dai_mz_sheet",
-            "hime_mz_sheet",
-            "karin_mz_sheet",
-            "liliy_mz_sheet",
-            "naje_mz_sheet",
-            "poryu_mz_sheet",
-            "sara_mz_sheet",
-            "syoujo2_mz_sheet"
-    );
-
     private static final int VISIBLE_ROWS = 3;
     private static final int COLS = 4;
     private static final int AVATAR_SIZE = 60;
@@ -76,7 +38,6 @@ public class GuiAvatarSelect extends Screen {
     private int maxScroll = 0;
     private List<String> visibleAvatars = List.of();
     private List<ResourceLocation> visibleAvatarTextures = List.of();
-    private long unlockedDlcMask;
 
     private final java.util.Map<String, Integer> expressionMap = new java.util.HashMap<>();
 
@@ -100,16 +61,14 @@ public class GuiAvatarSelect extends Screen {
         super.init();
         this.guiLeft = (this.width - this.guiWidth) / 2;
         this.guiTop = (this.height - this.guiHeight) / 2;
-        refreshVisibleAvatars(getUnlockedDlcMask());
+        refreshVisibleAvatars(ClientSkillInfo.getUnlockedAvatars());
     }
 
     @Override
     public void tick() {
         super.tick();
-        long currentMask = getUnlockedDlcMask();
-        if (currentMask != this.unlockedDlcMask) {
-            refreshVisibleAvatars(currentMask);
-        }
+        var avatars=ClientSkillInfo.getUnlockedAvatars();
+        if(!avatars.equals(visibleAvatars))refreshVisibleAvatars(avatars);
     }
 
     @Override
@@ -214,9 +173,9 @@ public class GuiAvatarSelect extends Screen {
     private void drawAvatar(GuiGraphics guiGraphics, ResourceLocation tex, String avatarId, int drawX, int drawY) {
         if (isExpressionSheet(avatarId)) {
             int expression = net.minecraft.util.Mth.clamp(getExpression(avatarId), 0, FACE_SHEET_MAX_INDEX);
-
-            int u = (expression % FACE_SHEET_COLS) * FACE_CELL_SIZE;
-            int v = (expression / FACE_SHEET_COLS) * FACE_CELL_SIZE;
+            int cell=avatarId.endsWith("_mz_sheet")?144:FACE_CELL_SIZE;
+            int u = (expression % FACE_SHEET_COLS) * cell;
+            int v = (expression / FACE_SHEET_COLS) * cell;
 
             guiGraphics.blit(
                     tex,
@@ -226,10 +185,10 @@ public class GuiAvatarSelect extends Screen {
                     AVATAR_SIZE,
                     u,
                     v,
-                    FACE_CELL_SIZE,
-                    FACE_CELL_SIZE,
-                    FACE_SHEET_WIDTH,
-                    FACE_SHEET_HEIGHT
+                    cell,
+                    cell,
+                    cell*4,
+                    cell*2
             );
         } else {
             guiGraphics.blit(
@@ -366,25 +325,7 @@ public class GuiAvatarSelect extends Screen {
         return false;
     }
 
-    private long getUnlockedDlcMask() {
-        long mask = 0L;
-        for (int i = 0; i < DLC_AVATARS.size(); i++) {
-            if (ClientSkillInfo.isDlcAvatarUnlocked(DLC_AVATARS.get(i))) {
-                mask |= 1L << i;
-            }
-        }
-        return mask;
-    }
-
-    private void refreshVisibleAvatars(long mask) {
-        ArrayList<String> avatars = new ArrayList<>(DEFAULT_AVATARS.size() + DLC_AVATARS.size());
-        avatars.addAll(DEFAULT_AVATARS);
-        for (int i = 0; i < DLC_AVATARS.size(); i++) {
-            if ((mask & 1L << i) != 0L) {
-                avatars.add(DLC_AVATARS.get(i));
-            }
-        }
-
+    private void refreshVisibleAvatars(List<String> avatars) {
         ArrayList<ResourceLocation> textures = new ArrayList<>(avatars.size());
         for (String avatarId : avatars) {
             textures.add(new ResourceLocation(BlackSouls.MODID, "textures/gui/avatars/" + avatarId + ".png"));
@@ -392,7 +333,6 @@ public class GuiAvatarSelect extends Screen {
 
         this.visibleAvatars = List.copyOf(avatars);
         this.visibleAvatarTextures = List.copyOf(textures);
-        this.unlockedDlcMask = mask;
         int totalRows = (this.visibleAvatars.size() + COLS - 1) / COLS;
         this.maxScroll = Math.max(0, totalRows - VISIBLE_ROWS);
         this.scrollOffset = net.minecraft.util.Mth.clamp(this.scrollOffset, 0, this.maxScroll);

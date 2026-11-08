@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "blacksouls:block/original/original_red_carpet"
+    },
+    "facing=east": {
+      "model": "blacksouls:block/original/original_red_carpet",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "blacksouls:block/original/original_red_carpet",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "blacksouls:block/original/original_red_carpet",
+      "y": 270
+    }
+  }
+}

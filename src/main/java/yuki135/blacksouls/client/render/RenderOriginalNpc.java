@@ -50,6 +50,12 @@ public final class RenderOriginalNpc extends EntityRenderer<EntityOriginalNpc> {
         pattern = pattern >= 0 && pattern < 3 ? pattern : 1;
         int direction = entity.getSpriteDirection();
         int directionRow = direction == 4 ? 1 : direction == 6 ? 2 : direction == 8 ? 3 : 0;
+        boolean roleplay=yuki135.blacksouls.client.OriginalRoleplayView.active();
+        if(roleplay) {
+            float facing=switch(direction) {case 4->90;case 6->270;case 8->180;default->0;};
+            facing=yuki135.blacksouls.client.OriginalRoleplayView.actorYaw(entity,facing);
+            directionRow=OriginalCharacterSprite.facingRow(facing,entity.getPosition(partialTicks),entityRenderDispatcher.camera.getPosition());
+        }
         int column = character % 4 * 3 + pattern;
         int row = character / 4 * 4 + directionRow;
         SheetSize size = SHEET_SIZES.getOrDefault(texture,
@@ -67,8 +73,11 @@ public final class RenderOriginalNpc extends EntityRenderer<EntityOriginalNpc> {
         int bushPixels = crowd ? Math.max(0, Math.min(frameHeight, entity.getOriginalBushDepth())) : 0;
 
         poseStack.pushPose();
-        poseStack.mulPose(entityRenderDispatcher.cameraOrientation());
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+        if(roleplay)OriginalCharacterSprite.faceCamera(poseStack,entityRenderDispatcher.cameraOrientation());
+        else {
+            poseStack.mulPose(entityRenderDispatcher.cameraOrientation());
+            poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+        }
         VertexConsumer consumer = buffer.getBuffer(RenderType.entityTranslucent(texture));
         PoseStack.Pose pose = poseStack.last();
         if (bushPixels > 0) {

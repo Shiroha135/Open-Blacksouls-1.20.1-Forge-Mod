@@ -83,7 +83,7 @@ public final class EntityOpeningActor extends PathfinderMob {
     @Override protected boolean shouldDropLoot() { return false; }
     @Override public boolean hurt(DamageSource source,float amount) { return false; }
     @Override public boolean isPushable() { return false; }
-    @Override public boolean isPickable() { return ownerId()!=null && isAlive(); }
+    @Override public boolean isPickable() { return ownerId()!=null && isAlive() && (originId()==0 || yuki135.blacksouls.story.OriginalOpeningGreeting.selectable(originId())); }
     @Override public boolean canBeCollidedWith() { return false; }
     @Override public boolean canCollideWith(Entity entity) { return false; }
     @Override public boolean canChangeDimensions() { return false; }

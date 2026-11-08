@@ -1567,5 +1567,7 @@
     "sounds": [
       "blacksouls:original_chicken_voice"
     ]
-  }
+  },
+  "opening_coda_river": {"sounds": [{"name": "blacksouls:opening_coda/river", "stream": true}]},
+  "opening_coda_night": {"sounds": [{"name": "blacksouls:opening_coda/night", "stream": true}]}
 }

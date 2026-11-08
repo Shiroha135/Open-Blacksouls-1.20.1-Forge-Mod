@@ -1,0 +1,9330 @@
+{
+  "version": 1,
+  "region": "rabbit_hole_library",
+  "blocks": [
+    {
+      "id": "original_cave_stone",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": true,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          96,
+          194,
+          32,
+          28
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_cave_stone_slab",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          96,
+          194,
+          32,
+          28
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_cave_stone_stairs",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ],
+            [
+              0,
+              8,
+              8,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          96,
+          194,
+          32,
+          28
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_moss_stone",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": true,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          0,
+          196,
+          32,
+          24
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_moss_stone_slab",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          0,
+          196,
+          32,
+          24
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_moss_stone_stairs",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ],
+            [
+              0,
+              8,
+              8,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          0,
+          196,
+          32,
+          24
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_limestone",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": true,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          194,
+          28,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_limestone_slab",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          194,
+          28,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_limestone_stairs",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ],
+            [
+              0,
+              8,
+              8,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          194,
+          28,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_oak_floor",
+      "material": "wood",
+      "strength": 1.5,
+      "light": 0,
+      "solid": true,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          129,
+          66,
+          28,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_oak_floor_slab",
+      "material": "wood",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          129,
+          66,
+          28,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_oak_floor_stairs",
+      "material": "wood",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ],
+            [
+              0,
+              8,
+              8,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          129,
+          66,
+          28,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_parquet",
+      "material": "wood",
+      "strength": 1.5,
+      "light": 0,
+      "solid": true,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          66,
+          27,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_parquet_slab",
+      "material": "wood",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          66,
+          27,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_parquet_stairs",
+      "material": "wood",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ],
+            [
+              0,
+              8,
+              8,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          66,
+          27,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_old_floor",
+      "material": "wood",
+      "strength": 1.5,
+      "light": 0,
+      "solid": true,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          34,
+          130,
+          27,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_old_floor_slab",
+      "material": "wood",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          34,
+          130,
+          27,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_old_floor_stairs",
+      "material": "wood",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ],
+            [
+              0,
+              8,
+              8,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          34,
+          130,
+          27,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_library_brick",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": true,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          65,
+          291,
+          28,
+          26
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_library_brick_slab",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          65,
+          291,
+          28,
+          26
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_library_brick_stairs",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ],
+            [
+              0,
+              8,
+              8,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          65,
+          291,
+          28,
+          26
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_dark_stone",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": true,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          131,
+          161,
+          25,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_dark_stone_slab",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          131,
+          161,
+          25,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_dark_stone_stairs",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ],
+            [
+              0,
+              8,
+              8,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          131,
+          161,
+          25,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_red_brick",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": true,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          161,
+          27,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_red_brick_slab",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          161,
+          27,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_red_brick_stairs",
+      "material": "stone",
+      "strength": 1.5,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              8,
+              16
+            ],
+            [
+              0,
+              8,
+              8,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          161,
+          27,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_marble_column",
+      "material": "stone",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              3,
+              16
+            ],
+            [
+              2,
+              3,
+              2,
+              14,
+              5,
+              14
+            ],
+            [
+              5.5,
+              5,
+              3,
+              10.5,
+              16,
+              13
+            ],
+            [
+              3,
+              5,
+              5.5,
+              13,
+              16,
+              10.5
+            ],
+            [
+              4.25,
+              5,
+              4.25,
+              11.75,
+              16,
+              11.75
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              5.5,
+              0,
+              3,
+              10.5,
+              16,
+              13
+            ],
+            [
+              3,
+              0,
+              5.5,
+              13,
+              16,
+              10.5
+            ],
+            [
+              4.25,
+              0,
+              4.25,
+              11.75,
+              16,
+              11.75
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            2,
+            0
+          ],
+          "collision": [
+            [
+              5.5,
+              0,
+              3,
+              10.5,
+              11,
+              13
+            ],
+            [
+              3,
+              0,
+              5.5,
+              13,
+              11,
+              10.5
+            ],
+            [
+              4.25,
+              0,
+              4.25,
+              11.75,
+              11,
+              11.75
+            ],
+            [
+              2,
+              11,
+              2,
+              14,
+              13,
+              14
+            ],
+            [
+              0,
+              13,
+              0,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          390,
+          307,
+          19,
+          36
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_cave_column",
+      "material": "stone",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              3,
+              16
+            ],
+            [
+              2,
+              3,
+              2,
+              14,
+              5,
+              14
+            ],
+            [
+              5.5,
+              5,
+              3,
+              10.5,
+              16,
+              13
+            ],
+            [
+              3,
+              5,
+              5.5,
+              13,
+              16,
+              10.5
+            ],
+            [
+              4.25,
+              5,
+              4.25,
+              11.75,
+              16,
+              11.75
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              5.5,
+              0,
+              3,
+              10.5,
+              16,
+              13
+            ],
+            [
+              3,
+              0,
+              5.5,
+              13,
+              16,
+              10.5
+            ],
+            [
+              4.25,
+              0,
+              4.25,
+              11.75,
+              16,
+              11.75
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            2,
+            0
+          ],
+          "collision": [
+            [
+              5.5,
+              0,
+              3,
+              10.5,
+              11,
+              13
+            ],
+            [
+              3,
+              0,
+              5.5,
+              13,
+              11,
+              10.5
+            ],
+            [
+              4.25,
+              0,
+              4.25,
+              11.75,
+              11,
+              11.75
+            ],
+            [
+              2,
+              11,
+              2,
+              14,
+              13,
+              14
+            ],
+            [
+              0,
+              13,
+              0,
+              16,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          96,
+          194,
+          32,
+          28
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_marble_arch",
+      "material": "stone",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              8,
+              4,
+              16
+            ],
+            [
+              1,
+              4,
+              2,
+              7,
+              16,
+              14
+            ]
+          ]
+        },
+        {
+          "offset": [
+            2,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              8,
+              0,
+              0,
+              16,
+              4,
+              16
+            ],
+            [
+              9,
+              4,
+              2,
+              15,
+              16,
+              14
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0,
+              2,
+              7,
+              16,
+              14
+            ]
+          ]
+        },
+        {
+          "offset": [
+            2,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              9,
+              0,
+              2,
+              15,
+              16,
+              14
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            2,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0,
+              2,
+              7,
+              2,
+              14
+            ],
+            [
+              0,
+              2,
+              0,
+              8,
+              6,
+              16
+            ],
+            [
+              0,
+              6,
+              0,
+              16,
+              14,
+              16
+            ],
+            [
+              0,
+              14,
+              0,
+              16,
+              16,
+              16
+            ],
+            [
+              8,
+              2,
+              1,
+              12,
+              6,
+              15
+            ]
+          ]
+        },
+        {
+          "offset": [
+            1,
+            2,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              6,
+              0,
+              16,
+              14,
+              16
+            ],
+            [
+              0,
+              14,
+              0,
+              16,
+              16,
+              16
+            ]
+          ]
+        },
+        {
+          "offset": [
+            2,
+            2,
+            0
+          ],
+          "collision": [
+            [
+              9,
+              0,
+              2,
+              15,
+              2,
+              14
+            ],
+            [
+              8,
+              2,
+              0,
+              16,
+              6,
+              16
+            ],
+            [
+              0,
+              6,
+              0,
+              16,
+              14,
+              16
+            ],
+            [
+              0,
+              14,
+              0,
+              16,
+              16,
+              16
+            ],
+            [
+              4,
+              2,
+              1,
+              8,
+              6,
+              15
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          390,
+          307,
+          19,
+          36
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_cave_arch",
+      "material": "stone",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              8,
+              4,
+              16
+            ],
+            [
+              1,
+              4,
+              2,
+              7,
+              16,
+              14
+            ]
+          ]
+        },
+        {
+          "offset": [
+            2,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              8,
+              0,
+              0,
+              16,
+              4,
+              16
+            ],
+            [
+              9,
+              4,
+              2,
+              15,
+              16,
+              14
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0,
+              2,
+              7,
+              16,
+              14
+            ]
+          ]
+        },
+        {
+          "offset": [
+            2,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              9,
+              0,
+              2,
+              15,
+              16,
+              14
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            2,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0,
+              2,
+              7,
+              2,
+              14
+            ],
+            [
+              0,
+              2,
+              0,
+              8,
+              6,
+              16
+            ],
+            [
+              0,
+              6,
+              0,
+              16,
+              14,
+              16
+            ],
+            [
+              0,
+              14,
+              0,
+              16,
+              16,
+              16
+            ],
+            [
+              8,
+              2,
+              1,
+              12,
+              6,
+              15
+            ]
+          ]
+        },
+        {
+          "offset": [
+            1,
+            2,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              6,
+              0,
+              16,
+              14,
+              16
+            ],
+            [
+              0,
+              14,
+              0,
+              16,
+              16,
+              16
+            ]
+          ]
+        },
+        {
+          "offset": [
+            2,
+            2,
+            0
+          ],
+          "collision": [
+            [
+              9,
+              0,
+              2,
+              15,
+              2,
+              14
+            ],
+            [
+              8,
+              2,
+              0,
+              16,
+              6,
+              16
+            ],
+            [
+              0,
+              6,
+              0,
+              16,
+              14,
+              16
+            ],
+            [
+              0,
+              14,
+              0,
+              16,
+              16,
+              16
+            ],
+            [
+              4,
+              2,
+              1,
+              8,
+              6,
+              15
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          131,
+          161,
+          25,
+          27
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_iron_grating",
+      "material": "metal",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0,
+              7,
+              2,
+              16,
+              9
+            ],
+            [
+              5,
+              0,
+              7,
+              6,
+              16,
+              9
+            ],
+            [
+              9,
+              0,
+              7,
+              10,
+              16,
+              9
+            ],
+            [
+              13,
+              0,
+              7,
+              14,
+              16,
+              9
+            ],
+            [
+              0,
+              2,
+              7,
+              16,
+              3,
+              9
+            ],
+            [
+              0,
+              15,
+              7,
+              16,
+              16,
+              9
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0,
+              7,
+              2,
+              16,
+              9
+            ],
+            [
+              5,
+              0,
+              7,
+              6,
+              16,
+              9
+            ],
+            [
+              9,
+              0,
+              7,
+              10,
+              16,
+              9
+            ],
+            [
+              13,
+              0,
+              7,
+              14,
+              16,
+              9
+            ],
+            [
+              0,
+              12,
+              7,
+              16,
+              13,
+              9
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          398,
+          453,
+          5,
+          24
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_grey_stone_rubble",
+      "material": "stone",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0,
+              2,
+              8,
+              5,
+              9
+            ],
+            [
+              8,
+              0,
+              6,
+              15,
+              4,
+              15
+            ],
+            [
+              4,
+              4,
+              5,
+              11,
+              8,
+              12
+            ],
+            [
+              10,
+              0,
+              1,
+              15,
+              4,
+              6
+            ],
+            [
+              0,
+              0,
+              11,
+              5,
+              3,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          96,
+          194,
+          32,
+          28
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_moss_stone_rubble",
+      "material": "stone",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0,
+              2,
+              8,
+              5,
+              9
+            ],
+            [
+              8,
+              0,
+              6,
+              15,
+              4,
+              15
+            ],
+            [
+              4,
+              4,
+              5,
+              11,
+              8,
+              12
+            ],
+            [
+              10,
+              0,
+              1,
+              15,
+              4,
+              6
+            ],
+            [
+              0,
+              0,
+              11,
+              5,
+              3,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          0,
+          196,
+          32,
+          24
+        ]
+      },
+      "category": "architecture"
+    },
+    {
+      "id": "original_oak_chair",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              4,
+              7,
+              4
+            ],
+            [
+              2,
+              0,
+              12,
+              4,
+              7,
+              14
+            ],
+            [
+              12,
+              0,
+              2,
+              14,
+              7,
+              4
+            ],
+            [
+              12,
+              0,
+              12,
+              14,
+              7,
+              14
+            ],
+            [
+              1,
+              7,
+              1,
+              15,
+              9,
+              15
+            ],
+            [
+              1,
+              9,
+              12,
+              3,
+              16,
+              15
+            ],
+            [
+              13,
+              9,
+              12,
+              15,
+              16,
+              15
+            ],
+            [
+              5,
+              9,
+              12,
+              6,
+              16,
+              14
+            ],
+            [
+              9,
+              9,
+              12,
+              10,
+              16,
+              14
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0,
+              12,
+              3,
+              5,
+              15
+            ],
+            [
+              13,
+              0,
+              12,
+              15,
+              5,
+              15
+            ],
+            [
+              2,
+              0,
+              12,
+              14,
+              5,
+              14
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          64,
+          420,
+          32,
+          28
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_dark_chair",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              4,
+              7,
+              4
+            ],
+            [
+              2,
+              0,
+              12,
+              4,
+              7,
+              14
+            ],
+            [
+              12,
+              0,
+              2,
+              14,
+              7,
+              4
+            ],
+            [
+              12,
+              0,
+              12,
+              14,
+              7,
+              14
+            ],
+            [
+              1,
+              7,
+              1,
+              15,
+              9,
+              15
+            ],
+            [
+              1,
+              9,
+              12,
+              3,
+              16,
+              15
+            ],
+            [
+              13,
+              9,
+              12,
+              15,
+              16,
+              15
+            ],
+            [
+              5,
+              9,
+              12,
+              6,
+              16,
+              14
+            ],
+            [
+              9,
+              9,
+              12,
+              10,
+              16,
+              14
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0,
+              12,
+              3,
+              5,
+              15
+            ],
+            [
+              13,
+              0,
+              12,
+              15,
+              5,
+              15
+            ],
+            [
+              2,
+              0,
+              12,
+              14,
+              5,
+              14
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          64,
+          420,
+          32,
+          28
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_red_chair",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              4,
+              7,
+              4
+            ],
+            [
+              2,
+              0,
+              12,
+              4,
+              7,
+              14
+            ],
+            [
+              12,
+              0,
+              2,
+              14,
+              7,
+              4
+            ],
+            [
+              12,
+              0,
+              12,
+              14,
+              7,
+              14
+            ],
+            [
+              1,
+              7,
+              1,
+              15,
+              9,
+              15
+            ],
+            [
+              1,
+              9,
+              12,
+              3,
+              16,
+              15
+            ],
+            [
+              13,
+              9,
+              12,
+              15,
+              16,
+              15
+            ],
+            [
+              5,
+              9,
+              12,
+              6,
+              16,
+              14
+            ],
+            [
+              9,
+              9,
+              12,
+              10,
+              16,
+              14
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0,
+              12,
+              3,
+              5,
+              15
+            ],
+            [
+              13,
+              0,
+              12,
+              15,
+              5,
+              15
+            ],
+            [
+              2,
+              0,
+              12,
+              14,
+              5,
+              14
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          320,
+          192,
+          96,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_purple_chair",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              4,
+              7,
+              4
+            ],
+            [
+              2,
+              0,
+              12,
+              4,
+              7,
+              14
+            ],
+            [
+              12,
+              0,
+              2,
+              14,
+              7,
+              4
+            ],
+            [
+              12,
+              0,
+              12,
+              14,
+              7,
+              14
+            ],
+            [
+              1,
+              7,
+              1,
+              15,
+              9,
+              15
+            ],
+            [
+              1,
+              9,
+              12,
+              3,
+              16,
+              15
+            ],
+            [
+              13,
+              9,
+              12,
+              15,
+              16,
+              15
+            ],
+            [
+              5,
+              9,
+              12,
+              6,
+              16,
+              14
+            ],
+            [
+              9,
+              9,
+              12,
+              10,
+              16,
+              14
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0,
+              12,
+              3,
+              5,
+              15
+            ],
+            [
+              13,
+              0,
+              12,
+              15,
+              5,
+              15
+            ],
+            [
+              2,
+              0,
+              12,
+              14,
+              5,
+              14
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          416,
+          192,
+          96,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_red_throne",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              4,
+              7,
+              4
+            ],
+            [
+              2,
+              0,
+              12,
+              4,
+              7,
+              14
+            ],
+            [
+              12,
+              0,
+              2,
+              14,
+              7,
+              4
+            ],
+            [
+              12,
+              0,
+              12,
+              14,
+              7,
+              14
+            ],
+            [
+              1,
+              7,
+              1,
+              15,
+              9,
+              15
+            ],
+            [
+              1,
+              9,
+              12,
+              3,
+              16,
+              15
+            ],
+            [
+              13,
+              9,
+              12,
+              15,
+              16,
+              15
+            ],
+            [
+              3,
+              10,
+              13,
+              13,
+              16,
+              15
+            ],
+            [
+              0,
+              9,
+              3,
+              2,
+              14,
+              14
+            ],
+            [
+              0,
+              13,
+              2,
+              2,
+              15,
+              15
+            ],
+            [
+              14,
+              9,
+              3,
+              16,
+              14,
+              14
+            ],
+            [
+              14,
+              13,
+              2,
+              16,
+              15,
+              15
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0,
+              12,
+              3,
+              8,
+              15
+            ],
+            [
+              13,
+              0,
+              12,
+              15,
+              8,
+              15
+            ],
+            [
+              2,
+              0,
+              12,
+              14,
+              9,
+              14
+            ],
+            [
+              3,
+              0,
+              13,
+              13,
+              8,
+              15
+            ],
+            [
+              5,
+              9,
+              12,
+              11,
+              12,
+              15
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          320,
+          192,
+          96,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_purple_throne",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              4,
+              7,
+              4
+            ],
+            [
+              2,
+              0,
+              12,
+              4,
+              7,
+              14
+            ],
+            [
+              12,
+              0,
+              2,
+              14,
+              7,
+              4
+            ],
+            [
+              12,
+              0,
+              12,
+              14,
+              7,
+              14
+            ],
+            [
+              1,
+              7,
+              1,
+              15,
+              9,
+              15
+            ],
+            [
+              1,
+              9,
+              12,
+              3,
+              16,
+              15
+            ],
+            [
+              13,
+              9,
+              12,
+              15,
+              16,
+              15
+            ],
+            [
+              3,
+              10,
+              13,
+              13,
+              16,
+              15
+            ],
+            [
+              0,
+              9,
+              3,
+              2,
+              14,
+              14
+            ],
+            [
+              0,
+              13,
+              2,
+              2,
+              15,
+              15
+            ],
+            [
+              14,
+              9,
+              3,
+              16,
+              14,
+              14
+            ],
+            [
+              14,
+              13,
+              2,
+              16,
+              15,
+              15
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0,
+              12,
+              3,
+              8,
+              15
+            ],
+            [
+              13,
+              0,
+              12,
+              15,
+              8,
+              15
+            ],
+            [
+              2,
+              0,
+              12,
+              14,
+              9,
+              14
+            ],
+            [
+              3,
+              0,
+              13,
+              13,
+              8,
+              15
+            ],
+            [
+              5,
+              9,
+              12,
+              11,
+              12,
+              15
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          416,
+          192,
+          96,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_oak_table",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              4,
+              14,
+              4
+            ],
+            [
+              2,
+              0,
+              12,
+              4,
+              14,
+              14
+            ],
+            [
+              12,
+              0,
+              2,
+              14,
+              14,
+              4
+            ],
+            [
+              12,
+              0,
+              12,
+              14,
+              14,
+              14
+            ],
+            [
+              0,
+              14,
+              0,
+              16,
+              16,
+              16
+            ],
+            [
+              2,
+              12,
+              2,
+              14,
+              14,
+              3
+            ],
+            [
+              2,
+              12,
+              13,
+              14,
+              14,
+              14
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_dark_table",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              4,
+              14,
+              4
+            ],
+            [
+              2,
+              0,
+              12,
+              4,
+              14,
+              14
+            ],
+            [
+              12,
+              0,
+              2,
+              14,
+              14,
+              4
+            ],
+            [
+              12,
+              0,
+              12,
+              14,
+              14,
+              14
+            ],
+            [
+              0,
+              14,
+              0,
+              16,
+              16,
+              16
+            ],
+            [
+              2,
+              12,
+              2,
+              14,
+              14,
+              3
+            ],
+            [
+              2,
+              12,
+              13,
+              14,
+              14,
+              14
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_oak_long_table",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              4,
+              14,
+              4
+            ],
+            [
+              2,
+              0,
+              12,
+              4,
+              14,
+              14
+            ],
+            [
+              0,
+              14,
+              0,
+              16,
+              16,
+              16
+            ],
+            [
+              2,
+              12,
+              2,
+              16,
+              14,
+              3
+            ],
+            [
+              2,
+              12,
+              13,
+              16,
+              14,
+              14
+            ]
+          ]
+        },
+        {
+          "offset": [
+            1,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              12,
+              0,
+              2,
+              14,
+              14,
+              4
+            ],
+            [
+              12,
+              0,
+              12,
+              14,
+              14,
+              14
+            ],
+            [
+              0,
+              14,
+              0,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              12,
+              2,
+              14,
+              14,
+              3
+            ],
+            [
+              0,
+              12,
+              13,
+              14,
+              14,
+              14
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_dark_long_table",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              4,
+              14,
+              4
+            ],
+            [
+              2,
+              0,
+              12,
+              4,
+              14,
+              14
+            ],
+            [
+              0,
+              14,
+              0,
+              16,
+              16,
+              16
+            ],
+            [
+              2,
+              12,
+              2,
+              16,
+              14,
+              3
+            ],
+            [
+              2,
+              12,
+              13,
+              16,
+              14,
+              14
+            ]
+          ]
+        },
+        {
+          "offset": [
+            1,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              12,
+              0,
+              2,
+              14,
+              14,
+              4
+            ],
+            [
+              12,
+              0,
+              12,
+              14,
+              14,
+              14
+            ],
+            [
+              0,
+              14,
+              0,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              12,
+              2,
+              14,
+              14,
+              3
+            ],
+            [
+              0,
+              12,
+              13,
+              14,
+              14,
+              14
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_round_oak_table",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              4.0,
+              14,
+              0,
+              12.0,
+              16,
+              16
+            ],
+            [
+              0,
+              14,
+              4.0,
+              16,
+              16,
+              12.0
+            ],
+            [
+              2.0,
+              14,
+              2.0,
+              14.0,
+              16,
+              14.0
+            ],
+            [
+              6,
+              2,
+              6,
+              10,
+              14,
+              10
+            ],
+            [
+              2,
+              0,
+              6,
+              14,
+              2,
+              10
+            ],
+            [
+              6,
+              0,
+              2,
+              10,
+              2,
+              14
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_round_white_table",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              4.0,
+              14,
+              0,
+              12.0,
+              16,
+              16
+            ],
+            [
+              0,
+              14,
+              4.0,
+              16,
+              16,
+              12.0
+            ],
+            [
+              2.0,
+              14,
+              2.0,
+              14.0,
+              16,
+              14.0
+            ],
+            [
+              6,
+              2,
+              6,
+              10,
+              14,
+              10
+            ],
+            [
+              2,
+              0,
+              6,
+              14,
+              2,
+              10
+            ],
+            [
+              6,
+              0,
+              2,
+              10,
+              2,
+              14
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_oak_stool",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              4,
+              7,
+              4
+            ],
+            [
+              2,
+              0,
+              12,
+              4,
+              7,
+              14
+            ],
+            [
+              12,
+              0,
+              2,
+              14,
+              7,
+              4
+            ],
+            [
+              12,
+              0,
+              12,
+              14,
+              7,
+              14
+            ],
+            [
+              0,
+              7,
+              0,
+              16,
+              9,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_red_stool",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              4,
+              7,
+              4
+            ],
+            [
+              2,
+              0,
+              12,
+              4,
+              7,
+              14
+            ],
+            [
+              12,
+              0,
+              2,
+              14,
+              7,
+              4
+            ],
+            [
+              12,
+              0,
+              12,
+              14,
+              7,
+              14
+            ],
+            [
+              0,
+              7,
+              0,
+              16,
+              9,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_purple_stool",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              4,
+              7,
+              4
+            ],
+            [
+              2,
+              0,
+              12,
+              4,
+              7,
+              14
+            ],
+            [
+              12,
+              0,
+              2,
+              14,
+              7,
+              4
+            ],
+            [
+              12,
+              0,
+              12,
+              14,
+              7,
+              14
+            ],
+            [
+              0,
+              7,
+              0,
+              16,
+              9,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_library_bookcase",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              5,
+              16,
+              2,
+              16
+            ],
+            [
+              0,
+              2,
+              14,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              2,
+              5,
+              2,
+              16,
+              14
+            ],
+            [
+              14,
+              2,
+              5,
+              16,
+              16,
+              14
+            ],
+            [
+              2,
+              9,
+              5,
+              14,
+              10,
+              14
+            ],
+            [
+              2.25,
+              2,
+              6.0,
+              3.55,
+              9.0,
+              13
+            ],
+            [
+              3.8,
+              2,
+              6.3,
+              5.4,
+              8.5,
+              13
+            ],
+            [
+              5.65,
+              2,
+              6.0,
+              7.55,
+              8.0,
+              13
+            ],
+            [
+              7.8,
+              2,
+              6.3,
+              9.1,
+              9.0,
+              13
+            ],
+            [
+              9.35,
+              2,
+              6.0,
+              10.95,
+              8.5,
+              13
+            ],
+            [
+              11.2,
+              2,
+              6.3,
+              13.1,
+              8.0,
+              13
+            ],
+            [
+              2.25,
+              10,
+              6.0,
+              3.85,
+              16,
+              13
+            ],
+            [
+              4.1,
+              10,
+              6.3,
+              6.0,
+              16,
+              13
+            ],
+            [
+              6.25,
+              10,
+              6.0,
+              7.55,
+              16,
+              13
+            ],
+            [
+              7.8,
+              10,
+              6.3,
+              9.4,
+              16,
+              13
+            ],
+            [
+              9.65,
+              10,
+              6.0,
+              11.55,
+              16,
+              13
+            ],
+            [
+              11.8,
+              10,
+              6.3,
+              13.1,
+              16,
+              13
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              14,
+              5,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              0,
+              14,
+              16,
+              14,
+              16
+            ],
+            [
+              0,
+              0,
+              5,
+              2,
+              14,
+              14
+            ],
+            [
+              14,
+              0,
+              5,
+              16,
+              14,
+              14
+            ],
+            [
+              2,
+              2,
+              5,
+              14,
+              3,
+              14
+            ],
+            [
+              2,
+              11,
+              5,
+              14,
+              12,
+              14
+            ],
+            [
+              2.25,
+              0,
+              6.0,
+              3.85,
+              2.0,
+              13
+            ],
+            [
+              4.1,
+              0,
+              6.3,
+              6.0,
+              1.5,
+              13
+            ],
+            [
+              6.25,
+              0,
+              6.0,
+              7.55,
+              1.0,
+              13
+            ],
+            [
+              7.8,
+              0,
+              6.3,
+              9.4,
+              2.0,
+              13
+            ],
+            [
+              9.65,
+              0,
+              6.0,
+              11.55,
+              1.5,
+              13
+            ],
+            [
+              11.8,
+              0,
+              6.3,
+              13.1,
+              1.0,
+              13
+            ],
+            [
+              2.25,
+              3,
+              6.0,
+              4.15,
+              11.0,
+              13
+            ],
+            [
+              4.4,
+              3,
+              6.3,
+              5.7,
+              10.5,
+              13
+            ],
+            [
+              5.95,
+              3,
+              6.0,
+              7.55,
+              10.0,
+              13
+            ],
+            [
+              7.8,
+              3,
+              6.3,
+              9.7,
+              11.0,
+              13
+            ],
+            [
+              9.95,
+              3,
+              6.0,
+              11.25,
+              10.5,
+              13
+            ],
+            [
+              11.5,
+              3,
+              6.3,
+              13.1,
+              10.0,
+              13
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          160,
+          256,
+          96,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_library_wide_bookcase",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              5,
+              16,
+              2,
+              16
+            ],
+            [
+              0,
+              2,
+              14,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              2,
+              5,
+              2,
+              16,
+              14
+            ],
+            [
+              2,
+              9,
+              5,
+              16,
+              10,
+              14
+            ],
+            [
+              2.25,
+              2,
+              6.0,
+              3.55,
+              9.0,
+              13
+            ],
+            [
+              3.8,
+              2,
+              6.3,
+              5.4,
+              8.5,
+              13
+            ],
+            [
+              5.65,
+              2,
+              6.0,
+              7.55,
+              8.0,
+              13
+            ],
+            [
+              7.8,
+              2,
+              6.3,
+              9.1,
+              9.0,
+              13
+            ],
+            [
+              9.35,
+              2,
+              6.0,
+              10.95,
+              8.5,
+              13
+            ],
+            [
+              11.2,
+              2,
+              6.3,
+              13.1,
+              8.0,
+              13
+            ],
+            [
+              13.35,
+              2,
+              6.0,
+              14.65,
+              9.0,
+              13
+            ],
+            [
+              14.9,
+              2,
+              6.3,
+              16,
+              8.5,
+              13
+            ],
+            [
+              2.25,
+              10,
+              6.0,
+              3.85,
+              16,
+              13
+            ],
+            [
+              4.1,
+              10,
+              6.3,
+              6.0,
+              16,
+              13
+            ],
+            [
+              6.25,
+              10,
+              6.0,
+              7.55,
+              16,
+              13
+            ],
+            [
+              7.8,
+              10,
+              6.3,
+              9.4,
+              16,
+              13
+            ],
+            [
+              9.65,
+              10,
+              6.0,
+              11.55,
+              16,
+              13
+            ],
+            [
+              11.8,
+              10,
+              6.3,
+              13.1,
+              16,
+              13
+            ],
+            [
+              13.35,
+              10,
+              6.0,
+              14.95,
+              16,
+              13
+            ],
+            [
+              15.2,
+              10,
+              6.3,
+              16,
+              16,
+              13
+            ]
+          ]
+        },
+        {
+          "offset": [
+            1,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              5,
+              16,
+              2,
+              16
+            ],
+            [
+              0,
+              2,
+              14,
+              16,
+              16,
+              16
+            ],
+            [
+              14,
+              2,
+              5,
+              16,
+              16,
+              14
+            ],
+            [
+              0,
+              9,
+              5,
+              14,
+              10,
+              14
+            ],
+            [
+              0,
+              2,
+              6.3,
+              0.5,
+              8.5,
+              13
+            ],
+            [
+              0.75,
+              2,
+              6.0,
+              2.65,
+              8.0,
+              13
+            ],
+            [
+              2.9,
+              2,
+              6.3,
+              4.2,
+              9.0,
+              13
+            ],
+            [
+              4.45,
+              2,
+              6.0,
+              6.05,
+              8.5,
+              13
+            ],
+            [
+              6.3,
+              2,
+              6.3,
+              8.2,
+              8.0,
+              13
+            ],
+            [
+              8.45,
+              2,
+              6.0,
+              9.75,
+              9.0,
+              13
+            ],
+            [
+              10.0,
+              2,
+              6.3,
+              11.6,
+              8.5,
+              13
+            ],
+            [
+              11.85,
+              2,
+              6.0,
+              13.5,
+              8.0,
+              13
+            ],
+            [
+              0,
+              10,
+              6.3,
+              1.1,
+              16,
+              13
+            ],
+            [
+              1.35,
+              10,
+              6.0,
+              2.65,
+              16,
+              13
+            ],
+            [
+              2.9,
+              10,
+              6.3,
+              4.5,
+              16,
+              13
+            ],
+            [
+              4.75,
+              10,
+              6.0,
+              6.65,
+              16,
+              13
+            ],
+            [
+              6.9,
+              10,
+              6.3,
+              8.2,
+              16,
+              13
+            ],
+            [
+              8.45,
+              10,
+              6.0,
+              10.05,
+              16,
+              13
+            ],
+            [
+              10.3,
+              10,
+              6.3,
+              12.2,
+              16,
+              13
+            ],
+            [
+              12.45,
+              10,
+              6.0,
+              13.5,
+              16,
+              13
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              14,
+              5,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              0,
+              14,
+              16,
+              14,
+              16
+            ],
+            [
+              0,
+              0,
+              5,
+              2,
+              14,
+              14
+            ],
+            [
+              2,
+              2,
+              5,
+              16,
+              3,
+              14
+            ],
+            [
+              2,
+              11,
+              5,
+              16,
+              12,
+              14
+            ],
+            [
+              2.25,
+              0,
+              6.0,
+              3.85,
+              2.0,
+              13
+            ],
+            [
+              4.1,
+              0,
+              6.3,
+              6.0,
+              1.5,
+              13
+            ],
+            [
+              6.25,
+              0,
+              6.0,
+              7.55,
+              1.0,
+              13
+            ],
+            [
+              7.8,
+              0,
+              6.3,
+              9.4,
+              2.0,
+              13
+            ],
+            [
+              9.65,
+              0,
+              6.0,
+              11.55,
+              1.5,
+              13
+            ],
+            [
+              11.8,
+              0,
+              6.3,
+              13.1,
+              1.0,
+              13
+            ],
+            [
+              13.35,
+              0,
+              6.0,
+              14.95,
+              2.0,
+              13
+            ],
+            [
+              15.2,
+              0,
+              6.3,
+              16,
+              1.5,
+              13
+            ],
+            [
+              2.25,
+              3,
+              6.0,
+              4.15,
+              11.0,
+              13
+            ],
+            [
+              4.4,
+              3,
+              6.3,
+              5.7,
+              10.5,
+              13
+            ],
+            [
+              5.95,
+              3,
+              6.0,
+              7.55,
+              10.0,
+              13
+            ],
+            [
+              7.8,
+              3,
+              6.3,
+              9.7,
+              11.0,
+              13
+            ],
+            [
+              9.95,
+              3,
+              6.0,
+              11.25,
+              10.5,
+              13
+            ],
+            [
+              11.5,
+              3,
+              6.3,
+              13.1,
+              10.0,
+              13
+            ],
+            [
+              13.35,
+              3,
+              6.0,
+              15.25,
+              11.0,
+              13
+            ],
+            [
+              15.5,
+              3,
+              6.3,
+              16,
+              10.5,
+              13
+            ]
+          ]
+        },
+        {
+          "offset": [
+            1,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              14,
+              5,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              0,
+              14,
+              16,
+              14,
+              16
+            ],
+            [
+              14,
+              0,
+              5,
+              16,
+              14,
+              14
+            ],
+            [
+              0,
+              2,
+              5,
+              14,
+              3,
+              14
+            ],
+            [
+              0,
+              11,
+              5,
+              14,
+              12,
+              14
+            ],
+            [
+              0,
+              0,
+              6.3,
+              1.1,
+              1.5,
+              13
+            ],
+            [
+              1.35,
+              0,
+              6.0,
+              2.65,
+              1.0,
+              13
+            ],
+            [
+              2.9,
+              0,
+              6.3,
+              4.5,
+              2.0,
+              13
+            ],
+            [
+              4.75,
+              0,
+              6.0,
+              6.65,
+              1.5,
+              13
+            ],
+            [
+              6.9,
+              0,
+              6.3,
+              8.2,
+              1.0,
+              13
+            ],
+            [
+              8.45,
+              0,
+              6.0,
+              10.05,
+              2.0,
+              13
+            ],
+            [
+              10.3,
+              0,
+              6.3,
+              12.2,
+              1.5,
+              13
+            ],
+            [
+              12.45,
+              0,
+              6.0,
+              13.5,
+              1.0,
+              13
+            ],
+            [
+              0,
+              3,
+              6.3,
+              0.8,
+              10.5,
+              13
+            ],
+            [
+              1.05,
+              3,
+              6.0,
+              2.65,
+              10.0,
+              13
+            ],
+            [
+              2.9,
+              3,
+              6.3,
+              4.8,
+              11.0,
+              13
+            ],
+            [
+              5.05,
+              3,
+              6.0,
+              6.35,
+              10.5,
+              13
+            ],
+            [
+              6.6,
+              3,
+              6.3,
+              8.2,
+              10.0,
+              13
+            ],
+            [
+              8.45,
+              3,
+              6.0,
+              10.35,
+              11.0,
+              13
+            ],
+            [
+              10.6,
+              3,
+              6.3,
+              11.9,
+              10.5,
+              13
+            ],
+            [
+              12.15,
+              3,
+              6.0,
+              13.5,
+              10.0,
+              13
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          160,
+          256,
+          96,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_dark_bookcase",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              5,
+              16,
+              2,
+              16
+            ],
+            [
+              0,
+              2,
+              14,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              2,
+              5,
+              2,
+              16,
+              14
+            ],
+            [
+              14,
+              2,
+              5,
+              16,
+              16,
+              14
+            ],
+            [
+              2,
+              9,
+              5,
+              14,
+              10,
+              14
+            ],
+            [
+              2.25,
+              2,
+              6.0,
+              3.55,
+              9.0,
+              13
+            ],
+            [
+              3.8,
+              2,
+              6.3,
+              5.4,
+              8.5,
+              13
+            ],
+            [
+              5.65,
+              2,
+              6.0,
+              7.55,
+              8.0,
+              13
+            ],
+            [
+              7.8,
+              2,
+              6.3,
+              9.1,
+              9.0,
+              13
+            ],
+            [
+              9.35,
+              2,
+              6.0,
+              10.95,
+              8.5,
+              13
+            ],
+            [
+              11.2,
+              2,
+              6.3,
+              13.1,
+              8.0,
+              13
+            ],
+            [
+              2.25,
+              10,
+              6.0,
+              3.85,
+              16,
+              13
+            ],
+            [
+              4.1,
+              10,
+              6.3,
+              6.0,
+              16,
+              13
+            ],
+            [
+              6.25,
+              10,
+              6.0,
+              7.55,
+              16,
+              13
+            ],
+            [
+              7.8,
+              10,
+              6.3,
+              9.4,
+              16,
+              13
+            ],
+            [
+              9.65,
+              10,
+              6.0,
+              11.55,
+              16,
+              13
+            ],
+            [
+              11.8,
+              10,
+              6.3,
+              13.1,
+              16,
+              13
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              14,
+              5,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              0,
+              14,
+              16,
+              14,
+              16
+            ],
+            [
+              0,
+              0,
+              5,
+              2,
+              14,
+              14
+            ],
+            [
+              14,
+              0,
+              5,
+              16,
+              14,
+              14
+            ],
+            [
+              2,
+              2,
+              5,
+              14,
+              3,
+              14
+            ],
+            [
+              2,
+              11,
+              5,
+              14,
+              12,
+              14
+            ],
+            [
+              2.25,
+              0,
+              6.0,
+              3.85,
+              2.0,
+              13
+            ],
+            [
+              4.1,
+              0,
+              6.3,
+              6.0,
+              1.5,
+              13
+            ],
+            [
+              6.25,
+              0,
+              6.0,
+              7.55,
+              1.0,
+              13
+            ],
+            [
+              7.8,
+              0,
+              6.3,
+              9.4,
+              2.0,
+              13
+            ],
+            [
+              9.65,
+              0,
+              6.0,
+              11.55,
+              1.5,
+              13
+            ],
+            [
+              11.8,
+              0,
+              6.3,
+              13.1,
+              1.0,
+              13
+            ],
+            [
+              2.25,
+              3,
+              6.0,
+              4.15,
+              11.0,
+              13
+            ],
+            [
+              4.4,
+              3,
+              6.3,
+              5.7,
+              10.5,
+              13
+            ],
+            [
+              5.95,
+              3,
+              6.0,
+              7.55,
+              10.0,
+              13
+            ],
+            [
+              7.8,
+              3,
+              6.3,
+              9.7,
+              11.0,
+              13
+            ],
+            [
+              9.95,
+              3,
+              6.0,
+              11.25,
+              10.5,
+              13
+            ],
+            [
+              11.5,
+              3,
+              6.3,
+              13.1,
+              10.0,
+              13
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          160,
+          256,
+          96,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_red_bookcase",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              5,
+              16,
+              2,
+              16
+            ],
+            [
+              0,
+              2,
+              14,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              2,
+              5,
+              2,
+              16,
+              14
+            ],
+            [
+              14,
+              2,
+              5,
+              16,
+              16,
+              14
+            ],
+            [
+              2,
+              9,
+              5,
+              14,
+              10,
+              14
+            ],
+            [
+              2.25,
+              2,
+              6.0,
+              3.55,
+              9.0,
+              13
+            ],
+            [
+              3.8,
+              2,
+              6.3,
+              5.4,
+              8.5,
+              13
+            ],
+            [
+              5.65,
+              2,
+              6.0,
+              7.55,
+              8.0,
+              13
+            ],
+            [
+              7.8,
+              2,
+              6.3,
+              9.1,
+              9.0,
+              13
+            ],
+            [
+              9.35,
+              2,
+              6.0,
+              10.95,
+              8.5,
+              13
+            ],
+            [
+              11.2,
+              2,
+              6.3,
+              13.1,
+              8.0,
+              13
+            ],
+            [
+              2.25,
+              10,
+              6.0,
+              3.85,
+              16,
+              13
+            ],
+            [
+              4.1,
+              10,
+              6.3,
+              6.0,
+              16,
+              13
+            ],
+            [
+              6.25,
+              10,
+              6.0,
+              7.55,
+              16,
+              13
+            ],
+            [
+              7.8,
+              10,
+              6.3,
+              9.4,
+              16,
+              13
+            ],
+            [
+              9.65,
+              10,
+              6.0,
+              11.55,
+              16,
+              13
+            ],
+            [
+              11.8,
+              10,
+              6.3,
+              13.1,
+              16,
+              13
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              14,
+              5,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              0,
+              14,
+              16,
+              14,
+              16
+            ],
+            [
+              0,
+              0,
+              5,
+              2,
+              14,
+              14
+            ],
+            [
+              14,
+              0,
+              5,
+              16,
+              14,
+              14
+            ],
+            [
+              2,
+              2,
+              5,
+              14,
+              3,
+              14
+            ],
+            [
+              2,
+              11,
+              5,
+              14,
+              12,
+              14
+            ],
+            [
+              2.25,
+              0,
+              6.0,
+              3.85,
+              2.0,
+              13
+            ],
+            [
+              4.1,
+              0,
+              6.3,
+              6.0,
+              1.5,
+              13
+            ],
+            [
+              6.25,
+              0,
+              6.0,
+              7.55,
+              1.0,
+              13
+            ],
+            [
+              7.8,
+              0,
+              6.3,
+              9.4,
+              2.0,
+              13
+            ],
+            [
+              9.65,
+              0,
+              6.0,
+              11.55,
+              1.5,
+              13
+            ],
+            [
+              11.8,
+              0,
+              6.3,
+              13.1,
+              1.0,
+              13
+            ],
+            [
+              2.25,
+              3,
+              6.0,
+              4.15,
+              11.0,
+              13
+            ],
+            [
+              4.4,
+              3,
+              6.3,
+              5.7,
+              10.5,
+              13
+            ],
+            [
+              5.95,
+              3,
+              6.0,
+              7.55,
+              10.0,
+              13
+            ],
+            [
+              7.8,
+              3,
+              6.3,
+              9.7,
+              11.0,
+              13
+            ],
+            [
+              9.95,
+              3,
+              6.0,
+              11.25,
+              10.5,
+              13
+            ],
+            [
+              11.5,
+              3,
+              6.3,
+              13.1,
+              10.0,
+              13
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          160,
+          256,
+          96,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_oak_wardrobe",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              5,
+              16,
+              2,
+              16
+            ],
+            [
+              0,
+              2,
+              14,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              2,
+              5,
+              2,
+              16,
+              14
+            ],
+            [
+              14,
+              2,
+              5,
+              16,
+              16,
+              14
+            ],
+            [
+              2,
+              2,
+              4,
+              14,
+              16,
+              6
+            ],
+            [
+              6.0,
+              14,
+              3,
+              7.0,
+              16,
+              4
+            ],
+            [
+              9.0,
+              14,
+              3,
+              10.0,
+              16,
+              4
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              14,
+              5,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              0,
+              14,
+              16,
+              14,
+              16
+            ],
+            [
+              0,
+              0,
+              5,
+              2,
+              14,
+              14
+            ],
+            [
+              14,
+              0,
+              5,
+              16,
+              14,
+              14
+            ],
+            [
+              2,
+              0,
+              4,
+              14,
+              14,
+              6
+            ],
+            [
+              6.0,
+              0,
+              3,
+              7.0,
+              1,
+              4
+            ],
+            [
+              9.0,
+              0,
+              3,
+              10.0,
+              1,
+              4
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          64,
+          192,
+          32,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_dark_wardrobe",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              5,
+              16,
+              2,
+              16
+            ],
+            [
+              0,
+              2,
+              14,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              2,
+              5,
+              2,
+              16,
+              14
+            ],
+            [
+              14,
+              2,
+              5,
+              16,
+              16,
+              14
+            ],
+            [
+              2,
+              2,
+              4,
+              14,
+              16,
+              6
+            ],
+            [
+              6.0,
+              14,
+              3,
+              7.0,
+              16,
+              4
+            ],
+            [
+              9.0,
+              14,
+              3,
+              10.0,
+              16,
+              4
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              14,
+              5,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              0,
+              14,
+              16,
+              14,
+              16
+            ],
+            [
+              0,
+              0,
+              5,
+              2,
+              14,
+              14
+            ],
+            [
+              14,
+              0,
+              5,
+              16,
+              14,
+              14
+            ],
+            [
+              2,
+              0,
+              4,
+              14,
+              14,
+              6
+            ],
+            [
+              6.0,
+              0,
+              3,
+              7.0,
+              1,
+              4
+            ],
+            [
+              9.0,
+              0,
+              3,
+              10.0,
+              1,
+              4
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          64,
+          192,
+          32,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_oak_drawer",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              1,
+              16,
+              14,
+              16
+            ],
+            [
+              0,
+              14,
+              0,
+              16,
+              16,
+              16
+            ],
+            [
+              5,
+              4,
+              0,
+              11,
+              5,
+              1
+            ],
+            [
+              5,
+              9,
+              0,
+              11,
+              10,
+              1
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          192,
+          32,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_crockery_cabinet",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              1,
+              16,
+              14,
+              16
+            ],
+            [
+              0,
+              14,
+              0,
+              16,
+              16,
+              16
+            ],
+            [
+              5,
+              4,
+              0,
+              11,
+              5,
+              1
+            ],
+            [
+              5,
+              9,
+              0,
+              11,
+              10,
+              1
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          64,
+          256,
+          32,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_library_counter",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              1,
+              16,
+              14,
+              16
+            ],
+            [
+              0,
+              14,
+              0,
+              16,
+              16,
+              16
+            ],
+            [
+              1,
+              1,
+              0,
+              16,
+              3,
+              1
+            ]
+          ]
+        },
+        {
+          "offset": [
+            1,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              1,
+              16,
+              14,
+              16
+            ],
+            [
+              0,
+              14,
+              0,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              1,
+              0,
+              15,
+              3,
+              1
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          192,
+          192,
+          64,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_green_bed",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              4,
+              6,
+              4
+            ],
+            [
+              12,
+              0,
+              2,
+              14,
+              6,
+              4
+            ],
+            [
+              0,
+              5,
+              0,
+              16,
+              7,
+              16
+            ],
+            [
+              1,
+              7,
+              1,
+              15,
+              10,
+              16
+            ],
+            [
+              0,
+              7,
+              0,
+              16,
+              10,
+              2
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            0,
+            1
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              12,
+              4,
+              6,
+              14
+            ],
+            [
+              12,
+              0,
+              12,
+              14,
+              6,
+              14
+            ],
+            [
+              0,
+              5,
+              0,
+              16,
+              7,
+              16
+            ],
+            [
+              1,
+              7,
+              0,
+              15,
+              10,
+              14
+            ],
+            [
+              2,
+              10,
+              7,
+              14,
+              12,
+              14
+            ],
+            [
+              0,
+              7,
+              14,
+              16,
+              16,
+              16
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            1
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              14,
+              16,
+              3,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          320,
+          64,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_beige_bed",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              4,
+              6,
+              4
+            ],
+            [
+              12,
+              0,
+              2,
+              14,
+              6,
+              4
+            ],
+            [
+              0,
+              5,
+              0,
+              16,
+              7,
+              16
+            ],
+            [
+              1,
+              7,
+              1,
+              15,
+              10,
+              16
+            ],
+            [
+              0,
+              7,
+              0,
+              16,
+              10,
+              2
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            0,
+            1
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              12,
+              4,
+              6,
+              14
+            ],
+            [
+              12,
+              0,
+              12,
+              14,
+              6,
+              14
+            ],
+            [
+              0,
+              5,
+              0,
+              16,
+              7,
+              16
+            ],
+            [
+              1,
+              7,
+              0,
+              15,
+              10,
+              14
+            ],
+            [
+              2,
+              10,
+              7,
+              14,
+              12,
+              14
+            ],
+            [
+              0,
+              7,
+              14,
+              16,
+              16,
+              16
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            1
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              14,
+              16,
+              3,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          64,
+          320,
+          64,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_white_bed",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              4,
+              6,
+              4
+            ],
+            [
+              12,
+              0,
+              2,
+              14,
+              6,
+              4
+            ],
+            [
+              0,
+              5,
+              0,
+              16,
+              7,
+              16
+            ],
+            [
+              1,
+              7,
+              1,
+              15,
+              10,
+              16
+            ],
+            [
+              0,
+              7,
+              0,
+              16,
+              10,
+              2
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            0,
+            1
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              12,
+              4,
+              6,
+              14
+            ],
+            [
+              12,
+              0,
+              12,
+              14,
+              6,
+              14
+            ],
+            [
+              0,
+              5,
+              0,
+              16,
+              7,
+              16
+            ],
+            [
+              1,
+              7,
+              0,
+              15,
+              10,
+              14
+            ],
+            [
+              2,
+              10,
+              7,
+              14,
+              12,
+              14
+            ],
+            [
+              0,
+              7,
+              14,
+              16,
+              16,
+              16
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            1
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              14,
+              16,
+              3,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          128,
+          320,
+          32,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_straw_bed",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              4,
+              6,
+              4
+            ],
+            [
+              12,
+              0,
+              2,
+              14,
+              6,
+              4
+            ],
+            [
+              0,
+              5,
+              0,
+              16,
+              7,
+              16
+            ],
+            [
+              1,
+              7,
+              1,
+              15,
+              10,
+              16
+            ],
+            [
+              0,
+              7,
+              0,
+              16,
+              10,
+              2
+            ],
+            [
+              1,
+              10,
+              2,
+              15,
+              11,
+              16
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            0,
+            1
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              12,
+              4,
+              6,
+              14
+            ],
+            [
+              12,
+              0,
+              12,
+              14,
+              6,
+              14
+            ],
+            [
+              0,
+              5,
+              0,
+              16,
+              7,
+              16
+            ],
+            [
+              1,
+              7,
+              0,
+              15,
+              10,
+              14
+            ],
+            [
+              2,
+              10,
+              7,
+              14,
+              12,
+              14
+            ],
+            [
+              0,
+              7,
+              14,
+              16,
+              16,
+              16
+            ],
+            [
+              1,
+              10,
+              0,
+              15,
+              11,
+              6
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            1
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              14,
+              16,
+              3,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          160,
+          320,
+          32,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_oak_chest",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              1,
+              2,
+              15,
+              10,
+              14
+            ],
+            [
+              1,
+              10,
+              3,
+              15,
+              12,
+              13
+            ],
+            [
+              2,
+              12,
+              4,
+              14,
+              13,
+              12
+            ],
+            [
+              2,
+              1,
+              1.75,
+              4,
+              11,
+              2.25
+            ],
+            [
+              12,
+              1,
+              1.75,
+              14,
+              11,
+              2.25
+            ],
+            [
+              7,
+              7,
+              1,
+              9,
+              10,
+              2
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "6896940",
+        "rect": [
+          128,
+          144,
+          48,
+          40
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_dark_wood_chest",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              1,
+              2,
+              15,
+              10,
+              14
+            ],
+            [
+              1,
+              10,
+              3,
+              15,
+              12,
+              13
+            ],
+            [
+              2,
+              12,
+              4,
+              14,
+              13,
+              12
+            ],
+            [
+              2,
+              1,
+              1.75,
+              4,
+              11,
+              2.25
+            ],
+            [
+              12,
+              1,
+              1.75,
+              14,
+              11,
+              2.25
+            ],
+            [
+              7,
+              7,
+              1,
+              9,
+              10,
+              2
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "6896940",
+        "rect": [
+          128,
+          144,
+          48,
+          40
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_oak_barrel",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              4.5,
+              1,
+              1,
+              11.5,
+              16,
+              15
+            ],
+            [
+              1,
+              1,
+              4.5,
+              15,
+              16,
+              11.5
+            ],
+            [
+              2.75,
+              1,
+              2.75,
+              13.25,
+              16,
+              13.25
+            ],
+            [
+              4.25,
+              4,
+              0.5,
+              11.75,
+              5,
+              15.5
+            ],
+            [
+              0.5,
+              4,
+              4.25,
+              15.5,
+              5,
+              11.75
+            ],
+            [
+              2.375,
+              4,
+              2.375,
+              13.625,
+              5,
+              13.625
+            ],
+            [
+              4.25,
+              13,
+              0.5,
+              11.75,
+              14,
+              15.5
+            ],
+            [
+              0.5,
+              13,
+              4.25,
+              15.5,
+              14,
+              11.75
+            ],
+            [
+              2.375,
+              13,
+              2.375,
+              13.625,
+              14,
+              13.625
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              4.5,
+              0,
+              1,
+              11.5,
+              1,
+              15
+            ],
+            [
+              1,
+              0,
+              4.5,
+              15,
+              1,
+              11.5
+            ],
+            [
+              2.75,
+              0,
+              2.75,
+              13.25,
+              1,
+              13.25
+            ],
+            [
+              5.0,
+              1,
+              2,
+              11.0,
+              2,
+              14
+            ],
+            [
+              2,
+              1,
+              5.0,
+              14,
+              2,
+              11.0
+            ],
+            [
+              3.5,
+              1,
+              3.5,
+              12.5,
+              2,
+              12.5
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          288,
+          320,
+          32,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_oak_crate",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              0,
+              0,
+              16,
+              2,
+              1
+            ],
+            [
+              0,
+              14,
+              0,
+              16,
+              16,
+              1
+            ],
+            [
+              0,
+              2,
+              0,
+              2,
+              14,
+              1
+            ],
+            [
+              14,
+              2,
+              0,
+              16,
+              14,
+              1
+            ],
+            [
+              0,
+              0,
+              15,
+              16,
+              2,
+              16
+            ],
+            [
+              0,
+              14,
+              15,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              2,
+              15,
+              2,
+              14,
+              16
+            ],
+            [
+              14,
+              2,
+              15,
+              16,
+              14,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          352,
+          448,
+          32,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_library_lectern",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              14,
+              2,
+              14
+            ],
+            [
+              6,
+              2,
+              6,
+              10,
+              14,
+              10
+            ],
+            [
+              0,
+              11,
+              0,
+              16,
+              12,
+              4
+            ],
+            [
+              0,
+              12,
+              4,
+              16,
+              13,
+              8
+            ],
+            [
+              0,
+              13,
+              8,
+              16,
+              14,
+              12
+            ],
+            [
+              0,
+              14,
+              12,
+              16,
+              15,
+              16
+            ],
+            [
+              1,
+              12,
+              0,
+              15,
+              13,
+              2
+            ],
+            [
+              2,
+              13,
+              3,
+              14,
+              14,
+              7
+            ],
+            [
+              2,
+              14,
+              7,
+              14,
+              15,
+              11
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          128,
+          224,
+          32,
+          32
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_upright_piano",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0,
+              1,
+              4,
+              11,
+              5
+            ],
+            [
+              0,
+              0,
+              7,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              11,
+              1,
+              16,
+              13,
+              8
+            ],
+            [
+              0,
+              13,
+              7,
+              16,
+              16,
+              8
+            ],
+            [
+              10,
+              0,
+              3,
+              11,
+              1,
+              7
+            ]
+          ]
+        },
+        {
+          "offset": [
+            1,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              12,
+              0,
+              1,
+              15,
+              11,
+              5
+            ],
+            [
+              0,
+              0,
+              7,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              11,
+              1,
+              16,
+              13,
+              8
+            ],
+            [
+              0,
+              13,
+              7,
+              16,
+              16,
+              8
+            ],
+            [
+              4,
+              0,
+              3,
+              5,
+              1,
+              7
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              7,
+              16,
+              8,
+              16
+            ],
+            [
+              0,
+              8,
+              6,
+              16,
+              10,
+              16
+            ]
+          ]
+        },
+        {
+          "offset": [
+            1,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              7,
+              16,
+              8,
+              16
+            ],
+            [
+              0,
+              8,
+              6,
+              16,
+              10,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          160,
+          384,
+          96,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_library_fireplace",
+      "material": "stone",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              7,
+              8,
+              16,
+              16
+            ],
+            [
+              0,
+              0,
+              0,
+              16,
+              2,
+              16
+            ],
+            [
+              8,
+              2,
+              14,
+              16,
+              16,
+              16
+            ],
+            [
+              10,
+              2,
+              8,
+              15,
+              4,
+              12
+            ]
+          ]
+        },
+        {
+          "offset": [
+            1,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              8,
+              0,
+              7,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              0,
+              0,
+              16,
+              2,
+              16
+            ],
+            [
+              0,
+              2,
+              14,
+              8,
+              16,
+              16
+            ],
+            [
+              1,
+              2,
+              8,
+              6,
+              4,
+              12
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              7,
+              8,
+              8,
+              16
+            ],
+            [
+              0,
+              8,
+              5,
+              16,
+              14,
+              16
+            ],
+            [
+              8,
+              0,
+              14,
+              16,
+              8,
+              16
+            ],
+            [
+              4,
+              14,
+              4,
+              16,
+              16,
+              16
+            ]
+          ]
+        },
+        {
+          "offset": [
+            1,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              8,
+              0,
+              7,
+              16,
+              8,
+              16
+            ],
+            [
+              0,
+              8,
+              5,
+              16,
+              14,
+              16
+            ],
+            [
+              0,
+              0,
+              14,
+              8,
+              8,
+              16
+            ],
+            [
+              0,
+              14,
+              4,
+              12,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          256,
+          0,
+          96,
+          64
+        ]
+      },
+      "category": "furniture"
+    },
+    {
+      "id": "original_red_cover_book",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              3,
+              14,
+              0.5,
+              13
+            ],
+            [
+              3,
+              0.5,
+              3.5,
+              13.5,
+              2,
+              12.5
+            ],
+            [
+              2,
+              2,
+              3,
+              14,
+              2.5,
+              13
+            ],
+            [
+              2,
+              0,
+              3,
+              3,
+              2.5,
+              13
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          1,
+          232,
+          20,
+          16
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_red_cover_books",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0.0,
+              3,
+              14,
+              0.5,
+              13
+            ],
+            [
+              1.5,
+              0.5,
+              3.5,
+              13.5,
+              2.0,
+              12.5
+            ],
+            [
+              1,
+              2.0,
+              3,
+              14,
+              2.5,
+              13
+            ],
+            [
+              3,
+              2.5,
+              1,
+              14,
+              3.0,
+              14
+            ],
+            [
+              3.5,
+              3.0,
+              1.5,
+              13.5,
+              4.5,
+              13.5
+            ],
+            [
+              3,
+              4.5,
+              1,
+              14,
+              5.0,
+              14
+            ],
+            [
+              2,
+              5.0,
+              4,
+              14,
+              5.5,
+              14
+            ],
+            [
+              2.5,
+              5.5,
+              4.5,
+              13.5,
+              7.0,
+              13.5
+            ],
+            [
+              2,
+              7.0,
+              4,
+              14,
+              7.5,
+              14
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          1,
+          232,
+          20,
+          16
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_blue_cover_book",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              3,
+              14,
+              0.5,
+              13
+            ],
+            [
+              3,
+              0.5,
+              3.5,
+              13.5,
+              2,
+              12.5
+            ],
+            [
+              2,
+              2,
+              3,
+              14,
+              2.5,
+              13
+            ],
+            [
+              2,
+              0,
+              3,
+              3,
+              2.5,
+              13
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          65,
+          235,
+          17,
+          13
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_blue_cover_books",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0.0,
+              3,
+              14,
+              0.5,
+              13
+            ],
+            [
+              1.5,
+              0.5,
+              3.5,
+              13.5,
+              2.0,
+              12.5
+            ],
+            [
+              1,
+              2.0,
+              3,
+              14,
+              2.5,
+              13
+            ],
+            [
+              3,
+              2.5,
+              1,
+              14,
+              3.0,
+              14
+            ],
+            [
+              3.5,
+              3.0,
+              1.5,
+              13.5,
+              4.5,
+              13.5
+            ],
+            [
+              3,
+              4.5,
+              1,
+              14,
+              5.0,
+              14
+            ],
+            [
+              2,
+              5.0,
+              4,
+              14,
+              5.5,
+              14
+            ],
+            [
+              2.5,
+              5.5,
+              4.5,
+              13.5,
+              7.0,
+              13.5
+            ],
+            [
+              2,
+              7.0,
+              4,
+              14,
+              7.5,
+              14
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          65,
+          235,
+          17,
+          13
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_brown_cover_book",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              3,
+              14,
+              0.5,
+              13
+            ],
+            [
+              3,
+              0.5,
+              3.5,
+              13.5,
+              2,
+              12.5
+            ],
+            [
+              2,
+              2,
+              3,
+              14,
+              2.5,
+              13
+            ],
+            [
+              2,
+              0,
+              3,
+              3,
+              2.5,
+              13
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          1,
+          265,
+          18,
+          13
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_brown_cover_books",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0.0,
+              3,
+              14,
+              0.5,
+              13
+            ],
+            [
+              1.5,
+              0.5,
+              3.5,
+              13.5,
+              2.0,
+              12.5
+            ],
+            [
+              1,
+              2.0,
+              3,
+              14,
+              2.5,
+              13
+            ],
+            [
+              3,
+              2.5,
+              1,
+              14,
+              3.0,
+              14
+            ],
+            [
+              3.5,
+              3.0,
+              1.5,
+              13.5,
+              4.5,
+              13.5
+            ],
+            [
+              3,
+              4.5,
+              1,
+              14,
+              5.0,
+              14
+            ],
+            [
+              2,
+              5.0,
+              4,
+              14,
+              5.5,
+              14
+            ],
+            [
+              2.5,
+              5.5,
+              4.5,
+              13.5,
+              7.0,
+              13.5
+            ],
+            [
+              2,
+              7.0,
+              4,
+              14,
+              7.5,
+              14
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          1,
+          265,
+          18,
+          13
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_open_book",
+      "material": "wood",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0,
+              3,
+              8,
+              1,
+              13
+            ],
+            [
+              8,
+              0,
+              3,
+              15,
+              1,
+              13
+            ],
+            [
+              2,
+              1,
+              4,
+              7,
+              2,
+              12
+            ],
+            [
+              9,
+              1,
+              4,
+              14,
+              2,
+              12
+            ],
+            [
+              7,
+              0.5,
+              4,
+              9,
+              1.5,
+              12
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          1,
+          232,
+          20,
+          16
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_brass_candle",
+      "material": "gold",
+      "strength": 1.2,
+      "light": 12,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              6.0,
+              0,
+              4,
+              10.0,
+              1,
+              12
+            ],
+            [
+              4,
+              0,
+              6.0,
+              12,
+              1,
+              10.0
+            ],
+            [
+              5.0,
+              0,
+              5.0,
+              11.0,
+              1,
+              11.0
+            ],
+            [
+              7,
+              1,
+              7,
+              9,
+              5,
+              9
+            ],
+            [
+              6,
+              5,
+              6,
+              10,
+              6,
+              10
+            ],
+            [
+              7,
+              6,
+              7,
+              9,
+              11,
+              9
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "6896940",
+        "rect": [
+          128,
+          192,
+          32,
+          96
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_silver_candle",
+      "material": "metal",
+      "strength": 1.2,
+      "light": 12,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              6.0,
+              0,
+              4,
+              10.0,
+              1,
+              12
+            ],
+            [
+              4,
+              0,
+              6.0,
+              12,
+              1,
+              10.0
+            ],
+            [
+              5.0,
+              0,
+              5.0,
+              11.0,
+              1,
+              11.0
+            ],
+            [
+              7,
+              1,
+              7,
+              9,
+              5,
+              9
+            ],
+            [
+              6,
+              5,
+              6,
+              10,
+              6,
+              10
+            ],
+            [
+              7,
+              6,
+              7,
+              9,
+              11,
+              9
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "6896940",
+        "rect": [
+          128,
+          192,
+          32,
+          96
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_brass_candelabra",
+      "material": "gold",
+      "strength": 1.2,
+      "light": 12,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              6.0,
+              0,
+              4,
+              10.0,
+              2,
+              12
+            ],
+            [
+              4,
+              0,
+              6.0,
+              12,
+              2,
+              10.0
+            ],
+            [
+              5.0,
+              0,
+              5.0,
+              11.0,
+              2,
+              11.0
+            ],
+            [
+              7,
+              2,
+              7,
+              9,
+              13,
+              9
+            ],
+            [
+              2,
+              10,
+              7,
+              14,
+              12,
+              9
+            ],
+            [
+              1,
+              12,
+              6,
+              5,
+              13,
+              10
+            ],
+            [
+              2,
+              13,
+              7,
+              4,
+              16,
+              9
+            ],
+            [
+              6,
+              14,
+              6,
+              10,
+              15,
+              10
+            ],
+            [
+              7,
+              15,
+              7,
+              9,
+              16,
+              9
+            ],
+            [
+              11,
+              12,
+              6,
+              15,
+              13,
+              10
+            ],
+            [
+              12,
+              13,
+              7,
+              14,
+              16,
+              9
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              7,
+              4,
+              2,
+              9
+            ],
+            [
+              7,
+              0,
+              7,
+              9,
+              4,
+              9
+            ],
+            [
+              12,
+              0,
+              7,
+              14,
+              2,
+              9
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "6896940",
+        "rect": [
+          128,
+          192,
+          32,
+          96
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_silver_candelabra",
+      "material": "metal",
+      "strength": 1.2,
+      "light": 12,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              6.0,
+              0,
+              4,
+              10.0,
+              2,
+              12
+            ],
+            [
+              4,
+              0,
+              6.0,
+              12,
+              2,
+              10.0
+            ],
+            [
+              5.0,
+              0,
+              5.0,
+              11.0,
+              2,
+              11.0
+            ],
+            [
+              7,
+              2,
+              7,
+              9,
+              13,
+              9
+            ],
+            [
+              2,
+              10,
+              7,
+              14,
+              12,
+              9
+            ],
+            [
+              1,
+              12,
+              6,
+              5,
+              13,
+              10
+            ],
+            [
+              2,
+              13,
+              7,
+              4,
+              16,
+              9
+            ],
+            [
+              6,
+              14,
+              6,
+              10,
+              15,
+              10
+            ],
+            [
+              7,
+              15,
+              7,
+              9,
+              16,
+              9
+            ],
+            [
+              11,
+              12,
+              6,
+              15,
+              13,
+              10
+            ],
+            [
+              12,
+              13,
+              7,
+              14,
+              16,
+              9
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              7,
+              4,
+              2,
+              9
+            ],
+            [
+              7,
+              0,
+              7,
+              9,
+              4,
+              9
+            ],
+            [
+              12,
+              0,
+              7,
+              14,
+              2,
+              9
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "6896940",
+        "rect": [
+          128,
+          192,
+          32,
+          96
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_wall_candle",
+      "material": "gold",
+      "strength": 1.2,
+      "light": 12,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              5,
+              2,
+              14,
+              11,
+              10,
+              16
+            ],
+            [
+              7,
+              3,
+              7,
+              9,
+              5,
+              15
+            ],
+            [
+              6,
+              5,
+              6,
+              10,
+              6,
+              10
+            ],
+            [
+              7,
+              6,
+              7,
+              9,
+              11,
+              9
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "6896940",
+        "rect": [
+          128,
+          192,
+          32,
+          96
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_library_map",
+      "material": "gold",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              1,
+              14,
+              16,
+              15,
+              15
+            ],
+            [
+              0,
+              0,
+              13,
+              1,
+              16,
+              16
+            ],
+            [
+              1,
+              0,
+              13,
+              16,
+              1,
+              16
+            ],
+            [
+              1,
+              15,
+              13,
+              16,
+              16,
+              16
+            ]
+          ]
+        },
+        {
+          "offset": [
+            1,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              1,
+              14,
+              15,
+              15,
+              15
+            ],
+            [
+              15,
+              0,
+              13,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              0,
+              13,
+              15,
+              1,
+              16
+            ],
+            [
+              0,
+              15,
+              13,
+              15,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          338,
+          202,
+          5,
+          24
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_landscape_frame",
+      "material": "gold",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              1,
+              14,
+              16,
+              15,
+              15
+            ],
+            [
+              0,
+              0,
+              13,
+              1,
+              16,
+              16
+            ],
+            [
+              1,
+              0,
+              13,
+              16,
+              1,
+              16
+            ],
+            [
+              1,
+              15,
+              13,
+              16,
+              16,
+              16
+            ]
+          ]
+        },
+        {
+          "offset": [
+            1,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              1,
+              14,
+              15,
+              15,
+              15
+            ],
+            [
+              15,
+              0,
+              13,
+              16,
+              16,
+              16
+            ],
+            [
+              0,
+              0,
+              13,
+              15,
+              1,
+              16
+            ],
+            [
+              0,
+              15,
+              13,
+              15,
+              16,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          338,
+          202,
+          5,
+          24
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_gilded_mirror",
+      "material": "gold",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              1,
+              14,
+              15,
+              16,
+              15
+            ],
+            [
+              0,
+              0,
+              13,
+              1,
+              16,
+              16
+            ],
+            [
+              15,
+              0,
+              13,
+              16,
+              16,
+              16
+            ],
+            [
+              1,
+              0,
+              13,
+              15,
+              1,
+              16
+            ]
+          ]
+        },
+        {
+          "offset": [
+            0,
+            1,
+            0
+          ],
+          "collision": [
+            [
+              1,
+              0,
+              14,
+              15,
+              7,
+              15
+            ],
+            [
+              0,
+              0,
+              13,
+              1,
+              8,
+              16
+            ],
+            [
+              15,
+              0,
+              13,
+              16,
+              8,
+              16
+            ],
+            [
+              1,
+              7,
+              13,
+              15,
+              8,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          338,
+          202,
+          5,
+          24
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_red_carpet",
+      "material": "cloth",
+      "strength": 0.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              0.5,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          130,
+          5,
+          26,
+          24
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_red_carpet_wide",
+      "material": "cloth",
+      "strength": 0.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              0.5,
+              16
+            ]
+          ]
+        },
+        {
+          "offset": [
+            1,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              0.5,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          130,
+          5,
+          26,
+          24
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_purple_carpet",
+      "material": "cloth",
+      "strength": 0.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              0.5,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          99,
+          392,
+          25,
+          18
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_purple_carpet_wide",
+      "material": "cloth",
+      "strength": 0.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              0.5,
+              16
+            ]
+          ]
+        },
+        {
+          "offset": [
+            1,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              0,
+              0,
+              0,
+              16,
+              0.5,
+              16
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          99,
+          392,
+          25,
+          18
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_white_teapot",
+      "material": "glass",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              6.0,
+              1,
+              4,
+              10.0,
+              6,
+              12
+            ],
+            [
+              4,
+              1,
+              6.0,
+              12,
+              6,
+              10.0
+            ],
+            [
+              5.0,
+              1,
+              5.0,
+              11.0,
+              6,
+              11.0
+            ],
+            [
+              6.5,
+              6,
+              5,
+              9.5,
+              7,
+              11
+            ],
+            [
+              5,
+              6,
+              6.5,
+              11,
+              7,
+              9.5
+            ],
+            [
+              5.75,
+              6,
+              5.75,
+              10.25,
+              7,
+              10.25
+            ],
+            [
+              7,
+              7,
+              7,
+              9,
+              8,
+              9
+            ],
+            [
+              11,
+              3,
+              6,
+              14,
+              5,
+              10
+            ],
+            [
+              1,
+              2,
+              5,
+              3,
+              5,
+              11
+            ],
+            [
+              2,
+              5,
+              5,
+              5,
+              6,
+              11
+            ],
+            [
+              2,
+              1,
+              5,
+              5,
+              2,
+              11
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          152,
+          204,
+          10,
+          8
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_tea_cup",
+      "material": "glass",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              6.5,
+              0,
+              5,
+              9.5,
+              5,
+              11
+            ],
+            [
+              5,
+              0,
+              6.5,
+              11,
+              5,
+              9.5
+            ],
+            [
+              5.75,
+              0,
+              5.75,
+              10.25,
+              5,
+              10.25
+            ],
+            [
+              6,
+              5,
+              6,
+              10,
+              5.2,
+              10
+            ],
+            [
+              11,
+              1,
+              7,
+              13,
+              4,
+              9
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          152,
+          204,
+          10,
+          8
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_white_plate",
+      "material": "glass",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              5.0,
+              0,
+              2,
+              11.0,
+              0.6,
+              14
+            ],
+            [
+              2,
+              0,
+              5.0,
+              14,
+              0.6,
+              11.0
+            ],
+            [
+              3.5,
+              0,
+              3.5,
+              12.5,
+              0.6,
+              12.5
+            ],
+            [
+              5.5,
+              0.6,
+              3,
+              10.5,
+              1.0,
+              13
+            ],
+            [
+              3,
+              0.6,
+              5.5,
+              13,
+              1.0,
+              10.5
+            ],
+            [
+              4.25,
+              0.6,
+              4.25,
+              11.75,
+              1.0,
+              11.75
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          152,
+          204,
+          10,
+          8
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_green_bottle",
+      "material": "glass",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              6.5,
+              0,
+              5,
+              9.5,
+              6,
+              11
+            ],
+            [
+              5,
+              0,
+              6.5,
+              11,
+              6,
+              9.5
+            ],
+            [
+              5.75,
+              0,
+              5.75,
+              10.25,
+              6,
+              10.25
+            ],
+            [
+              6,
+              6,
+              6,
+              10,
+              8,
+              10
+            ],
+            [
+              7,
+              8,
+              7,
+              9,
+              12,
+              9
+            ],
+            [
+              6.5,
+              12,
+              6.5,
+              9.5,
+              13,
+              9.5
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          105,
+          490,
+          5,
+          10
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_blue_bottle",
+      "material": "glass",
+      "strength": 1.2,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              6.5,
+              0,
+              5,
+              9.5,
+              6,
+              11
+            ],
+            [
+              5,
+              0,
+              6.5,
+              11,
+              6,
+              9.5
+            ],
+            [
+              5.75,
+              0,
+              5.75,
+              10.25,
+              6,
+              10.25
+            ],
+            [
+              6,
+              6,
+              6,
+              10,
+              8,
+              10
+            ],
+            [
+              7,
+              8,
+              7,
+              9,
+              12,
+              9
+            ],
+            [
+              6.5,
+              12,
+              6.5,
+              9.5,
+              13,
+              9.5
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          137,
+          489,
+          5,
+          12
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_manuscript",
+      "material": "cloth",
+      "strength": 0.1,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              14,
+              0.15,
+              14
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          1,
+          290,
+          29,
+          25
+        ]
+      },
+      "category": "decoration"
+    },
+    {
+      "id": "original_book_page",
+      "material": "cloth",
+      "strength": 0.1,
+      "light": 0,
+      "solid": false,
+      "parts": [
+        {
+          "offset": [
+            0,
+            0,
+            0
+          ],
+          "collision": [
+            [
+              2,
+              0,
+              2,
+              14,
+              0.15,
+              14
+            ]
+          ]
+        }
+      ],
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          130,
+          228,
+          28,
+          22
+        ]
+      },
+      "category": "decoration"
+    }
+  ]
+}

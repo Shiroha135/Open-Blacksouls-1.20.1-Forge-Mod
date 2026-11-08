@@ -40,6 +40,8 @@ public class PacketSyncStats {
                 BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
                 if (stats != null && msg.nbt != null) {
                     stats.deserializeNBT(msg.nbt);
+                    yuki135.blacksouls.client.ClientSkillInfo.applyAvatarState(stats);
+                    yuki135.blacksouls.client.OriginalOpeningBonfireMask.refresh();
                     StatEventHandler.applyStats(player);
                 }
             }

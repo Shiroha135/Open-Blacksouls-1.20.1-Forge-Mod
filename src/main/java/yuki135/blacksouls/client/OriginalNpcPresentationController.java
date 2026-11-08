@@ -66,6 +66,8 @@ public final class OriginalNpcPresentationController {
         return state.flash();
     }
 
+    public static ShaderInstance screenShader() { return screenShader; }
+
     public static void apply(ClientboundOriginalNpcPresentationPacket packet) {
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.level == null || !minecraft.level.dimension().location().equals(packet.dimension())) {
@@ -79,8 +81,12 @@ public final class OriginalNpcPresentationController {
                 OriginalSceneOmissionController.begin();
             }
             case 221, 222, 223, 224, 225 -> state.apply(packet.commandCode(), packet.values());
-            case 213 -> balloons.put(packet.entityId(), new Balloon(packet.values().get(0).intValue(), 76));
-            case 241, 242, 243, 244 -> OriginalNpcMusicController.apply(packet.commandCode(), packet.sound(), packet.values());
+            case 213 -> {
+                int remaining=packet.values().size()>1?Math.max(0,Math.min(76,packet.values().get(1).intValue())):76;
+                if(remaining>0)balloons.put(packet.entityId(),new Balloon(packet.values().get(0).intValue(),remaining));
+                else balloons.remove(packet.entityId());
+            }
+            case 241, 242, 243, 244 -> OriginalNpcMusicController.applyDialogue(packet.entityId(),packet.commandCode(), packet.sound(), packet.values());
             case 250 -> {
                 if (!packet.sound().isEmpty()) {
                     SimpleSoundInstance sound = new SimpleSoundInstance(

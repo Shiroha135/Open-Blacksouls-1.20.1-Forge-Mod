@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "blacksouls:block/opening_source/opening_source_tree_part_55"
+    },
+    "facing=east": {
+      "model": "blacksouls:block/opening_source/opening_source_tree_part_55",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "blacksouls:block/opening_source/opening_source_tree_part_55",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "blacksouls:block/opening_source/opening_source_tree_part_55",
+      "y": 270
+    }
+  }
+}

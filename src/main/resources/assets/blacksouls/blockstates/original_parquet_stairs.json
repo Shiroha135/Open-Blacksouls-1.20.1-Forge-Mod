@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "blacksouls:block/original/original_parquet_stairs"
+    },
+    "facing=east": {
+      "model": "blacksouls:block/original/original_parquet_stairs",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "blacksouls:block/original/original_parquet_stairs",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "blacksouls:block/original/original_parquet_stairs",
+      "y": 270
+    }
+  }
+}

@@ -2,10 +2,8 @@ package yuki135.blacksouls.item.consumables;
 
 import yuki135.blacksouls.BlackSouls;
 import yuki135.blacksouls.capability.BSPlayerStats;
-import yuki135.blacksouls.handler.StatEventHandler;
 import yuki135.blacksouls.util.HokoniwaDestination;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -36,10 +34,6 @@ public class ItemBlackAsh extends Item {
         ItemStack stack = player.getItemInHand(hand);
 
         if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
-            if (HokoniwaDestination.isHokoniwa(serverPlayer.level().dimension())) {
-                teleportToOverworldSpawn(serverPlayer);
-                return InteractionResultHolder.consume(stack);
-            }
             boolean success = teleportToHokoniwa(serverPlayer);
             if (!success) {
                 return InteractionResultHolder.fail(stack);
@@ -65,8 +59,6 @@ public class ItemBlackAsh extends Item {
 
         
         stats.souls = 0;
-        stats.hasVisitedLibrary = true;
-        StatEventHandler.syncToClient(serverPlayer);
 
         serverPlayer.level().playSound(
                 null,
@@ -87,6 +79,8 @@ public class ItemBlackAsh extends Item {
                 0.0F
         );
 
+        yuki135.blacksouls.story.OriginalOpeningBonfireFlow.visitLibrary(serverPlayer);
+
         targetLevel.playSound(
                 null,
                 serverPlayer.blockPosition(),
@@ -98,41 +92,6 @@ public class ItemBlackAsh extends Item {
 
         serverPlayer.sendSystemMessage(Component.translatable("message.blacksouls.black_ash_use").withStyle(ChatFormatting.DARK_PURPLE));
         return true;
-    }
-
-    private void teleportToOverworldSpawn(ServerPlayer serverPlayer) {
-        ServerLevel overworld = serverPlayer.server.overworld();
-        BlockPos spawnPos = overworld.getSharedSpawnPos();
-        float spawnYaw = overworld.getSharedSpawnAngle();
-
-        serverPlayer.level().playSound(
-                null,
-                serverPlayer.blockPosition(),
-                BlackSouls.FIRE6_EVENT.get(),
-                SoundSource.PLAYERS,
-                1.0F,
-                1.0F
-        );
-
-        serverPlayer.teleportTo(
-                overworld,
-                spawnPos.getX() + 0.5D,
-                spawnPos.getY(),
-                spawnPos.getZ() + 0.5D,
-                spawnYaw,
-                0.0F
-        );
-
-        overworld.playSound(
-                null,
-                serverPlayer.blockPosition(),
-                BlackSouls.FIRE6_EVENT.get(),
-                SoundSource.PLAYERS,
-                1.0F,
-                1.0F
-        );
-
-        serverPlayer.sendSystemMessage(Component.translatable("message.blacksouls.black_ash_use").withStyle(ChatFormatting.DARK_PURPLE));
     }
 
     @Override

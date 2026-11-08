@@ -32,6 +32,7 @@ import java.util.List;
 
 @SuppressWarnings("removal")
 public class GuiDialogueEnhanced extends Screen {
+    public int cameraEntityId() { return entityId; }
     private final String npcNameKey;
     private final String npcAvatarId;
     private final ResourceLocation npcAvatarTexture;
@@ -178,8 +179,16 @@ public class GuiDialogueEnhanced extends Screen {
             case RABBIT_KNIGHT -> rabbitKnightOptions;
             default -> killOnlyOptions ? killOptions : mainOptions;
         };
-        if (isCheshireDialogueMode()) {
+    }
+
+    private boolean dialogueMusicStarted;
+
+    @Override
+    protected void init() {
+        super.init();
+        if(isCheshireDialogueMode()&&!dialogueMusicStarted) {
             ClientSceneMusic.startCheshireDialogue();
+            dialogueMusicStarted=true;
         }
     }
 
@@ -244,7 +253,7 @@ public class GuiDialogueEnhanced extends Screen {
                 boolean isHovered = mouseX >= optionBoxLeft + 5 && mouseX <= optionBoxLeft + optionBoxWidth - 5 && mouseY >= currentY && mouseY < currentY + OPTION_LINE_HEIGHT;
                 boolean isKillOption = activeOptions[i] == DialogueOption.KILL;
 
-                if (isHovered) guiGraphics.fill(optionBoxLeft + 5, currentY + 1, optionBoxLeft + optionBoxWidth - 5, currentY + OPTION_LINE_HEIGHT - 1, 0x66FFFFFF);
+                if (isHovered) BSGuiUtils.drawRMSelection(guiGraphics,optionBoxLeft+5,currentY+1,optionBoxWidth-10,OPTION_LINE_HEIGHT-2);
 
                 int color = activeOptions[i].textColor;
                 if (!isKillOption && isHovered) color = 0xFFFFFF;
@@ -613,6 +622,13 @@ public class GuiDialogueEnhanced extends Screen {
             ClientSceneMusic.stopDialogueMusic();
         }
         super.onClose();
+    }
+
+    @Override
+    public void removed() {
+        if(isCheshireDialogueMode())ClientSceneMusic.stopDialogueMusic();
+        dialogueMusicStarted=false;
+        super.removed();
     }
 
     private boolean isCheshireDialogueMode() {

@@ -112,7 +112,7 @@ public class BSEntityRegistry {
     public static final RegistryObject<EntityType<EntityCorpseEatingRabbit>> CORPSE_EATING_RABBIT =
             ENTITY_TYPES.register("corpse_eating_rabbit", () ->
                     EntityType.Builder.of(EntityCorpseEatingRabbit::new, MobCategory.MONSTER)
-                            .sized(0.72F, 1.15F)
+                            .sized(0.5F, 1.15F)
                             .clientTrackingRange(10)
                             .updateInterval(3)
                             .build("corpse_eating_rabbit"));
@@ -131,7 +131,7 @@ public class BSEntityRegistry {
                                     (type, level) -> new EntityOriginalTurnBattleEnemy(
                                             type, level, EntityOriginalTurnBattleEnemy.Profile.HEADLESS_UNDEAD),
                                     MobCategory.MONSTER)
-                            .sized(0.62F, 1.8F)
+                            .sized(0.55F, 1.8F)
                             .clientTrackingRange(10)
                             .updateInterval(3)
                             .build("headless_undead"));
@@ -142,7 +142,7 @@ public class BSEntityRegistry {
                                     (type, level) -> new EntityOriginalTurnBattleEnemy(
                                             type, level, EntityOriginalTurnBattleEnemy.Profile.CORRUPT_DOG),
                                     MobCategory.MONSTER)
-                            .sized(0.9F, 1.05F)
+                            .sized(0.55F, 1.05F)
                             .clientTrackingRange(10)
                             .updateInterval(3)
                             .build("corrupt_dog"));
@@ -153,7 +153,7 @@ public class BSEntityRegistry {
                                     (type, level) -> new EntityOriginalTurnBattleEnemy(
                                             type, level, EntityOriginalTurnBattleEnemy.Profile.WEREWOLF),
                                     MobCategory.MONSTER)
-                            .sized(1.1F, 1.9F)
+                            .sized(0.6F, 1.9F)
                             .clientTrackingRange(10)
                             .updateInterval(3)
                             .build("werewolf"));

@@ -29,8 +29,10 @@ public final class OriginalOpeningSceneData extends SavedData {
     public static final int MAX_CHANGES = 4096;
     private final Map<UUID,Entry> entries = new LinkedHashMap<>();
     private int nextSlot;
+    private OriginalOpeningProfessionStage.Template professionTemplate;
 
-    public record Lease(UUID owner, int slot) {
+    public record Lease(UUID owner, int slot, OriginalOpeningProfessionStage.Template professionTemplate) {
+        public Lease(UUID owner, int slot) { this(owner,slot,null); }
         public Lease { if (owner == null || slot < 0 || slot >= MAX_SLOTS) throw new IllegalArgumentException("Invalid opening lease"); }
     }
 
@@ -50,10 +52,27 @@ public final class OriginalOpeningSceneData extends SavedData {
 
     public Lease lease(UUID owner) {
         if (owner == null) throw new IllegalArgumentException("Opening owner is required");
-        var existing = entries.get(owner); if (existing != null) return existing.lease;
+        var existing = entries.get(owner);
+        if (existing != null) {
+            if (existing.layout.equals(Layout.EMPTY) && existing.journal == null) {
+                var latest = new Lease(owner,existing.lease.slot(),professionTemplate());
+                if (!latest.equals(existing.lease)) { entries.put(owner,new Entry(latest)); setDirty(); return latest; }
+            }
+            return existing.lease;
+        }
         if (journalIdUsed(owner)) throw new IllegalArgumentException("Opening owner collides with an active journal identity");
         if (nextSlot >= MAX_SLOTS) throw new IllegalStateException("Opening scene slot capacity reached");
-        var lease = new Lease(owner,nextSlot++); entries.put(owner,new Entry(lease)); setDirty(); return lease;
+        var lease = new Lease(owner,nextSlot++,professionTemplate()); entries.put(owner,new Entry(lease)); setDirty(); return lease;
+    }
+
+    public OriginalOpeningProfessionStage.Template professionTemplate() {
+        if (professionTemplate == null) { professionTemplate = OriginalOpeningProfessionStage.defaultTemplate(); setDirty(); }
+        return professionTemplate;
+    }
+
+    public void professionTemplate(OriginalOpeningProfessionStage.Template template) {
+        if (template == null) throw new IllegalArgumentException("Missing profession template");
+        professionTemplate = template; setDirty();
     }
 
     public Optional<Lease> find(UUID owner) { var entry = entries.get(owner); return entry == null ? Optional.empty() : Optional.of(entry.lease); }
@@ -101,6 +120,7 @@ public final class OriginalOpeningSceneData extends SavedData {
                     || !sourceSupport(island,fallCell)&&!temporary.contains(fallCell))) throw new IllegalArgumentException("Invalid opening fall shaft");
         }
         Layout with(SceneKind kind, Set<Cell> supports) { return kind == SceneKind.OP ? new Layout(true,island,temporary,fallCell) : new Layout(op,kind,supports); }
+        Layout withoutOp() { return new Layout(false,island,temporary,fallCell); }
         Layout falling(Cell cell) { return new Layout(op,island,temporary,cell); }
         CompoundTag save() {
             var tag = new CompoundTag(); tag.putBoolean("Op",op); tag.putInt("Island",island == null ? 0 : island.sourceMap());
@@ -164,17 +184,24 @@ public final class OriginalOpeningSceneData extends SavedData {
     }
 
     public static OriginalOpeningSceneData load(CompoundTag tag) {
-        if (!tag.getAllKeys().equals(Set.of("Version","Catalog","NextSlot","Leases")) || !tag.contains("Version",Tag.TAG_INT)
+        var fields = new HashSet<>(Set.of("Version","Catalog","NextSlot","Leases"));
+        if (tag.contains("ProfessionTemplate")) fields.add("ProfessionTemplate");
+        if (!tag.getAllKeys().equals(fields) || tag.contains("ProfessionTemplate") && !tag.contains("ProfessionTemplate",Tag.TAG_COMPOUND)
+                || !tag.contains("Version",Tag.TAG_INT)
                 || tag.getInt("Version") != STORAGE_VERSION || !tag.contains("Catalog",Tag.TAG_STRING) || !CATALOG_HASH.equals(tag.getString("Catalog"))
                 || !tag.contains("NextSlot",Tag.TAG_INT) || !tag.contains("Leases",Tag.TAG_LIST)) throw new IllegalArgumentException("Invalid opening scene storage schema or plan version");
         int next = tag.getInt("NextSlot"); var rows = (ListTag)tag.get("Leases");
         if (next < 0 || next > MAX_SLOTS || rows.size() != next || !rows.isEmpty() && rows.getElementType() != Tag.TAG_COMPOUND) throw new IllegalArgumentException("Invalid opening lease count");
         var result = new OriginalOpeningSceneData(); var slots = new HashSet<Integer>(); var journals = new HashSet<UUID>();
+        if (tag.contains("ProfessionTemplate")) result.professionTemplate=OriginalOpeningProfessionStage.Template.load(tag.getCompound("ProfessionTemplate"));
         for (var value : rows) {
             var row = (CompoundTag)value; var keys = new HashSet<>(Set.of("Owner","Slot","Layout")); if (row.contains("Journal")) keys.add("Journal");
+            if (row.contains("ProfessionTemplate")) keys.add("ProfessionTemplate");
             if (!row.getAllKeys().equals(keys) || !row.hasUUID("Owner") || !row.contains("Slot",Tag.TAG_INT) || !row.contains("Layout",Tag.TAG_COMPOUND)
+                    || row.contains("ProfessionTemplate") && !row.contains("ProfessionTemplate",Tag.TAG_COMPOUND)
                     || row.contains("Journal") && !row.contains("Journal",Tag.TAG_COMPOUND)) throw new IllegalArgumentException("Invalid opening lease row");
-            var lease = new Lease(row.getUUID("Owner"),row.getInt("Slot")); if (lease.slot >= next || !slots.add(lease.slot)) throw new IllegalArgumentException("Duplicate or skipped opening slot");
+            var template=row.contains("ProfessionTemplate")?OriginalOpeningProfessionStage.Template.load(row.getCompound("ProfessionTemplate")):null;
+            var lease = new Lease(row.getUUID("Owner"),row.getInt("Slot"),template); if (lease.slot >= next || !slots.add(lease.slot)) throw new IllegalArgumentException("Duplicate or skipped opening slot");
             var entry = new Entry(lease); entry.layout = Layout.load(row.getCompound("Layout"));
             if (row.contains("Journal")) entry.journal = Journal.load(row.getCompound("Journal"));
             if (result.entries.put(lease.owner,entry) != null) throw new IllegalArgumentException("Duplicate opening owner");
@@ -190,8 +217,10 @@ public final class OriginalOpeningSceneData extends SavedData {
 
     @Override public CompoundTag save(CompoundTag tag) {
         tag.putInt("Version",STORAGE_VERSION); tag.putString("Catalog",CATALOG_HASH); tag.putInt("NextSlot",nextSlot); var rows = new ListTag();
+        if (professionTemplate != null) tag.put("ProfessionTemplate",professionTemplate.save());
         entries.values().stream().sorted(java.util.Comparator.comparingInt(entry -> entry.lease.slot)).forEach(entry -> {
             var row = new CompoundTag(); row.putUUID("Owner",entry.lease.owner); row.putInt("Slot",entry.lease.slot); row.put("Layout",entry.layout.save());
+            if (entry.lease.professionTemplate != null) row.put("ProfessionTemplate",entry.lease.professionTemplate.save());
             if (entry.journal != null) row.put("Journal",entry.journal.save()); rows.add(row);
         }); tag.put("Leases",rows); return tag;
     }

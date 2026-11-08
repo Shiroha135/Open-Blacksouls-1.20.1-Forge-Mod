@@ -1,0 +1,214 @@
+{
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": false,
+  "textures": {
+    "tree_bark_volume": "blacksouls:block/opening_source/tree_bark_volume",
+    "particle": "blacksouls:block/opening_source/tree_bark_volume"
+  },
+  "elements": [
+    {
+      "from": [
+        14,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        4,
+        4
+      ],
+      "faces": {
+        "north": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            14,
+            12,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            14,
+            12,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            0,
+            12,
+            4,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            0,
+            12,
+            4,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            14,
+            0,
+            16,
+            4
+          ]
+        },
+        "down": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            14,
+            0,
+            16,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        12,
+        0,
+        4
+      ],
+      "to": [
+        14,
+        2,
+        8
+      ],
+      "faces": {
+        "north": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            12,
+            14,
+            14,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            12,
+            14,
+            14,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            4,
+            14,
+            8,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            4,
+            14,
+            8,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            12,
+            4,
+            14,
+            8
+          ]
+        },
+        "down": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            12,
+            4,
+            14,
+            8
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        10,
+        0,
+        6
+      ],
+      "to": [
+        12,
+        2,
+        8
+      ],
+      "faces": {
+        "north": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            10,
+            14,
+            12,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            10,
+            14,
+            12,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            6,
+            14,
+            8,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            6,
+            14,
+            8,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            10,
+            6,
+            12,
+            8
+          ]
+        },
+        "down": {
+          "texture": "#tree_bark_volume",
+          "uv": [
+            10,
+            6,
+            12,
+            8
+          ]
+        }
+      }
+    }
+  ]
+}

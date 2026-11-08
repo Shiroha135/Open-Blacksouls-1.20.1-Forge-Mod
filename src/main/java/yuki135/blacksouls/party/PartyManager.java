@@ -89,7 +89,7 @@ public final class PartyManager {
 
     public static void updateAvatar(ServerPlayer player, String avatar) {
         restore(player.server);
-        AVATARS.put(player.getUUID(), sanitizeAvatar(avatar));
+        AVATARS.put(player.getUUID(), yuki135.blacksouls.handler.AvatarUnlocks.select(player,avatar));
         Party party = PARTIES.get(player.getUUID());
         if (party != null) sync(party, player.server);
         else syncSolo(player);
@@ -97,7 +97,7 @@ public final class PartyManager {
 
     public static void syncFor(ServerPlayer player, String avatar) {
         restore(player.server);
-        AVATARS.put(player.getUUID(), sanitizeAvatar(avatar));
+        AVATARS.put(player.getUUID(), yuki135.blacksouls.handler.AvatarUnlocks.select(player,avatar));
         Party party = PARTIES.get(player.getUUID());
         if (party == null) syncSolo(player);
         else sync(party, player.server);
@@ -324,7 +324,7 @@ public final class PartyManager {
                 .filter(java.util.Objects::nonNull)
                 .toList();
         return new ClientboundPartyStatePacket.Member(player.getUUID(), name,
-                AVATARS.getOrDefault(player.getUUID(), "knight_face"), downed ? 0.0F : player.getHealth(), player.getMaxHealth(),
+                yuki135.blacksouls.handler.AvatarUnlocks.selected(player), downed ? 0.0F : player.getHealth(), player.getMaxHealth(),
                 mp, maxMp, ap, maxAp, level, leader, downed, effects);
     }
 

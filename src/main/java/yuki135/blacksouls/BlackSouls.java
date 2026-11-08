@@ -1535,10 +1535,12 @@ public class BlackSouls {
     @SuppressWarnings("removal")
     public BlackSouls() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        yuki135.blacksouls.handler.OriginalTileBlocks.register(modEventBus);
         // 注册核心组件
         ITEMS.register(modEventBus);
         yuki135.blacksouls.handler.OriginalWorldBlocks.BLOCKS.register(modEventBus);
         yuki135.blacksouls.handler.OriginalOpeningVisualBlocks.register(modEventBus);
+        yuki135.blacksouls.handler.OriginalOpeningSourceBlocks.register(modEventBus);
         MOB_EFFECTS.register(modEventBus);
         SOUND_EVENTS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);

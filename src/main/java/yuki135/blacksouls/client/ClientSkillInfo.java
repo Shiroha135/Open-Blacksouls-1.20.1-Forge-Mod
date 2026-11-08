@@ -14,6 +14,9 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.List;
+import yuki135.blacksouls.capability.BSPlayerStats;
+import yuki135.blacksouls.util.AvatarCatalog;
 
 public class ClientSkillInfo {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -28,6 +31,7 @@ public class ClientSkillInfo {
     private static int currentAvatarExpression = 0;
 
     private static final Set<String> UNLOCKED_DLC_AVATARS = new HashSet<>();
+    private static boolean avatarPolicyReady;
 
     private ClientSkillInfo() {
     }
@@ -38,6 +42,7 @@ public class ClientSkillInfo {
     }
 
     public static void setAvatar(String avatar) {
+        if(!avatarPolicyReady||!UNLOCKED_DLC_AVATARS.contains(avatar))return;
         currentAvatar = sanitizeAvatar(avatar);
         isLoaded = true;
         saveAvatar();
@@ -50,8 +55,26 @@ public class ClientSkillInfo {
         UNLOCKED_DLC_AVATARS.clear();
 
         if (avatars != null) {
-            UNLOCKED_DLC_AVATARS.addAll(avatars);
+            avatars.stream().filter(AvatarCatalog.all()::contains).forEach(UNLOCKED_DLC_AVATARS::add);
         }
+        avatarPolicyReady=true;
+        if(!UNLOCKED_DLC_AVATARS.contains(currentAvatar)) {
+            currentAvatar=getUnlockedAvatars().stream().findFirst().orElse("unknown");
+            currentAvatarExpression=0;isLoaded=true;
+        }
+    }
+
+    public static List<String> getUnlockedAvatars() {return AvatarCatalog.all().stream().filter(UNLOCKED_DLC_AVATARS::contains).toList();}
+
+    public static void applyAvatarState(BSPlayerStats stats) {
+        String selected=AvatarCatalog.selected(stats);
+        setUnlockedDlcAvatars(AvatarCatalog.unlocked(stats));
+        if(!selected.equals(currentAvatar))currentAvatarExpression=0;
+        currentAvatar=selected;isLoaded=true;
+    }
+
+    public static void clearAvatarState() {
+        UNLOCKED_DLC_AVATARS.clear();avatarPolicyReady=false;currentAvatar=DEFAULT_AVATAR;currentAvatarExpression=0;isLoaded=false;
     }
 
     public static boolean isDlcAvatarUnlocked(String avatarId) {

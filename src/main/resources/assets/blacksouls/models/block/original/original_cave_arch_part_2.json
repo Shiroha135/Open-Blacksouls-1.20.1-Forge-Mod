@@ -1,0 +1,79 @@
+{
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": true,
+  "textures": {
+    "dark_stone": "blacksouls:block/original/dark_stone",
+    "particle": "blacksouls:block/original/dark_stone"
+  },
+  "elements": [
+    {
+      "from": [
+        1,
+        0,
+        2
+      ],
+      "to": [
+        7,
+        16,
+        14
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            1.066667,
+            16.0,
+            9.6
+          ],
+          "texture": "#dark_stone"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            1.066667,
+            16.0,
+            9.6
+          ],
+          "texture": "#dark_stone"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            1.066667,
+            16.0,
+            9.6
+          ],
+          "texture": "#dark_stone"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            1.066667,
+            16.0,
+            9.6
+          ],
+          "texture": "#dark_stone"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#dark_stone"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "blacksouls:block/opening_source/opening_source_altar_part_1"
+    },
+    "facing=east": {
+      "model": "blacksouls:block/opening_source/opening_source_altar_part_1",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "blacksouls:block/opening_source/opening_source_altar_part_1",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "blacksouls:block/opening_source/opening_source_altar_part_1",
+      "y": 270
+    }
+  }
+}

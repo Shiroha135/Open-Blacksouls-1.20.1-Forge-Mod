@@ -1,0 +1,355 @@
+{
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": true,
+  "textures": {
+    "marble": "blacksouls:block/original/marble",
+    "particle": "blacksouls:block/original/marble"
+  },
+  "elements": [
+    {
+      "from": [
+        1,
+        0,
+        2
+      ],
+      "to": [
+        7,
+        2,
+        14
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            1.066667
+          ],
+          "texture": "#marble"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            1.066667
+          ],
+          "texture": "#marble"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            1.066667
+          ],
+          "texture": "#marble"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            1.066667
+          ],
+          "texture": "#marble"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        2,
+        0
+      ],
+      "to": [
+        8,
+        6,
+        16
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        6,
+        0
+      ],
+      "to": [
+        16,
+        14,
+        16
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            10.666667,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            5.333333,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            5.333333,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            5.333333,
+            16.0
+          ],
+          "texture": "#marble"
+        }
+      }
+    },
+    {
+      "from": [
+        0,
+        14,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            10.666667,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            5.333333,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            5.333333,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            5.333333,
+            16.0
+          ],
+          "texture": "#marble"
+        }
+      }
+    },
+    {
+      "from": [
+        8,
+        2,
+        1
+      ],
+      "to": [
+        12,
+        6,
+        15
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        }
+      }
+    }
+  ]
+}

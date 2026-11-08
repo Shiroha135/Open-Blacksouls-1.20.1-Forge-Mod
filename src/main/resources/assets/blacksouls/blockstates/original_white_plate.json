@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "blacksouls:block/original/original_white_plate"
+    },
+    "facing=east": {
+      "model": "blacksouls:block/original/original_white_plate",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "blacksouls:block/original/original_white_plate",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "blacksouls:block/original/original_white_plate",
+      "y": 270
+    }
+  }
+}

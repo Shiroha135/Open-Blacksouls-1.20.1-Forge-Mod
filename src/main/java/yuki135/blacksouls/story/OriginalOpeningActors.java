@@ -21,12 +21,16 @@ public final class OriginalOpeningActors {
     private OriginalOpeningActors() { }
 
     public static boolean ensure(ServerPlayer owner,Lease lease,SceneKind scene,int relationship,boolean showAlice) {
+        return ensure(owner,lease,scene,relationship,showAlice,true);
+    }
+
+    public static boolean ensure(ServerPlayer owner,Lease lease,SceneKind scene,int relationship,boolean showAlice,boolean showProfessions) {
         if (owner==null || lease==null || scene==null || relationship<0 || relationship>3 || owner.getServer()==null
                 || owner.getServer().getPlayerList().getPlayer(owner.getUUID())!=owner) return false;
         var level=owner.getServer().getLevel(DIMENSION);
         if (level==null || !level.getServer().isSameThread() || !canonical(level,lease) || !loaded(level,lease)
                 || !OriginalOpeningSceneWorld.ready(level,lease.owner(),lease,scene)) return false;
-        var targets=targets(lease,scene,showAlice);var existing=owned(level,owner.getUUID(),lease);if (existing.size()>64) return false;
+        var targets=targets(lease,scene,showAlice,showProfessions);var existing=owned(level,owner.getUUID(),lease);if (existing.size()>64) return false;
         for (var target:targets) if (!safe(level,owner,lease,target)) return false;
         var retained=new HashSet<EntityOpeningActor>();var missing=new ArrayList<Target>();
         for (var target:targets) {
@@ -37,7 +41,8 @@ public final class OriginalOpeningActors {
         for (var target:missing) {
             var actor=BSEntityRegistry.OPENING_ACTOR.get().create(level);
             if (actor==null) { created.forEach(Entity::discard);return false; }
-            actor.configure(owner.getUUID(),target.origin,relationship,lease.slot());actor.moveTo(target.feet.x,target.feet.y,target.feet.z,0,0);
+            actor.configure(owner.getUUID(),target.origin,relationship,lease.slot());actor.moveTo(target.feet.x,target.feet.y,target.feet.z,target.origin==0?90:0,0);
+            if(target.origin==0) { actor.setYHeadRot(90);actor.setYBodyRot(90); }
             if (!level.addFreshEntity(actor)) { actor.discard();created.forEach(Entity::discard);return false; }created.add(actor);
         }
         retained.forEach(actor->actor.configure(owner.getUUID(),actor.originId(),relationship,lease.slot()));
@@ -59,10 +64,10 @@ public final class OriginalOpeningActors {
         for (var entity:level.getAllEntities()) if (entity instanceof EntityOpeningActor actor && !actor.isRemoved() && owner.equals(actor.ownerId()) && actor.leaseSlot()==lease.slot()) result.add(actor);
         return List.copyOf(result);
     }
-    private static List<Target> targets(Lease lease,SceneKind scene,boolean showAlice) {
+    private static List<Target> targets(Lease lease,SceneKind scene,boolean showAlice,boolean showProfessions) {
         var result=new ArrayList<Target>();
-        if (scene==SceneKind.OP) { int origin=0;for (var anchor:professionAnchors(lease)) result.add(new Target(++origin,anchor.sourceCell(),anchor.feet(),scene)); }
-        else if (showAlice) { var anchor=aliceAnchor(lease,scene);result.add(new Target(0,anchor.sourceCell(),anchor.feet(),scene)); }
+        if (scene==SceneKind.OP&&showProfessions) { int origin=0;for (var anchor:professionAnchors(lease)) { origin++;if(OriginalOpeningGreeting.selectable(origin))result.add(new Target(origin,anchor.sourceCell(),anchor.feet(),scene)); } }
+        else if (scene.island()&&showAlice) { var anchor=aliceAnchor(lease,scene);result.add(new Target(0,anchor.sourceCell(),anchor.feet(),scene)); }
         return List.copyOf(result);
     }
     private static boolean safe(ServerLevel level,ServerPlayer owner,Lease lease,Target target) {

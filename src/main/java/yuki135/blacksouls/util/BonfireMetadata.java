@@ -12,6 +12,9 @@ public final class BonfireMetadata {
     private static final String DESCRIPTION_KEY = "BlackSoulsBonfireDescription";
 
     public static Data read(Level level, BlockPos pos) {
+        if (yuki135.blacksouls.story.OriginalOpeningBonfireFlow.isFallingBonfire(level.dimension(), pos)) {
+            return fallingRoom();
+        }
         if (HokoniwaDestination.isHokoniwa(level.dimension())
                 && pos.equals(HokoniwaDestination.FIRST_BONFIRE_POS)) {
             return new Data(
@@ -50,6 +53,10 @@ public final class BonfireMetadata {
     }
 
     public record Data(String name, String description) {
+    }
+
+    public static Data fallingRoom() {
+        return new Data("坠落之间", "一小块从天而降的空间。\n许多误入不可思议之国的人会直接坠落到这里。");
     }
 
     private BonfireMetadata() {

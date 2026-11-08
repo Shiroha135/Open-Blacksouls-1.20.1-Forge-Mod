@@ -207,6 +207,7 @@ public final class OriginalOpeningScenes {
     public static Plan plan(OriginalOpeningSceneData.Lease lease, SceneKind kind, Set<Cell> temporary) {
         requireTemporary(kind,temporary);
         if (kind.island()) return OriginalOpeningVisualPlan.plan(lease,kind,temporary);
+        if (lease.professionTemplate()!=null) return OriginalOpeningProfessionStage.plan(lease,lease.professionTemplate());
         var blocks=new LinkedHashMap<BlockPos,Material>();var start=origin(lease,kind);
         for (int y=0;y<kind.height;y++) for (int x=0;x<kind.width;x++) {
             var cell=new Cell(x,y);

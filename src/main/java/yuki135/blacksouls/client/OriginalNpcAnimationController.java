@@ -133,7 +133,7 @@ public final class OriginalNpcAnimationController {
             RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
             for (Active active : ACTIVE.values()) {
                 int frameIndex = cellFrameIndex(active.animation.frames.size(), active.timeline.elapsed(now));
-                if (active.position == 3 || frameIndex < 0) continue;
+                if (active.position == 3 || selfScreen(active.entityId) || frameIndex < 0) continue;
                 Entity target = Minecraft.getInstance().level.getEntity(active.entityId);
                 Vec3 anchor = worldAnchor(active.origin,
                         target == null ? null : target.getPosition(event.getPartialTick()), active.position, active.height);
@@ -168,7 +168,7 @@ public final class OriginalNpcAnimationController {
             prepareRender();
             for (Active active : ACTIVE.values()) {
                 int frameIndex = cellFrameIndex(active.animation.frames.size(), active.timeline.elapsed(now));
-                if (active.position != 3 || frameIndex < 0) continue;
+                if (active.position != 3 && !selfScreen(active.entityId) || frameIndex < 0) continue;
                 renderScreenFrame(graphics, active.animation, active.animation.frames.get(frameIndex),
                         width / 2, height / 2, canvasScale);
             }
@@ -208,6 +208,13 @@ public final class OriginalNpcAnimationController {
                 else minecraft.getSoundManager().play(instance);
             }
         }
+    }
+
+    private static boolean selfScreen(int entityId) {
+        var minecraft=Minecraft.getInstance();
+        var opening=OriginalOpeningController.state();
+        return minecraft.player!=null&&entityId==minecraft.player.getId()&&minecraft.getCameraEntity()==minecraft.player
+                &&minecraft.options.getCameraType().isFirstPerson()&&opening!=null&&yuki135.blacksouls.story.OriginalOpeningCoda.active(opening.command());
     }
 
     private static void renderWorldFrame(VFXAnimation animation, VFXFrame frame, Matrix4f matrix) {

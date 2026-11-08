@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "blacksouls:block/original/original_marble_arch_part_3"
+    },
+    "facing=east": {
+      "model": "blacksouls:block/original/original_marble_arch_part_3",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "blacksouls:block/original/original_marble_arch_part_3",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "blacksouls:block/original/original_marble_arch_part_3",
+      "y": 270
+    }
+  }
+}

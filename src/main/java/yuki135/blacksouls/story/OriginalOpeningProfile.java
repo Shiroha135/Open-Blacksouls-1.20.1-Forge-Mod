@@ -261,6 +261,7 @@ public final class OriginalOpeningProfile {
     }
 
     public void requestRealSkip() { Flow flow = requireRealMutable(); if (flow.stage == Stage.COMPLETE) throw new IllegalStateException("opening complete"); flow.skipRequested = true; }
+    public void clearRealSkip() { Flow flow=requireRealMutable();if(flow.stage==Stage.COMPLETE)throw new IllegalStateException("opening complete");flow.skipRequested=false; }
     public void advanceRealSkipToArrival() {
         Flow flow = requireRealMutable();
         if (!flow.skipRequested || flow.originId == 0 || flow.relationshipId == 0 || !kitGrantCommitted || !opCodaGrantCommitted
@@ -298,6 +299,7 @@ public final class OriginalOpeningProfile {
     public void confirmPreviewOrigin(int id) { Flow flow = requirePreview(); range(id, 1, 9, "preview origin"); requireStage(flow, Stage.ORIGIN_SELECTION); flow.originId = id; advance(flow, Stage.ORIGIN_CONFIRMED); }
     public void confirmPreviewRelationship(int id) { Flow flow = requirePreview(); range(id, 1, 3, "preview relationship"); requireStage(flow, Stage.ALICE_SELECTION); flow.relationshipId = id; advance(flow, Stage.MEMORY_DIALOGUE); }
     public void requestPreviewSkip() { Flow flow = requirePreview(); if (flow.stage == Stage.COMPLETE) throw new IllegalStateException("preview complete"); flow.skipRequested = true; }
+    public void clearPreviewSkip() { Flow flow=requirePreview();if(flow.stage==Stage.COMPLETE)throw new IllegalStateException("preview complete");flow.skipRequested=false; }
     public void advancePreviewSkipToArrival() {
         Flow flow = requirePreview();
         if (!flow.skipRequested || flow.originId == 0 || flow.relationshipId == 0 || flow.stage.ordinal() < Stage.MEMORY_DIALOGUE.ordinal()

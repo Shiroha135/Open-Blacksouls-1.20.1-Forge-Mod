@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "blacksouls:block/opening_source/opening_source_ground_part_0"
+    },
+    "facing=east": {
+      "model": "blacksouls:block/opening_source/opening_source_ground_part_0"
+    },
+    "facing=south": {
+      "model": "blacksouls:block/opening_source/opening_source_ground_part_0"
+    },
+    "facing=west": {
+      "model": "blacksouls:block/opening_source/opening_source_ground_part_0"
+    }
+  }
+}

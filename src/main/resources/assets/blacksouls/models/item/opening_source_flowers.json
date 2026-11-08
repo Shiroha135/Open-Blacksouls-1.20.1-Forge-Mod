@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "blacksouls:block/opening_source/source_flowers"
+  }
+}

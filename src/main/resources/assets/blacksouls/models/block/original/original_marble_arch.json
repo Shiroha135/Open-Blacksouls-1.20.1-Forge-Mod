@@ -1,0 +1,148 @@
+{
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": true,
+  "textures": {
+    "marble": "blacksouls:block/original/marble",
+    "particle": "blacksouls:block/original/marble"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        8,
+        4,
+        16
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        }
+      }
+    },
+    {
+      "from": [
+        1,
+        4,
+        2
+      ],
+      "to": [
+        7,
+        16,
+        14
+      ],
+      "shade": true,
+      "faces": {
+        "north": {
+          "uv": [
+            0.0,
+            9.6,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "south": {
+          "uv": [
+            0.0,
+            9.6,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "east": {
+          "uv": [
+            0.0,
+            9.6,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "west": {
+          "uv": [
+            0.0,
+            9.6,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "up": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        },
+        "down": {
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ],
+          "texture": "#marble"
+        }
+      }
+    }
+  ]
+}

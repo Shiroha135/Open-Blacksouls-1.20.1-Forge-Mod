@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "blacksouls:block/original/original_oak_floor"
+    },
+    "facing=east": {
+      "model": "blacksouls:block/original/original_oak_floor",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "blacksouls:block/original/original_oak_floor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "blacksouls:block/original/original_oak_floor",
+      "y": 270
+    }
+  }
+}

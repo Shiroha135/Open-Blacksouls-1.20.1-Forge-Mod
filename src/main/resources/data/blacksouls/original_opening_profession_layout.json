@@ -1,0 +1,955 @@
+{
+  "version": 1,
+  "size": [
+    20,
+    20
+  ],
+  "indexBase": 0,
+  "sourceMap": 7,
+  "sourceMapSha256": "01228bd93e8e7678da295ffd9677ca74fcbd92df4c665a3f23dc1e54dcc2175b",
+  "treeFootMapping": {
+    "sourceFootOffset": [
+      2,
+      4.5
+    ],
+    "modelRootLocal": [
+      1.5,
+      1.5
+    ],
+    "originRounding": "nearest_integer",
+    "footprint": [
+      4,
+      4
+    ],
+    "clipOriginTo": [
+      0,
+      16
+    ]
+  },
+  "placements": [
+    {
+      "module": "source_tree",
+      "position": [
+        16,
+        0,
+        3
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        16,
+        0
+      ],
+      "category": "tree"
+    },
+    {
+      "module": "source_tree",
+      "position": [
+        2,
+        0,
+        4
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        1,
+        1
+      ],
+      "category": "tree"
+    },
+    {
+      "module": "source_tree",
+      "position": [
+        2,
+        0,
+        16
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        1,
+        13
+      ],
+      "category": "tree"
+    },
+    {
+      "module": "source_tree",
+      "position": [
+        16,
+        0,
+        16
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        15,
+        14
+      ],
+      "category": "tree"
+    },
+    {
+      "module": "source_altar",
+      "position": [
+        10,
+        0,
+        8
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        10,
+        7
+      ],
+      "category": "structure"
+    },
+    {
+      "module": "source_boat",
+      "position": [
+        0,
+        0,
+        18
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        0,
+        18
+      ],
+      "category": "boat"
+    },
+    {
+      "module": "source_sapling",
+      "position": [
+        6,
+        0,
+        3
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        6,
+        2
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sapling",
+      "position": [
+        19,
+        0,
+        7
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        19,
+        6
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sapling",
+      "position": [
+        0,
+        0,
+        10
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        0,
+        9
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sapling",
+      "position": [
+        6,
+        0,
+        18
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        6,
+        17
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sapling",
+      "position": [
+        19,
+        0,
+        18
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        19,
+        17
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_vines",
+      "position": [
+        14,
+        0,
+        2
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        14,
+        1
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_vines",
+      "position": [
+        13,
+        0,
+        17
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        13,
+        16
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_flowers",
+      "position": [
+        8,
+        0,
+        0
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        8,
+        0
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_shrub",
+      "position": [
+        13,
+        0,
+        0
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        13,
+        0
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_flowers",
+      "position": [
+        15,
+        0,
+        0
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        15,
+        0
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_shrub",
+      "position": [
+        6,
+        0,
+        1
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        6,
+        1
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_flowers",
+      "position": [
+        10,
+        0,
+        1
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        10,
+        1
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sprigs",
+      "position": [
+        13,
+        0,
+        1
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        13,
+        1
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_shrub",
+      "position": [
+        0,
+        0,
+        2
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        0,
+        2
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_flowers",
+      "position": [
+        5,
+        0,
+        2
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        5,
+        2
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_shrub",
+      "position": [
+        8,
+        0,
+        2
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        8,
+        2
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_flowers",
+      "position": [
+        12,
+        0,
+        2
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        12,
+        2
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sprigs",
+      "position": [
+        5,
+        0,
+        3
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        5,
+        3
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_shrub",
+      "position": [
+        15,
+        0,
+        3
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        15,
+        3
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sprigs",
+      "position": [
+        0,
+        0,
+        4
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        0,
+        4
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_shrub",
+      "position": [
+        5,
+        0,
+        4
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        5,
+        4
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sprigs",
+      "position": [
+        17,
+        0,
+        5
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        17,
+        5
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_shrub",
+      "position": [
+        19,
+        0,
+        5
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        19,
+        5
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_flowers",
+      "position": [
+        1,
+        0,
+        6
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        1,
+        6
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_flowers",
+      "position": [
+        0,
+        0,
+        7
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        0,
+        7
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sprigs",
+      "position": [
+        1,
+        0,
+        7
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        1,
+        7
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_mark",
+      "position": [
+        6,
+        0,
+        7
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        6,
+        7
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_mark",
+      "position": [
+        8,
+        0,
+        7
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        8,
+        7
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_mark",
+      "position": [
+        12,
+        0,
+        7
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        12,
+        7
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_mark",
+      "position": [
+        14,
+        0,
+        7
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        14,
+        7
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_shrub",
+      "position": [
+        18,
+        0,
+        8
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        18,
+        8
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sprigs",
+      "position": [
+        19,
+        0,
+        8
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        19,
+        8
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sprigs",
+      "position": [
+        18,
+        0,
+        10
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        18,
+        10
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_flowers",
+      "position": [
+        19,
+        0,
+        10
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        19,
+        10
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sprigs",
+      "position": [
+        2,
+        0,
+        11
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        2,
+        11
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_mark",
+      "position": [
+        6,
+        0,
+        11
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        6,
+        11
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_mark",
+      "position": [
+        8,
+        0,
+        11
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        8,
+        11
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_mark",
+      "position": [
+        12,
+        0,
+        11
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        12,
+        11
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_mark",
+      "position": [
+        14,
+        0,
+        11
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        14,
+        11
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_flowers",
+      "position": [
+        1,
+        0,
+        12
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        1,
+        12
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sprigs",
+      "position": [
+        17,
+        0,
+        12
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        17,
+        12
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_shrub",
+      "position": [
+        19,
+        0,
+        12
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        19,
+        12
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sprigs",
+      "position": [
+        18,
+        0,
+        13
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        18,
+        13
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_shrub",
+      "position": [
+        0,
+        0,
+        14
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        0,
+        14
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_shrub",
+      "position": [
+        19,
+        0,
+        14
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        19,
+        14
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sprigs",
+      "position": [
+        5,
+        0,
+        15
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        5,
+        15
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_mark",
+      "position": [
+        10,
+        0,
+        16
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        10,
+        16
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_flowers",
+      "position": [
+        19,
+        0,
+        16
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        19,
+        16
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_flowers",
+      "position": [
+        0,
+        0,
+        17
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        0,
+        17
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sprigs",
+      "position": [
+        4,
+        0,
+        18
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        4,
+        18
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_flowers",
+      "position": [
+        5,
+        0,
+        18
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        5,
+        18
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sprigs",
+      "position": [
+        9,
+        0,
+        18
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        9,
+        18
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sprigs",
+      "position": [
+        14,
+        0,
+        18
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        14,
+        18
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_shrub",
+      "position": [
+        3,
+        0,
+        19
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        3,
+        19
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_flowers",
+      "position": [
+        8,
+        0,
+        19
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        8,
+        19
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_shrub",
+      "position": [
+        10,
+        0,
+        19
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        10,
+        19
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_sprigs",
+      "position": [
+        11,
+        0,
+        19
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        11,
+        19
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_shrub",
+      "position": [
+        12,
+        0,
+        19
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        12,
+        19
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_flowers",
+      "position": [
+        14,
+        0,
+        19
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        14,
+        19
+      ],
+      "category": "plant"
+    },
+    {
+      "module": "source_shrub",
+      "position": [
+        19,
+        0,
+        19
+      ],
+      "facing": "north",
+      "sourceTopLeft": [
+        19,
+        19
+      ],
+      "category": "plant"
+    }
+  ]
+}

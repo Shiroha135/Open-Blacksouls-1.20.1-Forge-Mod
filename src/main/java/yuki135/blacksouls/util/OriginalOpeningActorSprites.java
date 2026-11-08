@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public final class OriginalOpeningActorSprites {
     private static final List<Sprite> SPRITES=load();
+    private static final List<Sprite> PLAYERS=loadPlayers();
 
     public record Sprite(String sourceCharacter,ResourceLocation texture,int sheetWidth,int sheetHeight,int columns,int rows,int column,int row) {
         public int frameWidth() { return sheetWidth/columns; }
@@ -24,6 +25,17 @@ public final class OriginalOpeningActorSprites {
     public static Sprite get(int origin) {
         if (origin<0 || origin>=SPRITES.size()) throw new IllegalArgumentException("Invalid opening sprite origin");
         return SPRITES.get(origin);
+    }
+
+    public static Sprite player(int origin) { return PLAYERS.get(origin-1); }
+
+    private static List<Sprite> loadPlayers() {
+        var result=new ArrayList<Sprite>();
+        for(int origin=1;origin<=9;origin++) {
+            var actor=OriginalOpeningData.get(origin).actor();
+            result.add(sprite(actor.characterName(),actor.characterIndex(),2,1));
+        }
+        return List.copyOf(result);
     }
 
     private static List<Sprite> load() {

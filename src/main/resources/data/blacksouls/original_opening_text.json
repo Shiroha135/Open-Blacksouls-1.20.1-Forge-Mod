@@ -46,7 +46,7 @@
   ],
   "title": "BLACK SOULSⅡ",
   "sourceDialogueIndexSha256": "4e2ddefeedf1c3f5147cad1e5273f2e80352cf28a31df860cbd4f23c4b9e20b8",
-  "nonExplicitPolicy": "Family-memory presentation and preference questionnaire omitted; personal relationship and progression retained.",
+  "nonExplicitPolicy": "Opening family memories and the preference questionnaire are restored from Map007 and Map110. Both interest responses select the original refusal branch and keep switch 20 (hide H scenes) enabled.",
   "skillNames": {
     "12": "闪避",
     "13": "击溃",

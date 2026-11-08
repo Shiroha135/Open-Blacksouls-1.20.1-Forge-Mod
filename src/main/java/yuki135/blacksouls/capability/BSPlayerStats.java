@@ -47,8 +47,12 @@ public class BSPlayerStats {
 
     public boolean developerNoCooldown = false;
     public boolean developerLimitBreak = false;
+    public boolean allAvatarsUnlocked = false;
+    public String avatarId = "";
 
     public boolean hasVisitedLibrary = false;
+    public int openingBonfireFlowPhase = 0;
+    public boolean openingLibraryBonfireActivated = false;
     public boolean whiteBearIntroduced = false;
     public boolean whiteBearFreeSoulsClaimed = false;
     public int whiteBearProgress = 0;
@@ -170,6 +174,8 @@ public class BSPlayerStats {
         nbt.putInt("Level", level);
         nbt.putBoolean("DeveloperNoCooldown", developerNoCooldown);
         nbt.putBoolean("DeveloperLimitBreak", developerLimitBreak);
+        nbt.putBoolean("AllAvatarsUnlocked",allAvatarsUnlocked);
+        nbt.putString("AvatarId",avatarId);
         nbt.putLong("Exp", currentExp);
         nbt.putDouble("MP", mp);
         nbt.putDouble("CurrentActionPoints", currentActionPoints);
@@ -189,6 +195,8 @@ public class BSPlayerStats {
             nbt.put("OriginalSen", originalSen);
         }
         nbt.putBoolean("HasVisitedLibrary", this.hasVisitedLibrary);
+        nbt.putInt("OpeningBonfireFlowPhase", this.openingBonfireFlowPhase);
+        nbt.putBoolean("OpeningLibraryBonfireActivated", this.openingLibraryBonfireActivated);
         nbt.putBoolean("WhiteBearIntroduced", this.whiteBearIntroduced);
         nbt.putBoolean("WhiteBearFreeSoulsClaimed", this.whiteBearFreeSoulsClaimed);
         nbt.putInt("WhiteBearProgress", this.whiteBearProgress);
@@ -333,6 +341,8 @@ public class BSPlayerStats {
         this.level = Math.max(1, nbt.getInt("Level"));
         this.developerNoCooldown = nbt.getBoolean("DeveloperNoCooldown");
         this.developerLimitBreak = nbt.getBoolean("DeveloperLimitBreak");
+        this.allAvatarsUnlocked = nbt.getBoolean("AllAvatarsUnlocked");
+        this.avatarId = nbt.getString("AvatarId");
         this.currentExp = nbt.getLong("Exp");
         this.mp = nbt.getDouble("MP");
         this.currentActionPoints = nbt.contains("CurrentActionPoints") ? nbt.getDouble("CurrentActionPoints") : 1.0;
@@ -348,6 +358,8 @@ public class BSPlayerStats {
         this.originalSenThresholdsKnown = nbt.contains("OriginalSen");
         this.originalSenThresholdMask = originalSen.getInt("ThresholdMask");
         this.hasVisitedLibrary = nbt.getBoolean("HasVisitedLibrary");
+        this.openingBonfireFlowPhase = Math.max(0, Math.min(3, nbt.getInt("OpeningBonfireFlowPhase")));
+        this.openingLibraryBonfireActivated = nbt.getBoolean("OpeningLibraryBonfireActivated");
         this.whiteBearIntroduced = nbt.getBoolean("WhiteBearIntroduced");
         this.whiteBearFreeSoulsClaimed = nbt.getBoolean("WhiteBearFreeSoulsClaimed");
         this.whiteBearProgress = Math.max(0, Math.min(12, nbt.getInt("WhiteBearProgress")));

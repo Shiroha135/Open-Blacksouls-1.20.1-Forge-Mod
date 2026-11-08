@@ -42,8 +42,20 @@ public final class OriginalNpcMusicController {
     private static volatile boolean ownsMusic;
     private static String sceneStamp = "";
     private static volatile ObservedMusic observed;
+    private static int dialogueEntity=-1;
+    private static boolean cheshireDialogue;
 
     private OriginalNpcMusicController() {
+    }
+
+    public static void applyDialogue(int entityId,int code,String sound,List<Double> values) {
+        apply(code,sound,values);
+        dialogueEntity=entityId;
+        if(code==241&&!sound.isEmpty())cheshireDialogue=sound.equals("blacksouls2music:music_track_076")||sound.equals("blacksouls:cheshire_theme");
+    }
+
+    public static void finishDialogue(int entityId) {
+        if(dialogueEntity==entityId&&cheshireDialogue)reset();
     }
 
     public static void apply(int code, String sound, List<Double> values) {
@@ -168,6 +180,8 @@ public final class OriginalNpcMusicController {
         ownsMusic = false;
         observed = null;
         sceneStamp = "";
+        dialogueEntity=-1;
+        cheshireDialogue=false;
         ClientSceneMusic.resumeAfterPresentation();
     }
 

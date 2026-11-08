@@ -1,0 +1,214 @@
+{
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": false,
+  "textures": {
+    "tree_leaves_olive_volume": "blacksouls:block/opening_source/tree_leaves_olive_volume",
+    "particle": "blacksouls:block/opening_source/tree_leaves_olive_volume"
+  },
+  "elements": [
+    {
+      "from": [
+        8,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        4,
+        4
+      ],
+      "faces": {
+        "north": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            8,
+            12,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            8,
+            12,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            0,
+            12,
+            4,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            0,
+            12,
+            4,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            8,
+            0,
+            16,
+            4
+          ]
+        },
+        "down": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            8,
+            0,
+            16,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        12,
+        4,
+        0
+      ],
+      "to": [
+        16,
+        6,
+        4
+      ],
+      "faces": {
+        "north": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            12,
+            10,
+            16,
+            12
+          ]
+        },
+        "south": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            12,
+            10,
+            16,
+            12
+          ]
+        },
+        "east": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            0,
+            10,
+            4,
+            12
+          ]
+        },
+        "west": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            0,
+            10,
+            4,
+            12
+          ]
+        },
+        "up": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            12,
+            0,
+            16,
+            4
+          ]
+        },
+        "down": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            12,
+            0,
+            16,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        12,
+        6,
+        0
+      ],
+      "to": [
+        14,
+        8,
+        4
+      ],
+      "faces": {
+        "north": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            12,
+            8,
+            14,
+            10
+          ]
+        },
+        "south": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            12,
+            8,
+            14,
+            10
+          ]
+        },
+        "east": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            0,
+            8,
+            4,
+            10
+          ]
+        },
+        "west": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            0,
+            8,
+            4,
+            10
+          ]
+        },
+        "up": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            12,
+            0,
+            14,
+            4
+          ]
+        },
+        "down": {
+          "texture": "#tree_leaves_olive_volume",
+          "uv": [
+            12,
+            0,
+            14,
+            4
+          ]
+        }
+      }
+    }
+  ]
+}

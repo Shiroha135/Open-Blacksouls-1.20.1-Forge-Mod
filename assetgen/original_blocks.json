@@ -1,0 +1,2623 @@
+{
+  "version": 1,
+  "region": "rabbit_hole_library",
+  "materials": [
+    {
+      "id": "oak",
+      "sheet": "VXTileB",
+      "rect": [
+        128,
+        64,
+        32,
+        32
+      ]
+    },
+    {
+      "id": "light_oak",
+      "sheet": "Inside_B",
+      "rect": [
+        98,
+        194,
+        26,
+        11
+      ]
+    },
+    {
+      "id": "dark_wood",
+      "sheet": "Inside_B",
+      "rect": [
+        71,
+        223,
+        13,
+        17
+      ]
+    },
+    {
+      "id": "gold",
+      "sheet": "Inside_B",
+      "rect": [
+        338,
+        202,
+        5,
+        24
+      ]
+    },
+    {
+      "id": "iron",
+      "sheet": "Inside_B",
+      "rect": [
+        398,
+        453,
+        5,
+        24
+      ]
+    },
+    {
+      "id": "white",
+      "sheet": "Inside_C",
+      "rect": [
+        152,
+        204,
+        10,
+        8
+      ]
+    },
+    {
+      "id": "red_velvet",
+      "sheet": "Inside_B",
+      "rect": [
+        354,
+        217,
+        28,
+        20
+      ]
+    },
+    {
+      "id": "purple_velvet",
+      "sheet": "Inside_B",
+      "rect": [
+        450,
+        217,
+        28,
+        20
+      ]
+    },
+    {
+      "id": "green_quilt",
+      "sheet": "Inside_B",
+      "rect": [
+        2,
+        345,
+        60,
+        27
+      ]
+    },
+    {
+      "id": "beige_quilt",
+      "sheet": "Inside_B",
+      "rect": [
+        67,
+        345,
+        57,
+        27
+      ]
+    },
+    {
+      "id": "white_quilt",
+      "sheet": "Inside_B",
+      "rect": [
+        132,
+        345,
+        24,
+        27
+      ]
+    },
+    {
+      "id": "pillow",
+      "sheet": "Inside_B",
+      "rect": [
+        35,
+        327,
+        22,
+        12
+      ]
+    },
+    {
+      "id": "straw",
+      "sheet": "Inside_B",
+      "rect": [
+        162,
+        330,
+        24,
+        42
+      ]
+    },
+    {
+      "id": "books",
+      "sheet": "Inside_B",
+      "rect": [
+        193,
+        275,
+        60,
+        10
+      ]
+    },
+    {
+      "id": "red_books",
+      "sheet": "Inside_B",
+      "rect": [
+        163,
+        274,
+        24,
+        12
+      ]
+    },
+    {
+      "id": "cabinet",
+      "sheet": "Inside_B",
+      "rect": [
+        66,
+        210,
+        26,
+        43
+      ]
+    },
+    {
+      "id": "drawers",
+      "sheet": "Inside_B",
+      "rect": [
+        2,
+        210,
+        25,
+        43
+      ]
+    },
+    {
+      "id": "storage",
+      "sheet": "Inside_B",
+      "rect": [
+        68,
+        276,
+        23,
+        41
+      ]
+    },
+    {
+      "id": "keys",
+      "sheet": "Inside_B",
+      "rect": [
+        178,
+        433,
+        60,
+        12
+      ]
+    },
+    {
+      "id": "piano_front",
+      "sheet": "Inside_B",
+      "rect": [
+        177,
+        390,
+        62,
+        40
+      ]
+    },
+    {
+      "id": "dark",
+      "sheet": "Inside_B",
+      "rect": [
+        289,
+        36,
+        27,
+        25
+      ]
+    },
+    {
+      "id": "wax",
+      "sheet": "6896940",
+      "rect": [
+        139,
+        214,
+        12,
+        25
+      ]
+    },
+    {
+      "id": "flame",
+      "sheet": "../Characters/!Flame",
+      "rect": [
+        8,
+        128,
+        16,
+        20
+      ],
+      "animation": {
+        "count": 3,
+        "stride": 32,
+        "frametime": 3
+      }
+    },
+    {
+      "id": "paper",
+      "sheet": "Inside_C",
+      "rect": [
+        1,
+        290,
+        29,
+        25
+      ]
+    },
+    {
+      "id": "open_pages",
+      "sheet": "Inside_C",
+      "rect": [
+        130,
+        228,
+        28,
+        22
+      ]
+    },
+    {
+      "id": "red_cover",
+      "sheet": "Inside_C",
+      "rect": [
+        1,
+        232,
+        20,
+        16
+      ]
+    },
+    {
+      "id": "blue_cover",
+      "sheet": "Inside_B",
+      "rect": [
+        195,
+        292,
+        28,
+        12
+      ]
+    },
+    {
+      "id": "brown_cover",
+      "sheet": "Inside_C",
+      "rect": [
+        1,
+        265,
+        18,
+        13
+      ]
+    },
+    {
+      "id": "book_pages",
+      "sheet": "Inside_C",
+      "rect": [
+        131,
+        232,
+        9,
+        12
+      ]
+    },
+    {
+      "id": "wall_map",
+      "sheet": "Inside_B",
+      "rect": [
+        389,
+        134,
+        54,
+        22
+      ]
+    },
+    {
+      "id": "landscape",
+      "sheet": "Inside_B",
+      "rect": [
+        452,
+        134,
+        54,
+        22
+      ]
+    },
+    {
+      "id": "mirror",
+      "sheet": "Inside_B",
+      "rect": [
+        293,
+        140,
+        17,
+        23
+      ]
+    },
+    {
+      "id": "green_bottle",
+      "sheet": "Inside_B",
+      "rect": [
+        105,
+        490,
+        5,
+        10
+      ]
+    },
+    {
+      "id": "blue_bottle",
+      "sheet": "Inside_B",
+      "rect": [
+        137,
+        489,
+        5,
+        12
+      ]
+    },
+    {
+      "id": "cork",
+      "sheet": "Inside_B",
+      "rect": [
+        344,
+        459,
+        6,
+        7
+      ]
+    },
+    {
+      "id": "tea",
+      "sheet": "Inside_C",
+      "rect": [
+        20,
+        39,
+        4,
+        4
+      ]
+    },
+    {
+      "id": "marble",
+      "sheet": "Inside_B",
+      "rect": [
+        390,
+        307,
+        19,
+        36
+      ]
+    },
+    {
+      "id": "marble_cap",
+      "sheet": "Inside_B",
+      "rect": [
+        389,
+        290,
+        21,
+        13
+      ]
+    },
+    {
+      "id": "grey_stone",
+      "sheet": "VXTileA5",
+      "rect": [
+        96,
+        194,
+        32,
+        28
+      ]
+    },
+    {
+      "id": "moss_stone",
+      "sheet": "VXTileA5",
+      "rect": [
+        0,
+        196,
+        32,
+        24
+      ]
+    },
+    {
+      "id": "dark_stone",
+      "sheet": "VXTileA5",
+      "rect": [
+        131,
+        161,
+        25,
+        27
+      ]
+    },
+    {
+      "id": "library_brick",
+      "sheet": "VXTileA5",
+      "rect": [
+        65,
+        291,
+        28,
+        26
+      ]
+    },
+    {
+      "id": "limestone",
+      "sheet": "VXTileA5",
+      "rect": [
+        194,
+        194,
+        28,
+        27
+      ]
+    },
+    {
+      "id": "red_brick",
+      "sheet": "VXTileA5",
+      "rect": [
+        194,
+        161,
+        27,
+        27
+      ]
+    },
+    {
+      "id": "oak_floor",
+      "sheet": "VXTileA5",
+      "rect": [
+        129,
+        66,
+        28,
+        27
+      ]
+    },
+    {
+      "id": "parquet",
+      "sheet": "VXTileA5",
+      "rect": [
+        194,
+        66,
+        27,
+        27
+      ]
+    },
+    {
+      "id": "old_floor",
+      "sheet": "VXTileA5",
+      "rect": [
+        34,
+        130,
+        27,
+        27
+      ]
+    },
+    {
+      "id": "red_carpet",
+      "sheet": "VXTileA5",
+      "rect": [
+        130,
+        5,
+        26,
+        24
+      ]
+    },
+    {
+      "id": "purple_carpet",
+      "sheet": "Inside_B",
+      "rect": [
+        99,
+        392,
+        25,
+        18
+      ]
+    },
+    {
+      "id": "spine_red",
+      "sheet": "Inside_B",
+      "rect": [
+        193,
+        276,
+        5,
+        10
+      ]
+    },
+    {
+      "id": "spine_green",
+      "sheet": "Inside_B",
+      "rect": [
+        227,
+        276,
+        5,
+        10
+      ]
+    },
+    {
+      "id": "spine_blue",
+      "sheet": "Inside_B",
+      "rect": [
+        240,
+        306,
+        5,
+        11
+      ]
+    },
+    {
+      "id": "spine_gold",
+      "sheet": "Inside_B",
+      "rect": [
+        251,
+        276,
+        3,
+        10
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "id": "cave_stone",
+      "zh": "洞窟石砖",
+      "en": "Cave Stone",
+      "template": "cube",
+      "textures": {
+        "body": "grey_stone"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          96,
+          194,
+          32,
+          28
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "cave_stone_slab",
+      "zh": "洞窟石砖台阶",
+      "en": "Cave Stone Slab",
+      "template": "slab",
+      "textures": {
+        "body": "grey_stone"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          96,
+          194,
+          32,
+          28
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "cave_stone_stairs",
+      "zh": "洞窟石砖楼梯",
+      "en": "Cave Stone Stairs",
+      "template": "stairs",
+      "textures": {
+        "body": "grey_stone"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          96,
+          194,
+          32,
+          28
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "moss_stone",
+      "zh": "苔石地砖",
+      "en": "Mossy Stone",
+      "template": "cube",
+      "textures": {
+        "body": "moss_stone"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          0,
+          196,
+          32,
+          24
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "moss_stone_slab",
+      "zh": "苔石地砖台阶",
+      "en": "Mossy Stone Slab",
+      "template": "slab",
+      "textures": {
+        "body": "moss_stone"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          0,
+          196,
+          32,
+          24
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "moss_stone_stairs",
+      "zh": "苔石地砖楼梯",
+      "en": "Mossy Stone Stairs",
+      "template": "stairs",
+      "textures": {
+        "body": "moss_stone"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          0,
+          196,
+          32,
+          24
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "limestone",
+      "zh": "旧石地砖",
+      "en": "Old Limestone",
+      "template": "cube",
+      "textures": {
+        "body": "limestone"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          194,
+          28,
+          27
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "limestone_slab",
+      "zh": "旧石地砖台阶",
+      "en": "Old Limestone Slab",
+      "template": "slab",
+      "textures": {
+        "body": "limestone"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          194,
+          28,
+          27
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "limestone_stairs",
+      "zh": "旧石地砖楼梯",
+      "en": "Old Limestone Stairs",
+      "template": "stairs",
+      "textures": {
+        "body": "limestone"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          194,
+          28,
+          27
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "oak_floor",
+      "zh": "图书馆木地板",
+      "en": "Library Oak Floor",
+      "template": "cube",
+      "textures": {
+        "body": "oak_floor"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          129,
+          66,
+          28,
+          27
+        ]
+      },
+      "material": "wood",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "oak_floor_slab",
+      "zh": "图书馆木地板台阶",
+      "en": "Library Oak Floor Slab",
+      "template": "slab",
+      "textures": {
+        "body": "oak_floor"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          129,
+          66,
+          28,
+          27
+        ]
+      },
+      "material": "wood",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "oak_floor_stairs",
+      "zh": "图书馆木地板楼梯",
+      "en": "Library Oak Floor Stairs",
+      "template": "stairs",
+      "textures": {
+        "body": "oak_floor"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          129,
+          66,
+          28,
+          27
+        ]
+      },
+      "material": "wood",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "parquet",
+      "zh": "图书馆拼花地板",
+      "en": "Library Parquet",
+      "template": "cube",
+      "textures": {
+        "body": "parquet"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          66,
+          27,
+          27
+        ]
+      },
+      "material": "wood",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "parquet_slab",
+      "zh": "图书馆拼花地板台阶",
+      "en": "Library Parquet Slab",
+      "template": "slab",
+      "textures": {
+        "body": "parquet"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          66,
+          27,
+          27
+        ]
+      },
+      "material": "wood",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "parquet_stairs",
+      "zh": "图书馆拼花地板楼梯",
+      "en": "Library Parquet Stairs",
+      "template": "stairs",
+      "textures": {
+        "body": "parquet"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          66,
+          27,
+          27
+        ]
+      },
+      "material": "wood",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "old_floor",
+      "zh": "兔子洞旧木地板",
+      "en": "Rabbit Hole Old Floor",
+      "template": "cube",
+      "textures": {
+        "body": "old_floor"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          34,
+          130,
+          27,
+          27
+        ]
+      },
+      "material": "wood",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "old_floor_slab",
+      "zh": "兔子洞旧木地板台阶",
+      "en": "Rabbit Hole Old Floor Slab",
+      "template": "slab",
+      "textures": {
+        "body": "old_floor"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          34,
+          130,
+          27,
+          27
+        ]
+      },
+      "material": "wood",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "old_floor_stairs",
+      "zh": "兔子洞旧木地板楼梯",
+      "en": "Rabbit Hole Old Floor Stairs",
+      "template": "stairs",
+      "textures": {
+        "body": "old_floor"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          34,
+          130,
+          27,
+          27
+        ]
+      },
+      "material": "wood",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "library_brick",
+      "zh": "图书馆旧砖墙",
+      "en": "Library Brick Wall",
+      "template": "cube",
+      "textures": {
+        "body": "library_brick"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          65,
+          291,
+          28,
+          26
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "library_brick_slab",
+      "zh": "图书馆旧砖墙台阶",
+      "en": "Library Brick Wall Slab",
+      "template": "slab",
+      "textures": {
+        "body": "library_brick"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          65,
+          291,
+          28,
+          26
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "library_brick_stairs",
+      "zh": "图书馆旧砖墙楼梯",
+      "en": "Library Brick Wall Stairs",
+      "template": "stairs",
+      "textures": {
+        "body": "library_brick"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          65,
+          291,
+          28,
+          26
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "dark_stone",
+      "zh": "兔子洞暗石墙",
+      "en": "Rabbit Hole Dark Stone Wall",
+      "template": "cube",
+      "textures": {
+        "body": "dark_stone"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          131,
+          161,
+          25,
+          27
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "dark_stone_slab",
+      "zh": "兔子洞暗石墙台阶",
+      "en": "Rabbit Hole Dark Stone Wall Slab",
+      "template": "slab",
+      "textures": {
+        "body": "dark_stone"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          131,
+          161,
+          25,
+          27
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "dark_stone_stairs",
+      "zh": "兔子洞暗石墙楼梯",
+      "en": "Rabbit Hole Dark Stone Wall Stairs",
+      "template": "stairs",
+      "textures": {
+        "body": "dark_stone"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          131,
+          161,
+          25,
+          27
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "red_brick",
+      "zh": "旧红砖墙",
+      "en": "Old Red Brick Wall",
+      "template": "cube",
+      "textures": {
+        "body": "red_brick"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          161,
+          27,
+          27
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "red_brick_slab",
+      "zh": "旧红砖墙台阶",
+      "en": "Old Red Brick Wall Slab",
+      "template": "slab",
+      "textures": {
+        "body": "red_brick"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          161,
+          27,
+          27
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "red_brick_stairs",
+      "zh": "旧红砖墙楼梯",
+      "en": "Old Red Brick Wall Stairs",
+      "template": "stairs",
+      "textures": {
+        "body": "red_brick"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          194,
+          161,
+          27,
+          27
+        ]
+      },
+      "material": "stone",
+      "category": "architecture",
+      "strength": 1.5
+    },
+    {
+      "id": "marble_column",
+      "zh": "图书馆大理石柱",
+      "en": "Library Marble Column",
+      "template": "pillar",
+      "textures": {
+        "body": "marble",
+        "trim": "marble_cap"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          390,
+          307,
+          19,
+          36
+        ]
+      },
+      "material": "stone",
+      "category": "architecture"
+    },
+    {
+      "id": "cave_column",
+      "zh": "兔子洞石柱",
+      "en": "Rabbit Hole Stone Column",
+      "template": "pillar",
+      "textures": {
+        "body": "grey_stone",
+        "trim": "dark_stone"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          96,
+          194,
+          32,
+          28
+        ]
+      },
+      "material": "stone",
+      "category": "architecture"
+    },
+    {
+      "id": "marble_arch",
+      "zh": "图书馆石拱门",
+      "en": "Library Stone Arch",
+      "template": "arch",
+      "textures": {
+        "body": "marble",
+        "trim": "marble"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          390,
+          307,
+          19,
+          36
+        ]
+      },
+      "material": "stone",
+      "category": "architecture"
+    },
+    {
+      "id": "cave_arch",
+      "zh": "兔子洞暗石拱门",
+      "en": "Rabbit Hole Dark Stone Arch",
+      "template": "arch",
+      "textures": {
+        "body": "dark_stone",
+        "trim": "dark_stone"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          131,
+          161,
+          25,
+          27
+        ]
+      },
+      "material": "stone",
+      "category": "architecture"
+    },
+    {
+      "id": "iron_grating",
+      "zh": "兔子洞铁栅栏",
+      "en": "Rabbit Hole Iron Grating",
+      "template": "iron_bars",
+      "textures": {
+        "body": "iron",
+        "trim": "iron"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          398,
+          453,
+          5,
+          24
+        ]
+      },
+      "material": "metal",
+      "category": "architecture"
+    },
+    {
+      "id": "grey_stone_rubble",
+      "zh": "洞窟碎石堆",
+      "en": "Cave Rubble",
+      "template": "rubble",
+      "textures": {
+        "body": "grey_stone"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          96,
+          194,
+          32,
+          28
+        ]
+      },
+      "material": "stone",
+      "category": "architecture"
+    },
+    {
+      "id": "moss_stone_rubble",
+      "zh": "苔石堆",
+      "en": "Mossy Rubble",
+      "template": "rubble",
+      "textures": {
+        "body": "moss_stone"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          0,
+          196,
+          32,
+          24
+        ]
+      },
+      "material": "stone",
+      "category": "architecture"
+    },
+    {
+      "id": "oak_chair",
+      "zh": "旧木椅",
+      "en": "Old Oak Chair",
+      "template": "chair",
+      "textures": {
+        "body": "oak",
+        "seat": "oak",
+        "back": "oak"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          64,
+          420,
+          32,
+          28
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "dark_chair",
+      "zh": "深木椅",
+      "en": "Dark Wood Chair",
+      "template": "chair",
+      "textures": {
+        "body": "dark_wood",
+        "seat": "dark_wood",
+        "back": "dark_wood"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          64,
+          420,
+          32,
+          28
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "red_chair",
+      "zh": "红绒木椅",
+      "en": "Red Velvet Chair",
+      "template": "chair",
+      "textures": {
+        "body": "dark_wood",
+        "seat": "red_velvet",
+        "back": "red_velvet"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          320,
+          192,
+          96,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "purple_chair",
+      "zh": "紫绒木椅",
+      "en": "Purple Velvet Chair",
+      "template": "chair",
+      "textures": {
+        "body": "dark_wood",
+        "seat": "purple_velvet",
+        "back": "purple_velvet"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          416,
+          192,
+          96,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "red_throne",
+      "zh": "红绒金边王座",
+      "en": "Gilded Red Throne",
+      "template": "throne",
+      "textures": {
+        "body": "gold",
+        "seat": "red_velvet",
+        "back": "red_velvet"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          320,
+          192,
+          96,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "purple_throne",
+      "zh": "紫绒银边王座",
+      "en": "Silver Purple Throne",
+      "template": "throne",
+      "textures": {
+        "body": "iron",
+        "seat": "purple_velvet",
+        "back": "purple_velvet"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          416,
+          192,
+          96,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "oak_table",
+      "zh": "旧木方桌",
+      "en": "Old Oak Table",
+      "template": "table",
+      "textures": {
+        "body": "oak",
+        "surface": "light_oak"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "dark_table",
+      "zh": "深木方桌",
+      "en": "Dark Wood Table",
+      "template": "table",
+      "textures": {
+        "body": "dark_wood",
+        "surface": "dark_wood"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "oak_long_table",
+      "zh": "图书馆长桌",
+      "en": "Library Long Table",
+      "template": "long_table",
+      "textures": {
+        "body": "oak",
+        "surface": "light_oak"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "dark_long_table",
+      "zh": "深木长桌",
+      "en": "Dark Wood Long Table",
+      "template": "long_table",
+      "textures": {
+        "body": "dark_wood",
+        "surface": "dark_wood"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "round_oak_table",
+      "zh": "旧木圆桌",
+      "en": "Old Round Table",
+      "template": "round_table",
+      "textures": {
+        "body": "oak",
+        "surface": "light_oak"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "round_white_table",
+      "zh": "白布圆桌",
+      "en": "White Cloth Round Table",
+      "template": "round_table",
+      "textures": {
+        "body": "oak",
+        "surface": "white"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "oak_stool",
+      "zh": "旧木凳",
+      "en": "Old Wooden Stool",
+      "template": "stool",
+      "textures": {
+        "body": "oak",
+        "surface": "light_oak"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "red_stool",
+      "zh": "红绒圆凳",
+      "en": "Red Velvet Stool",
+      "template": "stool",
+      "textures": {
+        "body": "oak",
+        "surface": "red_velvet"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "purple_stool",
+      "zh": "紫绒木凳",
+      "en": "Purple Velvet Stool",
+      "template": "stool",
+      "textures": {
+        "body": "dark_wood",
+        "surface": "purple_velvet"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          384,
+          160,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "library_bookcase",
+      "zh": "图书馆书柜",
+      "en": "Library Bookcase",
+      "template": "bookcase",
+      "textures": {
+        "body": "oak",
+        "books": "books",
+        "books0": "spine_red",
+        "books1": "spine_green",
+        "books2": "spine_blue",
+        "books3": "spine_gold"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          160,
+          256,
+          96,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture",
+      "width": 16
+    },
+    {
+      "id": "library_wide_bookcase",
+      "zh": "图书馆双联书柜",
+      "en": "Library Wide Bookcase",
+      "template": "bookcase",
+      "textures": {
+        "body": "oak",
+        "books": "books",
+        "books0": "spine_red",
+        "books1": "spine_green",
+        "books2": "spine_blue",
+        "books3": "spine_gold"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          160,
+          256,
+          96,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture",
+      "width": 32
+    },
+    {
+      "id": "dark_bookcase",
+      "zh": "深木书柜",
+      "en": "Dark Wood Bookcase",
+      "template": "bookcase",
+      "textures": {
+        "body": "dark_wood",
+        "books": "books",
+        "books0": "spine_red",
+        "books1": "spine_green",
+        "books2": "spine_blue",
+        "books3": "spine_gold"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          160,
+          256,
+          96,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture",
+      "width": 16
+    },
+    {
+      "id": "red_bookcase",
+      "zh": "红书书柜",
+      "en": "Red Bookcase",
+      "template": "bookcase",
+      "textures": {
+        "body": "oak",
+        "books": "red_books",
+        "books0": "spine_red",
+        "books1": "spine_red",
+        "books2": "spine_red",
+        "books3": "spine_red"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          160,
+          256,
+          96,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture",
+      "width": 16
+    },
+    {
+      "id": "oak_wardrobe",
+      "zh": "旧木衣柜",
+      "en": "Old Oak Wardrobe",
+      "template": "cupboard",
+      "textures": {
+        "body": "oak",
+        "panel": "cabinet",
+        "trim": "gold"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          64,
+          192,
+          32,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "dark_wardrobe",
+      "zh": "深木衣柜",
+      "en": "Dark Wood Wardrobe",
+      "template": "cupboard",
+      "textures": {
+        "body": "dark_wood",
+        "panel": "cabinet",
+        "trim": "gold"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          64,
+          192,
+          32,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "oak_drawer",
+      "zh": "旧木抽屉柜",
+      "en": "Old Wooden Drawers",
+      "template": "cabinet",
+      "textures": {
+        "body": "oak",
+        "panel": "drawers",
+        "surface": "light_oak",
+        "trim": "gold"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          192,
+          32,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "crockery_cabinet",
+      "zh": "旧餐具柜",
+      "en": "Old Crockery Cabinet",
+      "template": "cabinet",
+      "textures": {
+        "body": "oak",
+        "panel": "storage",
+        "surface": "light_oak",
+        "trim": "gold"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          64,
+          256,
+          32,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "library_counter",
+      "zh": "图书馆木柜台",
+      "en": "Library Counter",
+      "template": "counter",
+      "textures": {
+        "body": "oak",
+        "panel": "cabinet",
+        "surface": "light_oak"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          192,
+          192,
+          64,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "green_bed",
+      "zh": "绿被木床",
+      "en": "Green Quilt Bed",
+      "template": "bed",
+      "textures": {
+        "body": "oak",
+        "quilt": "green_quilt",
+        "pillow": "pillow",
+        "back": "oak"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          0,
+          320,
+          64,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "beige_bed",
+      "zh": "旧被木床",
+      "en": "Beige Quilt Bed",
+      "template": "bed",
+      "textures": {
+        "body": "oak",
+        "quilt": "beige_quilt",
+        "pillow": "pillow",
+        "back": "oak"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          64,
+          320,
+          64,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "white_bed",
+      "zh": "白被木床",
+      "en": "White Quilt Bed",
+      "template": "bed",
+      "textures": {
+        "body": "oak",
+        "quilt": "white_quilt",
+        "pillow": "pillow",
+        "back": "oak"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          128,
+          320,
+          32,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "straw_bed",
+      "zh": "兔子洞草床",
+      "en": "Rabbit Hole Straw Bed",
+      "template": "straw_bed",
+      "textures": {
+        "body": "oak",
+        "quilt": "straw",
+        "pillow": "pillow",
+        "back": "oak"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          160,
+          320,
+          32,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "oak_chest",
+      "zh": "旧木箱",
+      "en": "Old Wooden Chest",
+      "template": "chest",
+      "textures": {
+        "body": "oak",
+        "surface": "oak",
+        "trim": "gold"
+      },
+      "source": {
+        "sheet": "6896940",
+        "rect": [
+          128,
+          144,
+          48,
+          40
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "dark_wood_chest",
+      "zh": "深木箱",
+      "en": "Dark Wood Chest",
+      "template": "chest",
+      "textures": {
+        "body": "dark_wood",
+        "surface": "dark_wood",
+        "trim": "gold"
+      },
+      "source": {
+        "sheet": "6896940",
+        "rect": [
+          128,
+          144,
+          48,
+          40
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "oak_barrel",
+      "zh": "旧木桶",
+      "en": "Old Wooden Barrel",
+      "template": "barrel",
+      "textures": {
+        "body": "oak",
+        "surface": "light_oak",
+        "trim": "iron"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          288,
+          320,
+          32,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "oak_crate",
+      "zh": "图书馆板条箱",
+      "en": "Library Wooden Crate",
+      "template": "crate",
+      "textures": {
+        "body": "oak",
+        "trim": "light_oak"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          352,
+          448,
+          32,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "library_lectern",
+      "zh": "图书馆阅书台",
+      "en": "Library Reading Stand",
+      "template": "lectern",
+      "textures": {
+        "body": "oak",
+        "surface": "light_oak",
+        "pages": "open_pages"
+      },
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          128,
+          224,
+          32,
+          32
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "upright_piano",
+      "zh": "旧立式钢琴",
+      "en": "Old Upright Piano",
+      "template": "piano",
+      "textures": {
+        "body": "dark_wood",
+        "keys": "keys",
+        "panel": "piano_front",
+        "trim": "gold"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          160,
+          384,
+          96,
+          64
+        ]
+      },
+      "material": "wood",
+      "category": "furniture"
+    },
+    {
+      "id": "library_fireplace",
+      "zh": "图书馆石壁炉",
+      "en": "Library Stone Fireplace",
+      "template": "fireplace",
+      "textures": {
+        "body": "library_brick",
+        "trim": "marble_cap",
+        "dark": "dark",
+        "log": "dark_wood"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          256,
+          0,
+          96,
+          64
+        ]
+      },
+      "material": "stone",
+      "category": "furniture"
+    },
+    {
+      "id": "red_cover_book",
+      "zh": "红封书",
+      "en": "Red Book",
+      "template": "closed_book",
+      "textures": {
+        "body": "red_cover",
+        "cover": "red_cover",
+        "pages": "book_pages"
+      },
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          1,
+          232,
+          20,
+          16
+        ]
+      },
+      "material": "wood",
+      "category": "decoration"
+    },
+    {
+      "id": "red_cover_books",
+      "zh": "红封书堆",
+      "en": "Red Book Stack",
+      "template": "book_stack",
+      "textures": {
+        "body": "red_cover",
+        "cover": "red_cover",
+        "pages": "book_pages"
+      },
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          1,
+          232,
+          20,
+          16
+        ]
+      },
+      "material": "wood",
+      "category": "decoration"
+    },
+    {
+      "id": "blue_cover_book",
+      "zh": "蓝封书",
+      "en": "Blue Book",
+      "template": "closed_book",
+      "textures": {
+        "body": "blue_cover",
+        "cover": "blue_cover",
+        "pages": "book_pages"
+      },
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          65,
+          235,
+          17,
+          13
+        ]
+      },
+      "material": "wood",
+      "category": "decoration"
+    },
+    {
+      "id": "blue_cover_books",
+      "zh": "蓝封书堆",
+      "en": "Blue Book Stack",
+      "template": "book_stack",
+      "textures": {
+        "body": "blue_cover",
+        "cover": "blue_cover",
+        "pages": "book_pages"
+      },
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          65,
+          235,
+          17,
+          13
+        ]
+      },
+      "material": "wood",
+      "category": "decoration"
+    },
+    {
+      "id": "brown_cover_book",
+      "zh": "旧皮书",
+      "en": "Worn Leather Book",
+      "template": "closed_book",
+      "textures": {
+        "body": "brown_cover",
+        "cover": "brown_cover",
+        "pages": "book_pages"
+      },
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          1,
+          265,
+          18,
+          13
+        ]
+      },
+      "material": "wood",
+      "category": "decoration"
+    },
+    {
+      "id": "brown_cover_books",
+      "zh": "旧皮书堆",
+      "en": "Worn Leather Book Stack",
+      "template": "book_stack",
+      "textures": {
+        "body": "brown_cover",
+        "cover": "brown_cover",
+        "pages": "book_pages"
+      },
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          1,
+          265,
+          18,
+          13
+        ]
+      },
+      "material": "wood",
+      "category": "decoration"
+    },
+    {
+      "id": "open_book",
+      "zh": "摊开的旧书",
+      "en": "Open Old Book",
+      "template": "open_book",
+      "textures": {
+        "body": "red_cover",
+        "cover": "red_cover",
+        "pages": "open_pages"
+      },
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          1,
+          232,
+          20,
+          16
+        ]
+      },
+      "material": "wood",
+      "category": "decoration"
+    },
+    {
+      "id": "brass_candle",
+      "zh": "黄铜烛台",
+      "en": "Brass Candlestick",
+      "template": "candle",
+      "textures": {
+        "body": "gold",
+        "wax": "wax",
+        "flame": "flame"
+      },
+      "source": {
+        "sheet": "6896940",
+        "rect": [
+          128,
+          192,
+          32,
+          96
+        ]
+      },
+      "material": "gold",
+      "category": "decoration",
+      "light": 12
+    },
+    {
+      "id": "silver_candle",
+      "zh": "银色烛台",
+      "en": "Silver Candlestick",
+      "template": "candle",
+      "textures": {
+        "body": "iron",
+        "wax": "wax",
+        "flame": "flame"
+      },
+      "source": {
+        "sheet": "6896940",
+        "rect": [
+          128,
+          192,
+          32,
+          96
+        ]
+      },
+      "material": "metal",
+      "category": "decoration",
+      "light": 12
+    },
+    {
+      "id": "brass_candelabra",
+      "zh": "黄铜三枝烛台",
+      "en": "Brass Candelabra",
+      "template": "candelabra",
+      "textures": {
+        "body": "gold",
+        "wax": "wax",
+        "flame": "flame"
+      },
+      "source": {
+        "sheet": "6896940",
+        "rect": [
+          128,
+          192,
+          32,
+          96
+        ]
+      },
+      "material": "gold",
+      "category": "decoration",
+      "light": 12
+    },
+    {
+      "id": "silver_candelabra",
+      "zh": "银色三枝烛台",
+      "en": "Silver Candelabra",
+      "template": "candelabra",
+      "textures": {
+        "body": "iron",
+        "wax": "wax",
+        "flame": "flame"
+      },
+      "source": {
+        "sheet": "6896940",
+        "rect": [
+          128,
+          192,
+          32,
+          96
+        ]
+      },
+      "material": "metal",
+      "category": "decoration",
+      "light": 12
+    },
+    {
+      "id": "wall_candle",
+      "zh": "壁式烛台",
+      "en": "Wall Candlestick",
+      "template": "wall_candle",
+      "textures": {
+        "body": "gold",
+        "wax": "wax",
+        "flame": "flame"
+      },
+      "source": {
+        "sheet": "6896940",
+        "rect": [
+          128,
+          192,
+          32,
+          96
+        ]
+      },
+      "material": "gold",
+      "category": "decoration",
+      "light": 12
+    },
+    {
+      "id": "library_map",
+      "zh": "图书馆古地图",
+      "en": "Library Old Map",
+      "template": "frame",
+      "textures": {
+        "body": "gold",
+        "trim": "gold",
+        "picture": "wall_map"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          338,
+          202,
+          5,
+          24
+        ]
+      },
+      "material": "gold",
+      "category": "decoration",
+      "width": 32,
+      "height": 16
+    },
+    {
+      "id": "landscape_frame",
+      "zh": "旧风景画",
+      "en": "Old Landscape Painting",
+      "template": "frame",
+      "textures": {
+        "body": "gold",
+        "trim": "gold",
+        "picture": "landscape"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          338,
+          202,
+          5,
+          24
+        ]
+      },
+      "material": "gold",
+      "category": "decoration",
+      "width": 32,
+      "height": 16
+    },
+    {
+      "id": "gilded_mirror",
+      "zh": "金框壁镜",
+      "en": "Gilded Wall Mirror",
+      "template": "frame",
+      "textures": {
+        "body": "gold",
+        "trim": "gold",
+        "picture": "mirror"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          338,
+          202,
+          5,
+          24
+        ]
+      },
+      "material": "gold",
+      "category": "decoration",
+      "width": 16,
+      "height": 24
+    },
+    {
+      "id": "red_carpet",
+      "zh": "图书馆红地毯",
+      "en": "Library Red Carpet",
+      "template": "rug",
+      "textures": {
+        "body": "red_carpet",
+        "surface": "red_carpet"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          130,
+          5,
+          26,
+          24
+        ]
+      },
+      "material": "cloth",
+      "category": "decoration",
+      "width": 16,
+      "strength": 0.2
+    },
+    {
+      "id": "red_carpet_wide",
+      "zh": "图书馆红地毯（宽）",
+      "en": "Library Red Carpet Wide",
+      "template": "rug",
+      "textures": {
+        "body": "red_carpet",
+        "surface": "red_carpet"
+      },
+      "source": {
+        "sheet": "VXTileA5",
+        "rect": [
+          130,
+          5,
+          26,
+          24
+        ]
+      },
+      "material": "cloth",
+      "category": "decoration",
+      "width": 32,
+      "strength": 0.2
+    },
+    {
+      "id": "purple_carpet",
+      "zh": "图书馆紫地毯",
+      "en": "Library Purple Carpet",
+      "template": "rug",
+      "textures": {
+        "body": "purple_carpet",
+        "surface": "purple_carpet"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          99,
+          392,
+          25,
+          18
+        ]
+      },
+      "material": "cloth",
+      "category": "decoration",
+      "width": 16,
+      "strength": 0.2
+    },
+    {
+      "id": "purple_carpet_wide",
+      "zh": "图书馆紫地毯（宽）",
+      "en": "Library Purple Carpet Wide",
+      "template": "rug",
+      "textures": {
+        "body": "purple_carpet",
+        "surface": "purple_carpet"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          99,
+          392,
+          25,
+          18
+        ]
+      },
+      "material": "cloth",
+      "category": "decoration",
+      "width": 32,
+      "strength": 0.2
+    },
+    {
+      "id": "white_teapot",
+      "zh": "白瓷茶壶",
+      "en": "White Porcelain Teapot",
+      "template": "teapot",
+      "textures": {
+        "body": "white",
+        "trim": "gold"
+      },
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          152,
+          204,
+          10,
+          8
+        ]
+      },
+      "material": "glass",
+      "category": "decoration"
+    },
+    {
+      "id": "tea_cup",
+      "zh": "瓷茶杯",
+      "en": "Porcelain Tea Cup",
+      "template": "mug",
+      "textures": {
+        "body": "white",
+        "liquid": "tea"
+      },
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          152,
+          204,
+          10,
+          8
+        ]
+      },
+      "material": "glass",
+      "category": "decoration"
+    },
+    {
+      "id": "white_plate",
+      "zh": "白瓷盘",
+      "en": "White Porcelain Plate",
+      "template": "plate",
+      "textures": {
+        "body": "white",
+        "surface": "white"
+      },
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          152,
+          204,
+          10,
+          8
+        ]
+      },
+      "material": "glass",
+      "category": "decoration"
+    },
+    {
+      "id": "green_bottle",
+      "zh": "旧绿玻璃瓶",
+      "en": "Old Green Bottle",
+      "template": "bottle",
+      "textures": {
+        "body": "green_bottle",
+        "neck": "green_bottle",
+        "trim": "cork"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          105,
+          490,
+          5,
+          10
+        ]
+      },
+      "material": "glass",
+      "category": "decoration"
+    },
+    {
+      "id": "blue_bottle",
+      "zh": "旧蓝玻璃瓶",
+      "en": "Old Blue Bottle",
+      "template": "bottle",
+      "textures": {
+        "body": "blue_bottle",
+        "neck": "blue_bottle",
+        "trim": "cork"
+      },
+      "source": {
+        "sheet": "Inside_B",
+        "rect": [
+          137,
+          489,
+          5,
+          12
+        ]
+      },
+      "material": "glass",
+      "category": "decoration"
+    },
+    {
+      "id": "manuscript",
+      "zh": "散落的手稿",
+      "en": "Loose Manuscript",
+      "template": "paper",
+      "textures": {
+        "body": "paper",
+        "pages": "paper"
+      },
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          1,
+          290,
+          29,
+          25
+        ]
+      },
+      "material": "cloth",
+      "category": "decoration",
+      "strength": 0.1
+    },
+    {
+      "id": "book_page",
+      "zh": "散落的书页",
+      "en": "Loose Book Page",
+      "template": "paper",
+      "textures": {
+        "body": "open_pages",
+        "pages": "open_pages"
+      },
+      "source": {
+        "sheet": "Inside_C",
+        "rect": [
+          130,
+          228,
+          28,
+          22
+        ]
+      },
+      "material": "cloth",
+      "category": "decoration",
+      "strength": 0.1
+    }
+  ]
+}

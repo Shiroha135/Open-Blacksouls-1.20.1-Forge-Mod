@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "blacksouls:block/original/original_dark_wardrobe"
+    },
+    "facing=east": {
+      "model": "blacksouls:block/original/original_dark_wardrobe",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "blacksouls:block/original/original_dark_wardrobe",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "blacksouls:block/original/original_dark_wardrobe",
+      "y": 270
+    }
+  }
+}

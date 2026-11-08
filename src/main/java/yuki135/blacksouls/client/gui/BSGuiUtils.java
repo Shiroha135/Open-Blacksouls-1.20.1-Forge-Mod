@@ -12,6 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 public class BSGuiUtils {
 
     public static final ResourceLocation RM_WINDOW_SKIN = new ResourceLocation(BlackSouls.MODID, "textures/gui/window.png");
+    private static final ResourceLocation RM_WINDOW_BACKGROUND = new ResourceLocation(BlackSouls.MODID, "textures/gui/window_back.png");
     private static final int TEX_SIZE = 128;        
     private static final int BG_U = 0;              
     private static final int BG_V = 64;             
@@ -20,30 +21,59 @@ public class BSGuiUtils {
     private static final int CORNER_TEX_SIZE = 16;  
     private static final int BG_RENDER_SIZE = 32;   
 
+    public static void drawRMSelection(GuiGraphics graphics,int x,int y,int width,int height) {
+        graphics.flush();
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        graphics.setColor(1,1,1,1);
+        graphics.blit(RM_WINDOW_SKIN,x,y,width,height,64,64,32,32,128,128);
+        RenderSystem.disableBlend();
+    }
+
     public static void drawRMWindow(@NotNull GuiGraphics guiGraphics, int x, int y, int width, int height) {
         drawRMWindow(guiGraphics, x, y, width, height, 8);
     }
     public static void drawRMWindow(@NotNull GuiGraphics guiGraphics, int x, int y, int width, int height, int borderThickness) {
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
+        drawRMWindow(guiGraphics, x, y, width, height, borderThickness, BG_RENDER_SIZE);
+    }
+    public static void drawRMWindow(@NotNull GuiGraphics guiGraphics, int x, int y, int width, int height, int borderThickness, int backgroundTileSize) {
+        drawRMWindow(guiGraphics, x, y, width, height, borderThickness, backgroundTileSize, 1.0F);
+    }
+    public static void drawRMWindow(@NotNull GuiGraphics guiGraphics, int x, int y, int width, int height, int borderThickness, int backgroundTileSize, float backgroundOpacity) {
+        if (width <= 0 || height <= 0) return;
+        borderThickness = Math.max(1, Math.min(borderThickness, Math.min(width, height) / 2));
+        backgroundTileSize = Math.max(1, backgroundTileSize);
+        guiGraphics.flush();
+        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
         int bgOffset = borderThickness / 2;
         int bgStartX = x + bgOffset;
         int bgStartY = y + bgOffset;
         int bgWidth = width - bgOffset * 2;
         int bgHeight = height - bgOffset * 2;
-        guiGraphics.fill(bgStartX, bgStartY, bgStartX + bgWidth, bgStartY + bgHeight, 0xFF000000);
-        guiGraphics.setColor(109.0F / 255.0F, 1.0F / 255.0F, 1.0F / 255.0F, 1.0F);
+        boolean translucent=backgroundOpacity<1.0F;
+        if(!translucent) {
+            guiGraphics.fill(bgStartX, bgStartY, bgStartX + bgWidth, bgStartY + bgHeight, 0xFF000000);
+            guiGraphics.flush();
+        }
+        if(translucent)guiGraphics.setColor(1.0F, 1.0F, 1.0F, Math.max(0.0F, backgroundOpacity));
+        else guiGraphics.setColor(109.0F / 255.0F, 1.0F / 255.0F, 1.0F / 255.0F, 1.0F);
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        boolean composed=translucent&&yuki135.blacksouls.client.render.OriginalWindowBackground.draw(guiGraphics,RM_WINDOW_SKIN,bgStartX,bgStartY,bgWidth,bgHeight,backgroundTileSize,backgroundOpacity);
         
-        for (int i = 0; i < bgWidth; i += BG_RENDER_SIZE) {
-            for (int j = 0; j < bgHeight; j += BG_RENDER_SIZE) {
-                int drawW = Math.min(BG_RENDER_SIZE, bgWidth - i);
-                int drawH = Math.min(BG_RENDER_SIZE, bgHeight - j);
-                int texW = drawW * 2;
-                int texH = drawH * 2;
-                guiGraphics.blit(RM_WINDOW_SKIN, bgStartX + i, bgStartY + j, drawW, drawH, BG_U, BG_V, texW, texH, TEX_SIZE, TEX_SIZE);
+        for (int i = 0; !composed&&i < bgWidth; i += backgroundTileSize) {
+            for (int j = 0; j < bgHeight; j += backgroundTileSize) {
+                int drawW = Math.min(backgroundTileSize, bgWidth - i);
+                int drawH = Math.min(backgroundTileSize, bgHeight - j);
+                int texW = Math.max(1, Math.round(drawW * 64.0F / backgroundTileSize));
+                int texH = Math.max(1, Math.round(drawH * 64.0F / backgroundTileSize));
+                if(translucent)guiGraphics.blit(RM_WINDOW_BACKGROUND, bgStartX + i, bgStartY + j, drawW, drawH, 0, 0, texW, texH, 64, 64);
+                else guiGraphics.blit(RM_WINDOW_SKIN, bgStartX + i, bgStartY + j, drawW, drawH, BG_U, BG_V, texW, texH, TEX_SIZE, TEX_SIZE);
             }
         }
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
         
         float scale = (float) CORNER_TEX_SIZE / borderThickness;
         int edgeRenderLen = Math.max(1, (int) (32 / scale));

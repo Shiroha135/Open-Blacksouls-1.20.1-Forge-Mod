@@ -7,6 +7,8 @@ import yuki135.blacksouls.handler.StatEventHandler;
 import yuki135.blacksouls.network.NetworkHandler;
 import yuki135.blacksouls.network.packets.ClientboundOpeningPacket;
 import yuki135.blacksouls.network.packets.ClientboundOpeningPresentationPacket;
+import yuki135.blacksouls.network.packets.ClientboundOriginalNpcAnimationPacket;
+import yuki135.blacksouls.network.packets.ClientboundOriginalNpcPresentationPacket;
 import yuki135.blacksouls.network.packets.ClientboundStoryNamePacket;
 import yuki135.blacksouls.network.packets.ServerboundOpeningPacket;
 import yuki135.blacksouls.util.HokoniwaDestination;
@@ -65,6 +67,7 @@ public final class OriginalOpeningService {
     private static final TicketType<UUID> TICKET = TicketType.create("blacksouls_opening", Comparator.comparing(UUID::toString), 80);
     private static final Map<MinecraftServer, LinkedHashMap<UUID, Session>> SESSIONS = new WeakHashMap<>();
     private static final Map<MinecraftServer, Integer> ROUND_ROBIN = new WeakHashMap<>();
+    private static final Map<SceneKind,List<Cell>> MOVEMENT_TRIGGERS=new java.util.EnumMap<>(SceneKind.class);
 
     private OriginalOpeningService() {
     }
@@ -80,7 +83,8 @@ public final class OriginalOpeningService {
     public static boolean inventoryLocked(ServerPlayer player) {
         if (!managed(player)) return false;
         var profile=stats(player).openingProfile();
-        return profile.previewActive() || profile.realStage().orElse(Stage.COMPLETE)!=Stage.ORIGIN_SELECTION;
+        return profile.previewActive() || profile.realStage().orElse(Stage.COMPLETE)!=Stage.ORIGIN_SELECTION
+                || OriginalOpeningGreeting.active(profile.realCursor().commandIndex());
     }
 
     public static boolean ownsOpening(ServerPlayer player) {
@@ -103,13 +107,15 @@ public final class OriginalOpeningService {
         }
         var flow = new Flow(profile);
         stabilize(flow);
+        normalizeCoda(player,flow);
         stopFall(player);
         var session = new Session(player, profile);
         session.cleanup = cleanup || profile.previewActive() && flow.stage() == Stage.COMPLETE;
         sessions.put(player.getUUID(), session);
         if (!profile.previewActive() && !StoryNameData.hasStarted(player)) StoryNameData.start(player);
-        if (profile.previewActive() && flow.stage() == Stage.NAME_PENDING && !aborting(flow)) flow.advance(Stage.ORIGIN_SELECTION);
+        if (profile.previewActive() && flow.stage() == Stage.NAME_PENDING && !aborting(flow)) named(flow);
         if (!profile.previewActive() && flow.stage() == Stage.NAME_PENDING && StoryNameData.isConfirmed(player)) named(flow);
+        if (StoryNameData.isConfirmed(player)) NetworkHandler.sendToPlayer(new ClientboundStoryNamePacket(false,StoryNameData.get(player)),player);
         save(player, session);
         send(player, session);
         return true;
@@ -134,6 +140,7 @@ public final class OriginalOpeningService {
     private static void named(Flow flow) {
         var pending=flow.pending();
         flow.advance(Stage.ORIGIN_SELECTION);
+        flow.cursor(OriginalOpeningGreeting.cursor(OriginalOpeningGreeting.FIRST_COMMAND));
         if (pending.isPresent()) {
             flow.clearPending(pending.get());
             flow.pending(new PendingTransfer(pending.get().targetSourceMapId(),Stage.ORIGIN_SELECTION,pending.get().destination()));
@@ -154,13 +161,17 @@ public final class OriginalOpeningService {
         if (session == null || session.error || session.entering || session.awaitingReady || session.lease == null
                 || actor.leaseSlot() != session.lease.slot() || session.cleanup) return InteractionResult.FAIL;
         var flow = flow(player);
-        if (flow.stage() == Stage.ORIGIN_SELECTION && actor.originId() >= 1 && actor.originId() <= 9) {
+        if (flow.stage() == Stage.ORIGIN_SELECTION && !OriginalOpeningGreeting.active(flow.cursor().commandIndex())
+                && OriginalOpeningGreeting.selectable(actor.originId())) {
             session.focus = actor.originId();
             session.focusActor = actor.getUUID();
+            OriginalOpeningDialogueView.focus(player,actor);
+            session.hold=point(player);
             changed(player, session);
             return InteractionResult.CONSUME;
         }
         if (flow.stage() == Stage.ALICE_SELECTION && actor.originId() == 0) {
+            if(OriginalOpeningCoda.aliceChoice(flow.cursor().commandIndex()))OriginalOpeningDialogueView.focus(player,actor);
             changed(player, session);
             return InteractionResult.CONSUME;
         }
@@ -172,7 +183,10 @@ public final class OriginalOpeningService {
         var session = session(player);
         if (session == null || !session.token.equals(packet.session()) || session.revision != packet.revision()) return;
         int now = player.server.getTickCount();
-        if (now == session.lastActionTick) return;
+        int command=flow(player).cursor().commandIndex();
+        boolean codaInput=packet.action()==ServerboundOpeningPacket.Action.NEXT&&OriginalOpeningCoda.active(command)
+                ||packet.action()==ServerboundOpeningPacket.Action.RELATIONSHIP&&OriginalOpeningCoda.aliceChoice(command);
+        if (now == session.lastActionTick&&!codaInput) return;
         session.lastActionTick = now;
         if (packet.action() == ServerboundOpeningPacket.Action.RETRY) {
             var flow=flow(player);
@@ -220,9 +234,16 @@ public final class OriginalOpeningService {
             case CONFIRM_ORIGIN -> confirmOrigin(player, session, flow, packet.value());
             case RELATIONSHIP -> {
                 if (flow.stage() != Stage.ALICE_SELECTION || packet.value() < 1 || packet.value() > 3) return;
+                if(OriginalOpeningCoda.active(flow.cursor().commandIndex())&&!OriginalOpeningCoda.aliceChoice(flow.cursor().commandIndex()))return;
                 flow.confirmRelationship(packet.value());
-                flow.cursor(new Cursor(110,8,packet.value(),0,0,20));
+                flow.cursor(OriginalOpeningCoda.cursor(OriginalOpeningCoda.memoryStart(packet.value()),0));
                 flow.checkpoint(point(player));
+                if(flow.skip()) {
+                    flow.skipToArrival();
+                    var cinematic=OriginalOpeningCinematic.start("arrival");cinematic.skip();flow.cinematic(cinematic);
+                    session.entering=true;session.sceneReady=false;
+                    changed(player,session);save(player,session);return;
+                }
                 if (!OriginalOpeningActors.ensure(player,session.lease,SceneKind.ISLAND_110,flow.relationship(),true)) {
                     fail(player,session,"爱丽丝尚未准备好，请重试。","alice_actor_relationship_update_failed");
                     save(player,session);
@@ -231,12 +252,11 @@ public final class OriginalOpeningService {
                 changed(player, session);
                 save(player, session);
             }
-            case NEXT -> nextSleep(player, session, flow, packet.value());
-            case DOWN -> {
-                if (flow.stage() == Stage.FIRST_STEP && flow.cursor().waitTicksRemaining() == 0) {
-                    beginMotion(player, session, flow, new Cell(15,13), Stage.COLLAPSE1, SceneKind.ISLAND_97);
-                }
+            case NEXT -> {
+                if(flow.stage()==Stage.ORIGIN_SELECTION)nextGreeting(player,session,flow,packet.value());
+                else nextCoda(player,session,flow,packet.value());
             }
+            case DOWN -> { }
             case CLOSE_PREVIEW -> {
                 if (flow.stage() != Stage.ORIGIN_SELECTION) return;
                 session.focus = 0;
@@ -248,7 +268,8 @@ public final class OriginalOpeningService {
     }
 
     private static void confirmOrigin(ServerPlayer player, Session session, Flow flow, int origin) {
-        if (flow.stage() != Stage.ORIGIN_SELECTION || origin != session.focus || session.focusActor == null
+        if (flow.stage() != Stage.ORIGIN_SELECTION || OriginalOpeningGreeting.active(flow.cursor().commandIndex())
+                || !OriginalOpeningGreeting.selectable(origin) || origin != session.focus || session.focusActor == null
                 || !(player.serverLevel().getEntity(session.focusActor) instanceof EntityOpeningActor actor)
                 || !player.getUUID().equals(actor.ownerId()) || actor.leaseSlot() != session.lease.slot()
                 || actor.originId() != origin || player.distanceToSqr(actor) > 16.0D) return;
@@ -259,43 +280,222 @@ public final class OriginalOpeningService {
         flow.confirmOrigin(origin);
         session.focus = 0;
         session.focusActor = null;
-        if (!commitOriginRewards(player, session)) return;
+        if (!commitOriginKit(player, session)) return;
         flow = flow(player);
-        flow.cursor(new Cursor(7,1,2,27,0,20));
+        flow.cursor(originCodaCursor(OriginalOpeningCoda.ORIGIN_ANIMATION,flow.origin(),0));
         flow.checkpoint(point(player));
         changed(player, session);
-        save(player, session);
+        if(save(player, session))tickCoda(player,session,flow,false);
     }
 
-    private static boolean commitOriginRewards(ServerPlayer player, Session session) {
+    private static boolean commitOriginKit(ServerPlayer player, Session session) {
         var flow = flow(player);
         if (flow.preview()) return true;
         var result = OriginalOpeningStartingKit.grant(player);
         if (!result.committed()) { fail(player, session, "出身内容尚未保存，请重试。", result.detail()); return false; }
-        result = OriginalOpeningStartingKit.opCoda(player);
+        return true;
+    }
+
+    private static boolean commitCodaReward(ServerPlayer player,Session session) {
+        if(flow(player).preview())return true;
+        var result=OriginalOpeningStartingKit.opCoda(player);
         if (!result.committed()) { fail(player, session, "旅途的初始赠礼尚未保存，请重试。", result.detail()); return false; }
         return true;
     }
 
-    private static void nextSleep(ServerPlayer player, Session session, Flow flow, int value) {
-        if (flow.stage() != Stage.ORIGIN_CONFIRMED || flow.cursor().waitTicksRemaining() != 0) return;
-        int command = flow.cursor().commandIndex();
-        int next = switch (command) {
-            case 27 -> value == 1 ? 31 : value == 2 ? 35 : -1;
-            case 31,35 -> 40;
-            case 40 -> 45;
-            case 45 -> 0;
-            default -> -1;
-        };
-        if (next < 0) return;
-        if (next == 0) {
-            flow.advance(Stage.ALICE_SELECTION);
-            flow.cursor(new Cursor(110,8,0,0,0,0));
-            session.entering = true;
-            session.sceneReady = false;
-        } else flow.cursor(new Cursor(7,1,2,next,0,20));
-        changed(player, session);
-        save(player, session);
+    private static void nextGreeting(ServerPlayer player,Session session,Flow flow,int value) {
+        var cursor=flow.cursor();
+        if(cursor.waitTicksRemaining()!=0)return;
+        int next=OriginalOpeningGreeting.next(cursor.commandIndex(),value);
+        if(next==cursor.commandIndex())return;
+        flow.cursor(OriginalOpeningGreeting.cursor(next));
+        flow.checkpoint(point(player));
+        changed(player,session);
+        if(!save(player,session))return;
+        if(OriginalOpeningGreeting.animation(next))sendGreetingAnimations(player,session,flow);
+    }
+
+    private static void sendGreetingAnimations(ServerPlayer player,Session session,Flow flow) {
+        if(session.lease==null)return;
+        for(var entity:player.serverLevel().getAllEntities()) {
+            if(!(entity instanceof EntityOpeningActor actor)||!player.getUUID().equals(actor.ownerId())
+                    ||actor.leaseSlot()!=session.lease.slot()||!OriginalOpeningGreeting.selectable(actor.originId())||actor.isRemoved())continue;
+            int mask=1<<(actor.originId()-1);
+            int frame=OriginalOpeningGreeting.animationFrame(flow.cursor().waitTicksRemaining(),actor.originId());
+            if(frame<0||frame>=OriginalOpeningGreeting.ANIMATION_FRAMES||(session.greetingAnimations&mask)!=0)continue;
+            var playback=UUID.nameUUIDFromBytes(("blacksouls:opening-greeting:"+session.token+":"+actor.originId()).getBytes(StandardCharsets.UTF_8));
+            NetworkHandler.sendToPlayer(new ClientboundOriginalNpcAnimationPacket(playback,actor.getId(),player.level().dimension().location(),
+                    OriginalOpeningGreeting.ANIMATION_ID,frame,1,actor.getX(),actor.getY(),actor.getZ(),frame==0,false),player);
+            session.greetingAnimations|=mask;
+        }
+    }
+
+    private static void normalizeCoda(ServerPlayer player,Flow flow) {
+        if(aborting(flow))return;
+        int command=flow.cursor().commandIndex();
+        if(flow.stage()==Stage.ORIGIN_CONFIRMED&&!OriginalOpeningCoda.active(command))
+            flow.cursor(originCodaCursor(OriginalOpeningCoda.migrateOrigin(command),flow.origin(),0));
+        else if(flow.stage()==Stage.ALICE_SELECTION&&!OriginalOpeningCoda.active(command))flow.cursor(OriginalOpeningCoda.cursor(OriginalOpeningCoda.OP_SKIP,255));
+        else if(flow.stage()==Stage.MEMORY_DIALOGUE&&!OriginalOpeningCoda.active(command))flow.cursor(OriginalOpeningCoda.cursor(OriginalOpeningCoda.memoryStart(flow.relationship()),0));
+        if(flow.stage()==Stage.ORIGIN_CONFIRMED||flow.stage()==Stage.ALICE_SELECTION||flow.stage()==Stage.MEMORY_DIALOGUE)ensureNoH(player);
+    }
+
+    private static void ensureNoH(ServerPlayer player) {
+        var progress=yuki135.blacksouls.capability.OriginalNpcProgress.get(player.server);
+        if(!progress.switchValue(20)) {
+            progress.setSwitch(20,true);
+            player.server.overworld().getDataStorage().save();
+        }
+    }
+
+    private static Cursor originCodaCursor(int command,int origin,int state) {
+        var cursor=OriginalOpeningCoda.cursor(command,state);
+        return command>=OriginalOpeningCoda.ORIGIN_ANIMATION&&command<=OriginalOpeningCoda.ORIGIN_FADE_IN
+                ?new Cursor(7,origin+2,0,command,state,cursor.waitTicksRemaining()):cursor;
+    }
+
+    private static void enterCoda(ServerPlayer player,Session session,Flow flow,int command) {
+        int visual=OriginalOpeningCoda.enterVisualState(command,flow.cursor().commandIndex(),flow.cursor().messageOffset());
+        flow.cursor(originCodaCursor(command,flow.origin(),visual));
+        session.codaEffectCommand=-1;session.codaRouteKey=-1;
+        if(session.lease!=null)OriginalOpeningDialogueView.focusAlice(player,session.lease.slot(),command);
+        flow.checkpoint(point(player));
+        changed(player,session);
+    }
+
+    private static void nextCoda(ServerPlayer player,Session session,Flow flow,int value) {
+        int command=flow.cursor().commandIndex();
+        if(!OriginalOpeningCoda.active(command)||!OriginalOpeningCoda.acceptsInput(command)||flow.cursor().waitTicksRemaining()>0
+                ||OriginalOpeningCoda.aliceChoice(command))return;
+        int next=OriginalOpeningCoda.next(command,value);if(next<0)return;
+        if(command==OriginalOpeningCoda.OP_SKIP) { if(value==1)flow.requestSkip();else flow.clearSkip(); }
+        ensureNoH(player);
+        enterCoda(player,session,flow,next);
+        tickCoda(player,session,flow,false);
+    }
+
+    private static void tickCoda(ServerPlayer player,Session session,Flow flow,boolean advanceTime) {
+        if(!OriginalOpeningCoda.active(flow.cursor().commandIndex()))return;
+        ensureNoH(player);
+        if(advanceTime) {
+            var cursor=flow.cursor();
+            int visual=OriginalOpeningCoda.advanceVisualState(cursor.commandIndex(),cursor.messageOffset(),3);
+            if(visual!=cursor.messageOffset())flow.cursor(new Cursor(cursor.sourceMapId(),cursor.sourceEventId(),cursor.pageIndex(),cursor.commandIndex(),visual,cursor.waitTicksRemaining()));
+        }
+        boolean changed=false;
+        for(int guard=0;guard<128;guard++) {
+            var cursor=flow.cursor();var cue=OriginalOpeningCoda.cue(cursor.commandIndex());
+            changed=sendCodaEffects(player,session,flow,cue)||changed;
+            if(OriginalOpeningCoda.acceptsInput(cue.command())||cursor.waitTicksRemaining()>0) { if(changed)save(player,session);return; }
+            if(cue.durationFrames()>0&&(cue.code()==212||cue.code()==213)) {
+                var p=cue.parameters();var subject=codaSubject(player,session,p.get(0).getAsInt());
+                if(cue.code()==212)NetworkHandler.sendToPlayer(new ClientboundOriginalNpcAnimationPacket(codaPlaybackId(session,cue.command()),subject.getId(),
+                        player.level().dimension().location(),p.get(1).getAsInt(),Math.max(OriginalOpeningGreeting.ANIMATION_FRAMES,cue.durationFrames()),1,
+                        subject.getX(),subject.getY(),subject.getZ(),false,false),player);
+                else NetworkHandler.sendToPlayer(new ClientboundOriginalNpcPresentationPacket(213,subject.getId(),player.level().dimension().location(),
+                        List.of(p.get(1).getAsDouble(),0D),""),player);
+            }
+            if(cue.kind().equals("origin_transfer")) {
+                OriginalOpeningActors.clear(player.serverLevel(),player.getUUID(),session.lease);
+                var feet=feet(session.lease,SceneKind.OP,new Cell(10,9));
+                var destination=new WorldPoint(DIMENSION.location().toString(),feet.x,feet.y,feet.z,0,0);
+                if(!safe(player.serverLevel(),player,destination)) { notice(player,session,"正在等待石柱前的落脚点空出……");return; }
+                player.connection.teleport(feet.x,feet.y,feet.z,0,0);player.setYHeadRot(0);player.setYBodyRot(0);player.setDeltaMovement(Vec3.ZERO);player.fallDistance=0;
+                session.hold=destination;session.previousCell=new Cell(10,9);session.notice="";
+                flow.checkpoint(destination);
+                if(!save(player,session))return;
+            }
+            if(cue.kind().equals("coda_finish")) {
+                if(!flow.preview())OriginalSenService.writeValue(player,100);
+                if(!commitCodaReward(player,session))return;
+                flow.advance(Stage.ALICE_SELECTION);flow.cursor(OriginalOpeningCoda.cursor(OriginalOpeningCoda.OP_SKIP,255));
+                flow.checkpoint(point(player));session.entering=true;session.sceneReady=false;
+                session.codaEffectCommand=-1;changed(player,session);save(player,session);return;
+            }
+            if(cue.kind().equals("memory_finish")) {
+                OriginalOpeningActors.clear(player.serverLevel(),player.getUUID(),session.lease);
+                flow.advance(Stage.FIRST_STEP);flow.cursor(new Cursor(110,9,0,0,0,0));flow.checkpoint(point(player));
+                session.codaEffectCommand=-1;changed(player,session);save(player,session);return;
+            }
+            if(cue.next()==0)throw new IllegalStateException("Opening coda reached a missing terminal");
+            enterCoda(player,session,flow,cue.next());changed=true;
+        }
+        throw new IllegalStateException("Opening coda exceeded its transition bound");
+    }
+
+    private static Entity codaSubject(ServerPlayer player,Session session,int target) {
+        if(target==-1)return player;
+        for(var entity:player.serverLevel().getAllEntities())if(entity instanceof EntityOpeningActor actor&&actor.originId()==0
+                &&player.getUUID().equals(actor.ownerId())&&actor.leaseSlot()==session.lease.slot()&&!actor.isRemoved())return actor;
+        return player;
+    }
+
+    private static UUID codaPlaybackId(Session session,int command) {
+        return UUID.nameUUIDFromBytes(("blacksouls:opening-coda:"+session.token+":"+command).getBytes(StandardCharsets.UTF_8));
+    }
+
+    private static boolean sendCodaEffects(ServerPlayer player,Session session,Flow flow,OriginalOpeningCoda.Cue cue) {
+        var cursor=flow.cursor();int elapsed=OriginalOpeningCoda.elapsedFrames(cue.command(),cursor.waitTicksRemaining());
+        boolean seen=(cursor.messageOffset()&OriginalOpeningCoda.EFFECT_PLAYED)!=0;
+        boolean changed=false;
+        if(session.codaEffectCommand!=cue.command()) {
+            var p=cue.parameters();
+            if(OriginalOpeningCoda.memory(cue.command())&&cue.code()==121&&p.get(0).getAsInt()<=103
+                    &&p.get(1).getAsInt()>=103&&p.get(2).getAsInt()==0)
+                OriginalOpeningActors.clear(player.serverLevel(),player.getUUID(),session.lease);
+            if(OriginalOpeningCoda.memory(cue.command())) {
+                var subject=codaSubject(player,session,6);
+                if(subject instanceof EntityOpeningActor actor) {
+                    float yaw=switch(OriginalOpeningCoda.aliceDirection(cue.command())) {case 2->0;case 4->90;case 6->270;default->180;};
+                    actor.setYRot(yaw);actor.setYHeadRot(yaw);actor.setYBodyRot(yaw);
+                }
+            }
+            if(cue.code()==212) {
+                var subject=codaSubject(player,session,p.get(0).getAsInt());
+                if(cue.durationFrames()==0||elapsed<cue.durationFrames())NetworkHandler.sendToPlayer(new ClientboundOriginalNpcAnimationPacket(codaPlaybackId(session,cue.command()),subject.getId(),
+                        player.level().dimension().location(),p.get(1).getAsInt(),seen?Math.max(1,elapsed):elapsed,1,
+                        subject.getX(),subject.getY(),subject.getZ(),!seen&&elapsed==0,false),player);
+            } else if(cue.code()==213) {
+                var subject=codaSubject(player,session,p.get(0).getAsInt());int remaining=Math.max(0,76-elapsed);
+                if(remaining>0)NetworkHandler.sendToPlayer(new ClientboundOriginalNpcPresentationPacket(213,subject.getId(),player.level().dimension().location(),List.of(p.get(1).getAsDouble(),(double)remaining),""),player);
+            } else if((cue.code()==241||cue.code()==242)&&!seen) {
+                var parameters=new java.util.ArrayList<com.google.gson.JsonElement>();p.forEach(parameters::add);
+                OriginalNpcPresentationService.apply(player,player,cue.code(),parameters);
+            }
+            session.codaEffectCommand=cue.command();
+            flow.cursor(new Cursor(cursor.sourceMapId(),cursor.sourceEventId(),cursor.pageIndex(),cursor.commandIndex(),cursor.messageOffset()|OriginalOpeningCoda.EFFECT_PLAYED,cursor.waitTicksRemaining()));
+            changed=!seen;
+        }
+        if(cue.code()==205)applyCodaRoute(player,session,cue,elapsed);
+        return changed;
+    }
+
+    private static void applyCodaRoute(ServerPlayer player,Session session,OriginalOpeningCoda.Cue cue,int elapsed) {
+        var p=cue.parameters();var subject=codaSubject(player,session,p.get(0).getAsInt());
+        int frame=0,direction=0;double jump=0;
+        for(var value:p.get(1).getAsJsonObject().getAsJsonArray("list")) {
+            var move=value.getAsJsonObject();int code=move.get("code").getAsInt();var args=move.getAsJsonArray("parameters");
+            if(code==0)break;
+            int duration=code==15?args.get(0).getAsInt():code==14?14:1;
+            if(code>=16&&code<=19&&elapsed>=frame)direction=switch(code) {case 16->2;case 17->4;case 18->6;default->8;};
+            if(code==14&&elapsed>=frame&&elapsed<frame+duration) {
+                double count=duration-(elapsed-frame);jump=(49-Math.pow(Math.abs(count-7),2))/64D;
+            }
+            frame+=duration;
+        }
+        if(direction!=0) {
+            int key=cue.command()*10+direction;
+            if(session.codaRouteKey!=key) {
+                float yaw=switch(direction) {case 2->0;case 4->90;case 6->270;default->180;};
+                subject.setYRot(yaw);
+                if(subject instanceof net.minecraft.world.entity.LivingEntity living) { living.setYHeadRot(yaw);living.setYBodyRot(yaw); }
+                if(subject==player)player.connection.teleport(player.getX(),player.getY(),player.getZ(),yaw,player.getXRot());
+                session.codaRouteKey=key;
+            }
+        }
+        if(subject instanceof EntityOpeningActor actor&&session.lease!=null) {
+            var anchor=aliceAnchor(session.lease,SceneKind.ISLAND_110).feet();actor.setPos(anchor.x,anchor.y+jump,anchor.z);
+        }
     }
 
     @SubscribeEvent
@@ -333,6 +533,7 @@ public final class OriginalOpeningService {
                 if (session.profile != stats(player).openingProfile()) {
                     session.profile = stats(player).openingProfile();
                     stabilize(flow(player));
+                    normalizeCoda(player,flow(player));
                     session.entering = !session.cleanup;
                     session.awaitingReady=false;
                     session.sceneReady = false;
@@ -381,13 +582,20 @@ public final class OriginalOpeningService {
             periodic(player, session);
             return 0;
         }
+        if(!session.entering&&!session.awaitingReady&&needsOpRetirement(player,session)) {
+            session.entering=true;session.sceneReady=false;
+            changed(player,session);
+        }
         if (session.entering) {
             int used = enterScene(player, session, flow, budget);
             hold(player, session);
             periodic(player, session);
             return used;
         }
-        if (session.awaitingReady) { hold(player, session); periodic(player, session); return 0; }
+        if (session.awaitingReady) {
+            int used=retireOp(player,session,budget);
+            hold(player,session);periodic(player,session);return used;
+        }
         if(flow.stage()==Stage.COLLAPSE1||flow.stage()==Stage.COLLAPSE2||flow.stage()==Stage.COLLAPSE3||flow.stage()==Stage.FALLING) {
             ensureStageCinematic(player,session,flow);
             tickCinematic(player,session,flow);
@@ -410,40 +618,34 @@ public final class OriginalOpeningService {
                     NetworkHandler.sendToPlayer(new ClientboundStoryNamePacket(true,""), player);
                 }
             }
-            case ORIGIN_SELECTION -> guardMovement(player, session, flow);
+            case ORIGIN_SELECTION -> {
+                if(OriginalOpeningGreeting.active(flow.cursor().commandIndex())) {
+                    hold(player,session);
+                    if(OriginalOpeningGreeting.animation(flow.cursor().commandIndex())) {
+                        sendGreetingAnimations(player,session,flow);
+                        if(flow.cursor().waitTicksRemaining()==0) {
+                            flow.cursor(OriginalOpeningGreeting.cursor(OriginalOpeningGreeting.LAST_COMMAND));
+                            flow.checkpoint(point(player));
+                            changed(player,session);
+                            save(player,session);
+                        }
+                    }
+                } else if(session.focus>0)hold(player,session);
+                else guardMovement(player,session,flow);
+            }
             case ORIGIN_CONFIRMED -> {
                 hold(player, session);
-                if (!flow.preview() && (!flow.profile.realKitGrantCommitted() || !flow.profile.realOpCodaGrantCommitted())) {
-                    if (!commitOriginRewards(player, session)) return 0;
+                if (!flow.preview() && !flow.profile.realKitGrantCommitted()) {
+                    if (!commitOriginKit(player, session)) return 0;
                     flow = flow(player);
                 }
-                if (flow.cursor().commandIndex() == 0) {
-                    flow.cursor(new Cursor(7,1,2,27,0,20));
-                    changed(player,session);
-                    save(player,session);
-                }
-                if (flow.skip()) {
-                    flow.advance(Stage.ALICE_SELECTION);
-                    flow.cursor(new Cursor(110,8,0,0,0,0));
-                    session.entering=true;
-                    session.sceneReady=false;
-                    changed(player,session);
-                    save(player,session);
-                }
+                normalizeCoda(player,flow);tickCoda(player,session,flow,true);
             }
-            case ALICE_SELECTION -> hold(player, session);
+            case ALICE_SELECTION -> { hold(player,session);normalizeCoda(player,flow);tickCoda(player,session,flow,true); }
             case MEMORY_DIALOGUE -> {
-                hold(player, session);
-                if (flow.cursor().waitTicksRemaining() == 0) {
-                    OriginalOpeningActors.clear(player.serverLevel(),player.getUUID(),session.lease);
-                    flow.advance(Stage.FIRST_STEP);
-                    flow.cursor(new Cursor(110,9,0,0,0,20));
-                    flow.checkpoint(point(player));
-                    changed(player,session);
-                    save(player,session);
-                }
+                hold(player,session);normalizeCoda(player,flow);tickCoda(player,session,flow,true);
             }
-            case FIRST_STEP -> hold(player,session);
+            case FIRST_STEP -> guardFirstStepMovement(player,session,flow);
             case COLLAPSE1,COLLAPSE2 -> guardMovement(player,session,flow);
             case COLLAPSE3 -> {
                 hold(player,session);
@@ -523,9 +725,15 @@ public final class OriginalOpeningService {
             return used;
         }
         var view=data.view(identity,lease).orElseThrow();
+        if(kind.island()&&view.journal()!=null&&!view.journal().restore()&&view.journal().zone()==SceneKind.OP&&!view.journal().targetOp()) {
+            session.scene=kind;
+            int used=retireOp(player,session,budget);
+            if(needsOpRetirement(player,session)||session.error)return used;
+            return used;
+        }
         Set<Cell> temporary = Set.of();
         Cell landingCell = desiredCell(flow,lease,kind);
-        if (!sourceSupport(kind,landingCell) && sourcePit(kind,landingCell)) temporary=Set.of(landingCell);
+        if (kind.island() && !sourceSupport(kind,landingCell) && sourcePit(kind,landingCell)) temporary=Set.of(landingCell);
         if (view.journal()==null && view.island()==kind && !view.temporarySupports().isEmpty()
                 && DIMENSION.equals(player.level().dimension()) && sourceSupport(kind,landingCell)) {
             Cell current=null;
@@ -566,8 +774,10 @@ public final class OriginalOpeningService {
             notice(player,session,"落脚点被占用，正在等待安全位置。");
             return Math.min(budget,used);
         }
-        boolean alice=kind==SceneKind.ISLAND_110 && (flow.stage()==Stage.ALICE_SELECTION || flow.stage()==Stage.MEMORY_DIALOGUE);
-        if (!OriginalOpeningActors.ensure(player,lease,kind,flow.relationship(),alice)) {
+        boolean alice=kind==SceneKind.ISLAND_110 && (flow.stage()==Stage.ALICE_SELECTION || flow.stage()==Stage.MEMORY_DIALOGUE)
+                &&OriginalOpeningCoda.aliceVisible(flow.cursor().commandIndex());
+        boolean professions=flow.stage()!=Stage.ORIGIN_CONFIRMED||OriginalOpeningCoda.professionsPresent(flow.cursor().commandIndex());
+        if (!OriginalOpeningActors.ensure(player,lease,kind,flow.relationship(),alice,professions)) {
             notice(player,session,"序章人物尚未就绪，请稍候。");
             return Math.min(budget,used);
         }
@@ -613,6 +823,7 @@ public final class OriginalOpeningService {
         if (level==null) return;
         player.stopRiding();
         if (flow.stage()==Stage.FALLING) freezeFall(player);else stopFall(player);
+        if(flow.stage()==Stage.ARRIVAL_PENDING&&!flow.preview()&&!OriginalOpeningBonfireFlow.prepareFallingRoom(player))return;
         player.teleportTo(level,destination.x(),destination.y(),destination.z(),destination.yaw(),destination.pitch());
         if (player.level()!=level || player.position().distanceToSqr(new Vec3(destination.x(),destination.y(),destination.z()))>1.0E-6D) {
             fail(player,session,"暂时无法前往目的地，进度已保留，请重试。","opening_transfer_not_completed");
@@ -629,6 +840,7 @@ public final class OriginalOpeningService {
 
     private static void acceptReady(ServerPlayer player, Session session, Flow flow) {
         if (!session.awaitingReady || flow.pending().isEmpty()) return;
+        if(DIMENSION.equals(player.level().dimension())&&needsOpRetirement(player,session))return;
         if (flow.stage()==Stage.FALLING&&flow.cinematic().isEmpty()) {
             stabilize(flow);
             session.awaitingReady=false;
@@ -681,8 +893,36 @@ public final class OriginalOpeningService {
                 return;
             }
         }
+        if(session.lease!=null&&OriginalOpeningDialogueView.focusAlice(player,session.lease.slot(),flow.cursor().commandIndex()))flow.checkpoint(point(player));
         changed(player,session);
         save(player,session);
+    }
+
+    private static boolean needsOpRetirement(ServerPlayer player,Session session) {
+        if(session.lease==null||session.scene==null||!session.scene.island())return false;
+        var level=player.server.getLevel(DIMENSION);
+        return level!=null&&OriginalOpeningSceneData.get(level).view(session.lease.owner(),session.lease).map(OriginalOpeningSceneData.View::opBuilt).orElse(false);
+    }
+
+    private static int retireOp(ServerPlayer player,Session session,int budget) {
+        if(!needsOpRetirement(player,session))return 0;
+        var level=player.server.getLevel(DIMENSION);
+        var result=OriginalOpeningSceneWorld.beginRetireOp(level,session.lease.owner(),session.lease);
+        if(result.status()==OriginalOpeningSceneWorld.Status.WAIT_CHUNKS)return 0;
+        if(result.status()==OriginalOpeningSceneWorld.Status.ALREADY_READY)return 0;
+        if(result.status()!=OriginalOpeningSceneWorld.Status.PROGRESS&&result.status()!=OriginalOpeningSceneWorld.Status.COMPLETE) {
+            fail(player,session,"先前的出身场景暂时不能安全收起，请重试。",sceneFailure(level,result));return 0;
+        }
+        if(budget==0)return 0;
+        int before=result.cursor();
+        result=OriginalOpeningSceneWorld.advance(level,session.lease.owner(),session.lease,result.journal(),budget);
+        int used=result.status()==OriginalOpeningSceneWorld.Status.WRITE_FAILED?budget:Math.max(0,result.cursor()-before);
+        if(result.status()==OriginalOpeningSceneWorld.Status.COMPLETE) {
+            for(var entity:level.getAllEntities())if(entity instanceof EntityOpeningActor actor&&player.getUUID().equals(actor.ownerId())&&actor.leaseSlot()==session.lease.slot()&&actor.originId()>0)actor.discard();
+        } else if(result.status()!=OriginalOpeningSceneWorld.Status.PROGRESS&&result.status()!=OriginalOpeningSceneWorld.Status.WAIT_CHUNKS) {
+            fail(player,session,"先前的出身场景暂时不能安全收起，请重试。",sceneFailure(level,result));
+        }
+        return Math.min(budget,used);
     }
 
     private static void ensureStageCinematic(ServerPlayer player,Session session,Flow flow) {
@@ -818,7 +1058,10 @@ public final class OriginalOpeningService {
             var result=OriginalOpeningStartingKit.arrivalCleanup(player);
             if(!result.committed()) { fail(player,session,"序章抵达状态尚未保存，请重试。",result.detail());return; }
             flow=flow(player);
-            stats(player).hasVisitedLibrary=true;StatEventHandler.applyStats(player);player.setHealth(player.getMaxHealth());
+            if(!OriginalOpeningBonfireFlow.arriveAtFallingRoom(player)) {
+                fail(player,session,"坠落之间的篝火尚未就绪，请重试。","opening_arrival_bonfire_unavailable");return;
+            }
+            StatEventHandler.applyStats(player);player.setHealth(player.getMaxHealth());
             flow.cursor(new Cursor(1,0,0,0,0,0));flow.region(1,0);
         }
         session.completedCinematic=flow.cinematic().orElseThrow().copy();session.completedPreview=flow.preview();
@@ -900,26 +1143,107 @@ public final class OriginalOpeningService {
     }
 
     private static void guardMovement(ServerPlayer player, Session session, Flow flow) {
-        if (session.scene==null || session.lease==null || !DIMENSION.equals(player.level().dimension()) || player.getY()<63.8 || player.getY()>64.6) { hold(player,session); return; }
+        if (session.scene==null || session.lease==null || !DIMENSION.equals(player.level().dimension())) { hold(player,session); return; }
+        if (session.scene==SceneKind.OP) { guardProfessionMovement(player,session,flow); return; }
         Cell after;
         try { after=sourceCell(session.lease,session.scene,player.position()); }
         catch (IllegalArgumentException failure) { hold(player,session); return; }
+        if(startMovementTrigger(player,session,flow))return;
+        if (player.getY()<63.8 || player.getY()>64.6) { hold(player,session); return; }
         var before=session.previousCell;
         if (!player.serverLevel().getEntities(player,player.getBoundingBox(),entity->!entity.isRemoved()&&!entity.isSpectator()).isEmpty()) { hold(player,session);return; }
         if (before==null) { session.previousCell=after; session.hold=point(player); return; }
         if (!after.equals(before) && !canSourceStep(session.scene,before,after)) { hold(player,session); return; }
-        if (!after.equals(before) && (flow.stage()==Stage.COLLAPSE1 || flow.stage()==Stage.COLLAPSE2)
-                && enteredRegion10(session.scene,before,after)) {
-            var next=flow.stage()==Stage.COLLAPSE1?Stage.COLLAPSE2:Stage.COLLAPSE3;
-            var nextScene=flow.stage()==Stage.COLLAPSE1?SceneKind.ISLAND_98:SceneKind.ISLAND_99;
-            beginMotion(player,session,flow,before,next,nextScene);
-            return;
-        }
         if (!sourceSupport(session.scene,after)) { hold(player,session); return; }
         session.previousCell=after;
         session.hold=point(player);
         flow.region(session.scene.sourceMap(),regionAt(session.scene,after));
         if (!after.equals(before)) flow.checkpoint(point(player));
+    }
+
+    private static void guardFirstStepMovement(ServerPlayer player,Session session,Flow flow) {
+        if(session.scene!=SceneKind.ISLAND_110||session.lease==null||!DIMENSION.equals(player.level().dimension())
+                ||flow.cursor().waitTicksRemaining()>0) { hold(player,session);return; }
+        if(!session.firstStepReleased) {
+            var target=feet(session.lease,SceneKind.ISLAND_110,new Cell(15,13));
+            if(player.position().distanceToSqr(target)>.00001D)
+                player.lookAt(net.minecraft.commands.arguments.EntityAnchorArgument.Anchor.EYES,target.add(0,player.getEyeHeight(),0));
+            session.firstStepReleased=true;
+            flow.checkpoint(point(player));
+            changed(player,session);
+            if(!save(player,session))return;
+        }
+        var body=player.getBoundingBox();var bounds=bounds(session.lease,SceneKind.ISLAND_110);
+        if(body.minX<bounds.minX||body.maxX>bounds.maxX||body.minY<bounds.minY||body.maxY>bounds.maxY
+                ||body.minZ<bounds.minZ||body.maxZ>bounds.maxZ||!player.serverLevel().noCollision(player,body)
+                ||player.serverLevel().containsAnyLiquid(body)) { hold(player,session);return; }
+        var cell=sourceCell(session.lease,SceneKind.ISLAND_110,player.position());
+        if(startMovementTrigger(player,session,flow))return;
+        if(!sourceSupport(SceneKind.ISLAND_110,cell)) { hold(player,session);return; }
+        var previous=session.previousCell;
+        if(player.onGround()) {
+            session.previousCell=cell;session.hold=point(player);
+            flow.region(SceneKind.ISLAND_110.sourceMap(),regionAt(SceneKind.ISLAND_110,cell));
+            if(!cell.equals(previous))flow.checkpoint(point(player));
+        }
+    }
+
+    private static boolean startMovementTrigger(ServerPlayer player,Session session,Flow flow) {
+        if(flow.stage()!=Stage.FIRST_STEP&&flow.stage()!=Stage.COLLAPSE1&&flow.stage()!=Stage.COLLAPSE2)return false;
+        var current=player.position();
+        if(session.triggerScene!=session.scene) {
+            session.triggerScene=session.scene;session.pendingTrigger=null;
+            var held=session.hold;
+            session.triggerFrom=held!=null&&held.dimension().equals(player.level().dimension().location().toString())
+                    ?new Vec3(held.x(),held.y(),held.z()):current;
+        }
+        var from=session.triggerFrom==null?current:session.triggerFrom;
+        session.triggerFrom=current;
+        if(session.pendingTrigger==null) {
+            var cells=MOVEMENT_TRIGGERS.computeIfAbsent(session.scene,scene->{
+                if(scene==SceneKind.ISLAND_110)return List.of(new Cell(15,13));
+                var result=new java.util.ArrayList<Cell>();
+                for(int z=0;z<scene.height();z++)for(int x=0;x<scene.width();x++) {
+                    var cell=new Cell(x,z);if(regionAt(scene,cell)==10)result.add(cell);
+                }
+                return List.copyOf(result);
+            });
+            double first=Double.POSITIVE_INFINITY;
+            for(var cell:cells) {
+                var feet=feet(session.lease,session.scene,cell);
+                var area=new AABB(feet.x-.5,FEET_Y-.2,feet.z-.5,feet.x+.5,FEET_Y+2,feet.z+.5);
+                var hit=area.contains(from)?Optional.of(from):area.clip(from,current);
+                if(hit.isEmpty()&&area.contains(current))hit=Optional.of(current);
+                if(hit.isPresent()&&from.distanceToSqr(hit.get())<first) {
+                    first=from.distanceToSqr(hit.get());session.pendingTrigger=cell;
+                }
+            }
+        }
+        if(session.pendingTrigger==null)return false;
+        var next=flow.stage()==Stage.FIRST_STEP?Stage.COLLAPSE1:flow.stage()==Stage.COLLAPSE1?Stage.COLLAPSE2:Stage.COLLAPSE3;
+        var nextScene=flow.stage()==Stage.FIRST_STEP?SceneKind.ISLAND_97:flow.stage()==Stage.COLLAPSE1?SceneKind.ISLAND_98:SceneKind.ISLAND_99;
+        var destination=flow.stage()==Stage.FIRST_STEP?session.pendingTrigger:session.previousCell;
+        if(destination==null||!sourceSupport(session.scene,destination))destination=sourceCell(session.lease,session.scene,current);
+        beginMotion(player,session,flow,destination,next,nextScene);
+        if(session.motion==null)hold(player,session);
+        return true;
+    }
+
+    private static void guardProfessionMovement(ServerPlayer player, Session session, Flow flow) {
+        var body=player.getBoundingBox();
+        var bounds=bounds(session.lease,SceneKind.OP);
+        if (body.minX<bounds.minX || body.maxX>bounds.maxX || body.minY<bounds.minY || body.maxY>bounds.maxY
+                || body.minZ<bounds.minZ || body.maxZ>bounds.maxZ || !player.serverLevel().noCollision(player,body)
+                || player.serverLevel().containsAnyLiquid(body)) { hold(player,session); return; }
+        var cell=sourceCell(session.lease,SceneKind.OP,player.position());
+        if (!player.onGround()) return;
+        session.hold=point(player);
+        if (cell.equals(session.previousCell) || Math.abs(player.getY()-FEET_Y)>.01D) return;
+        try { checkpoint(plan(session.lease,SceneKind.OP),cell); }
+        catch (IllegalArgumentException failure) { return; }
+        session.previousCell=cell;
+        flow.region(SceneKind.OP.sourceMap(),regionAt(SceneKind.OP,cell));
+        flow.checkpoint(point(player));
     }
 
     private static void beginMotion(ServerPlayer player, Session session, Flow flow, Cell destination, Stage next, SceneKind nextScene) {
@@ -1127,11 +1451,16 @@ public final class OriginalOpeningService {
         var flow=new Flow(stats.openingProfile());
         var stage=session.cleanup?Stage.COMPLETE:flow.stage();
         boolean locked=session.cleanup?flow.preview():(session.error||session.entering||session.awaitingReady||session.motion!=null
-                || stage!=Stage.ORIGIN_SELECTION&&stage!=Stage.COLLAPSE1&&stage!=Stage.COLLAPSE2&&stage!=Stage.COMPLETE);
+                || stage==Stage.ORIGIN_SELECTION&&(OriginalOpeningGreeting.active(flow.cursor().commandIndex())||session.focus>0)
+                || stage==Stage.FIRST_STEP&&(!session.firstStepReleased||flow.cursor().waitTicksRemaining()>0)
+                || stage!=Stage.ORIGIN_SELECTION&&stage!=Stage.FIRST_STEP&&stage!=Stage.COLLAPSE1&&stage!=Stage.COLLAPSE2&&stage!=Stage.COMPLETE);
         var position=session.hold==null?point(player):session.hold;
+        String notice=session.notice;
+        if(!session.error&&(notice.equals("正在准备序章场景……")||notice.equals("正在准备抵达地点……")||notice.equals("正在准备安全的坠落路径……")))notice="";
         NetworkHandler.sendToPlayer(new ClientboundOpeningPacket(session.token,session.revision,ResourceLocation.tryParse(position.dimension()),
-                BlockPos.containing(position.x(),position.y(),position.z()),stage,flow.preview(),locked,session.awaitingReady,
-                session.focus,flow.relationship(),flow.cursor().commandIndex(),flow.cursor().waitTicksRemaining(),session.notice),player);
+                BlockPos.containing(position.x(),position.y(),position.z()),stage,flow.preview(),locked,session.entering||session.awaitingReady,
+                session.focus,flow.relationship(),flow.cursor().commandIndex(),flow.cursor().waitTicksRemaining(),notice,
+                OriginalOpeningCoda.active(flow.cursor().commandIndex())?flow.cursor().messageOffset():0,flow.origin()),player);
         sendCinematic(player,session,flow,false);
     }
 
@@ -1288,10 +1617,13 @@ public final class OriginalOpeningService {
         SceneKind scene;
         WorldPoint hold;
         Cell previousCell;
+        SceneKind triggerScene;
+        Vec3 triggerFrom;
+        Cell pendingTrigger;
         Motion motion;
         UUID focusActor;
-        int revision=1,focus,lastActionTick=-1,fallSavedCommand=-1;
-        boolean entering=true,awaitingReady,sceneReady,error,cleanup,nameSent,removeTemporaryAfterReady;
+        int revision=1,focus,lastActionTick=-1,fallSavedCommand=-1,greetingAnimations,codaEffectCommand=-1,codaRouteKey=-1;
+        boolean entering=true,awaitingReady,sceneReady,error,cleanup,nameSent,removeTemporaryAfterReady,firstStepReleased;
         boolean presentationRestoring=true,completedPreview,fallReady;
         boolean sentRestoring;
         UUID sentEpisode;
@@ -1324,6 +1656,7 @@ public final class OriginalOpeningService {
         void pending(PendingTransfer value) { if(preview())profile.setPreviewPendingTransfer(value);else profile.setRealPendingTransfer(value); }
         void clearPending(PendingTransfer value) { if(preview())profile.clearPreviewPendingTransfer(value);else profile.clearRealPendingTransfer(value); }
         void requestSkip() { if(preview())profile.requestPreviewSkip();else profile.requestRealSkip(); }
+        void clearSkip() { if(preview())profile.clearPreviewSkip();else profile.clearRealSkip(); }
         void skipToArrival() { if(preview())profile.advancePreviewSkipToArrival();else profile.advanceRealSkipToArrival(); }
         Optional<OriginalOpeningCinematic> cinematic() { return profile.activeCinematic(); }
         void cinematic(OriginalOpeningCinematic value) { profile.setActiveCinematic(value); }

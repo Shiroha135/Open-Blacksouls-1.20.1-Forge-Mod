@@ -30,7 +30,8 @@
     "OpeningFoodMixin",
     "OpeningExhaustionMixin",
     "compat.OpeningCuriosDestroyMixin",
-    "compat.OpeningCuriosOpenMixin"
+    "compat.OpeningCuriosOpenMixin",
+    "OpeningBonfireCollisionMixin"
   ],
   "client": [
     "AbstractContainerScreenAccessor",
@@ -46,7 +47,10 @@
     "client.FogGateRendererMixin",
     "client.ExperimentalWorldWarningMixin",
     "client.MobEffectInstanceClientMixin",
-    "client.MinecraftWindowTitleMixin"
+    "client.MinecraftWindowTitleMixin",
+    "client.OpeningCodaToastMixin",
+    "client.OpeningBonfirePacketMixin",
+    "client.RoleplayCameraMixin"
   ],
   "injectors": {
     "defaultRequire": 1
