@@ -1,0 +1,1262 @@
+{
+  "version": 1,
+  "sourceArmorSha256": "0f185e88ec538611930745aa2a3d23abab21cb4cf824df8ba1e6885fc90f02b8",
+  "shields": [
+    {
+      "id": 38,
+      "registry": "blacksouls:cannibal_shield",
+      "name": "食人族之盾",
+      "description": "防御效果率【小】 HP再生率+5% 速度-3%\n只要想一想就知道这是什么肉了。",
+      "price": 1000,
+      "icon": 291,
+      "armorType": 5,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 23,
+          "id": 1,
+          "value": 1.5
+        },
+        {
+          "code": 22,
+          "id": 7,
+          "value": 0.05
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.97
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "registry": "blacksouls:temple_knight_shield",
+      "name": "神殿骑士的盾",
+      "description": "防御效果率【中】 魔力＋10%　速度-4%\n为了保护神圣的神殿，神殿骑士们所持有的盾牌。",
+      "price": 1000,
+      "icon": 556,
+      "armorType": 6,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 21,
+          "id": 4,
+          "value": 1.1
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.96
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 2.0
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "registry": "blacksouls:blade_shield",
+      "name": "刃之盾",
+      "description": "攻击力＋5%　速度-2%\n周围环绕着刀片，极具攻击性的盾牌。",
+      "price": 1000,
+      "icon": 431,
+      "armorType": 5,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 21,
+          "id": 2,
+          "value": 1.05
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.98
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "registry": "blacksouls:grass_crest_shield",
+      "name": "草纹盾",
+      "description": "防御效果率【小】 速度＋5%\n镶着纹章的来历不明的金属盾",
+      "price": 1000,
+      "icon": 430,
+      "armorType": 5,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 1.05
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 1.5
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "registry": "blacksouls:wooden_shield",
+      "name": "木盾",
+      "description": "防御效果率【小】\n惨不忍睹的木板制成的盾。",
+      "price": 50,
+      "icon": 505,
+      "armorType": 5,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 23,
+          "id": 1,
+          "value": 1.5
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "registry": "blacksouls:buckler",
+      "name": "小圆盾",
+      "description": "闪避率＋10%\n为了弹开攻击而使用的小型盾。",
+      "price": 1000,
+      "icon": 160,
+      "armorType": 5,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 22,
+          "id": 1,
+          "value": 0.1
+        },
+        {
+          "code": 22,
+          "id": 4,
+          "value": 0.1
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "registry": "blacksouls:mushroom_shield",
+      "name": "蘑菇盾",
+      "description": "防御效果率【小】 毒耐性＋50%　毒率＋30% 速度-1%\n上面长着密集的毒蘑菇的盾。",
+      "price": 1000,
+      "icon": 504,
+      "armorType": 5,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.99
+        },
+        {
+          "code": 13,
+          "id": 2,
+          "value": 0.5
+        },
+        {
+          "code": 13,
+          "id": 3,
+          "value": 0.5
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 1.5
+        },
+        {
+          "code": 32,
+          "id": 2,
+          "value": 0.3
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "registry": "blacksouls:round_shield",
+      "name": "圆盾",
+      "description": "防御效果率【小】 闪避率＋5%　速度-2%\n标准的圆型木盾。",
+      "price": 1000,
+      "icon": 502,
+      "armorType": 5,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 22,
+          "id": 1,
+          "value": 0.05
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.98
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 1.5
+        },
+        {
+          "code": 22,
+          "id": 4,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "registry": "blacksouls:iron_round_shield",
+      "name": "铁制圆盾",
+      "description": "防御效果果率【中】　速度-1%\n一般兵士使用的金属圆盾。",
+      "price": 1000,
+      "icon": 507,
+      "armorType": 5,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.99
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 2.0
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "registry": "blacksouls:warrior_round_shield",
+      "name": "战士的圆盾",
+      "description": "防御效果率【小】 攻击力＋2%　速度-2%\n古代战士所使用的金属盾。",
+      "price": 1000,
+      "icon": 508,
+      "armorType": 5,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.98
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 1.5
+        },
+        {
+          "code": 21,
+          "id": 2,
+          "value": 1.02
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "registry": "blacksouls:target_shield",
+      "name": "标靶盾牌",
+      "description": "闪避率＋15%　速度-3%\n利用特殊的突起形状弹开攻击的金属小盾",
+      "price": 1000,
+      "icon": 161,
+      "armorType": 5,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 22,
+          "id": 1,
+          "value": 0.15
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.97
+        },
+        {
+          "code": 22,
+          "id": 4,
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "registry": "blacksouls:porcupine_shield",
+      "name": "豪猪盾",
+      "description": "防御效果率【中】 反击率+30%　出血率+30%　速度-3%\n表面像豪猪一样长满了刺的扭曲之盾。",
+      "price": 1000,
+      "icon": 666,
+      "armorType": 5,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.97
+        },
+        {
+          "code": 22,
+          "id": 6,
+          "value": 0.3
+        },
+        {
+          "code": 32,
+          "id": 26,
+          "value": 0.3
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 2.0
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "registry": "blacksouls:griffin_shield",
+      "name": "鹫狮子之盾",
+      "description": "防御效果率【小】 闪避率＋15%　速度-5%\n格里菲所使用的轻巧又强大的盾。",
+      "price": 1000,
+      "icon": 501,
+      "armorType": 6,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 22,
+          "id": 1,
+          "value": 0.15
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.95
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 1.5
+        },
+        {
+          "code": 22,
+          "id": 4,
+          "value": 0.15
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "registry": "blacksouls:knight_shield",
+      "name": "骑士盾",
+      "description": "防御效果率【大】 速度-2%　晕眩耐性+50%\n在骑士之间广泛普及的钢之盾。",
+      "price": 1000,
+      "icon": 497,
+      "armorType": 6,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 23,
+          "id": 1,
+          "value": 2.5
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.98
+        },
+        {
+          "code": 13,
+          "id": 13,
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "registry": "blacksouls:kite_shield",
+      "name": "鸢形盾",
+      "description": "防御效果率【中】 闪避率＋5%　速度-4%\n正统的中型金属盾。",
+      "price": 1000,
+      "icon": 509,
+      "armorType": 6,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.96
+        },
+        {
+          "code": 22,
+          "id": 1,
+          "value": 0.05
+        },
+        {
+          "code": 22,
+          "id": 4,
+          "value": 0.05
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 2.0
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "registry": "blacksouls:red_shield",
+      "name": "赤之盾",
+      "description": "防御效果率【中】 炎耐性＋50%　燃烧耐性＋50%　速度-2%\n象征着纵火的深红色的金属盾牌，。",
+      "price": 1000,
+      "icon": 496,
+      "armorType": 6,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.98
+        },
+        {
+          "code": 11,
+          "id": 3,
+          "value": 0.5
+        },
+        {
+          "code": 13,
+          "id": 29,
+          "value": 0.5
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 2.0
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "registry": "blacksouls:mock_turtle_shell",
+      "name": "假海龟的龟壳",
+      "description": "防御效果率【中】 雷耐性＋50%　速度-2%\n假海龟的龟壳。既然是假海龟，那么这个肯定也是假货吧。",
+      "price": 1000,
+      "icon": 510,
+      "armorType": 6,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.98
+        },
+        {
+          "code": 11,
+          "id": 5,
+          "value": 0.5
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 2.0
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "registry": "blacksouls:brick_shield",
+      "name": "炼瓦之盾",
+      "description": "防御效果率【中】 出血耐性＋100%　速度-2%\n三只小猪中的末子所做的盾。大概可以很轻易的防住野兽的爪子吧。",
+      "price": 1000,
+      "icon": 503,
+      "armorType": 6,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.98
+        },
+        {
+          "code": 13,
+          "id": 26,
+          "value": 0.0
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 2.0
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "registry": "blacksouls:black_vanguard_shield",
+      "name": "黑尖兵之盾",
+      "description": "防御效果率【中】 暗耐性＋50%　速度-2%\n黑之尖兵所使用的暗之盾。",
+      "price": 1000,
+      "icon": 500,
+      "armorType": 6,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.98
+        },
+        {
+          "code": 11,
+          "id": 10,
+          "value": 0.5
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 2.0
+        }
+      ]
+    },
+    {
+      "id": 57,
+      "registry": "blacksouls:paladin_shield",
+      "name": "圣骑士之盾",
+      "description": "防御效果率【中】 光耐性＋50%　速度-2%\n圣骑士使用的光之盾。稍微有点烧焦的味道。",
+      "price": 10000,
+      "icon": 675,
+      "armorType": 6,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.98
+        },
+        {
+          "code": 11,
+          "id": 9,
+          "value": 0.5
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 2.0
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "registry": "blacksouls:seashell_shield",
+      "name": "贝类甲壳",
+      "description": "防御效果率【中】魔法耐性+50%　速度-3%\n已经变色了的坚固的巨大贝壳。里面是空的。",
+      "price": 1000,
+      "icon": 363,
+      "armorType": 5,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 23,
+          "id": 7,
+          "value": 0.5
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.97
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 2.0
+        }
+      ]
+    },
+    {
+      "id": 59,
+      "registry": "blacksouls:dicka_greatshield",
+      "name": "迪卡的大盾",
+      "description": "防御效果率【特大】　速度-3%\n声名远扬的安多鲁骑士团中的一人，迪卡所使用的大盾。",
+      "price": 1000,
+      "icon": 499,
+      "armorType": 6,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 23,
+          "id": 1,
+          "value": 3.0
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.97
+        }
+      ]
+    },
+    {
+      "id": 60,
+      "registry": "blacksouls:sloth_greatshield",
+      "name": "怠惰的大盾",
+      "description": "防御效果率【特大】 全属性耐性＋25%　速度-5%\n被视为荣誉象征的大盾。但是，荣誉即是怠惰的开始。",
+      "price": 1000,
+      "icon": 498,
+      "armorType": 6,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.95
+        },
+        {
+          "code": 11,
+          "id": 3,
+          "value": 0.75
+        },
+        {
+          "code": 11,
+          "id": 4,
+          "value": 0.75
+        },
+        {
+          "code": 11,
+          "id": 5,
+          "value": 0.75
+        },
+        {
+          "code": 11,
+          "id": 9,
+          "value": 0.75
+        },
+        {
+          "code": 11,
+          "id": 10,
+          "value": 0.75
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 3.0
+        }
+      ]
+    },
+    {
+      "id": 61,
+      "registry": "blacksouls:abyss_greatshield",
+      "name": "深渊的大盾",
+      "description": "防御效果率【特大】 全异常耐性＋30%　速度-5%\n寄宿着来自深渊的恶魔之力的大盾。",
+      "price": 1000,
+      "icon": 690,
+      "armorType": 6,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.95
+        },
+        {
+          "code": 13,
+          "id": 2,
+          "value": 0.7
+        },
+        {
+          "code": 13,
+          "id": 3,
+          "value": 0.7
+        },
+        {
+          "code": 13,
+          "id": 13,
+          "value": 0.7
+        },
+        {
+          "code": 13,
+          "id": 5,
+          "value": 0.7
+        },
+        {
+          "code": 13,
+          "id": 6,
+          "value": 0.7
+        },
+        {
+          "code": 13,
+          "id": 28,
+          "value": 0.7
+        },
+        {
+          "code": 13,
+          "id": 26,
+          "value": 0.7
+        },
+        {
+          "code": 13,
+          "id": 29,
+          "value": 0.7
+        },
+        {
+          "code": 13,
+          "id": 55,
+          "value": 0.7
+        },
+        {
+          "code": 13,
+          "id": 56,
+          "value": 0.7
+        },
+        {
+          "code": 13,
+          "id": 61,
+          "value": 0.7
+        },
+        {
+          "code": 13,
+          "id": 17,
+          "value": 0.7
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 3.0
+        },
+        {
+          "code": 13,
+          "id": 162,
+          "value": 0.7
+        },
+        {
+          "code": 13,
+          "id": 163,
+          "value": 0.7
+        },
+        {
+          "code": 13,
+          "id": 8,
+          "value": 0.7
+        },
+        {
+          "code": 13,
+          "id": 7,
+          "value": 0.7
+        },
+        {
+          "code": 13,
+          "id": 4,
+          "value": 0.7
+        }
+      ]
+    },
+    {
+      "id": 62,
+      "registry": "blacksouls:deep_sea_greatshield",
+      "name": "深海的大盾",
+      "description": "防御效果率【特大】 弱体无效　速度-8%\n任性的神明将一只稚鱼偷走，用在了红的故事中。",
+      "price": 1000,
+      "icon": 686,
+      "armorType": 6,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.92
+        },
+        {
+          "code": 12,
+          "id": 0,
+          "value": 0.0
+        },
+        {
+          "code": 12,
+          "id": 1,
+          "value": 0.0
+        },
+        {
+          "code": 12,
+          "id": 2,
+          "value": 0.0
+        },
+        {
+          "code": 12,
+          "id": 3,
+          "value": 0.0
+        },
+        {
+          "code": 12,
+          "id": 4,
+          "value": 0.0
+        },
+        {
+          "code": 12,
+          "id": 5,
+          "value": 0.0
+        },
+        {
+          "code": 12,
+          "id": 6,
+          "value": 0.0
+        },
+        {
+          "code": 12,
+          "id": 7,
+          "value": 0.0
+        },
+        {
+          "code": 23,
+          "id": 1,
+          "value": 3.0
+        }
+      ]
+    },
+    {
+      "id": 63,
+      "registry": "blacksouls:mirror_greatshield",
+      "name": "镜之大盾",
+      "description": "魔法反射率＋50%　速度-5%\n某位公主爱用的能映照出真实的大镜。",
+      "price": 10000,
+      "icon": 282,
+      "armorType": 6,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.95
+        },
+        {
+          "code": 22,
+          "id": 5,
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "id": 167,
+      "registry": "blacksouls:beanstalk_shield",
+      "name": "豌豆木之盾",
+      "description": "防御效果率【大】 HP再生率+5% 炎耐性-50% 速度-3%\n表面覆盖着刀枪不入的藤蔓的结实盾牌。另一方面，对火炎毫无办法。",
+      "price": 10000,
+      "icon": 716,
+      "armorType": 5,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 23,
+          "id": 1,
+          "value": 2.5
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.97
+        },
+        {
+          "code": 11,
+          "id": 3,
+          "value": 1.5
+        },
+        {
+          "code": 22,
+          "id": 7,
+          "value": 0.05
+        }
+      ]
+    },
+    {
+      "id": 168,
+      "registry": "blacksouls:mercury_shield",
+      "name": "水银盾",
+      "description": "防御效果率【中】 免疫暴击和即死。 速度-3%\n传说中流传下来的不老不死的王所持有的盾。",
+      "price": 10000,
+      "icon": 667,
+      "armorType": 5,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 23,
+          "id": 1,
+          "value": 2.0
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.97
+        },
+        {
+          "code": 22,
+          "id": 3,
+          "value": 1.0
+        },
+        {
+          "code": 13,
+          "id": 1,
+          "value": 0.0
+        }
+      ]
+    },
+    {
+      "id": 217,
+      "registry": "blacksouls:duality_buckler",
+      "name": "两面性的小盾",
+      "description": "防御效果率【小】 行动次数追加＋100% 速度-15%\n会对她产生隐秘的欲望全都是海德的错。不是我的错。-杰基尔博士",
+      "price": 1000,
+      "icon": 777,
+      "armorType": 5,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 23,
+          "id": 1,
+          "value": 1.5
+        },
+        {
+          "code": 61,
+          "id": 0,
+          "value": 1.0
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.85
+        }
+      ]
+    },
+    {
+      "id": 237,
+      "registry": "blacksouls:ghost_hunter_shield",
+      "name": "幽灵猎人之盾",
+      "description": "防御效果率【中】 攻击追加回数+2 攻击力-50%\n卡纳奇所使用的盾。名声与财富密切相连，因此是脱离贫困的阳光大道。",
+      "price": 1000,
+      "icon": 767,
+      "armorType": 5,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 23,
+          "id": 1,
+          "value": 1.5
+        },
+        {
+          "code": 34,
+          "id": 0,
+          "value": 2.0
+        },
+        {
+          "code": 21,
+          "id": 2,
+          "value": 0.5
+        }
+      ]
+    },
+    {
+      "id": 239,
+      "registry": "blacksouls:cross_greatshield",
+      "name": "十字架的大盾",
+      "description": "防御效果率【大】 HP＋50% 速度-10%\n用黄金制成的大盾。强欲的罪人会受到背负加热过的十字架的处置。",
+      "price": 1000,
+      "icon": 281,
+      "armorType": 5,
+      "parameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "features": [
+        {
+          "code": 23,
+          "id": 1,
+          "value": 2.5
+        },
+        {
+          "code": 21,
+          "id": 0,
+          "value": 1.5
+        },
+        {
+          "code": 21,
+          "id": 6,
+          "value": 0.9
+        }
+      ]
+    }
+  ]
+}

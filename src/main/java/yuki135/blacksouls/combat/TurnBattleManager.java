@@ -15,6 +15,7 @@ import com.google.gson.JsonObject;
 import yuki135.blacksouls.entity.EntityOriginalDatabaseEnemy;
 import yuki135.blacksouls.entity.EntityOriginalTurnBattleEnemy;
 import yuki135.blacksouls.handler.SceneSpawnerBossHandler;
+import yuki135.blacksouls.compat.scene.SceneSpawnerBossData;
 import yuki135.blacksouls.entity.EntityCorpseEatingRabbit;
 import yuki135.blacksouls.entity.EntityRabbitKnight;
 import yuki135.blacksouls.entity.RabbitKnightDialogue;
@@ -164,6 +165,9 @@ public final class TurnBattleManager {
         }
         int profileId = enemy instanceof EntityOriginalDatabaseEnemy originalEnemy
                 ? originalEnemy.getProfileId() : -1;
+        if (profileId==185&&yuki135.blacksouls.story.OriginalSkullBeastService.matches(player.serverLevel())
+                && SceneSpawnerBossData.spawnerKey(player.level().dimension(),yuki135.blacksouls.story.OriginalSkullBeastService.SPAWNER)
+                .equals(enemy.getPersistentData().getString(yuki135.blacksouls.compat.scene.SceneSpawnerBossState.ENTITY_SPAWNER_KEY_TAG))) return;
         int originalTroop = switch (profileId) {
             case 88 -> 35;
             case 97 -> 116;
@@ -196,6 +200,7 @@ public final class TurnBattleManager {
         session.openingPending = BSOriginalBattleProfileData.get(profileId).preemptiveSkillId() > 0;
         session.resolving = session.openingPending || session.surprisePending;
         session.presentationDriver = player.getUUID();
+        PartyManager.refresh(player);
         broadcastState(session, true, battleIntro(session.battleProfileId, enemy),
                 !session.resolving, ClientboundTurnBattlePacket.Outcome.NONE, 0L);
     }
@@ -276,6 +281,7 @@ public final class TurnBattleManager {
         }
         session.remainingPlayerActions = rollPlayerActionCount(player, battlePlayerStats(player));
         session.presentationDriver = player.getUUID();
+        PartyManager.refresh(player);
         if (RUNNER_TROOPS.contains(troopId)) {
             session.troopContext = new TroopEventContext(player, session);
             session.troopRunner = new OriginalTroopEventRunner(troop, session.troopContext);
@@ -743,7 +749,7 @@ public final class TurnBattleManager {
         }
         int profileId = entity instanceof EntityOriginalDatabaseEnemy original ? original.getProfileId()
                 : entity instanceof EntityOriginalTurnBattleEnemy legacy ? legacy.getOriginalBattleProfileId() : 0;
-        double rate = 1.0D;
+        double rate = yuki135.blacksouls.util.OriginalShieldData.rate(entity,11,elementId);
         rate *= StatEventHandler.getOriginalSpiritRate(entity, 11, elementId);
         for (BSOriginalCombatData.Feature feature : BSOriginalCombatData.enemy(profileId).features()) {
             if (feature.code() == 11 && feature.dataId() == elementId) {
@@ -1186,6 +1192,8 @@ public final class TurnBattleManager {
             hits.add(new ClientboundTurnBattlePacket.DamageHit(
                     enemy.getId(), dealt, hitCritical, hit));
             session.originalState.onDamage(enemy, player.getRandom());
+            for(var feature:yuki135.blacksouls.util.OriginalShieldData.battleFeatures(player))if(feature.code()==32)
+                addOriginalState(player,player,enemy,feature.dataId(),feature.value(),1,BSOriginalSkillData.get(1),session);
             refreshOriginalParameters(enemy, session);
             if (counter) {
                 reactions.append(executeTurnBattleCounter(player, enemy, player, session));
@@ -1493,6 +1501,9 @@ public final class TurnBattleManager {
         }
         boolean interrupted = states.removeIf(INTERRUPTIBLE_CHARGE_STATES::contains);
         if (interrupted) {
+            if (target instanceof EntityOriginalDatabaseEnemy original&&original.getProfileId()==184) {
+                session.commonEvents.setSwitchValue(24,false);
+            }
             target.addEffect(new MobEffectInstance(BlackSouls.BUFF_DEFENSELESS.get(), 400, 0));
             states.add(8);
             session.enemyBreakRounds.put(target.getUUID(), 2);
@@ -2324,6 +2335,7 @@ public final class TurnBattleManager {
         BSOriginalEnemyData.Action action = null;
         if (!searching && !restricted && forcedSkillId >= 0 && battleEnemy instanceof EntityOriginalDatabaseEnemy original) {
             Set<Integer> states = session.enemyStates.computeIfAbsent(battleEnemy.getUUID(), ignored -> new HashSet<>());
+            if (original.getProfileId()==184&&!states.contains(32)) session.commonEvents.setSwitchValue(24,false);
             action = forcedSkillId > 0 ? original.getProfile().findAction(forcedSkillId)
                     : original.selectTurnBattleAction(player.getRandom(),
                     session.enemyTurns.getOrDefault(battleEnemy.getUUID(), 1), states,
@@ -2419,7 +2431,7 @@ public final class TurnBattleManager {
             for (int hit = 0; hit < repeats && player.isAlive(); hit++) {
                 double damage = varied(player, Math.max(
                         1.0D, enemyAttack * 4.0D - stats.defense * defenseRate * 2.0D));
-                boolean critical = player.getRandom().nextDouble() < 0.05D;
+                boolean critical = player.getRandom().nextDouble() < 0.05D * Math.max(0,1-session.originalState.xparam(player,3));
                 if (critical) {
                     damage *= 3.0D;
                     anyCritical = true;
@@ -3430,6 +3442,14 @@ public final class TurnBattleManager {
         };
     }
 
+    public static int originalPlayerStateId(MobEffect effect,int amplifier) {
+        for(int id:List.of(2,3,5,6,7,8,13,17,26,28,29,39,55,56,61,162,163,165)) {
+            if(id==7&&amplifier==0||id==8&&amplifier>0)continue;
+            if(originalPlayerStateEffect(id)==effect)return id;
+        }
+        return 0;
+    }
+
     private static int originalPlayerStateDuration(int stateId) {
         return switch (stateId) {
             case 2, 3, 55 -> 2000;
@@ -3575,6 +3595,9 @@ public final class TurnBattleManager {
         session.downedMembers.clear();
         session.partyMembers.clear();
         clearTransientState(session);
+        for (LivingEntity entity : combatants) {
+            if (entity instanceof ServerPlayer member) PartyManager.refresh(member);
+        }
         if (session.onFinished != null) {
             session.onFinished.accept(outcome);
         }

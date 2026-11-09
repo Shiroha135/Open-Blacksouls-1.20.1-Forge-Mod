@@ -29,7 +29,8 @@ public class GuiDevPanel extends Screen {
         ATTRIBUTES("gui.blacksouls.dev_panel.tab.attributes"),
         SWITCHES("gui.blacksouls.dev_panel.tab.switches"),
         SKILLS("gui.blacksouls.dev_panel.tab.skills"),
-        BONFIRES("gui.blacksouls.dev_panel.tab.bonfires");
+        BONFIRES("gui.blacksouls.dev_panel.tab.bonfires"),
+        STORY("剧情 / 事件测试");
 
         private final String key;
 
@@ -249,13 +250,13 @@ public class GuiDevPanel extends Screen {
         for (int i = 0; i < Tab.values().length; i++) {
             Tab tab = Tab.values()[i];
             int x = panelX + 16;
-            int y = panelY + 64 + i * 36;
+            int y = panelY + 64 + i * Math.min(36,(panelHeight-74)/Tab.values().length);
             int width = navWidth - 28;
             boolean selected = tab == activeTab;
             boolean hovered = inside(mouseX, mouseY, x, y, width, 28);
             DevGlassRenderer.fill(graphics, x, y, width, 28, 8.0F,
                     selected ? 0x704C91BA : hovered ? 0x493A6684 : 0x251A2B3C);
-            graphics.drawString(this.font, Component.translatable(tab.key), x + 10, y + 10,
+            graphics.drawString(this.font, tab==Tab.STORY?Component.literal(tab.key):Component.translatable(tab.key), x + 10, y + 10,
                     selected ? 0xFFFFFFFF : 0xFFC0CDDB, false);
         }
     }
@@ -358,8 +359,9 @@ public class GuiDevPanel extends Screen {
         if (button == 0) {
             for (int i = 0; i < Tab.values().length; i++) {
                 int x = panelX + 16;
-                int y = panelY + 64 + i * 36;
+                int y = panelY + 64 + i * Math.min(36,(panelHeight-74)/Tab.values().length);
                 if (inside(mouseX, mouseY, x, y, navWidth - 28, 28)) {
+                    if(Tab.values()[i]==Tab.STORY){this.minecraft.setScreen(new GuiDevStory(this));return true;}
                     this.activeTab = Tab.values()[i];
                     this.setFocused(null);
                     updateFieldVisibility();

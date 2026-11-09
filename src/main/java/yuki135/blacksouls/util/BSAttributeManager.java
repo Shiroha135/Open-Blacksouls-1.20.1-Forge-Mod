@@ -87,6 +87,10 @@ public class BSAttributeManager {
                 res *= (float) Math.pow(0.5D, StatEventHandler.getBaubleCount(player, BlackSouls.RING_HEAVEN.get()));
                 res *= (float) Math.pow(0.8D, StatEventHandler.getBaubleCount(player, BlackSouls.RING_EXORCISM.get()));
             }
+            if(!yuki135.blacksouls.combat.TurnBattleManager.isInBattle(player)) {
+                int element=switch(attribute) {case PHYSICAL->1;case FIRE->3;case ICE->4;case THUNDER->5;case LIGHT->9;case DARK->10;default->0;};
+                res*=(float)OriginalShieldData.rate(player,11,element);
+            }
             return Math.max(0.0f, res);
         } else {
             if (victim instanceof EntityOriginalDatabaseEnemy originalEnemy) {

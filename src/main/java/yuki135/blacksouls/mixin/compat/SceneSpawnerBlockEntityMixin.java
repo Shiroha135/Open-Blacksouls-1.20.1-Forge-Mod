@@ -120,12 +120,14 @@ public abstract class SceneSpawnerBlockEntityMixin implements SceneSpawnerBounds
         blacksouls$repairOriginalBossScene();
     }
 
-    @Inject(method = "serverTick", at = @At("HEAD"), remap = false)
+    @Inject(method = "serverTick", at = @At("HEAD"), remap = false, cancellable = true)
     private static void blacksouls$repairBeforeTick(Level level, BlockPos pos, BlockState state,
                                                    @Coerce Object spawner, CallbackInfo callback) {
         if (spawner instanceof Map052BossSpawnerRepair.Access access) {
             access.blacksouls$repairOriginalBossScene();
         }
+        if (level instanceof ServerLevel serverLevel
+                && yuki135.blacksouls.story.OriginalSkullBeastService.managesSpawner(serverLevel,pos)) callback.cancel();
     }
 
     @Unique

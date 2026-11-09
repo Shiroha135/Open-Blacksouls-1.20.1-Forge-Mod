@@ -184,6 +184,7 @@ public final class OriginalBattleState {
 
     public List<BSOriginalCombatData.Feature> features(LivingEntity entity) {
         List<BSOriginalCombatData.Feature> features = new ArrayList<>();
+        features.addAll(yuki135.blacksouls.util.OriginalShieldData.battleFeatures(entity));
         entity.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> {
             var spirit = stats.getOriginalSpirit();
             if (spirit != null) features.addAll(spirit.battleFeatures());

@@ -89,6 +89,23 @@ public final class OriginalNpcProgress extends SavedData {
         return switches.contains(id);
     }
 
+    public CompoundTag developerState() {
+        var full=save(new CompoundTag());var result=new CompoundTag();
+        for(String key:java.util.List.of("Switches","Variables","SelfSwitches","HiddenEvents"))result.put(key,full.get(key).copy());
+        return result;
+    }
+
+    public void restoreDeveloperState(CompoundTag state) {
+        var restored=load(state);
+        switches.clear();switches.addAll(restored.switches);switches.add(20);
+        variables.clear();variables.putAll(restored.variables);
+        selfSwitches.clear();selfSwitches.addAll(restored.selfSwitches);
+        hiddenEvents.clear();hiddenEvents.addAll(restored.hiddenEvents);
+        setDirty();
+    }
+
+    public boolean hasSavedConversations() {return !conversations.isEmpty();}
+
     public void setSwitch(int id, boolean enabled) {
         if (id > 0 && (enabled ? switches.add(id) : switches.remove(id))) {
             setDirty();

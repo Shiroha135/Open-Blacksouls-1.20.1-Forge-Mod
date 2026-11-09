@@ -53,6 +53,7 @@ public final class RenderOriginalNpc extends EntityRenderer<EntityOriginalNpc> {
         boolean roleplay=yuki135.blacksouls.client.OriginalRoleplayView.active();
         if(roleplay) {
             float facing=switch(direction) {case 4->90;case 6->270;case 8->180;default->0;};
+            if (yuki135.blacksouls.story.OriginalSkullBeastService.handles(entity.getNpcId())) facing=net.minecraft.util.Mth.wrapDegrees(facing+180);
             facing=yuki135.blacksouls.client.OriginalRoleplayView.actorYaw(entity,facing);
             directionRow=OriginalCharacterSprite.facingRow(facing,entity.getPosition(partialTicks),entityRenderDispatcher.camera.getPosition());
         }
@@ -68,6 +69,7 @@ public final class RenderOriginalNpc extends EntityRenderer<EntityOriginalNpc> {
         float v1 = tile != null ? 1 : (row + 1) * frameHeight / (float) size.height();
         boolean crowd = tile == null && OriginalPoolCrowdSprite.applies(entity.getNpcId());
         float height = tile != null ? tile.blockHeight() : crowd ? frameHeight / 32.0F : 1.9F;
+        if (yuki135.blacksouls.story.OriginalSkullBeastService.KNIGHT.equals(entity.getNpcId())) height=3.8F;
         float halfWidth = tile != null ? tile.blockWidth() * 0.5F : height * frameWidth / frameHeight * 0.5F;
         float bottom = crowd ? entity.getOriginalShiftY() / 32.0F : 0.0F;
         int bushPixels = crowd ? Math.max(0, Math.min(frameHeight, entity.getOriginalBushDepth())) : 0;

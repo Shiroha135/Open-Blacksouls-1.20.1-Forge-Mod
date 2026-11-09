@@ -1864,5 +1864,7 @@
       "sound": "blacksouls:original_chicken_voice",
       "sourceFile": "Chicken.ogg"
     }
-  }
+  ,
+"browbeat1":{"sound": "blacksouls:original_skull_beast_roar", "sourceFile": "browbeat1.mp3"},"Collapse3":{"sound": "blacksouls:original_skull_beast_victory", "sourceFile": "Collapse3.ogg"}
+}
 }

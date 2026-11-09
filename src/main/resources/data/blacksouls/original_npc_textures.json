@@ -1220,7 +1220,9 @@
       "frameWidth": 64,
       "frameHeight": 64
     }
-  },
+  ,
+"!$巨大騎士":{"texture": "blacksouls:textures/entity/original_npc/skull_beast_fbdb3d7e314d2a83.png", "width": 192, "height": 256, "single": true, "columns": 3, "rows": 4, "frameWidth": 64, "frameHeight": 64},"!$巨大騎士 首なし":{"texture": "blacksouls:textures/entity/original_npc/skull_beast_af1de94cc568b840.png", "width": 192, "height": 256, "single": true, "columns": 3, "rows": 4, "frameWidth": 64, "frameHeight": 64},"vorpal-bunny":{"texture": "blacksouls:textures/entity/original_npc/skull_beast_69b93ebf8bcd6555.png", "width": 384, "height": 256, "single": false, "columns": 12, "rows": 8, "frameWidth": 32, "frameHeight": 32}
+},
   "portraits": {
     "8e81334d": {
       "texture": "blacksouls:textures/gui/avatars/original_npc/face_aa02d21033107038.png",

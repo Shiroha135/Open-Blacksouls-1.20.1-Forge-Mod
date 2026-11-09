@@ -301,6 +301,8 @@ public class BlackSouls {
     public static final RegistryObject<SoundEvent> SWORD1_EVENT = registerSound("sword1");
     public static final RegistryObject<SoundEvent> SWORD3_EVENT = registerSound("sword3");
     public static final RegistryObject<SoundEvent> SWORD4_EVENT = registerSound("sword4");
+    public static final RegistryObject<SoundEvent> ORIGINAL_SKULL_BEAST_ROAR = registerSound("original_skull_beast_roar");
+    public static final RegistryObject<SoundEvent> ORIGINAL_SKULL_BEAST_VICTORY = registerSound("original_skull_beast_victory");
     public static final RegistryObject<SoundEvent> SWORD5_EVENT = registerSound("sword5");
     public static final RegistryObject<SoundEvent> DAO2_EVENT = registerSound("dao2");
     public static final RegistryObject<SoundEvent> DAO3_EVENT = registerSound("dao3");
@@ -744,6 +746,30 @@ public class BlackSouls {
     public static final RegistryObject<Item> BUCKLER = ITEMS.register("buckler", () -> new ItemOriginalOpeningShield(new Item.Properties(), 43));
     public static final RegistryObject<Item> ROUND_SHIELD = ITEMS.register("round_shield", () -> new ItemOriginalOpeningShield(new Item.Properties(), 45));
     public static final RegistryObject<Item> WARRIOR_ROUND_SHIELD = ITEMS.register("warrior_round_shield", () -> new ItemOriginalOpeningShield(new Item.Properties(), 47));
+    public static final RegistryObject<Item> CANNIBAL_SHIELD = ITEMS.register("cannibal_shield", () -> new ItemOriginalShield(new Item.Properties(), 38));
+    public static final RegistryObject<Item> BLADE_SHIELD = ITEMS.register("blade_shield", () -> new ItemOriginalShield(new Item.Properties(), 40));
+    public static final RegistryObject<Item> GRASS_CREST_SHIELD = ITEMS.register("grass_crest_shield", () -> new ItemOriginalShield(new Item.Properties(), 41));
+    public static final RegistryObject<Item> MUSHROOM_SHIELD = ITEMS.register("mushroom_shield", () -> new ItemOriginalShield(new Item.Properties(), 44));
+    public static final RegistryObject<Item> IRON_ROUND_SHIELD = ITEMS.register("iron_round_shield", () -> new ItemOriginalShield(new Item.Properties(), 46));
+    public static final RegistryObject<Item> TARGET_SHIELD = ITEMS.register("target_shield", () -> new ItemOriginalShield(new Item.Properties(), 48));
+    public static final RegistryObject<Item> GRIFFIN_SHIELD = ITEMS.register("griffin_shield", () -> new ItemOriginalShield(new Item.Properties(), 50));
+    public static final RegistryObject<Item> KITE_SHIELD = ITEMS.register("kite_shield", () -> new ItemOriginalShield(new Item.Properties(), 52));
+    public static final RegistryObject<Item> RED_SHIELD = ITEMS.register("red_shield", () -> new ItemOriginalShield(new Item.Properties(), 53));
+    public static final RegistryObject<Item> MOCK_TURTLE_SHELL = ITEMS.register("mock_turtle_shell", () -> new ItemOriginalShield(new Item.Properties(), 54));
+    public static final RegistryObject<Item> BRICK_SHIELD = ITEMS.register("brick_shield", () -> new ItemOriginalShield(new Item.Properties(), 55));
+    public static final RegistryObject<Item> BLACK_VANGUARD_SHIELD = ITEMS.register("black_vanguard_shield", () -> new ItemOriginalShield(new Item.Properties(), 56));
+    public static final RegistryObject<Item> PALADIN_SHIELD = ITEMS.register("paladin_shield", () -> new ItemOriginalShield(new Item.Properties(), 57));
+    public static final RegistryObject<Item> SEASHELL_SHIELD = ITEMS.register("seashell_shield", () -> new ItemOriginalShield(new Item.Properties(), 58));
+    public static final RegistryObject<Item> DICKA_GREATSHIELD = ITEMS.register("dicka_greatshield", () -> new ItemOriginalShield(new Item.Properties(), 59));
+    public static final RegistryObject<Item> SLOTH_GREATSHIELD = ITEMS.register("sloth_greatshield", () -> new ItemOriginalShield(new Item.Properties(), 60));
+    public static final RegistryObject<Item> ABYSS_GREATSHIELD = ITEMS.register("abyss_greatshield", () -> new ItemOriginalShield(new Item.Properties(), 61));
+    public static final RegistryObject<Item> DEEP_SEA_GREATSHIELD = ITEMS.register("deep_sea_greatshield", () -> new ItemOriginalShield(new Item.Properties(), 62));
+    public static final RegistryObject<Item> MIRROR_GREATSHIELD = ITEMS.register("mirror_greatshield", () -> new ItemOriginalShield(new Item.Properties(), 63));
+    public static final RegistryObject<Item> BEANSTALK_SHIELD = ITEMS.register("beanstalk_shield", () -> new ItemOriginalShield(new Item.Properties(), 167));
+    public static final RegistryObject<Item> MERCURY_SHIELD = ITEMS.register("mercury_shield", () -> new ItemOriginalShield(new Item.Properties(), 168));
+    public static final RegistryObject<Item> DUALITY_BUCKLER = ITEMS.register("duality_buckler", () -> new ItemOriginalShield(new Item.Properties(), 217));
+    public static final RegistryObject<Item> GHOST_HUNTER_SHIELD = ITEMS.register("ghost_hunter_shield", () -> new ItemOriginalShield(new Item.Properties(), 237));
+    public static final RegistryObject<Item> CROSS_GREATSHIELD = ITEMS.register("cross_greatshield", () -> new ItemOriginalShield(new Item.Properties(), 239));
     public static final RegistryObject<Item> SILVER_PISTOL = ITEMS.register("silver_pistol", () -> new ItemOriginalSilverPistol(new Item.Properties()));
     public static final RegistryObject<Item> MURDERERS_SHOTGUN = ITEMS.register("murderers_shotgun", () -> new ItemMurderersShotgun(new Item.Properties()));
     public static final RegistryObject<Item> VORPAL_BLADE = ITEMS.register("vorpal_blade", () -> new ItemVorpalBlade(new Item.Properties()));
@@ -1246,6 +1272,30 @@ public class BlackSouls {
                         output.accept(BUCKLER.get());
                         output.accept(ROUND_SHIELD.get());
                         output.accept(WARRIOR_ROUND_SHIELD.get());
+                        output.accept(CANNIBAL_SHIELD.get());
+                        output.accept(BLADE_SHIELD.get());
+                        output.accept(GRASS_CREST_SHIELD.get());
+                        output.accept(MUSHROOM_SHIELD.get());
+                        output.accept(IRON_ROUND_SHIELD.get());
+                        output.accept(TARGET_SHIELD.get());
+                        output.accept(GRIFFIN_SHIELD.get());
+                        output.accept(KITE_SHIELD.get());
+                        output.accept(RED_SHIELD.get());
+                        output.accept(MOCK_TURTLE_SHELL.get());
+                        output.accept(BRICK_SHIELD.get());
+                        output.accept(BLACK_VANGUARD_SHIELD.get());
+                        output.accept(PALADIN_SHIELD.get());
+                        output.accept(SEASHELL_SHIELD.get());
+                        output.accept(DICKA_GREATSHIELD.get());
+                        output.accept(SLOTH_GREATSHIELD.get());
+                        output.accept(ABYSS_GREATSHIELD.get());
+                        output.accept(DEEP_SEA_GREATSHIELD.get());
+                        output.accept(MIRROR_GREATSHIELD.get());
+                        output.accept(BEANSTALK_SHIELD.get());
+                        output.accept(MERCURY_SHIELD.get());
+                        output.accept(DUALITY_BUCKLER.get());
+                        output.accept(GHOST_HUNTER_SHIELD.get());
+                        output.accept(CROSS_GREATSHIELD.get());
                         output.accept(SILVER_PISTOL.get());
                         output.accept(MURDERERS_SHOTGUN.get());            // 杀人魔霰弹铳
                     })
@@ -1516,6 +1566,7 @@ public class BlackSouls {
         Map<String, RegistryObject<Item>> result = new LinkedHashMap<>();
         for (yuki135.blacksouls.util.BSOriginalNpcData.Entry npc
                 : yuki135.blacksouls.util.BSOriginalNpcData.values()) {
+            if (yuki135.blacksouls.story.OriginalSkullBeastService.handles(npc.id())) continue;
             if (npc.pages().stream().noneMatch(page -> !page.graphic().get("character_name").getAsString().isBlank())) {
                 continue;
             }

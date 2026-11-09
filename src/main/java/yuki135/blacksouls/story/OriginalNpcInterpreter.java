@@ -48,16 +48,12 @@ public final class OriginalNpcInterpreter {
             if (selection < 0 && selection != -2) {
                 return pending;
             }
-            int selected = selection;
-            if (selected == -2) {
-                if (pendingCancel == 0) {
-                    return pending;
-                }
-                selected = pendingCancel == 5 ? -1 : pendingCancel - 1;
-            }
-            if (selected < -1 || selected >= pending.choices().size()) {
+            ChoiceGroup group = choiceGroup(frames.peek(), frames.peek().position - 1);
+            if (selection >= pending.choices().size()) {
                 return pending;
             }
+            int selected = selection == -2 ? group.cancelBranch() : group.branches().get(selection);
+            if (selected < 0) return pending;
             frames.peek().choices.put(pendingIndent, selected);
             frames.peek().omissionFadeShown = false;
         } else if (pending != null && pending.type() == Type.SHOP) {
@@ -147,23 +143,31 @@ public final class OriginalNpcInterpreter {
                         return emit(Type.TEXT, String.join("\n", lines), text(p, 0), integer(p, 1), List.of(), List.of(), "");
                     }
                     case 102 -> {
-                        if (omitted) {
+                        if (omitted && frame.entireScene) {
                             frame.choices.put(command.indent(), 0);
                             break;
                         }
-                        List<String> choices = new ArrayList<>();
-                        p.get(0).getAsJsonArray().forEach(value -> choices.add(value.getAsString()));
+                        ChoiceGroup group = choiceGroup(frame, commandPosition);
                         pendingIndent = command.indent();
                         pendingCancel = integer(p, 1);
-                        return emit(Type.CHOICE, "", "", 0, choices, List.of(), "");
+                        return emit(Type.CHOICE, "", "", 0, group.labels(), List.of(), "");
                     }
                     case 402, 403 -> {
-                        int branch = command.code() == 403 ? -1 : integer(p, 0);
-                        if (frame.choices.getOrDefault(command.indent(), Integer.MIN_VALUE) != branch) {
+                        int branch = command.code() == 403 ? 4 : integer(p, 0);
+                        int selected = frame.choices.getOrDefault(command.indent(), Integer.MIN_VALUE);
+                        if (selected != branch) {
                             frame.position = find(frame, command.indent(), 402, 403, 404);
                         }
                     }
-                    case 404 -> frame.choices.remove(command.indent());
+                    case 404 -> {
+                        if (frame.position < frame.commands.size() && frame.commands.get(frame.position).code() == 102
+                                && frame.commands.get(frame.position).indent() == command.indent()) {
+                            frame.choices.computeIfPresent(command.indent(), (indent, selected) -> selected - 5);
+                            frame.position++;
+                        } else {
+                            frame.choices.remove(command.indent());
+                        }
+                    }
                     case 111 -> {
                         if (!condition(p, context)) {
                             int next = find(frame, command.indent(), 411, 412);
@@ -289,6 +293,12 @@ public final class OriginalNpcInterpreter {
                         }
                     }
                     case 250 -> context.sound(p.get(0).getAsJsonObject());
+                    case 313 -> {
+                        if (p.size()!=4) throw new UnsupportedOperationException("actor_state_parameters");
+                        int mode=integer(p,0),actor=integer(p,1),operation=integer(p,2),state=integer(p,3);
+                        if (mode<0||mode>1||actor<0||operation<0||operation>1||state<1) throw new UnsupportedOperationException("actor_state_parameters");
+                        context.changeActorState(Math.toIntExact(mode==0?actor:context.variable(actor)),state,operation==0);
+                    }
                     case 314 -> context.recoverAll(integer(p, 0), integer(p, 1));
                     case 315 -> {
                         if (p.size() != 6) throw new UnsupportedOperationException("experience_parameters");
@@ -627,6 +637,7 @@ public final class OriginalNpcInterpreter {
                 throw new IllegalArgumentException("Invalid original NPC snapshot position");
             }
             loadMap(saved.getAsJsonObject("choices"), frame.choices, -1, Integer.MAX_VALUE);
+            frame.choices.replaceAll((indent, selected) -> selected == -1 ? 4 : selected);
             loadMap(saved.getAsJsonObject("loops"), frame.loops, 0, commands.size());
             loadMap(saved.getAsJsonObject("battles"), frame.battles, 0, 2);
             result.frames.addLast(frame);
@@ -642,12 +653,23 @@ public final class OriginalNpcInterpreter {
                 && !(result.pending.type() == Type.TEXT && result.experienceDisplay))) {
             throw new IllegalArgumentException("Inconsistent original NPC snapshot prompt");
         }
+        if (result.pending != null && result.pending.type() == Type.CHOICE) {
+            Frame current = result.frames.peek();
+            ChoiceGroup group = choiceGroup(current, current.position - 1);
+            Prompt previous = result.pending;
+            if (previous.choices().size() < group.labels().size()
+                    && group.labels().subList(0, previous.choices().size()).equals(previous.choices())) {
+                result.pending = new Prompt(previous.revision(), previous.type(), previous.text(), previous.portrait(),
+                        previous.portraitIndex(), group.labels(), previous.goods(), previous.reason());
+            }
+        }
         if (context.nonExplicitScenes() && !result.frames.isEmpty() && result.pending != null) {
             Frame current = result.frames.peek();
             int cursor = current.position;
             boolean currentOmitted = cursor < current.omitted.length && current.omitted[cursor];
             boolean previousOmitted = cursor > 0 && current.omitted[cursor - 1];
-            result.omittedOnRestore = currentOmitted || previousOmitted;
+            result.omittedOnRestore = (currentOmitted || previousOmitted)
+                    && !(result.pending.type() == Type.CHOICE && !current.entireScene);
             if (result.omittedOnRestore && (result.pending.type() == Type.TEXT || result.pending.type() == Type.ROUTE_WAIT
                     || result.pending.type() == Type.ANIMATION_WAIT
                     || result.pending.type() == Type.WAIT && !current.omissionFadeShown)) result.pending = null;
@@ -660,17 +682,55 @@ public final class OriginalNpcInterpreter {
     }
 
     public boolean omitsSelectedScene(int selection) {
-        if (pending == null || pending.type() != Type.CHOICE || selection < 0 || frames.isEmpty()) return false;
+        if (pending == null || pending.type() != Type.CHOICE || frames.isEmpty()
+                || selection < 0 && selection != -2 || selection >= pending.choices().size()) return false;
         Frame frame = frames.peek();
+        ChoiceGroup group = choiceGroup(frame, frame.position - 1);
+        int branch = selection == -2 ? group.cancelBranch() : group.branches().get(selection);
+        if (branch < 0) return false;
         for (int index = frame.position; index < frame.commands.size(); index++) {
             var command = frame.commands.get(index);
             if (command.indent() != pendingIndent) continue;
-            if (command.code() == 404) return false;
-            if (command.code() == 402 && integer(command.parameters(), 0) == selection) {
+            if (command.code() == 404) {
+                if (index + 1 >= frame.commands.size() || frame.commands.get(index + 1).code() != 102
+                        || frame.commands.get(index + 1).indent() != pendingIndent) return false;
+                branch -= 5;
+            }
+            if ((command.code() == 402 && integer(command.parameters(), 0) == branch)
+                    || command.code() == 403 && branch == 4) {
                 return index + 1 < frame.omitted.length && frame.omitted[index + 1];
             }
         }
         return false;
+    }
+
+    private static ChoiceGroup choiceGroup(Frame frame, int start) {
+        List<String> labels = new ArrayList<>();
+        List<Integer> branches = new ArrayList<>();
+        int offset = 0;
+        int cancelBranch = -1;
+        int indent = frame.commands.get(start).indent();
+        while (start < frame.commands.size()) {
+            var choice = frame.commands.get(start);
+            var values = choice.parameters().get(0).getAsJsonArray();
+            for (int index = 0; index < values.size(); index++) {
+                labels.add(values.get(index).getAsString());
+                branches.add(offset + index);
+            }
+            int cancel = integer(choice.parameters(), 1);
+            if (cancel > 0) cancelBranch = offset + cancel - 1;
+            int end = start + 1;
+            while (end < frame.commands.size()
+                    && !(frame.commands.get(end).code() == 404 && frame.commands.get(end).indent() == indent)) end++;
+            start = end + 1;
+            if (start >= frame.commands.size() || frame.commands.get(start).code() != 102
+                    || frame.commands.get(start).indent() != indent) break;
+            offset += 5;
+        }
+        return new ChoiceGroup(List.copyOf(labels), List.copyOf(branches), cancelBranch);
+    }
+
+    private record ChoiceGroup(List<String> labels, List<Integer> branches, int cancelBranch) {
     }
 
     private static boolean presentationCommand(int code) {
@@ -1024,6 +1084,9 @@ public final class OriginalNpcInterpreter {
     }
 
     public interface Context {
+        default void changeActorState(int actor,int state,boolean add) {
+            throw new UnsupportedOperationException("actor_state:"+actor+":"+state);
+        }
         default boolean nonExplicitScenes() {
             return false;
         }

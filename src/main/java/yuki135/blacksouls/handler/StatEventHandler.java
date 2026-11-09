@@ -16,6 +16,7 @@ import yuki135.blacksouls.network.packets.*;
 import yuki135.blacksouls.util.PlayerStatService;
 import yuki135.blacksouls.util.SkillUtils;
 import yuki135.blacksouls.util.OriginalOpeningEquipment;
+import yuki135.blacksouls.util.OriginalShieldData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -406,16 +407,9 @@ public class StatEventHandler {
                 * Math.pow(2.0D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_1))
                 * Math.pow(2.5D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_2))
                 * Math.pow(3.0D, getOriginalRingCount(entity, ItemOriginalRing.Profile.TENACIOUS_PLUS_3));
-        if (entity instanceof Player player && OriginalOpeningEquipment.active(player)) {
-            multiplier *= OriginalOpeningEquipment.rate(player, 23, 1);
-            if (!OriginalOpeningEquipment.handled(player, player.getOffhandItem(), 1)) {
-                if (hasKnightShield(player)) multiplier *= 2.5D;
-                else if (hasPorcupineShield(player)) multiplier *= 2.0D;
-            }
-        } else if (entity instanceof Player player && hasKnightShield(player)) {
-            multiplier *= 2.5D;
-        } else if (entity instanceof Player player && hasPorcupineShield(player)) {
-            multiplier *= 2.0D;
+        if(entity instanceof Player player) {
+            if(OriginalOpeningEquipment.active(player))multiplier*=OriginalOpeningEquipment.rate(player,23,1);
+            multiplier*=OriginalShieldData.rate(player,23,1);
         }
         return multiplier;
     }
@@ -427,11 +421,6 @@ public class StatEventHandler {
     private static boolean hasPorcupineShield(Player player) {
         return player.getMainHandItem().is(BlackSouls.PORCUPINE_SHIELD.get())
                 || player.getOffhandItem().is(BlackSouls.PORCUPINE_SHIELD.get());
-    }
-
-    private static boolean hasKnightShield(Player player) {
-        return player.getMainHandItem().is(BlackSouls.KNIGHT_SHIELD.get())
-                || player.getOffhandItem().is(BlackSouls.KNIGHT_SHIELD.get());
     }
 
     private static boolean hasRegisteredEffect(LivingEntity entity, RegistryObject<net.minecraft.world.effect.MobEffect> effect) {
@@ -866,7 +855,7 @@ public class StatEventHandler {
                 + getOriginalRingCount(player, ItemOriginalRing.Profile.SIN_PLUS_2) * 60.0D
                 + getOriginalRingCount(player, ItemOriginalRing.Profile.SIN_PLUS_3) * 70.0D
                 + getOriginalRingCount(player, ItemOriginalRing.Profile.COUNTERATTACK) * 100.0D;
-        if (hasPorcupineShield(player)) rate += 30.0D;
+        rate += OriginalShieldData.sum(player,22,6)*100;
         ItemStack mainHand = player.getMainHandItem();
         if (mainHand.isEmpty()) return Math.min(100.0D, rate);
         if (mainHand.getItem() == BlackSouls.GUNGNIR.get()) rate += 100.0D;
@@ -1108,6 +1097,14 @@ public class StatEventHandler {
                     }
 
                     PlayerStatService.recoverAll(serverPlayer);
+                    for (int slot = 0; slot < serverPlayer.getInventory().getContainerSize(); slot++) {
+                        ItemStack stack = serverPlayer.getInventory().getItem(slot);
+                        if (stack.is(BlackSouls.HERB_BOTTLE.get()) || stack.is(BlackSouls.HERB_BOTTLE_M.get())) {
+                            stack.setDamageValue(0);
+                        }
+                    }
+                    serverPlayer.getInventory().setChanged();
+                    serverPlayer.containerMenu.broadcastChanges();
                     serverPlayer.setRespawnPosition(level.dimension(), pos.above(), player.getYRot(), true, false);
                 }
             }
@@ -1197,7 +1194,7 @@ public class StatEventHandler {
             int winterMageCoatCount = getBaubleCount(player, BlackSouls.WINTER_MAGE_COAT.get());
             double reflectChance = 1.0D
                     - Math.pow(0.90D, reflectCount)
-                    * Math.pow(0.85D, winterMageCoatCount);
+                    * Math.pow(0.85D, winterMageCoatCount) * Math.max(0,1-OriginalShieldData.sum(player,22,5));
             if (reflectChance > 0.0D && player.getRandom().nextDouble() < reflectChance) {
                 event.setCanceled(true);
                 magicAttacker.hurt(player.damageSources().magic(), event.getAmount());
@@ -1246,7 +1243,7 @@ public class StatEventHandler {
             }
             double criticalEvasionChance = Math.min(1.0D,
                     (getBaubleCount(victim, BlackSouls.WINTER_KNIGHT_ARMOR.get())
-                            + getBaubleCount(victim, BlackSouls.WINTER_KNIGHT_HELMET.get())) * 0.50D);
+                            + getBaubleCount(victim, BlackSouls.WINTER_KNIGHT_HELMET.get())) * 0.50D + OriginalShieldData.sum(victim,22,3));
             if (attackerData.getBoolean("bs2_is_crit")
                     && criticalEvasionChance > 0.0D
                     && victim.getRandom().nextDouble() < criticalEvasionChance) {
@@ -1497,10 +1494,12 @@ public class StatEventHandler {
         } else if (!mainHand.isEmpty() && mainHand.getItem() == BlackSouls.SLAUGHTERER_GREATAXE.get()) {
             bleedRate = 100.0D;
         }
-        if (hasPorcupineShield(attacker)) bleedRate += 30.0D;
+        if(!yuki135.blacksouls.combat.TurnBattleManager.isInBattle(attacker))bleedRate += OriginalShieldData.sum(attacker,32,26)*100;
         if (bleedRate > 0.0D && Math.random() * 100.0D < bleedRate && BlackSouls.BUFF_BLEEDING.isPresent()) {
             victim.addEffect(new net.minecraft.world.effect.MobEffectInstance(BlackSouls.BUFF_BLEEDING.get(), 600, 0));
         }
+        double shieldPoison=yuki135.blacksouls.combat.TurnBattleManager.isInBattle(attacker)?0:OriginalShieldData.sum(attacker,32,2);
+        if(shieldPoison>0&&attacker.getRandom().nextDouble()<shieldPoison)victim.addEffect(new MobEffectInstance(BlackSouls.BUFF_POISON.get(),2000,0));
         int appleRingCount = getBaubleCount(attacker, BlackSouls.RING_APPLE.get());
         if (appleRingCount > 0
                 && Math.random() * 100.0D < Math.min(100.0D, appleRingCount * 50.0D)
@@ -1762,6 +1761,7 @@ public class StatEventHandler {
             stats.recalculateBaseStats();
             resetDerivedStats(stats);
             OriginalOpeningEquipment.apply(player, stats);
+            OriginalShieldData.apply(player,stats);
             applyCovenantBonuses(stats);
 
             // Accessory and armor section.
@@ -2708,8 +2708,7 @@ public class StatEventHandler {
             if (!offHand.isEmpty() && offHand.getItem() == BlackSouls.MURDERERS_SHOTGUN.get()) {
                 stats.attack += 50.0; stats.speed *= 0.95;
             }
-            if (hasPorcupineShield(player)) stats.speed *= 0.97D;
-            if (hasKnightShield(player) && !OriginalOpeningEquipment.handled(player, player.getOffhandItem(), 1)) stats.speed *= 0.98D;
+
 
             stats.weaponEnchantments.clear();
 
@@ -2746,7 +2745,7 @@ public class StatEventHandler {
             }
             stats.applyOriginalSpiritParameters();
             MinecraftForge.EVENT_BUS.post(new BSStatsRecalcEvent(player, stats));
-            stats.magicEvasion += stats.evasion - OriginalOpeningEquipment.sum(player, 22, 1) * 100.0D;
+            stats.magicEvasion += stats.evasion - OriginalOpeningEquipment.sum(player, 22, 1) * 100.0D - OriginalShieldData.sum(player,22,1)*100;
             stats.applyOriginalSpiritDerivedStats();
             clampCalculatedStats(player, stats);
             syncVanillaAttributes(player, stats);
@@ -3162,6 +3161,14 @@ public class StatEventHandler {
 
         if (event.getEntity() instanceof Player player) {
             net.minecraft.world.effect.MobEffect incomingEffect = event.getEffectInstance().getEffect();
+            if(!yuki135.blacksouls.combat.TurnBattleManager.isInBattle(player)) {
+                int sourceState=yuki135.blacksouls.combat.TurnBattleManager.originalPlayerStateId(incomingEffect,event.getEffectInstance().getAmplifier());
+                double rate=sourceState>0?OriginalShieldData.rate(player,13,sourceState):1;
+                if(isParameterDebuff(incomingEffect)&&OriginalShieldData.equipped(player)!=null
+                        &&OriginalShieldData.equipped(player).id()==62)rate=0;
+                if(rate<1&&player.getRandom().nextDouble()>=rate) {event.setResult(Event.Result.DENY);return;}
+            }
+
             if (getBaubleCount(player, BlackSouls.RING_BARBER.get()) > 0 && isParameterDebuff(incomingEffect)) {
                 event.setResult(Event.Result.DENY);
                 return;
@@ -3192,8 +3199,7 @@ public class StatEventHandler {
             }
             int fighterCount = getBaubleCount(player, BlackSouls.RING_FIGHTER.get());
             int clubKnightCount = getBaubleCount(player, BlackSouls.RING_CLUB_KNIGHT.get());
-            int knightShieldCount = hasKnightShield(player) ? 1 : 0;
-            double stunResistance = 1.0D - Math.pow(0.50D, fighterCount + clubKnightCount + knightShieldCount);
+            double stunResistance = 1.0D - Math.pow(0.50D, fighterCount + clubKnightCount);
             if (stunResistance > 0.0D
                     && BlackSouls.BUFF_STUN.isPresent()
                     && incomingEffect == BlackSouls.BUFF_STUN.get()
@@ -3328,6 +3334,7 @@ public class StatEventHandler {
             if (!player.getInventory().add(darkSoulStack)) {
                 player.drop(darkSoulStack, false);
             }
+            yuki135.blacksouls.party.PartyManager.refresh(player);
         }
     }
 

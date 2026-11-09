@@ -7420,7 +7420,7 @@
     "id": 38,
     "name": "食人族之盾",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:cannibal_shield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7436,7 +7436,7 @@
     "id": 40,
     "name": "刃之盾",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:blade_shield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7444,7 +7444,7 @@
     "id": 41,
     "name": "草纹盾",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:grass_crest_shield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7468,7 +7468,7 @@
     "id": 44,
     "name": "蘑菇盾",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:mushroom_shield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7484,7 +7484,7 @@
     "id": 46,
     "name": "铁制圆盾",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:iron_round_shield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7500,7 +7500,7 @@
     "id": 48,
     "name": "标靶盾牌",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:target_shield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7516,7 +7516,7 @@
     "id": 50,
     "name": "鹫狮子之盾",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:griffin_shield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7532,7 +7532,7 @@
     "id": 52,
     "name": "鸢形盾",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:kite_shield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7540,7 +7540,7 @@
     "id": 53,
     "name": "赤之盾",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:red_shield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7548,7 +7548,7 @@
     "id": 54,
     "name": "假海龟的龟壳",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:mock_turtle_shell",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7556,7 +7556,7 @@
     "id": 55,
     "name": "炼瓦之盾",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:brick_shield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7564,7 +7564,7 @@
     "id": 56,
     "name": "黑尖兵之盾",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:black_vanguard_shield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7572,7 +7572,7 @@
     "id": 57,
     "name": "圣骑士之盾",
     "price": 10000,
-    "registry": null,
+    "registry": "blacksouls:paladin_shield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7580,7 +7580,7 @@
     "id": 58,
     "name": "贝类甲壳",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:seashell_shield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7588,7 +7588,7 @@
     "id": 59,
     "name": "迪卡的大盾",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:dicka_greatshield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7596,7 +7596,7 @@
     "id": 60,
     "name": "怠惰的大盾",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:sloth_greatshield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7604,7 +7604,7 @@
     "id": 61,
     "name": "深渊的大盾",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:abyss_greatshield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7612,7 +7612,7 @@
     "id": 62,
     "name": "深海的大盾",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:deep_sea_greatshield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -7620,7 +7620,7 @@
     "id": 63,
     "name": "镜之大盾",
     "price": 10000,
-    "registry": null,
+    "registry": "blacksouls:mirror_greatshield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -8452,7 +8452,7 @@
     "id": 167,
     "name": "豌豆木之盾",
     "price": 10000,
-    "registry": null,
+    "registry": "blacksouls:beanstalk_shield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -8460,7 +8460,7 @@
     "id": 168,
     "name": "水银盾",
     "price": 10000,
-    "registry": null,
+    "registry": "blacksouls:mercury_shield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -8852,7 +8852,7 @@
     "id": 217,
     "name": "两面性的小盾",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:duality_buckler",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -9012,7 +9012,7 @@
     "id": 237,
     "name": "幽灵猎人之盾",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:ghost_hunter_shield",
     "source": "no_exact_registered_name_match"
   },
   {
@@ -9028,7 +9028,7 @@
     "id": 239,
     "name": "十字架的大盾",
     "price": 1000,
-    "registry": null,
+    "registry": "blacksouls:cross_greatshield",
     "source": "no_exact_registered_name_match"
   },
   {

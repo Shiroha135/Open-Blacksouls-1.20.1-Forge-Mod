@@ -51,6 +51,11 @@ public final class SceneSpawnerBossData extends SavedData {
         return storyProgress;
     }
 
+    public void restoreDeveloperState(CompoundTag state) {
+        var restored=load(state);defeatedSpawners.clear();defeatedSpawners.addAll(restored.defeatedSpawners);
+        storyProgress=restored.storyProgress;setDirty();
+    }
+
     public void setStoryProgress(int value) {
         int next = Math.max(0, value);
         if (next != storyProgress) {

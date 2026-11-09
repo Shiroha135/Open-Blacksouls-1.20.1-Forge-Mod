@@ -108,6 +108,7 @@ public final class OriginalOpeningEquipment {
 
     private static OriginalEquipmentData.Equipment fitted(ItemStack stack, int equipmentType) {
         if (stack == null || stack.isEmpty()) return null;
+        if(OriginalShieldData.isShield(stack))return null;
         if (equipmentType == 0) {
             int id = OriginalNpcItems.sourceId(stack);
             if (!DATA.containsKey(key(1, id))) return null;

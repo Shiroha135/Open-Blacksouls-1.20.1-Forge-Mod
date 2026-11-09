@@ -1570,4 +1570,6 @@
   },
   "opening_coda_river": {"sounds": [{"name": "blacksouls:opening_coda/river", "stream": true}]},
   "opening_coda_night": {"sounds": [{"name": "blacksouls:opening_coda/night", "stream": true}]}
+,
+"original_skull_beast_roar":{"sounds": ["blacksouls:original_skull_beast_roar"]},"original_skull_beast_victory":{"sounds": ["blacksouls:original_skull_beast_victory"]}
 }

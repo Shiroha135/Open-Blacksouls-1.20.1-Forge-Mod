@@ -612,6 +612,7 @@ public final class OriginalNpcMovementService {
                 return;
             }
             if (code >= 1 && code <= 14) {
+                if (sourceMap==52&&OriginalSkullBeastService.routeAllowed(owner,subject,subject.getX(),subject.getZ())) return;
                 if (sourceMap != 62 && !(sourceMap == 37 && subject instanceof EntityOriginalNpc npc
                         && npc.hasOriginalAutonomy() && subject.level().dimension().equals(yuki135.blacksouls.util.HokoniwaDestination.DIMENSION)
                         && isOriginalMap37Position(npc.getNpcId(), subject.getX(), subject.getZ())
@@ -813,6 +814,9 @@ public final class OriginalNpcMovementService {
 
         private boolean startMotion(int dx, int dy, boolean jump) {
             double tx = subject.getX() - dx, tz = subject.getZ() - dy;
+            if (sourceMap==52&&!OriginalSkullBeastService.routeAllowed(owner,subject,tx,tz)) {
+                throw new UnsupportedOperationException("physical_route_map52_local_bounds");
+            }
             if (sourceMap == 37 && (!(subject instanceof EntityOriginalNpc npc)
                     || !isOriginalMap37Position(npc.getNpcId(), subject.getX(), subject.getZ()) || !isOriginalMap37Position(npc.getNpcId(), tx, tz))) {
                 throw new UnsupportedOperationException("physical_route_map37_local_bounds");

@@ -63,6 +63,8 @@ public final class OriginalNonExplicitScenes {
             int position = frame.get("position").getAsInt();
             if (position < 0 || position > commands.size()) return false;
             boolean entireScene = frame.has("omittedScene") && frame.get("omittedScene").getAsBoolean() || isScene(commands);
+            if (!entireScene && snapshot.has("pending") && snapshot.get("pending").isJsonObject()
+                    && "CHOICE".equals(snapshot.getAsJsonObject("pending").get("type").getAsString())) return false;
             boolean[] omitted = omittedCommands(commands, entireScene);
             return position < omitted.length && omitted[position] || position > 0 && omitted[position - 1];
         } catch (RuntimeException invalid) {

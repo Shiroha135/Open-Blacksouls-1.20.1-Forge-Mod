@@ -75,6 +75,8 @@ public final class OriginalNpcService {
     }
 
     private static boolean matchesActor(PathfinderMob npc, String npcId) {
+        if (OriginalSkullBeastService.handles(npcId)) return npc.level() instanceof ServerLevel level
+                && OriginalSkullBeastService.matches(level)&&OriginalSkullBeastService.actor(level,npcId)==npc;
         if (npc instanceof EntityOriginalWhiteBear whiteBear && !OriginalWhiteBearPlacement.matches(whiteBear)) return false;
         if (npc instanceof EntityOriginalCemeteryCat cat && !OriginalCemeteryCatPlacement.matches(cat)) return false;
         if (npc instanceof EntityOriginalMarketCat cat && !OriginalMarketCatPlacement.matches(cat)) return false;
@@ -938,6 +940,11 @@ public final class OriginalNpcService {
         }
         enemy.setProfileId(first.enemyId());
         enemy.moveTo(npc.getX(), npc.getY(), npc.getZ(), npc.getYRot(), 0.0F);
+        if (OriginalSkullBeastService.SOURCE.equals(session.npcId)&&!OriginalSkullBeastService.prepareBattle(player,enemy)) {
+            enemy.discard();
+            blockBattle(player,npc,session,"skull_beast_actor_unavailable");
+            return;
+        }
         if (!player.serverLevel().addFreshEntity(enemy)) {
             enemy.discard();
             blockBattle(player, npc, session, "original_troop_spawn:" + request.troopId());
@@ -948,6 +955,7 @@ public final class OriginalNpcService {
         boolean started = TurnBattleManager.tryStartOriginalTroop(player, enemy, request.troopId(),
                 request.canEscape(), request.canLose(), outcome -> {
                     enemy.discard();
+                    if (OriginalSkullBeastService.SOURCE.equals(session.npcId)) OriginalSkullBeastService.finishBattle(player);
                     if (SESSIONS.get(session.playerId) != session || session.prompt != prompt) {
                         return;
                     }
@@ -958,6 +966,14 @@ public final class OriginalNpcService {
                         NetworkHandler.sendToPlayer(new ClientboundOriginalNpcPacket(npc.getId(), session.token,
                                 npc.getName().getString(), "", new OriginalNpcInterpreter.Prompt(prompt.revision() + 1,
                                 OriginalNpcInterpreter.Type.END, "", "", 0, List.of(), List.of(), "battle_aborted"), List.of()), player);
+                    } else if (outcome == ClientboundTurnBattlePacket.Outcome.DEFEAT&&OriginalSkullBeastService.SOURCE.equals(session.npcId)) {
+                        OriginalNpcProgress.get(player.server).setSelfSwitch(session.npcId,"A",true);
+                        OriginalNpcProgress.get(player.server).setSwitch(7,false);
+                        OriginalNpcProgress.get(player.server).setSwitch(576,false);
+                        OriginalSkullBeastService.retry(player);
+                        present(player,npc,session,new OriginalNpcInterpreter.Prompt(prompt.revision()+1,
+                                OriginalNpcInterpreter.Type.END,"","",0,List.of(),List.of(),"battle_defeat"));
+                        player.hurt(player.damageSources().genericKill(),Float.MAX_VALUE);
                     } else if (outcome == ClientboundTurnBattlePacket.Outcome.DEFEAT && !request.canLose()) {
                         present(player, npc, session, new OriginalNpcInterpreter.Prompt(prompt.revision() + 1,
                                 OriginalNpcInterpreter.Type.END, "", "", 0, List.of(), List.of(), "battle_ended"));
@@ -976,6 +992,7 @@ public final class OriginalNpcService {
                 }, true, session.encounterCondition);
         if (!started) {
             enemy.discard();
+            if (OriginalSkullBeastService.SOURCE.equals(session.npcId)) OriginalSkullBeastService.finishBattle(player);
             blockBattle(player, npc, session, "original_troop_unavailable:" + request.troopId());
         }
     }
@@ -1146,6 +1163,7 @@ public final class OriginalNpcService {
             if (player != null) {
                 OriginalNpcProgress.writeSwitch(player, id, value);
                 if (id == 41) OriginalAltarEntry.synchronize(player.serverLevel());
+                if (id==56&&value&&OriginalSkullBeastService.SOURCE.equals(npcId)) OriginalSkullBeastService.defeated(player);
                 return;
             }
             progress.setSwitch(id, value);
@@ -1418,6 +1436,13 @@ public final class OriginalNpcService {
                     || OriginalNpcCharacterBindings.resolve((ServerLevel) npc.level(), OriginalNpcCharacterBindings.CHESHIRE_RABBIT_HOLE) != npc) {
                 throw new UnsupportedOperationException("bound_character_target:" + npcId + ":" + target);
             }
+        }
+
+        @Override
+        public void changeActorState(int actor,int state,boolean add) {
+            if (player==null||actor!=0&&!hasActor(actor)||state!=12) throw new UnsupportedOperationException("actor_state:"+actor+":"+state);
+            if (add) player.addEffect(new net.minecraft.world.effect.MobEffectInstance(BlackSouls.BUFF_HOLLOWED.get(),-1,0,false,false,true));
+            else player.removeEffect(BlackSouls.BUFF_HOLLOWED.get());
         }
 
         @Override

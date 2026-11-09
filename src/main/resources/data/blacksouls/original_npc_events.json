@@ -387922,5 +387922,1938 @@
         ]
       }
     ]
-  }
+  },
+{
+  "id": "map052_ev010",
+  "mapId": 52,
+  "eventId": 10,
+  "name": "巨大骑士",
+  "x": 18,
+  "y": 22,
+  "pages": [
+    {
+      "condition": {
+        "switch1_valid": false,
+        "switch2_valid": false,
+        "variable_valid": false,
+        "self_switch_valid": false,
+        "item_valid": false,
+        "actor_valid": false,
+        "switch1_id": 1,
+        "switch2_id": 1,
+        "variable_id": 1,
+        "variable_value": 0,
+        "self_switch_ch": "A",
+        "item_id": 1,
+        "actor_id": 1,
+        "_class": "RPG::Event::Page::Condition"
+      },
+      "graphic": {
+        "tile_id": 0,
+        "character_name": "!$巨大騎士",
+        "character_index": 0,
+        "direction": 8,
+        "pattern": 1,
+        "_class": "RPG::Event::Page::Graphic"
+      },
+      "move_type": 0,
+      "move_speed": 3,
+      "move_frequency": 3,
+      "move_route": {
+        "repeat": true,
+        "skippable": false,
+        "wait": false,
+        "list": [
+          {
+            "code": 0,
+            "parameters": [],
+            "_class": "RPG::MoveCommand"
+          }
+        ],
+        "_class": "RPG::MoveRoute"
+      },
+      "walk_anime": true,
+      "step_anime": false,
+      "direction_fix": false,
+      "through": false,
+      "priority_type": 1,
+      "trigger": 0,
+      "commands": [
+        {
+          "code": 0,
+          "indent": 0,
+          "parameters": []
+        }
+      ]
+    },
+    {
+      "condition": {
+        "switch1_valid": true,
+        "switch2_valid": false,
+        "variable_valid": false,
+        "self_switch_valid": false,
+        "item_valid": false,
+        "actor_valid": false,
+        "switch1_id": 57,
+        "switch2_id": 1,
+        "variable_id": 1,
+        "variable_value": 0,
+        "self_switch_ch": "A",
+        "item_id": 1,
+        "actor_id": 1,
+        "_class": "RPG::Event::Page::Condition"
+      },
+      "graphic": {
+        "tile_id": 0,
+        "character_name": "",
+        "character_index": 0,
+        "direction": 2,
+        "pattern": 0,
+        "_class": "RPG::Event::Page::Graphic"
+      },
+      "move_type": 0,
+      "move_speed": 3,
+      "move_frequency": 3,
+      "move_route": {
+        "repeat": true,
+        "skippable": false,
+        "wait": false,
+        "list": [
+          {
+            "code": 0,
+            "parameters": [],
+            "_class": "RPG::MoveCommand"
+          }
+        ],
+        "_class": "RPG::MoveRoute"
+      },
+      "walk_anime": true,
+      "step_anime": false,
+      "direction_fix": false,
+      "through": false,
+      "priority_type": 0,
+      "trigger": 0,
+      "commands": [
+        {
+          "code": 0,
+          "indent": 0,
+          "parameters": []
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "map052_ev017",
+  "mapId": 52,
+  "eventId": 17,
+  "name": "猎颅之兽",
+  "x": 18,
+  "y": 21,
+  "pages": [
+    {
+      "condition": {
+        "switch1_valid": false,
+        "switch2_valid": false,
+        "variable_valid": false,
+        "self_switch_valid": false,
+        "item_valid": false,
+        "actor_valid": false,
+        "switch1_id": 1,
+        "switch2_id": 1,
+        "variable_id": 1,
+        "variable_value": 0,
+        "self_switch_ch": "A",
+        "item_id": 1,
+        "actor_id": 1,
+        "_class": "RPG::Event::Page::Condition"
+      },
+      "graphic": {
+        "tile_id": 0,
+        "character_name": "vorpal-bunny",
+        "character_index": 0,
+        "direction": 2,
+        "pattern": 1,
+        "_class": "RPG::Event::Page::Graphic"
+      },
+      "move_type": 0,
+      "move_speed": 3,
+      "move_frequency": 3,
+      "move_route": {
+        "repeat": true,
+        "skippable": false,
+        "wait": false,
+        "list": [
+          {
+            "code": 0,
+            "parameters": [],
+            "_class": "RPG::MoveCommand"
+          }
+        ],
+        "_class": "RPG::MoveRoute"
+      },
+      "walk_anime": true,
+      "step_anime": false,
+      "direction_fix": false,
+      "through": false,
+      "priority_type": 1,
+      "trigger": 0,
+      "commands": [
+        {
+          "code": 0,
+          "indent": 0,
+          "parameters": []
+        }
+      ]
+    },
+    {
+      "condition": {
+        "switch1_valid": true,
+        "switch2_valid": false,
+        "variable_valid": false,
+        "self_switch_valid": false,
+        "item_valid": false,
+        "actor_valid": false,
+        "switch1_id": 56,
+        "switch2_id": 1,
+        "variable_id": 1,
+        "variable_value": 0,
+        "self_switch_ch": "A",
+        "item_id": 1,
+        "actor_id": 1,
+        "_class": "RPG::Event::Page::Condition"
+      },
+      "graphic": {
+        "tile_id": 0,
+        "character_name": "",
+        "character_index": 0,
+        "direction": 2,
+        "pattern": 0,
+        "_class": "RPG::Event::Page::Graphic"
+      },
+      "move_type": 0,
+      "move_speed": 3,
+      "move_frequency": 3,
+      "move_route": {
+        "repeat": true,
+        "skippable": false,
+        "wait": false,
+        "list": [
+          {
+            "code": 0,
+            "parameters": [],
+            "_class": "RPG::MoveCommand"
+          }
+        ],
+        "_class": "RPG::MoveRoute"
+      },
+      "walk_anime": true,
+      "step_anime": false,
+      "direction_fix": false,
+      "through": false,
+      "priority_type": 0,
+      "trigger": 0,
+      "commands": [
+        {
+          "code": 0,
+          "indent": 0,
+          "parameters": []
+        }
+      ]
+    }
+  ]
+},
+{
+  "id": "map052_ev023",
+  "mapId": 52,
+  "eventId": 23,
+  "name": "猎颅之兽遭遇",
+  "x": 18,
+  "y": 27,
+  "pages": [
+    {
+      "condition": {
+        "switch1_valid": false,
+        "switch2_valid": false,
+        "variable_valid": false,
+        "self_switch_valid": false,
+        "item_valid": false,
+        "actor_valid": false,
+        "switch1_id": 388,
+        "switch2_id": 1,
+        "variable_id": 1,
+        "variable_value": 0,
+        "self_switch_ch": "A",
+        "item_id": 1,
+        "actor_id": 1,
+        "_class": "RPG::Event::Page::Condition"
+      },
+      "graphic": {
+        "tile_id": 0,
+        "character_name": "",
+        "character_index": 0,
+        "direction": 2,
+        "pattern": 0,
+        "_class": "RPG::Event::Page::Graphic"
+      },
+      "move_type": 0,
+      "move_speed": 3,
+      "move_frequency": 3,
+      "move_route": {
+        "repeat": true,
+        "skippable": false,
+        "wait": false,
+        "list": [
+          {
+            "code": 0,
+            "parameters": [],
+            "_class": "RPG::MoveCommand"
+          }
+        ],
+        "_class": "RPG::MoveRoute"
+      },
+      "walk_anime": true,
+      "step_anime": false,
+      "direction_fix": false,
+      "through": false,
+      "priority_type": 0,
+      "trigger": 1,
+      "commands": [
+        {
+          "code": 355,
+          "indent": 0,
+          "parameters": [
+            "reset_stealth"
+          ]
+        },
+        {
+          "code": 121,
+          "indent": 0,
+          "parameters": [
+            7,
+            7,
+            0
+          ]
+        },
+        {
+          "code": 242,
+          "indent": 0,
+          "parameters": [
+            2
+          ]
+        },
+        {
+          "code": 205,
+          "indent": 0,
+          "parameters": [
+            -1,
+            {
+              "repeat": false,
+              "skippable": false,
+              "wait": true,
+              "list": [
+                {
+                  "code": 4,
+                  "parameters": [],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 4,
+                  "parameters": [],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 0,
+                  "parameters": [],
+                  "_class": "RPG::MoveCommand"
+                }
+              ],
+              "_class": "RPG::MoveRoute"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 4,
+              "parameters": [],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 4,
+              "parameters": [],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 230,
+          "indent": 0,
+          "parameters": [
+            90
+          ]
+        },
+        {
+          "code": 250,
+          "indent": 0,
+          "parameters": [
+            {
+              "name": "Sword4",
+              "volume": 80,
+              "pitch": 100,
+              "_class": "RPG::SE"
+            }
+          ]
+        },
+        {
+          "code": 250,
+          "indent": 0,
+          "parameters": [
+            {
+              "name": "gucha004a",
+              "volume": 80,
+              "pitch": 100,
+              "_class": "RPG::SE"
+            }
+          ]
+        },
+        {
+          "code": 205,
+          "indent": 0,
+          "parameters": [
+            10,
+            {
+              "repeat": false,
+              "skippable": false,
+              "wait": true,
+              "list": [
+                {
+                  "code": 41,
+                  "parameters": [
+                    "!$巨大騎士 首なし",
+                    0
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 0,
+                  "parameters": [],
+                  "_class": "RPG::MoveCommand"
+                }
+              ],
+              "_class": "RPG::MoveRoute"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 41,
+              "parameters": [
+                "!$巨大騎士 首なし",
+                0
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 224,
+          "indent": 0,
+          "parameters": [
+            {
+              "marshal_data_base64": "AAAAAADgb0AAAAAAAAAAAAAAAAAAAAAAAAAAAABgZ0A=",
+              "_class": "Color"
+            },
+            30,
+            true
+          ]
+        },
+        {
+          "code": 230,
+          "indent": 0,
+          "parameters": [
+            30
+          ]
+        },
+        {
+          "code": 205,
+          "indent": 0,
+          "parameters": [
+            10,
+            {
+              "repeat": false,
+              "skippable": false,
+              "wait": true,
+              "list": [
+                {
+                  "code": 42,
+                  "parameters": [
+                    200
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 15,
+                  "parameters": [
+                    10
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 42,
+                  "parameters": [
+                    150
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 15,
+                  "parameters": [
+                    10
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 42,
+                  "parameters": [
+                    100
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 15,
+                  "parameters": [
+                    10
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 42,
+                  "parameters": [
+                    50
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 15,
+                  "parameters": [
+                    10
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 42,
+                  "parameters": [
+                    0
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 39,
+                  "parameters": [],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 37,
+                  "parameters": [],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 0,
+                  "parameters": [],
+                  "_class": "RPG::MoveCommand"
+                }
+              ],
+              "_class": "RPG::MoveRoute"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 42,
+              "parameters": [
+                200
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 15,
+              "parameters": [
+                10
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 42,
+              "parameters": [
+                150
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 15,
+              "parameters": [
+                10
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 42,
+              "parameters": [
+                100
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 15,
+              "parameters": [
+                10
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 42,
+              "parameters": [
+                50
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 15,
+              "parameters": [
+                10
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 42,
+              "parameters": [
+                0
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 39,
+              "parameters": [],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 37,
+              "parameters": [],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 121,
+          "indent": 0,
+          "parameters": [
+            57,
+            57,
+            0
+          ]
+        },
+        {
+          "code": 250,
+          "indent": 0,
+          "parameters": [
+            {
+              "name": "browbeat1",
+              "volume": 80,
+              "pitch": 145,
+              "_class": "RPG::SE"
+            }
+          ]
+        },
+        {
+          "code": 205,
+          "indent": 0,
+          "parameters": [
+            17,
+            {
+              "repeat": false,
+              "skippable": false,
+              "wait": true,
+              "list": [
+                {
+                  "code": 14,
+                  "parameters": [
+                    0,
+                    1
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 15,
+                  "parameters": [
+                    1
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 14,
+                  "parameters": [
+                    0,
+                    1
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 15,
+                  "parameters": [
+                    1
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 14,
+                  "parameters": [
+                    0,
+                    1
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 0,
+                  "parameters": [],
+                  "_class": "RPG::MoveCommand"
+                }
+              ],
+              "_class": "RPG::MoveRoute"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 14,
+              "parameters": [
+                0,
+                1
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 15,
+              "parameters": [
+                1
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 14,
+              "parameters": [
+                0,
+                1
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 15,
+              "parameters": [
+                1
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 14,
+              "parameters": [
+                0,
+                1
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 121,
+          "indent": 0,
+          "parameters": [
+            576,
+            576,
+            1
+          ]
+        },
+        {
+          "code": 301,
+          "indent": 0,
+          "parameters": [
+            0,
+            174,
+            false,
+            true
+          ]
+        },
+        {
+          "code": 601,
+          "indent": 0,
+          "parameters": []
+        },
+        {
+          "code": 111,
+          "indent": 1,
+          "parameters": [
+            0,
+            576,
+            0
+          ]
+        },
+        {
+          "code": 108,
+          "indent": 2,
+          "parameters": [
+            "NW名前指定 邪竜狩りヴォーパル"
+          ]
+        },
+        {
+          "code": 108,
+          "indent": 2,
+          "parameters": [
+            "NW名前指定 狩猎邪龙的沃柏尔"
+          ]
+        },
+        {
+          "code": 101,
+          "indent": 2,
+          "parameters": [
+            "",
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "code": 401,
+          "indent": 2,
+          "parameters": [
+            "「真乃勇士也………」"
+          ]
+        },
+        {
+          "code": 0,
+          "indent": 2,
+          "parameters": []
+        },
+        {
+          "code": 412,
+          "indent": 1,
+          "parameters": []
+        },
+        {
+          "code": 205,
+          "indent": 1,
+          "parameters": [
+            17,
+            {
+              "repeat": false,
+              "skippable": false,
+              "wait": true,
+              "list": [
+                {
+                  "code": 42,
+                  "parameters": [
+                    200
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 15,
+                  "parameters": [
+                    10
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 42,
+                  "parameters": [
+                    150
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 15,
+                  "parameters": [
+                    10
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 42,
+                  "parameters": [
+                    100
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 15,
+                  "parameters": [
+                    10
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 42,
+                  "parameters": [
+                    50
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 15,
+                  "parameters": [
+                    10
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 42,
+                  "parameters": [
+                    0
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 39,
+                  "parameters": [],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 0,
+                  "parameters": [],
+                  "_class": "RPG::MoveCommand"
+                }
+              ],
+              "_class": "RPG::MoveRoute"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 42,
+              "parameters": [
+                200
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 15,
+              "parameters": [
+                10
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 42,
+              "parameters": [
+                150
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 15,
+              "parameters": [
+                10
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 42,
+              "parameters": [
+                100
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 15,
+              "parameters": [
+                10
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 42,
+              "parameters": [
+                50
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 15,
+              "parameters": [
+                10
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 42,
+              "parameters": [
+                0
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 39,
+              "parameters": [],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 121,
+          "indent": 1,
+          "parameters": [
+            56,
+            56,
+            0
+          ]
+        },
+        {
+          "code": 117,
+          "indent": 1,
+          "parameters": [
+            12
+          ]
+        },
+        {
+          "code": 313,
+          "indent": 1,
+          "parameters": [
+            0,
+            0,
+            1,
+            12
+          ]
+        },
+        {
+          "code": 122,
+          "indent": 1,
+          "parameters": [
+            11,
+            11,
+            1,
+            0,
+            1
+          ]
+        },
+        {
+          "code": 121,
+          "indent": 1,
+          "parameters": [
+            7,
+            7,
+            1
+          ]
+        },
+        {
+          "code": 0,
+          "indent": 1,
+          "parameters": []
+        },
+        {
+          "code": 603,
+          "indent": 0,
+          "parameters": []
+        },
+        {
+          "code": 121,
+          "indent": 1,
+          "parameters": [
+            576,
+            576,
+            1
+          ]
+        },
+        {
+          "code": 117,
+          "indent": 1,
+          "parameters": [
+            11
+          ]
+        },
+        {
+          "code": 123,
+          "indent": 1,
+          "parameters": [
+            "A",
+            0
+          ]
+        },
+        {
+          "code": 0,
+          "indent": 1,
+          "parameters": []
+        },
+        {
+          "code": 604,
+          "indent": 0,
+          "parameters": []
+        },
+        {
+          "code": 0,
+          "indent": 0,
+          "parameters": []
+        }
+      ]
+    },
+    {
+      "condition": {
+        "switch1_valid": false,
+        "switch2_valid": false,
+        "variable_valid": false,
+        "self_switch_valid": true,
+        "item_valid": false,
+        "actor_valid": false,
+        "switch1_id": 388,
+        "switch2_id": 1,
+        "variable_id": 1,
+        "variable_value": 0,
+        "self_switch_ch": "A",
+        "item_id": 1,
+        "actor_id": 1,
+        "_class": "RPG::Event::Page::Condition"
+      },
+      "graphic": {
+        "tile_id": 0,
+        "character_name": "",
+        "character_index": 0,
+        "direction": 2,
+        "pattern": 0,
+        "_class": "RPG::Event::Page::Graphic"
+      },
+      "move_type": 0,
+      "move_speed": 3,
+      "move_frequency": 3,
+      "move_route": {
+        "repeat": true,
+        "skippable": false,
+        "wait": false,
+        "list": [
+          {
+            "code": 0,
+            "parameters": [],
+            "_class": "RPG::MoveCommand"
+          }
+        ],
+        "_class": "RPG::MoveRoute"
+      },
+      "walk_anime": true,
+      "step_anime": false,
+      "direction_fix": false,
+      "through": false,
+      "priority_type": 0,
+      "trigger": 1,
+      "commands": [
+        {
+          "code": 355,
+          "indent": 0,
+          "parameters": [
+            "reset_stealth"
+          ]
+        },
+        {
+          "code": 121,
+          "indent": 0,
+          "parameters": [
+            7,
+            7,
+            0
+          ]
+        },
+        {
+          "code": 242,
+          "indent": 0,
+          "parameters": [
+            2
+          ]
+        },
+        {
+          "code": 205,
+          "indent": 0,
+          "parameters": [
+            -1,
+            {
+              "repeat": false,
+              "skippable": false,
+              "wait": true,
+              "list": [
+                {
+                  "code": 4,
+                  "parameters": [],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 4,
+                  "parameters": [],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 0,
+                  "parameters": [],
+                  "_class": "RPG::MoveCommand"
+                }
+              ],
+              "_class": "RPG::MoveRoute"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 4,
+              "parameters": [],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 4,
+              "parameters": [],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 230,
+          "indent": 0,
+          "parameters": [
+            30
+          ]
+        },
+        {
+          "code": 250,
+          "indent": 0,
+          "parameters": [
+            {
+              "name": "browbeat1",
+              "volume": 80,
+              "pitch": 145,
+              "_class": "RPG::SE"
+            }
+          ]
+        },
+        {
+          "code": 205,
+          "indent": 0,
+          "parameters": [
+            17,
+            {
+              "repeat": false,
+              "skippable": false,
+              "wait": true,
+              "list": [
+                {
+                  "code": 14,
+                  "parameters": [
+                    0,
+                    1
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 15,
+                  "parameters": [
+                    1
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 14,
+                  "parameters": [
+                    0,
+                    1
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 15,
+                  "parameters": [
+                    1
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 14,
+                  "parameters": [
+                    0,
+                    1
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 0,
+                  "parameters": [],
+                  "_class": "RPG::MoveCommand"
+                }
+              ],
+              "_class": "RPG::MoveRoute"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 14,
+              "parameters": [
+                0,
+                1
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 15,
+              "parameters": [
+                1
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 14,
+              "parameters": [
+                0,
+                1
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 15,
+              "parameters": [
+                1
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 0,
+          "parameters": [
+            {
+              "code": 14,
+              "parameters": [
+                0,
+                1
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 121,
+          "indent": 0,
+          "parameters": [
+            576,
+            576,
+            1
+          ]
+        },
+        {
+          "code": 301,
+          "indent": 0,
+          "parameters": [
+            0,
+            174,
+            false,
+            true
+          ]
+        },
+        {
+          "code": 601,
+          "indent": 0,
+          "parameters": []
+        },
+        {
+          "code": 111,
+          "indent": 1,
+          "parameters": [
+            0,
+            576,
+            0
+          ]
+        },
+        {
+          "code": 108,
+          "indent": 2,
+          "parameters": [
+            "NW名前指定 邪竜狩りヴォーパル"
+          ]
+        },
+        {
+          "code": 108,
+          "indent": 2,
+          "parameters": [
+            "NW名前指定 狩猎邪龙的沃柏尔"
+          ]
+        },
+        {
+          "code": 101,
+          "indent": 2,
+          "parameters": [
+            "",
+            0,
+            0,
+            2
+          ]
+        },
+        {
+          "code": 401,
+          "indent": 2,
+          "parameters": [
+            "「真乃勇士也………」"
+          ]
+        },
+        {
+          "code": 0,
+          "indent": 2,
+          "parameters": []
+        },
+        {
+          "code": 412,
+          "indent": 1,
+          "parameters": []
+        },
+        {
+          "code": 205,
+          "indent": 1,
+          "parameters": [
+            17,
+            {
+              "repeat": false,
+              "skippable": false,
+              "wait": true,
+              "list": [
+                {
+                  "code": 42,
+                  "parameters": [
+                    200
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 15,
+                  "parameters": [
+                    10
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 42,
+                  "parameters": [
+                    150
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 15,
+                  "parameters": [
+                    10
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 42,
+                  "parameters": [
+                    100
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 15,
+                  "parameters": [
+                    10
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 42,
+                  "parameters": [
+                    50
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 15,
+                  "parameters": [
+                    10
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 42,
+                  "parameters": [
+                    0
+                  ],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 39,
+                  "parameters": [],
+                  "_class": "RPG::MoveCommand"
+                },
+                {
+                  "code": 0,
+                  "parameters": [],
+                  "_class": "RPG::MoveCommand"
+                }
+              ],
+              "_class": "RPG::MoveRoute"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 42,
+              "parameters": [
+                200
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 15,
+              "parameters": [
+                10
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 42,
+              "parameters": [
+                150
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 15,
+              "parameters": [
+                10
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 42,
+              "parameters": [
+                100
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 15,
+              "parameters": [
+                10
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 42,
+              "parameters": [
+                50
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 15,
+              "parameters": [
+                10
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 42,
+              "parameters": [
+                0
+              ],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 505,
+          "indent": 1,
+          "parameters": [
+            {
+              "code": 39,
+              "parameters": [],
+              "_class": "RPG::MoveCommand"
+            }
+          ]
+        },
+        {
+          "code": 121,
+          "indent": 1,
+          "parameters": [
+            56,
+            56,
+            0
+          ]
+        },
+        {
+          "code": 117,
+          "indent": 1,
+          "parameters": [
+            12
+          ]
+        },
+        {
+          "code": 313,
+          "indent": 1,
+          "parameters": [
+            0,
+            0,
+            1,
+            12
+          ]
+        },
+        {
+          "code": 122,
+          "indent": 1,
+          "parameters": [
+            11,
+            11,
+            1,
+            0,
+            1
+          ]
+        },
+        {
+          "code": 121,
+          "indent": 1,
+          "parameters": [
+            7,
+            7,
+            1
+          ]
+        },
+        {
+          "code": 0,
+          "indent": 1,
+          "parameters": []
+        },
+        {
+          "code": 603,
+          "indent": 0,
+          "parameters": []
+        },
+        {
+          "code": 121,
+          "indent": 1,
+          "parameters": [
+            576,
+            576,
+            1
+          ]
+        },
+        {
+          "code": 117,
+          "indent": 1,
+          "parameters": [
+            11
+          ]
+        },
+        {
+          "code": 0,
+          "indent": 1,
+          "parameters": []
+        },
+        {
+          "code": 604,
+          "indent": 0,
+          "parameters": []
+        },
+        {
+          "code": 0,
+          "indent": 0,
+          "parameters": []
+        }
+      ]
+    },
+    {
+      "condition": {
+        "switch1_valid": true,
+        "switch2_valid": false,
+        "variable_valid": false,
+        "self_switch_valid": false,
+        "item_valid": false,
+        "actor_valid": false,
+        "switch1_id": 56,
+        "switch2_id": 1,
+        "variable_id": 1,
+        "variable_value": 0,
+        "self_switch_ch": "A",
+        "item_id": 1,
+        "actor_id": 1,
+        "_class": "RPG::Event::Page::Condition"
+      },
+      "graphic": {
+        "tile_id": 0,
+        "character_name": "",
+        "character_index": 0,
+        "direction": 2,
+        "pattern": 0,
+        "_class": "RPG::Event::Page::Graphic"
+      },
+      "move_type": 0,
+      "move_speed": 3,
+      "move_frequency": 3,
+      "move_route": {
+        "repeat": true,
+        "skippable": false,
+        "wait": false,
+        "list": [
+          {
+            "code": 0,
+            "parameters": [],
+            "_class": "RPG::MoveCommand"
+          }
+        ],
+        "_class": "RPG::MoveRoute"
+      },
+      "walk_anime": true,
+      "step_anime": false,
+      "direction_fix": false,
+      "through": false,
+      "priority_type": 0,
+      "trigger": 0,
+      "commands": [
+        {
+          "code": 0,
+          "indent": 0,
+          "parameters": []
+        }
+      ]
+    }
+  ]
+}
 ]
