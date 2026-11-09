@@ -1393,7 +1393,7 @@
   "gui.blacksouls.difficulty.title": "世界难度调整",
   "gui.blacksouls.difficulty.current": "当前难度: 难度%d",
   "gui.blacksouls.difficulty.close": "关闭面板",
-  "gui.blacksouls.difficulty.lv": "难度%d",
+  "gui.blacksouls.difficulty.lv": "难易度%d",
   "gui.blacksouls.difficulty.multiplier": "全属性 %s 倍",
   "gui.blacksouls.difficulty.deaths": "在这片世界迎来了%d次死亡。",
   "gui.blacksouls.difficulty.loops": "然后，现在是第%d次的轮回。",

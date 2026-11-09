@@ -157,7 +157,8 @@ public final class TurnBattleManager {
     }
 
     public static void tryStart(ServerPlayer player, EntityTurnBattleMonster enemy) {
-        if (yuki135.blacksouls.story.OriginalOpeningService.managed(player) || BSConfig.COMBAT_MODE.get() != BSConfig.CombatMode.BLACK_SOULS_TURN_BASED
+        if (yuki135.blacksouls.story.OriginalBlackAshService.pending(player)
+                || yuki135.blacksouls.story.OriginalOpeningService.managed(player) || BSConfig.COMBAT_MODE.get() != BSConfig.CombatMode.BLACK_SOULS_TURN_BASED
                 || player.isCreative() || player.isSpectator() || !player.isAlive()
                 || enemy.isTurnBattleDefeated() || !enemy.canStartTurnBattle()
                 || PLAYER_SESSIONS.containsKey(player.getUUID()) || ENEMY_SESSIONS.containsKey(enemy.getUUID())) {
@@ -222,7 +223,8 @@ public final class TurnBattleManager {
                                                  int troopId, boolean canEscape, boolean canLose,
                                                  Consumer<ClientboundTurnBattlePacket.Outcome> onFinished,
                                                  boolean scripted, int openingCondition) {
-        if (yuki135.blacksouls.story.OriginalOpeningService.managed(player) || openingCondition < 0 || openingCondition > 2 || !scripted && openingCondition != 0) return false;
+        if (yuki135.blacksouls.story.OriginalBlackAshService.pending(player)
+                || yuki135.blacksouls.story.OriginalOpeningService.managed(player) || openingCondition < 0 || openingCondition > 2 || !scripted && openingCondition != 0) return false;
         BSOriginalTroopData.Entry troop = BSOriginalTroopData.get(troopId);
         if (troop == null || troop.members().isEmpty() || troop.members().stream().allMatch(BSOriginalTroopData.Member::hidden)) {
             BlackSouls.LOGGER.warn("Rejected original battle troop {}: missing or no visible members", troopId);

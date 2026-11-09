@@ -214,7 +214,8 @@ public final class OriginalNpcAnimationController {
         var minecraft=Minecraft.getInstance();
         var opening=OriginalOpeningController.state();
         return minecraft.player!=null&&entityId==minecraft.player.getId()&&minecraft.getCameraEntity()==minecraft.player
-                &&minecraft.options.getCameraType().isFirstPerson()&&opening!=null&&yuki135.blacksouls.story.OriginalOpeningCoda.active(opening.command());
+                &&minecraft.options.getCameraType().isFirstPerson()&&(BlackAshPresentationController.active()
+                ||opening!=null&&yuki135.blacksouls.story.OriginalOpeningCoda.active(opening.command()));
     }
 
     private static void renderWorldFrame(VFXAnimation animation, VFXFrame frame, Matrix4f matrix) {

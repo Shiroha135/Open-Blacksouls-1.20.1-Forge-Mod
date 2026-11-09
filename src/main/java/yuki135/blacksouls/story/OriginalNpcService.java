@@ -562,7 +562,7 @@ public final class OriginalNpcService {
     }
 
     private static void interact(ServerPlayer player, PathfinderMob npc, String npcId, boolean savedContinuation, boolean autorun) {
-        if (OriginalOpeningService.managed(player) || OriginalDodoRunService.pending(player)) return;
+        if (OriginalBlackAshService.pending(player) || OriginalOpeningService.managed(player) || OriginalDodoRunService.pending(player)) return;
         boolean available = savedContinuation || autorun
                 ? player.isAlive() && npc.isAlive() && !npc.isRemoved() && player.level() == npc.level()
                 : canInteract(player, npc);
