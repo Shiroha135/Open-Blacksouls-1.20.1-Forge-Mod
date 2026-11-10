@@ -5,6 +5,12 @@ import yuki135.blacksouls.capability.BSPlayerStats;
 import yuki135.blacksouls.network.NetworkHandler;
 import yuki135.blacksouls.network.BSItemSellRegistry;
 import yuki135.blacksouls.network.packets.ServerboundTradePacket;
+import yuki135.blacksouls.network.packets.ClientboundOriginalNpcPacket;
+import yuki135.blacksouls.network.packets.ServerboundOriginalNpcPacket;
+import yuki135.blacksouls.network.packets.ServerboundOriginalNpcTradePacket;
+import yuki135.blacksouls.entity.EntityOriginalNpc;
+import yuki135.blacksouls.story.OriginalNpcInterpreter;
+import net.minecraftforge.registries.ForgeRegistries;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -33,6 +39,9 @@ public class GuiUniversalShop extends Screen {
     }
 
     private final ShopType shopType;
+    private ClientboundOriginalNpcPacket originalShop;
+    private boolean awaitingTrade;
+    private boolean closed;
 
     private int descH, tabH, subTabH, listW, baseListH;
     private final int soulWindowWidth = 150;
@@ -44,15 +53,16 @@ public class GuiUniversalShop extends Screen {
     private static final int COLOR_S_SUFFIX = 0x5555FF;
 
     private static class ShopItem {
-        final RegistryObject<Item> itemReg;
         final long price;
         final String descKey;
         final ItemStack renderStack;
         ShopItem(RegistryObject<Item> itemReg, long price, String descKey) {
-            this.itemReg = itemReg;
+            this(itemReg.get(), price, descKey);
+        }
+        ShopItem(Item item, long price, String descKey) {
             this.price = price;
             this.descKey = descKey;
-            this.renderStack = new ItemStack(itemReg.get());
+            this.renderStack = new ItemStack(item);
         }
     }
 
@@ -73,6 +83,45 @@ public class GuiUniversalShop extends Screen {
     public GuiUniversalShop(ShopType shopType) {
         super(Component.translatable(shopType.titleKey));
         this.shopType = shopType;
+    }
+
+    public GuiUniversalShop(ClientboundOriginalNpcPacket packet) {
+        this(ShopType.COLORED_SOULS);
+        this.originalShop = packet;
+    }
+
+    public boolean isConversation(int entityId, java.util.UUID sessionId) {
+        return originalShop != null && originalShop.entityId() == entityId && originalShop.sessionId().equals(sessionId);
+    }
+
+    public static boolean openOriginal(ClientboundOriginalNpcPacket packet) {
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.screen instanceof GuiUniversalShop shop && shop.isConversation(packet.entityId(), packet.sessionId())
+                && packet.type() == OriginalNpcInterpreter.Type.SHOP) {
+            shop.updateOriginal(packet);
+            return true;
+        }
+        if (packet.type() != OriginalNpcInterpreter.Type.SHOP || packet.shopView() == null || packet.shopView().exchange()
+                || minecraft.level == null || !(minecraft.level.getEntity(packet.entityId()) instanceof EntityOriginalNpc npc)
+                || !(npc.getNpcId().equals("map101_ev009") || npc.getNpcId().equals("map101_ev015"))
+                || packet.shopView().buys().size() != 8 || packet.shopView().buys().stream()
+                .anyMatch(offer -> offer.kind() != 0 || offer.id() < 9 || offer.id() > 16)) return false;
+        minecraft.setScreen(new GuiUniversalShop(packet));
+        return true;
+    }
+
+    public void updateOriginal(ClientboundOriginalNpcPacket packet) {
+        if (!isConversation(packet.entityId(), packet.sessionId()) || packet.revision() < originalShop.revision()) return;
+        boolean response = packet.revision() > originalShop.revision();
+        originalShop = packet;
+        awaitingTrade = false;
+        if (response) isSelectingQuantity = false;
+        currentSouls = packet.shopView().money();
+        initShopItems();
+        updatePlayerInventoryList();
+        clampSelectedIndex();
+        ensureBuySelectionVisible();
+        updateSelectionState();
     }
 
     @Override
@@ -108,6 +157,17 @@ public class GuiUniversalShop extends Screen {
             shopItems.add(new ShopItem(BlackSouls.SOUL_GRAY, 5000, "lore.blacksouls.soul_gray"));
             shopItems.add(new ShopItem(BlackSouls.SOUL_WHITE, 5000, "lore.blacksouls.soul_white"));
             shopItems.add(new ShopItem(BlackSouls.SOUL_FOUR_LEAF_CLOVER, 5000, "lore.blacksouls.soul_four_leaf_clover"));
+            if (originalShop != null) {
+                List<ShopItem> catalog = List.copyOf(shopItems);
+                shopItems.clear();
+                for (var offer : originalShop.shopView().buys()) {
+                    Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(offer.registry()));
+                    if (item == null) continue;
+                    String description = catalog.stream().filter(entry -> entry.renderStack.is(item))
+                            .map(entry -> entry.descKey).findFirst().orElse("");
+                    shopItems.add(new ShopItem(item, offer.price(), description));
+                }
+            }
         } else if (this.shopType == ShopType.CLOCK_MAKER) {
             shopItems.add(new ShopItem(BlackSouls.RABBIT_WATCH, 5000, "lore.blacksouls.rabbit_watch"));
         } else if (this.shopType == ShopType.WHITE_BEAR) {
@@ -167,6 +227,18 @@ public class GuiUniversalShop extends Screen {
         playerSellableItems.clear();
         if (this.minecraft.player == null) return;
 
+        if (originalShop != null) {
+            for (var offer : originalShop.shopView().sells()) {
+                Item item = ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse(offer.registry()));
+                if (item != null && offer.owned() > 0 && offer.category() == currentSubTab) {
+                    playerSellableItems.add(new ItemStack(item));
+                }
+            }
+            clampSelectedIndex();
+            updateSelectionState();
+            return;
+        }
+
         for (ItemStack stack : this.minecraft.player.getInventory().items) {
             if (!stack.isEmpty() && BSItemSellRegistry.SELL_PRICES.containsKey(stack.getItem())) {
                 if (getItemSubTabType(stack) == currentSubTab) {
@@ -202,7 +274,7 @@ public class GuiUniversalShop extends Screen {
             ItemStack stack = playerSellableItems.get(selectedIndex);
             Item sellItem = stack.getItem();
 
-            BSItemSellRegistry.SellInfo info = BSItemSellRegistry.SELL_PRICES.get(sellItem);
+            BSItemSellRegistry.SellInfo info = sellInfo(sellItem);
             if (info != null && info.descKey != null && !info.descKey.isEmpty()) {
                 cachedDescKeys.add(info.descKey);
             } else {
@@ -214,7 +286,9 @@ public class GuiUniversalShop extends Screen {
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
 
-        if (this.minecraft.player != null) {
+        if (originalShop != null) {
+            currentSouls = originalShop.shopView().money();
+        } else if (this.minecraft.player != null) {
             this.minecraft.player.getCapability(BSPlayerStats.CAPABILITY).ifPresent(stats -> this.currentSouls = stats.souls);
         }
 
@@ -238,7 +312,7 @@ public class GuiUniversalShop extends Screen {
         long currentOwnedCount = 0;
         if (this.minecraft.player != null) {
             if (currentTab == 0 && !shopItems.isEmpty()) {
-                currentOwnedCount = getInventoryCountFor(this.minecraft.player, new ItemStack(shopItems.get(selectedIndex).itemReg.get()));
+                currentOwnedCount = getInventoryCountFor(this.minecraft.player, shopItems.get(selectedIndex).renderStack);
             } else if (currentTab == 1 && !playerSellableItems.isEmpty()) {
                 ItemStack stack = playerSellableItems.get(selectedIndex);
                 currentOwnedCount = getInventoryCountFor(this.minecraft.player, stack);
@@ -403,7 +477,7 @@ public class GuiUniversalShop extends Screen {
 
             ItemStack stack = playerSellableItems.get(i);
             Item item = stack.getItem();
-            BSItemSellRegistry.SellInfo info = BSItemSellRegistry.SELL_PRICES.get(item);
+            BSItemSellRegistry.SellInfo info = sellInfo(item);
             if (info == null) continue;
 
             int col = isSelectingQuantity ? 0 : (i % columns);
@@ -446,6 +520,7 @@ public class GuiUniversalShop extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (awaitingTrade || closed) return true;
         if (button != 0) return super.mouseClicked(mouseX, mouseY, button);
 
         int tabCenterY = descH + (tabH / 2) - 4;
@@ -544,9 +619,14 @@ public class GuiUniversalShop extends Screen {
     private void buySelectedItem() {
         if (shopItems.isEmpty()) return;
         ShopItem item = shopItems.get(selectedIndex);
+        if (originalShop != null) {
+            transactOriginal(ServerboundOriginalNpcTradePacket.Action.BUY, item.renderStack);
+            return;
+        }
         long totalCost = item.price * actionQuantity;
         if (currentSouls >= totalCost) {
-            NetworkHandler.sendToServer(new ServerboundTradePacket(ServerboundTradePacket.Action.BUY, item.itemReg.getId().toString(), actionQuantity));
+            NetworkHandler.sendToServer(new ServerboundTradePacket(ServerboundTradePacket.Action.BUY,
+                    ForgeRegistries.ITEMS.getKey(item.renderStack.getItem()).toString(), actionQuantity));
             isSelectingQuantity = false;
             playCursorSound();
         } else {
@@ -559,6 +639,10 @@ public class GuiUniversalShop extends Screen {
     private void sellSelectedItem() {
         if (playerSellableItems.isEmpty() || this.minecraft.player == null) return;
         ItemStack stackToSell = playerSellableItems.get(selectedIndex);
+        if (originalShop != null) {
+            transactOriginal(ServerboundOriginalNpcTradePacket.Action.SELL, stackToSell);
+            return;
+        }
         long actualOwned = getInventoryCountFor(this.minecraft.player, stackToSell);
 
         if (actualOwned >= actionQuantity) {
@@ -581,6 +665,7 @@ public class GuiUniversalShop extends Screen {
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if (awaitingTrade || closed) return true;
         if (keyCode == InputConstants.KEY_ESCAPE || this.minecraft.options.keyInventory.matches(keyCode, scanCode)) {
             if (isSelectingQuantity) {
                 isSelectingQuantity = false;
@@ -669,6 +754,13 @@ public class GuiUniversalShop extends Screen {
     }
 
     private void clampQuantity() {
+        if (originalShop != null) {
+            ItemStack stack = currentTab == 0 ? shopItems.isEmpty() ? ItemStack.EMPTY : shopItems.get(selectedIndex).renderStack
+                    : playerSellableItems.isEmpty() ? ItemStack.EMPTY : playerSellableItems.get(selectedIndex);
+            var offer = originalOffer(stack, currentTab == 0);
+            actionQuantity = Math.max(1, Math.min(offer == null ? 1 : offer.maximum(), actionQuantity));
+            return;
+        }
         if (currentTab == 1 && this.minecraft.player != null && !playerSellableItems.isEmpty()) {
             long actualOwned = getInventoryCountFor(this.minecraft.player, playerSellableItems.get(selectedIndex));
             actionQuantity = (int) Math.max(1, Math.min(actualOwned, actionQuantity));
@@ -722,12 +814,50 @@ public class GuiUniversalShop extends Screen {
     }
 
     private long getInventoryCountFor(Player player, ItemStack target) {
+        if (originalShop != null) {
+            var offer = originalOffer(target, currentTab == 0);
+            return offer == null ? 0 : offer.owned();
+        }
         long count = 0;
         Item targetItem = target.getItem();
         for (ItemStack stack : player.getInventory().items) {
             if (!stack.isEmpty() && stack.is(targetItem)) count += stack.getCount();
         }
         return count;
+    }
+
+    private ClientboundOriginalNpcPacket.TradeOffer originalOffer(ItemStack stack, boolean buying) {
+        if (originalShop == null || stack.isEmpty()) return null;
+        String registry = ForgeRegistries.ITEMS.getKey(stack.getItem()).toString();
+        return (buying ? originalShop.shopView().buys() : originalShop.shopView().sells()).stream()
+                .filter(offer -> offer.registry().equals(registry)).findFirst().orElse(null);
+    }
+
+    private BSItemSellRegistry.SellInfo sellInfo(Item item) {
+        var info = BSItemSellRegistry.SELL_PRICES.get(item);
+        if (originalShop == null) return info;
+        var offer = originalOffer(new ItemStack(item), false);
+        return offer == null ? null : new BSItemSellRegistry.SellInfo(offer.price(), info == null ? "" : info.descKey);
+    }
+
+    private void transactOriginal(ServerboundOriginalNpcTradePacket.Action action, ItemStack stack) {
+        var offer = originalOffer(stack, action == ServerboundOriginalNpcTradePacket.Action.BUY);
+        if (awaitingTrade || offer == null || !offer.enabled() || actionQuantity < 1 || actionQuantity > offer.maximum()) return;
+        awaitingTrade = true;
+        NetworkHandler.sendToServer(new ServerboundOriginalNpcTradePacket(originalShop.entityId(), originalShop.sessionId(),
+                originalShop.revision(), action, offer.kind(), offer.id(), actionQuantity));
+        playCursorSound();
+    }
+
+    @Override
+    public void onClose() {
+        if (originalShop != null && !closed) {
+            if (awaitingTrade) return;
+            closed = true;
+            NetworkHandler.sendToServer(new ServerboundOriginalNpcPacket(originalShop.entityId(), originalShop.sessionId(),
+                    originalShop.revision(), -1));
+        }
+        super.onClose();
     }
 
     @Override

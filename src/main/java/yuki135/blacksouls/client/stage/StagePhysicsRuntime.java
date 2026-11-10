@@ -63,7 +63,9 @@ public final class StagePhysicsRuntime {
     public static Vec3 root(Entity entity, float partialTick) {
         Vec3 origin = new Vec3(Mth.lerp(partialTick, entity.xo, entity.getX()),
                 Mth.lerp(partialTick, entity.yo, entity.getY()), Mth.lerp(partialTick, entity.zo, entity.getZ()));
-        return entity instanceof CustomEntityModelOffsetProvider provider ? origin.add(provider.getMmdModelOffset()) : origin;
+        if (entity instanceof CustomEntityModelOffsetProvider provider) origin = origin.add(provider.getMmdModelOffset());
+        return entity instanceof yuki135.mmdskin.render.entity.CustomEntityRenderStateProvider provider
+                ? origin.add(provider.getMmdPlacementOffset()) : origin;
     }
 
     public static void prepare(Entity entity, ManagedModel model, float yawDegrees, float partialTick) {

@@ -132,12 +132,23 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
     }
 
     @Override
+    public boolean isMmdPhysicsEnabled() {
+        return false;
+    }
+
+    @Override
+    public Vec3 getMmdPlacementOffset() {
+        return isOriginalSourceManaged() || entityData.get(ORIGINAL_ROUTE_STATE).getBoolean("RabbitHoleModel")
+                ? new Vec3(1.0D, 0.0D, 0.0D) : Vec3.ZERO;
+    }
+
+    @Override
     public float getMmdBodyYaw(float resolvedYaw) {
         return isOriginalSourceManaged() ? 180.0F : resolvedYaw;
     }
 
     @Override
-    public String getMmdAnimation() { return isSitting() ? "ride" : "blacksouls_cheshire_recline"; }
+    public String getMmdAnimation() { return isSitting() ? "ride" : "blacksouls_cheshire_recline_v2"; }
 
     public CompoundTag originalRouteState() {
         return entityData.get(ORIGINAL_ROUTE_STATE).copy();
@@ -270,6 +281,12 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
         super.tick();
         setDeltaMovement(0.0D, onGround() ? 0.0D : getDeltaMovement().y, 0.0D);
         if (!level().isClientSide) {
+            boolean rabbitHoleModel = isOriginalSourceManaged() || "map_051".equals(sceneId);
+            if (entityData.get(ORIGINAL_ROUTE_STATE).getBoolean("RabbitHoleModel") != rabbitHoleModel) {
+                CompoundTag state = originalRouteState();
+                state.putBoolean("RabbitHoleModel", rabbitHoleModel);
+                entityData.set(ORIGINAL_ROUTE_STATE, state);
+            }
             refreshOriginalRoutePage();
             if (!isOriginalSourceManaged()) {
                 if (awaitingGiftReturn) {

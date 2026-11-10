@@ -499,9 +499,12 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
                         && dialogue.isConversation(packet.entityId(), packet.sessionId())) {
                     minecraft.setScreen(null);
                 }
+                if (minecraft.screen instanceof yuki135.blacksouls.client.gui.GuiUniversalShop shop
+                        && shop.isConversation(packet.entityId(), packet.sessionId())) minecraft.setScreen(null);
                 return;
             }
             yuki135.blacksouls.client.OriginalNpcBattleContinuation.clear();
+            if (yuki135.blacksouls.client.gui.GuiUniversalShop.openOriginal(packet)) return;
             if (minecraft.screen instanceof yuki135.blacksouls.client.gui.GuiOriginalNpcDialogue dialogue
                     && dialogue.isConversation(packet.entityId(), packet.sessionId())) {
                 dialogue.update(packet);

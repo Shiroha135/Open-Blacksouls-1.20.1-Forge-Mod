@@ -80,7 +80,14 @@ public class MmdSkinRenderer<T extends Entity> extends EntityRenderer<T> {
         if (entityIn instanceof CustomEntityRenderStateProvider provider) {
             reusablePose.bodyYaw = provider.getMmdBodyYaw(reusablePose.bodyYaw);
         }
-        yuki135.blacksouls.client.stage.StagePhysicsRuntime.prepare(entityIn, model, reusablePose.bodyYaw, tickDelta);
+        if (entityIn instanceof CustomEntityRenderStateProvider provider && !provider.isMmdPhysicsEnabled()) {
+            long handle = model.modelInstance().getModelHandle();
+            if (yuki135.mmdskin.NativeFunc.GetInst().IsPhysicsEnabled(handle)) {
+                yuki135.mmdskin.NativeFunc.GetInst().SetPhysicsEnabled(handle, false);
+            }
+        } else {
+            yuki135.blacksouls.client.stage.StagePhysicsRuntime.prepare(entityIn, model, reusablePose.bodyYaw, tickDelta);
+        }
 
         matrixStackIn.pushPose();
         DrawState previousState = entityIn instanceof CustomEntityRenderStateProvider ? DrawState.capture() : null;
@@ -92,6 +99,10 @@ public class MmdSkinRenderer<T extends Entity> extends EntityRenderer<T> {
             {
                 if (entityIn instanceof CustomEntityModelOffsetProvider provider) {
                     var offset = provider.getMmdModelOffset();
+                    matrixStackIn.translate(offset.x, offset.y, offset.z);
+                }
+                if (entityIn instanceof CustomEntityRenderStateProvider provider) {
+                    var offset = provider.getMmdPlacementOffset();
                     matrixStackIn.translate(offset.x, offset.y, offset.z);
                 }
                 matrixStackIn.scale(size[0], size[0], size[0]);
