@@ -118,7 +118,8 @@ public final class OriginalSkullBeastService {
                 if (!TurnBattleManager.isInBattle(legacy)) legacy.discard();
             }
         }
-        if (OriginalOpeningService.managed(player)||OriginalNpcService.isConversing(player)||TurnBattleManager.isInBattle(player)
+        if (yuki135.blacksouls.handler.FogGateTraversalHandler.isTraversing(player)
+                ||OriginalOpeningService.managed(player)||OriginalNpcService.isConversing(player)||TurnBattleManager.isInBattle(player)
                 ||OriginalWorldTransferService.pending(player)||OriginalNpcProgress.get(player.server).switchValue(56)) return;
         var trigger=actor(player.serverLevel(),SOURCE);
         if (trigger==null) return;

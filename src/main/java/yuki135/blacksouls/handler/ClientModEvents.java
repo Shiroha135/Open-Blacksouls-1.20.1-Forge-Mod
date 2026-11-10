@@ -11,7 +11,6 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.client.renderer.entity.RabbitRenderer;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -46,7 +45,7 @@ public class ClientModEvents {
                 context -> new SwitchableMmdRenderer<>(context, "诺登", RenderNoden::new));
         event.registerEntityRenderer(BSEntityRegistry.RED_HOOD.get(),
                 context -> new SwitchableMmdRenderer<>(context, "小红帽", RenderRedHoodFallback::new));
-        event.registerEntityRenderer(BSEntityRegistry.RABBIT_HOLE_NPC.get(), RabbitRenderer::new);
+        event.registerEntityRenderer(BSEntityRegistry.RABBIT_HOLE_NPC.get(), RenderRabbitHoleNpc::new);
         event.registerEntityRenderer(BSEntityRegistry.RABBIT_KNIGHT.get(), RenderSourceRabbitKnight::new);
         event.registerEntityRenderer(BSEntityRegistry.CHESHIRE_CAT.get(),
                 context -> new SwitchableMmdRenderer<>(context, "柴郡猫", RenderCheshireCat::new, 0.25F));

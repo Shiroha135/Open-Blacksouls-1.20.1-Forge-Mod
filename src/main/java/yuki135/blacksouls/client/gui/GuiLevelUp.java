@@ -89,10 +89,7 @@ public class GuiLevelUp extends Screen {
             for (int i = 0; i < 6; i++) {
                 int digitX = startX + (i * spacing);
                 if (i == currentDigitIndex) {
-                    int alpha = (int) (60 + 40 * Math.sin(System.currentTimeMillis() / 150.0));
-                    int cursorColor = (alpha << 24) | 0xFFFFFF;
-                    guiGraphics.fill(digitX - 4, startY - 4, digitX + 12, startY + 12, cursorColor);
-                    guiGraphics.renderOutline(digitX - 4, startY - 4, 16, 16, 0x88FFFFFF);
+                    BSGuiUtils.drawRMSelectionBounds(guiGraphics,digitX - 4, startY - 4, digitX + 12, startY + 12);
                 }
                 guiGraphics.drawString(font, String.valueOf(digits[i]), digitX, startY, COLOR_TEXT_HIGHLIGHT, false);
             }

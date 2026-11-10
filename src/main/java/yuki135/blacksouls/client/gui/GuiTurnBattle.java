@@ -1157,8 +1157,8 @@ public class GuiTurnBattle extends Screen {
         }
         if (this.troopPresentation != null && this.troopPresentation.kind() == 2) {
             for (int index = 0; index < this.troopPresentation.choices().size(); index++) {
-                graphics.drawString(this.font, (index == this.selection ? "▶ " : "  ")
-                        + this.troopPresentation.choices().get(index), 14, lineY, 0xFFFFFFFF, false);
+                if (index == this.selection) BSGuiUtils.drawRMSelectionBounds(graphics,10,lineY-1,this.width-10,lineY+this.font.lineHeight+2);
+                graphics.drawString(this.font, this.troopPresentation.choices().get(index), 14, lineY, 0xFFFFFFFF, false);
                 lineY += this.font.lineHeight + 3;
             }
         }
@@ -1313,7 +1313,7 @@ public class GuiTurnBattle extends Screen {
         graphics.disableScissor();
         int nameX = 43;
         if (this.view == View.ALLY_TARGETS && memberIndex == this.targetSelection) {
-            graphics.fill(40, rowY + 1, this.width - 8, rowY + 25, 0x88705563);
+            BSGuiUtils.drawRMSelectionBounds(graphics, 40, rowY + 1, this.width - 8, rowY + 25);
         }
         graphics.drawString(this.font, member.name(), nameX, rowY + 6,
                 member.downed() ? 0xFFFF4444 : 0xFFFFFFFF, false);
@@ -1415,11 +1415,7 @@ public class GuiTurnBattle extends Screen {
             EnemyVisual enemy = this.enemies.get(enemyIndex);
             int rowY = geometry.y + 11 + row * geometry.rowHeight;
             if (enemyIndex == this.targetSelection) {
-                int pulse = 0x70 + (int) (0x18
-                        * (0.5D + 0.5D * Math.sin(System.currentTimeMillis() / 95.0D)));
-                graphics.fill(geometry.x + 8, rowY - 2,
-                        geometry.x + geometry.width - 8,
-                        rowY + 13, pulse << 24 | 0x00705563);
+                BSGuiUtils.drawRMSelectionBounds(graphics, geometry.x + 8, rowY - 2, geometry.x + geometry.width - 8, rowY + 13);
             }
             graphics.drawString(this.font, enemy.name,
                     geometry.x + 12, rowY, 0xFFFFFFFF, false);
@@ -2052,8 +2048,7 @@ public class GuiTurnBattle extends Screen {
                     && mouseX >= 8 && mouseX < geometry.width - 8
                     && mouseY >= rowY - 2 && mouseY < rowY + 14;
             if (index == activeSelection || hovered) {
-                graphics.fill(8, rowY - 2, geometry.width - 8, rowY + 13,
-                        index == activeSelection ? 0x88705563 : 0x55444444);
+                BSGuiUtils.drawRMSelectionBounds(graphics, 8, rowY - 2, geometry.width - 8, rowY + 13);
             }
             graphics.drawString(this.font, entry.label, 12, rowY,
                     entry.enabled ? 0xFFFFFFFF : 0xFF777777, false);
@@ -2079,8 +2074,7 @@ public class GuiTurnBattle extends Screen {
             boolean hovered = mouseX >= left && mouseX < right
                     && mouseY >= rowY - 2 && mouseY < rowY + 18;
             if (index == this.selection || hovered) {
-                graphics.fill(left, rowY - 2, right, rowY + 18,
-                        index == this.selection ? 0x88705563 : 0x55444444);
+                BSGuiUtils.drawRMSelectionBounds(graphics, left, rowY - 2, right, rowY + 18);
             }
             if (entry.item != null && !entry.item.isEmpty()) {
                 graphics.renderItem(entry.item, left + 2, rowY);
@@ -2182,7 +2176,7 @@ public class GuiTurnBattle extends Screen {
             int tabLeft = left + i * tabWidth;
             int tabRight = i == tabs.length - 1 ? right : tabLeft + tabWidth;
             if (i == 0) {
-                graphics.fill(tabLeft, tabY - 2, tabRight, tabY + this.font.lineHeight + 3, 0x88705563);
+                BSGuiUtils.drawRMSelectionBounds(graphics, tabLeft, tabY - 2, tabRight, tabY + this.font.lineHeight + 3);
             }
             graphics.drawCenteredString(this.font, tabs[i], (tabLeft + tabRight) / 2,
                     tabY, i == 0 ? 0xFFFFFFFF : 0xFFDDDDDD);
@@ -2209,7 +2203,7 @@ public class GuiTurnBattle extends Screen {
         for (int i = 0; i < labels.length; i++) {
             int rowY = rowsTop + i * rowHeight;
             if (i == 0) {
-                graphics.fill(left, rowY - 2, right, rowY + Math.min(19, rowHeight - 1), 0x66705563);
+                BSGuiUtils.drawRMSelectionBounds(graphics, left, rowY - 2, right, rowY + Math.min(19, rowHeight - 1));
             }
             graphics.drawString(this.font, labels[i], left + 2, rowY + 3, 0xFF75B8FF, false);
             ItemStack stack = equipment[i];
@@ -2237,8 +2231,7 @@ public class GuiTurnBattle extends Screen {
             boolean hovered = mouseX >= left && mouseX < right
                     && mouseY >= rowY - 2 && mouseY < rowY + 18;
             if (index == this.selection || hovered) {
-                graphics.fill(left, rowY - 2, right, rowY + 18,
-                        index == this.selection ? 0x88705563 : 0x55444444);
+                BSGuiUtils.drawRMSelectionBounds(graphics, left, rowY - 2, right, rowY + 18);
             }
             if (entry.item != null && !entry.item.isEmpty()) {
                 graphics.renderItem(entry.item, left + 2, rowY);

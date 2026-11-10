@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.UUID;
 
 public final class EntityCheshireCat extends PathfinderMob implements DialogueResettable, CustomEntityRenderStateProvider,
-        yuki135.mmdskin.render.entity.CustomEntityPoseProvider {
+        yuki135.mmdskin.render.entity.CustomEntityPoseProvider, yuki135.mmdskin.render.entity.CustomEntityAnimationProvider {
     private static final EntityDataAccessor<CompoundTag> MODEL_OFFSET = SynchedEntityData.defineId(
             EntityCheshireCat.class, EntityDataSerializers.COMPOUND_TAG);
     private static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(
@@ -135,6 +135,9 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
     public float getMmdBodyYaw(float resolvedYaw) {
         return isOriginalSourceManaged() ? 180.0F : resolvedYaw;
     }
+
+    @Override
+    public String getMmdAnimation() { return isSitting() ? "ride" : "blacksouls_cheshire_recline"; }
 
     public CompoundTag originalRouteState() {
         return entityData.get(ORIGINAL_ROUTE_STATE).copy();

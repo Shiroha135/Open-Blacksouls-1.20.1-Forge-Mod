@@ -139,7 +139,7 @@ public class GuiCovenant extends Screen {
         boolean isHovered = mouseX >= x - 5 && mouseX <= x + entryWidth && mouseY >= y - 2 && mouseY <= y + 26;
         if (isHovered) {
             hoveredCovenant = id;
-            guiGraphics.fill(x - 5, y - 2, x + entryWidth, y + 26, 0x44FFFFFF);
+            BSGuiUtils.drawRMSelectionBounds(guiGraphics,x - 5, y - 2, x + entryWidth, y + 26);
         }
         int origW = "tweedle".equals(id) ? 47 : 32;
         int renderW = origW * 20 / 32;

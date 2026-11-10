@@ -49,6 +49,10 @@ public final class TextBannerRenderer {
         return centered && waitingForBattleEnd && !message.getString().isEmpty();
     }
 
+    public static boolean isCenteredBannerActive() {
+        return centered && (waitingForBattleEnd || ticksLeft > 0) && !message.getString().isEmpty();
+    }
+
     public static void hide() {
         ticksLeft = 0;
         message = Component.empty();
@@ -92,7 +96,7 @@ public final class TextBannerRenderer {
                 ? Math.max(1, (int) (graphics.guiHeight() * 0.15F))
                 : 90;
         int top = centered
-                ? (int) (graphics.guiHeight() * 0.33F)
+                ? (graphics.guiHeight() - bannerHeight) / 2
                 : graphics.guiHeight() - bannerHeight;
         int bottom = top + bannerHeight;
         float opacity = Math.min(1.0F,
@@ -100,14 +104,12 @@ public final class TextBannerRenderer {
         FadedBannerRenderer.draw(graphics, 0, top, graphics.guiWidth(), bottom, opacity);
         int textColor = Math.round(255.0F * opacity) << 24 | rgb;
         if (centered) {
-            float scale = 3.5F;
+            float scale = Math.min(3.5F, (graphics.guiWidth() - 24.0F) / Math.max(1, minecraft.font.width(message)));
             graphics.pose().pushPose();
-            graphics.pose().translate(0.0F, 0.0F, 100.0F);
+            graphics.pose().translate(graphics.guiWidth() / 2.0F, top + bannerHeight / 2.0F, 100.0F);
             graphics.pose().scale(scale, scale, 1.0F);
-            int textX = (int) (graphics.guiWidth() / 2.0F / scale)
-                    - minecraft.font.width(message) / 2;
-            int textY = (int) ((top
-                    + (bannerHeight - minecraft.font.lineHeight * scale) / 2.0F) / scale);
+            int textX = -minecraft.font.width(message) / 2;
+            int textY = -minecraft.font.lineHeight / 2;
             graphics.drawString(minecraft.font, message, textX, textY, textColor, false);
             graphics.pose().popPose();
         } else {

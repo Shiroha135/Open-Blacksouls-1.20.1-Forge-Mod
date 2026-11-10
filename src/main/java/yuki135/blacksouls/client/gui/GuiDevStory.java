@@ -43,7 +43,7 @@ public final class GuiDevStory extends Screen {
         button("撤回上次修改",left+10,top+h-26,112,18,()->send("undo","","",""));
         rebuildActions();send("overview","","","");
     }
-    private Button button(String label,int x,int y,int width,int height,Runnable action) {return addRenderableWidget(Button.builder(Component.literal(label),ignored->action.run()).bounds(x,y,width,height).build());}
+    private Button button(String label,int x,int y,int width,int height,Runnable action) {return addRenderableWidget(new DevGlassButton(x,y,width,height,Component.literal(label),ignored->action.run()));}
     private void action(String text,int x,int y,int width,Runnable runnable){actions.add(button(text,x,y,width,18,runnable));}
     private void invalidate(){request++;waiting=false;token="";}
     private void mode(int next){invalidate();mode=next;selected="";listScroll=0;textScroll=0;search.setValue("");details=summary();rebuildActions();}

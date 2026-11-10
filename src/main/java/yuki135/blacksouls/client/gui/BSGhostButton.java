@@ -18,13 +18,7 @@ public class BSGhostButton extends Button {
         int x = this.getX();
         int y = this.getY();
         if (this.isHoveredOrFocused()) {
-            int fillColor = this.active ? 0x33FFFFFF : 0x22111111;
-            int borderColor = this.active ? 0xAAFFFFFF : 0x55777777;
-            guiGraphics.fill(x, y, x + this.width, y + this.height, fillColor);
-            guiGraphics.fill(x, y, x + this.width, y + 1, borderColor);
-            guiGraphics.fill(x, y + this.height - 1, x + this.width, y + this.height, borderColor);
-            guiGraphics.fill(x, y, x + 1, y + this.height, borderColor);
-            guiGraphics.fill(x + this.width - 1, y, x + this.width, y + this.height, borderColor);
+            if (active) BSGuiUtils.drawRMSelection(guiGraphics,x,y,width,height);
         }
 
         Font font = Minecraft.getInstance().font;

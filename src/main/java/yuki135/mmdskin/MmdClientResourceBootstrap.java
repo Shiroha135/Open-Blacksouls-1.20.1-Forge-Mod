@@ -43,7 +43,7 @@ public final class MmdClientResourceBootstrap {
     );
     private static final List<BundledModelSpec> FRIEND_MODELS = loadFriendModels();
     private static final String[] DEFAULT_ANIM_FILES = {
-            "Drink.vmd", "crawl.vmd", "die.vmd", "elytraFly.vmd", "idle.vmd",
+            "Drink.vmd", "crawl.vmd", "die.vmd", "elytraFly.vmd", "idle.vmd", "blacksouls_cheshire_recline.vmd",
             "itemActive_minecraft.bow_Left_using.vmd", "itemActive_minecraft.iron_sword_Right_swinging.vmd",
             "itemActive_minecraft.shield_Left_using.vmd", "itemActive_minecraft.shield_Right_using.vmd",
             "lieDown.vmd", "onClimbable.vmd", "onClimbableDown.vmd", "onClimbableUp.vmd",

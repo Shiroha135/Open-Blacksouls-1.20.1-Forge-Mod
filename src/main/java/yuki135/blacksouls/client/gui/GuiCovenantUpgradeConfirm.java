@@ -87,8 +87,8 @@ public class GuiCovenantUpgradeConfirm extends Screen {
         boolean hoverYes = mouseX >= ynX + 5 && mouseX <= ynX + YN_W - 5 && mouseY >= yesY - 4 && mouseY <= yesY + 12;
         boolean hoverNo = mouseX >= ynX + 5 && mouseX <= ynX + YN_W - 5 && mouseY >= noY - 4 && mouseY <= noY + 12;
 
-        if (hoverYes) guiGraphics.fill(ynX + 8, yesY - 2, ynX + YN_W - 8, yesY + 12, 0x66FFFFFF);
-        if (hoverNo) guiGraphics.fill(ynX + 8, noY - 2, ynX + YN_W - 8, noY + 12, 0x66FFFFFF);
+        if (hoverYes) BSGuiUtils.drawRMSelectionBounds(guiGraphics, ynX + 8, yesY - 2, ynX + YN_W - 8, yesY + 12);
+        if (hoverNo) BSGuiUtils.drawRMSelectionBounds(guiGraphics, ynX + 8, noY - 2, ynX + YN_W - 8, noY + 12);
 
         String yesText = I18n.get("gui.blacksouls.option.yes");
         String noText = I18n.get("gui.blacksouls.option.no");

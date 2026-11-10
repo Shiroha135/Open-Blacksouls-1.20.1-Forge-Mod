@@ -86,7 +86,7 @@ public class GuiPlayerStats extends Screen {
             Component menuText = MENU_LABELS[i];
 
             if (isHovered) {
-                guiGraphics.fill(boxStartX, mY - 4, boxEndX, mY + 12, 0x66FFFFFF);
+                BSGuiUtils.drawRMSelectionBounds(guiGraphics, boxStartX, mY - 4, boxEndX, mY + 12);
                 guiGraphics.drawString(font, menuText, mX, mY, 0xFFFFFF, false);
             } else {
                 guiGraphics.drawString(font, menuText, mX, mY, 0xAAAAAA, false);

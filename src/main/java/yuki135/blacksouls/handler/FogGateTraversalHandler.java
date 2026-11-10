@@ -31,6 +31,10 @@ public final class FogGateTraversalHandler {
     private static final double TARGET_EPSILON = 0.02D;
     private static final Map<UUID, WalkState> ACTIVE = new HashMap<>();
 
+    public static boolean isTraversing(ServerPlayer player) {
+        return ACTIVE.containsKey(player.getUUID());
+    }
+
     public static void start(ServerPlayer player, BlockPos gatePos) {
         if (!player.isAlive()
                 || player.isPassenger()
@@ -71,7 +75,8 @@ public final class FogGateTraversalHandler {
         player.setNoGravity(true);
         player.fallDistance = 0.0F;
         face(player, direction);
-        NetworkHandler.sendToPlayer(new ClientboundFogGateWalkPacket(direction, targetX, targetZ), player);
+        NetworkHandler.sendToPlayer(new ClientboundFogGateWalkPacket(direction, targetX, targetZ,
+                walkState.previousNoPhysics, walkState.previousNoGravity), player);
     }
 
     @SubscribeEvent
@@ -161,11 +166,11 @@ public final class FogGateTraversalHandler {
         }
         player.noPhysics = state.previousNoPhysics;
         player.setNoGravity(state.previousNoGravity);
-        Vec3 movement = player.getDeltaMovement();
-        player.setDeltaMovement(0.0D, movement.y, 0.0D);
+        player.setDeltaMovement(Vec3.ZERO);
         player.hurtMarked = true;
         if (notifyClient) {
-            NetworkHandler.sendToPlayer(new ClientboundFogGateWalkPacket(state.direction), player);
+            NetworkHandler.sendToPlayer(new ClientboundFogGateWalkPacket(state.direction,
+                    state.previousNoPhysics, state.previousNoGravity), player);
         }
     }
 

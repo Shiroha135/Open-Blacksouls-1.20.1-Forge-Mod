@@ -114,7 +114,7 @@ public class GuiWhiteBearDialogue extends Screen {
             int y = top + OPTION_PADDING + i * OPTION_LINE_HEIGHT;
             boolean hovered = mouseX >= left + 5 && mouseX <= width - 5 && mouseY >= y && mouseY < y + OPTION_LINE_HEIGHT;
             if (hovered) {
-                guiGraphics.fill(left + 5, y + 1, width - 5, y + OPTION_LINE_HEIGHT - 1, 0x66FFFFFF);
+                BSGuiUtils.drawRMSelectionBounds(guiGraphics, left + 5, y + 1, width - 5, y + OPTION_LINE_HEIGHT - 1);
             }
             guiGraphics.drawString(font, Component.translatable(keys[i]), left + 10, y + 3, 0xFFFFFF, false);
         }

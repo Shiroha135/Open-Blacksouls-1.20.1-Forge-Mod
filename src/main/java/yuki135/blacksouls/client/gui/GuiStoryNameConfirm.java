@@ -42,7 +42,7 @@ public final class GuiStoryNameConfirm extends Screen {
 
     private void renderOption(GuiGraphics graphics, int optionLeft, int y, int index, String key) {
         if (selection == index) {
-            graphics.fill(optionLeft + 8, y - 2, width - 8, y + 12, 0x66FFFFFF);
+            BSGuiUtils.drawRMSelectionBounds(graphics, optionLeft + 8, y - 2, width - 8, y + 12);
         }
         graphics.drawCenteredString(font, Component.translatable(key), optionLeft + OPTION_WIDTH / 2, y, 0xFFFFFFFF);
     }

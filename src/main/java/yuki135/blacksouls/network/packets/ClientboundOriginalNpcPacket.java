@@ -483,6 +483,8 @@ public record ClientboundOriginalNpcPacket(int entityId, UUID sessionId, long re
     private static final class ClientHandler {
         private static void open(ClientboundOriginalNpcPacket packet) {
             net.minecraft.client.Minecraft minecraft = net.minecraft.client.Minecraft.getInstance();
+            if (yuki135.blacksouls.client.OriginalNpcVictoryBanner.show(packet)) return;
+            yuki135.blacksouls.client.OriginalNpcVictoryBanner.clear();
             if (packet.type() == OriginalNpcInterpreter.Type.BATTLE) {
                 yuki135.blacksouls.client.OriginalNpcBattleContinuation.begin(packet);
                 if (minecraft.screen instanceof yuki135.blacksouls.client.gui.GuiOriginalNpcDialogue) {

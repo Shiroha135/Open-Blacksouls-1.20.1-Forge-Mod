@@ -32,10 +32,7 @@ public class BSMenuTextButton extends Button {
         guiGraphics.flush();
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
         if (this.isHoveredOrFocused()) {
-            RenderSystem.enableBlend();
-            RenderSystem.defaultBlendFunc();
-            guiGraphics.blit(BSGuiUtils.RM_WINDOW_SKIN, x, y, this.width, this.height, 64, 64, 32, 32, 128, 128);
-            RenderSystem.disableBlend();
+            BSGuiUtils.drawRMSelection(guiGraphics,x,y,this.width,this.height);
         }
         int textColor = this.active ? 0xFFFFFFFF : 0xFFA0A0A0;
         Font font = Minecraft.getInstance().font;

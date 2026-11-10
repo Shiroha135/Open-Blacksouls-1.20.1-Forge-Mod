@@ -39,6 +39,8 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
     private static final double MAX_SUPPORTED_HEALTH = Integer.MAX_VALUE;
     private static final EntityDataAccessor<Integer> PROFILE_ID =
             SynchedEntityData.defineId(EntityOriginalDatabaseEnemy.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> WALKING_MAP =
+            SynchedEntityData.defineId(EntityOriginalDatabaseEnemy.class, EntityDataSerializers.INT);
     private double turnBattleHealth;
     private double turnBattleDifficultyMultiplier = 1.0D;
     private double turnBattleHealthRate = 1.0D;
@@ -64,10 +66,36 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(PROFILE_ID, 1);
+        this.entityData.define(WALKING_MAP, 0);
     }
 
     public int getProfileId() {
         return this.entityData.get(PROFILE_ID);
+    }
+
+    public int getWalkingMapId() { return entityData.get(WALKING_MAP); }
+
+    public void setWalkingScene(String scene) {
+        if (scene != null && scene.matches("map_[0-9]{3,4}")) {
+            entityData.set(WALKING_MAP, Integer.parseInt(scene.substring(4)));
+        }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (level().isClientSide() || getWalkingMapId() != 0 || tickCount % 20 != 1) return;
+        String key = getPersistentData().getString(yuki135.blacksouls.compat.scene.SceneSpawnerBossState.ENTITY_SPAWNER_KEY_TAG);
+        int separator = key.lastIndexOf('@');
+        if (separator < 0 || !key.substring(0, separator).equals(level().dimension().location().toString())) return;
+        try {
+            var position = net.minecraft.core.BlockPos.of(Long.parseLong(key.substring(separator + 1)));
+            if (level().hasChunkAt(position) && level().getBlockEntity(position)
+                    instanceof yuki135.blacksouls.compat.scene.SceneSpawnerBossState spawner) {
+                setWalkingScene(spawner.blacksouls$getSceneId());
+            }
+        } catch (NumberFormatException ignored) {
+        }
     }
 
     public void setProfileId(int profileId) {
@@ -484,6 +512,7 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("OriginalEnemyId", getProfileId());
+        tag.putInt("OriginalEnemyWalkingMap", getWalkingMapId());
         tag.putDouble("OriginalBattleHealth", this.turnBattleHealth);
         tag.putDouble("OriginalBattleDifficultyMultiplier", this.turnBattleDifficultyMultiplier);
         tag.put("OriginalBattleResources", this.actionResources.save());
@@ -493,6 +522,7 @@ public class EntityOriginalDatabaseEnemy extends EntityTurnBattleMonster {
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         setProfileId(tag.contains("OriginalEnemyId") ? tag.getInt("OriginalEnemyId") : 1);
+        entityData.set(WALKING_MAP, Math.max(0, Math.min(9999, tag.getInt("OriginalEnemyWalkingMap"))));
         if (tag.contains("OriginalBattleDifficultyMultiplier")) {
             setTurnBattleDifficultyMultiplier(tag.getDouble("OriginalBattleDifficultyMultiplier"));
         }

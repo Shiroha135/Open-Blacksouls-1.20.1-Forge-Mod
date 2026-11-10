@@ -22,12 +22,32 @@ public class BSGuiUtils {
     private static final int BG_RENDER_SIZE = 32;   
 
     public static void drawRMSelection(GuiGraphics graphics,int x,int y,int width,int height) {
+        if (width <= 0 || height <= 0) return;
         graphics.flush();
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
+        float pulse = 0.72F + 0.18F * (float) Math.cos(net.minecraft.Util.getMillis() * Math.PI / 1000.0D);
         graphics.setColor(1,1,1,1);
-        graphics.blit(RM_WINDOW_SKIN,x,y,width,height,64,64,32,32,128,128);
+        int middle = y + Math.max(1,height / 2);
+        graphics.fillGradient(x,y,x+width,middle,selectionColor(0xADADAD,0.34F*pulse),selectionColor(0x797979,0.48F*pulse));
+        graphics.fillGradient(x,middle,x+width,y+height,selectionColor(0x797979,0.48F*pulse),selectionColor(0xC4C4C4,0.32F*pulse));
+        if (width > 2 && height > 2) {
+            graphics.fill(x+1,y,x+width-1,y+1,selectionColor(0xFFFFFF,0.66F*pulse));
+            graphics.fill(x+1,y+height-1,x+width-1,y+height,selectionColor(0xFFFFFF,0.56F*pulse));
+            graphics.fill(x,y+1,x+1,y+height-1,selectionColor(0xEFEFEF,0.6F*pulse));
+            graphics.fill(x+width-1,y+1,x+width,y+height-1,selectionColor(0xEFEFEF,0.6F*pulse));
+        }
+        graphics.flush();
+        graphics.setColor(1,1,1,1);
         RenderSystem.disableBlend();
+    }
+
+    private static int selectionColor(int rgb,float opacity) {
+        return Math.round(255 * Math.max(0,Math.min(1,opacity))) << 24 | rgb;
+    }
+
+    public static void drawRMSelectionBounds(GuiGraphics graphics,int left,int top,int right,int bottom) {
+        drawRMSelection(graphics,left,top,right-left,bottom-top);
     }
 
     public static void drawRMWindow(@NotNull GuiGraphics guiGraphics, int x, int y, int width, int height) {

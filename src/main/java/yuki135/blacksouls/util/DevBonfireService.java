@@ -94,7 +94,7 @@ public final class DevBonfireService {
                         BlackSouls.LOGGER.warn("Could not index developer bonfires", failure);
                     }
                     NetworkHandler.sendToPlayer(new ClientboundDevBonfiresPacket(
-                            collectCurrentBonfires(server, entries == null ? List.of() : entries), failure == null), player);
+                            collectCurrentBonfires(server, entries == null ? List.of() : entries, player.level().dimension()), failure == null), player);
                 });
             }
         });
@@ -165,7 +165,7 @@ public final class DevBonfireService {
         return chunks;
     }
 
-    private static List<ClientboundDevBonfiresPacket.Entry> collectCurrentBonfires(MinecraftServer server, List<BonfireEntry> saved) {
+    private static List<ClientboundDevBonfiresPacket.Entry> collectCurrentBonfires(MinecraftServer server, List<BonfireEntry> saved, ResourceKey<Level> preferred) {
         Map<GlobalPos, BonfireEntry> entries = new LinkedHashMap<>();
         saved.forEach(entry -> entries.put(entry.pos, entry));
         BSWorldData worldData = BSWorldData.get(server.overworld());
@@ -191,8 +191,30 @@ public final class DevBonfireService {
             }
         }
         var activated = worldData.activatedBonfires.stream().map(entry -> entry.pos).collect(java.util.stream.Collectors.toSet());
-        return entries.values().stream().limit(ClientboundDevBonfiresPacket.MAX_ENTRIES)
-                .map(entry -> new ClientboundDevBonfiresPacket.Entry(entry.pos, entry.name, entry.description, activated.contains(entry.pos))).toList();
+        return displayEntries(List.copyOf(entries.values()), activated, preferred);
+    }
+
+    private record MirrorKey(BlockPos position,String name,String description) { }
+
+    static List<ClientboundDevBonfiresPacket.Entry> displayEntries(List<BonfireEntry> entries, java.util.Set<GlobalPos> activated,
+                                                                  ResourceKey<Level> preferred) {
+        Map<Object,ClientboundDevBonfiresPacket.Entry> result = new LinkedHashMap<>();
+        for (var entry : entries) {
+            Object key = OriginalMapBonfires.mirrored(entry.pos.dimension(), entry.pos.pos())
+                    ? new MirrorKey(entry.pos.pos(),entry.name,entry.description) : entry.pos;
+            var previous = result.get(key);
+            boolean active = activated.contains(entry.pos) || previous != null && previous.activated();
+            boolean replace = previous == null || preference(entry.pos.dimension(),preferred) > preference(previous.pos().dimension(),preferred);
+            var chosen = replace ? entry : new BonfireEntry(previous.pos(),previous.name(),previous.description());
+            result.put(key,new ClientboundDevBonfiresPacket.Entry(chosen.pos,chosen.name,chosen.description,active));
+        }
+        return result.values().stream().limit(ClientboundDevBonfiresPacket.MAX_ENTRIES).toList();
+    }
+
+    private static int preference(ResourceKey<Level> dimension,ResourceKey<Level> preferred) {
+        if (dimension.equals(preferred)) return 3;
+        if (dimension.equals(HokoniwaDestination.DIMENSION)) return 2;
+        return dimension.equals(Level.OVERWORLD) ? 1 : 0;
     }
 
     public static boolean teleport(ServerPlayer player, GlobalPos destination) {

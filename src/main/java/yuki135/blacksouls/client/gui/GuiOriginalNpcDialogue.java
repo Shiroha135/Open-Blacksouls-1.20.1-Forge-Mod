@@ -298,7 +298,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
         int cell = Math.max(1, (box.width() - PADDING * 2) / packet.numberView().digits());
         for (int digit = 0; digit < text.length(); digit++) {
             int x = box.x() + PADDING + digit * cell;
-            if (digit == numberInput.cursor()) graphics.fill(x, y, x + cell, y + ROW_HEIGHT, 0x55FFFFFF);
+            if (digit == numberInput.cursor()) BSGuiUtils.drawRMSelectionBounds(graphics, x, y, x + cell, y + ROW_HEIGHT);
             graphics.drawString(font, text.substring(digit, digit + 1), x + Math.max(0, (cell - font.width("0")) / 2), y + 4,
                     awaitingResponse ? 0xAAAAAA : 0xFFFFFF, false);
         }
@@ -907,8 +907,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
         }
         int middle = box.x() + box.width() / 2;
         if (!awaitingResponse && box.contains(mouseX, mouseY) && mouseY >= y && mouseY < y + ROW_HEIGHT) {
-            graphics.fill(mouseX < middle ? x - 4 : middle, y + 1,
-                    mouseX < middle ? middle : box.x() + box.width() - PADDING + 4, y + ROW_HEIGHT - 1, 0x55FFFFFF);
+            BSGuiUtils.drawRMSelectionBounds(graphics, mouseX < middle ? x - 4 : middle, y + 1, mouseX < middle ? middle : box.x() + box.width() - PADDING + 4, y + ROW_HEIGHT - 1);
         }
         int color = awaitingResponse ? 0xAAAAAA : 0xFFFFFF;
         graphics.drawString(font, "确认", x, y + 4, color, false);
@@ -947,8 +946,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
         int middle = box.x() + box.width() / 2;
         int buttonsY = y + ROW_HEIGHT * 6;
         if (!awaitingResponse && box.contains(mouseX, mouseY) && mouseY >= buttonsY && mouseY < buttonsY + ROW_HEIGHT) {
-            graphics.fill(mouseX < middle ? x - 4 : middle, buttonsY + 1,
-                    mouseX < middle ? middle : box.x() + box.width() - PADDING + 4, buttonsY + ROW_HEIGHT - 1, 0x55FFFFFF);
+            BSGuiUtils.drawRMSelectionBounds(graphics, mouseX < middle ? x - 4 : middle, buttonsY + 1, mouseX < middle ? middle : box.x() + box.width() - PADDING + 4, buttonsY + ROW_HEIGHT - 1);
         }
         graphics.drawString(font, keepText("confirm"), x, buttonsY + 4, color, false);
         graphics.drawString(font, keepText("cancel"), middle + PADDING, buttonsY + 4, color, false);
@@ -1021,8 +1019,7 @@ public final class GuiOriginalNpcDialogue extends Screen {
         int buttonsY = y + ROW_HEIGHT * buttonsRow;
         int middle = box.x() + box.width() / 2;
         if (box.contains(mouseX, mouseY) && mouseY >= buttonsY && mouseY < buttonsY + ROW_HEIGHT) {
-            graphics.fill(mouseX < middle ? x - 4 : middle, buttonsY + 1,
-                    mouseX < middle ? middle : box.x() + box.width() - PADDING + 4, buttonsY + ROW_HEIGHT - 1, 0x55FFFFFF);
+            BSGuiUtils.drawRMSelectionBounds(graphics, mouseX < middle ? x - 4 : middle, buttonsY + 1, mouseX < middle ? middle : box.x() + box.width() - PADDING + 4, buttonsY + ROW_HEIGHT - 1);
         }
         graphics.drawString(font, synthesisText("confirm"), x, buttonsY + 4, color, false);
         graphics.drawString(font, synthesisText("cancel"), middle + PADDING, buttonsY + 4, color, false);

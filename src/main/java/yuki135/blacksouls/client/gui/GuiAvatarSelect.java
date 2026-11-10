@@ -126,24 +126,8 @@ public class GuiAvatarSelect extends Screen {
                     && mouseY >= drawY && mouseY <= drawY + AVATAR_SIZE;
 
 
-            if (hovered) {
-                guiGraphics.fill(
-                        drawX - 2,
-                        drawY - 2,
-                        drawX + AVATAR_SIZE + 2,
-                        drawY + AVATAR_SIZE + 2,
-                        0x66FFFFFF
-                );
-            }
-
-            if (avatarId.equals(ClientSkillInfo.getAvatar())) {
-                guiGraphics.fill(
-                        drawX - 2,
-                        drawY - 2,
-                        drawX + AVATAR_SIZE + 2,
-                        drawY + AVATAR_SIZE + 2,
-                        0x88FFFF00
-                );
+            if (hovered || avatarId.equals(ClientSkillInfo.getAvatar())) {
+                BSGuiUtils.drawRMSelectionBounds(guiGraphics,drawX - 2,drawY - 2,drawX + AVATAR_SIZE + 2,drawY + AVATAR_SIZE + 2);
             }
 
             RenderSystem.enableBlend();

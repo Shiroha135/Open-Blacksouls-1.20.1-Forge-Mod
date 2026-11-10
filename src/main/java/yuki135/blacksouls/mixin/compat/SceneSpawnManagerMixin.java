@@ -38,6 +38,8 @@ public abstract class SceneSpawnManagerMixin {
             return;
         }
         CompoundTag data = entity.getPersistentData();
+        if (entity instanceof yuki135.blacksouls.entity.EntityOriginalDatabaseEnemy original
+                && blockEntity instanceof SceneSpawnerBossState state) original.setWalkingScene(state.blacksouls$getSceneId());
         data.putInt(SceneSpawnerBounds.ORIGIN_X_TAG, pos.getX());
         data.putInt(SceneSpawnerBounds.ORIGIN_Y_TAG, pos.getY() + 1);
         data.putInt(SceneSpawnerBounds.ORIGIN_Z_TAG, pos.getZ());

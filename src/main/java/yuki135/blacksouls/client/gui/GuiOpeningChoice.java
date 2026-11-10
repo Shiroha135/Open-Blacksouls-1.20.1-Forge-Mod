@@ -69,10 +69,10 @@ public final class GuiOpeningChoice extends Screen {
     }
 
     private void button(String label,int left,int top,int width,Action action,int value,boolean wait) {
-        var button=addRenderableWidget(Button.builder(Component.literal(label),ignored->{
+        var button=addRenderableWidget(new BSGhostButton(left,top,width,20,Component.literal(label),ignored->{
             if(OriginalOpeningPresentationController.locksInput()&&action==Action.NEXT)OriginalOpeningPresentationController.advance();
             else OriginalOpeningController.act(action,value);
-        }).bounds(left,top,width,20).build());
+        }));
         if (wait) delayed.add(button);
     }
 

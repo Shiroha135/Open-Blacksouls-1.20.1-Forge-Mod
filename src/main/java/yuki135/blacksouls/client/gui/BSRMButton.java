@@ -19,7 +19,7 @@ public class BSRMButton extends Button {
             int y = this.getY();
             BSGuiUtils.drawRMWindow(guiGraphics, x, y, this.width, this.height);
             if (this.isHoveredOrFocused()) {
-                guiGraphics.fill(x + 2, y + 2, x + this.width - 2, y + this.height - 2, 0x44FFFFFF);
+                BSGuiUtils.drawRMSelectionBounds(guiGraphics, x + 2, y + 2, x + this.width - 2, y + this.height - 2);
             }
             int textColor = 14737632;
             if (!this.active) {

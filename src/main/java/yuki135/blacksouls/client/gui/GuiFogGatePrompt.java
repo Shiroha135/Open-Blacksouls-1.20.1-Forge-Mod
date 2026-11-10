@@ -1,6 +1,7 @@
 package yuki135.blacksouls.client.gui;
 
 import yuki135.blacksouls.client.ClientStoryName;
+import yuki135.blacksouls.client.render.FadedBannerRenderer;
 import yuki135.blacksouls.network.NetworkHandler;
 import yuki135.blacksouls.network.packets.ServerboundFogGateProceedPacket;
 import net.minecraft.client.gui.GuiGraphics;
@@ -26,8 +27,7 @@ public final class GuiFogGatePrompt extends Screen {
     @Override
     public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         int bannerTop = height - BANNER_HEIGHT;
-        graphics.fill(0, bannerTop, width, height, 0xE8000000);
-        graphics.fill(0, bannerTop, width, bannerTop + 1, 0x669A8B6A);
+        FadedBannerRenderer.draw(graphics, 0, bannerTop, width, height);
         graphics.drawString(font, title, 16, bannerTop + 16, 0xFFFFFFFF, true);
 
         int optionLeft = width - OPTION_WIDTH;
@@ -44,7 +44,7 @@ public final class GuiFogGatePrompt extends Screen {
 
     private void renderOption(GuiGraphics graphics, int optionLeft, int y, int index, String key) {
         if (selection == index) {
-            graphics.fill(optionLeft + 5, y + 1, width - 5, y + OPTION_LINE_HEIGHT - 1, 0x66FFFFFF);
+            BSGuiUtils.drawRMSelectionBounds(graphics, optionLeft + 5, y + 1, width - 5, y + OPTION_LINE_HEIGHT - 1);
         }
         graphics.drawString(font, Component.translatable(key), optionLeft + 10, y + 4, 0xFFFFFFFF, false);
     }

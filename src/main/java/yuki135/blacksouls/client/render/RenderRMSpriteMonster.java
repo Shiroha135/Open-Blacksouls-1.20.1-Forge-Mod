@@ -29,6 +29,14 @@ public class RenderRMSpriteMonster<T extends Monster> extends EntityRenderer<T> 
 
     @Override
     public void render(T entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+        var walking = OriginalEnemyWalkingSprite.resolve(entity);
+        if (walking != null) {
+            OriginalEnemyWalkingSprite.render(entity, walking, partialTicks, entityRenderDispatcher.camera.getPosition(),
+                    entityRenderDispatcher.cameraOrientation(), poseStack, buffer, packedLight);
+            super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
+            return;
+        }
+        if (entity.isInvisible()) return;
         poseStack.pushPose();
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
@@ -63,6 +71,8 @@ public class RenderRMSpriteMonster<T extends Monster> extends EntityRenderer<T> 
 
     @Override
     public ResourceLocation getTextureLocation(T entity) {
+        var walking = OriginalEnemyWalkingSprite.resolve(entity);
+        if (walking != null) return walking.texture();
         return resolveTexture(entity);
     }
 

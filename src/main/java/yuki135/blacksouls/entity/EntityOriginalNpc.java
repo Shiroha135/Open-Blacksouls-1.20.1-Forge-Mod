@@ -535,6 +535,7 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
 
     @Override
     protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if (yuki135.blacksouls.compat.scene.OriginalLibraryProgress.isNoden(this) && isInvisible()) return InteractionResult.PASS;
         if (hand != InteractionHand.MAIN_HAND) {
             return InteractionResult.PASS;
         }
@@ -614,12 +615,16 @@ public class EntityOriginalNpc extends PathfinderMob implements CustomEntityRend
 
     @Override
     public boolean isPickable() {
+        if (yuki135.blacksouls.compat.scene.OriginalLibraryProgress.isNoden(this) && isInvisible()) return false;
         return !isNativeInteractionProxy() && super.isPickable();
     }
 
     @Override
     public boolean canBeCollidedWith() {
         BSOriginalNpcData.Page page = currentPage();
+        if ((yuki135.blacksouls.story.OriginalSkullBeastService.handles(getNpcId())
+                || yuki135.blacksouls.compat.scene.OriginalLibraryProgress.isNoden(this))
+                && (isInvisible() || getSpriteOpacity() <= 0)) return false;
         if (erased || !isAlive() || page == null || isNativeInteractionProxy()
                 || entityData.get(ROUTE_STATE).getBoolean("Through")) return false;
         JsonObject movement = page.movement();

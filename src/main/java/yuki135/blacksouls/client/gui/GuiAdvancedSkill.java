@@ -252,7 +252,7 @@ public class GuiAdvancedSkill extends Screen {
 
         boolean isHoveringAvatar = mouseX >= rightX + 10 && mouseX <= rightX + 70 && mouseY >= guiTop + 7 && mouseY <= guiTop + 67;
         if (isHoveringAvatar) {
-            guiGraphics.fill(rightX + 8, guiTop + 5, rightX + 72, guiTop + 69, 0x44FFFFFF);
+            BSGuiUtils.drawRMSelectionBounds(guiGraphics,rightX + 8, guiTop + 5, rightX + 72, guiTop + 69);
         }
 
         RenderSystem.enableBlend();
@@ -421,7 +421,7 @@ public class GuiAdvancedSkill extends Screen {
             boolean hovered = isHovered(mouseX, mouseY);
 
             if (hovered) {
-                guiGraphics.fill(x - 2, y - 2, x + colWidth - 10, y + size + 2, 0x44FFFFFF);
+                BSGuiUtils.drawRMSelectionBounds(guiGraphics, x - 2, y - 2, x + colWidth - 10, y + size + 2);
             }
 
             String boundKeys = "";

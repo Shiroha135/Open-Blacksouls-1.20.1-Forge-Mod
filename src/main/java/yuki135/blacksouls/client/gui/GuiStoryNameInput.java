@@ -86,13 +86,7 @@ public final class GuiStoryNameInput extends Screen {
         for (int index = 0; index < MODE_KEYS.length; index++) {
             int y = layout.keyboardTop + 8 + index * rowHeight;
             if (index == page || index == hovered) {
-                graphics.fill(
-                    layout.keyboardLeft + 7,
-                    y,
-                    layout.keyboardLeft + layout.modeWidth - 7,
-                    y + rowHeight - 2,
-                    0x66FFFFFF
-                );
+                BSGuiUtils.drawRMSelectionBounds(graphics, layout.keyboardLeft + 7, y, layout.keyboardLeft + layout.modeWidth - 7, y + rowHeight - 2);
             }
             graphics.drawCenteredString(
                 font,
@@ -123,7 +117,7 @@ public final class GuiStoryNameInput extends Screen {
             int x = areaLeft + column * cellWidth;
             int y = areaTop + row * cellHeight;
             if (index == selectedCharacter) {
-                graphics.fill(x, y, x + cellWidth - 1, y + cellHeight - 1, 0x66FFFFFF);
+                BSGuiUtils.drawRMSelectionBounds(graphics, x, y, x + cellWidth - 1, y + cellHeight - 1);
             }
             graphics.drawCenteredString(
                 font,

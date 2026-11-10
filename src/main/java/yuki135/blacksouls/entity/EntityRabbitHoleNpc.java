@@ -27,7 +27,8 @@ import java.util.UUID;
 
 public class EntityRabbitHoleNpc extends Rabbit implements DialogueResettable {
     private static final String RABBIT_FOOD_FLAG = "BlacksoulsCorpseFlag:rabbit_food_eaten";
-    private Role role = Role.EV052;
+    private static final net.minecraft.network.syncher.EntityDataAccessor<String> ROLE = net.minecraft.network.syncher.SynchedEntityData.defineId(
+            EntityRabbitHoleNpc.class, net.minecraft.network.syncher.EntityDataSerializers.STRING);
     private boolean foodEaten;
     private UUID battleEnemy;
 
@@ -44,12 +45,18 @@ public class EntityRabbitHoleNpc extends Rabbit implements DialogueResettable {
         return Rabbit.createAttributes();
     }
 
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(ROLE, Role.EV052.id());
+    }
+
     public void setRole(Role role) {
-        this.role = role == null ? Role.EV052 : role;
+        entityData.set(ROLE, (role == null ? Role.EV052 : role).id());
     }
 
     public Role getRole() {
-        return this.role;
+        return Role.fromId(entityData.get(ROLE));
     }
 
     public void setFoodEaten(boolean foodEaten) {
@@ -86,7 +93,7 @@ public class EntityRabbitHoleNpc extends Rabbit implements DialogueResettable {
     public void finishKillBattle(ServerPlayer player, boolean victory) {
         this.battleEnemy = null;
         if (victory) {
-            int senChange = this.role == Role.EV009
+            int senChange = getRole() == Role.EV009
                     && this.level() instanceof ServerLevel level
                     && StoryProgressService.get(level) >= 1 ? -1 : -5;
             PlayerStatService.addSen(player, senChange);
@@ -140,7 +147,7 @@ public class EntityRabbitHoleNpc extends Rabbit implements DialogueResettable {
                                     : "entity.blacksouls.rabbit_hole_npc.name",
                             "",
                             RabbitHoleDialogue.keys(
-                                    this.role,
+                                    getRole(),
                                     lowSen,
                                     this.foodEaten || serverPlayer.getPersistentData().getBoolean(RABBIT_FOOD_FLAG),
                                     postBoss
@@ -173,7 +180,7 @@ public class EntityRabbitHoleNpc extends Rabbit implements DialogueResettable {
     @Override
     public void addAdditionalSaveData(@NotNull CompoundTag tag) {
         super.addAdditionalSaveData(tag);
-        tag.putString("RabbitHoleRole", this.role.id());
+        tag.putString("RabbitHoleRole", getRole().id());
         tag.putBoolean("RabbitFoodEaten", this.foodEaten);
         if (this.battleEnemy != null) {
             tag.putUUID("RabbitBattleEnemy", this.battleEnemy);
@@ -183,7 +190,7 @@ public class EntityRabbitHoleNpc extends Rabbit implements DialogueResettable {
     @Override
     public void readAdditionalSaveData(@NotNull CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        this.role = Role.fromId(tag.getString("RabbitHoleRole"));
+        setRole(Role.fromId(tag.getString("RabbitHoleRole")));
         this.foodEaten = tag.getBoolean("RabbitFoodEaten");
         this.battleEnemy = tag.hasUUID("RabbitBattleEnemy") ? tag.getUUID("RabbitBattleEnemy") : null;
         this.setVariant(Variant.WHITE);

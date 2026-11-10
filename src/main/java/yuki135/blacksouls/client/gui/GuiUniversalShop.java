@@ -284,6 +284,9 @@ public class GuiUniversalShop extends Screen {
         int sellTabX = (int) (this.width * 0.35f);
         int cancelTabX = (int) (this.width * 0.55f);
 
+        int selectedTabX = currentTab == 0 ? buyTabX : sellTabX;
+        var selectedTabLabel = Component.translatable(currentTab == 0 ? "gui.blacksouls.shop.tab.buy" : "gui.blacksouls.shop.tab.sell");
+        BSGuiUtils.drawRMSelectionBounds(guiGraphics,selectedTabX - 8,tabCenterY - 3,selectedTabX + font.width(selectedTabLabel) + 8,tabCenterY + 13);
         guiGraphics.drawString(font, Component.translatable("gui.blacksouls.shop.tab.buy"), buyTabX, tabCenterY, currentTab == 0 ? COLOR_TEXT_HIGHLIGHT : COLOR_TEXT_NORMAL, false);
         guiGraphics.drawString(font, Component.translatable("gui.blacksouls.shop.tab.sell"), sellTabX, tabCenterY, currentTab == 1 ? COLOR_TEXT_HIGHLIGHT : COLOR_TEXT_NORMAL, false);
 
@@ -305,6 +308,7 @@ public class GuiUniversalShop extends Screen {
         int sectionWidth = this.width / 4;
         for (int i = 0; i < 4; i++) {
             int textColor = (i == currentSubTab) ? COLOR_TEXT_HIGHLIGHT : COLOR_TEXT_NORMAL;
+            if (i == currentSubTab) BSGuiUtils.drawRMSelectionBounds(guiGraphics,i * sectionWidth + 8, subTabCenterY - 3, (i + 1) * sectionWidth - 8, subTabCenterY + 13);
             int textX = (i * sectionWidth) + (sectionWidth / 2) - (font.width(subTabTexts[i]) / 2);
             guiGraphics.drawString(font, subTabTexts[i], textX, subTabCenterY, textColor, false);
         }
@@ -372,7 +376,7 @@ public class GuiUniversalShop extends Screen {
             int rowY = listStartY + (isSelectingQuantity ? 0 : ((i - buyScroll) * 22));
 
             if (i == selectedIndex && !isSelectingQuantity) {
-                guiGraphics.fill(listStartX, rowY - 3, listW - 8, rowY + 18, 0x66FFFFFF);
+                BSGuiUtils.drawRMSelectionBounds(guiGraphics, listStartX, rowY - 3, listW - 8, rowY + 18);
             }
 
             guiGraphics.renderItem(item.renderStack, listStartX + 2, rowY);
@@ -410,7 +414,7 @@ public class GuiUniversalShop extends Screen {
             int currentItemW = isSelectingQuantity ? (listW - 8) : itemWidth;
 
             if (i == selectedIndex && !isSelectingQuantity) {
-                guiGraphics.fill(cellX + 6, rowY - 3, cellX + currentItemW - 6, rowY + 18, 0x66FFFFFF);
+                BSGuiUtils.drawRMSelectionBounds(guiGraphics, cellX + 6, rowY - 3, cellX + currentItemW - 6, rowY + 18);
             }
 
             int iconOffset = isSelectingQuantity ? 2 : 12;
@@ -431,8 +435,7 @@ public class GuiUniversalShop extends Screen {
         int boxX = listW - 50;
         guiGraphics.drawString(font, "x", boxX - 15, boxY + 4, COLOR_TEXT_HIGHLIGHT, false);
 
-        int alpha = (int) (60 + 40 * Math.sin(System.currentTimeMillis() / 150.0));
-        guiGraphics.fill(boxX, boxY, boxX + 40, boxY + 16, (alpha << 24) | 0xFFFFFF);
+        BSGuiUtils.drawRMSelectionBounds(guiGraphics,boxX,boxY,boxX + 40,boxY + 16);
         guiGraphics.drawCenteredString(font, String.valueOf(actionQuantity), boxX + 20, boxY + 4, COLOR_TEXT_HIGHLIGHT);
 
         String totalStr = String.valueOf(unitPrice * actionQuantity);

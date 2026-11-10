@@ -67,7 +67,7 @@ public class GuiPurgeCommission extends Screen {
         boolean refreshHovered = isInside(mouseX, mouseY, refreshButtonLeft, refreshButtonTop, REFRESH_BUTTON_WIDTH, BUTTON_HEIGHT);
         BSGuiUtils.drawRMWindow(guiGraphics, refreshButtonLeft, refreshButtonTop, REFRESH_BUTTON_WIDTH, BUTTON_HEIGHT);
         if (refreshHovered) {
-            guiGraphics.fill(refreshButtonLeft + 4, refreshButtonTop + 3, refreshButtonLeft + REFRESH_BUTTON_WIDTH - 4, refreshButtonTop + BUTTON_HEIGHT - 3, 0x33FFFFFF);
+            BSGuiUtils.drawRMSelectionBounds(guiGraphics, refreshButtonLeft + 4, refreshButtonTop + 3, refreshButtonLeft + REFRESH_BUTTON_WIDTH - 4, refreshButtonTop + BUTTON_HEIGHT - 3);
         }
         guiGraphics.drawCenteredString(this.font, Component.translatable("gui.blacksouls.purge.refresh_button"), refreshButtonLeft + REFRESH_BUTTON_WIDTH / 2, refreshButtonTop + 5, 0xFFFFFF);
 
@@ -126,7 +126,7 @@ public class GuiPurgeCommission extends Screen {
             boolean hovered = isInside(mouseX, mouseY, buttonLeft, buttonTop, 58, BUTTON_HEIGHT);
             BSGuiUtils.drawRMWindow(guiGraphics, buttonLeft, buttonTop, 58, BUTTON_HEIGHT);
             if (hovered) {
-                guiGraphics.fill(buttonLeft + 4, buttonTop + 3, buttonLeft + 54, buttonTop + BUTTON_HEIGHT - 3, 0x33FFFFFF);
+                BSGuiUtils.drawRMSelectionBounds(guiGraphics, buttonLeft + 4, buttonTop + 3, buttonLeft + 54, buttonTop + BUTTON_HEIGHT - 3);
             }
             guiGraphics.drawCenteredString(this.font, Component.translatable("gui.blacksouls.purge.claim_button"), buttonLeft + 29, buttonTop + 5, 0xFFFFFF);
         }

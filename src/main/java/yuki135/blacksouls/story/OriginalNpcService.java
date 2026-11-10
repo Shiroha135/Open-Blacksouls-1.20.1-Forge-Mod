@@ -471,6 +471,7 @@ public final class OriginalNpcService {
         if (progress.hasOtherConversation(player.getUUID(), java.util.Set.of(npc.getNpcId()))
                 && progress.conversation(player.getUUID(), npc.getNpcId()) == null) return;
         refreshPage(npc, player);
+        if (yuki135.blacksouls.compat.scene.OriginalLibraryProgress.isNoden(npc) && npc.isInvisible()) return;
         if (npc.currentPage() != null && (npc.currentPage().trigger() == 2 || npc.currentPage().trigger() == 3)
                 || OriginalNpcAutorunService.isManaged(npc.getNpcId()) && progress.conversation(player.getUUID(), npc.getNpcId()) != null) return;
         if (yuki135.blacksouls.util.OriginalWorldEventData.isNativeBlock(npc.getNpcId())

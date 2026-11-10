@@ -19,7 +19,8 @@ public final class ClientFogGateTraversal {
     private static final double TARGET_EPSILON = 0.02D;
     private static WalkState active;
 
-    public static void start(Direction direction, double targetX, double targetZ) {
+    public static void start(Direction direction, double targetX, double targetZ,
+                             boolean previousNoPhysics, boolean previousNoGravity) {
         Minecraft minecraft = Minecraft.getInstance();
         LocalPlayer player = minecraft.player;
         if (player == null) {
@@ -31,8 +32,8 @@ public final class ClientFogGateTraversal {
                 direction,
                 targetX,
                 targetZ,
-                player.noPhysics,
-                player.isNoGravity()
+                previousNoPhysics,
+                previousNoGravity
         );
         player.noPhysics = true;
         player.setNoGravity(true);
@@ -47,10 +48,19 @@ public final class ClientFogGateTraversal {
         if (player == null || state == null || !state.playerId.equals(player.getUUID())) {
             return;
         }
-        player.noPhysics = state.previousNoPhysics;
-        player.setNoGravity(state.previousNoGravity);
-        Vec3 movement = player.getDeltaMovement();
-        player.setDeltaMovement(0.0D, movement.y, 0.0D);
+        restore(player, state.previousNoPhysics, state.previousNoGravity);
+    }
+
+    public static void stop(boolean previousNoPhysics, boolean previousNoGravity) {
+        LocalPlayer player = Minecraft.getInstance().player;
+        active = null;
+        if (player != null) restore(player, previousNoPhysics, previousNoGravity);
+    }
+
+    private static void restore(LocalPlayer player, boolean previousNoPhysics, boolean previousNoGravity) {
+        player.noPhysics = previousNoPhysics;
+        player.setNoGravity(previousNoGravity);
+        player.setDeltaMovement(Vec3.ZERO);
         clearInput(player.input);
     }
 

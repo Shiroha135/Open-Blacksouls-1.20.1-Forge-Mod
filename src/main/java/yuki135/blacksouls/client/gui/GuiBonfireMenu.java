@@ -153,17 +153,11 @@ public class GuiBonfireMenu extends Screen {
 
             int color = isSelected || isHovered ? COLOR_TEXT_HIGHLIGHT : COLOR_TEXT_NORMAL;
 
-            guiGraphics.drawString(font, Component.literal("[" + getDisplayName(bonfire.name) + "]"), itemX, currentY, color, false);
 
             if (isSelected) {
-                guiGraphics.fill(
-                        guiLeft + SELECTION_BG_PADDING_X,
-                        currentY - SELECTION_BG_PADDING_Y,
-                        guiLeft + LIST_WIDTH - SELECTION_BG_PADDING_X,
-                        currentY + ITEM_LINE_HEIGHT - SELECTION_BG_PADDING_Y,
-                        COLOR_SELECTION_BG
-                );
+                BSGuiUtils.drawRMSelectionBounds(guiGraphics, guiLeft + SELECTION_BG_PADDING_X, currentY - SELECTION_BG_PADDING_Y, guiLeft + LIST_WIDTH - SELECTION_BG_PADDING_X, currentY + ITEM_LINE_HEIGHT - SELECTION_BG_PADDING_Y);
             }
+            guiGraphics.drawString(font, Component.literal("[" + getDisplayName(bonfire.name) + "]"), itemX, currentY, color, false);
         }
 
         int arrowX = guiLeft + LIST_WIDTH / 2;

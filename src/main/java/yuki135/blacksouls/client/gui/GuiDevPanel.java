@@ -350,8 +350,7 @@ public class GuiDevPanel extends Screen {
     private void drawButton(GuiGraphics graphics, int x, int y, int width, int height,
                             Component label, int mouseX, int mouseY, int accent) {
         boolean hovered = inside(mouseX, mouseY, x, y, width, height);
-        DevGlassRenderer.fill(graphics, x, y, width, height, 8.0F, hovered ? 0x5E31546D : 0x3B1C3042);
-        graphics.drawCenteredString(this.font, label, x + width / 2, y + (height - this.font.lineHeight) / 2, hovered ? 0xFFFFFFFF : 0xFFD8E3ED);
+        DevGlassButton.draw(graphics,x,y,width,height,label,true,hovered);
     }
 
     @Override

@@ -60,16 +60,10 @@ public class GuiBonfireRest extends Screen {
             int currentY = guiTop + START_Y_OFFSET + i * ITEM_HEIGHT;
             boolean isHovered = isMouseOverItem(mouseX, mouseY, currentY);
             int color = isHovered ? COLOR_TEXT_HOVER : COLOR_TEXT_NORMAL;
-            guiGraphics.drawCenteredString(font, options[i].text, guiLeft + GUI_WIDTH / 2, currentY + TEXT_OFFSET_Y, color);
             if (isHovered) {
-                guiGraphics.fill(
-                        guiLeft + PADDING_X,
-                        currentY + HIGHLIGHT_PADDING_Y,
-                        guiLeft + GUI_WIDTH - PADDING_X,
-                        currentY + ITEM_HEIGHT - HIGHLIGHT_PADDING_Y,
-                        COLOR_HIGHLIGHT_BG
-                );
+                BSGuiUtils.drawRMSelectionBounds(guiGraphics, guiLeft + PADDING_X, currentY + HIGHLIGHT_PADDING_Y, guiLeft + GUI_WIDTH - PADDING_X, currentY + ITEM_HEIGHT - HIGHLIGHT_PADDING_Y);
             }
+            guiGraphics.drawCenteredString(font, options[i].text, guiLeft + GUI_WIDTH / 2, currentY + TEXT_OFFSET_Y, color);
         }
 
         super.render(guiGraphics, mouseX, mouseY, partialTicks);

@@ -20,7 +20,7 @@ import java.util.Optional;
 @SuppressWarnings("removal")
 public class NetworkHandler {
 
-    private static final String PROTOCOL_VERSION = "restoration-33";
+    private static final String PROTOCOL_VERSION = "restoration-37";
 
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(BlackSouls.MODID, "main"),
