@@ -148,7 +148,7 @@ public final class EntityCheshireCat extends PathfinderMob implements DialogueRe
     }
 
     @Override
-    public String getMmdAnimation() { return isSitting() ? "ride" : "blacksouls_cheshire_recline_v2"; }
+    public String getMmdAnimation() { return isSitting() ? "ride" : "blacksouls_cheshire_recline_v7"; }
 
     public CompoundTag originalRouteState() {
         return entityData.get(ORIGINAL_ROUTE_STATE).copy();
