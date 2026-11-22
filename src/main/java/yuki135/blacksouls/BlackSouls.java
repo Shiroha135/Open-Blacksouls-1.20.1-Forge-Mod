@@ -959,11 +959,11 @@ public class BlackSouls {
     public static final RegistryObject<Item> SOUL_FOUR_LEAF_CLOVER = ITEMS.register("soul_four_leaf_clover",
             () -> new ItemStatSoul(new Item.Properties(), 0, 0, 0, 0, 0, 0, 2,0));
     public static final RegistryObject<Item> SOUL_BLACK = ITEMS.register("soul_black",
-            () -> new ItemStatSoul(new Item.Properties(), 10, 5, 1, 1, 1, 1, 1,1));
+            () -> new ItemStatSoul(new Item.Properties(), 10, 5, 1, 1, 1, 1, 1,1, -10));
     public static final RegistryObject<Item> SOUL_BLACK_DEFILED = ITEMS.register("soul_black_defiled",
-            () -> new ItemStatSoul(new Item.Properties(), 30, 15, 3, 3, 3, 3, 3,3));
+            () -> new ItemStatSoul(new Item.Properties(), 30, 15, 3, 3, 3, 3, 3,3, -30));
     public static final RegistryObject<Item> SOUL_OUTSIDER = ITEMS.register("soul_outsider",
-            () -> new ItemStatSoul(new Item.Properties(), 300, 150, 30, 30, 30, 30,30,30));
+            () -> new ItemStatSoul(new Item.Properties(), 300, 150, 30, 30, 30, 30,30,30, 100));
     // ==========================================================================================================================================================================================================================================================================
     // 童话书系列 (共32本)
     // ==========================================================================================================================================================================================================================================================================

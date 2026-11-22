@@ -4,8 +4,10 @@ import yuki135.blacksouls.BlackSouls;
 import yuki135.blacksouls.capability.BSPlayerStats;
 import yuki135.blacksouls.handler.StatEventHandler;
 import yuki135.blacksouls.item.ItemLoreBase;
+import yuki135.blacksouls.story.OriginalSenService;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -27,8 +29,13 @@ public class ItemStatSoul extends ItemLoreBase {
     private final double addMagicDefense;
     private final double addLuck;
     private final double addSpeed;
+    private final int senDelta;
 
     public ItemStatSoul(Properties properties, double hp, double mp, double atk, double def, double mAtk, double mDef, double luck, double speed) {
+        this(properties, hp, mp, atk, def, mAtk, mDef, luck, speed, 0);
+    }
+
+    public ItemStatSoul(Properties properties, double hp, double mp, double atk, double def, double mAtk, double mDef, double luck, double speed, int senDelta) {
         super(properties);
         this.addHp = hp;
         this.addMp = mp;
@@ -38,6 +45,7 @@ public class ItemStatSoul extends ItemLoreBase {
         this.addMagicDefense = mDef;
         this.addLuck = luck;
         this.addSpeed = speed;
+        this.senDelta = senDelta;
     }
 
     @Override
@@ -47,6 +55,11 @@ public class ItemStatSoul extends ItemLoreBase {
         if (!level.isClientSide()) {
             BSPlayerStats stats = player.getCapability(BSPlayerStats.CAPABILITY).orElse(null);
             if (stats == null) {
+                return InteractionResultHolder.fail(stack);
+            }
+            long changedSen = (long) stats.sen + senDelta;
+            if (changedSen < Integer.MIN_VALUE || changedSen > Integer.MAX_VALUE
+                    || senDelta != 0 && !(player instanceof ServerPlayer)) {
                 return InteractionResultHolder.fail(stack);
             }
 
@@ -69,6 +82,14 @@ public class ItemStatSoul extends ItemLoreBase {
                 if (stats.mp > stats.maxMp) {
                     stats.mp = stats.maxMp;
                 }
+            }
+
+            if (senDelta != 0) {
+                ServerPlayer serverPlayer = (ServerPlayer) player;
+                int before = stats.sen;
+                OriginalSenService.writeValue(serverPlayer, changedSen);
+                OriginalSenService.afterVariableOperation(serverPlayer, senDelta > 0 ? 1 : 2,
+                        Math.abs((long) senDelta), before, changedSen);
             }
 
             StatEventHandler.applyStats(player);
@@ -102,5 +123,6 @@ public class ItemStatSoul extends ItemLoreBase {
         if (addMagicDefense > 0) tooltip.add(Component.literal(" ").append(Component.translatable("tooltip.blacksouls.stat.mdef")).append(" +" + (int) addMagicDefense).withStyle(ChatFormatting.BLUE));
         if (addLuck > 0) tooltip.add(Component.literal(" ").append(Component.translatable("tooltip.blacksouls.stat.luc")).append(" +" + (int) addLuck).withStyle(ChatFormatting.YELLOW));
         if (addSpeed > 0) tooltip.add(Component.literal(" ").append(Component.translatable("tooltip.blacksouls.stat.speed")).append(" +" + (int) addSpeed).withStyle(ChatFormatting.WHITE));
+        if (senDelta != 0) tooltip.add(Component.literal(" SEN " + (senDelta > 0 ? "+" : "") + senDelta).withStyle(ChatFormatting.LIGHT_PURPLE));
     }
 }
