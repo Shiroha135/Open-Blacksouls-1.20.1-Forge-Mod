@@ -3,6 +3,8 @@ package yuki135.blacksouls.handler;
 import yuki135.blacksouls.BlackSouls;
 import yuki135.blacksouls.client.gui.GuiBSMainMenu;
 import yuki135.blacksouls.client.ClientSceneMusic;
+import yuki135.blacksouls.client.OriginalNpcMusicController;
+import yuki135.blacksouls.client.TurnBattleAudioGate;
 import yuki135.blacksouls.client.render.GuiShaderTextRenderer;
 import yuki135.blacksouls.mixin.AbstractContainerScreenAccessor;
 import yuki135.blacksouls.util.HokoniwaDestination;
@@ -17,6 +19,8 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
@@ -78,13 +82,19 @@ public class ClientEventHandler {
             event.setSound(null);
             return;
         }
+        if (TurnBattleAudioGate.isActive()) {
+            return;
+        }
 
         Minecraft mc = Minecraft.getInstance();
         ClientLevel level = mc.level;
-        if (isHokoniwa(level) && event.getSound() != null) {
+        if (event.getSound() != null) {
             ResourceLocation soundId = event.getSound().getLocation();
-            if (!ClientSceneMusic.isSceneSound(soundId)
-                    && soundId.getPath().contains("music")) {
+            if (isHokoniwa(level) && soundId.getPath().contains("music")
+                    && !ClientSceneMusic.isSceneSound(soundId) && !OriginalNpcMusicController.ownsSound(event.getSound())) {
+                event.setSound(null);
+            } else if (overworldSceneControlsMusic(level) && event.getSound().getSource() == SoundSource.MUSIC
+                    && "minecraft".equals(soundId.getNamespace())) {
                 event.setSound(null);
             }
         }
@@ -100,8 +110,7 @@ public class ClientEventHandler {
         Screen screen = mc.screen;
         ClientLevel level = mc.level;
 
-        boolean inHokoniwa = isHokoniwa(level);
-        if (inHokoniwa) {
+        if (isHokoniwa(level) || overworldSceneControlsMusic(level)) {
             mc.getMusicManager().stopPlaying();
             if (currentTitleBGM != null) {
                 mc.getSoundManager().stop(currentTitleBGM);
@@ -148,5 +157,9 @@ public class ClientEventHandler {
         }
         ResourceLocation dimension = level.dimension().location();
         return HokoniwaDestination.ID.equals(dimension) || HokoniwaDestination.LEGACY_ID.equals(dimension);
+    }
+
+    private static boolean overworldSceneControlsMusic(ClientLevel level) {
+        return level != null && Level.OVERWORLD.equals(level.dimension()) && ClientSceneMusic.shouldReplaceVanillaMusic();
     }
 }

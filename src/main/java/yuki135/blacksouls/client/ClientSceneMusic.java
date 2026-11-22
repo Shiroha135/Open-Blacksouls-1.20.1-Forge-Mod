@@ -1,6 +1,7 @@
 package yuki135.blacksouls.client;
 
 import yuki135.blacksouls.BlackSouls;
+import yuki135.blacksouls.capability.BSPlayerStats;
 import yuki135.blacksouls.util.OriginalMapSceneRegistry;
 import yuki135.blacksouls.util.HokoniwaDestination;
 import net.minecraft.client.Minecraft;
@@ -9,6 +10,7 @@ import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.event.TickEvent;
@@ -20,6 +22,7 @@ import net.minecraftforge.fml.common.Mod;
 public final class ClientSceneMusic {
     private static final String MUSIC_MOD_ID = "blacksouls2music";
     private static final float SCENE_VOLUME_MULTIPLIER = 1.2F;
+    private static final ResourceLocation RABBIT_HOLE_AMBIENCE = ResourceLocation.fromNamespaceAndPath(BlackSouls.MODID, "rabbit_hole_low_sen");
     private static String activeSceneId = "";
     private static OriginalMapSceneRegistry.Entry activeEntry;
     private static SimpleSoundInstance activeMusic;
@@ -38,8 +41,7 @@ public final class ClientSceneMusic {
             reset();
             return;
         }
-        ResourceLocation dimension = minecraft.level.dimension().location();
-        if (!HokoniwaDestination.ID.equals(dimension) && !HokoniwaDestination.LEGACY_ID.equals(dimension)) {
+        if (!Level.OVERWORLD.equals(minecraft.level.dimension()) && !HokoniwaDestination.isHokoniwa(minecraft.level.dimension())) {
             ClientSceneState.clear();
             reset();
             return;
@@ -55,16 +57,26 @@ public final class ClientSceneMusic {
         if (dialogueMusicActive || presentationMusicActive) {
             return;
         }
-        if (activeEntry == null || TurnBattleAudioGate.isActive() || !isAvailable()) {
+        if (activeEntry == null || activeEntry.isSilent() || TurnBattleAudioGate.isActive() || !isAvailable()) {
             return;
         }
+        boolean lowSen = switch (activeSceneId) {
+            case "map_051", "map_052", "map_053", "map_054" ->
+                    minecraft.player.getCapability(BSPlayerStats.CAPABILITY).map(stats -> stats.sen <= 70).orElse(false);
+            default -> false;
+        };
+        ResourceLocation sound = lowSen ? RABBIT_HOLE_AMBIENCE : activeEntry.soundEvent();
+        if (activeMusic != null && !activeMusic.getLocation().equals(sound)) {
+            stopMusic();
+        }
         if (activeMusic == null || !minecraft.getSoundManager().isActive(activeMusic)) {
-            startMusic(minecraft);
+            startMusic(minecraft, sound, lowSen);
         }
     }
 
-    public static boolean hasAssignedMusic() {
-        return OriginalMapSceneRegistry.get(ClientSceneState.getSceneId()) != null && isAvailable();
+    public static boolean shouldReplaceVanillaMusic() {
+        OriginalMapSceneRegistry.Entry entry = OriginalMapSceneRegistry.get(ClientSceneState.getSceneId());
+        return entry != null && (entry.isSilent() || isAvailable());
     }
 
     public static boolean isSceneSound(ResourceLocation soundEvent) {
@@ -127,10 +139,10 @@ public final class ClientSceneMusic {
         activeEntry = OriginalMapSceneRegistry.get(activeSceneId);
     }
 
-    private static void startMusic(Minecraft minecraft) {
+    private static void startMusic(Minecraft minecraft, ResourceLocation sound, boolean lowSen) {
         activeMusic = new SimpleSoundInstance(
-                activeEntry.soundEvent(), SoundSource.MUSIC,
-                activeEntry.volume() * SCENE_VOLUME_MULTIPLIER, activeEntry.pitch(),
+                sound, lowSen ? SoundSource.AMBIENT : SoundSource.MUSIC,
+                lowSen ? 1.0F : activeEntry.volume() * SCENE_VOLUME_MULTIPLIER, lowSen ? 1.0F : activeEntry.pitch(),
                 RandomSource.create(), true, 0,
                 SoundInstance.Attenuation.NONE,
                 0.0D, 0.0D, 0.0D, true

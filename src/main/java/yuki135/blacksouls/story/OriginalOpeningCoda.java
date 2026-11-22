@@ -24,6 +24,8 @@ public final class OriginalOpeningCoda {
     private static final int TONE_MASK=255;
     private static final int FRAME_MASK=511;
     private static final Map<Integer,Cue> CUES=load();
+    private static final int ORIGIN_MUSIC_FADE_INDEX=CUES.values().stream().filter(cue->cue.map()==7&&cue.code()==242)
+            .mapToInt(Cue::sourceIndex).min().orElseThrow();
 
     public record Cue(int command,int map,int event,int page,int sourceIndex,int code,String kind,
             String text,String face,int faceIndex,int style,int position,List<String> choices,List<Integer> targets,
@@ -79,6 +81,10 @@ public final class OriginalOpeningCoda {
     public static boolean sunshineVisible(int command) { return active(command)&&cue(command).sunshine(); }
     public static boolean isBalloon(int command) { return active(command)&&cue(command).code()==213; }
     public static boolean memory(int command) { return active(command)&&cue(command).map()==110&&cue(command).page()>0; }
+    public static boolean beforeOriginMusicFade(int command) {
+        var cue=CUES.get(command);
+        return cue!=null&&cue.map()==7&&cue.sourceIndex()<ORIGIN_MUSIC_FADE_INDEX;
+    }
     public static int memoryStart(int relationship) { if(relationship<1||relationship>3)throw new IllegalArgumentException("Invalid Alice relationship");return BASE+relationship*1000; }
     public static boolean aliceChoice(int command) { return command==SKIP_ALICE||command==STORY_ALICE; }
     public static boolean professionsPresent(int command) { return command==ORIGIN_ANIMATION||command==ORIGIN_FADE_OUT; }

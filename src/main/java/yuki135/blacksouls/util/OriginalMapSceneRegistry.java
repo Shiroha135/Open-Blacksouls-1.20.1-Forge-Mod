@@ -45,6 +45,11 @@ public final class OriginalMapSceneRegistry {
             }
             for (Map.Entry<String, JsonElement> mapEntry : maps.entrySet()) {
                 JsonObject map = mapEntry.getValue().getAsJsonObject();
+                String sceneId = mapEntry.getKey().toLowerCase(Locale.ROOT);
+                if (map.has("silent") && map.get("silent").getAsBoolean()) {
+                    entries.put(sceneId, new Entry(null, 0.0F, 1.0F));
+                    continue;
+                }
                 ResourceLocation soundEvent = map.has("sound_event")
                         ? ResourceLocation.tryParse(map.get("sound_event").getAsString()) : null;
                 if (soundEvent == null) {
@@ -52,8 +57,7 @@ public final class OriginalMapSceneRegistry {
                 }
                 float volume = map.has("volume") ? map.get("volume").getAsFloat() / 100.0F : 1.0F;
                 float pitch = map.has("pitch") ? map.get("pitch").getAsFloat() / 100.0F : 1.0F;
-                entries.put(mapEntry.getKey().toLowerCase(Locale.ROOT),
-                        new Entry(soundEvent, volume, pitch));
+                entries.put(sceneId, new Entry(soundEvent, volume, pitch));
             }
         } catch (IOException | RuntimeException ignored) {
         }
@@ -63,12 +67,17 @@ public final class OriginalMapSceneRegistry {
     private static Set<ResourceLocation> loadSoundEvents() {
         Set<ResourceLocation> events = new HashSet<>();
         for (Entry entry : ENTRIES.values()) {
-            events.add(entry.soundEvent());
+            if (!entry.isSilent()) {
+                events.add(entry.soundEvent());
+            }
         }
         return events;
     }
 
     public record Entry(ResourceLocation soundEvent, float volume, float pitch) {
+        public boolean isSilent() {
+            return soundEvent == null;
+        }
     }
 
     private OriginalMapSceneRegistry() {

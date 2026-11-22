@@ -48,7 +48,13 @@ public final class OriginalNpcMusicController {
     private OriginalNpcMusicController() {
     }
 
+    public static boolean ownsSound(SoundInstance sound) {
+        return ownsMusic && sound != null && sound == current;
+    }
+
     public static void applyDialogue(int entityId,int code,String sound,List<Double> values) {
+        if (code == 242 && !sound.isEmpty() && (dialogueEntity != entityId || !ownsMusic || current == null
+                || current.isStopped() || !current.track.sound().toString().equals(sound))) return;
         apply(code,sound,values);
         dialogueEntity=entityId;
         if(code==241&&!sound.isEmpty())cheshireDialogue=sound.equals("blacksouls2music:music_track_076")||sound.equals("blacksouls:cheshire_theme");
@@ -56,6 +62,14 @@ public final class OriginalNpcMusicController {
 
     public static void finishDialogue(int entityId) {
         if(dialogueEntity==entityId&&cheshireDialogue)reset();
+    }
+
+    public static boolean releaseTrack(String sound, boolean finishFade) {
+        if (current != null && current.track.sound().toString().equals(sound)) {
+            if (finishFade && current.fadeTicks > 0 && !current.isStopped()) return false;
+            reset();
+        }
+        return true;
     }
 
     public static void apply(int code, String sound, List<Double> values) {

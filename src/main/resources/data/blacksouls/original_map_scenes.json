@@ -3,18 +3,12 @@
     "map_001": {
       "map_id": 1,
       "parent_id": 0,
-      "source_bgm": "時計音",
-      "volume": 80,
-      "pitch": 100,
-      "sound_event": "blacksouls2music:music_track_150"
+      "silent": true
     },
     "map_002": {
       "map_id": 2,
       "parent_id": 0,
-      "source_bgm": "チェシャ猫",
-      "volume": 100,
-      "pitch": 100,
-      "sound_event": "blacksouls2music:music_track_076"
+      "silent": true
     },
     "map_003": {
       "map_id": 3,

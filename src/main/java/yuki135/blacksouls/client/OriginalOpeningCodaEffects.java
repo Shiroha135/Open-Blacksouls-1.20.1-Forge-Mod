@@ -31,7 +31,9 @@ import yuki135.blacksouls.BlackSouls;
 import yuki135.blacksouls.client.render.OpeningRichFogRenderer;
 import yuki135.blacksouls.network.packets.ClientboundOpeningPacket;
 import yuki135.blacksouls.story.OriginalOpeningCoda;
+import yuki135.blacksouls.story.OriginalOpeningGreeting;
 import yuki135.blacksouls.story.OriginalOpeningProfile.Stage;
+import yuki135.blacksouls.story.OriginalOpeningScenes;
 
 @Mod.EventBusSubscriber(modid=BlackSouls.MODID,value=Dist.CLIENT)
 public final class OriginalOpeningCodaEffects {
@@ -42,6 +44,8 @@ public final class OriginalOpeningCodaEffects {
     private static TextureTarget capture;
     private static Ambient ambient;
     private static String ambientName="";
+    private static final String ORIGIN_MUSIC=OriginalOpeningCodaAssets.music("OP");
+    private static boolean originMusicStarted;
 
     public record Frame(boolean active,int command,int remainingTicks,int visualState,float tone,float black,
             String picture,double pictureOpacity,boolean pictureBlack,boolean fog,boolean sunshine) { }
@@ -51,9 +55,10 @@ public final class OriginalOpeningCodaEffects {
     public static void accept(ClientboundOpeningPacket packet) {
         boolean newSession=state==null||!state.session().equals(packet.session());
         boolean changed=newSession||state.command()!=packet.command();
-        if(newSession) { stopAmbient();receivedAt=ticks; }
+        if(newSession) { releaseOriginMusic(false);stopAmbient();receivedAt=ticks; }
         if(!packet.equals(state))receivedAt=ticks;
         state=packet;
+        syncOriginMusic();
         if(OriginalOpeningCoda.active(packet.command())) {
             if(changed)applyAudio(packet.command(),newSession);
         } else {
@@ -106,6 +111,7 @@ public final class OriginalOpeningCodaEffects {
         if(event.phase!=TickEvent.Phase.END)return;
         var minecraft=Minecraft.getInstance();
         if(minecraft.level==null||minecraft.player==null)return;
+        syncOriginMusic();
         if(!minecraft.isPaused()&&(state==null||state.notice().isEmpty()&&!state.awaitingReady()))ticks++;
     }
 
@@ -245,7 +251,34 @@ public final class OriginalOpeningCodaEffects {
     }
 
     private static void releaseCapture() { if(capture!=null) { capture.destroyBuffers();capture=null; } }
-    public static void clear() { state=null;ticks=0;receivedAt=0;releaseCapture();stopAmbient(); }
+    private static void syncOriginMusic() {
+        var minecraft=Minecraft.getInstance();
+        if(state==null||minecraft.level==null||minecraft.player==null||!minecraft.player.isAlive()
+                ||!OriginalOpeningScenes.DIMENSION.equals(minecraft.level.dimension())
+                ||!state.dimension().equals(OriginalOpeningScenes.DIMENSION.location())) {
+            releaseOriginMusic(false);
+            return;
+        }
+        int command=state.command();
+        boolean choosing=state.stage()==Stage.ORIGIN_SELECTION
+                &&(OriginalOpeningGreeting.active(command)||command==OriginalOpeningGreeting.COMPLETE_COMMAND);
+        boolean confirming=state.stage()==Stage.ORIGIN_CONFIRMED&&OriginalOpeningCoda.active(command)
+                &&OriginalOpeningCoda.cue(command).map()==7;
+        if(choosing||confirming&&OriginalOpeningCoda.beforeOriginMusicFade(command)) {
+            if(!originMusicStarted&&!state.awaitingReady()&&state.notice().isEmpty()&&!ORIGIN_MUSIC.isEmpty()) {
+                OriginalNpcMusicController.apply(241,ORIGIN_MUSIC,java.util.List.of(100D,100D));
+                originMusicStarted=true;
+            }
+        } else if(!confirming) {
+            releaseOriginMusic(state.stage()==Stage.ALICE_SELECTION||state.stage()==Stage.MEMORY_DIALOGUE);
+        }
+    }
+
+    private static void releaseOriginMusic(boolean finishFade) {
+        if(originMusicStarted&&OriginalNpcMusicController.releaseTrack(ORIGIN_MUSIC,finishFade))originMusicStarted=false;
+    }
+
+    public static void clear() { releaseOriginMusic(false);state=null;ticks=0;receivedAt=0;releaseCapture();stopAmbient(); }
     @SubscribeEvent public static void logout(ClientPlayerNetworkEvent.LoggingOut event) { clear(); }
 
     private static final class Ambient extends AbstractTickableSoundInstance {

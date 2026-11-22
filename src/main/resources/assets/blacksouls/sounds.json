@@ -1568,6 +1568,11 @@
       "blacksouls:original_chicken_voice"
     ]
   },
+  "ludwig_mirror_open": {"sounds": ["blacksouls:ludwig_mirror_open"]},
+  "ludwig_mirror_close": {"sounds": ["blacksouls:ludwig_mirror_close"]},
+  "ludwig_bird_call": {"sounds": [{"name": "blacksouls:ludwig_bird_call", "attenuation_distance": 48}]},
+  "ludwig_bird_wings": {"sounds": [{"name": "blacksouls:ludwig_bird_wings", "attenuation_distance": 48}]},
+  "rabbit_hole_low_sen": {"sounds": [{"name": "blacksouls:rabbit_hole_low_sen", "stream": true}]},
   "opening_coda_river": {"sounds": [{"name": "blacksouls:opening_coda/river", "stream": true}]},
   "opening_coda_night": {"sounds": [{"name": "blacksouls:opening_coda/night", "stream": true}]}
 ,
